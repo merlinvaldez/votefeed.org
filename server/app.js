@@ -2,7 +2,11 @@ import express from "express";
 const app = express();
 export default app;
 
+import districtsRouter from "./src/api/districts.js";
+
 app.use(express.json());
+
+app.use("/districts", districtsRouter);
 
 app.use((err, req, res, next) => {
   switch (err.code) {
