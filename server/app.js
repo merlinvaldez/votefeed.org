@@ -3,12 +3,16 @@ const app = express();
 export default app;
 
 import districtsRouter from "./src/api/districts.js";
-import repRouter from "./src/api/rep.js";
+import repsRouter from "./src/api/reps.js";
+import billsRouter from "./src/api/bills.js";
+import votingRecordRouter from "./src/api/votingRecords.js";
 
 app.use(express.json());
 
 app.use("/districts", districtsRouter);
-app.use("/rep", repRouter);
+app.use("/reps", repsRouter);
+app.use("/bills", billsRouter);
+app.use("/votingrecords", votingRecordRouter);
 
 app.use((err, req, res, next) => {
   switch (err.code) {
