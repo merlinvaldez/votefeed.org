@@ -36,6 +36,44 @@ router.get("/", async (req, res) => {
         nextUrl = null;
       }
     }
+    for (let i = 0; i < houseVotes.length; i++) {
+      const vote = houseVotes[i];
+      const congress = vote?.congress ?? 119;
+      const session = vote.sessionNumber;
+      const voteNumber = vote.rollCallNumber;
+
+      const membersBaseUrl = new URL(
+        `https://api.congress.gov/v3/house-vote/${congress}/${session}/${voteNumber}/members`
+      );
+      membersBaseUrl.searchParams.set("limit", "250");
+      membersBaseUrl.searchParams.set("api_key", apiKey);
+      let membersNext = membersBaseUrl.toString();
+      let results = [];
+      let failed = false;
+      while (membersNext) {
+        console.log(membersNext);
+        const resp = await fetch(membersNext);
+        if (!resp.ok) {
+          const text = await resp.text();
+          vote.votingRecord = null;
+          vote.votingRecordError = `Congres API Error ${resp.status}: ${text}`;
+          failed = true;
+          break;
+        }
+        const data = await resp.json();
+        const pageObj = data?.houseRollCallVoteMemberVotes || {};
+        results = results.concat(pageObj.results || []);
+        const paginationNext = data?.pagination?.next ?? null;
+        if (paginationNext) {
+          const next = new URL(paginationNext);
+          next.searchParams.set("api_key", apiKey);
+          membersNext = next.toString();
+        } else {
+          membersNext = null;
+        }
+      }
+      if (!failed) vote.votingRecord = results;
+    }
     return res.json({ count: houseVotes.length, houseVotes });
   } catch (err) {
     console.error(err);
