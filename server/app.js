@@ -5,14 +5,14 @@ export default app;
 import districtsRouter from "./src/api/districts.js";
 import repsRouter from "./src/api/reps.js";
 import billsRouter from "./src/api/bills.js";
-import votingRecordRouter from "./src/api/votingRecords.js";
+import houseVotesRouter from "./src/api/houseVotes.js";
 
 app.use(express.json());
 
 app.use("/districts", districtsRouter);
 app.use("/reps", repsRouter);
 app.use("/bills", billsRouter);
-app.use("/votingrecords", votingRecordRouter);
+app.use("/housevotes", houseVotesRouter);
 
 app.use((err, req, res, next) => {
   switch (err.code) {
