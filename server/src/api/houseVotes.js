@@ -36,7 +36,7 @@ router.get("/", async (req, res) => {
         nextUrl = null;
       }
     }
-    for (let i = 0; i < houseVotes.length; i++) {
+    for (let i = 0; i < 5; i++) {
       const vote = houseVotes[i];
       const congress = vote?.congress ?? 119;
       const session = vote.sessionNumber;

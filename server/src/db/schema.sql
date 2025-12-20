@@ -27,9 +27,10 @@ CREATE TABLE bills(
 );
 
 CREATE TABLE member_voting_record (
-    legislationNumber integer PRIMARY KEY,
+    id serial PRIMARY KEY,
+    legislationNumber integer NOT NULL,
     vote text NOT NULL,
-    member_id text NOT NULL REFERENCES reps(bioguideId) ON DELETE CASCADE
+    member_id text NOT NULL
 );
 
 
