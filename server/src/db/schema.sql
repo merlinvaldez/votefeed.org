@@ -1,9 +1,9 @@
 
-DROP TABLE IF EXISTS interactions,
-DROP TABLE IF EXISTS member_voting_record,
-DROP TABLE IF EXISTS bills,
-DROP TABLE IF EXISTS reps,
-DROP TABLE IF EXISTS users,
+DROP TABLE IF EXISTS interactions;
+DROP TABLE IF EXISTS member_voting_record;
+DROP TABLE IF EXISTS bills;
+DROP TABLE IF EXISTS reps;
+DROP TABLE IF EXISTS users;
 
 
 CREATE TABLE users(
@@ -34,7 +34,7 @@ CREATE TABLE member_voting_record (
 
 
 CREATE TABLE interactions (
-    id interactions PRIMARY KEY,
+    id serial PRIMARY KEY,
     stante text NOT NULL,
     user_comment text,
     user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
