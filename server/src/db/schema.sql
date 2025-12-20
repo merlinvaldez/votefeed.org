@@ -17,7 +17,7 @@ CREATE TABLE users(
 CREATE TABLE reps (
     bioguideId text PRIMARY KEY,
     full_name text NOT NULL,
-    district integer NOT NULL
+    district integer 
 );
 
 CREATE TABLE bills(
