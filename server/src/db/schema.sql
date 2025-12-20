@@ -11,7 +11,8 @@ CREATE TABLE users(
     email text UNIQUE NOT NULL,
     password text NOT NULL,
     first_name text NOT NULL,
-    last_name integer NOT NULL
+    last_name integer NOT NULL,
+    district integer NOT NULL
 );
 
 CREATE TABLE reps (
