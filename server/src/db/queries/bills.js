@@ -7,8 +7,6 @@ export async function getAllBillSummaries() {
   const resp = await fetch(billsUrl);
   if (!resp.ok) throw new Error(`getAllBills Query failed ${resp.status}`);
   const { summaries = [] } = await resp.json();
-
-  await db.connect();
   const inserted = [];
   for (const summary of summaries) {
     const sql = `INSERT INTO bills
@@ -21,11 +19,11 @@ export async function getAllBillSummaries() {
     } = await db.query(sql, params);
     inserted.push(bill);
   }
-  await db.end();
   console.log(inserted);
   return inserted;
 }
 
-getAllBillSummaries();
-
-// TODO : delete the db connect, db end and the function calls after done testing
+// Test
+// await db.connect();
+// getAllBillSummaries();
+// await db.end();

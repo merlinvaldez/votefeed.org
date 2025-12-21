@@ -10,11 +10,11 @@ router.get("/", async (req, res) => {
   if (!apiKey) {
     return res.status(500).json({ error: "Missing Congress API Key" });
   }
-
   try {
     const baseUrl = new URL("https://api.congress.gov/v3/summaries/119/hr");
     baseUrl.searchParams.set("limit", "250");
     baseUrl.searchParams.set("api_key", apiKey);
+    console.log(baseUrl.toString());
     let summaries = [];
     let nextUrl = baseUrl.toString();
     while (nextUrl) {

@@ -11,7 +11,7 @@ CREATE TABLE users(
     email text UNIQUE NOT NULL,
     password text NOT NULL,
     first_name text NOT NULL,
-    last_name integer NOT NULL,
+    last_name text NOT NULL,
     district integer NOT NULL
 );
 
@@ -29,7 +29,7 @@ CREATE TABLE bills(
 
 CREATE TABLE member_voting_record (
     id serial PRIMARY KEY,
-    legislationNumber integer NOT NULL,
+    legislationNumber integer,
     vote text NOT NULL,
     member_id text NOT NULL
 );

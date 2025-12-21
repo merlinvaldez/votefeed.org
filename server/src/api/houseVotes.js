@@ -4,6 +4,16 @@ export default router;
 
 const apiKey = process.env.CONGRESS_API_KEY;
 
+const FETCH_TIMEOUT_MS = 500_000;
+
+const fetchWithTimeout = (url, ms = FETCH_TIMEOUT_MS) => {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), ms);
+  return fetch(url, { signal: controller.signal }).finally(() =>
+    clearTimeout(timer)
+  );
+};
+
 router.get("/", async (req, res) => {
   if (!apiKey) {
     return res.status(500).json({ error: "Missing Congress API Key" });
@@ -16,7 +26,7 @@ router.get("/", async (req, res) => {
     let nextUrl = baseUrl.toString();
     while (nextUrl) {
       console.log(nextUrl);
-      const response = await fetch(nextUrl);
+      const response = await fetchWithTimeout(nextUrl);
       if (!response.ok) {
         const text = await response.text();
         return res.status(502).json({
@@ -36,7 +46,7 @@ router.get("/", async (req, res) => {
         nextUrl = null;
       }
     }
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < houseVotes.length; i++) {
       const vote = houseVotes[i];
       const congress = vote?.congress ?? 119;
       const session = vote.sessionNumber;

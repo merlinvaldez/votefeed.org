@@ -1,4 +1,4 @@
-import db from "../client";
+import db from "../client.js";
 
 export async function getDistrictFromAddress(address) {
   const base = `http://localhost:${process.env.PORT || 4000}`;
