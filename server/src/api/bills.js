@@ -1,5 +1,3 @@
-//get an array summaries of all bills in the HR of congress 119
-
 import express from "express";
 const router = express.Router();
 export default router;
@@ -11,11 +9,13 @@ router.get("/", async (req, res) => {
     return res.status(500).json({ error: "Missing Congress API Key" });
   }
   try {
-    const baseUrl = new URL("https://api.congress.gov/v3/bill/119/hr");
+    const fromDateTime = "2025-01-01T00:00:00Z";
+    const baseUrl = new URL("https://api.congress.gov/v3/summaries/119/hr");
     baseUrl.searchParams.set("limit", "250");
+    baseUrl.searchParams.set("fromDateTime", fromDateTime);
     baseUrl.searchParams.set("api_key", apiKey);
     console.log(baseUrl.toString());
-    let bills = [];
+    let summaries = [];
     let nextUrl = baseUrl.toString();
     while (nextUrl) {
       console.log(nextUrl);
@@ -29,7 +29,7 @@ router.get("/", async (req, res) => {
         });
       }
       const data = await response.json();
-      bills = bills.concat(data?.bills || []);
+      summaries = summaries.concat(data?.summaries || []);
       const paginationNext = data?.pagination?.next ?? null;
       if (paginationNext) {
         const next = new URL(paginationNext);
@@ -39,7 +39,7 @@ router.get("/", async (req, res) => {
         nextUrl = null;
       }
     }
-    return res.json({ count: bills.length, bills });
+    return res.json({ count: summaries.length, summaries });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch bill summaries" });

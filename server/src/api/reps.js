@@ -47,10 +47,11 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/district/:districtId", async (req, res) => {
+router.get("/district/:state/:districtId", async (req, res) => {
+  const state = req.params.state;
   const district = Number(req.params.districtId);
   try {
-    const rep = await findRepByDistrict(district);
+    const rep = await findRepByDistrict(state, district);
     if (!rep)
       return res.status(404).json({ error: "No repfound for that district" });
     res.json(rep);

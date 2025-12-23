@@ -10,11 +10,18 @@ export async function getAllReps() {
   const inserted = [];
   for (const rep of members) {
     const sql = `INSERT INTO reps
-    (bioguideId, full_name, district)
+    (bioguideId, full_name, party, chamber, state, congressionalDistrict)
     VALUES
-    ($1, $2, $3)
+    ($1, $2, $3, $4, $5, $6)
     RETURNING *`;
-    const params = [rep.bioguideId, rep.name, rep.district];
+    const params = [
+      rep.bioguideId,
+      rep.name,
+      rep.partyName,
+      rep.terms.item[0].chamber,
+      rep.state,
+      rep.district,
+    ];
     const {
       rows: [representative],
     } = await db.query(sql, params);
@@ -23,12 +30,13 @@ export async function getAllReps() {
   return inserted;
 }
 
-export async function findRepByDistrict(district) {
+export async function findRepByDistrict(state, congressionalDistrict) {
   const sql = ` SELECT * FROM reps 
-  WHERE district=$1 `;
+  WHERE state=$1 AND congressionalDistrict=$2 
+`;
 
   const {
     rows: [rep],
-  } = await db.query(sql, [district]);
+  } = await db.query(sql, [state, congressionalDistrict]);
   return rep;
 }

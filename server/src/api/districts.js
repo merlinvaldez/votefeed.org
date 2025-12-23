@@ -29,6 +29,7 @@ router.get("/", async (req, res) => {
     const data = await response.json();
 
     const match = data?.result?.addressMatches?.[0];
+    const state = match?.geographies?.["States"]?.[0]?.BASENAME;
     const district =
       match?.geographies?.["119th Congressional Districts"]?.[0]?.BASENAME;
 
@@ -39,6 +40,7 @@ router.get("/", async (req, res) => {
     console.log(`You're in district ${district}`);
     res.json({
       address: match.matchedAddress,
+      state: state,
       congressionalDistrict: district,
     });
   } catch (err) {

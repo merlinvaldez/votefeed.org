@@ -19,7 +19,6 @@ export async function getAllBillSummaries() {
     } = await db.query(sql, params);
     inserted.push(bill);
   }
-  console.log(inserted);
   return inserted;
 }
 

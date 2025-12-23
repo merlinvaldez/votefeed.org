@@ -18,11 +18,15 @@ CREATE TABLE users(
 CREATE TABLE reps (
     bioguideId text PRIMARY KEY,
     full_name text NOT NULL,
-    district integer 
+    party text NOT NULL,
+    chamber text NOT NULL,
+    state text NOT NULL,
+    congressionalDistrict integer 
 );
 
 CREATE TABLE bills(
-    number integer PRIMARY KEY,
+    id serial PRIMARY KEY,
+    number integer NOT NULL,
     title text NOT NULL,
     summary text NOT NULL
 );
