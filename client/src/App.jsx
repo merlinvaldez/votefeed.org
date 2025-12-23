@@ -29,7 +29,7 @@ function LandingPage() {
         );
       }
       const districtData = await districtResp.json();
-      const district = districtData.congressionalDistrict;
+      // const district = districtData.congressionalDistrict;
 
       //TODO build getRepbydistrict route
     } catch (err) {

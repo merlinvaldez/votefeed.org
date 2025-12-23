@@ -11,11 +11,11 @@ router.get("/", async (req, res) => {
     return res.status(500).json({ error: "Missing Congress API Key" });
   }
   try {
-    const baseUrl = new URL("https://api.congress.gov/v3/summaries/119/hr");
+    const baseUrl = new URL("https://api.congress.gov/v3/bill/119/hr");
     baseUrl.searchParams.set("limit", "250");
     baseUrl.searchParams.set("api_key", apiKey);
     console.log(baseUrl.toString());
-    let summaries = [];
+    let bills = [];
     let nextUrl = baseUrl.toString();
     while (nextUrl) {
       console.log(nextUrl);
@@ -29,7 +29,7 @@ router.get("/", async (req, res) => {
         });
       }
       const data = await response.json();
-      summaries = summaries.concat(data?.summaries || []);
+      bills = bills.concat(data?.bills || []);
       const paginationNext = data?.pagination?.next ?? null;
       if (paginationNext) {
         const next = new URL(paginationNext);
@@ -39,7 +39,7 @@ router.get("/", async (req, res) => {
         nextUrl = null;
       }
     }
-    return res.json({ count: summaries.length, summaries });
+    return res.json({ count: bills.length, bills });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch bill summaries" });

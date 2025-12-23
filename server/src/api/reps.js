@@ -2,6 +2,8 @@ import express from "express";
 const router = express.Router();
 export default router;
 
+import { findRepByDistrict } from "../db/queries/reps.js";
+
 const apiKey = process.env.CONGRESS_API_KEY;
 
 router.get("/", async (req, res) => {
@@ -42,5 +44,18 @@ router.get("/", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch Members" });
+  }
+});
+
+router.get("/district/:districtId", async (req, res) => {
+  const district = Number(req.params.districtId);
+  try {
+    const rep = await findRepByDistrict(district);
+    if (!rep)
+      return res.status(404).json({ error: "No repfound for that district" });
+    res.json(rep);
+  } catch (err) {
+    console.error("Failed to fectch rep by district", err);
+    res.status(500).json({ error: "Failed to fetch representative" });
   }
 });

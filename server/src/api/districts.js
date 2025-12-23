@@ -36,7 +36,7 @@ router.get("/", async (req, res) => {
       return res.status(404).json({ error: "No district found" });
     }
 
-    console.log(`You're in distrcit ${district}`);
+    console.log(`You're in district ${district}`);
     res.json({
       address: match.matchedAddress,
       congressionalDistrict: district,

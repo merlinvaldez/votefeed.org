@@ -4,16 +4,6 @@ export default router;
 
 const apiKey = process.env.CONGRESS_API_KEY;
 
-const FETCH_TIMEOUT_MS = 500_000;
-
-const fetchWithTimeout = (url, ms = FETCH_TIMEOUT_MS) => {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), ms);
-  return fetch(url, { signal: controller.signal }).finally(() =>
-    clearTimeout(timer)
-  );
-};
-
 router.get("/", async (req, res) => {
   if (!apiKey) {
     return res.status(500).json({ error: "Missing Congress API Key" });
@@ -26,7 +16,7 @@ router.get("/", async (req, res) => {
     let nextUrl = baseUrl.toString();
     while (nextUrl) {
       console.log(nextUrl);
-      const response = await fetchWithTimeout(nextUrl);
+      const response = await fetch(nextUrl);
       if (!response.ok) {
         const text = await response.text();
         return res.status(502).json({
@@ -46,47 +36,52 @@ router.get("/", async (req, res) => {
         nextUrl = null;
       }
     }
-    for (let i = 0; i < houseVotes.length; i++) {
-      const vote = houseVotes[i];
-      const congress = vote?.congress ?? 119;
-      const session = vote.sessionNumber;
-      const voteNumber = vote.rollCallNumber;
 
-      const membersBaseUrl = new URL(
-        `https://api.congress.gov/v3/house-vote/${congress}/${session}/${voteNumber}/members`
-      );
-      membersBaseUrl.searchParams.set("limit", "250");
-      membersBaseUrl.searchParams.set("api_key", apiKey);
-      let membersNext = membersBaseUrl.toString();
-      let results = [];
-      let failed = false;
-      while (membersNext) {
-        console.log(membersNext);
-        const resp = await fetch(membersNext);
-        if (!resp.ok) {
-          const text = await resp.text();
-          vote.votingRecord = null;
-          vote.votingRecordError = `Congres API Error ${resp.status}: ${text}`;
-          failed = true;
-          break;
-        }
-        const data = await resp.json();
-        const pageObj = data?.houseRollCallVoteMemberVotes || {};
-        results = results.concat(pageObj.results || []);
-        const paginationNext = data?.pagination?.next ?? null;
-        if (paginationNext) {
-          const next = new URL(paginationNext);
-          next.searchParams.set("api_key", apiKey);
-          membersNext = next.toString();
-        } else {
-          membersNext = null;
-        }
-      }
-      if (!failed) vote.votingRecord = results;
-    }
     return res.json({ count: houseVotes.length, houseVotes });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch house votes" });
+  }
+});
+
+router.get("/:session/:voteNumber", async (req, res) => {
+  if (!apiKey)
+    return res.status(500).json({ error: "Missing Congress API Key" });
+  const { session, voteNumber } = req.params;
+  try {
+    const baseUrl = new URL(
+      `https://api.congress.gov/v3/house-vote/119/${session}/${voteNumber}/members`
+    );
+    baseUrl.searchParams.set("limit", "250");
+    baseUrl.searchParams.set("api_key", apiKey);
+    let members = [];
+    let nextUrl = baseUrl.toString();
+    while (nextUrl) {
+      const resp = await fetch(nextUrl);
+      if (!resp.ok) {
+        const text = await resp.text();
+        return res.status(502).json({
+          error: "Congress API Error",
+          status: resp.status,
+          details: text,
+        });
+      }
+      const data = await resp.json();
+      const pageObj = data?.houseRollCallVoteMemberVotes || {};
+      members = members.concat(pageObj.results || []);
+      const paginationNext = data?.pagination?.next ?? null;
+      if (paginationNext) {
+        const next = new URL(paginationNext);
+        next.searchParams.set("api_key", apiKey);
+        nextUrl = next.toString();
+      } else {
+        nextUrl = null;
+      }
+    }
+
+    res.json({ count: members.length, members });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch member votes" });
   }
 });

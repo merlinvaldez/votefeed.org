@@ -13,13 +13,3 @@ export async function getDistrictFromAddress(address) {
   );
   return congressionalDistrict;
 }
-
-export async function findRepByDistrict(district) {
-  const sql = ` SELECT * FROM reps 
-  WHERE district=$1 `;
-
-  const {
-    rows: [rep],
-  } = await db.query(sql, [district]);
-  return rep;
-}

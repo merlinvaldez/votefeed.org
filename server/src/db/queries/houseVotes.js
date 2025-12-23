@@ -2,13 +2,25 @@ import db from "../client.js";
 
 export async function getHouseVotes() {
   const base = `http://localhost:${process.env.PORT || 4000}`;
-  const houseVotesUrl = new URL("housevotes", base);
-  const resp = await fetch(houseVotesUrl);
-  if (!resp.ok) throw new Error(`getHouseVotes Query failed ${resp.status}`);
-  const { houseVotes = [] } = await resp.json();
+  const listUrl = new URL("housevotes", base);
+  const listResp = await fetch(listUrl);
+  if (!listResp.ok)
+    throw new Error(`getHouseVotes Query failed ${listResp.status}`);
+  const { houseVotes = [] } = await listResp.json();
   const inserted = [];
   for (const vote of houseVotes) {
-    for (const record of vote.votingRecord || []) {
+    const membersUrl = new URL(
+      `housevotes/${vote.sessionNumber}/${vote.rollCallNumber}`,
+      base
+    );
+    const membersResp = await fetch(membersUrl);
+    if (!membersResp.ok) {
+      throw new Error(
+        `getHouseVotes members failed ${membersResp.status} for ${membersUrl}`
+      );
+    }
+    const { members = [] } = await membersResp.json();
+    for (const record of members) {
       const sql = `INSERT INTO member_voting_record
     (legislationNumber, vote, member_id)
     VALUES
