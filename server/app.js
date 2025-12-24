@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 const app = express();
 export default app;
 
@@ -7,6 +8,7 @@ import repsRouter from "./src/api/reps.js";
 import billsRouter from "./src/api/bills.js";
 import houseVotesRouter from "./src/api/houseVotes.js";
 
+app.use(cors());
 app.use(express.json());
 
 app.use("/districts", districtsRouter);
