@@ -29,13 +29,19 @@
 }
 
 .logo-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   width: 36px;
   height: 36px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.16);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  filter: brightness(0) invert(1);
+}
+.logo-mark img,
+.logo-mark {
+  object-fit: contain;
 }
 
 .hero-copy p {
