@@ -39,3 +39,16 @@ export async function getHouseVotes() {
   }
   return inserted;
 }
+
+export async function findMemberVotes(bioguideId) {
+  const sql = `SELECT 
+  member_voting_record.legislationNumber,
+  bills.title,
+  bills.summary,
+  member_voting_record.vote
+  FROM member_voting_record
+  JOIN bills on bills.number = member_voting_record.legislationNumber
+  WHERE member_voting_record.member_id =$1`;
+  const { rows: memberVotes } = await db.query(sql, [bioguideId]);
+  return memberVotes;
+}

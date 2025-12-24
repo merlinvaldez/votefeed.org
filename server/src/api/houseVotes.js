@@ -2,6 +2,8 @@ import express from "express";
 const router = express.Router();
 export default router;
 
+import { findMemberVotes } from "../db/queries/houseVotes.js";
+
 const apiKey = process.env.CONGRESS_API_KEY;
 
 router.get("/", async (req, res) => {
@@ -41,6 +43,16 @@ router.get("/", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch house votes" });
+  }
+});
+
+router.get("/member/:bioguideId", async (req, res) => {
+  try {
+    const votes = await findMemberVotes(req.params.bioguideId);
+    res.json({ count: votes.length, votes });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch member votes" });
   }
 });
 
