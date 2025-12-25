@@ -8,8 +8,8 @@
 
 .feed-sidebar {
   width: 240px;
-  background: #1d4ed8;
-  color: #e5e7eb;
+  background: #f7f9fb; /* was #1d4ed8 */
+  color: #0f172a; /* darker text for contrast */
   padding: 20px 18px;
   display: flex;
   flex-direction: column;
@@ -28,7 +28,7 @@
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.12);
+  background: #1d4ed8;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -43,6 +43,7 @@
 }
 .brand-name {
   letter-spacing: 0.2px;
+  color: #1d4ed8;
 }
 
 .nav {
@@ -58,16 +59,17 @@
   padding: 12px 14px;
   border-radius: 12px;
   background: transparent;
-  color: #e5e7eb;
+  color: #0f172a;
   font-weight: 600;
 }
 
 .nav-item.active {
-  background: rgba(255, 255, 255, 0.08);
+  background: #e5e7eb;
 }
 
 .nav-icon {
   font-size: 16px;
+  color: #0f172a;
 }
 
 .feed-main {
@@ -136,6 +138,15 @@
   margin-top: 6px;
   color: #4b5563;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px; /* space between pin and text */
+}
+
+.meta-icon {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
 }
 
 .feed-section {
@@ -233,12 +244,18 @@
   cursor: pointer;
   font-weight: 700;
   color: #374151;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .comments {
   margin-left: auto;
   color: #6b7280;
   font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 @media (max-width: 900px) {
