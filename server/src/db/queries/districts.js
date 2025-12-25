@@ -1,5 +1,3 @@
-import db from "../client.js";
-
 export async function getDistrictFromAddress(address) {
   const base = `http://localhost:${process.env.PORT || 4000}`;
   const districtUrl = new URL("districts", base);

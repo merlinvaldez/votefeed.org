@@ -21,8 +21,3 @@ export async function getAllBillSummaries() {
   }
   return inserted;
 }
-
-// Test
-// await db.connect();
-// getAllBillSummaries();
-// await db.end();
