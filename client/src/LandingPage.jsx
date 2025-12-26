@@ -104,7 +104,7 @@ function LandingPage() {
       }
       const repData = await repResp.json();
       setStatus("loading-votes");
-      const repId = repData.bioguideId;
+      const repId = repData.bioguideid;
       const votesResp = await fetch(`${API_BASE}/housevotes/member/${repId}`);
       if (!votesResp.ok) {
         const msg = await votesResp.text();
@@ -115,6 +115,7 @@ function LandingPage() {
       const { votes = [] } = await votesResp.json();
       setResult({ district: districtData, rep: repData, votes });
       setStatus("success");
+      console.log(result);
     } catch (err) {
       setError(err.message || `Something went wrong`);
       setStatus(`error`);
@@ -210,13 +211,6 @@ function LandingPage() {
             </button>
 
             {error && <div className="error">{error}</div>}
-            {status === "loading-votes" && !error && (
-              <div className="result">
-                <div className="card">
-                  <p>Loading voting record...</p>
-                </div>
-              </div>
-            )}
           </form>
           <div className="login-row">
             <span>Already have an account?</span>
