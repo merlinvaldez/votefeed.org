@@ -8,8 +8,8 @@
 
 .feed-sidebar {
   width: 240px;
-  background: #f7f9fb; /* was #1d4ed8 */
-  color: #0f172a; /* darker text for contrast */
+  background: #f7f9fb;
+  color: #0f172a;
   padding: 20px 18px;
   display: flex;
   flex-direction: column;
