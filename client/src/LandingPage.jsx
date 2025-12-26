@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { API_BASE } from "./constants.js";
 
-import "./App.css";
+import "./LandingPage.css";
 
 const STATES = [
   { code: "AL", name: "Alabama" },
@@ -103,13 +103,29 @@ function LandingPage() {
         throw new Error(msg || `Rep lookup failed (${repResp.status})`);
       }
       const repData = await repResp.json();
-      setResult({ district: districtData, rep: repData });
+      setStatus("loading-votes");
+      const repId = repData.bioguideId;
+      const votesResp = await fetch(`${API_BASE}/housevotes/member/${repId}`);
+      if (!votesResp.ok) {
+        const msg = await votesResp.text();
+        throw new Error(
+          msg || `Voting record lookup failed (${votesResp.status})`
+        );
+      }
+      const { votes = [] } = await votesResp.json();
+      setResult({ district: districtData, rep: repData, votes });
       setStatus("success");
     } catch (err) {
       setError(err.message || `Something went wrong`);
       setStatus(`error`);
     }
   };
+  const buttonLabel =
+    status === "loading"
+      ? "Looking up district..."
+      : status === "loading-votes"
+      ? "Loading voting record"
+      : "Check my Rep";
   return (
     <div className="page">
       <section className="hero">
@@ -186,43 +202,18 @@ function LandingPage() {
               inputMode="numeric"
               required
             />
-            <button type="submit" disabled={status === "loading"}>
-              {status === "loading" ? "looking up.." : "Check my Rep"}
+            <button
+              type="submit"
+              disabled={status === "loading" || status === "loading-votes"}
+            >
+              {buttonLabel}
             </button>
 
             {error && <div className="error">{error}</div>}
-            {result && (
+            {status === "loading-votes" && !error && (
               <div className="result">
                 <div className="card">
-                  <h3>District</h3>
-                  <p>
-                    <strong>State:</strong> {result.district?.state}
-                  </p>
-                  <p>
-                    <strong>District #:</strong>{" "}
-                    {result.district?.congressionalDistrict}
-                  </p>
-                  <p>
-                    <strong>Matched Address:</strong> {result.district?.address}
-                  </p>
-                </div>
-
-                <div className="card">
-                  <h3>Representative</h3>
-                  <p>
-                    <strong>Name:</strong> {result.rep?.full_name}
-                  </p>
-                  <p>
-                    <strong>Party:</strong> {result.rep?.party}
-                  </p>
-                  <p>
-                    <strong>District:</strong>{" "}
-                    {result.rep?.congressionaldistrict ??
-                      result.rep?.congressionalDistrict}
-                  </p>
-                  <p>
-                    <strong>State:</strong> {result.rep?.state}
-                  </p>
+                  <p>Loading voting record...</p>
                 </div>
               </div>
             )}
