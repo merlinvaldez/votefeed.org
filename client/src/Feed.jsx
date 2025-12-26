@@ -1,3 +1,4 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Feed.css";
 import {
   Home,
@@ -10,6 +11,8 @@ import {
 } from "lucide-react";
 
 function Feed() {
+  const { state } = useLocation();
+  const navigate = useNavigate();
   return (
     <div className="feed-layout">
       <aside className="feed-sidebar">

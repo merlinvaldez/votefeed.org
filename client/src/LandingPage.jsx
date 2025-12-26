@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { API_BASE } from "./constants.js";
 
@@ -59,13 +60,13 @@ const STATES = [
 ];
 
 function LandingPage() {
+  const navigate = useNavigate();
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
   const [stateCode, setStateCode] = useState("");
   const [zip, setZip] = useState("");
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
-  const [result, setResult] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -81,7 +82,6 @@ function LandingPage() {
 
     setStatus(`loading`);
     setError("");
-    setResult(null);
 
     try {
       const districtResp = await fetch(
@@ -113,9 +113,11 @@ function LandingPage() {
         );
       }
       const { votes = [] } = await votesResp.json();
-      setResult({ district: districtData, rep: repData, votes });
+      navigate("/feed", {
+        state: { district: districtData, rep: repData, votes },
+      });
       setStatus("success");
-      console.log(result);
+      console.log(status);
     } catch (err) {
       setError(err.message || `Something went wrong`);
       setStatus(`error`);

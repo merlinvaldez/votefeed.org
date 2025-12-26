@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import RequireFeedData from "./RequireFeedData";
 import LandingPage from "./LandingPage";
 import Feed from "./Feed";
 
@@ -7,7 +8,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/feed" element={<Feed></Feed>} />
+        <Route
+          path="/feed"
+          element={
+            <RequireFeedData>
+              <Feed></Feed>
+            </RequireFeedData>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
