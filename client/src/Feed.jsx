@@ -83,7 +83,7 @@ function Feed() {
               <div className="leg-vote">
                 {(() => {
                   let voteClass = "neutral";
-                  if (vote.vote === "Yea") {
+                  if (vote.vote === "Yea" || vote.vote === "Aye") {
                     voteClass = "success";
                   } else if (vote.vote === "Nay" || vote.vote === "No") {
                     voteClass = "danger";
