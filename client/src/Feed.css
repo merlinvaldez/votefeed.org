@@ -135,18 +135,32 @@
 }
 
 .member-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   margin-top: 6px;
   color: #4b5563;
   font-weight: 600;
   display: inline-flex;
+  align-items: left;
+}
+
+.meta-line {
+  display: inline-flex;
   align-items: center;
-  gap: 6px; /* space between pin and text */
+  gap: 10px;
+  line-height: 1.2;
 }
 
 .meta-icon {
-  display: inline-flex;
   width: 16px;
   height: 16px;
+  display: inline-flex;
+  align-items: center; /* vertically center the glyph inside its box */
+  justify-content: center;
+  flex-shrink: 0;
+  color: #1d4ed8; /* or match your text color */
+  margin-top: 1px; /* slight nudge down if it still feels high */
 }
 
 .feed-section {
@@ -195,6 +209,14 @@
   line-height: 1.5;
 }
 
+.leg-body p {
+  margin: 0 0 8px;
+  line-height: 1.5;
+}
+.leg-body strong {
+  font-weight: 800;
+}
+
 .leg-vote {
   display: flex;
   gap: 10px;
@@ -214,6 +236,17 @@
 .primary {
   background: #eef2ff;
   color: #3730a3;
+}
+
+.pill.danger {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecdd3;
+}
+.pill.neutral {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
 }
 
 .success {
