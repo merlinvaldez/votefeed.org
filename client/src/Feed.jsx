@@ -71,7 +71,9 @@ function Feed() {
           {votes.map((vote) => (
             <div key={vote.legislationnumber} className="leg-card">
               <div className="leg-top">
-                <span>HR {vote.legislationnumber}</span>
+                <span className="pill primary">
+                  HR {vote.legislationnumber}
+                </span>
               </div>
               {/* <div className="leg-title">{vote.title}</div> */}
               <div
