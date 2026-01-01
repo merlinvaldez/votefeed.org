@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
 export default router;
+import { getBillSummary } from "../db/queries/bills.js";
 
 const apiKey = process.env.CONGRESS_API_KEY;
 
@@ -43,5 +44,21 @@ router.get("/", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch bill summaries" });
+  }
+});
+
+router.get("/:billNumber", async (req, res) => {
+  try {
+    const billNumber = Number(req.params.billNumber);
+    if (!Number.isInteger(billNumber)) {
+      return res.status(400).json({ error: "Invalid bill number" });
+    }
+    const bill = await getBillSummary(billNumber);
+    if (!bill || bill.length === 0)
+      return res.status(404).json({ error: "Bill not found" });
+    res.json(bill[0] || bill);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch bill" });
   }
 });

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RequireFeedData from "./RequireFeedData";
 import LandingPage from "./LandingPage";
 import Feed from "./Feed";
+import BillPage from "./BillPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             </RequireFeedData>
           }
         />
+        <Route path="/bill/:billNumber" element={<BillPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -5,7 +5,8 @@ export async function getAllBillSummaries() {
   const billsUrl = new URL("bills", base);
 
   const resp = await fetch(billsUrl);
-  if (!resp.ok) throw new Error(`getAllBills Query failed ${resp.status}`);
+  if (!resp.ok)
+    throw new Error(`getAllBillsSummaries query failed ${resp.status}`);
   const { summaries = [] } = await resp.json();
   const inserted = [];
   for (const summary of summaries) {
@@ -20,4 +21,11 @@ export async function getAllBillSummaries() {
     inserted.push(bill);
   }
   return inserted;
+}
+
+export async function getBillSummary(legislationNumber) {
+  const sql = `SELECT * FROM bills
+  WHERE number=$1`;
+  const { rows } = await db.query(sql, [legislationNumber]);
+  return rows;
 }

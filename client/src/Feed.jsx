@@ -17,6 +17,10 @@ function Feed() {
 
   const { rep, votes } = state;
 
+  const goToBill = (vote) => {
+    const billNumber = vote.legislationnumber;
+    navigate(`/bill/${billNumber}`, { state: { rep, bill: vote } });
+  };
   return (
     <div className="feed-layout">
       <aside className="feed-sidebar">
@@ -71,7 +75,11 @@ function Feed() {
           {votes.map((vote) => (
             <div key={vote.legislationnumber} className="leg-card">
               <div className="leg-top">
-                <span className="pill primary">
+                <span
+                  className="pill primary"
+                  onClick={() => goToBill(vote)}
+                  style={{ cursor: "pointer" }}
+                >
                   HR {vote.legislationnumber}
                 </span>
               </div>
@@ -105,7 +113,11 @@ function Feed() {
                   <ThumbsDown size={16} />
                   Disapprove
                 </button>
-                <div className="comments">
+                <div
+                  className="comments"
+                  onClick={() => goToBill(vote)}
+                  style={{ cursor: "pointer" }}
+                >
                   <MessageCircle size={16} />0 Comments
                 </div>
               </div>
