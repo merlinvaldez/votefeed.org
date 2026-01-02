@@ -7,14 +7,18 @@ import districtsRouter from "./src/api/districts.js";
 import repsRouter from "./src/api/reps.js";
 import billsRouter from "./src/api/bills.js";
 import houseVotesRouter from "./src/api/houseVotes.js";
+import usersRouter from "./src/api/users.js";
+import getUserFromToken from "./src/middleware/getUserFromToken.js";
 
 app.use(cors());
 app.use(express.json());
+app.use(getUserFromToken);
 
 app.use("/districts", districtsRouter);
 app.use("/reps", repsRouter);
 app.use("/bills", billsRouter);
 app.use("/housevotes", houseVotesRouter);
+app.use("/users", usersRouter);
 
 app.use((err, req, res, next) => {
   switch (err.code) {
