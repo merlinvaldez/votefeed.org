@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import "./Feed.css";
 import {
   Home,
@@ -11,9 +11,10 @@ import {
   IdCard,
 } from "lucide-react";
 
-function Feed() {
-  const { state } = useLocation();
+function Feed(props) {
+  const location = useLocation();
   const navigate = useNavigate();
+  const state = location.state || props.state;
 
   const { rep, votes } = state;
 
@@ -51,7 +52,9 @@ function Feed() {
               <div className="guest-sub">Your interactions won’t be saved.</div>
             </div>
           </div>
-          <button className="guest-cta">Log In / Sign Up</button>
+          <button className="guest-cta" onClick={() => navigate("/login")}>
+            Log In / Sign Up
+          </button>
         </div>
 
         <section className="member-card">

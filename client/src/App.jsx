@@ -3,12 +3,14 @@ import RequireFeedData from "./RequireFeedData";
 import LandingPage from "./LandingPage";
 import Feed from "./Feed";
 import BillPage from "./BillPage";
+import Login from "./Login";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login></Login>} />
         <Route
           path="/feed"
           element={

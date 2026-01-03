@@ -5,9 +5,6 @@ export async function getDistrictFromAddress(address) {
 
   const resp = await fetch(districtUrl);
   if (!resp.ok) throw new Error(`District lookup Query failed ${resp.status}`);
-  const { congressionalDistrict } = await resp.json();
-  console.log(
-    `Congretional District Search for ${address} returns district # ${congressionalDistrict}`
-  );
-  return congressionalDistrict;
+  const { state, congressionalDistrict } = await resp.json();
+  return { state, district: congressionalDistrict };
 }

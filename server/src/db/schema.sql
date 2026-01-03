@@ -12,6 +12,7 @@ CREATE TABLE users(
     password text NOT NULL,
     first_name text NOT NULL,
     last_name text NOT NULL,
+    state text NOT NULL,
     district integer NOT NULL
 );
 

@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, Link } from "react-router-dom";
 import { API_BASE } from "./constants.js";
-
 import "./LandingPage.css";
 
 const STATES = [
@@ -216,7 +214,7 @@ function LandingPage() {
           </form>
           <div className="login-row">
             <span>Already have an account?</span>
-            <a href="#">Log in</a>
+            <Link to="/login">Log in</Link>
           </div>
           <div className="powered-by">Powered by U.S. Census Geocoder API</div>
         </div>

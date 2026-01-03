@@ -10,9 +10,9 @@ export async function createUser(
   last_name,
   address
 ) {
-  const congressionalDistrict = await getDistrictFromAddress(address);
-  const sql = `INSERT INTO users (email, password, first_name, last_name, district)
-VALUES ($1,$2,$3,$4,$5)
+  const { district, state } = await getDistrictFromAddress(address);
+  const sql = `INSERT INTO users (email, password, first_name, last_name, district, state)
+VALUES ($1,$2,$3,$4,$5,$6)
 RETURNING *;`;
   const hashedPassword = await bcrypt.hash(password, 10);
   const {
@@ -22,7 +22,8 @@ RETURNING *;`;
     hashedPassword,
     first_name,
     last_name,
-    congressionalDistrict,
+    district,
+    state,
   ]);
   return user;
 }
@@ -36,6 +37,7 @@ export async function getUserByEmailAndPassword(email, password) {
   if (!user) return null;
   const isValid = await bcrypt.compare(password, user.password);
   if (!isValid) return null;
+
   return user;
 }
 

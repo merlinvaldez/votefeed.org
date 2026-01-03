@@ -1,4 +1,6 @@
 import express from "express";
+import { findRepByDistrict } from "../db/queries/reps.js";
+import { findMemberVotes } from "../db/queries/houseVotes.js";
 
 const router = express.Router();
 
@@ -29,7 +31,7 @@ router.post(
 router.post("/login", requireBody(["email", "password"]), async (req, res) => {
   const { email, password } = req.body;
   const user = await getUserByEmailAndPassword(email, password);
-  if (!user) return res.status(401).send("Invalid username or password.");
+  if (!user) return res.status(401).send("Invalid email or password.");
   const token = createToken({ id: user.id });
   res.send(token);
 });
@@ -47,7 +49,7 @@ router.get("/me/feed", requireUser, async (req, res) => {
     }
     const rep = await findRepByDistrict(state, district);
     if (!rep) return res.status(404).json({ error: "No rep for district" });
-    const { votes = [] } = await findMemberVotes(rep.bioguideid);
+    const votes = await findMemberVotes(rep.bioguideid);
     res.json({ rep, votes });
   } catch (err) {
     console.error(err);
