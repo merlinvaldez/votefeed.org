@@ -1,4 +1,5 @@
 import { useLocation, useNavigate, Link } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 import "./Feed.css";
 import {
   Home,
@@ -12,10 +13,15 @@ import {
 } from "lucide-react";
 
 function Feed(props) {
+  const { token } = useAuth();
+  const isAuthed = Boolean(token);
   const location = useLocation();
   const navigate = useNavigate();
   const state = location.state || props.state;
 
+  if (!state.rep || !state.votes) {
+    return <div>Missing feed data</div>;
+  }
   const { rep, votes } = state;
 
   const goToBill = (vote) => {
@@ -44,18 +50,22 @@ function Feed(props) {
       </aside>
 
       <main className="feed-main">
-        <div className="guest-bar">
-          <div className="guest-left">
-            <Info className="guest-icon" strokeWidth={1.75}></Info>
-            <div>
-              <div className="guest-title">Viewing as Guest</div>
-              <div className="guest-sub">Your interactions won’t be saved.</div>
+        {!isAuthed && (
+          <div className="guest-bar">
+            <div className="guest-left">
+              <Info className="guest-icon" strokeWidth={1.75}></Info>
+              <div>
+                <div className="guest-title">Viewing as Guest</div>
+                <div className="guest-sub">
+                  Your interactions won’t be saved.
+                </div>
+              </div>
             </div>
+            <button className="guest-cta" onClick={() => navigate("/login")}>
+              Log In / Sign Up
+            </button>
           </div>
-          <button className="guest-cta" onClick={() => navigate("/login")}>
-            Log In / Sign Up
-          </button>
-        </div>
+        )}
 
         <section className="member-card">
           <div className="member-name">{rep.full_name}</div>

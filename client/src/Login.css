@@ -134,6 +134,21 @@ body {
   cursor: not-allowed;
 }
 
+.login-form select {
+  border: 1px solid var(--vf-border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 15px;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  background: #fff;
+}
+
+.login-form select:focus {
+  border-color: var(--vf-blue);
+  box-shadow: 0 0 0 3px rgba(29, 93, 252, 0.12);
+}
+
 .login-error,
 .login-form .error {
   color: #c0392b;

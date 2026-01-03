@@ -4,6 +4,7 @@ import LandingPage from "./LandingPage";
 import Feed from "./Feed";
 import BillPage from "./BillPage";
 import Login from "./Login";
+import Signup from "./Signup";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login></Login>} />
+        <Route path="/Signup" element={<Signup></Signup>} />
         <Route
           path="/feed"
           element={

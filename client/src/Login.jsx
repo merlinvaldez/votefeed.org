@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { API_BASE } from "./constants";
 import { useAuth } from "./AuthContext";
 import "./LandingPage.css";
@@ -34,7 +34,7 @@ export default function Login() {
       if (!feedResp.ok) throw new Error("Failed to load feed");
       const feed = await feedResp.json();
 
-      navigate("/feed", { state: feed });
+      navigate("/feed", { state: { ...feed, authed: true } });
       setStatus("success");
     } catch (err) {
       setError(err.message || "Login failed");
@@ -95,7 +95,7 @@ export default function Login() {
           </form>
 
           <div className="login-footer">
-            New here? <a href="#">Create an account</a>
+            New here? <Link to="/Signup">Create an account</Link>
           </div>
         </div>
       </section>
