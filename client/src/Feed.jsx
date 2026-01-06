@@ -44,7 +44,7 @@ function Feed(props) {
           </div>
           <div className="nav-item">
             <User className="nav-icon" strokeWidth={1.75}></User>
-            <span>Profile</span>
+            <span onClick={() => navigate("/profile")}>Profile</span>
           </div>
         </nav>
       </aside>

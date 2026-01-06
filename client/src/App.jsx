@@ -5,6 +5,7 @@ import Feed from "./Feed";
 import BillPage from "./BillPage";
 import Login from "./Login";
 import Signup from "./Signup";
+import Profile from "./Profile";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           }
         />
         <Route path="/bill/:billNumber" element={<BillPage />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

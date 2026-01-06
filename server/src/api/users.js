@@ -1,12 +1,13 @@
 import express from "express";
+const router = express.Router();
+export default router;
 import { findRepByDistrict } from "../db/queries/reps.js";
 import { findMemberVotes } from "../db/queries/houseVotes.js";
-
-const router = express.Router();
-
-export default router;
-
-import { createUser, getUserByEmailAndPassword } from "../db/queries/users.js";
+import {
+  createUser,
+  getUserByEmailAndPassword,
+  updateUserDistrict,
+} from "../db/queries/users.js";
 import requireBody from "../middleware/requireBody.js";
 import requireUser from "../middleware/requireUser.js";
 import { createToken } from "../utils/jwt.js";
@@ -56,3 +57,16 @@ router.get("/me/feed", requireUser, async (req, res) => {
     res.status(500).json({ error: "Failed to load feed" });
   }
 });
+
+router.put(
+  "/me/updateDistrict",
+  requireUser,
+  requireBody(["address"]),
+  async (req, res) => {
+    const { id, address } = req.body;
+
+    const updated = await updateUserDistrict(req.user.id, req.body.address);
+    if (!updated) return res.status(404).json({ error: "User not found" });
+    res.json(updated);
+  }
+);

@@ -1,0 +1,114 @@
+.profile-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  min-height: 100vh;
+  background: #f7f9fb;
+  color: #0f172a;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+.profile-page-error {
+  color: #b91c1c;
+  padding: 24px;
+}
+
+.profile-header {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.avatar-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #1d4ed8;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.profile-meta .profile-name {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.profile-meta .profile-email {
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.profile-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
+}
+
+.profile-card h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.rep-name {
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.rep-meta {
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.profile-card .profile-primary-btn {
+  margin-top: 10px;
+  background: #1d4ed8;
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.profile-card .profile-ghost-btn {
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  transition: color 0.15s ease, border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.profile-card .profile-ghost-btn:hover {
+  color: #b91c1c;
+  border-color: #fca5a5;
+  background: #fef2f2;
+}
+
+.profile-update-form {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.profile-update-form input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+}

@@ -49,3 +49,15 @@ export async function getUserById(id) {
   } = await db.query(sql, [id]);
   return user;
 }
+
+export async function updateUserDistrict(id, address) {
+  const { district, state } = await getDistrictFromAddress(address);
+  const sql = `UPDATE users 
+  SET state=$1, district=$2
+  WHERE id=$3
+  RETURNING *`;
+  const {
+    rows: [user],
+  } = await db.query(sql, [state, district, id]);
+  return user;
+}
