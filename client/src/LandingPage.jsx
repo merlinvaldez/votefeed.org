@@ -158,11 +158,13 @@ function LandingPage() {
 
             {error && <div className="error">{error}</div>}
           </form>
+          <div className="signup-row">
+            New here? <Link to="/Signup">Create an account</Link>
+          </div>
           <div className="login-row">
             <span>Already have an account?</span>
             <Link to="/login">Log in</Link>
           </div>
-          <div className="powered-by">Powered by U.S. Census Geocoder API</div>
         </div>
       </section>
     </div>
