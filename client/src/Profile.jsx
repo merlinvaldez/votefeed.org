@@ -44,6 +44,11 @@ export default function Profile() {
     loadProfile();
   }, [token, authFetch, navigate]);
 
+  const initials =
+    user?.first_name && user?.last_name
+      ? `${user.first_name[0] || ""}${user.last_name[0] || ""}`.toUpperCase()
+      : "";
+
   async function handleUpdateDistrict(e) {
     e.preventDefault();
     setFormError("");
@@ -56,7 +61,16 @@ export default function Profile() {
       });
       if (!resp.ok) throw new Error((await resp.text()) || "Update failed");
 
-      await loadProfile();
+      const meResp = await authFetch(`${API_BASE}/users/me`);
+      if (!meResp.ok) throw new Error("Failed to refresh profile");
+      const me = await meResp.json();
+      setUser(me);
+
+      const feedResp = await authFetch(`${API_BASE}/users/me/feed`);
+      if (!feedResp.ok) throw new Error("Failed to refresh district data");
+      const feed = await feedResp.json();
+      setRep(feed.rep || null);
+
       setShowForm(false);
       setStreet("");
       setCity("");
@@ -68,11 +82,6 @@ export default function Profile() {
       setSaving(false);
     }
   }
-
-  const initials =
-    user?.first_name && user?.last_name
-      ? `${user.first_name[0] || ""}${user.last_name[0] || ""}`.toUpperCase()
-      : "";
 
   if (loading) return <div className="profile-page">Loading profile...</div>;
   if (error) return <div className="profile-page-error">{error}</div>;
