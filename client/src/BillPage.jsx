@@ -54,7 +54,7 @@ export default function BillPage() {
   }, [bill, billNumber]);
 
   return (
-    <div className="bill-page">
+    <>
       <button className="back-link" onClick={() => navigate(-1)}>
         <ArrowLeft size={18}></ArrowLeft> Back to Feed
       </button>
@@ -115,6 +115,6 @@ export default function BillPage() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

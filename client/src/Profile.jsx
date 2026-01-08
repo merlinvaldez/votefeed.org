@@ -87,7 +87,7 @@ export default function Profile() {
   if (error) return <div className="profile-page-error">{error}</div>;
 
   return (
-    <div className="profile-page">
+    <>
       <header className="profile-header">
         <div className="avatar-circle">{initials}</div>
         <div className="profile-meta">
@@ -175,6 +175,6 @@ export default function Profile() {
           Log out
         </button>
       </section>
-    </div>
+    </>
   );
 }

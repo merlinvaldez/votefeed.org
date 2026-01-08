@@ -30,7 +30,9 @@ export default function Login() {
       const token = await resp.text();
       setToken(token);
 
-      const feedResp = await authFetch(`${API_BASE}/users/me/feed`);
+      const feedResp = await authFetch(`${API_BASE}/users/me/feed`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       if (!feedResp.ok) throw new Error("Failed to load feed");
       const feed = await feedResp.json();
 
