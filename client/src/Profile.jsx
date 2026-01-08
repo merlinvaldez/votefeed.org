@@ -83,7 +83,7 @@ export default function Profile() {
     }
   }
 
-  if (loading) return <div className="profile-page">Loading profile...</div>;
+  if (loading) return <div className="profile-loading">Loading profile...</div>;
   if (error) return <div className="profile-page-error">{error}</div>;
 
   return (

@@ -294,6 +294,37 @@
   gap: 8px;
 }
 
+.feed-loading {
+  max-width: 820px;
+  margin: 24px auto;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.feed-loading::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #cbd5f5;
+  border-top-color: #1d4ed8;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (max-width: 900px) {
   .feed-layout {
     flex-direction: column;

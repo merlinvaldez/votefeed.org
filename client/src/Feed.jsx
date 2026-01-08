@@ -48,7 +48,7 @@ function Feed(props) {
     };
   }, [feedState, token, authFetch]);
 
-  if (loading) return <div>Loading feed...</div>;
+  if (loading) return <div className="feed-loading">Loading feed...</div>;
   if (error) return <div className="error">{error}</div>;
 
   if (!feedState?.rep || !feedState?.votes) {
