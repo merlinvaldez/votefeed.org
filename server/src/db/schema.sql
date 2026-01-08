@@ -42,8 +42,8 @@ CREATE TABLE member_voting_record (
 
 CREATE TABLE interactions (
     id serial PRIMARY KEY,
-    stante text NOT NULL,
+    stance text NOT NULL,
     user_comment text,
     user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    bill_id integer NOT NULL REFERENCES bills(number) ON DELETE CASCADE
+    bill_id integer NOT NULL REFERENCES bills(id) ON DELETE CASCADE
 );
