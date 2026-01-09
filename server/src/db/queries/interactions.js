@@ -54,9 +54,7 @@ export async function deleteComment(interactionId) {
 export async function getAllUserInteractions(userId) {
   const sql = `SELECT * FROM interactions 
     WHERE user_id=$1`;
-  const {
-    rows: [userInteractions],
-  } = await db.query(sql, [userId]);
+  const { rows: userInteractions } = await db.query(sql, [userId]);
   return userInteractions;
 }
 

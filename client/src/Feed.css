@@ -285,6 +285,18 @@
   gap: 8px;
 }
 
+.ghost-btn.active.approve {
+  background: #ecfdf3;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+.ghost-btn.active.disapprove {
+  background: #fef2f2;
+  color: #b91c1c;
+  border-color: #fecdd3;
+}
+
 .comments {
   margin-left: auto;
   color: #6b7280;
