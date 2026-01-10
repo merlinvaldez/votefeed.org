@@ -97,7 +97,7 @@ export default function Login() {
           </form>
 
           <div className="login-footer">
-            New here? <Link to="/Signup">Create an account</Link>
+            New here? <Link to="/signup">Create an account</Link>
           </div>
         </div>
       </section>
