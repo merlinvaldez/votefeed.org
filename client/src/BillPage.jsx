@@ -81,7 +81,8 @@ export default function BillPage() {
         );
         if (!interactionResp.ok)
           throw new Error("Failed to load interaction");
-        const data = await interactionResp.json();
+        const text = await interactionResp.text();
+        const data = text ? JSON.parse(text) : null;
         if (!cancelled) setInteraction(data || null);
       } catch (err) {
         if (!cancelled)
