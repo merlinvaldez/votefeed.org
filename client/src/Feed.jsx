@@ -27,6 +27,12 @@ function Feed(props) {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
+    if (token) return;
+    if (feedState?.rep && feedState?.votes) return;
+    navigate("/", { replace: true });
+  }, [token, feedState, navigate]);
+
+  useEffect(() => {
     if (feedState?.rep && feedState?.votes) return;
     if (!token) return;
 
