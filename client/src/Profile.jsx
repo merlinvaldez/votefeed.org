@@ -18,6 +18,20 @@ export default function Profile() {
   const [zip, setZip] = useState("");
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState("");
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const stored = window.localStorage.getItem("theme");
+    if (stored === "dark") return true;
+    if (stored === "light") return false;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const theme = darkMode ? "dark" : "light";
+    document.documentElement.dataset.theme = theme;
+    window.localStorage.setItem("theme", theme);
+  }, [darkMode]);
 
   useEffect(() => {
     if (!token) {
@@ -162,6 +176,24 @@ export default function Profile() {
             {formError && <div className="profile-page-error">{formError}</div>}
           </form>
         )}
+      </section>
+
+      <section className="profile-card">
+        <h2>Settings</h2>
+        <div className="settings-row">
+          <div>
+            <div className="settings-title">Dark mode</div>
+            <div className="settings-sub">Use a dark theme across the app.</div>
+          </div>
+          <label className="toggle">
+            <input
+              type="checkbox"
+              checked={darkMode}
+              onChange={(e) => setDarkMode(e.target.checked)}
+              aria-label="Toggle dark mode"
+            />
+          </label>
+        </div>
       </section>
 
       <section className="profile-card logout">

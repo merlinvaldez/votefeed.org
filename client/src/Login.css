@@ -1,10 +1,10 @@
 :root {
-  --vf-blue: #1d5dfc;
-  --vf-blue-dark: #0f4ad1;
-  --vf-text: #0e172a;
-  --vf-muted: #5b6475;
-  --vf-bg: #f6f8fb;
-  --vf-border: #dbe2f3;
+  --vf-blue: var(--primary);
+  --vf-blue-dark: var(--primary-strong);
+  --vf-text: var(--text);
+  --vf-muted: var(--text-subtle);
+  --vf-bg: var(--bg);
+  --vf-border: var(--border-strong);
 }
 
 body {
@@ -26,10 +26,10 @@ body {
 }
 
 .login-card {
-  background: #fff;
+  background: var(--surface);
   padding: 32px 24px;
   border-radius: 12px;
-  box-shadow: 0 14px 40px rgba(17, 34, 68, 0.08);
+  box-shadow: var(--shadow-card);
   width: 520px;
   max-width: 100%;
   position: relative;
@@ -42,7 +42,7 @@ body {
   gap: 6px;
   background: transparent;
   border: none;
-  color: #1d4ed8;
+  color: var(--link);
   font-weight: 700;
   cursor: pointer;
   padding: 8px 6px; /* larger touch target */
@@ -52,13 +52,13 @@ body {
 }
 
 .back-link:hover {
-  color: #0f3fbf;
-  background: rgba(13, 110, 253, 0.08);
+  color: var(--primary-strong);
+  background: var(--primary-soft);
 }
 
 .back-link:active {
   transform: translateX(-1px);
-  background: rgba(13, 110, 253, 0.14);
+  background: var(--primary-soft);
 }
 
 .login-card h1 {
@@ -92,12 +92,13 @@ body {
   font-size: 15px;
   outline: none;
   transition: border 0.2s, box-shadow 0.2s;
-  background: #fff;
+  background: var(--surface);
+  color: var(--vf-text);
 }
 
 .login-form input:focus {
   border-color: var(--vf-blue);
-  box-shadow: 0 0 0 3px rgba(29, 93, 252, 0.12);
+  box-shadow: var(--focus-ring-strong);
 }
 
 .login-form .forgot {
@@ -110,7 +111,7 @@ body {
 .login-form button {
   margin-top: 8px;
   background: var(--vf-blue);
-  color: #fff;
+  color: var(--primary-contrast);
   border: none;
   border-radius: 10px;
   padding: 14px;
@@ -141,19 +142,20 @@ body {
   font-size: 15px;
   outline: none;
   transition: border 0.2s, box-shadow 0.2s;
-  background: #fff;
+  background: var(--surface);
+  color: var(--vf-text);
 }
 
 .login-form select:focus {
   border-color: var(--vf-blue);
-  box-shadow: 0 0 0 3px rgba(29, 93, 252, 0.12);
+  box-shadow: var(--focus-ring-strong);
 }
 
 .login-error,
 .login-form .error {
-  color: #c0392b;
-  background: #fdecea;
-  border: 1px solid #f5c2c0;
+  color: var(--danger);
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
   border-radius: 8px;
   padding: 10px 12px;
   font-size: 14px;

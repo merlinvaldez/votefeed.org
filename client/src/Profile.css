@@ -3,13 +3,13 @@
   margin: 0 auto;
   padding: 40px 24px;
   min-height: 100vh;
-  background: #f7f9fb;
-  color: #0f172a;
+  background: var(--bg);
+  color: var(--text);
   font-family: "Inter", system-ui, -apple-system, sans-serif;
 }
 
 .profile-page-error {
-  color: #b91c1c;
+  color: var(--danger);
   padding: 24px;
 }
 
@@ -24,8 +24,8 @@
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: #1d4ed8;
-  color: #fff;
+  background: var(--primary);
+  color: var(--primary-contrast);
   display: grid;
   place-items: center;
   font-weight: 800;
@@ -38,24 +38,24 @@
 }
 
 .profile-meta .profile-email {
-  color: #4b5563;
+  color: var(--text-subtle);
   font-size: 14px;
 }
 
 .profile-card {
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 16px;
   padding: 18px 20px;
   margin-bottom: 16px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-soft);
 }
 
 .profile-card h2 {
   margin: 0 0 8px;
   font-size: 16px;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text);
 }
 
 .rep-name {
@@ -64,14 +64,14 @@
 }
 
 .rep-meta {
-  color: #4b5563;
+  color: var(--text-subtle);
   font-size: 14px;
 }
 
 .profile-card .profile-primary-btn {
   margin-top: 10px;
-  background: #1d4ed8;
-  color: #fff;
+  background: var(--primary);
+  color: var(--primary-contrast);
   border: none;
   padding: 10px 14px;
   border-radius: 10px;
@@ -81,8 +81,8 @@
 
 .profile-card .profile-ghost-btn {
   background: transparent;
-  border: 1px solid #e5e7eb;
-  color: #374151;
+  border: 1px solid var(--border);
+  color: var(--neutral-text);
   padding: 10px 14px;
   border-radius: 10px;
   cursor: pointer;
@@ -94,9 +94,9 @@
 }
 
 .profile-card .profile-ghost-btn:hover {
-  color: #b91c1c;
-  border-color: #fca5a5;
-  background: #fef2f2;
+  color: var(--danger);
+  border-color: var(--danger-border);
+  background: var(--danger-bg);
 }
 
 .profile-update-form {
@@ -108,9 +108,73 @@
 .profile-update-form input {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
   font-size: 14px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.settings-title {
+  font-weight: 700;
+}
+
+.settings-sub {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+}
+
+.toggle input {
+  appearance: none;
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--neutral-bg);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.toggle input::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--surface);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.2s ease, background 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.toggle input:checked {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.toggle input:checked::after {
+  transform: translateX(20px);
+  background: var(--primary-contrast);
+}
+
+.toggle input:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
 }
 
 .profile-loading {
@@ -118,10 +182,10 @@
   margin: 24px auto;
   padding: 18px 20px;
   border-radius: 16px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
-  color: #1f2937;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  color: var(--text);
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -133,8 +197,8 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 2px solid #cbd5f5;
-  border-top-color: #1d4ed8;
+  border: 2px solid var(--spinner-track);
+  border-top-color: var(--primary);
   animation: spin 0.8s linear infinite;
 }
 
