@@ -3,7 +3,21 @@ import { createContext, useContext, useState } from "react";
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState(null);
+  const [token, setTokenState] = useState(() => {
+    if (typeof window === "undefined") return null;
+    return window.localStorage.getItem("token");
+  });
+
+  const setToken = (nextToken) => {
+    setTokenState(nextToken);
+    if (typeof window !== "undefined") {
+      if (nextToken) {
+        window.localStorage.setItem("token", nextToken);
+      } else {
+        window.localStorage.removeItem("token");
+      }
+    }
+  };
 
   async function authFetch(url, options = {}) {
     const headers = new Headers(options.headers || {});
