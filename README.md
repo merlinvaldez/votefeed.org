@@ -143,6 +143,26 @@ VoteFeed is a twitter/bluesky-like user experience that allows constituents to i
 
 https://gemini.google.com/share/b8811c595e88
 
+## How I Used AI
+
+I used AI as a **coding mentor and pair-programming partner** while building VoteFeed—primarily to **learn faster**, keep my approach aligned with best practices, and debug systematically.
+
+**How AI was used**
+
+- **Conceptual learning:** explanations of unfamiliar concepts (e.g., API design, auth flows, data modeling) and why certain approaches are preferred.
+- **Planning & pseudocode:** breaking features into small steps and outlining implementation plans before writing code.
+- **Debugging support:** helping me interpret errors, identify likely causes, and practice a “reproduce → isolate → verify → fix smallest thing” workflow.
+- **Documentation help:** pointing me to official docs and suggesting what sections to read to unblock myself.
+- **Review assistance:** when I asked “check my work,” I used AI feedback to spot logic issues, edge cases, and improve readability.
+
+**What AI did _not_ do**
+
+- I did not rely on AI to generate the entire project end-to-end. I wrote and integrated the final code myself, and verified behavior by running and testing the app locally.
+
+**More context**
+
+- See **`AGENTS.md`** for the exact rules and workflow I used for AI support (teacher-first guidance, pseudocode-first mode, and review mode).
+
 **VoteFeed (How Merlin Built It)**
 
 **Guy R.:**
