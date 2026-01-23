@@ -33,7 +33,7 @@ export default function BillPage() {
   const [userName, setUserName] = useState("");
   const [interactionError, setInteractionError] = useState("");
   const [isEditingComment, setIsEditingComment] = useState(false);
-  //   const rep = state?.rep;
+  const [isDraftDirty, setIsDraftDirty] = useState(false);
 
   const billId = bill?.bill_id ?? bill?.id ?? null;
 
@@ -77,10 +77,9 @@ export default function BillPage() {
           setUserName(`${me.first_name || ""} ${me.last_name || ""}`.trim());
 
         const interactionResp = await authFetch(
-          `${API_BASE}/interactions/users/${me.id}/bill/${billId}`
+          `${API_BASE}/interactions/users/${me.id}/bill/${billId}`,
         );
-        if (!interactionResp.ok)
-          throw new Error("Failed to load interaction");
+        if (!interactionResp.ok) throw new Error("Failed to load interaction");
         const text = await interactionResp.text();
         const data = text ? JSON.parse(text) : null;
         if (!cancelled) setInteraction(data || null);
@@ -97,9 +96,10 @@ export default function BillPage() {
 
   useEffect(() => {
     setStance(interaction?.stance || null);
-    setComment(interaction?.user_comment || "");
-    setIsEditingComment(false);
-  }, [interaction]);
+    if (!isDraftDirty) {
+      setComment(interaction?.user_comment || "");
+    }
+  }, [interaction, isDraftDirty]);
 
   const handleStanceClick = async (nextStance) => {
     if (!token) {
@@ -113,7 +113,7 @@ export default function BillPage() {
       if (interaction?.stance === nextStance) {
         const resp = await authFetch(
           `${API_BASE}/interactions/${interaction.id}`,
-          { method: "DELETE" }
+          { method: "DELETE" },
         );
         if (!resp.ok) throw new Error("Failed to delete stance");
         setInteraction(null);
@@ -133,9 +133,9 @@ export default function BillPage() {
                   user_id: userId,
                   bill_id: billId,
                   stance: nextStance,
-                }
+                },
           ),
-        }
+        },
       );
       if (!resp.ok) throw new Error("Failed to save stance");
       const saved = await resp.json();
@@ -162,14 +162,17 @@ export default function BillPage() {
       }
 
       if (!current) {
-        const stanceResp = await authFetch(`${API_BASE}/interactions/addstance`, {
-          method: "POST",
-          body: JSON.stringify({
-            user_id: userId,
-            bill_id: billId,
-            stance,
-          }),
-        });
+        const stanceResp = await authFetch(
+          `${API_BASE}/interactions/addstance`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              user_id: userId,
+              bill_id: billId,
+              stance,
+            }),
+          },
+        );
         if (!stanceResp.ok) throw new Error("Failed to create stance");
         current = await stanceResp.json();
         setInteraction(current);
@@ -180,12 +183,13 @@ export default function BillPage() {
         {
           method: "PUT",
           body: JSON.stringify({ user_comment: comment }),
-        }
+        },
       );
       if (!resp.ok) throw new Error("Failed to save comment");
       const saved = await resp.json();
       setInteraction(saved);
       setIsEditingComment(false);
+      setIsDraftDirty(false);
     } catch (err) {
       setInteractionError(err.message || "Failed to save comment");
     }
@@ -197,13 +201,14 @@ export default function BillPage() {
       setInteractionError("");
       const resp = await authFetch(
         `${API_BASE}/interactions/${interaction.id}/comment`,
-        { method: "DELETE" }
+        { method: "DELETE" },
       );
       if (!resp.ok) throw new Error("Failed to delete comment");
       const saved = await resp.json();
       setInteraction(saved);
       setComment("");
       setIsEditingComment(false);
+      setIsDraftDirty(false);
     } catch (err) {
       setInteractionError(err.message || "Failed to delete comment");
     }
@@ -269,9 +274,7 @@ export default function BillPage() {
           )}
           {hasComment && !isEditingComment && (
             <div className="comment-card">
-              <div className="comment-label">
-                {userName || "My comment"}
-              </div>
+              <div className="comment-label">{userName || "My comment"}</div>
               <div className="comment-text">{interaction.user_comment}</div>
             </div>
           )}
@@ -279,7 +282,10 @@ export default function BillPage() {
             <textarea
               placeholder="Write a comment to your Representative"
               value={comment}
-              onChange={(e) => setComment(e.target.value)}
+              onChange={(e) => {
+                setComment(e.target.value);
+                setIsDraftDirty(true);
+              }}
             ></textarea>
           )}
           {interactionError && <p className="error-text">{interactionError}</p>}
@@ -295,6 +301,7 @@ export default function BillPage() {
                     onClick={() => {
                       setComment(interaction?.user_comment || "");
                       setIsEditingComment(false);
+                      setIsDraftDirty(false);
                     }}
                   >
                     Cancel
