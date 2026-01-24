@@ -48,7 +48,20 @@ router.get("/", async (req, res) => {
 
 router.get("/member/:bioguideId", async (req, res) => {
   try {
-    const votes = await findMemberVotes(req.params.bioguideId);
+    const rawLimit = req.query.limit;
+    const rawOffset = req.query.offset;
+    const parsedLimit = Number.parseInt(rawLimit, 10);
+    const parsedOffset = Number.parseInt(rawOffset, 10);
+    const limit =
+      Number.isInteger(parsedLimit) && parsedLimit > 0
+        ? parsedLimit
+        : undefined;
+    const offset =
+      Number.isInteger(parsedOffset) && parsedOffset >= 0 ? parsedOffset : 0;
+    const votes = await findMemberVotes(req.params.bioguideId, {
+      limit,
+      offset,
+    });
     res.json({ count: votes.length, votes });
   } catch (err) {
     console.error(err);
@@ -62,7 +75,7 @@ router.get("/:session/:voteNumber", async (req, res) => {
   const { session, voteNumber } = req.params;
   try {
     const baseUrl = new URL(
-      `https://api.congress.gov/v3/house-vote/119/${session}/${voteNumber}/members`
+      `https://api.congress.gov/v3/house-vote/119/${session}/${voteNumber}/members`,
     );
     baseUrl.searchParams.set("limit", "250");
     baseUrl.searchParams.set("api_key", apiKey);

@@ -22,11 +22,11 @@ router.post(
       password,
       first_name,
       last_name,
-      address
+      address,
     );
     const token = createToken({ id: user.id });
     res.status(201).send(token);
-  }
+  },
 );
 
 router.post("/login", requireBody(["email", "password"]), async (req, res) => {
@@ -50,7 +50,12 @@ router.get("/me/feed", requireUser, async (req, res) => {
     }
     const rep = await findRepByDistrict(state, district);
     if (!rep) return res.status(404).json({ error: "No rep for district" });
-    const votes = await findMemberVotes(rep.bioguideid);
+    const rawLimit = Number.parseInt(req.query.limit, 10);
+    const rawOffset = Number.parseInt(req.query.offset, 10);
+    const limit = Number.isInteger(rawLimit) && rawLimit > 0 ? rawLimit : 10;
+    const offset =
+      Number.isInteger(rawOffset) && rawOffset >= 0 ? rawOffset : 0;
+    const votes = await findMemberVotes(rep.bioguideid, { limit, offset });
     res.json({ rep, votes });
   } catch (err) {
     console.error(err);
@@ -68,5 +73,5 @@ router.put(
     const updated = await updateUserDistrict(req.user.id, req.body.address);
     if (!updated) return res.status(404).json({ error: "User not found" });
     res.json(updated);
-  }
+  },
 );

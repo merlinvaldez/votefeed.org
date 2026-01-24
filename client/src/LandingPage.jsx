@@ -4,6 +4,7 @@ import { API_BASE, STATES } from "./constants.js";
 import "./LandingPage.css";
 
 function LandingPage() {
+  const PAGE_SIZE = 5;
   const navigate = useNavigate();
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
@@ -29,18 +30,18 @@ function LandingPage() {
 
     try {
       const districtResp = await fetch(
-        `${API_BASE}/districts?address=${cleanStreet}, ${cleanCity}, ${cleanState} ${cleanZip}`
+        `${API_BASE}/districts?address=${cleanStreet}, ${cleanCity}, ${cleanState} ${cleanZip}`,
       );
       if (!districtResp.ok) {
         const msg = await districtResp.text();
         throw new Error(
-          msg || `District lookup failed (${districtResp.status})`
+          msg || `District lookup failed (${districtResp.status})`,
         );
       }
       const districtData = await districtResp.json();
 
       const repResp = await fetch(
-        `${API_BASE}/reps/district/${districtData.state}/${districtData.congressionalDistrict}`
+        `${API_BASE}/reps/district/${districtData.state}/${districtData.congressionalDistrict}`,
       );
       if (!repResp.ok) {
         const msg = await repResp.text();
@@ -49,11 +50,13 @@ function LandingPage() {
       const repData = await repResp.json();
       setStatus("loading-votes");
       const repId = repData.bioguideid;
-      const votesResp = await fetch(`${API_BASE}/housevotes/member/${repId}`);
+      const votesResp = await fetch(
+        `${API_BASE}/housevotes/member/${repId}?limit=${PAGE_SIZE}&offset=0`,
+      );
       if (!votesResp.ok) {
         const msg = await votesResp.text();
         throw new Error(
-          msg || `Voting record lookup failed (${votesResp.status})`
+          msg || `Voting record lookup failed (${votesResp.status})`,
         );
       }
       const { votes = [] } = await votesResp.json();
@@ -71,8 +74,8 @@ function LandingPage() {
     status === "loading"
       ? "Looking up district..."
       : status === "loading-votes"
-      ? "Loading voting record"
-      : "Check my Rep";
+        ? "Loading voting record"
+        : "Check my Rep";
   return (
     <div className="page">
       <section className="hero">

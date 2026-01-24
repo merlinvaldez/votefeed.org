@@ -10,10 +10,11 @@ import {
   ThumbsDown,
   MessageCircle,
   IdCard,
+  ReceiptTurkishLiraIcon,
 } from "lucide-react";
 
 function Feed(props) {
-  const PAGE_SIZE = 10;
+  const PAGE_SIZE = 5;
   const { token, authFetch } = useAuth();
   const isAuthed = Boolean(token);
   const location = useLocation();
@@ -26,27 +27,25 @@ function Feed(props) {
 
   const [interactions, setInteractions] = useState([]);
   const [userId, setUserId] = useState(null);
-  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [hasMore, setHasmore] = useState(true);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
   const sentinelRef = useRef(null);
   const votes = feedState?.votes ?? [];
 
   useEffect(() => {
-    if (!votes.length) return;
-    setVisibleCount(Math.min(PAGE_SIZE, votes.length));
-  }, [votes.length]);
-
-  useEffect(() => {
-    if (!sentinelRef.current || !votes.length) return;
+    if (!sentinelRef.current) return;
     const observer = new IntersectionObserver(
       (entries) => {
         if (!entries[0].isIntersecting) return;
-        setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, votes.length));
+        if (!token && !feedState?.rep) return;
+        if (!hasMore || isFetchingMore) return;
+        loadMoreVotes();
       },
       { rootMargin: "200px" },
     );
     observer.observe(sentinelRef.current);
     return () => observer.disconnect();
-  }, [votes.length]);
+  }, [token, hasMore, isFetchingMore, votes.length]);
 
   useEffect(() => {
     if (token) return;
@@ -63,10 +62,13 @@ function Feed(props) {
     (async () => {
       try {
         setLoading(true);
-        const resp = await authFetch(`${API_BASE}/users/me/feed`);
+        const resp = await authFetch(
+          `${API_BASE}/users/me/feed?limit=${PAGE_SIZE}&offset=0`,
+        );
         if (!resp.ok) throw new Error("Failed to load feed");
         const feed = await resp.json();
         if (!cancelled) setFeedState(feed);
+        if (!cancelled) setHasmore(feed.votes.length === PAGE_SIZE);
       } catch (err) {
         if (!cancelled) setError(err.message || "Failed to load feed");
       } finally {
@@ -78,6 +80,31 @@ function Feed(props) {
       cancelled = true;
     };
   }, [feedState, token, authFetch]);
+
+  const loadMoreVotes = async () => {
+    if (isFetchingMore) return;
+    setIsFetchingMore(true);
+    try {
+      const offset = votes.length;
+      const repId = feedState?.rep.bioguideid;
+      const isGuest = !token;
+      const url = isGuest
+        ? `${API_BASE}/housevotes/member/${repId}?limit=${PAGE_SIZE}&offset=${offset}`
+        : `${API_BASE}/users/me/feed?limit=${PAGE_SIZE}&offset=${offset}`;
+      const resp = isGuest ? await fetch(url) : await authFetch(url);
+      if (!resp.ok) throw new Error("Failed to load more votes");
+      const { votes: nextVotes = [] } = await resp.json();
+      setFeedState((prev) => ({
+        ...prev,
+        votes: [...(prev?.votes ?? []), ...nextVotes],
+      }));
+      setHasmore(nextVotes.length === PAGE_SIZE);
+    } catch (err) {
+      setError(err.message || "Failed to load more votes");
+    } finally {
+      setIsFetchingMore(false);
+    }
+  };
 
   useEffect(() => {
     if (!token) return;
@@ -163,8 +190,6 @@ function Feed(props) {
     return <div>Missing feed data</div>;
   }
   const rep = feedState?.rep;
-  const visibleVotes = votes.slice(0, visibleCount);
-  const hasMore = visibleCount < votes.length;
 
   const goToBill = (vote) => {
     const billNumber = vote.legislationnumber;
@@ -205,7 +230,7 @@ function Feed(props) {
         <h2 className="section-title">Legislative Feed</h2>
         {votes.length === 0 && <p>No votes found for this member.</p>}
 
-        {visibleVotes.map((vote) => {
+        {votes.map((vote) => {
           const interaction = interactionsByBill[vote.bill_id];
 
           return (
@@ -276,7 +301,7 @@ function Feed(props) {
         })}
         {hasMore && (
           <div ref={sentinelRef} className="feed-loading">
-            <div>Loading more...</div>
+            <div>{isFetchingMore ? "Loading more..." : "Scroll for more"}</div>
           </div>
         )}
       </section>
