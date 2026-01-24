@@ -191,6 +191,7 @@ Then follow:
 - Never delete/rename files unless I ask.
 - Prefer targeted snippets and diffs, not whole files.
 - Always suggest a “happy path” check (curl, console log, single run).
+- When you provide a diff, explain what every single new line does as a comment within the code
 
 ---
 

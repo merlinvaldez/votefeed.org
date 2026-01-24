@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { API_BASE } from "./constants";
@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 function Feed(props) {
+  const PAGE_SIZE = 10;
   const { token, authFetch } = useAuth();
   const isAuthed = Boolean(token);
   const location = useLocation();
@@ -25,6 +26,27 @@ function Feed(props) {
 
   const [interactions, setInteractions] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const sentinelRef = useRef(null);
+  const votes = feedState?.votes ?? [];
+
+  useEffect(() => {
+    if (!votes.length) return;
+    setVisibleCount(Math.min(PAGE_SIZE, votes.length));
+  }, [votes.length]);
+
+  useEffect(() => {
+    if (!sentinelRef.current || !votes.length) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries[0].isIntersecting) return;
+        setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, votes.length));
+      },
+      { rootMargin: "200px" },
+    );
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [votes.length]);
 
   useEffect(() => {
     if (token) return;
@@ -69,7 +91,7 @@ function Feed(props) {
         if (!cancelled) setUserId(me.id);
 
         const interactionsResp = await authFetch(
-          `${API_BASE}/interactions/users/${me.id}`
+          `${API_BASE}/interactions/users/${me.id}`,
         );
         if (!interactionsResp.ok)
           throw new Error("Failed to load interactions");
@@ -98,7 +120,7 @@ function Feed(props) {
       if (existing?.stance === stance) {
         const resp = await authFetch(
           `${API_BASE}/interactions/${existing.id}`,
-          { method: "DELETE" }
+          { method: "DELETE" },
         );
         if (!resp.ok) throw new Error("Failed to delete stance");
         setInteractions((prev) => prev.filter((i) => i.id !== existing.id));
@@ -118,9 +140,9 @@ function Feed(props) {
                   user_id: userId,
                   bill_id: billId,
                   stance,
-                }
+                },
           ),
-        }
+        },
       );
       if (!resp.ok) throw new Error("Failed to save stance");
       const saved = await resp.json();
@@ -140,7 +162,9 @@ function Feed(props) {
   if (!feedState?.rep || !feedState?.votes) {
     return <div>Missing feed data</div>;
   }
-  const { rep, votes } = feedState;
+  const rep = feedState?.rep;
+  const visibleVotes = votes.slice(0, visibleCount);
+  const hasMore = visibleCount < votes.length;
 
   const goToBill = (vote) => {
     const billNumber = vote.legislationnumber;
@@ -181,7 +205,7 @@ function Feed(props) {
         <h2 className="section-title">Legislative Feed</h2>
         {votes.length === 0 && <p>No votes found for this member.</p>}
 
-        {votes.map((vote) => {
+        {visibleVotes.map((vote) => {
           const interaction = interactionsByBill[vote.bill_id];
 
           return (
@@ -247,10 +271,14 @@ function Feed(props) {
                   {interaction?.user_comment ? "1 Comment" : "0 Comments"}
                 </div>
               </div>
-
             </div>
           );
         })}
+        {hasMore && (
+          <div ref={sentinelRef} className="feed-loading">
+            <div>Loading more...</div>
+          </div>
+        )}
       </section>
     </>
   );
