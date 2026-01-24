@@ -10,7 +10,6 @@ import {
   ThumbsDown,
   MessageCircle,
   IdCard,
-  ReceiptTurkishLiraIcon,
 } from "lucide-react";
 
 function Feed(props) {
@@ -19,7 +18,6 @@ function Feed(props) {
   const isAuthed = Boolean(token);
   const location = useLocation();
   const navigate = useNavigate();
-  const state = location.state || props.state;
 
   const [feedState, setFeedState] = useState(location.state || props.state);
   const [loading, setLoading] = useState(false);
@@ -39,6 +37,7 @@ function Feed(props) {
         if (!entries[0].isIntersecting) return;
         if (!token && !feedState?.rep) return;
         if (!hasMore || isFetchingMore) return;
+        if (loading) return;
         loadMoreVotes();
       },
       { rootMargin: "200px" },
@@ -86,7 +85,7 @@ function Feed(props) {
     setIsFetchingMore(true);
     try {
       const offset = votes.length;
-      const repId = feedState?.rep.bioguideid;
+      const repId = feedState?.rep?.bioguideid;
       const isGuest = !token;
       const url = isGuest
         ? `${API_BASE}/housevotes/member/${repId}?limit=${PAGE_SIZE}&offset=${offset}`
