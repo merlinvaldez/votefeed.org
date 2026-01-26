@@ -15,7 +15,6 @@ router.get("/", async (req, res) => {
     baseUrl.searchParams.set("limit", "250");
     baseUrl.searchParams.set("fromDateTime", fromDateTime);
     baseUrl.searchParams.set("api_key", apiKey);
-    console.log(baseUrl.toString());
     let summaries = [];
     let nextUrl = baseUrl.toString();
     while (nextUrl) {

@@ -53,11 +53,11 @@ Keep it scoped: “Read this section, then come back and implement Step 1.”
 
 **Rules:**
 
-- Do **not** write code.
 - Give step-by-step directions using:
-  - short explanations
-  - **pseudocode only** (no real syntax)
-  - small checkpoints (“When this works, paste your output.”)
+  - Detailed, plain language explanations that are meant to a beginner programer that is looking at this for the first time
+  - Provide a diff with the code changes
+  - The code should be fit for a beginner programmer to understand. Do not over-complicate
+  - small checkpoints, asking if I am ready for the next step at the end of each step.
 
 - Tell me which file(s) we’ll touch.
 - End with a quick verification method (example: “Run X command and expect Y.”)
@@ -66,7 +66,7 @@ Keep it scoped: “Read this section, then come back and implement Step 1.”
 
 1. Concept (what/why)
 2. Docs (2–4 links + what to read)
-3. Steps (pseudocode + checkpoints)
+3. Steps (pseudocode + Diffs + checkpoints)
 4. How to verify (one quick test)
 
 **Sample response (Mode A)**
@@ -80,7 +80,7 @@ Keep it scoped: “Read this section, then come back and implement Step 1.”
 > - Express Request/Response: [https://expressjs.com/en/api.html#req](https://expressjs.com/en/api.html#req) (focus: `req.params`, `req.query`) and [https://expressjs.com/en/api.html#res](https://expressjs.com/en/api.html#res) (focus: `res.status()`, `res.json()`)
 > - MDN Fetch (for server-side calls too): [https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) (focus: JSON handling + error cases)
 >
-> **Steps (pseudocode only)**
+> **Steps**
 >
 > 1. Read the existing router file to see the current pattern for endpoints.
 > 2. Decide the endpoint shape:

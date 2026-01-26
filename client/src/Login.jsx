@@ -87,9 +87,7 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            {/* <a className="forgot" href="#">
-              Forgot?
-            </a> */}
+
             <button type="submit" disabled={status === "loading"}>
               {status === "loading" ? "Logging in..." : "Log in"}
             </button>

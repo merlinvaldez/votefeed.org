@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useCallback } from "react";
 
 const AuthContext = createContext(null);
 
@@ -19,14 +19,27 @@ export function AuthProvider({ children }) {
     }
   };
 
-  async function authFetch(url, options = {}) {
-    const headers = new Headers(options.headers || {});
-    if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
-    }
-    headers.set("Content-Type", "application/json");
-    return fetch(url, { ...options, headers });
-  }
+  //   async function authFetch(url, options = {}) {
+  //     const headers = new Headers(options.headers || {});
+  //     if (token) {
+  //       headers.set("Authorization", `Bearer ${token}`);
+  //     }
+  //     headers.set("Content-Type", "application/json");
+  //     return fetch(url, { ...options, headers });
+  //   }
+
+  const authFetch = useCallback(
+    async (url, options = {}) => {
+      const headers = new Headers(options.headers || {});
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      headers.set("Content-Type", "application/json");
+      return fetch(url, { ...options, headers });
+    },
+    [token],
+  );
+
   const value = { token, setToken, authFetch };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

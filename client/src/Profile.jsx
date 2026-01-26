@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
-import { API_BASE } from "./constants";
+import { API_BASE, STATES } from "./constants";
 import "./Profile.css";
 
 export default function Profile() {
@@ -152,13 +152,24 @@ export default function Profile() {
               onChange={(e) => setCity(e.target.value)}
               required
             />
-            <input
-              type="text"
-              placeholder="State (e.g., NY)"
+            <select
               value={stateCode}
               onChange={(e) => setStateCode(e.target.value)}
               required
-            />
+            >
+              {" "}
+              <option
+                value="
+              "
+              >
+                Select State
+              </option>
+              {STATES.map(({ code, name }) => (
+                <option key={code} value={code}>
+                  {name}
+                </option>
+              ))}
+            </select>
             <input
               type="text"
               placeholder="ZIP"

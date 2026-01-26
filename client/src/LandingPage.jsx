@@ -64,7 +64,6 @@ function LandingPage() {
         state: { district: districtData, rep: repData, votes },
       });
       setStatus("success");
-      console.log(status);
     } catch (err) {
       setError(err.message || `Something went wrong`);
       setStatus(`error`);

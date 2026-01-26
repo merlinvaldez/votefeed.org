@@ -68,7 +68,7 @@ router.put(
   requireUser,
   requireBody(["address"]),
   async (req, res) => {
-    const { id, address } = req.body;
+    const { address } = req.body;
 
     const updated = await updateUserDistrict(req.user.id, req.body.address);
     if (!updated) return res.status(404).json({ error: "User not found" });
