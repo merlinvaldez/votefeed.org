@@ -1,10 +1,23 @@
 export async function getDistrictFromAddress(address) {
-  const base = `http://localhost:${process.env.PORT || 4000}`;
-  const districtUrl = new URL("districts", base);
-  districtUrl.searchParams.set(`address`, address);
-
-  const resp = await fetch(districtUrl);
-  if (!resp.ok) throw new Error(`District lookup Query failed ${resp.status}`);
-  const { state, congressionalDistrict } = await resp.json();
-  return { state, district: congressionalDistrict };
+  const url = new URL(
+    "https://geocoding.geo.census.gov/geocoder/geographies/onelineaddress",
+  );
+  url.searchParams.set("address", address);
+  url.searchParams.set("benchmark", "Public_AR_Current");
+  url.searchParams.set("vintage", "Current_Current");
+  url.searchParams.set("format", "json");
+  const resp = await fetch(url);
+  if (!resp.ok) {
+    const body = await resp.text();
+    throw new Error(`District lookup failed ${resp.status}: ${body}`);
+  }
+  const data = await resp.json();
+  const match = data?.result?.addressMatches?.[0];
+  const state = match?.geographies?.["States"]?.[0]?.BASENAME;
+  const district =
+    match?.geographies?.["119th Congressional Districts"]?.[0]?.BASENAME;
+  if (!match || !state || !district) {
+    throw new Error("No district found for address");
+  }
+  return { state, district };
 }
