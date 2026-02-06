@@ -66,3 +66,12 @@ export async function getUserInteractionsByBill(userId, billId) {
   } = await db.query(sql, [userId, billId]);
   return userInteractionsOnBill;
 }
+
+export async function getInteractionById(id) {
+  const sql = `SELECT * FROM interactions
+  WHERE id =$1`;
+  const {
+    rows: [interaction],
+  } = await db.query(sql, [id]);
+  return interaction;
+}
