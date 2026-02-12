@@ -29,7 +29,8 @@ CREATE TABLE bills(
     id serial PRIMARY KEY,
     number integer NOT NULL,
     title text NOT NULL,
-    summary text NOT NULL
+    summary text NOT NULL,
+    aisummary text, 
 );
 
 CREATE TABLE member_voting_record (
