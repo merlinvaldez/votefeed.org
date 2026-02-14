@@ -302,7 +302,7 @@ function Feed(props) {
               {!showAi ? (
                 <div
                   className="leg-body"
-                  dangerouslySetInnerHTML={{ __html: vote.summary }}
+                  dangerouslySetInnerHTML={{ __html: summaryText }}
                 />
               ) : (
                 <div className="leg-body">{summaryText}</div>
