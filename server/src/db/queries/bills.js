@@ -1,4 +1,5 @@
 import db from "../client.js";
+import { generateAiBillSummary } from "../../utils/aiSummaryPipeline.js";
 
 export async function getAllBillSummaries() {
   const base = `http://localhost:${process.env.PORT || 4000}`;
@@ -28,4 +29,21 @@ export async function getBillSummary(legislationNumber) {
   WHERE number=$1`;
   const { rows } = await db.query(sql, [legislationNumber]);
   return rows;
+}
+
+export async function getOrCreateAiBillSummary(legislationNumber) {
+  const billRows = await getBillSummary(legislationNumber);
+  const bill = billRows?.[0];
+  if (!bill) return null;
+  if (typeof bill.aisummary === "string" && bill.aisummary.trim() !== "") {
+    return bill.aisummary;
+  }
+  const aiSummary = await generateAiBillSummary(bill.summary);
+  const sql = `UPDATE bills
+    SET aisummary=$1
+    WHERE number=$2
+    RETURNING aisummary`;
+
+  const { rows } = await db.query(sql, [aiSummary, legislationNumber]);
+  return rows?.[0]?.aisummary ?? aiSummary;
 }

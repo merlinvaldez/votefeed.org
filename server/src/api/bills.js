@@ -1,7 +1,10 @@
 import express from "express";
 const router = express.Router();
 export default router;
-import { getBillSummary } from "../db/queries/bills.js";
+import {
+  getBillSummary,
+  getOrCreateAiBillSummary,
+} from "../db/queries/bills.js";
 
 const apiKey = process.env.CONGRESS_API_KEY;
 
@@ -59,5 +62,22 @@ router.get("/:billNumber", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch bill" });
+  }
+});
+
+router.get("/:billNumber/ai-summary", async (req, res) => {
+  try {
+    const billNumber = Number(req.params.billNumber);
+    if (!Number.isInteger(billNumber)) {
+      return res.status(400).json({ error: "Invalid bill number" });
+    }
+    const aiSummary = await getOrCreateAiBillSummary(billNumber);
+    if (!aiSummary) {
+      return res.status(404).json({ error: "Bill not found" });
+    }
+    return res.json({ aiSummary });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Failed to generate AI summary" });
   }
 });
