@@ -30,6 +30,33 @@ function Feed(props) {
   const sentinelRef = useRef(null);
   const votes = feedState?.votes ?? [];
 
+  const [aiToggledByBill, setAiToggledByBill] = useState({});
+  const [aiSummaryByBill, setAiSummaryByBill] = useState({});
+  const [aiLoadingByBill, setAiLoadingByBill] = useState({});
+  const [aiErrorByBill, setAiErrorByBill] = useState({});
+
+  const handleToggleAi = async (billNumber, nextValue) => {
+    const next = !aiToggledByBill[billNumber];
+    setAiToggledByBill((prev) => ({ ...prev, [billNumber]: nextValue }));
+    if (!nextValue) return;
+    if (aiSummaryByBill[billNumber]) return;
+    setAiLoadingByBill((prev) => ({ ...prev, [billNumber]: true }));
+    setAiErrorByBill((prev) => ({ ...prev, [billNumber]: null }));
+    try {
+      const resp = await fetch(`${API_BASE}/bills/${billNumber}/ai-summary`);
+      if (!resp.ok) throw new Error("Ai summary failed");
+      const data = await resp.json();
+      setAiSummaryByBill((prev) => ({ ...prev, [billNumber]: data.aiSummary }));
+    } catch (err) {
+      setAiErrorByBill((prev) => ({
+        ...prev,
+        [billNumber]: "AI summary failed",
+      }));
+    } finally {
+      setAiLoadingByBill((prev) => ({ ...prev, [billNumber]: false }));
+    }
+  };
+
   useEffect(() => {
     if (!sentinelRef.current) return;
     const observer = new IntersectionObserver(
@@ -231,7 +258,19 @@ function Feed(props) {
 
         {votes.map((vote) => {
           const interaction = interactionsByBill[vote.bill_id];
+          const billNumber = vote.legislationnumber;
+          const showAi = aiToggledByBill[billNumber];
+          const isLoadingAi = aiLoadingByBill[billNumber];
+          const aiText = aiSummaryByBill[billNumber];
+          const aiError = aiErrorByBill[billNumber];
 
+          const summaryText = !showAi
+            ? vote.summary
+            : isLoadingAi
+              ? "Loading..."
+              : aiError
+                ? vote.summary
+                : aiText || vote.summary;
           return (
             <div key={vote.legislationnumber} className="leg-card">
               <div className="leg-top">
@@ -242,11 +281,32 @@ function Feed(props) {
                 >
                   HR {vote.legislationnumber}
                 </span>
+                <label
+                  className="toggle toggle-ai"
+                  style={{ gap: 8 }}
+                  title="Show simplified AI summary"
+                >
+                  <input
+                    type="checkbox"
+                    checked={Boolean(showAi)}
+                    onChange={(e) =>
+                      handleToggleAi(billNumber, e.target.checked)
+                    }
+                    aria-label="Toggle to simplify using AI"
+                  />
+                </label>
+                {showAi && aiError && (
+                  <div className="error-text">{aiError}</div>
+                )}
               </div>
-              <div
-                className="leg-body"
-                dangerouslySetInnerHTML={{ __html: vote.summary }}
-              />
+              {!showAi ? (
+                <div
+                  className="leg-body"
+                  dangerouslySetInnerHTML={{ __html: summaryText }}
+                />
+              ) : (
+                <div className="leg-body">{summaryText}</div>
+              )}
               <div className="leg-vote">
                 {(() => {
                   let voteClass = "neutral";

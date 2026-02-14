@@ -3,7 +3,11 @@
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 .feed-sidebar {
@@ -369,4 +373,25 @@
   .feed-main {
     padding-top: 12px;
   }
+}
+
+.toggle.toggle-ai input::after {
+  /* AI knob text override for this toggle only */
+  content: "AI"; /* always render AI inside the knob */
+  display: grid; /* allow centering */
+  place-items: center; /* center text in the circle */
+  font-size: 9px; /* fit inside 20px knob */
+  font-weight: 800; /* make text readable */
+  line-height: 1; /* avoid vertical drift */
+  letter-spacing: 0.2px; /* tiny spacing for clarity */
+  color: var(--primary); /* blue text on light knob */
+  border: 1px solid var(--border) color(--primary);
+}
+
+.toggle.toggle-ai input:checked::after {
+  color: var(--primary);
+}
+
+.leg-top .toggle.toggle-ai {
+  margin-left: auto;
 }

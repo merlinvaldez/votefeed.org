@@ -14,7 +14,7 @@ import { useAuth } from "./AuthContext";
 const getVotePillClass = (voteVal) => {
   if (!voteVal || voteVal === "Not Voting") return "neutral";
   if (voteVal === "Yea" || voteVal === "Aye") return "success";
-  if (voteVal === "No" || voteVal === "Nay") return "success";
+  if (voteVal === "No" || voteVal === "Nay") return "danger";
   return "neutral";
 };
 
@@ -35,7 +35,30 @@ export default function BillPage() {
   const [isEditingComment, setIsEditingComment] = useState(false);
   const [isDraftDirty, setIsDraftDirty] = useState(false);
 
+  const [aiToggled, setAiToggled] = useState(false);
+  const [aiSummary, setAiSummary] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState("");
+
   const billId = bill?.bill_id ?? bill?.id ?? null;
+
+  const handleToggleAi = async (nextValue) => {
+    setAiToggled(nextValue);
+    if (!nextValue) return;
+    if (aiSummary) return;
+    setAiLoading(true);
+    setAiError("");
+    try {
+      const resp = await fetch(`${API_BASE}/bills/${billNumber}/ai-summary`);
+      if (!resp.ok) throw new Error("AI summary failed");
+      const data = await resp.json();
+      setAiSummary(data.aiSummary);
+    } catch (err) {
+      setAiError("AI summary failed");
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (bill) return;
@@ -216,6 +239,7 @@ export default function BillPage() {
 
   const hasComment = Boolean(interaction?.user_comment);
   const showCommentEditor = !hasComment || isEditingComment;
+  const showAi = aiToggled;
 
   return (
     <>
@@ -233,16 +257,35 @@ export default function BillPage() {
               Rep Voted: {bill.vote}
             </span>
           )}
+          <label className="toggle toggle-ai" style={{ gap: 8 }}>
+            <input
+              type="checkbox"
+              checked={Boolean(showAi)}
+              onChange={(e) => handleToggleAi(e.target.checked)}
+              aria-label="Toggle AI summary"
+              title="Show simplified AI summary"
+            />
+          </label>
         </div>
-        <div className="leg-title">{bill?.title || "loading bill..."}</div>
         {status === "loading" && <p>Loading summary</p>}
         {status === "error" && <p className="error-text">{error}</p>}
-        {bill?.summary && (
+        {!showAi && bill?.summary && (
           <div
             className="leg-body"
             dangerouslySetInnerHTML={{ __html: bill.summary }}
           ></div>
         )}
+        {showAi && aiLoading && <div className="leg-body">Loading...</div>}
+        {showAi && aiError && bill?.summary && (
+          <div
+            className="leg-body"
+            dangerouslySetInnerHTML={{ __html: bill.summary }}
+          ></div>
+        )}
+        {showAi && !aiLoading && !aiError && (
+          <div className="leg-body">{aiSummary}</div>
+        )}
+        {showAi && aiError && <p className="error-text">{aiError}</p>}
 
         <div className="vote-actions">
           <button
