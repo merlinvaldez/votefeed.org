@@ -1,4 +1,3 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
-  "relatedProjects": ["prj_7JHlqzqpw2F5ZgeL0UdVQMKekiE5"]
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
