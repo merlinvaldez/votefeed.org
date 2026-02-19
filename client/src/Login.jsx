@@ -82,13 +82,9 @@ export default function Login() {
 
       <section className="login-panel">
         <div className="login-card">
-          <button
-            type="button"
-            className="back-link"
-            onClick={() => navigate("/")}
-          >
+          <a className="back-link" onClick={() => navigate("/")}>
             ← Back to Search
-          </button>
+          </a>
           <h1>Welcome Back</h1>
           <p className="login-sub">Log in to track votes and comment.</p>
 
