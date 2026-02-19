@@ -19,15 +19,6 @@ export function AuthProvider({ children }) {
     }
   };
 
-  //   async function authFetch(url, options = {}) {
-  //     const headers = new Headers(options.headers || {});
-  //     if (token) {
-  //       headers.set("Authorization", `Bearer ${token}`);
-  //     }
-  //     headers.set("Content-Type", "application/json");
-  //     return fetch(url, { ...options, headers });
-  //   }
-
   const authFetch = useCallback(
     async (url, options = {}) => {
       const headers = new Headers(options.headers || {});
