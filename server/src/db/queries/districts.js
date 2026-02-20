@@ -1,5 +1,5 @@
 export const ADDRESS_NOT_FOUND_MESSAGE =
-  "We couldn't match that address to a voting district.\nPlease enter a U.S. address recognized by the 2020 Census. If it still doesn't work, try removing the apartment/unit number or entering a nearby address.";
+  "We couldn't match that address to a congressional district.\nPlease enter a U.S. address recognized by the 2020 Census. If it still doesn't work, try removing the apartment/unit number or entering a nearby address.";
 export const ADDRESS_NOT_FOUND_CODE = "ADDRESS_NOT_FOUND";
 export async function getDistrictFromAddress(address) {
   const url = new URL(
