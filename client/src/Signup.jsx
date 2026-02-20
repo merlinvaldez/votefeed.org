@@ -18,9 +18,31 @@ export default function Signup() {
   const [zip, setZip] = useState("");
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const zipPattern = /^\d{5}$/;
+
+  const validateFields = () => {
+    const nextErrors = {};
+    if (!emailPattern.test(email.trim())) {
+      nextErrors.email = "Enter a valid email.";
+    }
+    if (!zipPattern.test(zip.trim())) {
+      nextErrors.zip = "Enter a 5 digit ZIP code.";
+    }
+    return nextErrors;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const nextErrors = validateFields();
+    if (Object.keys(nextErrors).length > 0) {
+      setFieldErrors(nextErrors);
+      setStatus("idle");
+      return;
+    }
+    setFieldErrors({});
     setStatus("loading");
     setError("");
     try {
@@ -109,6 +131,9 @@ export default function Signup() {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
+            {fieldErrors.email && (
+              <div className="error">{fieldErrors.email}</div>
+            )}
 
             <label htmlFor="signup-password">Password</label>
             <input
@@ -157,6 +182,8 @@ export default function Signup() {
               onChange={(e) => setZip(e.target.value)}
               required
             />
+
+            {fieldErrors.zip && <div className="error">{fieldErrors.zip}</div>}
 
             <button type="submit" disabled={status === "loading"}>
               {status === "loading" ? "Creating account..." : "Sign Up"}

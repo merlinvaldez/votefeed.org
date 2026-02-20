@@ -11,26 +11,49 @@ import {
 import requireBody from "../middleware/requireBody.js";
 import requireUser from "../middleware/requireUser.js";
 import { createToken } from "../utils/jwt.js";
+import {
+  ADDRESS_NOT_FOUND_CODE,
+  ADDRESS_NOT_FOUND_MESSAGE,
+} from "../db/queries/districts.js";
 
 router.post(
   "/signup",
   requireBody(["email", "password", "first_name", "last_name", "address"]),
-  async (req, res) => {
-    const { email, password, first_name, last_name, address } = req.body;
-    const user = await createUser(
-      email,
-      password,
-      first_name,
-      last_name,
-      address,
-    );
-    const token = createToken({ id: user.id });
-    res.status(201).send(token);
+  async (req, res, next) => {
+    try {
+      const { email, password, first_name, last_name, address } = req.body;
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const zipPattern = /\b\d{5}\b/;
+      if (!emailPattern.test(String(email).trim())) {
+        return res.status(400).send("Enter a valid email.");
+      }
+      if (!zipPattern.test(String(address).trim())) {
+        return res.status(400).send("Enter a 5 digit ZIP code.");
+      }
+      const user = await createUser(
+        email,
+        password,
+        first_name,
+        last_name,
+        address,
+      );
+      const token = createToken({ id: user.id });
+      return res.status(201).send(token);
+    } catch (err) {
+      if (err?.code === ADDRESS_NOT_FOUND_CODE) {
+        return res.status(400).send(ADDRESS_NOT_FOUND_MESSAGE);
+      }
+      return next(err);
+    }
   },
 );
 
 router.post("/login", requireBody(["email", "password"]), async (req, res) => {
   const { email, password } = req.body;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(String(email).trim())) {
+    return res.status(400).send("Enter a valid email.");
+  }
   const user = await getUserByEmailAndPassword(email, password);
   if (!user) return res.status(401).send("Invalid email or password.");
   const token = createToken({ id: user.id });
@@ -67,11 +90,21 @@ router.put(
   "/me/updateDistrict",
   requireUser,
   requireBody(["address"]),
-  async (req, res) => {
+  async (req, res, next) => {
     const { address } = req.body;
-
-    const updated = await updateUserDistrict(req.user.id, req.body.address);
-    if (!updated) return res.status(404).json({ error: "User not found" });
-    res.json(updated);
+    const zipPattern = /\b\d{5}\b/;
+    if (!zipPattern.test(String(address).trim())) {
+      return res.status(400).send("Enter a 5 digit ZIP code.");
+    }
+    try {
+      const updated = await updateUserDistrict(req.user.id, req.body.address);
+      if (!updated) return res.status(404).json({ error: "User not found" });
+      res.json(updated);
+    } catch (err) {
+      if (err?.code === ADDRESS_NOT_FOUND_CODE) {
+        return res.status(400).send(ADDRESS_NOT_FOUND_MESSAGE);
+      }
+      return next(err);
+    }
   },
 );

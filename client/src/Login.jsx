@@ -12,9 +12,27 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const validateFields = () => {
+    const nextErrors = {};
+    if (!emailPattern.test(email.trim())) {
+      nextErrors.email = "Enter a valid email.";
+    }
+    return nextErrors;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const nextErrors = validateFields();
+    if (Object.keys(nextErrors).length > 0) {
+      setFieldErrors(nextErrors);
+      setStatus("idle");
+      return;
+    }
+    setFieldErrors({});
     setStatus("loading");
     setError("");
     try {
@@ -79,6 +97,9 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
+            {fieldErrors.email && (
+              <div className="error">{fieldErrors.email}</div>
+            )}
             <label htmlFor="login-password">Password</label>
             <input
               id="login-password"

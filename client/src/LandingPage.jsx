@@ -12,16 +12,34 @@ function LandingPage() {
   const [zip, setZip] = useState("");
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
+
+  const zipPattern = /^\d{5}$/;
+
+  const validateFields = () => {
+    const nextErrors = {};
+    if (!zipPattern.test(zip.trim())) {
+      nextErrors.zip = "Enter a 5 digit ZIP code.";
+    }
+    return nextErrors;
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const nextErrors = validateFields();
+    if (Object.keys(nextErrors).length > 0) {
+      setFieldErrors(nextErrors);
+      setStatus("idle");
+      return;
+    }
+    setFieldErrors({});
     const cleanStreet = street.trim();
     const cleanCity = city.trim();
     const cleanState = stateCode.trim();
     const cleanZip = zip.trim();
 
-    if (!cleanStreet || !cleanCity || !cleanState || !cleanZip) {
-      setError("Street, city, state, and ZIP are required.");
+    if (!cleanStreet || !cleanCity || !cleanState) {
+      setError("Street, city, and state are required.");
       return;
     }
 
@@ -151,6 +169,7 @@ function LandingPage() {
               inputMode="numeric"
               required
             />
+            {fieldErrors.zip && <div className="error">{fieldErrors.zip}</div>}
             <button
               type="submit"
               disabled={status === "loading" || status === "loading-votes"}
@@ -158,7 +177,7 @@ function LandingPage() {
               {buttonLabel}
             </button>
 
-            {error && <div className="error">{error}</div>}
+            {error && <div className="error">{JSON.parse(error).error}</div>}
           </form>
           <div className="signup-row">
             New here? <Link to="/signup">Create an account</Link>
