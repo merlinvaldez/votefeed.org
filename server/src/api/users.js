@@ -11,6 +11,10 @@ import {
 import requireBody from "../middleware/requireBody.js";
 import requireUser from "../middleware/requireUser.js";
 import { createToken } from "../utils/jwt.js";
+import {
+  ADDRESS_NOT_FOUND_CODE,
+  ADDRESS_NOT_FOUND_MESSAGE,
+} from "../db/queries/districts.js";
 
 router.post(
   "/signup",
@@ -36,13 +40,8 @@ router.post(
       const token = createToken({ id: user.id });
       return res.status(201).send(token);
     } catch (err) {
-      const message = String(err?.message || "Somenthing went wrong.");
-      const isAddressError =
-        message.includes("No district found") || "District lookup fialed";
-      if (isAddressError) {
-        return res.status(400)
-          .send(`We couldn’t match that address to a voting district.
-Please enter a U.S. address recognized by the 2020 Census. If it still doesn’t work, try removing the apartment/unit number or entering a nearby address.`);
+      if (err?.code === ADDRESS_NOT_FOUND_CODE) {
+        return res.status(400).send(ADDRESS_NOT_FOUND_MESSAGE);
       }
       return next(err);
     }
@@ -91,11 +90,21 @@ router.put(
   "/me/updateDistrict",
   requireUser,
   requireBody(["address"]),
-  async (req, res) => {
+  async (req, res, next) => {
     const { address } = req.body;
-
-    const updated = await updateUserDistrict(req.user.id, req.body.address);
-    if (!updated) return res.status(404).json({ error: "User not found" });
-    res.json(updated);
+    const zipPattern = /\b\d{5}\b/;
+    if (!zipPattern.test(String(address).trim())) {
+      return res.status(400).send("Enter a 5 digit ZIP code.");
+    }
+    try {
+      const updated = await updateUserDistrict(req.user.id, req.body.address);
+      if (!updated) return res.status(404).json({ error: "User not found" });
+      res.json(updated);
+    } catch (err) {
+      if (err?.code === ADDRESS_NOT_FOUND_CODE) {
+        return res.status(400).send(ADDRESS_NOT_FOUND_MESSAGE);
+      }
+      return next(err);
+    }
   },
 );

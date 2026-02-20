@@ -1,3 +1,4 @@
+import { ADDRESS_NOT_FOUND_MESSAGE } from "../db/queries/districts.js";
 import express from "express";
 const router = express.Router();
 export default router;
@@ -39,10 +40,7 @@ router.get("/", async (req, res) => {
       match?.geographies?.["119th Congressional Districts"]?.[0]?.BASENAME;
 
     if (!match || !district) {
-      return res.status(404).json({
-        error: `We couldn’t match that address to a congressional district.
-Please enter a U.S. address recognized by the 2020 Census. If it still doesn’t work, try removing the apartment/unit number or entering a nearby address.`,
-      });
+      return res.status(404).json({ error: ADDRESS_NOT_FOUND_MESSAGE });
     }
     res.json({
       address: match.matchedAddress,
