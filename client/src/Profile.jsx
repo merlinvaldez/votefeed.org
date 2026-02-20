@@ -66,6 +66,12 @@ export default function Profile() {
   async function handleUpdateDistrict(e) {
     e.preventDefault();
     setFormError("");
+    const zipPattern = /^\d{5}$/;
+    const cleanZip = zip.trim();
+    if (!zipPattern.test(cleanZip)) {
+      setFormError("Enter a 5 digit Zip code.");
+      return;
+    }
     setSaving(true);
     try {
       const address = `${street.trim()}, ${city.trim()}, ${stateCode.trim()} ${zip.trim()}`;
