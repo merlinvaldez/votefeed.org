@@ -17,7 +17,10 @@ export async function getDistrictFromAddress(address) {
   const district =
     match?.geographies?.["119th Congressional Districts"]?.[0]?.BASENAME;
   if (!match || !state || !district) {
-    throw new Error("No district found for address");
+    throw new Error(
+      `We couldn’t match that address to a congressional district.
+Please enter a U.S. address recognized by the 2020 Census. If it still doesn’t work, try removing the apartment/unit number or entering a nearby address.`,
+    );
   }
   return { state, district };
 }

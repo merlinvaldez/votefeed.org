@@ -177,7 +177,7 @@ function LandingPage() {
               {buttonLabel}
             </button>
 
-            {error && <div className="error">{error}</div>}
+            {error && <div className="error">{JSON.parse(error).error}</div>}
           </form>
           <div className="signup-row">
             New here? <Link to="/signup">Create an account</Link>
