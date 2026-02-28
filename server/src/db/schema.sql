@@ -9,7 +9,8 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users(
     id serial PRIMARY KEY,
     email text UNIQUE NOT NULL,
-    password text NOT NULL,
+    password text,
+    clerk_user_id text UNIQUE,
     first_name text NOT NULL,
     last_name text NOT NULL,
     state text NOT NULL,
@@ -30,7 +31,7 @@ CREATE TABLE bills(
     number integer NOT NULL,
     title text NOT NULL,
     summary text NOT NULL,
-    aisummary text, 
+    aisummary text 
 );
 
 CREATE TABLE member_voting_record (

@@ -7,6 +7,7 @@ import {
   createUser,
   getUserByEmailAndPassword,
   updateUserDistrict,
+  upsertUserByClerkId,
 } from "../db/queries/users.js";
 import requireBody from "../middleware/requireBody.js";
 import requireUser from "../middleware/requireUser.js";
@@ -59,6 +60,32 @@ router.post("/login", requireBody(["email", "password"]), async (req, res) => {
   const token = createToken({ id: user.id });
   res.send(token);
 });
+
+router.post(
+  "/me/onboarding",
+  requireBody(["address", "email", "first_name", "last_name"]),
+  async (req, res, next) => {
+    try {
+      if (!req.auth?.userId) {
+        return res.status(401).send("Unauthorized");
+      }
+      const { address, email, first_name, last_name } = req.body;
+      const user = await upsertUserByClerkId({
+        clerk_user_id: req.auth.userId,
+        email,
+        first_name,
+        last_name,
+        address,
+      });
+      return res.status(201).json(user);
+    } catch (error) {
+      if (err.code === ADDRESS_NOT_FOUND_CODE) {
+        return res.status(400).send(ADDRESS_NOT_FOUND_MESSAGE);
+      }
+      return next(err);
+    }
+  },
+);
 
 router.get("/me", requireUser, (req, res) => {
   const { id, email, first_name, last_name, district, state } = req.user;

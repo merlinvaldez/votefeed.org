@@ -8,7 +8,7 @@ export async function createUser(
   password,
   first_name,
   last_name,
-  address
+  address,
 ) {
   const { district, state } = await getDistrictFromAddress(address);
   const sql = `INSERT INTO users (email, password, first_name, last_name, district, state)
@@ -24,6 +24,32 @@ RETURNING *;`;
     last_name,
     district,
     state,
+  ]);
+  return user;
+}
+
+export async function upsertUserByClerkId({
+  clerk_user_id,
+  email,
+  first_name,
+  last_name,
+  address,
+}) {
+  const { district, state } = await getDistrictFromAddress(address);
+  const sql = `INSERT INTO users (clerk_user_id, email, first_name, last_name, state, district)
+  VALUES ($1,$2,$3,$4,$5,$6)
+  ON CONFLICT (clerk_user_id)
+  DO UPDATE SET email=$2, first_name=$3, last_name=$4, state=$5, district=$6
+  RETURNING *;`;
+  const {
+    rows: [user],
+  } = await db.query(sql, [
+    clerk_user_id,
+    email,
+    first_name,
+    last_name,
+    state,
+    district,
   ]);
   return user;
 }
@@ -47,6 +73,15 @@ export async function getUserById(id) {
   const {
     rows: [user],
   } = await db.query(sql, [id]);
+  return user;
+}
+
+export async function getUserByClerkId(clerkUserId) {
+  const sql = `SELECT * FROM users
+  WHERE clerk_user_id=$1`;
+  const {
+    row: [user],
+  } = await db.query(sql, [clerkUserId]);
   return user;
 }
 

@@ -10,9 +10,11 @@ import houseVotesRouter from "./src/api/houseVotes.js";
 import usersRouter from "./src/api/users.js";
 import interactionsRouter from "./src/api/interactions.js";
 import getUserFromToken from "./src/middleware/getUserFromToken.js";
+import { clerkMiddleware } from "@clerk/express";
 
 app.use(cors());
 app.use(express.json());
+app.use(clerkMiddleware());
 app.use(getUserFromToken);
 
 app.use("/districts", districtsRouter);
