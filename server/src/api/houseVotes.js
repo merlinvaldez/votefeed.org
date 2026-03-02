@@ -5,6 +5,13 @@ export default router;
 import { findMemberVotes } from "../db/queries/houseVotes.js";
 
 const apiKey = process.env.CONGRESS_API_KEY;
+const CONGRESS_API_ORIGIN = "https://api.congress.gov";
+
+function toCongressNextUrl(paginationNext) {
+  const next = new URL(paginationNext, CONGRESS_API_ORIGIN);
+  next.searchParams.set("api_key", apiKey);
+  return next.toString();
+}
 
 router.get("/", async (req, res) => {
   if (!apiKey) {
@@ -31,9 +38,7 @@ router.get("/", async (req, res) => {
       houseVotes = houseVotes.concat(data?.houseRollCallVotes || []);
       const paginationNext = data?.pagination?.next ?? null;
       if (paginationNext) {
-        const next = new URL(paginationNext);
-        next.searchParams.set("api_key", apiKey);
-        nextUrl = next.toString();
+        nextUrl = toCongressNextUrl(paginationNext);
       } else {
         nextUrl = null;
       }
@@ -96,9 +101,7 @@ router.get("/:session/:voteNumber", async (req, res) => {
       members = members.concat(pageObj.results || []);
       const paginationNext = data?.pagination?.next ?? null;
       if (paginationNext) {
-        const next = new URL(paginationNext);
-        next.searchParams.set("api_key", apiKey);
-        nextUrl = next.toString();
+        nextUrl = toCongressNextUrl(paginationNext);
       } else {
         nextUrl = null;
       }
@@ -107,6 +110,9 @@ router.get("/:session/:voteNumber", async (req, res) => {
     res.json({ count: members.length, members });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to fetch member votes" });
+    res.status(500).json({
+      error: "Failed to fetch member votes",
+      details: err?.message || "Unknown upstream error",
+    });
   }
 });

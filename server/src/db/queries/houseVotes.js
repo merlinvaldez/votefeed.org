@@ -15,8 +15,9 @@ export async function getHouseVotes() {
     );
     const membersResp = await fetch(membersUrl);
     if (!membersResp.ok) {
+      const details = await membersResp.text();
       throw new Error(
-        `getHouseVotes members failed ${membersResp.status} for ${membersUrl}`,
+        `getHouseVotes members failed ${membersResp.status} for ${membersUrl} - ${details}`,
       );
     }
     const { members = [] } = await membersResp.json();
