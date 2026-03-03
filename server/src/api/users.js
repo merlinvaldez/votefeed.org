@@ -78,8 +78,8 @@ router.post(
         address,
       });
       return res.status(201).json(user);
-    } catch (error) {
-      if (err.code === ADDRESS_NOT_FOUND_CODE) {
+    } catch (err) {
+      if (err?.code === ADDRESS_NOT_FOUND_CODE) {
         return res.status(400).send(ADDRESS_NOT_FOUND_MESSAGE);
       }
       return next(err);
