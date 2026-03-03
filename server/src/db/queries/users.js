@@ -60,7 +60,7 @@ export async function getUserByEmailAndPassword(email, password) {
   const {
     rows: [user],
   } = await db.query(sql, [email]);
-  if (!user) return null;
+  if (!user || !user.password) return null;
   const isValid = await bcrypt.compare(password, user.password);
   if (!isValid) return null;
 
@@ -80,7 +80,7 @@ export async function getUserByClerkId(clerkUserId) {
   const sql = `SELECT * FROM users
   WHERE clerk_user_id=$1`;
   const {
-    row: [user],
+    rows: [user],
   } = await db.query(sql, [clerkUserId]);
   return user;
 }

@@ -1,40 +1,26 @@
-import { createContext, useContext, useState, useCallback } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
+import { useAuth as useClerkAuth } from "@clerk/clerk-react";
+import useClerkAuthFetch from "./useClerkAuthFetch";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [token, setTokenState] = useState(() => {
-    if (typeof window === "undefined") return null;
-    return window.localStorage.getItem("token");
-  });
+  const { isSignedIn } = useClerkAuth();
+  const authFetch = useClerkAuthFetch();
 
-  const setToken = (nextToken) => {
-    setTokenState(nextToken);
-    if (typeof window !== "undefined") {
-      if (nextToken) {
-        window.localStorage.setItem("token", nextToken);
-      } else {
-        window.localStorage.removeItem("token");
-      }
-    }
-  };
-
-  const authFetch = useCallback(
-    async (url, options = {}) => {
-      const headers = new Headers(options.headers || {});
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
-      headers.set("Content-Type", "application/json");
-      return fetch(url, { ...options, headers });
-    },
-    [token],
+  const value = useMemo(
+    () => ({ isSignedIn, authFetch }),
+    [isSignedIn, authFetch],
   );
 
-  const value = { token, setToken, authFetch };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
-
 export function useAuth() {
   return useContext(AuthContext);
 }

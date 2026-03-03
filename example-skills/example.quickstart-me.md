@@ -17,6 +17,15 @@ Generate a compact, learn-by-doing quickstart that the user can finish in 10 to 
 - Keep it minimal: one file when possible, two files maximum unless absolutely necessary.
 - Assume the user is learning; prioritize clarity over cleverness.
 
+## File path format
+
+- Do not output clickable links for local files.
+- Do not use `vscode://`, `file://`, `http://`, or `https://` for local code references.
+- Output plain absolute paths only, in this format:
+- `/c:/Users/merli/Desktop/repos/coursework/voteFeed/<path-from-repo-root>`
+- Example:
+- `/c:/Users/merli/Desktop/repos/coursework/voteFeed/client/src/AuthContext.jsx`
+
 ## Quickstart structure
 
 Always output these sections in this order.
@@ -89,6 +98,7 @@ Always output these sections in this order.
 - Each non-empty code line must include an explanatory comment on that same line, or a directly adjacent comment line that explains it.
 - Prefer inline comments when the language supports them.
 - Keep comments short and beginner-friendly.
+- If showing an edit-style example, explain every changed line in order (line-by-line), even when using a diff-like format.
 - If the format does not allow comments (for example strict JSON), provide:
 - an annotated teaching block in a comment-capable equivalent (for example `jsonc`), and
 - a second runnable block labeled `Runnable version`.
@@ -107,3 +117,68 @@ Always output these sections in this order.
 - "Give me a quickstart for REST APIs in Node."
 - "Teach me React state in 15 minutes."
 - "I want a hands-on intro to SQL joins."
+
+## Exemplar response
+
+Use exemplars like the following and keep all required sections.
+
+### Exemplar: quickstart on array `map` in JavaScript
+
+1. Goal (1 sentence)
+- Build confidence transforming arrays with `map` and predicting outputs.
+
+2. What it is (plain language)
+- `map` creates a new array by running a function on each element.
+- Use it when you want transformation without mutating the original array.
+
+3. Mental model (tiny analogy + key rules)
+- Analogy: a conveyor belt where each item gets the same transformation step.
+- Rules:
+- `map` returns a new array.
+- Callback runs once per element.
+- Original array is unchanged unless you mutate objects inside it.
+
+4. Setup
+- Open browser DevTools Console, or run `node` in a terminal.
+
+5. Build it (numbered steps)
+1. Type:
+```js
+const nums = [1, 2, 3]; // Create the source array with three numbers.
+const doubled = nums.map((n) => n * 2); // Transform each number into its doubled value.
+console.log(doubled); // Print the transformed array to verify the result.
+console.log(nums); // Print the original array to confirm it stayed unchanged.
+```
+- What you should see: `[2, 4, 6]` then `[1, 2, 3]`
+- Why it matters: confirms transformation without mutating source data.
+- Tell me what you got and I'll give you the next step.
+
+2. Type:
+```js
+const labels = nums.map((n) => `Item-${n}`); // Convert each number into a labeled string.
+console.log(labels); // Print labels to verify string transformation output.
+```
+- What you should see: `["Item-1", "Item-2", "Item-3"]`
+- Why it matters: shows `map` works for type conversion too.
+- Tell me what you got and I'll give you the next step.
+
+6. Micro-exercises (increasing difficulty)
+- Exercise 1 prompt: map `[2, 4, 6]` to `[3, 5, 7]`.
+- Success criteria: output must be exactly `[3, 5, 7]`.
+- Hint: return `n + 1`.
+- Exercise 2 prompt: map `["a", "b"]` to `["A", "B"]`.
+- Success criteria: all letters uppercase.
+- Hint: use `.toUpperCase()`.
+
+7. Common mistakes (top 5)
+- Forgetting `return` in block-bodied callbacks.
+- Recognize: array of `undefined`.
+- Fix: `return value;` inside `{ ... }`.
+- Mutating source objects unintentionally.
+- Recognize: original object fields changed.
+- Fix: return copied objects (`{ ...obj, key: newValue }`).
+
+8. Next steps (pick one)
+- Practice more: do 5 more map transformations with numbers and strings.
+- Vary constraints: combine `filter` + `map` in one pipeline.
+- Deepen understanding: compare `map` vs `forEach` with one tiny benchmark.
