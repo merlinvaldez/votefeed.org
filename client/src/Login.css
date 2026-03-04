@@ -36,6 +36,28 @@ body {
   padding-top: 10px;
 }
 
+.login-card--clerk {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  width: 520px;
+  max-width: 100%;
+}
+
+.login-card--clerk .back-link {
+  margin: 0 0 14px 0;
+}
+
+.clerk-only {
+  width: 100%;
+}
+
+.clerk-only .vf-clerk-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0;
+}
+
 .back-link {
   display: inline-flex;
   align-items: center;
@@ -48,7 +70,16 @@ body {
   padding: 8px 6px; /* larger touch target */
   margin: 0 0 18px 0;
   border-radius: 8px;
-  transition: color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease,
+    transform 0.1s ease;
+}
+
+.login-card--clerk {
+  padding: 0;
+  box-shadow: none;
+  max-width: 560px;
 }
 
 .back-link:hover {
@@ -91,7 +122,9 @@ body {
   padding: 12px 14px;
   font-size: 15px;
   outline: none;
-  transition: border 0.2s, box-shadow 0.2s;
+  transition:
+    border 0.2s,
+    box-shadow 0.2s;
   background: var(--surface);
   color: var(--vf-text);
 }
@@ -119,7 +152,9 @@ body {
   font-size: 16px;
   cursor: pointer;
   box-shadow: 0 10px 22px rgba(29, 93, 252, 0.25);
-  transition: background 0.2s, transform 0.1s;
+  transition:
+    background 0.2s,
+    transform 0.1s;
 }
 
 .login-form button:hover {
@@ -141,7 +176,9 @@ body {
   padding: 12px 14px;
   font-size: 15px;
   outline: none;
-  transition: border 0.2s, box-shadow 0.2s;
+  transition:
+    border 0.2s,
+    box-shadow 0.2s;
   background: var(--surface);
   color: var(--vf-text);
 }
@@ -212,5 +249,8 @@ body {
   }
   .back-link {
     margin-bottom: 12px;
+  }
+  .login-card--clerk {
+    padding: 0;
   }
 }

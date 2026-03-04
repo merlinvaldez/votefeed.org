@@ -7,6 +7,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import Profile from "./Profile";
 import FeedLayout from "./FeedLayout";
+import Onboarding from "./Onboarding";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login></Login>} />
         <Route path="/signup" element={<Signup></Signup>} />
+        <Route path="/onboarding" element={<Onboarding></Onboarding>} />
         <Route element={<FeedLayout />}>
           <Route path="/feed" element={<Feed></Feed>} />
           <Route path="/bill/:billNumber" element={<BillPage />} />

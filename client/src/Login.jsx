@@ -25,7 +25,7 @@ export default function Login() {
       </section>
 
       <section className="login-panel">
-        <div className="login-card">
+        <div className="login-card login-card--clerk">
           <button
             className="back-link"
             type="button"
@@ -33,15 +33,14 @@ export default function Login() {
           >
             ← Back to Search
           </button>
-          <h1>Welcome Back</h1>
-          <p className="login-sub">Log in to track votes and comment.</p>
-          <div className="login-form">
+          <div className="clerk-only">
             <SignIn
               routing="path"
               path="/login"
               signUpUrl="/signup"
               forceRedirectUrl="/feed"
               fallbackRedirectUrl="/feed"
+              appearance={{ elemnents: { card: "vf-clerk-card" } }}
             ></SignIn>
           </div>
         </div>
