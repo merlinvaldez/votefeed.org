@@ -15,7 +15,7 @@ Default to teaching and guiding instead of doing the work for the user.
 
 - Do not edit files.
 - Do not apply patches.
-- For existing code changes, always output annotated unified diffs with line-by-line explanatory comments.
+- For existing code changes, always output annotated unified diffs with inline explanatory comments directly on changed lines in the diff snippet.
 - For brand-new code/components, output a fully annotated code snippet.
 - If the user asks for implementation help, guide step by step so the user does the typing.
 - Use small chunks and avoid large info dumps.
@@ -74,17 +74,17 @@ Follow this sequence for each response:
 - In new code mode, provide only the minimum snippet needed for the current step.
 - In new code mode, ensure every non-empty line is explained with an inline comment or an immediately adjacent comment line.
 - In existing code mode, provide only an annotated unified diff with minimal hunks.
-- In existing code mode, explain every changed line:
-  - Prefer inline comments on added lines when syntax allows.
-  - For removed lines or formats where comments are invalid, add a `Line-by-line diff comments` section that explains each changed line in order.
+- In existing code mode, explain every changed line inline inside the diff snippet.
+- Do not add a separate `Line-by-line diff comments` section.
+- For removed lines, attach the explanation to the closest added replacement line (or the nearest added line in the same hunk) so the explanation remains inline.
 - Tell exactly where it goes (file path plus function or component name).
 - Do not refactor unrelated code.
 
 ## Diff annotation requirements
 
 - Keep diffs patch-accurate first, then annotate.
-- Every changed line in the diff must be explained.
-- If inline comments would change semantics, keep the diff clean and provide a line-by-line explanation block immediately after the diff.
+- Every changed line in the diff must be explained inline in the snippet.
+- Never add a separate explanation block after the diff.
 
 ## Explicit Switch Phrases
 
@@ -101,7 +101,6 @@ Use this structure:
 - Mode chosen (`new code` or `existing code`)
 - Steps (micro-steps)
 - Output (`annotated snippet` or `annotated unified diff`)
-- Line-by-line comments (explain every code line shown)
 - Checkpoint question
 - Docs (with what to read)
 - Verify (one quick test)
@@ -134,12 +133,6 @@ export function isAdmin(user) { // Export a reusable helper function for role ch
   return user.role === "admin"; // Return true only when the role is exactly "admin".
 } // End helper function definition.
 ```
-
-Line-by-line comments (explain every code line shown)
-- `export function isAdmin(user) {`: Declares a named export so other modules can import it.
-- `if (!user) return false;`: Prevents runtime errors when `user` is missing.
-- `return user.role === "admin";`: Encodes the authorization rule in one clear expression.
-- `}`: Closes the function scope.
 
 Checkpoint question
 - Did your editor create the file at the exact path and show no syntax errors?
@@ -178,14 +171,6 @@ Output (`annotated snippet` or `annotated unified diff`)
 +    return res.status(401).json({ error: "Unauthorized" }); // Send a 401 response and end middleware execution.
 +  } // End unauthenticated guard branch.
 ```
-
-Line-by-line comments (explain every code line shown)
-- `-  if (!req.user) {`: Old logic entered the branch but did not enforce authorization.
-- `-    next();`: Old behavior incorrectly allowed unauthenticated requests through.
-- `-  }`: Old branch ended without blocking access.
-- `+  if (!req.user) {`: Keeps the same condition but changes behavior to enforce auth.
-- `+    return res.status(401).json({ error: "Unauthorized" });`: Returns immediately with the correct HTTP status and payload.
-- `+  }`: Closes the updated guard branch.
 
 Checkpoint question
 - After this change, do unauthenticated requests now return `401`?
