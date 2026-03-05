@@ -1,22 +1,28 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  useMemo,
-} from "react";
-import { useAuth as useClerkAuth } from "@clerk/clerk-react";
+import { useAuth as useClerkAuth, useClerk } from "@clerk/clerk-react";
+import { createContext, useContext, useCallback, useMemo } from "react";
 import useClerkAuthFetch from "./useClerkAuthFetch";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const { isSignedIn } = useClerkAuth();
+  const { isLoaded, isSignedIn } = useClerkAuth();
+  const { signOut } = useClerk();
   const authFetch = useClerkAuthFetch();
+  const token = isSignedIn ? "clerk-session" : null;
+
+  const setToken = useCallback(
+    (nextToken) => {
+      if (nextToken == null) {
+        return signOut({ redirectUrl: "/login" });
+      }
+      return Promise.resolve(nextToken);
+    },
+    [signOut],
+  );
 
   const value = useMemo(
-    () => ({ isSignedIn, authFetch }),
-    [isSignedIn, authFetch],
+    () => ({ isLoaded, isSignedIn, token, setToken, authFetch }),
+    [isLoaded, isSignedIn, token, setToken, authFetch],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
