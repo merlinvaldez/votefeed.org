@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import { useAuth } from "./AuthContext";
@@ -13,14 +13,61 @@ import "./Login.css";
 export default function Onboarding() {
   const navigate = useNavigate();
   const { user } = useUser();
-  const { authFetch } = useAuth();
+  const { isLoaded, isSignedIn, authFetch } = useAuth();
+  const [pageStatus, setPageStatus] = useState("checking");
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
   const [stateCode, setStateCode] = useState("");
   const [zip, setZip] = useState("");
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
+  const [routeError, setRouteError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!isLoaded) return;
+    if (!isSignedIn) {
+      navigate("/login", { replace: true });
+      return;
+    }
+    (async () => {
+      try {
+        const response = await authFetch(`${API_BASE}/users/me`);
+        if (response.status === 401) {
+          return;
+        }
+        if (!response.ok) {
+          if (!cancelled)
+            setRouteError(
+              "We could not verify your account status. You can still continue onboarding.",
+            );
+          return;
+        }
+        if (response.ok) {
+          const me = await response.json();
+          if (me?.state && me?.district) {
+            navigate("/feed", { replace: true });
+            return;
+          }
+        }
+      } catch {
+        if (!cancelled)
+          setRouteError(
+            "We could not verify your account status. You can still continue onboarding.",
+          );
+      } finally {
+        if (!cancelled) setPageStatus("ready");
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [isLoaded, isSignedIn, authFetch, navigate]);
+
+  if (!isLoaded || pageStatus === "checking") {
+    return <div className="feed-loading">Loading...</div>;
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -81,7 +128,7 @@ export default function Onboarding() {
             Enter your address so we can find your district. We do not save your
             address in our databases.
           </p>
-
+          {routeError && <div className="error">{routeError}</div>}
           <form onSubmit={handleSubmit} className="login-form">
             <AddressFields
               street={street}

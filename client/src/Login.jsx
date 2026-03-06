@@ -38,9 +38,8 @@ export default function Login() {
               routing="path"
               path="/login"
               signUpUrl="/signup"
-              forceRedirectUrl="/feed"
               fallbackRedirectUrl="/feed"
-              appearance={{ elemnents: { card: "vf-clerk-card" } }}
+              appearance={{ elements: { card: "vf-clerk-card" } }}
             ></SignIn>
           </div>
         </div>

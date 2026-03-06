@@ -15,8 +15,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login></Login>} />
-        <Route path="/signup" element={<Signup></Signup>} />
+        <Route path="/login/*" element={<Login></Login>} />
+        <Route path="/signup/*" element={<Signup></Signup>} />
         <Route path="/onboarding" element={<Onboarding></Onboarding>} />
         <Route element={<RequireOnboarding />}>
           <Route element={<FeedLayout />}>
