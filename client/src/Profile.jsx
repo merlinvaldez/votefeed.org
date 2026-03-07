@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserAvatar, UserProfile } from "@clerk/clerk-react";
+import { UserAvatar } from "@clerk/clerk-react";
 import { useAuth } from "./AuthContext";
 import { API_BASE, STATES } from "./constants";
 import "./Profile.css";
@@ -161,11 +161,7 @@ export default function Profile() {
               onChange={(e) => setStateCode(e.target.value)}
               required
             >
-              {" "}
-              <option
-                value="
-              "
-              >
+              <option value="">
                 Select State
               </option>
               {STATES.map(({ code, name }) => (

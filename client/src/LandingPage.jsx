@@ -19,6 +19,15 @@ function LandingPage() {
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
+  const formatErrorMessage = (rawError) => {
+    if (!rawError) return "";
+    try {
+      const parsed = JSON.parse(rawError);
+      return parsed?.error || rawError;
+    } catch {
+      return rawError;
+    }
+  };
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -132,7 +141,7 @@ function LandingPage() {
               {buttonLabel}
             </button>
 
-            {error && <div className="error">{JSON.parse(error).error}</div>}
+            {error && <div className="error">{formatErrorMessage(error)}</div>}
           </form>
           <div className="signup-row">
             New here? <Link to="/signup">Create an account</Link>
