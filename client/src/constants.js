@@ -1,7 +1,17 @@
+const explicitApiBase =
+  import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE; // Keep explicit override support for local/prod fixed API URLs.
+const isVercelPreview = import.meta.env.VITE_VERCEL_ENV === "preview"; // Only auto-link branch hosts during Vercel preview builds.
+const frontendBranchHost = import.meta.env.VITE_VERCEL_BRANCH_URL || ""; // Read the current frontend branch hostname exposed by Vercel for Vite builds.
+const backendProjectName = "votefeed-org-backend"; // Backend Vercel project slug that should receive matching branch traffic.
+const backendBranchHost = // Build the backend host by reusing the same branch suffix from the frontend host.
+  isVercelPreview && frontendBranchHost.includes("-git-") // Guard to ensure we only transform valid git-branch preview hosts.
+    ? `${backendProjectName}${frontendBranchHost.slice(frontendBranchHost.indexOf("-git-"))}` // Replace project prefix, keep exact branch/team suffix.
+    : ""; // Fall back when not in a preview branch context.
+
 export const API_BASE =
-  import.meta.env.VITE_API_URL ||
-  import.meta.env.VITE_API_BASE ||
-  "http://localhost:4000";
+  explicitApiBase ||
+  (backendBranchHost ? `https://${backendBranchHost}` : "") ||
+  "http://localhost:4000"; // Resolution order: explicit env, auto branch-matched preview backend, then local default.
 
 export const STATES = [
   { code: "AL", name: "Alabama" },
