@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { API_BASE } from "./constants";
 
 export default function RequireOnboarding() {
   const { isLoaded, isSignedIn, authFetch } = useAuth();
+  const location = useLocation();
   const [status, setStatus] = useState("loading");
   const [needsOnboarding, setNeedsOnboarding] = useState(false);
 
@@ -16,9 +17,11 @@ export default function RequireOnboarding() {
         cancelled = true;
       };
     }
+    const isGuestAllowedRoute =
+      location.pathname === "/feed" || location.pathname.startsWith("/bill/");
     if (!isSignedIn) {
       setNeedsOnboarding(false);
-      setStatus("guest");
+      setStatus(isGuestAllowedRoute ? "ready" : "guest");
       return () => {
         cancelled = true;
       };
@@ -51,7 +54,7 @@ export default function RequireOnboarding() {
     return () => {
       cancelled = true;
     };
-  }, [isLoaded, isSignedIn, authFetch]);
+  }, [isLoaded, isSignedIn, authFetch, location.pathname]);
 
   if (!isLoaded || status === "loading")
     return <div className="feed-loading">Loading...</div>;
