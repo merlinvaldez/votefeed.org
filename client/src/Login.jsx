@@ -38,6 +38,9 @@ export default function Login() {
               routing="path"
               path="/login"
               signUpUrl="/signup"
+              withSignUp={true}
+              transferable={false}
+              signUpFallbackRedirectUrl={"/signup"}
               fallbackRedirectUrl="/feed"
               appearance={{ elements: { card: "vf-clerk-card" } }}
             ></SignIn>

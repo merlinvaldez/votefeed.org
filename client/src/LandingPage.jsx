@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { API_BASE } from "./constants.js";
+import { useAuth } from "./AuthContext.jsx";
 import AddressFields, {
   formatAddress,
   validateAddressFields,
@@ -10,6 +11,7 @@ import "./LandingPage.css";
 function LandingPage() {
   const PAGE_SIZE = 5;
   const navigate = useNavigate();
+  const { isLoaded, isSignedIn } = useAuth();
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
   const [stateCode, setStateCode] = useState("");
@@ -17,6 +19,11 @@ function LandingPage() {
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    if (isSignedIn) navigate("/feed", { replace: true });
+  }, [isLoaded, isSignedIn, navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

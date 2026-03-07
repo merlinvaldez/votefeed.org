@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SignUp } from "@clerk/clerk-react";
 import "./LandingPage.css";
@@ -5,6 +6,15 @@ import "./Login.css";
 
 export default function Signup() {
   const navigate = useNavigate();
+  const [showEmailExistsError, setShowEmailExistsError] = useState(false);
+
+  useEffect(() => {
+    const flag = window.sessionStorage.getItem("signup_error");
+    if (flag === "email_exists") {
+      setShowEmailExistsError(true);
+      window.sessionStorage.removeItem("signup_error");
+    }
+  }, []);
   return (
     <div className="login-layout">
       <section className="hero">
@@ -34,12 +44,21 @@ export default function Signup() {
             ← Back to Search
           </button>
           <div className="clerk-only">
+            {showEmailExistsError && (
+              <div className="error">
+                {" "}
+                An Account with that email already exists. Try signing in
+                instead.{" "}
+              </div>
+            )}
             <SignUp
               routing="path"
               path="/signup"
               signInUrl="/login"
               forceRedirectUrl="/onboarding"
               fallbackRedirectUrl="/onboarding"
+              signInForceRedirectUrl="/feed"
+              signInFallbackRedirectUrl="/feed"
               appearance={{ elements: { card: "vf-clerk-card" } }}
             />
           </div>

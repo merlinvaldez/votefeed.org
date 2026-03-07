@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "@clerk/clerk-react";
+import { useClerk, useUser } from "@clerk/clerk-react";
 import { useAuth } from "./AuthContext";
 import { API_BASE } from "./constants";
 import AddressFields, {
@@ -13,6 +13,7 @@ import "./Login.css";
 export default function Onboarding() {
   const navigate = useNavigate();
   const { user } = useUser();
+  const { signOut } = useClerk();
   const { isLoaded, isSignedIn, authFetch } = useAuth();
   const [pageStatus, setPageStatus] = useState("checking");
   const [street, setStreet] = useState("");
@@ -92,6 +93,11 @@ export default function Onboarding() {
           last_name: user?.lastName ?? "",
         }),
       });
+      if (response.status === 409) {
+        window.sessionStorage.setItem("signup_error", "email_exists");
+        await signOut({ redirectUrl: `${window.location.origin}/signup` });
+        return;
+      }
       if (!response.ok)
         throw new Error((await response.text()) || "Onboarding failed");
       navigate("/feed", { replace: true });

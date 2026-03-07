@@ -48,6 +48,19 @@ router.post(
       if (err?.code === ADDRESS_NOT_FOUND_CODE) {
         return res.status(400).send(ADDRESS_NOT_FOUND_MESSAGE);
       }
+      if (
+        err?.code === "23505" &&
+        (err?.constraint === "users_email_key" ||
+          String(err?.detail ?? "")
+            .toLowerCase()
+            .includes("email"))
+      ) {
+        return res
+          .status(409)
+          .json({
+            error: "An Account with that email already exists. Please sign in",
+          });
+      }
       return next(err);
     }
   },
