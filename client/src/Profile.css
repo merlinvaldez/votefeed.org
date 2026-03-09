@@ -24,16 +24,15 @@
   margin-bottom: 24px;
 }
 
-.avatar-circle {
+.profile-avatar {
   width: 64px;
   height: 64px;
-  border-radius: 50%;
-  background: var(--primary);
-  color: var(--primary-contrast);
   display: grid;
   place-items: center;
-  font-weight: 800;
-  font-size: 20px;
+}
+.profile-avatar :where(.cl-userAvatarBox) {
+  width: 64px;
+  height: 64px;
 }
 
 .profile-meta .profile-name {

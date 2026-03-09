@@ -4,61 +4,67 @@ export default router;
 import { findRepByDistrict } from "../db/queries/reps.js";
 import { findMemberVotes } from "../db/queries/houseVotes.js";
 import {
-  createUser,
-  getUserByEmailAndPassword,
   updateUserDistrict,
+  upsertUserByClerkId,
 } from "../db/queries/users.js";
 import requireBody from "../middleware/requireBody.js";
 import requireUser from "../middleware/requireUser.js";
-import { createToken } from "../utils/jwt.js";
+
 import {
   ADDRESS_NOT_FOUND_CODE,
   ADDRESS_NOT_FOUND_MESSAGE,
 } from "../db/queries/districts.js";
 
+router.post("/signup", (_req, res) => {
+  return res.status(410).json({
+    error: "Legacy /users/signup removed. Use Clerk SignUp at /signup.",
+  });
+});
+
+router.post("/login", (_req, res) => {
+  return res.status(410).json({
+    error: "Legacy /users/login removed. Use Clerk SignIn at /login.",
+  });
+});
+
 router.post(
-  "/signup",
-  requireBody(["email", "password", "first_name", "last_name", "address"]),
+  "/me/onboarding",
+  requireBody(["address", "email", "first_name", "last_name"]),
   async (req, res, next) => {
     try {
-      const { email, password, first_name, last_name, address } = req.body;
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const zipPattern = /\b\d{5}\b/;
-      if (!emailPattern.test(String(email).trim())) {
-        return res.status(400).send("Enter a valid email.");
+      if (!req.auth?.userId) {
+        return res.status(401).send("Unauthorized");
       }
-      if (!zipPattern.test(String(address).trim())) {
-        return res.status(400).send("Enter a 5 digit ZIP code.");
-      }
-      const user = await createUser(
+      const { address, email, first_name, last_name } = req.body;
+      const user = await upsertUserByClerkId({
+        clerk_user_id: req.auth.userId,
         email,
-        password,
         first_name,
         last_name,
         address,
-      );
-      const token = createToken({ id: user.id });
-      return res.status(201).send(token);
+      });
+      return res.status(201).json(user);
     } catch (err) {
       if (err?.code === ADDRESS_NOT_FOUND_CODE) {
         return res.status(400).send(ADDRESS_NOT_FOUND_MESSAGE);
+      }
+      if (
+        err?.code === "23505" &&
+        (err?.constraint === "users_email_key" ||
+          String(err?.detail ?? "")
+            .toLowerCase()
+            .includes("email"))
+      ) {
+        return res
+          .status(409)
+          .json({
+            error: "An Account with that email already exists. Please sign in",
+          });
       }
       return next(err);
     }
   },
 );
-
-router.post("/login", requireBody(["email", "password"]), async (req, res) => {
-  const { email, password } = req.body;
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(String(email).trim())) {
-    return res.status(400).send("Enter a valid email.");
-  }
-  const user = await getUserByEmailAndPassword(email, password);
-  if (!user) return res.status(401).send("Invalid email or password.");
-  const token = createToken({ id: user.id });
-  res.send(token);
-});
 
 router.get("/me", requireUser, (req, res) => {
   const { id, email, first_name, last_name, district, state } = req.user;

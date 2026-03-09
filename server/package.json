@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
-    "db:schema": "psql -d votefeed -f src/db/schema.sql",
+    "db:schema": "powershell -NoProfile -Command \"$dbUrl = $env:DATABASE_URL; if (-not $dbUrl) { $line = Get-Content .env | Where-Object { $_ -match '^DATABASE_URL=' } | Select-Object -First 1; if ($line) { $dbUrl = ($line -split '=',2)[1].Trim('\"') } }; if (-not $dbUrl) { throw 'DATABASE_URL not found in shell env or .env' }; psql $dbUrl -f src/db/schema.sql\"",
     "db:seed": "node  src/db/seed.js",
     "db:reset": "npm run db:schema && npm run db:seed"
   },
@@ -16,12 +16,11 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@clerk/express": "^1.7.74",
     "@openai/agents": "^0.4.10",
-    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
-    "jsonwebtoken": "^9.0.3",
     "openai": "^6.22.0",
     "pg": "^8.16.3"
   },

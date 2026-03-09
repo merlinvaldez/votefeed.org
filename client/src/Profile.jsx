@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserAvatar } from "@clerk/clerk-react";
 import { useAuth } from "./AuthContext";
 import { API_BASE, STATES } from "./constants";
 import "./Profile.css";
@@ -58,11 +59,6 @@ export default function Profile() {
     loadProfile();
   }, [token, authFetch, navigate]);
 
-  const initials =
-    user?.first_name && user?.last_name
-      ? `${user.first_name[0] || ""}${user.last_name[0] || ""}`.toUpperCase()
-      : "";
-
   async function handleUpdateDistrict(e) {
     e.preventDefault();
     setFormError("");
@@ -109,7 +105,9 @@ export default function Profile() {
   return (
     <>
       <header className="profile-header">
-        <div className="avatar-circle">{initials}</div>
+        <div className="profile-avatar" aria-label="Profile photo">
+          <UserAvatar rounded={true}></UserAvatar>
+        </div>
         <div className="profile-meta">
           <div className="profile-name">
             {user.first_name} {user.last_name}
@@ -163,11 +161,7 @@ export default function Profile() {
               onChange={(e) => setStateCode(e.target.value)}
               required
             >
-              {" "}
-              <option
-                value="
-              "
-              >
+              <option value="">
                 Select State
               </option>
               {STATES.map(({ code, name }) => (

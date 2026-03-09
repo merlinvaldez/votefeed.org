@@ -1,18 +1,16 @@
-import { getUserById } from "../db/queries/users.js";
-import { verifyToken } from "../utils/jwt.js";
+import { getUserByClerkId } from "../db/queries/users.js";
 
 export default async function getUserFromToken(req, res, next) {
-  const authorization = req.get("authorization");
-  if (!authorization || !authorization.startsWith("Bearer ")) return next();
-
-  const token = authorization.split(" ")[1];
+  const clerkUserId = req.auth?.userId;
+  if (!clerkUserId) {
+    req.user = null;
+    return next();
+  }
   try {
-    const { id } = verifyToken(token);
-    const user = await getUserById(id);
-    req.user = user;
-    next();
+    const user = await getUserByClerkId(clerkUserId);
+    req.user = user ?? null;
+    return next();
   } catch (err) {
-    console.error(err);
-    return res.status(401).send("Invalid token.");
+    return next(err);
   }
 }

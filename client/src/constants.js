@@ -1,7 +1,11 @@
+const explicitApiBase =
+  import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE; // Keep explicit override support for local/prod fixed API URLs.
+const relatedProjectApiBase = import.meta.env.VITE_RELATED_API_URL || ""; // Injected at build time via @vercel/related-projects for stable preview/prod host resolution.
+
 export const API_BASE =
-  import.meta.env.VITE_API_URL ||
-  import.meta.env.VITE_API_BASE ||
-  "http://localhost:4000";
+  explicitApiBase ||
+  relatedProjectApiBase ||
+  "http://localhost:4000"; // Resolution order: explicit env override, related-project host, then local default.
 
 export const STATES = [
   { code: "AL", name: "Alabama" },
