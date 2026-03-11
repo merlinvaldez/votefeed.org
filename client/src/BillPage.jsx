@@ -11,6 +11,16 @@ import { ThumbsUp, ThumbsDown, MessageCircle, ArrowLeft } from "lucide-react";
 import { API_BASE } from "./constants";
 import { useAuth } from "./AuthContext";
 
+// const getRepLastName = (fullName = "") => {
+//   const normalized = fullName.trim();
+//   if (!normalized) return "";
+//   if (normalized.includes(",")) {
+//     return normalized.split(",")[0].trim();
+//   }
+//   const parts = normalized.split(/\s+/).filter(Boolean);
+//   return parts[parts.length - 1] ?? "";
+// };
+
 const getVotePillClass = (voteVal) => {
   if (!voteVal || voteVal === "Not Voting") return "neutral";
   if (voteVal === "Yea" || voteVal === "Aye") return "success";
