@@ -12,6 +12,16 @@ import {
   IdCard,
 } from "lucide-react";
 
+const getRepLastName = (fullName = "") => {
+  const normalized = fullName.trim();
+  if (!normalized) return "";
+  if (normalized.includes(",")) {
+    return normalized.split(",")[0].trim();
+  }
+  const parts = normalized.split(/\s+/).filter(Boolean);
+  return parts[parts.length - 1] ?? "";
+};
+
 function Feed(props) {
   const PAGE_SIZE = 5;
   const { token, authFetch } = useAuth();
@@ -216,6 +226,7 @@ function Feed(props) {
     return <div>Missing feed data</div>;
   }
   const rep = feedState?.rep;
+  const repLastName = getRepLastName(rep.full_name);
 
   const goToBill = (vote) => {
     const billNumber = vote.legislationnumber;
@@ -319,7 +330,7 @@ function Feed(props) {
                   }
                   return (
                     <span className={`pill ${voteClass}`}>
-                      {rep.full_name} Voted: {vote.vote}
+                      Rep. {repLastName} Voted: {vote.vote}
                     </span>
                   );
                 })()}
@@ -331,7 +342,7 @@ function Feed(props) {
                   }`}
                   onClick={() => handleStance(vote.bill_id, "approve")}
                 >
-                  <ThumbsUp size={16} /> Approve
+                  <ThumbsUp size={16} /> I agree with Rep. {repLastName}
                 </button>
 
                 <button
@@ -342,8 +353,7 @@ function Feed(props) {
                   }`}
                   onClick={() => handleStance(vote.bill_id, "disapprove")}
                 >
-                  <ThumbsDown size={16} />
-                  Disapprove
+                  <ThumbsDown size={16} />I disagree with Rep. {repLastName}
                 </button>
 
                 <div

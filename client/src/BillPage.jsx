@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
-import {
-  Navigate,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./Feed.css";
 import "./BillPage.css";
 import { ThumbsUp, ThumbsDown, MessageCircle, ArrowLeft } from "lucide-react";
 import { API_BASE } from "./constants";
 import { useAuth } from "./AuthContext";
+
+const getRepLastName = (fullName = "") => {
+  const normalized = fullName.trim();
+  if (!normalized) return "";
+  if (normalized.includes(",")) {
+    return normalized.split(",")[0].trim();
+  }
+  const parts = normalized.split(/\s+/).filter(Boolean);
+  return parts[parts.length - 1] ?? "";
+};
 
 const getVotePillClass = (voteVal) => {
   if (!voteVal || voteVal === "Not Voting") return "neutral";
@@ -22,6 +27,8 @@ export default function BillPage() {
   const navigate = useNavigate();
   const { billNumber } = useParams();
   const { state } = useLocation();
+  const repFullName = state?.rep.full_name ?? "";
+  const repLastName = getRepLastName(repFullName);
   const { token, authFetch } = useAuth();
   const [bill, setBill] = useState(state?.bill || state?.vote || null);
   const [status, setStatus] = useState(bill ? "ready" : "loading");
@@ -254,7 +261,7 @@ export default function BillPage() {
           </span>
           {bill?.vote && (
             <span className={`pill ${getVotePillClass(bill.vote)}`}>
-              Rep Voted: {bill.vote}
+              Rep. {repLastName} Voted: {bill.vote}
             </span>
           )}
           <label className="toggle toggle-ai" style={{ gap: 8 }}>
@@ -294,7 +301,7 @@ export default function BillPage() {
             }`}
             onClick={() => handleStanceClick("approve")}
           >
-            <ThumbsUp size={16} /> I Agree
+            <ThumbsUp size={16} /> I agree with Rep. {repLastName}
           </button>
           <button
             className={`ghost-btn ${
@@ -302,7 +309,7 @@ export default function BillPage() {
             }`}
             onClick={() => handleStanceClick("disapprove")}
           >
-            <ThumbsDown size={16} /> I Disagree
+            <ThumbsDown size={16} /> I disagree with Rep. {repLastName}
           </button>
         </div>
 
