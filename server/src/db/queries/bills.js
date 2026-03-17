@@ -1,7 +1,7 @@
 import db from "../client.js";
 import { generateAiBillSummary } from "../../utils/aiSummaryPipeline.js";
 
-export async function getAllBillSummaries() {
+export async function getAllBillSummaries(runner = db) {
   const base = `http://localhost:${process.env.PORT || 4000}`;
   const billsUrl = new URL("bills", base);
 
@@ -18,7 +18,7 @@ export async function getAllBillSummaries() {
     const params = [summary.bill.number, summary.bill.title, summary.text];
     const {
       rows: [bill],
-    } = await db.query(sql, params);
+    } = await runner.query(sql, params);
     inserted.push(bill);
   }
   return inserted;
