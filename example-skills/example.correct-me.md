@@ -13,7 +13,7 @@ Review the user's code, reasoning, or approach. Identify mistakes precisely, exp
 
 - Do not edit files.
 - Do not apply patches.
-- For existing code changes, provide an annotated unified diff of changes the user should make.
+- For existing code changes, provide an annotated unified diff with inline explanatory comments directly on changed lines in the diff snippet.
 - For brand-new code/components, provide a fully annotated code snippet.
 - Keep diffs narrowly scoped to the issue.
 - If the user says `APPLY PATCH`, propose a patch first and confirm target files and scope before applying.
@@ -47,8 +47,8 @@ Review the user's code, reasoning, or approach. Identify mistakes precisely, exp
    - Option A (recommended) with reasoning
    - Option B (alternative) with tradeoffs
 5. Provide output in the selected mode:
-   - New code mode: annotated snippet with line-by-line comments.
-   - Existing code mode: annotated unified diff focused only on the tricky part, plus line-by-line comments for every changed line.
+   - New code mode: annotated snippet with inline comments on every non-empty line.
+   - Existing code mode: annotated unified diff focused only on the tricky part, with inline comments directly on every changed line.
 6. Provide one verification step (command/test + expected result).
 7. End with one tiny next step for the user.
 
@@ -57,9 +57,10 @@ Review the user's code, reasoning, or approach. Identify mistakes precisely, exp
 - Use fenced `diff` blocks.
 - Include file headers (`---` and `+++`) and focused hunks.
 - Include only necessary edits and minimal context.
-- Explain every changed line in order.
-- Prefer inline comments on added lines when syntax allows.
-- For removed lines or non-commentable formats, add a `Line-by-line diff comments` section immediately after the diff.
+- Keep diffs patch-accurate first, then annotate.
+- Explain every changed line inline inside the diff snippet.
+- Never add a separate explanation block after the diff.
+- For removed lines, attach the explanation to the closest added replacement line or the nearest added line in the same hunk so the explanation stays inline.
 
 ## New code snippet requirements
 
@@ -102,7 +103,6 @@ Use this exact section order:
 - `Why it matters`
 - `Fix (recommended + alternative)`
 - `Output (annotated snippet or annotated diff)`
-- `Line-by-line comments (every changed line explained)`
 - `Verify`
 - `Next tiny step for me`
 
@@ -134,18 +134,10 @@ Output (annotated snippet or annotated diff)
 -  if (!req.user) {
 -    next();
 -  }
-+  if (!req.user) { // Detect missing authenticated user on the request.
-+    return res.status(401).json({ error: "Unauthorized" }); // Send unauthorized response and stop middleware chain.
-+  } // End unauthorized branch.
++  if (!req.user) { // Detect a missing authenticated user before any protected handler runs.
++    return res.status(401).json({ error: "Unauthorized" }); // Replace the old `next()` path with an early 401 response so unauthorized requests cannot continue.
++  } // Close the corrected guard branch after the early return.
 ```
-
-Line-by-line comments (every changed line explained)
-- `-  if (!req.user) {`: Previous condition was correct but enforcement was missing.
-- `-    next();`: This advanced execution instead of blocking unauthorized access.
-- `-  }`: Closed a non-blocking branch.
-- `+  if (!req.user) {`: Keeps the same check.
-- `+    return res.status(401).json({ error: "Unauthorized" });`: Enforces access control and exits early.
-- `+  }`: Closes the corrected guard branch.
 
 Verify
 - Call a protected endpoint without auth and confirm `401`.
@@ -176,12 +168,6 @@ export function isAdmin(user) { // Export helper for role checks.
   return user.role === "admin"; // Return true only for admin role.
 } // End helper.
 ```
-
-Line-by-line comments (every changed line explained)
-- `export function isAdmin(user) {`: Defines and exports reusable utility.
-- `if (!user) return false;`: Prevents runtime errors from missing input.
-- `return user.role === "admin";`: Implements the role decision rule.
-- `}`: Closes function block.
 
 Verify
 - Run unit test or a quick Node call with `undefined` and `{ role: "admin" }`.

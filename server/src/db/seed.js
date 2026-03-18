@@ -14,7 +14,9 @@ try {
 
   console.log({
     ...baseSeed,
-    votes: votes.length,
+    votes: votes.insertedCount,
+    duplicateVotes: votes.duplicateCount,
+    skippedRollCalls: votes.skippedRollCalls,
   });
   console.log("Database Seeded!");
 } finally {

@@ -6,7 +6,7 @@ const fromDateTime = "2025-01-01T00:00:00Z";
 
 async function main() {
   if (!apiKey) throw new Error("Missing CONGRESS_API_KEY");
-  const actionDatesbyBill = new Map();
+  const actionDatesByBill = new Map();
 
   let nextUrl = new URL("https://api.congress.gov/v3/house-vote/119");
   nextUrl.searchParams.set("limit", 250);
@@ -19,13 +19,22 @@ async function main() {
     const data = await resp.json();
 
     for (const vote of data.houseRollCallVotes ?? []) {
-      if (!vote.legislationNumber || !vote.startDate) continue;
+      if (!vote.legislationNumber || !vote.legislationType || !vote.startDate)
+        continue;
       const billNumber = Number(vote.legislationNumber);
-      const savedDate = actionDatesbyBill.get(billNumber);
+      const billType = vote.legislationType.toLowerCase();
+      const billKey = `${billType}:${billNumber}`;
+      const savedDate = actionDatesByBill.get(billKey);
       const nextDateMs = new Date(vote.startDate).getTime();
-      const savedDateMs = savedDate ? new Date(savedDate).getTime() : -Infinity;
+      const savedDateMs = savedDate
+        ? new Date(savedDate.actionDate).getTime()
+        : -Infinity;
       if (nextDateMs > savedDateMs)
-        actionDatesbyBill.set(billNumber, vote.startDate);
+        actionDatesByBill.set(billKey, {
+          billNumber,
+          billType,
+          actionDate: vote.startDate,
+        });
     }
 
     const paginationNext = data.pagination?.next;
@@ -38,10 +47,14 @@ async function main() {
   }
 
   let updatedCount = 0;
-  for (const [billNumber, actionDate] of actionDatesbyBill) {
+  for (const {
+    billNumber,
+    billType,
+    actionDate,
+  } of actionDatesByBill.values()) {
     const result = await db.query(
-      `UPDATE bills SET action_date = $1 WHERE number = $2 AND action_date is NULL`,
-      [actionDate, billNumber],
+      `UPDATE bills SET action_date = $1 WHERE number = $2 AND bill_type=$3 AND action_date is NULL`,
+      [actionDate, billNumber, billType],
     );
     updatedCount += result.rowCount;
   }

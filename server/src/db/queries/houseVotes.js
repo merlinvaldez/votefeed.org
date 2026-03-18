@@ -35,23 +35,90 @@ async function fetchMembersWithRetry(membersUrl, maxAttempts = 4) {
   throw lastError;
 }
 
-async function insertMemberVote(runner, vote, record) {
-  const sql = `INSERT INTO member_voting_record
-    (legislationNumber, vote, member_id)
-    SELECT $1, $2, $3
-    WHERE NOT EXISTS (
-      SELECT 1
-      FROM member_voting_record
-      WHERE legislationNumber = $1
-        AND vote = $2
-        AND member_id = $3
+async function insertMemberVotes(runner, vote, members) {
+  const legislationNumbers = [];
+  const legislationTypes = [];
+  const sessionNumbers = [];
+  const rollCallNumbers = [];
+  const votedOnDates = [];
+  const voteCasts = [];
+  const memberIds = [];
+
+  for (const record of members) {
+    if (!record?.bioguideID || !record?.voteCast) continue;
+    legislationNumbers.push(Number(vote.legislationNumber));
+    legislationTypes.push(String(vote.legislationType).toLowerCase());
+    sessionNumbers.push(Number(vote.sessionNumber));
+    rollCallNumbers.push(Number(vote.rollCallNumber));
+    votedOnDates.push(vote.startDate);
+    voteCasts.push(record.voteCast);
+    memberIds.push(record.bioguideID);
+  }
+
+  if (memberIds.length === 0) {
+    return { attemptedCount: 0, insertedCount: 0 };
+  }
+
+  const sql = `WITH incoming AS (
+      SELECT *
+      FROM unnest(
+        $1::integer[],
+        $2::text[],
+        $3::integer[],
+        $4::integer[],
+        $5::timestamptz[],
+        $6::text[],
+        $7::text[]
+      ) AS incoming(
+        legislation_number,
+        legislation_type,
+        session_number,
+        roll_call_number,
+        voted_on,
+        vote,
+        member_id
+      )
+    ),
+    inserted AS (
+      INSERT INTO member_voting_record
+        (legislationNumber, legislation_type, session_number, roll_call_number, voted_on, vote, member_id)
+      SELECT
+        incoming.legislation_number,
+        incoming.legislation_type,
+        incoming.session_number,
+        incoming.roll_call_number,
+        incoming.voted_on,
+        incoming.vote,
+        incoming.member_id
+      FROM incoming
+      WHERE NOT EXISTS (
+        SELECT 1
+        FROM member_voting_record
+        WHERE member_id = incoming.member_id
+          AND session_number = incoming.session_number
+          AND roll_call_number = incoming.roll_call_number
+      )
+      RETURNING 1
     )
-    RETURNING *`;
-  const params = [vote.legislationNumber, record.voteCast, record.bioguideID];
+    SELECT
+      (SELECT COUNT(*)::integer FROM incoming) AS attempted_count,
+      (SELECT COUNT(*)::integer FROM inserted) AS inserted_count`;
   const {
-    rows: [repVote],
-  } = await runner.query(sql, params);
-  return repVote ?? null;
+    rows: [result],
+  } = await runner.query(sql, [
+    legislationNumbers,
+    legislationTypes,
+    sessionNumbers,
+    rollCallNumbers,
+    votedOnDates,
+    voteCasts,
+    memberIds,
+  ]);
+
+  return {
+    attemptedCount: result?.attempted_count ?? 0,
+    insertedCount: result?.inserted_count ?? 0,
+  };
 }
 
 export async function getHouseVotes(runner = db) {
@@ -61,12 +128,17 @@ export async function getHouseVotes(runner = db) {
   if (!listResp.ok)
     throw new Error(`getHouseVotes Query failed ${listResp.status}`);
   const { houseVotes = [] } = await listResp.json();
-  const inserted = [];
   let processedCount = 0;
+  let insertedCount = 0;
   let duplicateCount = 0;
   let skippedRollCalls = 0;
+  let nextProgressLog = PROGRESS_EVERY;
 
   for (const vote of houseVotes) {
+    if (!vote.legislationNumber || !vote.legislationType || !vote.startDate) {
+      continue;
+    }
+
     let members = [];
 
     try {
@@ -88,29 +160,30 @@ export async function getHouseVotes(runner = db) {
       continue;
     }
 
-    for (const record of members) {
-      const repVote = await insertMemberVote(runner, vote, record);
-      processedCount += 1;
+    const rollCallResult = await insertMemberVotes(runner, vote, members);
+    processedCount += rollCallResult.attemptedCount;
+    insertedCount += rollCallResult.insertedCount;
+    duplicateCount +=
+      rollCallResult.attemptedCount - rollCallResult.insertedCount;
 
-      if (!repVote) {
-        duplicateCount += 1;
-      } else {
-        inserted.push(repVote);
-      }
-
-      if (processedCount % PROGRESS_EVERY === 0) {
-        console.log(
-          `[getHouseVotes] processed ${processedCount} vote records (${inserted.length} inserted, ${duplicateCount} duplicates)`,
-        );
-      }
+    while (processedCount >= nextProgressLog) {
+      console.log(
+        `[getHouseVotes] processed ${processedCount} vote records (${insertedCount} inserted, ${duplicateCount} duplicates)`,
+      );
+      nextProgressLog += PROGRESS_EVERY;
     }
   }
 
   console.log(
-    `[getHouseVotes] finished. processed ${processedCount} vote records, inserted ${inserted.length}, skipped ${skippedRollCalls} roll calls, ignored ${duplicateCount} duplicates.`,
+    `[getHouseVotes] finished. processed ${processedCount} vote records, inserted ${insertedCount}, skipped ${skippedRollCalls} roll calls, ignored ${duplicateCount} duplicates.`,
   );
 
-  return inserted;
+  return {
+    processedCount,
+    insertedCount,
+    duplicateCount,
+    skippedRollCalls,
+  };
 }
 
 export async function findMemberVotes(bioguideId, options = {}) {

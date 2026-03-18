@@ -12,10 +12,15 @@ export async function getAllBillSummaries(runner = db) {
   const inserted = [];
   for (const summary of summaries) {
     const sql = `INSERT INTO bills
-    (number, title, summary)
-    VALUES ($1, $2, $3)
+    (number, bill_type, title, summary)
+    VALUES ($1, $2, $3, $4)
     RETURNING *`;
-    const params = [summary.bill.number, summary.bill.title, summary.text];
+    const params = [
+      summary.bill.number,
+      String(summary.bill.type).toLocaleLowerCase(),
+      summary.bill.title,
+      summary.text,
+    ];
     const {
       rows: [bill],
     } = await runner.query(sql, params);

@@ -11,13 +11,13 @@ The goal is to use AI to understand concepts, practice deliberately, and review 
 - Best use: when I want to code myself and learn why each change matters.
 
 2. `quickstart-me`
-- Purpose: 10 to 20 minute hands-on quickstarts in a scratch environment.
-- Default behavior: self-contained tutorial with runnable examples and line-by-line code comments.
-- Best use: when I need to learn a concept before touching production code.
+- Purpose: beginner-first Markdown mini-project tutorials saved into the workspace.
+- Default behavior: research current docs, write the tutorial to `quickstarts/`, and return only the file path in chat.
+- Best use: when I need an end-to-end guided tutorial from zero before touching production code.
 
 3. `correct-me`
 - Purpose: review my code and reasoning, then coach minimal fixes.
-- Default behavior: no auto-edits; provide a focused unified diff I can apply.
+- Default behavior: no auto-edits; provide a narrowly scoped annotated unified diff or annotated snippet.
 - Best use: after I implement, to catch mistakes and tighten understanding.
 
 ## How I Use These Together
