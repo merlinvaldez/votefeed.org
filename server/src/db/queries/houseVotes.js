@@ -193,13 +193,18 @@ export async function findMemberVotes(bioguideId, options = {}) {
   const sql = `SELECT
   bills.id AS bill_id,
   member_voting_record.legislationNumber,
+  member_voting_record.legislation_type,
+  member_voting_record.session_number,
+  member_voting_record.roll_call_number,
+  member_voting_record.voted_on,
   bills.title,
   bills.summary,
   member_voting_record.vote
 FROM member_voting_record
 JOIN bills ON bills.number = member_voting_record.legislationNumber
+AND bills.bill_type = member_voting_record.legislation_type
 WHERE member_voting_record.member_id = $1`;
-  const orderSql = " ORDER BY member_voting_record.id DESC";
+  const orderSql = " ORDER BY member_voting_record.voted_on DESC";
   const pageSql = hasLimit ? " LIMIT $2 OFFSET $3" : "";
   const finalSql = `${sql}${orderSql}${pageSql}`;
   const params = hasLimit ? [bioguideId, limit, safeOffset] : [bioguideId];

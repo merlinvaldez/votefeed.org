@@ -22,6 +22,17 @@ const getRepLastName = (fullName = "") => {
   return parts[parts.length - 1] ?? "";
 };
 
+const formatVotedOn = (value) => {
+  if (!value) return "Unknown";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Unknown";
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(date);
+};
+
 function Feed(props) {
   const PAGE_SIZE = 5;
   const { token, authFetch } = useAuth();
@@ -270,6 +281,8 @@ function Feed(props) {
         {votes.map((vote) => {
           const interaction = interactionsByBill[vote.bill_id];
           const billNumber = vote.legislationnumber;
+          const voteKey = `${vote.legislationnumber}-${vote.session_number}-${vote.roll_call_number}`;
+          const billLabel = `${String(vote.legislation_type).toUpperCase()} ${vote.legislationnumber}`;
           const showAi = aiToggledByBill[billNumber];
           const isLoadingAi = aiLoadingByBill[billNumber];
           const aiText = aiSummaryByBill[billNumber];
@@ -283,14 +296,14 @@ function Feed(props) {
                 ? vote.summary
                 : aiText || vote.summary;
           return (
-            <div key={vote.legislationnumber} className="leg-card">
+            <div key={voteKey} className="leg-card">
               <div className="leg-top">
                 <span
                   className="pill primary"
                   onClick={() => goToBill(vote)}
                   style={{ cursor: "pointer" }}
                 >
-                  HR {vote.legislationnumber}
+                  {billLabel}
                 </span>
                 <label
                   className="toggle toggle-ai"
@@ -329,9 +342,15 @@ function Feed(props) {
                     voteClass = "neutral";
                   }
                   return (
-                    <span className={`pill ${voteClass}`}>
-                      Rep. {repLastName} Voted: {vote.vote}
-                    </span>
+                    <>
+                      <span className={`pill ${voteClass}`}>
+                        Rep. {repLastName} Voted: {vote.vote}
+                      </span>
+                      <span className="pill neutral">
+                        {" "}
+                        Voted On: {formatVotedOn(vote.voted_on)}
+                      </span>
+                    </>
                   );
                 })()}
               </div>
