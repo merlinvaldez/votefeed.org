@@ -10,7 +10,8 @@
     "db:schema": "powershell -NoProfile -Command \"$dbUrl = $env:DATABASE_URL; if (-not $dbUrl) { $line = Get-Content .env | Where-Object { $_ -match '^DATABASE_URL=' } | Select-Object -First 1; if ($line) { $dbUrl = ($line -split '=',2)[1].Trim('\"') } }; if (-not $dbUrl) { throw 'DATABASE_URL not found in shell env or .env' }; psql $dbUrl -f src/db/schema.sql\"",
     "db:seed": "node  src/db/seed.js",
     "db:reset": "npm run db:schema && npm run db:seed",
-    "db:sync-votes": "node src/db/syncNewVotes.js"
+    "db:sync-votes": "node src/db/syncNewVotes.js",
+    "db:sync-bills": "node src/db/syncMissingBills.js"
   },
   "keywords": [],
   "author": "",

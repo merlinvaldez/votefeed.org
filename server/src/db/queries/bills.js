@@ -1,9 +1,14 @@
 import db from "../client.js";
 import { generateAiBillSummary } from "../../utils/aiSummaryPipeline.js";
 
-export async function getAllBillSummaries(runner = db) {
+export async function getAllBillSummaries(runner = db, options = {}) {
+  const { billType = "hr", fromDateTime } = options;
   const base = `http://localhost:${process.env.PORT || 4000}`;
   const billsUrl = new URL("bills", base);
+  billsUrl.searchParams.set("billType", String(billType).toLowerCase());
+  if (fromDateTime) {
+    billsUrl.searchParams.set("fromDateTime", fromDateTime);
+  }
 
   const resp = await fetch(billsUrl);
   if (!resp.ok)
@@ -14,6 +19,9 @@ export async function getAllBillSummaries(runner = db) {
     const sql = `INSERT INTO bills
     (number, bill_type, title, summary)
     VALUES ($1, $2, $3, $4)
+    ON CONFLICT (bill_type, number) DO UPDATE SET
+      title = EXCLUDED.title,
+      summary = EXCLUDED.summary
     RETURNING *`;
     const params = [
       summary.bill.number,
@@ -27,6 +35,52 @@ export async function getAllBillSummaries(runner = db) {
     inserted.push(bill);
   }
   return inserted;
+}
+
+export async function getMissingBillSummaryTargets(runner = db) {
+  const sql = `SELECT
+    m.legislation_type AS bill_type,
+    MIN(m.voted_on) AS from_date_time,
+    COUNT(DISTINCT m.legislationnumber)::integer AS missing_bill_count
+  FROM member_voting_record m
+  LEFT JOIN bills b
+    ON b.number = m.legislationnumber
+   AND b.bill_type = m.legislation_type
+  WHERE b.id IS NULL
+    AND m.legislation_type IS NOT NULL
+    AND m.voted_on IS NOT NULL
+  GROUP BY m.legislation_type
+  ORDER BY MIN(m.voted_on) ASC`;
+  const { rows } = await runner.query(sql);
+  return rows;
+}
+
+export async function syncMissingBillSummaries(runner = db) {
+  const targets = await getMissingBillSummaryTargets(runner);
+  const results = [];
+  let syncedBillTypeCount = 0;
+  let upsertedBillCount = 0;
+
+  for (const target of targets) {
+    const bills = await getAllBillSummaries(runner, {
+      billType: target.bill_type,
+      fromDateTime: target.from_date_time,
+    });
+    syncedBillTypeCount += 1;
+    upsertedBillCount += bills.length;
+    results.push({
+      billType: target.bill_type,
+      fromDateTime: target.from_date_time,
+      missingBillCount: target.missing_bill_count,
+      upsertedBillCount: bills.length,
+    });
+  }
+
+  return {
+    syncedBillTypeCount,
+    upsertedBillCount,
+    results,
+  };
 }
 
 export async function getBillSummary(legislationNumber) {

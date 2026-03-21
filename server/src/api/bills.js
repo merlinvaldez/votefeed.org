@@ -7,16 +7,33 @@ import {
 } from "../db/queries/bills.js";
 
 const apiKey = process.env.CONGRESS_API_KEY;
+const toCongressDateTimeString = (value) =>
+  value.toISOString().replace(".000Z", "Z");
 
 router.get("/", async (req, res) => {
   if (!apiKey) {
     return res.status(500).json({ error: "Missing Congress API Key" });
   }
   try {
-    const fromDateTime = "2025-01-01T00:00:00Z";
-    const baseUrl = new URL("https://api.congress.gov/v3/summaries/119/hr");
+    const billType = String(req.query.billType ?? "hr").trim().toLowerCase();
+    const rawFromDateTime = String(
+      req.query.fromDateTime ?? "2025-01-01T00:00:00Z",
+    ).trim();
+    const parsedFromDateTime = Date.parse(rawFromDateTime);
+    if (!billType) {
+      return res.status(400).json({ error: "Missing billType" });
+    }
+    if (!Number.isFinite(parsedFromDateTime)) {
+      return res.status(400).json({ error: "Invalid fromDateTime" });
+    }
+    const baseUrl = new URL(
+      `https://api.congress.gov/v3/summaries/119/${billType}`,
+    );
     baseUrl.searchParams.set("limit", "250");
-    baseUrl.searchParams.set("fromDateTime", fromDateTime);
+    baseUrl.searchParams.set(
+      "fromDateTime",
+      toCongressDateTimeString(new Date(parsedFromDateTime)),
+    );
     baseUrl.searchParams.set("api_key", apiKey);
     let summaries = [];
     let nextUrl = baseUrl.toString();
