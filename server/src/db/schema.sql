@@ -31,7 +31,6 @@ CREATE TABLE bills(
     bill_type text, 
     title text NOT NULL,
     summary text NOT NULL,
-    action_date timestamptz, 
     aisummary text 
 );
 

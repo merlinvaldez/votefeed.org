@@ -3,6 +3,7 @@ const router = express.Router();
 export default router;
 
 import { findMemberVotes } from "../db/queries/houseVotes.js";
+import { error } from "node:console";
 
 const apiKey = process.env.CONGRESS_API_KEY;
 const CONGRESS_API_ORIGIN = "https://api.congress.gov";
@@ -18,9 +19,17 @@ router.get("/", async (req, res) => {
     return res.status(500).json({ error: "Missing Congress API Key" });
   }
   try {
+    const rawFromDateTime = String(req.query.fromDateTime ?? "").trim();
+    const parsedFromDateTime = rawFromDateTime
+      ? Date.parse(rawFromDateTime)
+      : null;
+    if (rawFromDateTime && !Number.isFinite(parsedFromDateTime)) {
+      return res.status(400).json({ error: "Invalid fromDateTime" });
+    }
     const baseUrl = new URL("https://api.congress.gov/v3/house-vote/119");
     baseUrl.searchParams.set("limit", "250");
     baseUrl.searchParams.set("api_key", apiKey);
+
     let houseVotes = [];
     let nextUrl = baseUrl.toString();
     while (nextUrl) {
@@ -43,7 +52,15 @@ router.get("/", async (req, res) => {
         nextUrl = null;
       }
     }
-
+    if (parsedFromDateTime !== null) {
+      houseVotes = houseVotes.filter((vote) => {
+        const voteStartDateMs = Date.parse(vote?.startDate ?? "");
+        return (
+          Number.isFinite(voteStartDateMs) &&
+          voteStartDateMs >= parsedFromDateTime
+        );
+      });
+    }
     return res.json({ count: houseVotes.length, houseVotes });
   } catch (err) {
     console.error(err);

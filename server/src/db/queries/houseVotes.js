@@ -121,9 +121,20 @@ async function insertMemberVotes(runner, vote, members) {
   };
 }
 
-export async function getHouseVotes(runner = db) {
+export async function getHouseVotes(runner = db, options = {}) {
+  const { fromDateTime } = options;
+  const parsedFromDateTime = fromDateTime ? Date.parse(fromDateTime) : null;
+  if (fromDateTime && !Number.isFinite(parsedFromDateTime)) {
+    throw new Error("Invalid fromDateTime passed to getHouseVotes");
+  }
   const base = `http://localhost:${process.env.PORT || 4000}`;
   const listUrl = new URL("housevotes", base);
+  if (parsedFromDateTime !== null) {
+    listUrl.searchParams.set(
+      "fromDateTime",
+      new Date(parsedFromDateTime).toISOString(),
+    );
+  }
   const listResp = await fetch(listUrl);
   if (!listResp.ok)
     throw new Error(`getHouseVotes Query failed ${listResp.status}`);
@@ -184,6 +195,14 @@ export async function getHouseVotes(runner = db) {
     duplicateCount,
     skippedRollCalls,
   };
+}
+
+export async function getFreshestVotedOn() {
+  const sql = `SELECT MAX(voted_on) AS freshest_voted_on FROM member_voting_record`;
+  const {
+    rows: [row],
+  } = await db.query(sql);
+  return row?.freshest_voted_on ?? null;
 }
 
 export async function findMemberVotes(bioguideId, options = {}) {
