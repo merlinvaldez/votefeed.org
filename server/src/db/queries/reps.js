@@ -1,6 +1,6 @@
 import db from "../client.js";
 
-export async function getAllReps() {
+export async function getAllReps(runner = db) {
   const base = `http://localhost:${process.env.PORT || 4000}`;
   const repsUrl = new URL("reps", base);
 
@@ -24,7 +24,7 @@ export async function getAllReps() {
     ];
     const {
       rows: [representative],
-    } = await db.query(sql, params);
+    } = await runner.query(sql, params);
     inserted.push(representative);
   }
   return inserted;

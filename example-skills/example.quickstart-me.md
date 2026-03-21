@@ -1,184 +1,152 @@
 ---
 name: quickstart-me
-description: Generate small learn-by-doing quickstarts for concepts, tools, patterns, and features. Use when the user asks to learn something quickly, wants a hands-on tutorial, asks for a "quickstart", or needs a 10-20 minute scratch-environment walkthrough. Always annotate sample code line-by-line so each line explains itself.
+description: Generate beginner-first Markdown mini-project tutorials that are end-to-end and practical, then save them as markdown files in the current workspace. Use when the user asks for a quickstart, guided tutorial, or hands-on learning from zero. Each build step must include a short plain-language explanation and a short code snippet with inline comments explaining each line. Do not include "what to type" labels, separate line-by-line prose breakdowns, extra practice sections, common mistakes, or next steps. Always fetch current web documentation and at least one strong exemplar quickstart, and cite those sources directly in the tutorial.
 ---
 
 # Skill: Quickstart Me
 
 ## Mission
 
-Generate a compact, learn-by-doing quickstart that the user can finish in 10 to 20 minutes in a scratch environment.
+Generate an end-to-end beginner tutorial as a Markdown mini project.
+Teach from zero with small, well-explained code snippets and practical project flow.
+Write the final tutorial to a markdown file in the current workspace instead of returning the full tutorial in chat.
 
 ## Default behavior
 
-- Do not modify any repository.
-- Do not assume the user wants to apply this to an existing codebase.
-- Default to a scratch setup: browser console, CodeSandbox, Replit, or a single local folder.
-- Keep it minimal: one file when possible, two files maximum unless absolutely necessary.
-- Assume the user is learning; prioritize clarity over cleverness.
+- Do not modify any repository code unless the user explicitly asks for implementation.
+- Creating the tutorial markdown file is part of the skill output and is expected.
+- Default to a scratch environment unless the user asks to apply it to an existing codebase.
+- Assume the user is a total beginner to programming and computer science.
+- Prioritize plain language and concept clarity over speed.
+- Keep snippets short (typically 2 to 12 lines) and focused on one idea.
+- Explain key patterns and concepts when they appear.
 
 ## File path format
 
-- Do not output clickable links for local files.
+- Do not output clickable links for local files inside the tutorial content.
 - Do not use `vscode://`, `file://`, `http://`, or `https://` for local code references.
 - Output plain absolute paths only, in this format:
 - `/c:/Users/merli/Desktop/repos/coursework/voteFeed/<path-from-repo-root>`
-- Example:
-- `/c:/Users/merli/Desktop/repos/coursework/voteFeed/client/src/AuthContext.jsx`
 
-## Quickstart structure
+## Documentation workflow (required)
 
-Always output these sections in this order.
+Before writing the tutorial:
 
-1. Goal (1 sentence)
+1. Query the web for up-to-date official documentation relevant to the stack.
+2. Query at least one high-quality exemplar quickstart.
+3. Prefer primary sources and official docs when available.
+4. Use the retrieved docs to shape the tutorial sequence and terminology.
+5. Cite links directly in the tutorial under a dedicated documentation section.
 
-- State exactly what the user will be able to do or understand by the end.
+## File output workflow (required)
 
-2. What it is (plain language)
+Before the final response:
 
-- Explain what it is, why it matters, and when to use it.
+1. Create a `quickstarts/` directory in the current workspace if it does not already exist.
+2. Choose a concise file name based on the tutorial title in kebab-case, for example `daily-vote-feed-sync-api.md`.
+3. Write the full tutorial to that markdown file.
+4. If a file with that name already exists, overwrite it only if the user clearly wants a refreshed version; otherwise append a numeric suffix.
+5. In chat, do not paste the full tutorial. Return only a short confirmation and the absolute path to the markdown file.
 
-3. Mental model (tiny analogy + key rules)
+## Tutorial structure
 
-- Give one short analogy.
-- Give the most helpful principles for the concept (usually 3 to 7 rules).
+Always output these sections in this order inside the markdown file.
 
-4. Setup
+1. Project Title
 
-- Provide exact run instructions with copy/paste commands or clear "open this page/console" guidance.
-- If the environment is unspecified, default to:
-- Browser console for basic JavaScript concepts.
-- Node (latest LTS) for file or CLI examples.
+- A concise title for the mini project.
 
-5. Build it (numbered steps)
+2. Goal
 
+- One sentence describing what the user will build and understand.
+
+3. What You Are Building
+
+- Plain-language overview of the mini project.
+- Explain why this project teaches useful beginner patterns.
+
+4. Documentation References
+
+- List source links used (official docs plus at least one exemplar quickstart).
+
+5. Core Concepts
+
+- Explain only the concepts needed for this mini project.
+- Keep definitions short, concrete, and beginner-friendly.
+
+6. Project Setup
+
+- Provide setup commands and file scaffold in markdown code blocks.
+
+7. Build Steps
+
+- Use numbered steps from start to finish.
 - For each step, include:
-- what to type
-- what the user should see
-- why it matters (one sentence)
-- After each major step, include exactly:
-- "Tell me what you got and I'll give you the next step."
+- a short explanation paragraph describing what this step does
+- a code snippet with inline comments that explain each line
+- why this step matters (one sentence)
+- Do not use the labels `What to type:` or `What it is:`.
 
-6. Micro-exercises (increasing difficulty)
+8. Run and Verify
 
-- Provide as many exercises as needed to meet the goal (typically 3 to 8).
-- For each exercise, include:
-- prompt
-- expected output or success criteria
-- one optional hint
+- Show exactly how to run the mini project.
+- Include a basic verification flow to confirm it works end-to-end.
 
-7. Common mistakes (top 5)
+9. Final Recap
 
-- For each mistake, include:
-- what goes wrong
-- how to recognize it
-- how to fix it
+- Briefly summarize what was built and what core patterns were learned.
 
-8. Next steps (pick one)
+## Forbidden sections
 
-- Offer exactly three paths:
-- Practice more (more exercises)
-- Vary the constraints (same concept, different scenario)
-- Deepen understanding (one deeper concept plus a tiny follow-up quickstart)
+Do not include these sections unless the user explicitly asks for them:
+
+- Micro-exercises
+- Practice tasks
+- Common mistakes
+- Next steps
 
 ## Interaction rules
 
-- Ask at most one lightweight clarifying question only when necessary.
+- Ask at most one lightweight clarifying question only when truly necessary.
 - Otherwise, choose a reasonable default and proceed.
+- If the topic is broad, narrow scope to one complete mini project.
 
 ## Output rules
 
-- Use headings and numbered lists.
+- Write the tutorial to a markdown file in the workspace.
+- Do not paste the full tutorial into chat.
+- In chat, return a short confirmation plus the file path.
 - Do not output diffs.
 - Do not output patches.
+- Keep the tutorial concrete and execution-ready.
+- Ensure the tutorial is complete end-to-end.
 
 ## Code annotation rules
 
-- Any sample code must be line-by-line annotated.
-- Each non-empty code line must include an explanatory comment on that same line, or a directly adjacent comment line that explains it.
-- Prefer inline comments when the language supports them.
+- Every sample snippet must contain inline comments that explain each line.
+- Prefer same-line comments where language permits.
 - Keep comments short and beginner-friendly.
-- If showing an edit-style example, explain every changed line in order (line-by-line), even when using a diff-like format.
-- If the format does not allow comments (for example strict JSON), provide:
-- an annotated teaching block in a comment-capable equivalent (for example `jsonc`), and
-- a second runnable block labeled `Runnable version`.
-- Keep runnable blocks copy/paste executable.
+- Do not add separate line-by-line prose walkthroughs outside the snippet unless the user asks.
+- If a format cannot include comments (for example strict JSON), include:
+- an annotated equivalent block (for example `jsonc`)
+- a runnable block labeled `Runnable version`
 
 ## Style rules
 
-- Keep language plain and concrete.
-- Prefer short steps over long explanations.
-- Keep examples executable immediately without hidden setup.
-- Use safe defaults and avoid destructive commands.
+- Use plain, concrete language.
+- Define unavoidable jargon in one sentence.
+- Keep explanations supportive and direct.
+- Prefer short paragraphs and small snippets.
 
 ## Trigger examples
 
-- "QUICKSTART: Teach me loops in JavaScript."
-- "Give me a quickstart for REST APIs in Node."
-- "Teach me React state in 15 minutes."
-- "I want a hands-on intro to SQL joins."
+- "Quickstart me on building my first REST API."
+- "Teach me React state with a complete beginner mini project."
+- "Give me an end-to-end Node.js quickstart with docs links."
+- "I want a markdown quickstart tutorial that starts from zero."
 
-## Exemplar response
+## Exemplar response behavior
 
-Use exemplars like the following and keep all required sections.
-
-### Exemplar: quickstart on array `map` in JavaScript
-
-1. Goal (1 sentence)
-- Build confidence transforming arrays with `map` and predicting outputs.
-
-2. What it is (plain language)
-- `map` creates a new array by running a function on each element.
-- Use it when you want transformation without mutating the original array.
-
-3. Mental model (tiny analogy + key rules)
-- Analogy: a conveyor belt where each item gets the same transformation step.
-- Rules:
-- `map` returns a new array.
-- Callback runs once per element.
-- Original array is unchanged unless you mutate objects inside it.
-
-4. Setup
-- Open browser DevTools Console, or run `node` in a terminal.
-
-5. Build it (numbered steps)
-1. Type:
-```js
-const nums = [1, 2, 3]; // Create the source array with three numbers.
-const doubled = nums.map((n) => n * 2); // Transform each number into its doubled value.
-console.log(doubled); // Print the transformed array to verify the result.
-console.log(nums); // Print the original array to confirm it stayed unchanged.
-```
-- What you should see: `[2, 4, 6]` then `[1, 2, 3]`
-- Why it matters: confirms transformation without mutating source data.
-- Tell me what you got and I'll give you the next step.
-
-2. Type:
-```js
-const labels = nums.map((n) => `Item-${n}`); // Convert each number into a labeled string.
-console.log(labels); // Print labels to verify string transformation output.
-```
-- What you should see: `["Item-1", "Item-2", "Item-3"]`
-- Why it matters: shows `map` works for type conversion too.
-- Tell me what you got and I'll give you the next step.
-
-6. Micro-exercises (increasing difficulty)
-- Exercise 1 prompt: map `[2, 4, 6]` to `[3, 5, 7]`.
-- Success criteria: output must be exactly `[3, 5, 7]`.
-- Hint: return `n + 1`.
-- Exercise 2 prompt: map `["a", "b"]` to `["A", "B"]`.
-- Success criteria: all letters uppercase.
-- Hint: use `.toUpperCase()`.
-
-7. Common mistakes (top 5)
-- Forgetting `return` in block-bodied callbacks.
-- Recognize: array of `undefined`.
-- Fix: `return value;` inside `{ ... }`.
-- Mutating source objects unintentionally.
-- Recognize: original object fields changed.
-- Fix: return copied objects (`{ ...obj, key: newValue }`).
-
-8. Next steps (pick one)
-- Practice more: do 5 more map transformations with numbers and strings.
-- Vary constraints: combine `filter` + `map` in one pipeline.
-- Deepen understanding: compare `map` vs `forEach` with one tiny benchmark.
+- Create the tutorial markdown file in `quickstarts/`.
+- Reply in chat with a brief confirmation and the absolute file path.
+- Do not dump the tutorial body into chat.

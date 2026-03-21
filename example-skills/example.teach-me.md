@@ -134,6 +134,7 @@ export function isAdmin(user) { // Export a reusable helper function for role ch
 } // End helper function definition.
 ```
 
+
 Checkpoint question
 - Did your editor create the file at the exact path and show no syntax errors?
 
@@ -171,6 +172,7 @@ Output (`annotated snippet` or `annotated unified diff`)
 +    return res.status(401).json({ error: "Unauthorized" }); // Send a 401 response and end middleware execution.
 +  } // End unauthenticated guard branch.
 ```
+
 
 Checkpoint question
 - After this change, do unauthenticated requests now return `401`?

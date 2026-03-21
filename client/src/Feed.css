@@ -204,6 +204,23 @@
   font-weight: 600;
 }
 
+.leg-meta-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.leg-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.leg-divider {
+  color: var(--border);
+}
+
 .leg-meta {
   color: var(--text-muted);
 }

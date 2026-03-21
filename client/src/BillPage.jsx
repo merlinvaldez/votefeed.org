@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./Feed.css";
 import "./BillPage.css";
-import { ThumbsUp, ThumbsDown, MessageCircle, ArrowLeft } from "lucide-react";
+import {
+  ThumbsUp,
+  ThumbsDown,
+  MessageCircle,
+  ArrowLeft,
+  Clock3,
+} from "lucide-react";
 import { API_BASE } from "./constants";
 import { useAuth } from "./AuthContext";
 
@@ -23,11 +29,33 @@ const getVotePillClass = (voteVal) => {
   return "neutral";
 };
 
+const formatVotedOn = (value) => {
+  if (!value) return "Unknown date";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Unknown date";
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(date);
+};
+
+const formatBillLabel = (type, number) => {
+  const normalized = String(type || "hr").toLowerCase();
+  const labels = {
+    hr: "H.R.",
+    hres: "H.Res.",
+    hjres: "H.J.Res.",
+    hconres: "H.Con.Res.",
+  };
+  return `${labels[normalized] || normalized.toUpperCase()} ${number}`;
+};
+
 export default function BillPage() {
   const navigate = useNavigate();
   const { billNumber } = useParams();
   const { state } = useLocation();
-  const repFullName = state?.rep.full_name ?? "";
+  const repFullName = state?.rep?.full_name ?? "";
   const repLastName = getRepLastName(repFullName);
   const { token, authFetch } = useAuth();
   const [bill, setBill] = useState(state?.bill || state?.vote || null);
@@ -60,7 +88,7 @@ export default function BillPage() {
       if (!resp.ok) throw new Error("AI summary failed");
       const data = await resp.json();
       setAiSummary(data.aiSummary);
-    } catch (err) {
+    } catch {
       setAiError("AI summary failed");
     } finally {
       setAiLoading(false);
@@ -256,12 +284,20 @@ export default function BillPage() {
       <div className="leg-card">
         <div className="leg-top">
           <span className="pill primary">
-            {" "}
-            H.R. {bill?.legislationnumber || billNumber}
+            {formatBillLabel(
+              bill?.legislation_type ?? bill?.bill_type,
+              bill?.legislationnumber ?? bill?.number ?? billNumber,
+            )}
           </span>
           {bill?.vote && (
             <span className={`pill ${getVotePillClass(bill.vote)}`}>
               Rep. {repLastName} Voted: {bill.vote}
+            </span>
+          )}
+          {bill?.voted_on && (
+            <span className="pill neutral">
+              <Clock3 size={14}></Clock3>
+              Voted On: {formatVotedOn(bill.voted_on)}
             </span>
           )}
           <label className="toggle toggle-ai" style={{ gap: 8 }}>

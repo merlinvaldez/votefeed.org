@@ -8,13 +8,12 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users(
     id serial PRIMARY KEY,
-    email text UNIQUE NOT NULL,
-    password text,
+    email text UNIQUE,
     clerk_user_id text UNIQUE,
-    first_name text NOT NULL,
-    last_name text NOT NULL,
-    state text NOT NULL,
-    district integer NOT NULL
+    first_name text,
+    last_name text,
+    state text,
+    district integer,
 );
 
 CREATE TABLE reps (
@@ -29,6 +28,7 @@ CREATE TABLE reps (
 CREATE TABLE bills(
     id serial PRIMARY KEY,
     number integer NOT NULL,
+    bill_type text, 
     title text NOT NULL,
     summary text NOT NULL,
     aisummary text 
@@ -37,9 +37,16 @@ CREATE TABLE bills(
 CREATE TABLE member_voting_record (
     id serial PRIMARY KEY,
     legislationNumber integer,
+    legislation_type text,
+    session_number integer, 
+    roll_call_number integer,
+    voted_on timestamptz,
     vote text NOT NULL,
     member_id text NOT NULL
 );
+
+CREATE INDEX idx_member_voting_record_member_roll_call
+ON member_voting_record (member_id, session_number, roll_call_number);
 
 
 CREATE TABLE interactions (

@@ -2,13 +2,10 @@ import db from "../client.js";
 
 import { getDistrictFromAddress } from "./districts.js";
 
-export async function upsertUserByClerkId({
-  clerk_user_id,
-  email,
-  first_name,
-  last_name,
-  address,
-}) {
+export async function upsertUserByClerkId(
+  { clerk_user_id, email, first_name, last_name, address },
+  runner = db,
+) {
   const { district, state } = await getDistrictFromAddress(address);
   const sql = `INSERT INTO users (clerk_user_id, email, first_name, last_name, state, district)
   VALUES ($1,$2,$3,$4,$5,$6)
@@ -17,7 +14,7 @@ export async function upsertUserByClerkId({
   RETURNING *;`;
   const {
     rows: [user],
-  } = await db.query(sql, [
+  } = await runner.query(sql, [
     clerk_user_id,
     email,
     first_name,
