@@ -190,21 +190,41 @@ export async function findMemberVotes(bioguideId, options = {}) {
   const { limit, offset = 0 } = options;
   const hasLimit = Number.isInteger(limit) && limit > 0;
   const safeOffset = Number.isInteger(offset) && offset >= 0 ? offset : 0;
-  const sql = `SELECT
+  const sql = `WITH latest_vote_per_bill AS (
+  SELECT DISTINCT ON (legislation_type, legislationNumber)
+    legislationNumber,
+    legislation_type,
+    session_number,
+    roll_call_number,
+    voted_on,
+    vote
+  FROM member_voting_record
+  WHERE member_id = $1
+    AND voted_on IS NOT NULL
+  ORDER BY
+    legislation_type,
+    legislationNumber,
+    voted_on DESC,
+    session_number DESC,
+    roll_call_number DESC,
+    id DESC
+)
+SELECT
   bills.id AS bill_id,
-  member_voting_record.legislationNumber,
-  member_voting_record.legislation_type,
-  member_voting_record.session_number,
-  member_voting_record.roll_call_number,
-  member_voting_record.voted_on,
+  latest_vote_per_bill.legislationNumber,
+  latest_vote_per_bill.legislation_type,
+  latest_vote_per_bill.session_number,
+  latest_vote_per_bill.roll_call_number,
+  latest_vote_per_bill.voted_on,
   bills.title,
   bills.summary,
-  member_voting_record.vote
-FROM member_voting_record
-JOIN bills ON bills.number = member_voting_record.legislationNumber
-AND bills.bill_type = member_voting_record.legislation_type
-WHERE member_voting_record.member_id = $1`;
-  const orderSql = " ORDER BY member_voting_record.voted_on DESC";
+  latest_vote_per_bill.vote
+FROM latest_vote_per_bill
+JOIN bills
+  ON bills.number = latest_vote_per_bill.legislationNumber
+ AND bills.bill_type = latest_vote_per_bill.legislation_type`;
+  const orderSql =
+    " ORDER BY latest_vote_per_bill.voted_on DESC, latest_vote_per_bill.roll_call_number DESC";
   const pageSql = hasLimit ? " LIMIT $2 OFFSET $3" : "";
   const finalSql = `${sql}${orderSql}${pageSql}`;
   const params = hasLimit ? [bioguideId, limit, safeOffset] : [bioguideId];

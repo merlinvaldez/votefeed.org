@@ -10,6 +10,7 @@ import {
   ThumbsDown,
   MessageCircle,
   IdCard,
+  Clock3,
 } from "lucide-react";
 
 const getRepLastName = (fullName = "") => {
@@ -23,14 +24,25 @@ const getRepLastName = (fullName = "") => {
 };
 
 const formatVotedOn = (value) => {
-  if (!value) return "Unknown";
+  if (!value) return "Unknown date";
   const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "Unknown";
+  if (Number.isNaN(date.getTime())) return "Unknown date";
   return new Intl.DateTimeFormat("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
   }).format(date);
+};
+
+const formatBillLabel = (type, number) => {
+  const normalized = String(type || "hr").toLowerCase();
+  const labels = {
+    hr: "H.R.",
+    hres: "H.Res.",
+    hjres: "H.J.Res.",
+    hconres: "H.Con.Res.",
+  };
+  return `${labels[normalized] || normalized.toUpperCase()} ${number}`;
 };
 
 function Feed(props) {
@@ -51,14 +63,13 @@ function Feed(props) {
   const sentinelRef = useRef(null);
   const votes = feedState?.votes ?? [];
 
-  const [aiToggledByBill, setAiToggledByBill] = useState({});
+  const [aiToggledByCard, setAiToggledByCard] = useState({});
   const [aiSummaryByBill, setAiSummaryByBill] = useState({});
   const [aiLoadingByBill, setAiLoadingByBill] = useState({});
   const [aiErrorByBill, setAiErrorByBill] = useState({});
 
-  const handleToggleAi = async (billNumber, nextValue) => {
-    const next = !aiToggledByBill[billNumber];
-    setAiToggledByBill((prev) => ({ ...prev, [billNumber]: nextValue }));
+  const handleToggleAi = async (cardKey, billNumber, nextValue) => {
+    setAiToggledByCard((prev) => ({ ...prev, [cardKey]: nextValue }));
     if (!nextValue) return;
     if (aiSummaryByBill[billNumber]) return;
     setAiLoadingByBill((prev) => ({ ...prev, [billNumber]: true }));
@@ -282,8 +293,11 @@ function Feed(props) {
           const interaction = interactionsByBill[vote.bill_id];
           const billNumber = vote.legislationnumber;
           const voteKey = `${vote.legislationnumber}-${vote.session_number}-${vote.roll_call_number}`;
-          const billLabel = `${String(vote.legislation_type).toUpperCase()} ${vote.legislationnumber}`;
-          const showAi = aiToggledByBill[billNumber];
+          const billLabel = formatBillLabel(
+            vote.legislation_type,
+            vote.legislationnumber,
+          );
+          const showAi = aiToggledByCard[voteKey];
           const isLoadingAi = aiLoadingByBill[billNumber];
           const aiText = aiSummaryByBill[billNumber];
           const aiError = aiErrorByBill[billNumber];
@@ -298,13 +312,19 @@ function Feed(props) {
           return (
             <div key={voteKey} className="leg-card">
               <div className="leg-top">
-                <span
-                  className="pill primary"
-                  onClick={() => goToBill(vote)}
-                  style={{ cursor: "pointer" }}
-                >
-                  {billLabel}
-                </span>
+                <div className="leg-meta-row">
+                  <span
+                    className="pill primary"
+                    onClick={() => goToBill(vote)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {billLabel}
+                  </span>
+                  <span className="leg-date">
+                    <Clock3 size={14}></Clock3>
+                    {formatVotedOn(vote.voted_on)}
+                  </span>
+                </div>
                 <label
                   className="toggle toggle-ai"
                   style={{ gap: 8 }}
@@ -314,7 +334,7 @@ function Feed(props) {
                     type="checkbox"
                     checked={Boolean(showAi)}
                     onChange={(e) =>
-                      handleToggleAi(billNumber, e.target.checked)
+                      handleToggleAi(voteKey, billNumber, e.target.checked)
                     }
                     aria-label="Toggle to simplify using AI"
                   />
@@ -345,10 +365,6 @@ function Feed(props) {
                     <>
                       <span className={`pill ${voteClass}`}>
                         Rep. {repLastName} Voted: {vote.vote}
-                      </span>
-                      <span className="pill neutral">
-                        {" "}
-                        Voted On: {formatVotedOn(vote.voted_on)}
                       </span>
                     </>
                   );
