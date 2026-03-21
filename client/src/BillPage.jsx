@@ -88,7 +88,7 @@ export default function BillPage() {
       if (!resp.ok) throw new Error("AI summary failed");
       const data = await resp.json();
       setAiSummary(data.aiSummary);
-    } catch (err) {
+    } catch {
       setAiError("AI summary failed");
     } finally {
       setAiLoading(false);

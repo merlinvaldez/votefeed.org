@@ -79,7 +79,7 @@ function Feed(props) {
       if (!resp.ok) throw new Error("Ai summary failed");
       const data = await resp.json();
       setAiSummaryByBill((prev) => ({ ...prev, [billNumber]: data.aiSummary }));
-    } catch (err) {
+    } catch {
       setAiErrorByBill((prev) => ({
         ...prev,
         [billNumber]: "AI summary failed",
