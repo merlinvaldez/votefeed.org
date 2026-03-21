@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import RequireFeedData from "./RequireFeedData";
 import LandingPage from "./LandingPage";
 import Feed from "./Feed";
@@ -26,6 +27,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
+      <Analytics />
     </BrowserRouter>
   );
 }
