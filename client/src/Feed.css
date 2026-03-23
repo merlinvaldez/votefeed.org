@@ -131,48 +131,6 @@
   cursor: pointer;
 }
 
-.member-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 18px 20px;
-  box-shadow: var(--shadow-soft);
-}
-
-.member-name {
-  font-size: 24px;
-  font-weight: 800;
-}
-
-.member-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 6px;
-  color: var(--text-subtle);
-  font-weight: 600;
-  display: inline-flex;
-  align-items: left;
-}
-
-.meta-line {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  line-height: 1.2;
-}
-
-.meta-icon {
-  width: 16px;
-  height: 16px;
-  display: inline-flex;
-  align-items: center; /* vertically center the glyph inside its box */
-  justify-content: center;
-  flex-shrink: 0;
-  color: var(--primary); /* or match your text color */
-  margin-top: 1px; /* slight nudge down if it still feels high */
-}
-
 .feed-section {
   display: flex;
   flex-direction: column;
@@ -402,7 +360,7 @@
   line-height: 1; /* avoid vertical drift */
   letter-spacing: 0.2px; /* tiny spacing for clarity */
   color: var(--primary); /* blue text on light knob */
-  border: 1px solid var(--border) color(--primary);
+  border: 1px solid var(--border);
 }
 
 .toggle.toggle-ai input:checked::after {

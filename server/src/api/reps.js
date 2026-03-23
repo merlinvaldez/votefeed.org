@@ -12,8 +12,9 @@ router.get("/", async (req, res) => {
   }
 
   try {
-    const baseUrl = new URL("https://api.congress.gov/v3/member?congress=119");
+    const baseUrl = new URL("https://api.congress.gov/v3/member/congress/119");
     baseUrl.searchParams.set("limit", "250");
+    baseUrl.searchParams.set("currentMember", "true");
     baseUrl.searchParams.set("api_key", apiKey);
     let members = [];
     let nextUrl = baseUrl.toString();
@@ -34,6 +35,7 @@ router.get("/", async (req, res) => {
       if (paginationNext) {
         const next = new URL(paginationNext);
         next.searchParams.set("api_key", apiKey);
+        next.searchParams.set("currentMember", "true");
         nextUrl = next.toString();
       } else {
         nextUrl = null;

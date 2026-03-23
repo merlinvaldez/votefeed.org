@@ -54,6 +54,17 @@
   box-shadow: var(--shadow-soft);
 }
 
+.profile-section {
+  margin-bottom: 16px;
+}
+
+.profile-section-title {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+}
+
 .profile-card h2 {
   margin: 0 0 8px;
   font-size: 16px;
@@ -61,12 +72,7 @@
   color: var(--text);
 }
 
-.rep-name {
-  font-weight: 800;
-  font-size: 18px;
-}
-
-.rep-meta {
+.profile-empty-copy {
   color: var(--text-subtle);
   font-size: 14px;
 }
