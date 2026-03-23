@@ -10,9 +10,16 @@ export async function getAllReps(runner = db) {
   const inserted = [];
   for (const rep of members) {
     const sql = `INSERT INTO reps
-    (bioguideId, full_name, party, chamber, state, congressionalDistrict)
+    (bioguideId, full_name, party, chamber, state, congressionalDistrict, image_url)
     VALUES
-    ($1, $2, $3, $4, $5, $6)
+    ($1, $2, $3, $4, $5, $6, $7)
+    ON CONFLICT (bioguideId) DO UPDATE SET
+    full_name= EXCLUDED.full_name,
+    party= EXCLUDED.party,
+    chamber= EXCLUDED.chamber,
+    state= EXCLUDED.state,
+    congressionalDistrict= EXCLUDED.congressionalDistrict,
+    image_url = EXCLUDED.image_url
     RETURNING *`;
     const params = [
       rep.bioguideId,
@@ -21,6 +28,7 @@ export async function getAllReps(runner = db) {
       rep.terms.item[0].chamber,
       rep.state,
       rep.district,
+      rep.depiction?.imageUrl ?? null,
     ];
     const {
       rows: [representative],

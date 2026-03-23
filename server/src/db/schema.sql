@@ -22,7 +22,8 @@ CREATE TABLE reps (
     party text NOT NULL,
     chamber text NOT NULL,
     state text NOT NULL,
-    congressionalDistrict integer 
+    congressionalDistrict integer, 
+    image_url text, 
 );
 
 CREATE TABLE bills(
@@ -31,7 +32,9 @@ CREATE TABLE bills(
     bill_type text, 
     title text NOT NULL,
     summary text NOT NULL,
-    aisummary text 
+    aisummary text, 
+    policy_area text, 
+    legislation_url text 
 );
 
 CREATE TABLE member_voting_record (

@@ -237,6 +237,8 @@ SELECT
   latest_vote_per_bill.voted_on,
   bills.title,
   bills.summary,
+  bills.policy_area,
+  bills.legislation_url,
   latest_vote_per_bill.vote
 FROM latest_vote_per_bill
 JOIN bills

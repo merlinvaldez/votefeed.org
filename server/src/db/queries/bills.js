@@ -1,6 +1,25 @@
 import db from "../client.js";
 import { generateAiBillSummary } from "../../utils/aiSummaryPipeline.js";
 
+async function getBillMetadata(billApiUrl) {
+  if (!billApiUrl) {
+    return { policyArea: null, legislationUrl: null };
+  }
+  const apiKey = process.env.CONGRESS_API_KEY;
+  if (!apiKey) throw new Error("Missing Congres API key");
+  const detailUrl = new URL(billApiUrl);
+  detailUrl.searchParams.set("api_key", apiKey);
+  const resp = await fetch(detailUrl);
+  if (!resp.ok) {
+    throw new Error(`getBillMetadata query failed ${resp.status}`);
+  }
+  const { bill } = await resp.json();
+  return {
+    policyArea: bill?.policyArea?.name ?? null,
+    legislationUrl: bill?.legislationUrl ?? null,
+  };
+}
+
 export async function getAllBillSummaries(runner = db, options = {}) {
   const { billType = "hr", fromDateTime } = options;
   const base = `http://localhost:${process.env.PORT || 4000}`;
@@ -16,18 +35,23 @@ export async function getAllBillSummaries(runner = db, options = {}) {
   const { summaries = [] } = await resp.json();
   const inserted = [];
   for (const summary of summaries) {
+    const metadata = await getBillMetadata(summary.bill?.url);
     const sql = `INSERT INTO bills
-    (number, bill_type, title, summary)
-    VALUES ($1, $2, $3, $4)
+    (number, bill_type, title, summary, policy_area, legislation_url)
+    VALUES ($1, $2, $3, $4, $5, $6)
     ON CONFLICT (bill_type, number) DO UPDATE SET
       title = EXCLUDED.title,
-      summary = EXCLUDED.summary
+      summary = EXCLUDED.summary,
+      policy_area= EXCLUDED.policy_area,
+      legislation_url=EXCLUDED.legislation_url
     RETURNING *`;
     const params = [
       summary.bill.number,
       String(summary.bill.type).toLocaleLowerCase(),
       summary.bill.title,
       summary.text,
+      metadata.policyArea,
+      metadata.legislationUrl,
     ];
     const {
       rows: [bill],
@@ -46,7 +70,10 @@ export async function getMissingBillSummaryTargets(runner = db) {
   LEFT JOIN bills b
     ON b.number = m.legislationnumber
    AND b.bill_type = m.legislation_type
-  WHERE b.id IS NULL
+  WHERE (
+  b.id IS NULL 
+  OR b.policy_area IS NULL 
+  OR b.legislation_url IS NULL)
     AND m.legislation_type IS NOT NULL
     AND m.voted_on IS NOT NULL
   GROUP BY m.legislation_type
