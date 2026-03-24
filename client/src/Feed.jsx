@@ -44,10 +44,13 @@ function Feed(props) {
   const isAuthed = Boolean(token);
   const location = useLocation();
   const navigate = useNavigate();
+  const guestBarRef = useRef(null);
+  const guestHighlightTimeoutRef = useRef(null);
 
   const [feedState, setFeedState] = useState(location.state || props.state);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isGuestBarHighlighted, setIsGuestBarHighlighted] = useState(false);
 
   const [interactions, setInteractions] = useState([]);
   const [userId, setUserId] = useState(null);
@@ -60,6 +63,26 @@ function Feed(props) {
   const [aiSummaryByBill, setAiSummaryByBill] = useState({});
   const [aiLoadingByBill, setAiLoadingByBill] = useState({});
   const [aiErrorByBill, setAiErrorByBill] = useState({});
+
+  useEffect(() => {
+    return () => {
+      window.clearTimeout(guestHighlightTimeoutRef.current);
+    };
+  }, []);
+
+  const promptGuestInteraction = () => {
+    if (isAuthed) return false;
+    guestBarRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setIsGuestBarHighlighted(false);
+    window.clearTimeout(guestHighlightTimeoutRef.current);
+    window.requestAnimationFrame(() => {
+      setIsGuestBarHighlighted(true);
+    });
+    guestHighlightTimeoutRef.current = window.setTimeout(() => {
+      setIsGuestBarHighlighted(false);
+    }, 1400);
+    return true;
+  };
 
   const handleToggleAi = async (cardKey, billNumber, nextValue) => {
     setAiToggledByCard((prev) => ({ ...prev, [cardKey]: nextValue }));
@@ -191,7 +214,10 @@ function Feed(props) {
   }
 
   const handleStance = async (billId, stance) => {
-    if (!userId) return;
+    if (!userId) {
+      promptGuestInteraction();
+      return;
+    }
 
     try {
       const existing = interactionsByBill[billId];
@@ -247,10 +273,21 @@ function Feed(props) {
     const billNumber = vote.legislationnumber;
     navigate(`/bill/${billNumber}`, { state: { rep, bill: vote } });
   };
+
+  const handleCommentIntent = (vote) => {
+    if (promptGuestInteraction()) return;
+    goToBill(vote);
+  };
+
   return (
     <>
       {!isAuthed && (
-        <div className="guest-bar">
+        <div
+          ref={guestBarRef}
+          className={`guest-bar ${
+            isGuestBarHighlighted ? "guest-bar-highlighted" : ""
+          }`}
+        >
           <div className="guest-left">
             <Info className="guest-icon" strokeWidth={1.75}></Info>
             <div>
@@ -374,7 +411,7 @@ function Feed(props) {
 
                 <div
                   className="comments"
-                  onClick={() => goToBill(vote)}
+                  onClick={() => handleCommentIntent(vote)}
                   style={{ cursor: "pointer" }}
                 >
                   <MessageCircle size={16} />
