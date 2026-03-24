@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./Feed.css";
 import "./BillPage.css";
@@ -8,6 +8,9 @@ import {
   MessageCircle,
   ArrowLeft,
   Clock3,
+  FileText,
+  ExternalLink,
+  Info,
 } from "lucide-react";
 import { API_BASE } from "./constants";
 import { useAuth } from "./AuthContext";
@@ -58,6 +61,9 @@ export default function BillPage() {
   const repFullName = state?.rep?.full_name ?? "";
   const repLastName = getRepLastName(repFullName);
   const { token, authFetch } = useAuth();
+  const isAuthed = Boolean(token);
+  const guestBarRef = useRef(null);
+  const guestHighlightTimeoutRef = useRef(null);
   const [bill, setBill] = useState(state?.bill || state?.vote || null);
   const [status, setStatus] = useState(bill ? "ready" : "loading");
   const [error, setError] = useState("");
@@ -69,6 +75,7 @@ export default function BillPage() {
   const [interactionError, setInteractionError] = useState("");
   const [isEditingComment, setIsEditingComment] = useState(false);
   const [isDraftDirty, setIsDraftDirty] = useState(false);
+  const [isGuestBarHighlighted, setIsGuestBarHighlighted] = useState(false);
 
   const [aiToggled, setAiToggled] = useState(false);
   const [aiSummary, setAiSummary] = useState("");
@@ -76,6 +83,29 @@ export default function BillPage() {
   const [aiError, setAiError] = useState("");
 
   const billId = bill?.bill_id ?? bill?.id ?? null;
+  const fullBillUrl = bill?.legislation_url ?? null;
+  const canReadFullBill = Boolean(fullBillUrl);
+
+  useEffect(() => {
+    return () => {
+      window.clearTimeout(guestHighlightTimeoutRef.current);
+    };
+  }, []);
+
+  const promptGuestInteraction = () => {
+    if (isAuthed) return false;
+    guestBarRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setInteractionError("");
+    setIsGuestBarHighlighted(false);
+    window.clearTimeout(guestHighlightTimeoutRef.current);
+    window.requestAnimationFrame(() => {
+      setIsGuestBarHighlighted(true);
+    });
+    guestHighlightTimeoutRef.current = window.setTimeout(() => {
+      setIsGuestBarHighlighted(false);
+    }, 1400);
+    return true;
+  };
 
   const handleToggleAi = async (nextValue) => {
     setAiToggled(nextValue);
@@ -161,7 +191,7 @@ export default function BillPage() {
 
   const handleStanceClick = async (nextStance) => {
     if (!token) {
-      setInteractionError("Log in to vote on bills.");
+      promptGuestInteraction();
       return;
     }
     if (!billId) return;
@@ -205,7 +235,7 @@ export default function BillPage() {
 
   const handleCommentSave = async () => {
     if (!token) {
-      setInteractionError("Log in to comment.");
+      promptGuestInteraction();
       return;
     }
     if (!billId) return;
@@ -281,6 +311,25 @@ export default function BillPage() {
       <button className="back-link" onClick={() => navigate(-1)}>
         <ArrowLeft size={18}></ArrowLeft> Back to Feed
       </button>
+      {!isAuthed && (
+        <div
+          ref={guestBarRef}
+          className={`guest-bar ${
+            isGuestBarHighlighted ? "guest-bar-highlighted" : ""
+          }`}
+        >
+          <div className="guest-left">
+            <Info className="guest-icon" strokeWidth={1.75}></Info>
+            <div>
+              <div className="guest-title">Viewing as Guest</div>
+              <div className="guest-sub">Your interactions won't be saved.</div>
+            </div>
+          </div>
+          <button className="guest-cta" onClick={() => navigate("/login")}>
+            Log In / Sign Up
+          </button>
+        </div>
+      )}
       <div className="leg-card">
         <div className="leg-top">
           <span className="pill primary">
@@ -329,6 +378,22 @@ export default function BillPage() {
           <div className="leg-body">{aiSummary}</div>
         )}
         {showAi && aiError && <p className="error-text">{aiError}</p>}
+        {canReadFullBill && (
+          <div className="bill-reference-row">
+            <a
+              className="bill-text-link"
+              href={fullBillUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="bill-text-link-copy">
+                <FileText size={18}></FileText>
+                <span>Read Full Bill Text</span>
+              </span>
+              <ExternalLink size={16}></ExternalLink>
+            </a>
+          </div>
+        )}
 
         <div className="vote-actions">
           <button
@@ -366,7 +431,17 @@ export default function BillPage() {
           )}
           {showCommentEditor && (
             <textarea
-              placeholder="Write a comment to your Representative"
+              placeholder={
+                isAuthed
+                  ? "Write a comment to your Representative"
+                  : "Log in to comment on this bill"
+              }
+              readOnly={!isAuthed}
+              onFocus={() => {
+                if (!isAuthed) {
+                  promptGuestInteraction();
+                }
+              }}
               value={comment}
               onChange={(e) => {
                 setComment(e.target.value);

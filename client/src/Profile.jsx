@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UserAvatar } from "@clerk/clerk-react";
 import { useAuth } from "./AuthContext";
 import { API_BASE, STATES } from "./constants";
+import RepCard from "./RepCard";
 import "./Profile.css";
 
 export default function Profile() {
@@ -46,6 +47,7 @@ export default function Profile() {
         if (!meResp.ok) throw new Error("Failed to load profile");
         const me = await meResp.json();
         setUser(me);
+
         const feedResp = await authFetch(`${API_BASE}/users/me/feed`);
         if (!feedResp.ok) throw new Error("Failed to load district data");
         const feed = await feedResp.json();
@@ -56,6 +58,7 @@ export default function Profile() {
         setLoading(false);
       }
     }
+
     loadProfile();
   }, [token, authFetch, navigate]);
 
@@ -68,6 +71,7 @@ export default function Profile() {
       setFormError("Enter a 5 digit Zip code.");
       return;
     }
+
     setSaving(true);
     try {
       const address = `${street.trim()}, ${city.trim()}, ${stateCode.trim()} ${zip.trim()}`;
@@ -115,17 +119,15 @@ export default function Profile() {
           <div className="profile-email">{user.email}</div>
         </div>
       </header>
-      <section className="profile-card">
-        <h2>Representative</h2>
+
+      <section className="profile-section">
+        <h2 className="profile-section-title">Representative</h2>
         {rep ? (
-          <>
-            <div className="rep-name">{rep.full_name}</div>
-            <div className="rep-meta">
-              {rep.party} • {rep.state}
-            </div>
-          </>
+          <RepCard rep={rep}></RepCard>
         ) : (
-          <div className="rep-meta">No representative data.</div>
+          <section className="profile-card">
+            <div className="profile-empty-copy">No representative data.</div>
+          </section>
         )}
       </section>
 
@@ -161,9 +163,7 @@ export default function Profile() {
               onChange={(e) => setStateCode(e.target.value)}
               required
             >
-              <option value="">
-                Select State
-              </option>
+              <option value="">Select State</option>
               {STATES.map(({ code, name }) => (
                 <option key={code} value={code}>
                   {name}
