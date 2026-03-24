@@ -53,8 +53,37 @@
 .vote-actions {
   display: flex;
   gap: 12px;
-  margin: 16px 0;
+  margin: 8px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
   flex-wrap: wrap;
+}
+
+.bill-reference-row {
+  margin-top: 2px;
+}
+
+.bill-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--primary-text);
+  text-decoration: none;
+  font-weight: 700;
+  transition:
+    color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.bill-text-link-copy {
+  display: inline-flex; /* Keep the file icon and the label grouped together. */
+  align-items: center; /* Align the icon with the first line of text. */
+  gap: 10px; /* Add breathing room between the icon and the label. */
+}
+
+.bill-text-link:hover {
+  color: var(--primary);
+  opacity: 0.9;
 }
 
 .ghost-btn.active {

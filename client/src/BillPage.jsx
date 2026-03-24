@@ -8,6 +8,8 @@ import {
   MessageCircle,
   ArrowLeft,
   Clock3,
+  FileText,
+  ExternalLink,
 } from "lucide-react";
 import { API_BASE } from "./constants";
 import { useAuth } from "./AuthContext";
@@ -76,6 +78,8 @@ export default function BillPage() {
   const [aiError, setAiError] = useState("");
 
   const billId = bill?.bill_id ?? bill?.id ?? null;
+  const fullBillUrl = bill?.legislation_url ?? null;
+  const canReadFullBill = Boolean(fullBillUrl);
 
   const handleToggleAi = async (nextValue) => {
     setAiToggled(nextValue);
@@ -329,6 +333,22 @@ export default function BillPage() {
           <div className="leg-body">{aiSummary}</div>
         )}
         {showAi && aiError && <p className="error-text">{aiError}</p>}
+        {canReadFullBill && (
+          <div className="bill-reference-row">
+            <a
+              className="bill-text-link"
+              href={fullBillUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="bill-text-link-copy">
+                <FileText size={18}></FileText>
+                <span>Read Full Bill Text</span>
+              </span>
+              <ExternalLink size={16}></ExternalLink>
+            </a>
+          </div>
+        )}
 
         <div className="vote-actions">
           <button
