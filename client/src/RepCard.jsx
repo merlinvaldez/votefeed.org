@@ -1,4 +1,12 @@
 import { IdCard, MapPin } from "lucide-react";
+import {
+  GaugeContainer,
+  GaugeReferenceArc,
+  GaugeValueArc,
+  GaugeValueText,
+  gaugeClasses,
+  useGaugeState,
+} from "@mui/x-charts/Gauge";
 import "./RepCard.css";
 
 const getRepInitials = (fullName = "") => {
@@ -11,8 +19,47 @@ const getRepInitials = (fullName = "") => {
     .join("");
 };
 
+const getAlignmentColor = (percent) => {
+  if (percent >= 67) return "#16a34a";
+  if (percent >= 40) return "#d97706";
+  return "#dc2626";
+};
+
+function GaugePointer() {
+  const { valueAngle, outerRadius, cx, cy } = useGaugeState();
+
+  if (
+    valueAngle == null ||
+    outerRadius == null ||
+    cx == null ||
+    cy == null
+  ) {
+    return null;
+  }
+
+  const needleLength = Number(outerRadius) * 0.58;
+  const pivotY = cy - Number(outerRadius) * 0.19;
+  const targetX = cx + needleLength * Math.sin(valueAngle);
+  const targetY = pivotY - needleLength * Math.cos(valueAngle);
+
+  return (
+    <g className="member-gauge-pointer">
+      <line
+        x1={cx}
+        y1={pivotY}
+        x2={targetX}
+        y2={targetY}
+        className="member-gauge-needle"
+      />
+      <circle cx={cx} cy={pivotY} r="6" className="member-gauge-pivot" />
+    </g>
+  );
+}
+
 export default function RepCard({ rep, alignment }) {
   const repInitials = getRepInitials(rep?.full_name);
+  const alignmentPercent = Math.max(0, Math.min(100, alignment?.percent ?? 0));
+  const alignmentColor = getAlignmentColor(alignmentPercent);
 
   return (
     <section className="member-card">
@@ -47,15 +94,58 @@ export default function RepCard({ rep, alignment }) {
         </div>
       </div>
       {alignment && (
-        <div className="member-alignment-debug">
-          {!alignment.hasData ? (
-            <p>{alignment.emptyMessage}</p>
-          ) : (
-            <p>
-              {alignment.percent}% alignment ({alignment.approveCount}/
-              {alignment.totalCount})
-            </p>
-          )}
+        <div
+          className="member-alignment"
+          style={{ "--alignment-accent": alignmentColor }}
+        >
+          <div className="member-alignment-chart">
+            <GaugeContainer
+              width={176}
+              height={112}
+              value={alignmentPercent}
+              valueMin={0}
+              valueMax={100}
+              startAngle={-90}
+              endAngle={90}
+              innerRadius="72%"
+              outerRadius="98%"
+              cornerRadius="50%"
+              aria-label="Policy alignment gauge"
+              sx={{
+                [`& .${gaugeClasses.referenceArc}`]: {
+                  fill: "#dde2e8",
+                },
+                [`& .${gaugeClasses.valueArc}`]: {
+                  fill: alignmentColor,
+                },
+                [`& .${gaugeClasses.valueText}`]: {
+                  transform: "translate(0px, 2px)",
+                },
+              }}
+            >
+              <GaugeReferenceArc />
+              <GaugeValueArc />
+              <GaugeValueText
+                text={({ value }) => `${Math.round(value ?? 0)}%`}
+                style={{
+                  fill: "var(--alignment-accent)",
+                  fontSize: 22,
+                  fontWeight: 800,
+                  textAnchor: "middle",
+                  dominantBaseline: "central",
+                }}
+              />
+              <GaugePointer />
+            </GaugeContainer>
+          </div>
+          <div className="member-alignment-label">Policy Alignment</div>
+          <p className="member-alignment-copy">
+            You agree on{" "}
+            <span className="member-alignment-emphasis">
+              {alignment.approveCount}
+            </span>{" "}
+            out of {alignment.totalCount} votes
+          </p>
         </div>
       )}
     </section>

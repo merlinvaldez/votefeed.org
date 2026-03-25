@@ -11,6 +11,7 @@ export default function Profile() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [rep, setRep] = useState(null);
+  const [alignment, setAlignment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [showForm, setShowForm] = useState(false);
@@ -52,6 +53,7 @@ export default function Profile() {
         if (!feedResp.ok) throw new Error("Failed to load district data");
         const feed = await feedResp.json();
         setRep(feed.rep || null);
+        setAlignment(feed.alignment || null);
         setLoading(false);
       } catch (err) {
         setError(err.message || "Something went wrong");
@@ -90,6 +92,7 @@ export default function Profile() {
       if (!feedResp.ok) throw new Error("Failed to refresh district data");
       const feed = await feedResp.json();
       setRep(feed.rep || null);
+      setAlignment(feed.alignment || null);
 
       setShowForm(false);
       setStreet("");
@@ -123,7 +126,7 @@ export default function Profile() {
       <section className="profile-section">
         <h2 className="profile-section-title">Representative</h2>
         {rep ? (
-          <RepCard rep={rep}></RepCard>
+          <RepCard rep={rep} alignment={alignment}></RepCard>
         ) : (
           <section className="profile-card">
             <div className="profile-empty-copy">No representative data.</div>

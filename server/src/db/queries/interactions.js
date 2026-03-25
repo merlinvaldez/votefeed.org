@@ -74,9 +74,7 @@ export async function getAlignmentByUserAndRep(userId, repBioguideId) {
   const approveCount = summary?.approve_count ?? 0;
   const disapproveCount = summary?.disapprove_count ?? 0;
   const hasData = totalCount > 0;
-  const percent = hasData
-    ? Math.round((approveCount / totalCount) * 100)
-    : null;
+  const percent = hasData ? Math.round((approveCount / totalCount) * 100) : 0;
 
   return {
     totalCount,
@@ -84,7 +82,7 @@ export async function getAlignmentByUserAndRep(userId, repBioguideId) {
     disapproveCount,
     percent,
     hasData,
-    emptyMessage: hasData ? null : "You haven't interacted with any votes yet.",
+    emptyMessage: null,
   };
 }
 

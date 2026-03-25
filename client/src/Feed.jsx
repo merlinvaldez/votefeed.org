@@ -59,6 +59,7 @@ function Feed(props) {
   const [isGuestBarHighlighted, setIsGuestBarHighlighted] = useState(false);
 
   const [interactions, setInteractions] = useState([]);
+  const [interactionsLoaded, setInteractionsLoaded] = useState(false);
   const [userId, setUserId] = useState(null);
   const [hasMore, setHasmore] = useState(true);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
@@ -192,6 +193,7 @@ function Feed(props) {
 
     (async () => {
       try {
+        if (!cancelled) setInteractionsLoaded(false);
         const meResp = await authFetch(`${API_BASE}/users/me`);
         if (!meResp.ok) throw new Error("Failed to load user");
         const me = await meResp.json();
@@ -204,7 +206,9 @@ function Feed(props) {
           throw new Error("Failed to load interactions");
         const data = await interactionsResp.json();
         if (!cancelled) setInteractions(data);
+        if (!cancelled) setInteractionsLoaded(true);
       } catch (err) {
+        if (!cancelled) setInteractionsLoaded(true);
         if (!cancelled) setError(err.message || "Failed to load interactions");
       }
     })();
@@ -234,12 +238,12 @@ function Feed(props) {
     totalCount,
     approveCount,
     disapproveCount: totalCount - approveCount,
-    percent: hasData ? Math.round((approveCount / totalCount) * 100) : null,
+    percent: hasData ? Math.round((approveCount / totalCount) * 100) : 0,
     hasData,
-    emptyMessage: hasData ? null : "You haven't interacted with any votes yet.",
+    emptyMessage: null,
   };
 
-  const alignmentForCard = interactions.length
+  const alignmentForCard = interactionsLoaded
     ? liveAlignment
     : feedState?.alignment;
 
