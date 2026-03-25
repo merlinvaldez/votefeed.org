@@ -1,12 +1,12 @@
 import db from "../client.js";
 
-export async function addStance(userId, billId, stance) {
-  const sql = `INSERT INTO interactions (user_id, bill_id, stance)
-  VALUES ($1,$2,$3)
+export async function addStance(userId, billId, rep_bioguide_id, stance) {
+  const sql = `INSERT INTO interactions (user_id, bill_id, rep_bioguide_id, stance)
+  VALUES ($1,$2,$3,$4)
   RETURNING *`;
   const {
     rows: [addedStance],
-  } = await db.query(sql, [userId, billId, stance]);
+  } = await db.query(sql, [userId, billId, rep_bioguide_id, stance]);
   return addedStance;
 }
 
@@ -56,6 +56,34 @@ export async function getAllUserInteractions(userId) {
     WHERE user_id=$1`;
   const { rows: userInteractions } = await db.query(sql, [userId]);
   return userInteractions;
+}
+
+export async function getAlignmentByUserAndRep(userId, repBioguideId) {
+  const sql = `SELECT
+  COUNT(*)::integer AS total_count,
+  COALESCE(SUM(CASE WHEN stance = 'approve' THEN 1 ELSE 0 END), 0)::integer AS approve_count,
+  COALESCE(SUM(CASE WHEN stance = 'disapprove' THEN 1 ELSE 0 END), 0)::integer AS disapprove_count
+  FROM interactions
+  WHERE user_id=$1 and rep_bioguide_id=$2`;
+
+  const {
+    rows: [summary],
+  } = await db.query(sql, [userId, repBioguideId]);
+
+  const totalCount = summary?.total_count ?? 0;
+  const approveCount = summary?.approve_count ?? 0;
+  const disapproveCount = summary?.disapprove_count ?? 0;
+  const hasData = totalCount > 0;
+  const percent = hasData ? Math.round((approveCount / totalCount) * 100) : 0;
+
+  return {
+    totalCount,
+    approveCount,
+    disapproveCount,
+    percent,
+    hasData,
+    emptyMessage: null,
+  };
 }
 
 export async function getUserInteractionsByBill(userId, billId) {

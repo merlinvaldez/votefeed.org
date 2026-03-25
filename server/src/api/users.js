@@ -3,6 +3,7 @@ const router = express.Router();
 export default router;
 import { findRepByDistrict } from "../db/queries/reps.js";
 import { findMemberVotes } from "../db/queries/houseVotes.js";
+import { getAlignmentByUserAndRep } from "../db/queries/interactions.js";
 import {
   updateUserDistrict,
   upsertUserByClerkId,
@@ -55,11 +56,9 @@ router.post(
             .toLowerCase()
             .includes("email"))
       ) {
-        return res
-          .status(409)
-          .json({
-            error: "An Account with that email already exists. Please sign in",
-          });
+        return res.status(409).json({
+          error: "An Account with that email already exists. Please sign in",
+        });
       }
       return next(err);
     }
@@ -85,7 +84,11 @@ router.get("/me/feed", requireUser, async (req, res) => {
     const offset =
       Number.isInteger(rawOffset) && rawOffset >= 0 ? rawOffset : 0;
     const votes = await findMemberVotes(rep.bioguideid, { limit, offset });
-    res.json({ rep, votes });
+    const alignment = await getAlignmentByUserAndRep(
+      req.user.id,
+      rep.bioguideid,
+    );
+    res.json({ rep, votes, alignment });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to load feed" });

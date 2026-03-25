@@ -57,5 +57,9 @@ CREATE TABLE interactions (
     stance text NOT NULL,
     user_comment text,
     user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    rep_bioguide_id text NOT NULL REFERENCES reps(bioguideId),
     bill_id integer NOT NULL REFERENCES bills(id) ON DELETE CASCADE
 );
+
+CREATE INDEX idx_interactions_user_rep
+ON interactions(user_id,rep_bioguide_id);

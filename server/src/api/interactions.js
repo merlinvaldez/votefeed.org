@@ -42,11 +42,16 @@ router.get("/users/:userId/bill/:billId", async (req, res) => {
 router.post(
   "/addstance",
   requireUser,
-  requireBody(["bill_id", "stance"]),
+  requireBody(["bill_id", "rep_bioguide_id", "stance"]),
   async (req, res) => {
-    const { bill_id, stance } = req.body;
+    const { bill_id, rep_bioguide_id, stance } = req.body;
     const user_id = req.user.id;
-    const addedStance = await addStance(user_id, bill_id, stance);
+    const addedStance = await addStance(
+      user_id,
+      bill_id,
+      rep_bioguide_id,
+      stance,
+    );
     res.status(201).send(addedStance);
   },
 );

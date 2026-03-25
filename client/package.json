@@ -11,9 +11,15 @@
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.61.1",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.9",
+    "@mui/x-charts": "^8.28.0",
     "@vercel/analytics": "^2.0.1",
+    "apexcharts": "^5.10.4",
     "lucide-react": "^0.562.0",
     "react": "^19.2.0",
+    "react-apexcharts": "^2.1.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.11.0"
   },
