@@ -220,6 +220,7 @@ export default function BillPage() {
               : {
                   user_id: userId,
                   bill_id: billId,
+                  rep_bioguide_id: state?.rep?.bioguideid,
                   stance: nextStance,
                 },
           ),
@@ -257,6 +258,7 @@ export default function BillPage() {
             body: JSON.stringify({
               user_id: userId,
               bill_id: billId,
+              rep_bioguide_id: state?.rep?.bioguideid,
               stance,
             }),
           },

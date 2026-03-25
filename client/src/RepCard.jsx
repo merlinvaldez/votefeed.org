@@ -11,7 +11,7 @@ const getRepInitials = (fullName = "") => {
     .join("");
 };
 
-export default function RepCard({ rep }) {
+export default function RepCard({ rep, alignment }) {
   const repInitials = getRepInitials(rep?.full_name);
 
   return (
@@ -46,6 +46,18 @@ export default function RepCard({ rep }) {
           </div>
         </div>
       </div>
+      {alignment && (
+        <div className="member-alignment-debug">
+          {!alignment.hasData ? (
+            <p>{alignment.emptyMessage}</p>
+          ) : (
+            <p>
+              {alignment.percent}% alignment ({alignment.approveCount}/
+              {alignment.totalCount})
+            </p>
+          )}
+        </div>
+      )}
     </section>
   );
 }

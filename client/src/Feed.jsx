@@ -4,7 +4,13 @@ import { useAuth } from "./AuthContext";
 import { API_BASE } from "./constants";
 import RepCard from "./RepCard";
 import "./Feed.css";
-import { Info, ThumbsUp, ThumbsDown, MessageCircle, Clock3 } from "lucide-react";
+import {
+  Info,
+  ThumbsUp,
+  ThumbsDown,
+  MessageCircle,
+  Clock3,
+} from "lucide-react";
 
 const getRepLastName = (fullName = "") => {
   const normalized = fullName.trim();
@@ -212,6 +218,30 @@ function Feed(props) {
   for (const interaction of interactions) {
     interactionsByBill[interaction.bill_id] = interaction;
   }
+  const rep = feedState?.rep;
+
+  const liveRepInteractions = interactions.filter(
+    (interaction) => interaction.rep_bioguide_id === rep?.bioguideid,
+  );
+
+  const approveCount = liveRepInteractions.filter(
+    (interaction) => interaction.stance === "approve",
+  ).length;
+
+  const totalCount = liveRepInteractions.length;
+  const hasData = totalCount > 0;
+  const liveAlignment = {
+    totalCount,
+    approveCount,
+    disapproveCount: totalCount - approveCount,
+    percent: hasData ? Math.round((approveCount / totalCount) * 100) : null,
+    hasData,
+    emptyMessage: hasData ? null : "You haven't interacted with any votes yet.",
+  };
+
+  const alignmentForCard = interactions.length
+    ? liveAlignment
+    : feedState?.alignment;
 
   const handleStance = async (billId, stance) => {
     if (!userId) {
@@ -243,6 +273,7 @@ function Feed(props) {
               : {
                   user_id: userId,
                   bill_id: billId,
+                  rep_bioguide_id: rep.bioguideid,
                   stance,
                 },
           ),
@@ -266,7 +297,6 @@ function Feed(props) {
   if (!feedState?.rep || !feedState?.votes) {
     return <div>Missing feed data</div>;
   }
-  const rep = feedState?.rep;
   const repLastName = getRepLastName(rep.full_name);
 
   const goToBill = (vote) => {
@@ -301,7 +331,7 @@ function Feed(props) {
         </div>
       )}
 
-      <RepCard rep={rep}></RepCard>
+      <RepCard rep={rep} alignment={alignmentForCard}></RepCard>
 
       <section className="feed-section">
         <h2 className="section-title">Legislative Feed</h2>
