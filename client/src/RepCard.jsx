@@ -28,17 +28,12 @@ const getAlignmentColor = (percent) => {
 function GaugePointer() {
   const { valueAngle, outerRadius, cx, cy } = useGaugeState();
 
-  if (
-    valueAngle == null ||
-    outerRadius == null ||
-    cx == null ||
-    cy == null
-  ) {
+  if (valueAngle == null || outerRadius == null || cx == null || cy == null) {
     return null;
   }
 
-  const needleLength = Number(outerRadius) * 0.58;
-  const pivotY = cy - Number(outerRadius) * 0.19;
+  const needleLength = Number(outerRadius) * 0.65;
+  const pivotY = cy - Number(outerRadius) * 0.05;
   const targetX = cx + needleLength * Math.sin(valueAngle);
   const targetY = pivotY - needleLength * Math.cos(valueAngle);
 
@@ -101,15 +96,14 @@ export default function RepCard({ rep, alignment }) {
           <div className="member-alignment-chart">
             <GaugeContainer
               width={176}
-              height={112}
+              height={115}
               value={alignmentPercent}
               valueMin={0}
               valueMax={100}
               startAngle={-90}
               endAngle={90}
-              innerRadius="72%"
+              innerRadius="68%"
               outerRadius="98%"
-              cornerRadius="50%"
               aria-label="Policy alignment gauge"
               sx={{
                 [`& .${gaugeClasses.referenceArc}`]: {
@@ -119,7 +113,7 @@ export default function RepCard({ rep, alignment }) {
                   fill: alignmentColor,
                 },
                 [`& .${gaugeClasses.valueText}`]: {
-                  transform: "translate(0px, 2px)",
+                  transform: "translate(0px, 10px)",
                 },
               }}
             >
@@ -129,8 +123,8 @@ export default function RepCard({ rep, alignment }) {
                 text={({ value }) => `${Math.round(value ?? 0)}%`}
                 style={{
                   fill: "var(--alignment-accent)",
-                  fontSize: 22,
-                  fontWeight: 800,
+                  fontSize: 20,
+                  fontWeight: 750,
                   textAnchor: "middle",
                   dominantBaseline: "central",
                 }}
