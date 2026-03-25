@@ -113,7 +113,7 @@ export default function RepCard({ rep, alignment }) {
                   fill: alignmentColor,
                 },
                 [`& .${gaugeClasses.valueText}`]: {
-                  transform: "translate(0px, 10px)",
+                  transform: "translate(0px, 9px)",
                 },
               }}
             >
