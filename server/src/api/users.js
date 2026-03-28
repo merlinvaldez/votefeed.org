@@ -2,7 +2,10 @@ import express from "express";
 const router = express.Router();
 export default router;
 import { findRepByDistrict } from "../db/queries/reps.js";
-import { findMemberVotes } from "../db/queries/houseVotes.js";
+import {
+  findMemberPolicyAreas,
+  findMemberVotes,
+} from "../db/queries/houseVotes.js";
 import { getAlignmentByUserAndRep } from "../db/queries/interactions.js";
 import {
   updateUserDistrict,
@@ -33,12 +36,13 @@ router.post(
   requireBody(["address", "email", "first_name", "last_name"]),
   async (req, res, next) => {
     try {
-      if (!req.auth?.userId) {
+      const { userId } = req.auth();
+      if (!userId) {
         return res.status(401).send("Unauthorized");
       }
       const { address, email, first_name, last_name } = req.body;
       const user = await upsertUserByClerkId({
-        clerk_user_id: req.auth.userId,
+        clerk_user_id: userId,
         email,
         first_name,
         last_name,
@@ -70,6 +74,23 @@ router.get("/me", requireUser, (req, res) => {
   res.json({ id, email, first_name, last_name, district, state });
 });
 
+router.get("/me/alignment", requireUser, async (req, res) => {
+  try {
+    const repBioguideId = String(req.query.repBioguideId ?? "").trim();
+    const policyArea = String(req.query.policyArea ?? "").trim() || null;
+    if (!repBioguideId) {
+      return res.status(400).json({ error: "Missing repBioguideId" });
+    }
+    const alignment = await getAlignmentByUserAndRep(req.user.id, repBioguideId, {
+      policyArea,
+    });
+    res.json(alignment);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to load alignment" });
+  }
+});
+
 router.get("/me/feed", requireUser, async (req, res) => {
   try {
     const { district, state } = req.user;
@@ -80,15 +101,23 @@ router.get("/me/feed", requireUser, async (req, res) => {
     if (!rep) return res.status(404).json({ error: "No rep for district" });
     const rawLimit = Number.parseInt(req.query.limit, 10);
     const rawOffset = Number.parseInt(req.query.offset, 10);
-    const limit = Number.isInteger(rawLimit) && rawLimit > 0 ? rawLimit : 10;
+    const policyArea = String(req.query.policyArea ?? "").trim() || null;
+    const limit = Number.isInteger(rawLimit) && rawLimit > 0 ? rawLimit : undefined;
     const offset =
       Number.isInteger(rawOffset) && rawOffset >= 0 ? rawOffset : 0;
-    const votes = await findMemberVotes(rep.bioguideid, { limit, offset });
-    const alignment = await getAlignmentByUserAndRep(
-      req.user.id,
-      rep.bioguideid,
-    );
-    res.json({ rep, votes, alignment });
+    const [votes, policyAreaSummary, alignment] = await Promise.all([
+      findMemberVotes(rep.bioguideid, { limit, offset, policyArea }),
+      findMemberPolicyAreas(rep.bioguideid),
+      getAlignmentByUserAndRep(req.user.id, rep.bioguideid, { policyArea }),
+    ]);
+    res.json({
+      rep,
+      votes,
+      alignment,
+      policyAreas: policyAreaSummary.items,
+      totalPolicyCount: policyAreaSummary.totalCount,
+      selectedPolicyArea: policyArea,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to load feed" });

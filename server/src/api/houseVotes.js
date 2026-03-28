@@ -2,8 +2,10 @@ import express from "express";
 const router = express.Router();
 export default router;
 
-import { findMemberVotes } from "../db/queries/houseVotes.js";
-import { error } from "node:console";
+import {
+  findMemberPolicyAreas,
+  findMemberVotes,
+} from "../db/queries/houseVotes.js";
 
 const apiKey = process.env.CONGRESS_API_KEY;
 const CONGRESS_API_ORIGIN = "https://api.congress.gov";
@@ -74,17 +76,28 @@ router.get("/member/:bioguideId", async (req, res) => {
     const rawOffset = req.query.offset;
     const parsedLimit = Number.parseInt(rawLimit, 10);
     const parsedOffset = Number.parseInt(rawOffset, 10);
+    const policyArea = String(req.query.policyArea ?? "").trim() || null;
     const limit =
       Number.isInteger(parsedLimit) && parsedLimit > 0
         ? parsedLimit
         : undefined;
     const offset =
       Number.isInteger(parsedOffset) && parsedOffset >= 0 ? parsedOffset : 0;
-    const votes = await findMemberVotes(req.params.bioguideId, {
-      limit,
-      offset,
+    const [votes, policyAreaSummary] = await Promise.all([
+      findMemberVotes(req.params.bioguideId, {
+        limit,
+        offset,
+        policyArea,
+      }),
+      findMemberPolicyAreas(req.params.bioguideId),
+    ]);
+    res.json({
+      count: votes.length,
+      votes,
+      policyAreas: policyAreaSummary.items,
+      totalPolicyCount: policyAreaSummary.totalCount,
+      selectedPolicyArea: policyArea,
     });
-    res.json({ count: votes.length, votes });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch member votes" });

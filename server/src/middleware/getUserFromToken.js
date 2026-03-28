@@ -1,7 +1,7 @@
 import { getUserByClerkId } from "../db/queries/users.js";
 
 export default async function getUserFromToken(req, res, next) {
-  const clerkUserId = req.auth?.userId;
+  const { userId: clerkUserId } = req.auth();
   if (!clerkUserId) {
     req.user = null;
     return next();

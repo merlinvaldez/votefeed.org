@@ -205,8 +205,25 @@ export async function getFreshestVotedOn() {
   return row?.freshest_voted_on ?? null;
 }
 
+export async function findMemberPolicyAreas(bioguideId) {
+  const baseCte = `WITH latest_vote_per_bill AS ( SELECT DISTINCT ON (legislation_type, legislationNumber) legislationNumber, legislation_type, session_number, roll_call_number, voted_on FROM member_voting_record WHERE member_id = $1 AND voted_on IS NOT NULL ORDER BY legislation_type, legislationNumber, voted_on DESC, session_number DESC, roll_call_number DESC, id DESC ), scoped_bills AS ( SELECT bills.policy_area FROM latest_vote_per_bill JOIN bills ON bills.number = latest_vote_per_bill.legislationNumber AND bills.bill_type = latest_vote_per_bill.legislation_type )`;
+  const totalSql = `${baseCte} SELECT COUNT(*)::integer AS total_count FROM scoped_bills`;
+  const poliAreasSql = `${baseCte} SELECT policy_area, COUNT(*)::integer AS bill_count FROM scoped_bills WHERE policy_area IS NOT NULL AND TRIM(policy_area) <> '' GROUP BY policy_area ORDER BY policy_area ASC`;
+  const [totalResult, policyAreasResult] = await Promise.all([
+    db.query(totalSql, [bioguideId]),
+    db.query(poliAreasSql, [bioguideId]),
+  ]);
+  return {
+    totalCount: totalResult.rows[0]?.total_count ?? 0,
+    items: policyAreasResult.rows.map(({ policy_area, bill_count }) => ({
+      name: policy_area,
+      count: bill_count,
+    })),
+  };
+}
+
 export async function findMemberVotes(bioguideId, options = {}) {
-  const { limit, offset = 0 } = options;
+  const { limit, offset = 0, policyArea = null } = options;
   const hasLimit = Number.isInteger(limit) && limit > 0;
   const safeOffset = Number.isInteger(offset) && offset >= 0 ? offset : 0;
   const sql = `WITH latest_vote_per_bill AS (
@@ -244,11 +261,20 @@ FROM latest_vote_per_bill
 JOIN bills
   ON bills.number = latest_vote_per_bill.legislationNumber
  AND bills.bill_type = latest_vote_per_bill.legislation_type`;
+  const policyFilterSql = policyArea
+    ? ` WHERE bills.policy_area = $${hasLimit ? 4 : 2}`
+    : "";
   const orderSql =
     " ORDER BY latest_vote_per_bill.voted_on DESC, latest_vote_per_bill.roll_call_number DESC";
   const pageSql = hasLimit ? " LIMIT $2 OFFSET $3" : "";
-  const finalSql = `${sql}${orderSql}${pageSql}`;
-  const params = hasLimit ? [bioguideId, limit, safeOffset] : [bioguideId];
+  const finalSql = `${sql}${policyFilterSql}${orderSql}${pageSql}`;
+  const params = hasLimit
+    ? policyArea
+      ? [bioguideId, limit, safeOffset, policyArea]
+      : [bioguideId, limit, safeOffset]
+    : policyArea
+      ? [bioguideId, policyArea]
+      : [bioguideId];
   const { rows: memberVotes } = await db.query(finalSql, params);
   return memberVotes;
 }

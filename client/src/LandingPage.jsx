@@ -81,9 +81,21 @@ function LandingPage() {
           msg || `Voting record lookup failed (${votesResp.status})`,
         );
       }
-      const { votes = [] } = await votesResp.json();
+      const {
+        votes = [],
+        policyAreas = [],
+        totalPolicyCount = 0,
+        selectedPolicyArea = null,
+      } = await votesResp.json();
       navigate("/feed", {
-        state: { district: districtData, rep: repData, votes },
+        state: {
+          district: districtData,
+          rep: repData,
+          votes,
+          policyAreas,
+          totalPolicyCount,
+          selectedPolicyArea,
+        },
       });
       setStatus("success");
     } catch (err) {
