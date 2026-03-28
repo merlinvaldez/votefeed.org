@@ -67,6 +67,16 @@ const buildFeedUrl = ({
   return queryString ? `${baseUrl}?${queryString}` : baseUrl;
 };
 
+const buildAlignmentUrl = ({ repId, policyArea = null }) => {
+  const params = new URLSearchParams({
+    repBioguideId: repId,
+  });
+  if (policyArea) {
+    params.set("policyArea", policyArea);
+  }
+  return `${API_BASE}/users/me/alignment?${params.toString()}`;
+};
+
 function Feed(props) {
   const PAGE_SIZE = 5;
   const { token, authFetch } = useAuth();
@@ -88,7 +98,6 @@ function Feed(props) {
   const [isGuestBarHighlighted, setIsGuestBarHighlighted] = useState(false);
 
   const [interactions, setInteractions] = useState([]);
-  const [interactionsLoaded, setInteractionsLoaded] = useState(false);
   const [userId, setUserId] = useState(null);
   const [hasMore, setHasmore] = useState(true);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
@@ -334,7 +343,6 @@ function Feed(props) {
 
     (async () => {
       try {
-        if (!cancelled) setInteractionsLoaded(false);
         const meResp = await authFetch(`${API_BASE}/users/me`);
         if (!meResp.ok) throw new Error("Failed to load user");
         const me = await meResp.json();
@@ -347,9 +355,7 @@ function Feed(props) {
           throw new Error("Failed to load interactions");
         const data = await interactionsResp.json();
         if (!cancelled) setInteractions(data);
-        if (!cancelled) setInteractionsLoaded(true);
       } catch (err) {
-        if (!cancelled) setInteractionsLoaded(true);
         if (!cancelled) setError(err.message || "Failed to load interactions");
       }
     })();
@@ -364,29 +370,27 @@ function Feed(props) {
     interactionsByBill[interaction.bill_id] = interaction;
   }
   const rep = feedState?.rep;
+  const alignmentForCard = feedState?.alignment ?? null;
 
-  const liveRepInteractions = interactions.filter(
-    (interaction) => interaction.rep_bioguide_id === rep?.bioguideid,
-  );
-
-  const approveCount = liveRepInteractions.filter(
-    (interaction) => interaction.stance === "approve",
-  ).length;
-
-  const totalCount = liveRepInteractions.length;
-  const hasData = totalCount > 0;
-  const liveAlignment = {
-    totalCount,
-    approveCount,
-    disapproveCount: totalCount - approveCount,
-    percent: hasData ? Math.round((approveCount / totalCount) * 100) : 0,
-    hasData,
-    emptyMessage: null,
-  };
-
-  const alignmentForCard = interactionsLoaded
-    ? liveAlignment
-    : feedState?.alignment;
+  const refreshAlignmentSummary = useEffectEvent(async () => {
+    if (!token || !rep?.bioguideid) return;
+    const resp = await authFetch(
+      buildAlignmentUrl({
+        repId: rep.bioguideid,
+        policyArea: selectedPolicyArea,
+      }),
+    );
+    if (!resp.ok) throw new Error("Failed to refresh alignment");
+    const alignment = await resp.json();
+    setFeedState((prev) =>
+      prev
+        ? {
+            ...prev,
+            alignment,
+          }
+        : prev,
+    );
+  });
 
   const handleStance = async (billId, stance) => {
     if (!userId) {
@@ -403,6 +407,7 @@ function Feed(props) {
         );
         if (!resp.ok) throw new Error("Failed to delete stance");
         setInteractions((prev) => prev.filter((i) => i.id !== existing.id));
+        await refreshAlignmentSummary();
         return;
       }
 
@@ -431,6 +436,7 @@ function Feed(props) {
         const withoutCurrent = prev.filter((i) => i.id !== saved.id);
         return [...withoutCurrent, saved];
       });
+      await refreshAlignmentSummary();
     } catch (err) {
       setError(err.message || "Failed to save stance");
     }
@@ -492,7 +498,11 @@ function Feed(props) {
         </div>
       )}
 
-      <RepCard rep={rep} alignment={alignmentForCard}></RepCard>
+      <RepCard
+        rep={rep}
+        alignment={alignmentForCard}
+        alignmentPolicyArea={feedState?.selectedPolicyArea ?? null}
+      ></RepCard>
 
       <section className="feed-section">
         <h2 className="section-title">Legislative Feed</h2>

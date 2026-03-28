@@ -74,6 +74,23 @@ router.get("/me", requireUser, (req, res) => {
   res.json({ id, email, first_name, last_name, district, state });
 });
 
+router.get("/me/alignment", requireUser, async (req, res) => {
+  try {
+    const repBioguideId = String(req.query.repBioguideId ?? "").trim();
+    const policyArea = String(req.query.policyArea ?? "").trim() || null;
+    if (!repBioguideId) {
+      return res.status(400).json({ error: "Missing repBioguideId" });
+    }
+    const alignment = await getAlignmentByUserAndRep(req.user.id, repBioguideId, {
+      policyArea,
+    });
+    res.json(alignment);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to load alignment" });
+  }
+});
+
 router.get("/me/feed", requireUser, async (req, res) => {
   try {
     const { district, state } = req.user;
@@ -88,14 +105,11 @@ router.get("/me/feed", requireUser, async (req, res) => {
     const limit = Number.isInteger(rawLimit) && rawLimit > 0 ? rawLimit : undefined;
     const offset =
       Number.isInteger(rawOffset) && rawOffset >= 0 ? rawOffset : 0;
-    const [votes, policyAreaSummary] = await Promise.all([
+    const [votes, policyAreaSummary, alignment] = await Promise.all([
       findMemberVotes(rep.bioguideid, { limit, offset, policyArea }),
       findMemberPolicyAreas(rep.bioguideid),
+      getAlignmentByUserAndRep(req.user.id, rep.bioguideid, { policyArea }),
     ]);
-    const alignment = await getAlignmentByUserAndRep(
-      req.user.id,
-      rep.bioguideid,
-    );
     res.json({
       rep,
       votes,

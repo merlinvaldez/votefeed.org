@@ -51,7 +51,11 @@ function GaugePointer() {
   );
 }
 
-export default function RepCard({ rep, alignment }) {
+export default function RepCard({
+  rep,
+  alignment,
+  alignmentPolicyArea = null,
+}) {
   const repInitials = getRepInitials(rep?.full_name);
   const alignmentPercent = Math.max(0, Math.min(100, alignment?.percent ?? 0));
   const alignmentColor = getAlignmentColor(alignmentPercent);
@@ -139,6 +143,7 @@ export default function RepCard({ rep, alignment }) {
               {alignment.approveCount}
             </span>{" "}
             out of {alignment.totalCount} votes
+            {alignmentPolicyArea ? ` in ${alignmentPolicyArea}` : ""}
           </p>
         </div>
       )}

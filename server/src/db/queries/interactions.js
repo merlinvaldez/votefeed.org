@@ -58,18 +58,7 @@ export async function getAllUserInteractions(userId) {
   return userInteractions;
 }
 
-export async function getAlignmentByUserAndRep(userId, repBioguideId) {
-  const sql = `SELECT
-  COUNT(*)::integer AS total_count,
-  COALESCE(SUM(CASE WHEN stance = 'approve' THEN 1 ELSE 0 END), 0)::integer AS approve_count,
-  COALESCE(SUM(CASE WHEN stance = 'disapprove' THEN 1 ELSE 0 END), 0)::integer AS disapprove_count
-  FROM interactions
-  WHERE user_id=$1 and rep_bioguide_id=$2`;
-
-  const {
-    rows: [summary],
-  } = await db.query(sql, [userId, repBioguideId]);
-
+function toAlignmentSummary(summary) {
   const totalCount = summary?.total_count ?? 0;
   const approveCount = summary?.approve_count ?? 0;
   const disapproveCount = summary?.disapprove_count ?? 0;
@@ -84,6 +73,33 @@ export async function getAlignmentByUserAndRep(userId, repBioguideId) {
     hasData,
     emptyMessage: null,
   };
+}
+
+export async function getAlignmentByUserAndRep(
+  userId,
+  repBioguideId,
+  options = {},
+) {
+  const { policyArea = null } = options;
+  const sql = `SELECT
+  COUNT(*)::integer AS total_count,
+  COALESCE(SUM(CASE WHEN stance = 'approve' THEN 1 ELSE 0 END), 0)::integer AS approve_count,
+  COALESCE(SUM(CASE WHEN stance = 'disapprove' THEN 1 ELSE 0 END), 0)::integer AS disapprove_count
+  FROM interactions
+  JOIN bills
+    ON bills.id = interactions.bill_id
+  WHERE user_id=$1 and rep_bioguide_id=$2${
+    policyArea ? " AND bills.policy_area=$3" : ""
+  }`;
+
+  const {
+    rows: [summary],
+  } = await db.query(
+    sql,
+    policyArea ? [userId, repBioguideId, policyArea] : [userId, repBioguideId],
+  );
+
+  return toAlignmentSummary(summary);
 }
 
 export async function getUserInteractionsByBill(userId, billId) {
