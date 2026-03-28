@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useEffectEvent, useState, useRef } from "react";
+import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { API_BASE } from "./constants";
 import RepCard from "./RepCard";
@@ -10,6 +10,7 @@ import {
   ThumbsDown,
   MessageCircle,
   Clock3,
+  Search,
 } from "lucide-react";
 
 const getRepLastName = (fullName = "") => {
@@ -44,12 +45,40 @@ const formatBillLabel = (type, number) => {
   return `${labels[normalized] || normalized.toUpperCase()} ${number}`;
 };
 
+const buildFeedUrl = ({
+  isGuest,
+  repId,
+  pageSize,
+  offset = 0,
+  policyArea = null,
+}) => {
+  const baseUrl = isGuest
+    ? `${API_BASE}/housevotes/member/${repId}`
+    : `${API_BASE}/users/me/feed`;
+  const params = new URLSearchParams();
+  if (!policyArea) {
+    params.set("limit", String(pageSize));
+    params.set("offset", String(offset));
+  }
+  if (policyArea) {
+    params.set("policyArea", policyArea);
+  }
+  const queryString = params.toString();
+  return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+};
+
 function Feed(props) {
   const PAGE_SIZE = 5;
   const { token, authFetch } = useAuth();
   const isAuthed = Boolean(token);
   const location = useLocation();
   const navigate = useNavigate();
+  const {
+    selectedPolicyArea,
+    setSelectedPolicyArea,
+    setSidebarPolicyAreas,
+    setSidebarTotalPolicyCount,
+  } = useOutletContext();
   const guestBarRef = useRef(null);
   const guestHighlightTimeoutRef = useRef(null);
 
@@ -70,6 +99,39 @@ function Feed(props) {
   const [aiSummaryByBill, setAiSummaryByBill] = useState({});
   const [aiLoadingByBill, setAiLoadingByBill] = useState({});
   const [aiErrorByBill, setAiErrorByBill] = useState({});
+  const [mobilePolicySearch, setMobilePolicySearch] = useState("");
+  const [isMobilePolicySearchOpen, setIsMobilePolicySearchOpen] =
+    useState(false);
+  const isFilteringByPolicy = selectedPolicyArea !== null;
+  const availablePolicyAreas = feedState?.policyAreas ?? [];
+  const totalPolicyCount = feedState?.totalPolicyCount ?? 0;
+  const normalizedMobilePolicySearch = mobilePolicySearch.trim().toLowerCase();
+  const mobileVisiblePolicyAreas = availablePolicyAreas.filter((policyArea) =>
+    policyArea.name.toLowerCase().includes(normalizedMobilePolicySearch),
+  );
+
+  useEffect(() => {
+    setSidebarPolicyAreas(feedState?.policyAreas ?? []);
+    setSidebarTotalPolicyCount(feedState?.totalPolicyCount ?? 0);
+    setSelectedPolicyArea(feedState?.selectedPolicyArea ?? null);
+  }, [
+    feedState,
+    setSidebarPolicyAreas,
+    setSidebarTotalPolicyCount,
+    setSelectedPolicyArea,
+  ]);
+
+  useEffect(() => {
+    return () => {
+      setSidebarPolicyAreas([]);
+      setSidebarTotalPolicyCount(0);
+      setSelectedPolicyArea(null);
+    };
+  }, [
+    setSidebarPolicyAreas,
+    setSidebarTotalPolicyCount,
+    setSelectedPolicyArea,
+  ]);
 
   useEffect(() => {
     return () => {
@@ -113,22 +175,6 @@ function Feed(props) {
   };
 
   useEffect(() => {
-    if (!sentinelRef.current) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (!entries[0].isIntersecting) return;
-        if (!token && !feedState?.rep) return;
-        if (!hasMore || isFetchingMore) return;
-        if (loading) return;
-        loadMoreVotes();
-      },
-      { rootMargin: "200px" },
-    );
-    observer.observe(sentinelRef.current);
-    return () => observer.disconnect();
-  }, [token, hasMore, isFetchingMore, votes.length]);
-
-  useEffect(() => {
     if (token) return;
     if (feedState?.rep && feedState?.votes) return;
     navigate("/", { replace: true });
@@ -144,12 +190,20 @@ function Feed(props) {
       try {
         setLoading(true);
         const resp = await authFetch(
-          `${API_BASE}/users/me/feed?limit=${PAGE_SIZE}&offset=0`,
+          buildFeedUrl({
+            isGuest: false,
+            pageSize: PAGE_SIZE,
+            offset: 0,
+            policyArea: selectedPolicyArea,
+          }),
         );
         if (!resp.ok) throw new Error("Failed to load feed");
         const feed = await resp.json();
         if (!cancelled) setFeedState(feed);
-        if (!cancelled) setHasmore(feed.votes.length === PAGE_SIZE);
+        if (!cancelled)
+          setHasmore(
+            selectedPolicyArea === null && feed.votes.length === PAGE_SIZE,
+          );
       } catch (err) {
         if (!cancelled) setError(err.message || "Failed to load feed");
       } finally {
@@ -160,32 +214,119 @@ function Feed(props) {
     return () => {
       cancelled = true;
     };
-  }, [feedState, token, authFetch]);
+  }, [feedState, token, authFetch, selectedPolicyArea]);
 
-  const loadMoreVotes = async () => {
+  useEffect(() => {
+    const currentPolicyArea = feedState?.selectedPolicyArea ?? null;
+    const repId = feedState?.rep?.bioguideid;
+    if (selectedPolicyArea === currentPolicyArea) return;
+    if (!token && !repId) return;
+
+    let cancelled = false;
+
+    (async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const isGuest = !token;
+        const url = buildFeedUrl({
+          isGuest,
+          repId,
+          pageSize: PAGE_SIZE,
+          offset: 0,
+          policyArea: selectedPolicyArea,
+        });
+        const resp = isGuest ? await fetch(url) : await authFetch(url);
+        if (!resp.ok) throw new Error("Failed to filter feed");
+        const nextFeed = await resp.json();
+        if (cancelled) return;
+        setFeedState((prev) => ({
+          ...prev,
+          ...nextFeed,
+          rep: nextFeed.rep ?? prev?.rep ?? null,
+        }));
+        setHasmore(
+          selectedPolicyArea === null &&
+            (nextFeed.votes?.length ?? 0) === PAGE_SIZE,
+        );
+      } catch (err) {
+        if (!cancelled) {
+          setError(err.message || "Failed to filter feed");
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    authFetch,
+    feedState?.rep?.bioguideid,
+    feedState?.selectedPolicyArea,
+    selectedPolicyArea,
+    token,
+  ]);
+
+  const loadMoreVotes = useEffectEvent(async () => {
     if (isFetchingMore) return;
     setIsFetchingMore(true);
     try {
       const offset = votes.length;
       const repId = feedState?.rep?.bioguideid;
       const isGuest = !token;
-      const url = isGuest
-        ? `${API_BASE}/housevotes/member/${repId}?limit=${PAGE_SIZE}&offset=${offset}`
-        : `${API_BASE}/users/me/feed?limit=${PAGE_SIZE}&offset=${offset}`;
+      const url = buildFeedUrl({
+        isGuest,
+        repId,
+        pageSize: PAGE_SIZE,
+        offset,
+        policyArea: selectedPolicyArea,
+      });
       const resp = isGuest ? await fetch(url) : await authFetch(url);
       if (!resp.ok) throw new Error("Failed to load more votes");
-      const { votes: nextVotes = [] } = await resp.json();
-      setFeedState((prev) => ({
-        ...prev,
-        votes: [...(prev?.votes ?? []), ...nextVotes],
-      }));
-      setHasmore(nextVotes.length === PAGE_SIZE);
+      const nextFeed = await resp.json();
+      const nextVotes = nextFeed.votes ?? [];
+        setFeedState((prev) => ({
+          ...prev,
+          ...nextFeed,
+          rep: nextFeed.rep ?? prev?.rep ?? null,
+          votes: [...(prev?.votes ?? []), ...nextVotes],
+        }));
+        setHasmore(nextVotes.length === PAGE_SIZE);
     } catch (err) {
       setError(err.message || "Failed to load more votes");
     } finally {
       setIsFetchingMore(false);
     }
-  };
+  });
+
+  useEffect(() => {
+    if (!sentinelRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries[0]?.isIntersecting) return;
+        if (selectedPolicyArea !== null) return;
+        if (!token && !feedState?.rep) return;
+        if (!hasMore || isFetchingMore) return;
+        if (loading) return;
+        loadMoreVotes();
+      },
+      { rootMargin: "200px" },
+    );
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [
+    token,
+    feedState?.rep,
+    hasMore,
+    isFetchingMore,
+    loading,
+    votes.length,
+    selectedPolicyArea,
+  ]);
 
   useEffect(() => {
     if (!token) return;
@@ -313,6 +454,22 @@ function Feed(props) {
     goToBill(vote);
   };
 
+  const handlePolicySelection = (policyArea) => {
+    setSelectedPolicyArea(policyArea);
+    setMobilePolicySearch("");
+    setIsMobilePolicySearchOpen(false);
+  };
+
+  const toggleMobilePolicySearch = () => {
+    setIsMobilePolicySearchOpen((prev) => {
+      const next = !prev;
+      if (next) {
+        setMobilePolicySearch("");
+      }
+      return next;
+    });
+  };
+
   return (
     <>
       {!isAuthed && (
@@ -339,6 +496,78 @@ function Feed(props) {
 
       <section className="feed-section">
         <h2 className="section-title">Legislative Feed</h2>
+        <div className="mobile-policy-filter">
+          <div className="mobile-policy-header">
+            <div className="mobile-policy-current">
+              <span className="mobile-policy-current-label">Policy Areas</span>
+              <span className="mobile-policy-current-value">
+                {selectedPolicyArea ?? "All"}
+              </span>
+            </div>
+            <button
+              type="button"
+              className={`mobile-policy-toggle ${
+                isMobilePolicySearchOpen ? "open" : ""
+              }`}
+              onClick={toggleMobilePolicySearch}
+              aria-expanded={isMobilePolicySearchOpen}
+              aria-controls="mobile-policy-search-panel"
+              aria-label="Search policy areas"
+              title="Search policy areas"
+            >
+              <Search size={16} />
+            </button>
+          </div>
+          {isMobilePolicySearchOpen && (
+            <div
+              id="mobile-policy-search-panel"
+              className="mobile-policy-search-panel"
+            >
+              <input
+                id="mobile-policy-search"
+                className="mobile-policy-search-input"
+                type="search"
+                placeholder="Search by policy area"
+                value={mobilePolicySearch}
+                onChange={(event) => setMobilePolicySearch(event.target.value)}
+                autoFocus
+              />
+              <p className="mobile-policy-helper">
+                Start typing to narrow the list.
+              </p>
+              <div className="mobile-policy-results">
+                <div className="policy-list">
+                  <button
+                    type="button"
+                    className={`policy-option ${
+                      selectedPolicyArea === null ? "active" : ""
+                    }`}
+                    onClick={() => handlePolicySelection(null)}
+                  >
+                    <span>All</span>
+                    <span className="policy-count">{totalPolicyCount}</span>
+                  </button>
+                  {mobileVisiblePolicyAreas.map((policyArea) => (
+                    <button
+                      key={policyArea.name}
+                      type="button"
+                      className={`policy-option ${
+                        selectedPolicyArea === policyArea.name ? "active" : ""
+                      }`}
+                      onClick={() => handlePolicySelection(policyArea.name)}
+                    >
+                      <span>{policyArea.name}</span>
+                      <span className="policy-count">{policyArea.count}</span>
+                    </button>
+                  ))}
+                  {mobileVisiblePolicyAreas.length === 0 && (
+                    <p className="policy-empty">No matching policy areas.</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
         {votes.length === 0 && <p>No votes found for this member.</p>}
 
         {votes.map((vote) => {
@@ -455,7 +684,7 @@ function Feed(props) {
             </div>
           );
         })}
-        {hasMore && (
+        {!isFilteringByPolicy && hasMore && (
           <div ref={sentinelRef} className="feed-loading">
             <div>{isFetchingMore ? "Loading more..." : "Scroll for more"}</div>
           </div>
