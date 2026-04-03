@@ -15,6 +15,17 @@ function unwrapHouseVote(payload) {
   return Array.isArray(vote) ? (vote[0] ?? null) : (vote ?? null);
 }
 
+function summarizeVotePartyTotals(votePartyTotal = []) {
+  return votePartyTotal.reduce(
+    (acc, partyRow) => ({
+      yes: acc.yes + Number(partyRow.yeaTotal ?? 0),
+      no: acc.no + Number(partyRow?.nayTotal ?? 0),
+      notVoting: acc.notVoting + Number(partyRow?.notVotingTotal ?? 0),
+    }),
+    { yes: 0, no: 0, notVoting: 0 },
+  );
+}
+
 function toCongressNextUrl(paginationNext) {
   const next = new URL(paginationNext, CONGRESS_API_ORIGIN);
   next.searchParams.set("api_key", apiKey);
@@ -131,12 +142,18 @@ router.get("/:session/:voteNumber/summary", async (req, res) => {
     const data = await resp.json();
     const vote = unwrapHouseVote(data);
     if (!vote) {
-      return res.status(404).json({ erro: "House vote not found" });
+      return res.status(404).json({ error: "House vote not found" });
     }
-    return res.json(vote);
+    const totals = summarizeVotePartyTotals(vote.votePartyTotal);
+    return res.json({
+      result: vote.result ?? null,
+      totals,
+    });
   } catch (err) {
     console.error(err);
-    return res.status(500);
+    return res
+      .status(500)
+      .json({ error: "Failed to fetch house vote summary" });
   }
 });
 
