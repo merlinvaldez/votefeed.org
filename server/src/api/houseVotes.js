@@ -10,6 +10,11 @@ import {
 const apiKey = process.env.CONGRESS_API_KEY;
 const CONGRESS_API_ORIGIN = "https://api.congress.gov";
 
+function unwrapHouseVote(payload) {
+  const vote = payload?.houseRollCallVote;
+  return Array.isArray(vote) ? (vote[0] ?? null) : (vote ?? null);
+}
+
 function toCongressNextUrl(paginationNext) {
   const next = new URL(paginationNext, CONGRESS_API_ORIGIN);
   next.searchParams.set("api_key", apiKey);
@@ -101,6 +106,37 @@ router.get("/member/:bioguideId", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch member votes" });
+  }
+});
+
+router.get("/:session/:voteNumber/summary", async (req, res) => {
+  if (!apiKey) {
+    return res.status(500).json({ error: "Missing Congress API Key" });
+  }
+  const { session, voteNumber } = req.params;
+  try {
+    const baseUrl = new URL(
+      `https://api.congress.gov/v3/house-vote/119/${session}/${voteNumber}`,
+    );
+    baseUrl.searchParams.set("api_key", apiKey);
+    const resp = await fetch(baseUrl);
+    if (!resp.ok) {
+      const text = await resp.text();
+      return res.status(502).json({
+        error: "Congress API Error",
+        status: resp.status,
+        details: text,
+      });
+    }
+    const data = await resp.json();
+    const vote = unwrapHouseVote(data);
+    if (!vote) {
+      return res.status(404).json({ erro: "House vote not found" });
+    }
+    return res.json(vote);
+  } catch (err) {
+    console.error(err);
+    return res.status(500);
   }
 });
 
