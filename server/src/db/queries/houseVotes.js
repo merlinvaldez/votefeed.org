@@ -310,11 +310,20 @@ SELECT
   bills.summary,
   bills.policy_area,
   bills.legislation_url,
-  latest_vote_per_bill.vote
+  latest_vote_per_bill.vote,
+  roll_call_summaries.result AS vote_result,
+  roll_call_summaries.yes_count AS vote_yes_count,
+  roll_call_summaries.no_count AS vote_no_count,
+  roll_call_summaries.not_voting_count AS vote_not_voting_count
 FROM latest_vote_per_bill
 JOIN bills
   ON bills.number = latest_vote_per_bill.legislationNumber
- AND bills.bill_type = latest_vote_per_bill.legislation_type`;
+ AND bills.bill_type = latest_vote_per_bill.legislation_type
+LEFT JOIN roll_call_summaries
+  ON roll_call_summaries.session_number = latest_vote_per_bill.session_number
+ AND roll_call_summaries.roll_call_number = latest_vote_per_bill.roll_call_number
+ AND roll_call_summaries.legislation_number = latest_vote_per_bill.legislationNumber
+ AND roll_call_summaries.legislation_type = latest_vote_per_bill.legislation_type`;
   const policyFilterSql = policyArea
     ? ` WHERE bills.policy_area = $${hasLimit ? 4 : 2}`
     : "";
