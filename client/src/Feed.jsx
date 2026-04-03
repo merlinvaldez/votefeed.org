@@ -11,6 +11,8 @@ import {
   MessageCircle,
   Clock3,
   Search,
+  CheckCircle2,
+  XCircle,
 } from "lucide-react";
 
 const getRepLastName = (fullName = "") => {
@@ -645,6 +647,7 @@ function Feed(props) {
               <div className="leg-vote">
                 {(() => {
                   let voteClass = "neutral";
+                  let resultClass = "neutral";
                   if (vote.vote === "Yea" || vote.vote === "Aye") {
                     voteClass = "success";
                   } else if (vote.vote === "Nay" || vote.vote === "No") {
@@ -652,11 +655,31 @@ function Feed(props) {
                   } else if (vote.vote === "Not Voting") {
                     voteClass = "neutral";
                   }
+                  if (vote.vote_result === "Passed") {
+                    resultClass = "success";
+                  } else if (vote.vote_result === "Failed") {
+                    resultClass = "danger";
+                  }
                   return (
                     <>
                       <span className={`pill ${voteClass}`}>
-                        Rep. {repLastName} Voted: {vote.vote}
+                        {repLastName} Voted: {vote.vote}
                       </span>
+                      {vote.vote_result && (
+                        <>
+                          <span className="leg-divider" aria-hidden="true">
+                            |
+                          </span>
+                          <span className={`pill ${resultClass}`}>
+                            {vote.vote_result === "Passed" ? (
+                              <CheckCircle2 size={14} />
+                            ) : vote.vote_result === "Failed" ? (
+                              <XCircle size={14} />
+                            ) : null}
+                            {vote.vote_result}
+                          </span>
+                        </>
+                      )}
                     </>
                   );
                 })()}
