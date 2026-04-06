@@ -20,6 +20,17 @@ type HouseVote = {
   votingRecord?: HouseVoteRecord[];
 };
 
+type HouseVotePartyTotal = {
+  yeaTotal?: string | number;
+  nayTotal?: string | number;
+  notVotingTotal?: string | number;
+};
+
+type HouseVoteSummary = {
+  result?: string;
+  votePartyTotal?: HouseVotePartyTotal[];
+};
+
 type MemberVotingRecordRow = {
   legislationnumber: number;
   legislation_type: string;
@@ -44,6 +55,18 @@ type BillSummaryRow = {
   bill_type: string;
   title: string;
   summary: string;
+};
+
+type RollCallSummaryRow = {
+  legislation_number: number;
+  legislation_type: string;
+  session_number: number;
+  roll_call_number: number;
+  voted_on: string;
+  result: string;
+  yes_count: number;
+  no_count: number;
+  not_voting_count: number;
 };
 
 function json(body: unknown, status = 200) {
@@ -220,6 +243,52 @@ async function fetchRollCallMembersWithRetry(
   return members;
 }
 
+async function fetchRollCallSummary(
+  apiKey: string,
+  sessionNumber: string | number | undefined,
+  rollCallNumber: string | number | undefined,
+) {
+  if (!sessionNumber || !rollCallNumber) {
+    return null;
+  }
+
+  const url = new URL(
+    `https://api.congress.gov/v3/house-vote/119/${sessionNumber}/${rollCallNumber}`,
+  );
+  url.searchParams.set("api_key", apiKey);
+
+  const response = await fetch(url);
+  if (!response.ok) {
+    const details = await response.text();
+    throw new Error(
+      `Congress house-vote summary fetch failed ${response.status} for ${url}: ${details}`,
+    );
+  }
+
+  const data = await response.json();
+  const vote: HouseVoteSummary | null = Array.isArray(data?.houseRollCallVote)
+    ? (data.houseRollCallVote[0] ?? null)
+    : (data?.houseRollCallVote ?? null);
+
+  if (!vote?.result) {
+    return null;
+  }
+
+  const totals = (vote.votePartyTotal ?? []).reduce(
+    (acc, partyRow) => ({
+      yes: acc.yes + Number(partyRow?.yeaTotal ?? 0),
+      no: acc.no + Number(partyRow?.nayTotal ?? 0),
+      notVoting: acc.notVoting + Number(partyRow?.notVotingTotal ?? 0),
+    }),
+    { yes: 0, no: 0, notVoting: 0 },
+  );
+
+  return {
+    result: vote.result,
+    totals,
+  };
+}
+
 function buildRollCallRows(vote: HouseVote, votingRecord: HouseVoteRecord[]) {
   if (!vote.legislationNumber || !vote.legislationType || !vote.startDate) {
     return [];
@@ -236,6 +305,37 @@ function buildRollCallRows(vote: HouseVote, votingRecord: HouseVoteRecord[]) {
       vote: record.voteCast!,
       member_id: record.bioguideID!,
     }));
+}
+
+function buildRollCallSummaryRow(
+  vote: HouseVote,
+  summary:
+    | {
+        result: string;
+        totals: { yes: number; no: number; notVoting: number };
+      }
+    | null,
+) {
+  if (
+    !vote.legislationNumber ||
+    !vote.legislationType ||
+    !vote.startDate ||
+    !summary?.result
+  ) {
+    return null;
+  }
+
+  return {
+    legislation_number: Number(vote.legislationNumber),
+    legislation_type: String(vote.legislationType).toLowerCase(),
+    session_number: Number(vote.sessionNumber),
+    roll_call_number: Number(vote.rollCallNumber),
+    voted_on: vote.startDate,
+    result: summary.result,
+    yes_count: Number(summary.totals.yes ?? 0),
+    no_count: Number(summary.totals.no ?? 0),
+    not_voting_count: Number(summary.totals.notVoting ?? 0),
+  } satisfies RollCallSummaryRow;
 }
 
 async function upsertRollCallRows(
@@ -262,6 +362,33 @@ async function upsertRollCallRows(
   return {
     attemptedCount: rows.length,
     insertedCount: data?.length ?? 0,
+  };
+}
+
+async function upsertRollCallSummaryRow(
+  supabase: ReturnType<typeof createClient>,
+  row: RollCallSummaryRow | null,
+) {
+  if (!row) {
+    return { attemptedCount: 0, upsertedCount: 0 };
+  }
+
+  const { data, error } = await supabase
+    .from("roll_call_summaries")
+    .upsert(row, {
+      onConflict: "session_number,roll_call_number",
+      ignoreDuplicates: false,
+      defaultToNull: false,
+    })
+    .select("session_number");
+
+  if (error) {
+    throw error;
+  }
+
+  return {
+    attemptedCount: 1,
+    upsertedCount: data?.length ?? 0,
   };
 }
 
@@ -335,27 +462,52 @@ Deno.serve(async (req) => {
     let processedCount = 0;
     let insertedCount = 0;
     let skippedRollCalls = 0;
+    let rollCallSummaryProcessedCount = 0;
+    let rollCallSummaryUpsertedCount = 0;
     let billSummaryProcessedCount = 0;
     let billSummaryUpsertedCount = 0;
 
     for (const vote of houseVotes) {
-      const members =
-        Array.isArray(vote.votingRecord) && vote.votingRecord.length > 0
-          ? vote.votingRecord
-          : await fetchRollCallMembersWithRetry(
-              congressApiKey,
-              vote.sessionNumber,
-              vote.rollCallNumber,
-            );
-      const rows = buildRollCallRows(vote, members);
-      if (rows.length === 0) {
-        skippedRollCalls += 1;
-        continue;
-      }
+      try {
+        const members =
+          Array.isArray(vote.votingRecord) && vote.votingRecord.length > 0
+            ? vote.votingRecord
+            : await fetchRollCallMembersWithRetry(
+                congressApiKey,
+                vote.sessionNumber,
+                vote.rollCallNumber,
+              );
+        const rollCallSummary = await fetchRollCallSummary(
+          congressApiKey,
+          vote.sessionNumber,
+          vote.rollCallNumber,
+        );
+        const rollCallSummaryRow = buildRollCallSummaryRow(
+          vote,
+          rollCallSummary,
+        );
+        const rollCallSummaryResult = await upsertRollCallSummaryRow(
+          supabase,
+          rollCallSummaryRow,
+        );
+        rollCallSummaryProcessedCount += rollCallSummaryResult.attemptedCount;
+        rollCallSummaryUpsertedCount += rollCallSummaryResult.upsertedCount;
 
-      const summary = await upsertRollCallRows(supabase, rows);
-      processedCount += summary.attemptedCount;
-      insertedCount += summary.insertedCount;
+        const rows = buildRollCallRows(vote, members);
+        if (rows.length === 0) {
+          skippedRollCalls += 1;
+          continue;
+        }
+
+        const summary = await upsertRollCallRows(supabase, rows);
+        processedCount += summary.attemptedCount;
+        insertedCount += summary.insertedCount;
+      } catch (error) {
+        skippedRollCalls += 1;
+        console.warn(
+          `[sync-votes] skipping session ${vote.sessionNumber} roll call ${vote.rollCallNumber}: ${error instanceof Error ? error.message : "Unexpected error"}`,
+        );
+      }
     }
 
     const billSummaryTargets = buildBillSummaryTargets(houseVotes);
@@ -378,6 +530,8 @@ Deno.serve(async (req) => {
       insertedCount,
       duplicateCount: processedCount - insertedCount,
       skippedRollCalls,
+      rollCallSummaryProcessedCount,
+      rollCallSummaryUpsertedCount,
       syncedBillTypeCount: billSummaryTargets.length,
       billSummaryProcessedCount,
       billSummaryUpsertedCount,
