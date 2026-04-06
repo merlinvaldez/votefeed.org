@@ -31,7 +31,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  flex-wrap: wrap;
+  color: var(--text-muted);
+  font-weight: 600;
 }
 
 .leg-title {
@@ -120,6 +121,18 @@
 
 .vote-count-no {
   color: var(--danger);
+}
+
+@media (max-width: 640px) {
+  .vote-result-grid {
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .vote-result-counts {
+    width: 100%;
+    min-width: 0;
+  }
 }
 
 .vote-actions {

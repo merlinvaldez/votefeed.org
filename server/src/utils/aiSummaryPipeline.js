@@ -1,7 +1,7 @@
 import { Agent, run } from "@openai/agents";
 import { readFile } from "node:fs/promises";
 
-const MODEL_CHOICE = process.env.OPENAI_MODEL || "gpt-5.2";
+const MODEL_CHOICE = process.env.OPENAI_MODEL || "gpt-5.4";
 const MODEL_SETTINGS = { reasoning: { effort: "low" } };
 
 let cachedAgentsPromise = null;

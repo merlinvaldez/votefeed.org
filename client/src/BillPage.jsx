@@ -99,7 +99,9 @@ export default function BillPage() {
       : bill?.vote_result === "Failed"
         ? "danger"
         : "neutral";
-  const VoteResultIcon = bill?.vote_result === "Failed" ? XCircle : CheckCircle2;
+  const repVotePillClass = getVotePillClass(bill?.vote);
+  const VoteResultIcon =
+    bill?.vote_result === "Failed" ? XCircle : CheckCircle2;
 
   useEffect(() => {
     return () => {
@@ -351,23 +353,20 @@ export default function BillPage() {
       )}
       <div className="leg-card">
         <div className="leg-top">
-          <span className="pill primary">
-            {formatBillLabel(
-              bill?.legislation_type ?? bill?.bill_type,
-              bill?.legislationnumber ?? bill?.number ?? billNumber,
+          <div className="leg-meta-row">
+            <span className="pill primary">
+              {formatBillLabel(
+                bill?.legislation_type ?? bill?.bill_type,
+                bill?.legislationnumber ?? bill?.number ?? billNumber,
+              )}
+            </span>
+            {latestVoteDate && (
+              <span className="leg-date">
+                <Clock3 size={14}></Clock3>
+                {formatVotedOn(latestVoteDate)}
+              </span>
             )}
-          </span>
-          {bill?.vote && (
-            <span className={`pill ${getVotePillClass(bill.vote)}`}>
-              Rep. {repLastName} Voted: {bill.vote}
-            </span>
-          )}
-          {latestVoteDate && (
-            <span className="pill neutral">
-              <Clock3 size={14}></Clock3>
-              Voted On: {formatVotedOn(latestVoteDate)}
-            </span>
-          )}
+          </div>
           <label className="toggle toggle-ai" style={{ gap: 8 }}>
             <input
               type="checkbox"
@@ -400,9 +399,21 @@ export default function BillPage() {
         {bill?.vote_result && (
           <section className="vote-result-card">
             <div className="vote-result-grid">
+              {bill?.vote && (
+                <div className="vote-result-block">
+                  <div className="vote-result-label">
+                    Rep. {repLastName} Voted
+                  </div>
+                  <span className={`pill ${repVotePillClass} vote-result-pill`}>
+                    {bill.vote}
+                  </span>
+                </div>
+              )}
               <div className="vote-result-block">
                 <div className="vote-result-label">Result</div>
-                <span className={`pill ${voteResultPillClass} vote-result-pill`}>
+                <span
+                  className={`pill ${voteResultPillClass} vote-result-pill`}
+                >
                   <VoteResultIcon size={14}></VoteResultIcon>
                   {bill.vote_result}
                 </span>
