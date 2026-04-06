@@ -50,6 +50,78 @@
   margin: 0 0 10px;
 }
 
+.vote-result-card {
+  margin-top: 18px;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface-2);
+}
+
+.vote-result-grid {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.vote-result-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vote-result-counts {
+  flex: 1;
+  min-width: 260px;
+}
+
+.vote-result-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.vote-result-pill {
+  width: fit-content;
+}
+
+.vote-count-bar {
+  display: flex;
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--border);
+}
+
+.vote-count-bar-yes {
+  display: block;
+  background: var(--success);
+}
+
+.vote-count-bar-no {
+  display: block;
+  background: var(--danger);
+}
+
+.vote-count-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-weight: 700;
+}
+
+.vote-count-yes {
+  color: var(--success);
+}
+
+.vote-count-no {
+  color: var(--danger);
+}
+
 .vote-actions {
   display: flex;
   gap: 12px;
@@ -85,6 +157,7 @@
   color: var(--primary);
   opacity: 0.9;
 }
+
 
 .ghost-btn.active {
   border-color: var(--primary);
