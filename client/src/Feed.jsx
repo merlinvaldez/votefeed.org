@@ -11,6 +11,8 @@ import {
   MessageCircle,
   Clock3,
   Search,
+  CheckCircle2,
+  XCircle,
 } from "lucide-react";
 
 const getRepLastName = (fullName = "") => {
@@ -162,24 +164,30 @@ function Feed(props) {
     return true;
   };
 
-  const handleToggleAi = async (cardKey, billNumber, nextValue) => {
+  const handleToggleAi = async (cardKey, billType, billNumber, nextValue) => {
+    const billIdentity = `${billType}-${billNumber}`;
     setAiToggledByCard((prev) => ({ ...prev, [cardKey]: nextValue }));
     if (!nextValue) return;
-    if (aiSummaryByBill[billNumber]) return;
-    setAiLoadingByBill((prev) => ({ ...prev, [billNumber]: true }));
-    setAiErrorByBill((prev) => ({ ...prev, [billNumber]: null }));
+    if (aiSummaryByBill[billIdentity]) return;
+    setAiLoadingByBill((prev) => ({ ...prev, [billIdentity]: true }));
+    setAiErrorByBill((prev) => ({ ...prev, [billIdentity]: null }));
     try {
-      const resp = await fetch(`${API_BASE}/bills/${billNumber}/ai-summary`);
+      const resp = await fetch(
+        `${API_BASE}/bills/${billType}/${billNumber}/ai-summary`,
+      );
       if (!resp.ok) throw new Error("Ai summary failed");
       const data = await resp.json();
-      setAiSummaryByBill((prev) => ({ ...prev, [billNumber]: data.aiSummary }));
+      setAiSummaryByBill((prev) => ({
+        ...prev,
+        [billIdentity]: data.aiSummary,
+      }));
     } catch {
       setAiErrorByBill((prev) => ({
         ...prev,
-        [billNumber]: "AI summary failed",
+        [billIdentity]: "AI summary failed",
       }));
     } finally {
-      setAiLoadingByBill((prev) => ({ ...prev, [billNumber]: false }));
+      setAiLoadingByBill((prev) => ({ ...prev, [billIdentity]: false }));
     }
   };
 
@@ -452,7 +460,8 @@ function Feed(props) {
 
   const goToBill = (vote) => {
     const billNumber = vote.legislationnumber;
-    navigate(`/bill/${billNumber}`, { state: { rep, bill: vote } });
+    const billType = vote.legislation_type;
+    navigate(`/bill/${billType}/${billNumber}`, { state: { rep, bill: vote } });
   };
 
   const handleCommentIntent = (vote) => {
@@ -582,16 +591,18 @@ function Feed(props) {
 
         {votes.map((vote) => {
           const interaction = interactionsByBill[vote.bill_id];
+          const billType = vote.legislation_type;
           const billNumber = vote.legislationnumber;
+          const billIdentity = `${billType}-${billNumber}`;
           const voteKey = `${vote.legislationnumber}-${vote.session_number}-${vote.roll_call_number}`;
           const billLabel = formatBillLabel(
             vote.legislation_type,
             vote.legislationnumber,
           );
           const showAi = aiToggledByCard[voteKey];
-          const isLoadingAi = aiLoadingByBill[billNumber];
-          const aiText = aiSummaryByBill[billNumber];
-          const aiError = aiErrorByBill[billNumber];
+          const isLoadingAi = aiLoadingByBill[billIdentity];
+          const aiText = aiSummaryByBill[billIdentity];
+          const aiError = aiErrorByBill[billIdentity];
 
           const summaryText = !showAi
             ? vote.summary
@@ -625,7 +636,12 @@ function Feed(props) {
                     type="checkbox"
                     checked={Boolean(showAi)}
                     onChange={(e) =>
-                      handleToggleAi(voteKey, billNumber, e.target.checked)
+                      handleToggleAi(
+                        voteKey,
+                        billType,
+                        billNumber,
+                        e.target.checked,
+                      )
                     }
                     aria-label="Toggle to simplify using AI"
                   />
@@ -645,6 +661,7 @@ function Feed(props) {
               <div className="leg-vote">
                 {(() => {
                   let voteClass = "neutral";
+                  let resultClass = "neutral";
                   if (vote.vote === "Yea" || vote.vote === "Aye") {
                     voteClass = "success";
                   } else if (vote.vote === "Nay" || vote.vote === "No") {
@@ -652,11 +669,31 @@ function Feed(props) {
                   } else if (vote.vote === "Not Voting") {
                     voteClass = "neutral";
                   }
+                  if (vote.vote_result === "Passed") {
+                    resultClass = "success";
+                  } else if (vote.vote_result === "Failed") {
+                    resultClass = "danger";
+                  }
                   return (
                     <>
                       <span className={`pill ${voteClass}`}>
-                        Rep. {repLastName} Voted: {vote.vote}
+                        {repLastName} Voted: {vote.vote}
                       </span>
+                      {vote.vote_result && (
+                        <>
+                          <span className="leg-divider" aria-hidden="true">
+                            |
+                          </span>
+                          <span className={`pill ${resultClass}`}>
+                            {vote.vote_result === "Passed" ? (
+                              <CheckCircle2 size={14} />
+                            ) : vote.vote_result === "Failed" ? (
+                              <XCircle size={14} />
+                            ) : null}
+                            {vote.vote_result}
+                          </span>
+                        </>
+                      )}
                     </>
                   );
                 })()}

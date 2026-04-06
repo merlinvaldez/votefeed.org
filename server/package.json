@@ -11,7 +11,8 @@
     "db:seed": "node  src/db/seed.js",
     "db:reset": "npm run db:schema && npm run db:seed",
     "db:sync-votes": "node src/db/syncNewVotes.js",
-    "db:sync-bills": "node src/db/syncMissingBills.js"
+    "db:sync-bills": "node src/db/syncMissingBills.js",
+    "db:backfill-roll-call-summaries": "node src/db/backfillRollCallSummaries.js"
   },
   "keywords": [],
   "author": "",

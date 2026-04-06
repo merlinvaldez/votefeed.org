@@ -22,7 +22,7 @@ function App() {
         <Route element={<RequireOnboarding />}>
           <Route element={<FeedLayout />}>
             <Route path="/feed" element={<Feed></Feed>} />
-            <Route path="/bill/:billNumber" element={<BillPage />} />
+            <Route path="/bill/:billType/:billNumber" element={<BillPage />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
         </Route>

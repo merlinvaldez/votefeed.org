@@ -10,9 +10,26 @@ import {
 const apiKey = process.env.CONGRESS_API_KEY;
 const CONGRESS_API_ORIGIN = "https://api.congress.gov";
 
+function unwrapHouseVote(payload) {
+  const vote = payload?.houseRollCallVote;
+  return Array.isArray(vote) ? (vote[0] ?? null) : (vote ?? null);
+}
+
+function summarizeVotePartyTotals(votePartyTotal = []) {
+  return votePartyTotal.reduce(
+    (acc, partyRow) => ({
+      yes: acc.yes + Number(partyRow.yeaTotal ?? 0),
+      no: acc.no + Number(partyRow?.nayTotal ?? 0),
+      notVoting: acc.notVoting + Number(partyRow?.notVotingTotal ?? 0),
+    }),
+    { yes: 0, no: 0, notVoting: 0 },
+  );
+}
+
 function toCongressNextUrl(paginationNext) {
   const next = new URL(paginationNext, CONGRESS_API_ORIGIN);
   next.searchParams.set("api_key", apiKey);
+  next.searchParams.set("format", "json");
   return next.toString();
 }
 
@@ -31,6 +48,7 @@ router.get("/", async (req, res) => {
     const baseUrl = new URL("https://api.congress.gov/v3/house-vote/119");
     baseUrl.searchParams.set("limit", "250");
     baseUrl.searchParams.set("api_key", apiKey);
+    baseUrl.searchParams.set("format", "json");
 
     let houseVotes = [];
     let nextUrl = baseUrl.toString();
@@ -104,6 +122,44 @@ router.get("/member/:bioguideId", async (req, res) => {
   }
 });
 
+router.get("/:session/:voteNumber/summary", async (req, res) => {
+  if (!apiKey) {
+    return res.status(500).json({ error: "Missing Congress API Key" });
+  }
+  const { session, voteNumber } = req.params;
+  try {
+    const baseUrl = new URL(
+      `https://api.congress.gov/v3/house-vote/119/${session}/${voteNumber}`,
+    );
+    baseUrl.searchParams.set("api_key", apiKey);
+    baseUrl.searchParams.set("format", "json");
+    const resp = await fetch(baseUrl);
+    if (!resp.ok) {
+      const text = await resp.text();
+      return res.status(502).json({
+        error: "Congress API Error",
+        status: resp.status,
+        details: text,
+      });
+    }
+    const data = await resp.json();
+    const vote = unwrapHouseVote(data);
+    if (!vote) {
+      return res.status(404).json({ error: "House vote not found" });
+    }
+    const totals = summarizeVotePartyTotals(vote.votePartyTotal);
+    return res.json({
+      result: vote.result ?? null,
+      totals,
+    });
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ error: "Failed to fetch house vote summary" });
+  }
+});
+
 router.get("/:session/:voteNumber", async (req, res) => {
   if (!apiKey)
     return res.status(500).json({ error: "Missing Congress API Key" });
@@ -114,6 +170,7 @@ router.get("/:session/:voteNumber", async (req, res) => {
     );
     baseUrl.searchParams.set("limit", "250");
     baseUrl.searchParams.set("api_key", apiKey);
+    baseUrl.searchParams.set("format", "json");
     let members = [];
     let nextUrl = baseUrl.toString();
     while (nextUrl) {

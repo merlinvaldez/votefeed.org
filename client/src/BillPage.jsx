@@ -11,6 +11,8 @@ import {
   FileText,
   ExternalLink,
   Info,
+  CheckCircle2,
+  XCircle,
 } from "lucide-react";
 import { API_BASE } from "./constants";
 import { useAuth } from "./AuthContext";
@@ -56,7 +58,7 @@ const formatBillLabel = (type, number) => {
 
 export default function BillPage() {
   const navigate = useNavigate();
-  const { billNumber } = useParams();
+  const { billType, billNumber } = useParams();
   const { state } = useLocation();
   const repFullName = state?.rep?.full_name ?? "";
   const repLastName = getRepLastName(repFullName);
@@ -85,6 +87,21 @@ export default function BillPage() {
   const billId = bill?.bill_id ?? bill?.id ?? null;
   const fullBillUrl = bill?.legislation_url ?? null;
   const canReadFullBill = Boolean(fullBillUrl);
+  const latestVoteDate = bill?.latest_vote_date ?? bill?.voted_on ?? null;
+  const voteYesCount = Number(bill?.vote_yes_count ?? 0);
+  const voteNoCount = Number(bill?.vote_no_count ?? 0);
+  const totalCountedVotes = voteYesCount + voteNoCount;
+  const yesVotePercent =
+    totalCountedVotes > 0 ? (voteYesCount / totalCountedVotes) * 100 : 0;
+  const voteResultPillClass =
+    bill?.vote_result === "Passed"
+      ? "success"
+      : bill?.vote_result === "Failed"
+        ? "danger"
+        : "neutral";
+  const repVotePillClass = getVotePillClass(bill?.vote);
+  const VoteResultIcon =
+    bill?.vote_result === "Failed" ? XCircle : CheckCircle2;
 
   useEffect(() => {
     return () => {
@@ -114,7 +131,9 @@ export default function BillPage() {
     setAiLoading(true);
     setAiError("");
     try {
-      const resp = await fetch(`${API_BASE}/bills/${billNumber}/ai-summary`);
+      const resp = await fetch(
+        `${API_BASE}/bills/${billType}/${billNumber}/ai-summary`,
+      );
       if (!resp.ok) throw new Error("AI summary failed");
       const data = await resp.json();
       setAiSummary(data.aiSummary);
@@ -131,7 +150,7 @@ export default function BillPage() {
     (async () => {
       try {
         setStatus("loading");
-        const resp = await fetch(`${API_BASE}/bills/${billNumber}`);
+        const resp = await fetch(`${API_BASE}/bills/${billType}/${billNumber}`);
         if (!resp.ok) throw new Error(`Bill load failed (${resp.status})`);
         const data = await resp.json();
         if (!cancelled) {
@@ -148,7 +167,7 @@ export default function BillPage() {
     return () => {
       cancelled = true;
     };
-  }, [bill, billNumber]);
+  }, [bill, billNumber, billType]);
 
   useEffect(() => {
     if (!token || !billId) return;
@@ -334,23 +353,20 @@ export default function BillPage() {
       )}
       <div className="leg-card">
         <div className="leg-top">
-          <span className="pill primary">
-            {formatBillLabel(
-              bill?.legislation_type ?? bill?.bill_type,
-              bill?.legislationnumber ?? bill?.number ?? billNumber,
+          <div className="leg-meta-row">
+            <span className="pill primary">
+              {formatBillLabel(
+                bill?.legislation_type ?? bill?.bill_type,
+                bill?.legislationnumber ?? bill?.number ?? billNumber,
+              )}
+            </span>
+            {latestVoteDate && (
+              <span className="leg-date">
+                <Clock3 size={14}></Clock3>
+                {formatVotedOn(latestVoteDate)}
+              </span>
             )}
-          </span>
-          {bill?.vote && (
-            <span className={`pill ${getVotePillClass(bill.vote)}`}>
-              Rep. {repLastName} Voted: {bill.vote}
-            </span>
-          )}
-          {bill?.voted_on && (
-            <span className="pill neutral">
-              <Clock3 size={14}></Clock3>
-              Voted On: {formatVotedOn(bill.voted_on)}
-            </span>
-          )}
+          </div>
           <label className="toggle toggle-ai" style={{ gap: 8 }}>
             <input
               type="checkbox"
@@ -380,13 +396,55 @@ export default function BillPage() {
           <div className="leg-body">{aiSummary}</div>
         )}
         {showAi && aiError && <p className="error-text">{aiError}</p>}
+        {bill?.vote_result && (
+          <section className="vote-result-card">
+            <div className="vote-result-grid">
+              {bill?.vote && (
+                <div className="vote-result-block">
+                  <div className="vote-result-label">
+                    Rep. {repLastName} Voted
+                  </div>
+                  <span className={`pill ${repVotePillClass} vote-result-pill`}>
+                    {bill.vote}
+                  </span>
+                </div>
+              )}
+              <div className="vote-result-block">
+                <div className="vote-result-label">Result</div>
+                <span
+                  className={`pill ${voteResultPillClass} vote-result-pill`}
+                >
+                  <VoteResultIcon size={14}></VoteResultIcon>
+                  {bill.vote_result}
+                </span>
+              </div>
+              <div className="vote-result-block vote-result-counts">
+                <div className="vote-result-label">Vote Counts</div>
+                <div className="vote-count-bar" aria-hidden="true">
+                  <span
+                    className="vote-count-bar-yes"
+                    style={{ width: `${yesVotePercent}%` }}
+                  ></span>
+                  <span
+                    className="vote-count-bar-no"
+                    style={{ width: `${100 - yesVotePercent}%` }}
+                  ></span>
+                </div>
+                <div className="vote-count-row">
+                  <span className="vote-count-yes">{voteYesCount} Yea</span>
+                  <span className="vote-count-no">{voteNoCount} Nay</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
         {canReadFullBill && (
           <div className="bill-reference-row">
             <a
               className="bill-text-link"
               href={fullBillUrl}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
             >
               <span className="bill-text-link-copy">
                 <FileText size={18}></FileText>
@@ -396,7 +454,6 @@ export default function BillPage() {
             </a>
           </div>
         )}
-
         <div className="vote-actions">
           <button
             className={`ghost-btn ${

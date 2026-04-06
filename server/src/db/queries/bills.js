@@ -110,15 +110,44 @@ export async function syncMissingBillSummaries(runner = db) {
   };
 }
 
-export async function getBillSummary(legislationNumber) {
-  const sql = `SELECT * FROM bills
-  WHERE number=$1`;
-  const { rows } = await db.query(sql, [legislationNumber]);
+export async function getBillSummary(legislationNumber, billType) {
+  const sql = `WITH latest_roll_call_summary AS (
+    SELECT DISTINCT ON (legislation_number, legislation_type)
+      legislation_number,
+      legislation_type,
+      voted_on,
+      result,
+      yes_count,
+      no_count,
+      not_voting_count
+    FROM roll_call_summaries
+    ORDER BY
+      legislation_number,
+      legislation_type,
+      voted_on DESC NULLS LAST,
+      session_number DESC,
+      roll_call_number DESC,
+      id DESC
+  )
+  SELECT
+    bills.*,
+    latest_roll_call_summary.voted_on AS latest_vote_date,
+    latest_roll_call_summary.result AS vote_result,
+    latest_roll_call_summary.yes_count AS vote_yes_count,
+    latest_roll_call_summary.no_count AS vote_no_count,
+    latest_roll_call_summary.not_voting_count AS vote_not_voting_count
+  FROM bills
+  LEFT JOIN latest_roll_call_summary
+    ON latest_roll_call_summary.legislation_number = bills.number
+   AND latest_roll_call_summary.legislation_type = bills.bill_type
+  WHERE bills.number = $1
+    AND bills.bill_type = $2`;
+  const { rows } = await db.query(sql, [legislationNumber, billType]);
   return rows;
 }
 
-export async function getOrCreateAiBillSummary(legislationNumber) {
-  const billRows = await getBillSummary(legislationNumber);
+export async function getOrCreateAiBillSummary(legislationNumber, billType) {
+  const billRows = await getBillSummary(legislationNumber, billType);
   const bill = billRows?.[0];
   if (!bill) return null;
   if (typeof bill.aisummary === "string" && bill.aisummary.trim() !== "") {
@@ -128,8 +157,13 @@ export async function getOrCreateAiBillSummary(legislationNumber) {
   const sql = `UPDATE bills
     SET aisummary=$1
     WHERE number=$2
+      AND bill_type=$3
     RETURNING aisummary`;
 
-  const { rows } = await db.query(sql, [aiSummary, legislationNumber]);
+  const { rows } = await db.query(sql, [
+    aiSummary,
+    legislationNumber,
+    billType,
+  ]);
   return rows?.[0]?.aisummary ?? aiSummary;
 }

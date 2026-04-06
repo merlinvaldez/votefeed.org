@@ -35,6 +35,7 @@ router.get("/", async (req, res) => {
       toCongressDateTimeString(new Date(parsedFromDateTime)),
     );
     baseUrl.searchParams.set("api_key", apiKey);
+    baseUrl.searchParams.set("format", "json");
     let summaries = [];
     let nextUrl = baseUrl.toString();
     while (nextUrl) {
@@ -54,6 +55,7 @@ router.get("/", async (req, res) => {
       if (paginationNext) {
         const next = new URL(paginationNext);
         next.searchParams.set("api_key", apiKey);
+        next.searchParams.set("format", "json");
         nextUrl = next.toString();
       } else {
         nextUrl = null;
@@ -66,13 +68,17 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:billNumber", async (req, res) => {
+router.get("/:billType/:billNumber", async (req, res) => {
   try {
+    const billType = String(req.params.billType || "").trim().toLowerCase();
     const billNumber = Number(req.params.billNumber);
+    if (!billType) {
+      return res.status(400).json({ error: "Invalid bill type" });
+    }
     if (!Number.isInteger(billNumber)) {
       return res.status(400).json({ error: "Invalid bill number" });
     }
-    const bill = await getBillSummary(billNumber);
+    const bill = await getBillSummary(billNumber, billType);
     if (!bill || bill.length === 0)
       return res.status(404).json({ error: "Bill not found" });
     res.json(bill[0] || bill);
@@ -82,13 +88,17 @@ router.get("/:billNumber", async (req, res) => {
   }
 });
 
-router.get("/:billNumber/ai-summary", async (req, res) => {
+router.get("/:billType/:billNumber/ai-summary", async (req, res) => {
   try {
+    const billType = String(req.params.billType || "").trim().toLowerCase();
     const billNumber = Number(req.params.billNumber);
+    if (!billType) {
+      return res.status(400).json({ error: "Invalid bill type" });
+    }
     if (!Number.isInteger(billNumber)) {
       return res.status(400).json({ error: "Invalid bill number" });
     }
-    const aiSummary = await getOrCreateAiBillSummary(billNumber);
+    const aiSummary = await getOrCreateAiBillSummary(billNumber, billType);
     if (!aiSummary) {
       return res.status(404).json({ error: "Bill not found" });
     }

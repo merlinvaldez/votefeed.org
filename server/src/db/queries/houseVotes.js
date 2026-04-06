@@ -121,6 +121,47 @@ async function insertMemberVotes(runner, vote, members) {
   };
 }
 
+async function upsertRollCallSummary(runner, vote, summary) {
+  if (!summary?.result || !summary?.totals) {
+    throw new Error(
+      `Missing roll call summary for session ${vote.sessionNumber} roll call ${vote.rollCallNumber}`,
+    );
+  }
+
+  const sql = `INSERT INTO roll_call_summaries (
+      legislation_number,
+      legislation_type,
+      session_number,
+      roll_call_number,
+      voted_on,
+      result,
+      yes_count,
+      no_count,
+      not_voting_count
+    )
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    ON CONFLICT (session_number, roll_call_number) DO UPDATE SET
+      legislation_number = EXCLUDED.legislation_number,
+      legislation_type = EXCLUDED.legislation_type,
+      voted_on = EXCLUDED.voted_on,
+      result = EXCLUDED.result,
+      yes_count = EXCLUDED.yes_count,
+      no_count = EXCLUDED.no_count,
+      not_voting_count = EXCLUDED.not_voting_count`;
+
+  await runner.query(sql, [
+    Number(vote.legislationNumber),
+    String(vote.legislationType).toLowerCase(),
+    Number(vote.sessionNumber),
+    Number(vote.rollCallNumber),
+    vote.startDate,
+    summary.result,
+    Number(summary.totals.yes ?? 0),
+    Number(summary.totals.no ?? 0),
+    Number(summary.totals.notVoting ?? 0),
+  ]);
+}
+
 export async function getHouseVotes(runner = db, options = {}) {
   const { fromDateTime } = options;
   const parsedFromDateTime = fromDateTime ? Date.parse(fromDateTime) : null;
@@ -163,6 +204,19 @@ export async function getHouseVotes(runner = db, options = {}) {
               );
               return fetchMembersWithRetry(membersUrl);
             })();
+      const summaryUrl = new URL(
+        `housevotes/${vote.sessionNumber}/${vote.rollCallNumber}/summary`,
+        base,
+      );
+      const summaryResp = await fetch(summaryUrl);
+      if (!summaryResp.ok) {
+        const details = await summaryResp.text();
+        throw new Error(
+          `getHouseVotes summary failed ${summaryResp.status} for ${summaryUrl} - ${details}`,
+        );
+      }
+      const summary = await summaryResp.json();
+      await upsertRollCallSummary(runner, vote, summary);
     } catch (err) {
       skippedRollCalls += 1;
       console.warn(
@@ -256,11 +310,20 @@ SELECT
   bills.summary,
   bills.policy_area,
   bills.legislation_url,
-  latest_vote_per_bill.vote
+  latest_vote_per_bill.vote,
+  roll_call_summaries.result AS vote_result,
+  roll_call_summaries.yes_count AS vote_yes_count,
+  roll_call_summaries.no_count AS vote_no_count,
+  roll_call_summaries.not_voting_count AS vote_not_voting_count
 FROM latest_vote_per_bill
 JOIN bills
   ON bills.number = latest_vote_per_bill.legislationNumber
- AND bills.bill_type = latest_vote_per_bill.legislation_type`;
+ AND bills.bill_type = latest_vote_per_bill.legislation_type
+LEFT JOIN roll_call_summaries
+  ON roll_call_summaries.session_number = latest_vote_per_bill.session_number
+ AND roll_call_summaries.roll_call_number = latest_vote_per_bill.roll_call_number
+ AND roll_call_summaries.legislation_number = latest_vote_per_bill.legislationNumber
+ AND roll_call_summaries.legislation_type = latest_vote_per_bill.legislation_type`;
   const policyFilterSql = policyArea
     ? ` WHERE bills.policy_area = $${hasLimit ? 4 : 2}`
     : "";

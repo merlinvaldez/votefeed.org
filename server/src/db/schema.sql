@@ -1,5 +1,6 @@
 
 DROP TABLE IF EXISTS interactions;
+DROP TABLE IF EXISTS roll_call_summaries;
 DROP TABLE IF EXISTS member_voting_record;
 DROP TABLE IF EXISTS bills;
 DROP TABLE IF EXISTS reps;
@@ -36,6 +37,22 @@ CREATE TABLE bills(
     policy_area text, 
     legislation_url text 
 );
+
+CREATE TABLE roll_call_summaries (
+    id serial PRIMARY KEY,
+    legislation_number integer,
+    legislation_type text,
+    session_number integer NOT NULL,
+    roll_call_number integer NOT NULL,
+    voted_on timestamptz,
+    result text NOT NULL,
+    yes_count integer NOT NULL DEFAULT 0,
+    no_count integer NOT NULL DEFAULT 0,
+    not_voting_count integer NOT NULL DEFAULT 0
+);
+
+CREATE UNIQUE INDEX idx_roll_call_summaries_session_roll_call
+ON roll_call_summaries(session_number, roll_call_number);
 
 CREATE TABLE member_voting_record (
     id serial PRIMARY KEY,
