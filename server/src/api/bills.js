@@ -35,6 +35,7 @@ router.get("/", async (req, res) => {
       toCongressDateTimeString(new Date(parsedFromDateTime)),
     );
     baseUrl.searchParams.set("api_key", apiKey);
+    baseUrl.searchParams.set("format", "json");
     let summaries = [];
     let nextUrl = baseUrl.toString();
     while (nextUrl) {
@@ -54,6 +55,7 @@ router.get("/", async (req, res) => {
       if (paginationNext) {
         const next = new URL(paginationNext);
         next.searchParams.set("api_key", apiKey);
+        next.searchParams.set("format", "json");
         nextUrl = next.toString();
       } else {
         nextUrl = null;

@@ -83,6 +83,7 @@ function toCongressDateTimeString(value: Date) {
 function toCongressNextUrl(paginationNext: string, apiKey: string) {
   const next = new URL(paginationNext, CONGRESS_API_ORIGIN);
   next.searchParams.set("api_key", apiKey);
+  next.searchParams.set("format", "json");
   return next.toString();
 }
 
@@ -90,6 +91,7 @@ async function fetchHouseVotes(apiKey: string, fromDateTime: string | null) {
   const baseUrl = new URL("https://api.congress.gov/v3/house-vote/119");
   baseUrl.searchParams.set("limit", "250");
   baseUrl.searchParams.set("api_key", apiKey);
+  baseUrl.searchParams.set("format", "json");
 
   let houseVotes: HouseVote[] = [];
   let nextUrl: string | null = baseUrl.toString();
@@ -138,6 +140,7 @@ async function fetchBillSummaries(
     toCongressDateTimeString(new Date(Date.parse(fromDateTime))),
   );
   baseUrl.searchParams.set("api_key", apiKey);
+  baseUrl.searchParams.set("format", "json");
 
   let summaries: BillSummary[] = [];
   let nextUrl: string | null = baseUrl.toString();
@@ -196,6 +199,7 @@ async function fetchRollCallMembersWithRetry(
   );
   baseUrl.searchParams.set("limit", "250");
   baseUrl.searchParams.set("api_key", apiKey);
+  baseUrl.searchParams.set("format", "json");
 
   let members: HouseVoteRecord[] = [];
   let nextUrl: string | null = baseUrl.toString();
@@ -256,6 +260,7 @@ async function fetchRollCallSummary(
     `https://api.congress.gov/v3/house-vote/119/${sessionNumber}/${rollCallNumber}`,
   );
   url.searchParams.set("api_key", apiKey);
+  url.searchParams.set("format", "json");
 
   const response = await fetch(url);
   if (!response.ok) {

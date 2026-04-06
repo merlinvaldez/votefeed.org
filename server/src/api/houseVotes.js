@@ -29,6 +29,7 @@ function summarizeVotePartyTotals(votePartyTotal = []) {
 function toCongressNextUrl(paginationNext) {
   const next = new URL(paginationNext, CONGRESS_API_ORIGIN);
   next.searchParams.set("api_key", apiKey);
+  next.searchParams.set("format", "json");
   return next.toString();
 }
 
@@ -47,6 +48,7 @@ router.get("/", async (req, res) => {
     const baseUrl = new URL("https://api.congress.gov/v3/house-vote/119");
     baseUrl.searchParams.set("limit", "250");
     baseUrl.searchParams.set("api_key", apiKey);
+    baseUrl.searchParams.set("format", "json");
 
     let houseVotes = [];
     let nextUrl = baseUrl.toString();
@@ -130,6 +132,7 @@ router.get("/:session/:voteNumber/summary", async (req, res) => {
       `https://api.congress.gov/v3/house-vote/119/${session}/${voteNumber}`,
     );
     baseUrl.searchParams.set("api_key", apiKey);
+    baseUrl.searchParams.set("format", "json");
     const resp = await fetch(baseUrl);
     if (!resp.ok) {
       const text = await resp.text();
@@ -167,6 +170,7 @@ router.get("/:session/:voteNumber", async (req, res) => {
     );
     baseUrl.searchParams.set("limit", "250");
     baseUrl.searchParams.set("api_key", apiKey);
+    baseUrl.searchParams.set("format", "json");
     let members = [];
     let nextUrl = baseUrl.toString();
     while (nextUrl) {
