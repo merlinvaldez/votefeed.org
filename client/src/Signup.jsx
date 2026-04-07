@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SignUp } from "@clerk/clerk-react";
 import "./LandingPage.css";
 import "./Login.css";
@@ -15,6 +15,7 @@ export default function Signup() {
       window.sessionStorage.removeItem("signup_error");
     }
   }, []);
+
   return (
     <div className="login-layout">
       <section className="hero">
@@ -31,7 +32,13 @@ export default function Signup() {
             your district.
           </p>
         </div>
-        <div className="hero-footer">© 2025 VoteFeed Inc.</div>
+        <div className="hero-footer">
+          <div>&copy; 2025 VoteFeed Inc.</div>
+          <div className="hero-footer-links">
+            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/terms">Terms of Use</Link>
+          </div>
+        </div>
       </section>
 
       <section className="login-panel">
@@ -41,14 +48,14 @@ export default function Signup() {
             type="button"
             onClick={() => navigate("/")}
           >
-            ← Back to Search
+            <span aria-hidden="true">&larr;</span>
+            <span>Back to Search</span>
           </button>
           <div className="clerk-only">
             {showEmailExistsError && (
               <div className="error">
-                {" "}
                 An Account with that email already exists. Try signing in
-                instead.{" "}
+                instead.
               </div>
             )}
             <SignUp

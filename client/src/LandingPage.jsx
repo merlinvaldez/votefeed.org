@@ -125,8 +125,14 @@ function LandingPage() {
             your district.
           </p>
         </div>
-        <div className="hero-footer">© 2025 VoteFeed Inc.</div>
-      </section>
+        <div className="hero-footer">
+          <div>&copy; 2025 VoteFeed Inc.</div>
+          <div className="hero-footer-links">
+            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/terms">Terms of Use</Link>
+          </div>
+        </div>
+        </section>
 
       <section className="form-panel">
         <div className="form-card">

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useClerk, useUser } from "@clerk/clerk-react";
 import { useAuth } from "./AuthContext";
 import { API_BASE } from "./constants";
@@ -124,7 +124,13 @@ export default function Onboarding() {
             your district.
           </p>
         </div>
-        <div className="hero-footer">&copy; 2025 VoteFeed Inc.</div>
+        <div className="hero-footer">
+          <div>&copy; 2025 VoteFeed Inc.</div>
+          <div className="hero-footer-links">
+            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/terms">Terms of Use</Link>
+          </div>
+        </div>
       </section>
 
       <section className="login-panel">

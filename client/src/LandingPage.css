@@ -56,8 +56,24 @@
 }
 
 .hero-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   font-size: 14px;
   color: var(--hero-muted);
+}
+
+.hero-footer-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hero-footer-links a {
+  color: var(--hero-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .form-panel {
