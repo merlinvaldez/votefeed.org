@@ -10,12 +10,16 @@ import Profile from "./Profile";
 import FeedLayout from "./FeedLayout";
 import Onboarding from "./Onboarding";
 import RequireOnboarding from "./RequireOnboarding";
+import PrivacyPolicy from "./PrivacyPolicy";
+import TermsOfUse from "./TermsOfUse";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsOfUse />} />
         <Route path="/login/*" element={<Login></Login>} />
         <Route path="/signup/*" element={<Signup></Signup>} />
         <Route path="/onboarding" element={<Onboarding></Onboarding>} />

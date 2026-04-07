@@ -88,6 +88,27 @@
   gap: 10px;
 }
 
+.sidebar-legal {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar-legal-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.sidebar-legal-link:hover {
+  color: var(--link);
+}
+
 .policy-sidebar-header {
   display: flex;
   align-items: center;

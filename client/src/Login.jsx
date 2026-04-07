@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SignIn } from "@clerk/clerk-react";
 import "./LandingPage.css";
 import "./Login.css";
 
 export default function Login() {
   const navigate = useNavigate();
+
   return (
     <div className="login-layout">
       <section className="hero">
@@ -21,7 +22,13 @@ export default function Login() {
             your district.
           </p>
         </div>
-        <div className="hero-footer">© 2025 VoteFeed Inc.</div>
+        <div className="hero-footer">
+          <div>&copy; 2025 VoteFeed Inc.</div>
+          <div className="hero-footer-links">
+            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/terms">Terms of Use</Link>
+          </div>
+        </div>
       </section>
 
       <section className="login-panel">
@@ -31,7 +38,8 @@ export default function Login() {
             type="button"
             onClick={() => navigate("/")}
           >
-            ← Back to Search
+            <span aria-hidden="true">&larr;</span>
+            <span>Back to Search</span>
           </button>
           <div className="clerk-only">
             <SignIn
