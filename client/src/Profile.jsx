@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserAvatar } from "@clerk/clerk-react";
 import { useAuth } from "./AuthContext";
 import { API_BASE, STATES } from "./constants";
@@ -110,7 +110,7 @@ export default function Profile() {
   if (error) return <div className="profile-page-error">{error}</div>;
 
   return (
-    <>
+    <div className="profile-page">
       <header className="profile-header">
         <div className="profile-avatar" aria-label="Profile photo">
           <UserAvatar rounded={true}></UserAvatar>
@@ -221,6 +221,15 @@ export default function Profile() {
           Log out
         </button>
       </section>
-    </>
+
+      <footer className="profile-legal" aria-label="Legal">
+        <Link to="/privacy" className="profile-legal-link">
+          Privacy Policy
+        </Link>
+        <Link to="/terms" className="profile-legal-link">
+          Terms of Use
+        </Link>
+      </footer>
+    </div>
   );
 }

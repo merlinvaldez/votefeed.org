@@ -92,14 +92,6 @@ export default function FeedLayout() {
             </div>
           </section>
         )}
-        <div className="sidebar-legal">
-          <NavLink to="/privacy" className="sidebar-legal-link">
-            Privacy Policy
-          </NavLink>
-          <NavLink to="/terms" className="sidebar-legal-link">
-            Terms of Use
-          </NavLink>
-        </div>
       </aside>
       <main className="feed-main">
         <Outlet

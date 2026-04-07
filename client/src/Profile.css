@@ -1,8 +1,10 @@
 .profile-page {
+  width: 100%;
   max-width: 960px;
   margin: 0 auto;
-  padding: 40px 24px;
-  min-height: 100vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   background: var(--bg);
   color: var(--text);
   font-family:
@@ -108,6 +110,27 @@
   color: var(--danger);
   border-color: var(--danger-border);
   background: var(--danger-bg);
+}
+
+.profile-legal {
+  margin-top: auto;
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.profile-legal-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.profile-legal-link:hover {
+  color: var(--link);
 }
 
 .profile-update-form {
