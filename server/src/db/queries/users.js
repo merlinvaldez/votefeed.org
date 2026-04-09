@@ -54,3 +54,47 @@ export async function updateUserDistrict(id, address) {
   } = await db.query(sql, [state, district, id]);
   return user;
 }
+
+export async function findUsersToNotifyForRepVote(
+  { state, district, sessionNumber, rollCallNumber },
+  runner = db,
+) {
+  const sql = `SELECT id, email, first_name, last_name, state, district
+    FROM users
+    WHERE notifications_enabled = true
+      AND email IS NOT NULL
+      AND state = $1
+      AND district = $2
+      AND (
+        last_notified_session_number IS NULL
+        OR last_notified_roll_call_number IS NULL
+        OR last_notified_session_number < $3
+        OR (
+          last_notified_session_number = $3
+          AND last_notified_roll_call_number < $4
+        )
+      )`;
+  const { rows: users } = await runner.query(sql, [
+    state,
+    district,
+    sessionNumber,
+    rollCallNumber,
+  ]);
+  return users;
+}
+
+export async function markUserVoteNotificationSent(
+  userId,
+  { sessionNumber, rollCallNumber },
+  runner = db,
+) {
+  const sql = `UPDATE users
+  SET last_notified_session_number=$1,
+      last_notified_roll_call_number=$2
+  WHERE id = $3
+  RETURNING *`;
+  const {
+    rows: [user],
+  } = await runner.query(sql, [sessionNumber, rollCallNumber, userId]);
+  return user;
+}

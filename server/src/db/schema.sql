@@ -15,6 +15,9 @@ CREATE TABLE users(
     last_name text,
     state text,
     district integer,
+    notifications_enabled boolean NOT NULL DEFAULT true, 
+    last_notified_session_numbner integer, 
+    last_notified_roll_call_number integer
 );
 
 CREATE TABLE reps (
