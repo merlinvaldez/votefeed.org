@@ -30,6 +30,11 @@ The goal is to use AI to understand concepts, practice deliberately, and review 
 - Default behavior: compare the branch to `main`, inspect the changed surfaces, and return an unchecked test checklist with exact steps and expected results.
 - Best use: before merge or release, when I need to know exactly how to verify app, API, Vercel, and Supabase changes.
 
+6. `prod-plan`
+- Purpose: branch-aware production rollout planning based on the actual diff against a base branch.
+- Default behavior: compare the branch to `main`, identify the Vercel and Supabase production changes required, and return an unchecked rollout checklist with sequencing and blockers.
+- Best use: right before production deployment, when I need to know exactly what must change in env vars, migrations, redirects, buckets, cron, or other production settings.
+
 ## How I Use These Together
 
 1. Learn the concept in isolation with `quickstart-me`.
@@ -37,6 +42,7 @@ The goal is to use AI to understand concepts, practice deliberately, and review 
 3. Implement it myself in-repo with `teach-me`.
 4. Review and refine with `correct-me`.
 5. Generate a concrete regression checklist with `testing-plan` before merging.
+6. Generate a production rollout checklist with `prod-plan` before shipping live.
 
 ## Example Prompts
 
@@ -45,6 +51,7 @@ The goal is to use AI to understand concepts, practice deliberately, and review 
 3. `[$teach-me](./example.teach-me.md) Guide me to wire this into my existing app without writing the code for me.`
 4. `[$correct-me](./example.correct-me.md) Review my AuthContext changes and give me the minimal diff to fix mistakes.`
 5. `[$testing-plan](./example.testing-plan.md) Compare this branch against main and give me an exact manual QA checklist before I merge.`
+6. `[$prod-plan](./example.prod-plan.md) Compare this branch against main and tell me exactly what has to change in Vercel and Supabase before production.`
 
 ## Why This Matters
 
@@ -52,4 +59,5 @@ The goal is to use AI to understand concepts, practice deliberately, and review 
 - Better learning retention: I practice the implementation myself.
 - Better code quality: changes are reviewed with targeted feedback.
 - Better release confidence: I can verify the changed surfaces with an explicit checklist instead of improvised testing.
+- Better production safety: I can separate pre-merge QA from the exact rollout steps required to ship without breaking prod.
 - Better velocity over time: less guesswork, fewer repeated mistakes.
