@@ -48,3 +48,11 @@ export async function findRepByDistrict(state, congressionalDistrict) {
   } = await db.query(sql, [state, congressionalDistrict]);
   return rep;
 }
+
+export async function findRepByBioguideId(bioguideId, runner = db) {
+  const sql = `SELECT * FROM reps WHERE bioguideId=$1`;
+  const {
+    rows: [rep],
+  } = await runner.query(sql, [bioguideId]);
+  return rep;
+}
