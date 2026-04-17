@@ -7,10 +7,22 @@ export async function upsertUserByClerkId(
   runner = db,
 ) {
   const { district, state } = await getDistrictFromAddress(address);
-  const sql = `INSERT INTO users (clerk_user_id, email, first_name, last_name, state, district)
+  const sql = `INSERT INTO users (
+    clerk_user_id,
+    email,
+    first_name,
+    last_name,
+    state,
+    district
+  )
   VALUES ($1,$2,$3,$4,$5,$6)
   ON CONFLICT (clerk_user_id)
-  DO UPDATE SET email=$2, first_name=$3, last_name=$4, state=$5, district=$6
+  DO UPDATE SET
+    email=$2,
+    first_name=$3,
+    last_name=$4,
+    state=$5,
+    district=$6
   RETURNING *;`;
   const {
     rows: [user],
@@ -46,7 +58,10 @@ export async function getUserByClerkId(clerkUserId) {
 export async function updateUserDistrict(id, address) {
   const { district, state } = await getDistrictFromAddress(address);
   const sql = `UPDATE users 
-  SET state=$1, district=$2
+  SET state=$1,
+      district=$2,
+      last_notified_session_number=NULL,
+      last_notified_roll_call_number=NULL
   WHERE id=$3
   RETURNING *`;
   const {
@@ -59,7 +74,15 @@ export async function findUsersToNotifyForRepVote(
   { state, district, sessionNumber, rollCallNumber },
   runner = db,
 ) {
-  const sql = `SELECT id, email, first_name, last_name, state, district
+  const sql = `SELECT
+      id,
+      email,
+      first_name,
+      last_name,
+      state,
+      district,
+      last_notified_session_number,
+      last_notified_roll_call_number
     FROM users
     WHERE notifications_enabled = true
       AND email IS NOT NULL

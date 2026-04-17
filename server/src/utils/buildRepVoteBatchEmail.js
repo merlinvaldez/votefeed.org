@@ -19,8 +19,20 @@ function escapeHtml(value) {
 }
 
 function getRepLastName(repName = "") {
-  const parts = String(repName).trim().split(/\s+/).filter(Boolean);
+  const normalized = String(repName).trim();
+  if (!normalized) return "Representative";
+  if (normalized.includes(",")) {
+    return normalized.split(",")[0].trim() || "Representative";
+  }
+  const parts = normalized.split(/\s+/).filter(Boolean);
   return parts.at(-1) ?? "Representative";
+}
+
+function buildBillPageUrl(appOrigin, legislationType, legislationNumber) {
+  return new URL(
+    `/bill/${encodeURIComponent(String(legislationType).trim().toLowerCase())}/${encodeURIComponent(String(legislationNumber))}`,
+    appOrigin,
+  ).toString();
 }
 
 function getBillLabel(vote) {
@@ -81,10 +93,11 @@ export function buildRepVoteBatchEmail({ firstName, repName, votes = [] }) {
   const itemsHtml = votes
     .map((vote) => {
       const displayTitle = getVoteDisplayTitle(vote);
-      const billUrl = new URL(
-        `/bill/${String(vote.legislationType).trim().toLowerCase()}/${vote.legislationNumber}`,
+      const billUrl = buildBillPageUrl(
         appOrigin,
-      ).toString();
+        vote.legislationType,
+        vote.legislationNumber,
+      );
       const votePillHtml = buildVotePillHtml(vote.vote);
       return `<li style="margin: 0 0 12px;">Rep. ${safeRepLastName} voted ${votePillHtml} on <a href="${billUrl}" style="color: #1d4ed8; text-decoration: underline;">${escapeHtml(displayTitle)}</a></li>`;
     })
@@ -112,10 +125,11 @@ export function buildRepVoteBatchEmail({ firstName, repName, votes = [] }) {
     "",
     ...votes.map((vote) => {
       const displayTitle = getVoteDisplayTitle(vote);
-      const billUrl = new URL(
-        `/bill/${String(vote.legislationType).trim().toLowerCase()}/${vote.legislationNumber}`,
+      const billUrl = buildBillPageUrl(
         appOrigin,
-      ).toString();
+        vote.legislationType,
+        vote.legislationNumber,
+      );
       return `- Rep. ${repLastName} voted ${vote.vote} on ${displayTitle} (${billUrl})`;
     }),
     "",

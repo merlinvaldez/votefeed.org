@@ -1,11 +1,13 @@
 
 DROP TABLE IF EXISTS interactions;
+DROP TABLE IF EXISTS vote_notification_outbox;
 DROP TABLE IF EXISTS roll_call_summaries;
 DROP TABLE IF EXISTS member_voting_record;
 DROP TABLE IF EXISTS bills;
 DROP TABLE IF EXISTS reps;
 DROP TABLE IF EXISTS users;
 
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 CREATE TABLE users(
     id serial PRIMARY KEY,
@@ -16,7 +18,7 @@ CREATE TABLE users(
     state text,
     district integer,
     notifications_enabled boolean NOT NULL DEFAULT true, 
-    last_notified_session_numbner integer, 
+    last_notified_session_number integer, 
     last_notified_roll_call_number integer
 );
 
@@ -27,7 +29,7 @@ CREATE TABLE reps (
     chamber text NOT NULL,
     state text NOT NULL,
     congressionalDistrict integer, 
-    image_url text, 
+    image_url text
 );
 
 CREATE TABLE bills(
@@ -57,6 +59,9 @@ CREATE TABLE roll_call_summaries (
 CREATE UNIQUE INDEX idx_roll_call_summaries_session_roll_call
 ON roll_call_summaries(session_number, roll_call_number);
 
+CREATE UNIQUE INDEX idx_bills_bill_type_number
+ON bills(bill_type, number);
+
 CREATE TABLE member_voting_record (
     id serial PRIMARY KEY,
     legislationNumber integer,
@@ -68,8 +73,30 @@ CREATE TABLE member_voting_record (
     member_id text NOT NULL
 );
 
-CREATE INDEX idx_member_voting_record_member_roll_call
+CREATE UNIQUE INDEX idx_member_voting_record_member_roll_call
 ON member_voting_record (member_id, session_number, roll_call_number);
+
+CREATE TABLE vote_notification_outbox (
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    sync_run_id uuid NOT NULL,
+    member_id text NOT NULL,
+    legislation_type text NOT NULL,
+    legislation_number integer NOT NULL,
+    session_number integer NOT NULL,
+    roll_call_number integer NOT NULL,
+    voted_on timestamptz,
+    vote text NOT NULL,
+    created_at timestamptz NOT NULL DEFAULT now(),
+    processed_at timestamptz,
+    attempt_count integer NOT NULL DEFAULT 0,
+    last_error text
+);
+
+CREATE UNIQUE INDEX idx_vote_notification_outbox_sync_member_roll_call
+ON vote_notification_outbox(sync_run_id, member_id, session_number, roll_call_number);
+
+CREATE INDEX idx_vote_notification_outbox_pending_lookup
+ON vote_notification_outbox(processed_at, created_at, sync_run_id, member_id);
 
 
 CREATE TABLE interactions (
