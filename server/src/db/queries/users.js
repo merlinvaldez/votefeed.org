@@ -70,6 +70,21 @@ export async function updateUserDistrict(id, address) {
   return user;
 }
 
+export async function updateUserNotificationsEnabled(
+  id,
+  notificationsEnabled,
+  runner = db,
+) {
+  const sql = `UPDATE users
+  SET notifications_enabled=$1
+  WHERE id=$2
+  RETURNING *`;
+  const {
+    rows: [user],
+  } = await runner.query(sql, [notificationsEnabled, id]);
+  return user;
+}
+
 export async function findUsersToNotifyForRepVote(
   { state, district, sessionNumber, rollCallNumber },
   runner = db,

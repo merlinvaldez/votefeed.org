@@ -9,6 +9,7 @@ import {
 import { getAlignmentByUserAndRep } from "../db/queries/interactions.js";
 import {
   updateUserDistrict,
+  updateUserNotificationsEnabled,
   upsertUserByClerkId,
 } from "../db/queries/users.js";
 import requireBody from "../middleware/requireBody.js";
@@ -70,8 +71,24 @@ router.post(
 );
 
 router.get("/me", requireUser, (req, res) => {
-  const { id, email, first_name, last_name, district, state } = req.user;
-  res.json({ id, email, first_name, last_name, district, state });
+  const {
+    id,
+    email,
+    first_name,
+    last_name,
+    district,
+    state,
+    notifications_enabled,
+  } = req.user;
+  res.json({
+    id,
+    email,
+    first_name,
+    last_name,
+    district,
+    state,
+    notifications_enabled,
+  });
 });
 
 router.get("/me/alignment", requireUser, async (req, res) => {
@@ -142,6 +159,30 @@ router.put(
       if (err?.code === ADDRESS_NOT_FOUND_CODE) {
         return res.status(400).send(ADDRESS_NOT_FOUND_MESSAGE);
       }
+      return next(err);
+    }
+  },
+);
+
+router.put(
+  "/me/notifications",
+  requireUser,
+  requireBody(["notifications_enabled"]),
+  async (req, res, next) => {
+    try {
+      const { notifications_enabled } = req.body;
+      if (typeof notifications_enabled !== "boolean") {
+        return res
+          .status(400)
+          .json({ error: "notifications_enabled must be a boolean" });
+      }
+      const updated = await updateUserNotificationsEnabled(
+        req.user.id,
+        notifications_enabled,
+      );
+      if (!updated) return res.status(404).json({ error: "User not found" });
+      res.json(updated);
+    } catch (err) {
       return next(err);
     }
   },

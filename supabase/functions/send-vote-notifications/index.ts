@@ -4,8 +4,8 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import { json } from "../_shared/http.ts";
 
 const MAX_GROUPS_PER_INVOCATION = 10;
-const MAX_EMAILS_PER_INVOCATION = 25;
-const MAX_RUNTIME_MS = 20_000;
+const MAX_EMAILS_PER_INVOCATION = 100;
+const MAX_RUNTIME_MS = 100_000;
 const MAX_FAILURE_ATTEMPTS = 5;
 
 type SupabaseClient = ReturnType<typeof createClient>;
