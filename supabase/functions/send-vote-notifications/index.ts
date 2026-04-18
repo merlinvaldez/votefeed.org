@@ -3,7 +3,7 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 
 import { json } from "../_shared/http.ts";
 
-const MAX_GROUPS_PER_INVOCATION = 10;
+const MAX_GROUPS_PER_INVOCATION = 500;
 const MAX_EMAILS_PER_INVOCATION = 100;
 const MAX_RUNTIME_MS = 100_000;
 const MAX_FAILURE_ATTEMPTS = 5;
@@ -35,6 +35,7 @@ type OutboxGroup = {
 type RepRow = {
   bioguideid: string;
   full_name: string;
+  chamber: string | null;
   state: string;
   congressionaldistrict: number | null;
 };
@@ -391,12 +392,33 @@ async function findRepByBioguideId(
 ) {
   const { data, error } = await supabase
     .from("reps")
-    .select("bioguideid, full_name, state, congressionaldistrict")
+    .select("bioguideid, full_name, chamber, state, congressionaldistrict")
     .eq("bioguideid", bioguideId)
     .maybeSingle();
 
   if (error) throw error;
   return (data ?? null) as RepRow | null;
+}
+
+async function findRepsByBioguideIds(
+  supabase: SupabaseClient,
+  bioguideIds: string[],
+) {
+  const uniqueIds = [...new Set(bioguideIds.map((id) => String(id).trim()).filter(Boolean))];
+  if (uniqueIds.length === 0) {
+    return new Map<string, RepRow>();
+  }
+
+  const { data, error } = await supabase
+    .from("reps")
+    .select("bioguideid, full_name, chamber, state, congressionaldistrict")
+    .in("bioguideid", uniqueIds);
+
+  if (error) throw error;
+
+  return new Map(
+    ((data ?? []) as RepRow[]).map((rep) => [rep.bioguideid, rep]),
+  );
 }
 
 async function findRepByDistrict(
@@ -406,7 +428,7 @@ async function findRepByDistrict(
 ) {
   const { data, error } = await supabase
     .from("reps")
-    .select("bioguideid, full_name, state, congressionaldistrict")
+    .select("bioguideid, full_name, chamber, state, congressionaldistrict")
     .eq("state", state)
     .eq("congressionaldistrict", district)
     .maybeSingle();
@@ -483,6 +505,27 @@ function groupVotesByRollCall<
 
 function hasBillSummary(vote: { billSummary: string | null }) {
   return String(vote.billSummary ?? "").trim() !== "";
+}
+
+function isDeliverableHouseRep(rep: RepRow | null | undefined) {
+  const chamber = String(rep?.chamber ?? "").trim().toLowerCase();
+  return chamber.includes("house") && rep?.congressionaldistrict != null;
+}
+
+function getUndeliverableGroupReason(
+  memberId: string,
+  rep: RepRow | null | undefined,
+) {
+  if (!rep) {
+    return `Skipped notification queue for member ${memberId}: no matching rep record`;
+  }
+  if (!String(rep.chamber ?? "").trim().toLowerCase().includes("house")) {
+    return `Skipped notification queue for member ${memberId}: chamber ${rep.chamber ?? "unknown"} is not deliverable`;
+  }
+  if (rep.congressionaldistrict == null) {
+    return `Skipped notification queue for member ${memberId}: missing congressional district`;
+  }
+  return `Skipped notification queue for member ${memberId}: undeliverable rep`;
 }
 
 function getSummaryReadyRollCallGroups(votes: EnrichedVote[]) {
@@ -658,6 +701,27 @@ async function markOutboxRowsProcessed(
   if (error) throw error;
 }
 
+async function markOutboxRowsSkipped(
+  supabase: SupabaseClient,
+  rows: OutboxRow[],
+  reason: string,
+) {
+  if (rows.length === 0) return;
+
+  const { error } = await supabase
+    .from("vote_notification_outbox")
+    .update({
+      processed_at: new Date().toISOString(),
+      last_error: reason,
+    })
+    .in(
+      "id",
+      rows.map((row) => row.id),
+    );
+
+  if (error) throw error;
+}
+
 async function markOutboxRowsFailed(
   supabase: SupabaseClient,
   rows: OutboxRow[],
@@ -718,15 +782,36 @@ Deno.serve(async (req) => {
     const supabase = createClient(supabaseUrl, serviceRoleKey);
     const pendingRows = await loadPendingOutboxRows(supabase);
     const allPendingGroups = groupPendingOutboxRows(pendingRows);
+    const repByMemberId = await findRepsByBioguideIds(
+      supabase,
+      allPendingGroups.map((group) => group.memberId),
+    );
+    let skippedUndeliverableGroupCount = 0;
+
+    for (const group of allPendingGroups) {
+      const rep = repByMemberId.get(group.memberId) ?? null;
+      if (isDeliverableHouseRep(rep)) continue;
+      const reason = getUndeliverableGroupReason(group.memberId, rep);
+      console.warn(`[send-vote-notifications] ${reason}`);
+      await markOutboxRowsSkipped(supabase, group.rows, reason);
+      skippedUndeliverableGroupCount += 1;
+    }
+
+    const deliverablePendingGroups = allPendingGroups.filter((group) =>
+      isDeliverableHouseRep(repByMemberId.get(group.memberId) ?? null)
+    );
     const latestSummaryReadyGroupKeyByMember =
       await buildLatestSummaryReadyGroupKeyByMember(
         supabase,
-        allPendingGroups,
+        deliverablePendingGroups,
       );
     const pendingMemberIds = new Set(
-      allPendingGroups.map((group) => group.memberId),
+      deliverablePendingGroups.map((group) => group.memberId),
     );
-    const groupsToProcess = allPendingGroups.slice(0, MAX_GROUPS_PER_INVOCATION);
+    const groupsToProcess = deliverablePendingGroups.slice(
+      0,
+      MAX_GROUPS_PER_INVOCATION,
+    );
 
     let processedGroupCount = 0;
     let failedGroupCount = 0;
@@ -748,11 +833,14 @@ Deno.serve(async (req) => {
       let failureRows = group.rows;
 
       try {
-        const rep = await findRepByBioguideId(supabase, group.memberId);
-        if (!rep || rep.congressionaldistrict == null) {
-          throw new Error(
-            `Missing rep or district for member ${group.memberId}`,
-          );
+        const rep = repByMemberId.get(group.memberId) ??
+          await findRepByBioguideId(supabase, group.memberId);
+        if (!isDeliverableHouseRep(rep)) {
+          const reason = getUndeliverableGroupReason(group.memberId, rep);
+          console.warn(`[send-vote-notifications] ${reason}`);
+          await markOutboxRowsSkipped(supabase, group.rows, reason);
+          skippedUndeliverableGroupCount += 1;
+          continue;
         }
 
         const billMap = await findBillsForVotes(supabase, group.rows);
@@ -984,6 +1072,7 @@ Deno.serve(async (req) => {
     return json({
       loadedPendingVoteCount: pendingRows.length,
       loadedPendingGroupCount: allPendingGroups.length,
+      skippedUndeliverableGroupCount,
       processedGroupCount,
       failedGroupCount,
       deadLetterGroupCount,
