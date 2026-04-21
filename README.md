@@ -48,7 +48,7 @@ VoteFeed is a Twitter/Bluesky-like user experience that lets constituents see ho
 
 ## Current DB Schema
 
-This section reflects the current application schema in `server/src/db/schema.sql`, plus the unique indexes used in deployed sync workflows.
+This section reflects the current application schema in `server/src/db/schema.sql`, plus the unique indexes used in deployed sync and notification workflows.
 
 ### users
 
@@ -61,6 +61,9 @@ This section reflects the current application schema in `server/src/db/schema.sq
 | last_name     | text    | Nullable    |
 | state         | text    | Nullable    |
 | district      | integer | Nullable    |
+| notifications_enabled | boolean | Not null, defaults to `true` |
+| last_notified_session_number | integer | Nullable |
+| last_notified_roll_call_number | integer | Nullable |
 
 ### reps
 
@@ -72,6 +75,7 @@ This section reflects the current application schema in `server/src/db/schema.sq
 | chamber               | text    | Not null    |
 | state                 | text    | Not null    |
 | congressionalDistrict | integer | Nullable    |
+| image_url             | text    | Nullable    |
 
 ### bills
 
@@ -83,10 +87,31 @@ This section reflects the current application schema in `server/src/db/schema.sq
 | title     | text    | Not null    |
 | summary   | text    | Not null    |
 | aisummary | text    | Nullable    |
+| policy_area | text  | Nullable    |
+| legislation_url | text | Nullable |
 
 Deployed environments also use:
 
-- `bills_bill_type_number_uidx` on `(bill_type, number)` so bill summaries can be safely upserted without duplicates.
+- `idx_bills_bill_type_number` on `(bill_type, number)` so bill summaries can be safely upserted without duplicates.
+
+### roll_call_summaries
+
+| Column            | Type        | Constraints |
+| ----------------- | ----------- | ----------- |
+| id                | serial      | Primary key |
+| legislation_number | integer   | Nullable    |
+| legislation_type  | text        | Nullable    |
+| session_number    | integer     | Not null    |
+| roll_call_number  | integer     | Not null    |
+| voted_on          | timestamptz | Nullable    |
+| result            | text        | Not null    |
+| yes_count         | integer     | Not null, defaults to `0` |
+| no_count          | integer     | Not null, defaults to `0` |
+| not_voting_count  | integer     | Not null, defaults to `0` |
+
+Deployed environments also use:
+
+- `idx_roll_call_summaries_session_roll_call` on `(session_number, roll_call_number)` so roll call summaries stay idempotent.
 
 ### member_voting_record
 
@@ -103,7 +128,30 @@ Deployed environments also use:
 
 Deployed environments also use:
 
-- `member_voting_record_member_roll_call_uidx` on `(member_id, session_number, roll_call_number)` so vote sync stays idempotent.
+- `idx_member_voting_record_member_roll_call` on `(member_id, session_number, roll_call_number)` so vote sync stays idempotent.
+
+### vote_notification_outbox
+
+| Column             | Type        | Constraints |
+| ------------------ | ----------- | ----------- |
+| id                 | uuid        | Primary key, defaults to `gen_random_uuid()` |
+| sync_run_id        | uuid        | Not null    |
+| member_id          | text        | Not null    |
+| legislation_type   | text        | Not null    |
+| legislation_number | integer     | Not null    |
+| session_number     | integer     | Not null    |
+| roll_call_number   | integer     | Not null    |
+| voted_on           | timestamptz | Nullable    |
+| vote               | text        | Not null    |
+| created_at         | timestamptz | Not null, defaults to `now()` |
+| processed_at       | timestamptz | Nullable    |
+| attempt_count      | integer     | Not null, defaults to `0` |
+| last_error         | text        | Nullable    |
+
+Deployed environments also use:
+
+- `idx_vote_notification_outbox_sync_member_roll_call` on `(sync_run_id, member_id, session_number, roll_call_number)` so each sync run queues a representative vote once.
+- `idx_vote_notification_outbox_pending_lookup` on `(processed_at, created_at, sync_run_id, member_id)` so the notification sender can load pending work efficiently.
 
 ### interactions
 
@@ -113,7 +161,24 @@ Deployed environments also use:
 | stance       | text    | Not null                                                      |
 | user_comment | text    | Nullable                                                      |
 | user_id      | integer | Not null, foreign key to `users(id)` with `ON DELETE CASCADE` |
+| rep_bioguide_id | text | Not null, foreign key to `reps(bioguideId)` |
 | bill_id      | integer | Not null, foreign key to `bills(id)` with `ON DELETE CASCADE` |
+
+## Notification Sync And Delivery
+
+Production vote notifications are driven by Supabase Edge Functions:
+
+- `sync-votes` imports new House vote data, upserts roll call and bill summary data, and queues notification work in `vote_notification_outbox`.
+- `send-vote-notifications` reads pending outbox rows, sends emails through Resend, and updates each user's notification cursor fields.
+
+The notification functions require these Supabase function secrets:
+
+- `CONGRESS_API_KEY`
+- `RESEND_API_KEY`
+- `RESEND_FROM_EMAIL`
+- `APP_ORIGIN`
+
+Use `npx supabase ...` for local Supabase CLI commands in this repo. Production function deployments target the Supabase project ref `ycaldyqnmitdajoguagi`.
 
 ## API Endpoints
 
@@ -124,6 +189,7 @@ High-level mounted API groups:
 - `GET /bills/...`
 - `GET /housevotes/...`
 - `GET /users/...`
+- `PUT /users/me/notifications`
 - `GET|POST|PUT|DELETE /interactions/...`
 
 ## Wireframes
