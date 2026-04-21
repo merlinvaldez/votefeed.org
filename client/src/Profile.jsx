@@ -20,7 +20,9 @@ export default function Profile() {
   const [stateCode, setStateCode] = useState("");
   const [zip, setZip] = useState("");
   const [saving, setSaving] = useState(false);
+  const [notificationsSaving, setNotificationsSaving] = useState(false);
   const [formError, setFormError] = useState("");
+  const [notificationsError, setNotificationsError] = useState("");
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window === "undefined") return false;
     const stored = window.localStorage.getItem("theme");
@@ -103,6 +105,35 @@ export default function Profile() {
       setFormError(err.message || "Update failed");
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function handleNotificationsToggle(e) {
+    const nextNotificationsEnabled = e.target.checked;
+    setNotificationsError("");
+    setNotificationsSaving(true);
+
+    try {
+      const resp = await authFetch(`${API_BASE}/users/me/notifications`, {
+        method: "PUT",
+        body: JSON.stringify({
+          notifications_enabled: nextNotificationsEnabled,
+        }),
+      });
+      if (!resp.ok) {
+        const payload = await resp.json().catch(() => null);
+        throw new Error(payload?.error || "Failed to update notifications");
+      }
+
+      const updatedUser = await resp.json();
+      setUser((currentUser) => ({
+        ...currentUser,
+        notifications_enabled: updatedUser.notifications_enabled,
+      }));
+    } catch (err) {
+      setNotificationsError(err.message || "Failed to update notifications");
+    } finally {
+      setNotificationsSaving(false);
     }
   }
 
@@ -194,6 +225,26 @@ export default function Profile() {
 
       <section className="profile-card">
         <h2>Settings</h2>
+        <div className="settings-row">
+          <div>
+            <div className="settings-title">Email notifications</div>
+            <div className="settings-sub">
+              Receive vote notification emails for your representative.
+            </div>
+          </div>
+          <label className="toggle">
+            <input
+              type="checkbox"
+              checked={Boolean(user.notifications_enabled)}
+              onChange={handleNotificationsToggle}
+              aria-label="Toggle email notifications"
+              disabled={notificationsSaving}
+            />
+          </label>
+        </div>
+        {notificationsError && (
+          <div className="profile-page-error">{notificationsError}</div>
+        )}
         <div className="settings-row">
           <div>
             <div className="settings-title">Dark mode</div>

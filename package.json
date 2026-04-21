@@ -5,7 +5,8 @@
     "dev": "concurrently \"npm --prefix server run dev\" \"npm --prefix client run dev\""
   },
   "devDependencies": {
-    "concurrently": "^9.0.0"
+    "concurrently": "^9.0.0",
+    "supabase": "^2.91.3"
   },
   "dependencies": {
     "@openai/agents": "^0.4.7",

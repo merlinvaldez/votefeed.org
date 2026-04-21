@@ -56,7 +56,7 @@ async function insertMemberVotes(runner, vote, members) {
   }
 
   if (memberIds.length === 0) {
-    return { attemptedCount: 0, insertedCount: 0 };
+    return { attemptedCount: 0, insertedCount: 0, insertedRows: [] };
   }
 
   const sql = `WITH incoming AS (
@@ -98,11 +98,28 @@ async function insertMemberVotes(runner, vote, members) {
           AND session_number = incoming.session_number
           AND roll_call_number = incoming.roll_call_number
       )
-      RETURNING 1
+      RETURNING
+        legislationNumber AS legislation_number,
+        legislation_type,
+        session_number,
+        roll_call_number,
+        voted_on,
+        vote,
+        member_id
     )
     SELECT
       (SELECT COUNT(*)::integer FROM incoming) AS attempted_count,
-      (SELECT COUNT(*)::integer FROM inserted) AS inserted_count`;
+      (SELECT COUNT(*)::integer FROM inserted) AS inserted_count,
+      COALESCE(
+        (
+          SELECT json_agg(
+            inserted
+            ORDER BY inserted.session_number ASC, inserted.roll_call_number ASC
+          )
+          FROM inserted
+        ),
+        '[]'::json
+      ) AS inserted_rows`;
   const {
     rows: [result],
   } = await runner.query(sql, [
@@ -118,6 +135,7 @@ async function insertMemberVotes(runner, vote, members) {
   return {
     attemptedCount: result?.attempted_count ?? 0,
     insertedCount: result?.inserted_count ?? 0,
+    insertedRows: result?.inserted_rows ?? [],
   };
 }
 
@@ -182,6 +200,7 @@ export async function getHouseVotes(runner = db, options = {}) {
   const { houseVotes = [] } = await listResp.json();
   let processedCount = 0;
   let insertedCount = 0;
+  const insertedRows = [];
   let duplicateCount = 0;
   let skippedRollCalls = 0;
   let nextProgressLog = PROGRESS_EVERY;
@@ -228,6 +247,7 @@ export async function getHouseVotes(runner = db, options = {}) {
     const rollCallResult = await insertMemberVotes(runner, vote, members);
     processedCount += rollCallResult.attemptedCount;
     insertedCount += rollCallResult.insertedCount;
+    insertedRows.push(...(rollCallResult.insertedRows ?? []));
     duplicateCount +=
       rollCallResult.attemptedCount - rollCallResult.insertedCount;
 
@@ -246,6 +266,7 @@ export async function getHouseVotes(runner = db, options = {}) {
   return {
     processedCount,
     insertedCount,
+    insertedRows,
     duplicateCount,
     skippedRollCalls,
   };

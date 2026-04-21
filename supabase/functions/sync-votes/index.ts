@@ -1,10 +1,14 @@
 import "@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 
+import { json } from "../_shared/http.ts";
+
 const CONGRESS_API_ORIGIN = "https://api.congress.gov";
 const RETRYABLE_MEMBER_STATUSES = new Set([429, 500, 502, 503, 504]);
 const wait = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
+
+type SupabaseClient = ReturnType<typeof createClient>;
 
 type HouseVoteRecord = {
   bioguideID?: string;
@@ -41,6 +45,17 @@ type MemberVotingRecordRow = {
   member_id: string;
 };
 
+type OutboxRow = {
+  sync_run_id: string;
+  member_id: string;
+  legislation_type: string;
+  legislation_number: number;
+  session_number: number;
+  roll_call_number: number;
+  voted_on: string;
+  vote: string;
+};
+
 type BillSummary = {
   bill?: {
     number?: string | number;
@@ -69,12 +84,13 @@ type RollCallSummaryRow = {
   not_voting_count: number;
 };
 
-function json(body: unknown, status = 200) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+type ExistingOutboxRow = {
+  member_id: string;
+  legislation_type: string;
+  legislation_number: number;
+  session_number: number;
+  roll_call_number: number;
+};
 
 function toCongressDateTimeString(value: Date) {
   return value.toISOString().replace(".000Z", "Z");
@@ -85,6 +101,100 @@ function toCongressNextUrl(paginationNext: string, apiKey: string) {
   next.searchParams.set("api_key", apiKey);
   next.searchParams.set("format", "json");
   return next.toString();
+}
+
+function countQueuedRepGroups(rows: Array<{ member_id: string }>) {
+  const memberIds = new Set(
+    rows
+      .map((row) => String(row.member_id ?? "").trim())
+      .filter(Boolean),
+  );
+  return memberIds.size;
+}
+
+function hasNonEmptyText(value: string | null | undefined) {
+  return String(value ?? "").trim() !== "";
+}
+
+function getBillKey(billType: string, billNumber: number) {
+  return `${String(billType).trim().toLowerCase()}:${Number(billNumber)}`;
+}
+
+function getNotificationKey(
+  row: Pick<
+    MemberVotingRecordRow,
+    | "member_id"
+    | "legislation_type"
+    | "legislationnumber"
+    | "session_number"
+    | "roll_call_number"
+  >,
+) {
+  return [
+    String(row.member_id).trim(),
+    String(row.legislation_type).trim().toLowerCase(),
+    Number(row.legislationnumber),
+    Number(row.session_number),
+    Number(row.roll_call_number),
+  ].join(":");
+}
+
+function getExistingOutboxKey(row: ExistingOutboxRow) {
+  return [
+    String(row.member_id).trim(),
+    String(row.legislation_type).trim().toLowerCase(),
+    Number(row.legislation_number),
+    Number(row.session_number),
+    Number(row.roll_call_number),
+  ].join(":");
+}
+
+function getVoteScopeKey(scope: {
+  legislation_type: string;
+  legislation_number: number;
+  session_number: number;
+  roll_call_number: number;
+}) {
+  return [
+    String(scope.legislation_type).trim().toLowerCase(),
+    Number(scope.legislation_number),
+    Number(scope.session_number),
+    Number(scope.roll_call_number),
+  ].join(":");
+}
+
+function buildHouseVoteScopes(houseVotes: HouseVote[]) {
+  const scopedVotes = new Map<
+    string,
+    {
+      legislation_type: string;
+      legislation_number: number;
+      session_number: number;
+      roll_call_number: number;
+    }
+  >();
+
+  for (const vote of houseVotes) {
+    if (
+      !vote.legislationNumber ||
+      !vote.legislationType ||
+      !vote.sessionNumber ||
+      !vote.rollCallNumber
+    ) {
+      continue;
+    }
+
+    const scope = {
+      legislation_type: String(vote.legislationType).trim().toLowerCase(),
+      legislation_number: Number(vote.legislationNumber),
+      session_number: Number(vote.sessionNumber),
+      roll_call_number: Number(vote.rollCallNumber),
+    };
+
+    scopedVotes.set(getVoteScopeKey(scope), scope);
+  }
+
+  return [...scopedVotes.values()];
 }
 
 async function fetchHouseVotes(apiKey: string, fromDateTime: string | null) {
@@ -344,11 +454,15 @@ function buildRollCallSummaryRow(
 }
 
 async function upsertRollCallRows(
-  supabase: ReturnType<typeof createClient>,
+  supabase: SupabaseClient,
   rows: MemberVotingRecordRow[],
 ) {
   if (rows.length === 0) {
-    return { attemptedCount: 0, insertedCount: 0 };
+    return {
+      attemptedCount: 0,
+      insertedCount: 0,
+      insertedRows: [] as MemberVotingRecordRow[],
+    };
   }
 
   const { data, error } = await supabase
@@ -358,7 +472,9 @@ async function upsertRollCallRows(
       ignoreDuplicates: true,
       defaultToNull: false,
     })
-    .select("member_id");
+    .select(
+      "member_id, legislationnumber, legislation_type, session_number, roll_call_number, voted_on, vote",
+    );
 
   if (error) {
     throw error;
@@ -367,11 +483,12 @@ async function upsertRollCallRows(
   return {
     attemptedCount: rows.length,
     insertedCount: data?.length ?? 0,
+    insertedRows: (data ?? []) as MemberVotingRecordRow[],
   };
 }
 
 async function upsertRollCallSummaryRow(
-  supabase: ReturnType<typeof createClient>,
+  supabase: SupabaseClient,
   row: RollCallSummaryRow | null,
 ) {
   if (!row) {
@@ -399,17 +516,23 @@ async function upsertRollCallSummaryRow(
 
 function buildBillSummaryRows(summaries: BillSummary[]) {
   return summaries
-    .filter((summary) => summary?.bill?.number && summary?.bill?.type && summary?.bill?.title && typeof summary?.text === "string")
+    .filter((summary) =>
+      summary?.bill?.number &&
+      summary?.bill?.type &&
+      summary?.bill?.title &&
+      typeof summary?.text === "string" &&
+      hasNonEmptyText(summary.text)
+    )
     .map((summary) => ({
       number: Number(summary.bill!.number),
       bill_type: String(summary.bill!.type).toLowerCase(),
       title: summary.bill!.title!,
-      summary: summary.text!,
+      summary: summary.text!.trim(),
     }));
 }
 
 async function upsertBillSummaryRows(
-  supabase: ReturnType<typeof createClient>,
+  supabase: SupabaseClient,
   rows: BillSummaryRow[],
 ) {
   if (rows.length === 0) {
@@ -435,6 +558,160 @@ async function upsertBillSummaryRows(
   };
 }
 
+async function enqueueVoteNotifications(
+  supabase: SupabaseClient,
+  syncRunId: string,
+  queueRows: MemberVotingRecordRow[],
+) {
+  if (queueRows.length === 0) {
+    return { queuedCount: 0, queuedRows: [] as MemberVotingRecordRow[] };
+  }
+
+  const payload: OutboxRow[] = queueRows.map((row) => ({
+    sync_run_id: syncRunId,
+    member_id: row.member_id,
+    legislation_type: row.legislation_type,
+    legislation_number: row.legislationnumber,
+    session_number: row.session_number,
+    roll_call_number: row.roll_call_number,
+    voted_on: row.voted_on,
+    vote: row.vote,
+  }));
+
+  const { data, error } = await supabase
+    .from("vote_notification_outbox")
+    .insert(payload)
+    .select("member_id");
+
+  if (error) {
+    throw error;
+  }
+
+  return {
+    queuedCount: data?.length ?? 0,
+    queuedRows: queueRows,
+  };
+}
+
+async function findSummaryReadyVotesMissingOutbox(
+  supabase: SupabaseClient,
+  houseVotes: HouseVote[],
+) {
+  const voteScopes = buildHouseVoteScopes(houseVotes);
+  if (voteScopes.length === 0) {
+    return [] as MemberVotingRecordRow[];
+  }
+
+  const billTypes = [...new Set(voteScopes.map((scope) => scope.legislation_type))];
+  const billNumbers = [
+    ...new Set(voteScopes.map((scope) => scope.legislation_number)),
+  ];
+  const sessionNumbers = [
+    ...new Set(voteScopes.map((scope) => scope.session_number)),
+  ];
+  const rollCallNumbers = [
+    ...new Set(voteScopes.map((scope) => scope.roll_call_number)),
+  ];
+
+  const { data: billData, error: billError } = await supabase
+    .from("bills")
+    .select("bill_type, number, summary")
+    .in("bill_type", billTypes)
+    .in("number", billNumbers);
+
+  if (billError) {
+    throw billError;
+  }
+
+  const summaryReadyBillKeys = new Set(
+    ((billData ?? []) as BillSummaryRow[])
+      .filter((row) => hasNonEmptyText(row.summary))
+      .map((row) => getBillKey(row.bill_type, row.number)),
+  );
+
+  if (summaryReadyBillKeys.size === 0) {
+    return [] as MemberVotingRecordRow[];
+  }
+
+  const summaryReadyScopeKeys = new Set(
+    voteScopes
+      .filter((scope) =>
+        summaryReadyBillKeys.has(
+          getBillKey(scope.legislation_type, scope.legislation_number),
+        )
+      )
+      .map(getVoteScopeKey),
+  );
+
+  if (summaryReadyScopeKeys.size === 0) {
+    return [] as MemberVotingRecordRow[];
+  }
+
+  const { data: memberVoteData, error: memberVoteError } = await supabase
+    .from("member_voting_record")
+    .select(
+      "member_id, legislationnumber, legislation_type, session_number, roll_call_number, voted_on, vote",
+    )
+    .in("legislation_type", billTypes)
+    .in("legislationnumber", billNumbers)
+    .in("session_number", sessionNumbers)
+    .in("roll_call_number", rollCallNumbers);
+
+  if (memberVoteError) {
+    throw memberVoteError;
+  }
+
+  const candidateRows = ((memberVoteData ?? []) as MemberVotingRecordRow[])
+    .filter((row) =>
+      summaryReadyScopeKeys.has(
+        getVoteScopeKey({
+          legislation_type: row.legislation_type,
+          legislation_number: row.legislationnumber,
+          session_number: row.session_number,
+          roll_call_number: row.roll_call_number,
+        }),
+      )
+    )
+    .sort((a, b) => {
+      if (a.session_number !== b.session_number) {
+        return a.session_number - b.session_number;
+      }
+      if (a.roll_call_number !== b.roll_call_number) {
+        return a.roll_call_number - b.roll_call_number;
+      }
+      return a.member_id.localeCompare(b.member_id);
+    });
+
+  if (candidateRows.length === 0) {
+    return [];
+  }
+
+  const memberIds = [...new Set(candidateRows.map((row) => row.member_id))];
+
+  const { data: outboxData, error: outboxError } = await supabase
+    .from("vote_notification_outbox")
+    .select(
+      "member_id, legislation_type, legislation_number, session_number, roll_call_number",
+    )
+    .in("member_id", memberIds)
+    .in("legislation_type", billTypes)
+    .in("legislation_number", billNumbers)
+    .in("session_number", sessionNumbers)
+    .in("roll_call_number", rollCallNumbers);
+
+  if (outboxError) {
+    throw outboxError;
+  }
+
+  const existingOutboxKeys = new Set(
+    ((outboxData ?? []) as ExistingOutboxRow[]).map(getExistingOutboxKey),
+  );
+
+  return candidateRows.filter(
+    (row) => !existingOutboxKeys.has(getNotificationKey(row)),
+  );
+}
+
 Deno.serve(async (req) => {
   if (req.method !== "POST") {
     return json({ error: "Method not allowed" }, 405);
@@ -450,6 +727,8 @@ Deno.serve(async (req) => {
 
   try {
     const supabase = createClient(supabaseUrl, serviceRoleKey);
+    const syncRunId = crypto.randomUUID();
+
     const { data, error } = await supabase
       .from("member_voting_record")
       .select("voted_on")
@@ -466,6 +745,10 @@ Deno.serve(async (req) => {
     const houseVotes = await fetchHouseVotes(congressApiKey, freshestVotedOn);
     let processedCount = 0;
     let insertedCount = 0;
+    let insertedVoteQueuedCount = 0;
+    let summaryReadyQueuedVoteCount = 0;
+    let queuedVoteCount = 0;
+    const queuedRows: MemberVotingRecordRow[] = [];
     let skippedRollCalls = 0;
     let rollCallSummaryProcessedCount = 0;
     let rollCallSummaryUpsertedCount = 0;
@@ -473,8 +756,16 @@ Deno.serve(async (req) => {
     let billSummaryUpsertedCount = 0;
 
     for (const vote of houseVotes) {
+      let members: HouseVoteRecord[] = [];
+      let rollCallSummary:
+        | {
+            result: string;
+            totals: { yes: number; no: number; notVoting: number };
+          }
+        | null = null;
+
       try {
-        const members =
+        members =
           Array.isArray(vote.votingRecord) && vote.votingRecord.length > 0
             ? vote.votingRecord
             : await fetchRollCallMembersWithRetry(
@@ -482,37 +773,45 @@ Deno.serve(async (req) => {
                 vote.sessionNumber,
                 vote.rollCallNumber,
               );
-        const rollCallSummary = await fetchRollCallSummary(
+        rollCallSummary = await fetchRollCallSummary(
           congressApiKey,
           vote.sessionNumber,
           vote.rollCallNumber,
         );
-        const rollCallSummaryRow = buildRollCallSummaryRow(
-          vote,
-          rollCallSummary,
-        );
-        const rollCallSummaryResult = await upsertRollCallSummaryRow(
-          supabase,
-          rollCallSummaryRow,
-        );
-        rollCallSummaryProcessedCount += rollCallSummaryResult.attemptedCount;
-        rollCallSummaryUpsertedCount += rollCallSummaryResult.upsertedCount;
-
-        const rows = buildRollCallRows(vote, members);
-        if (rows.length === 0) {
-          skippedRollCalls += 1;
-          continue;
-        }
-
-        const summary = await upsertRollCallRows(supabase, rows);
-        processedCount += summary.attemptedCount;
-        insertedCount += summary.insertedCount;
       } catch (error) {
         skippedRollCalls += 1;
         console.warn(
           `[sync-votes] skipping session ${vote.sessionNumber} roll call ${vote.rollCallNumber}: ${error instanceof Error ? error.message : "Unexpected error"}`,
         );
+        continue;
       }
+
+      const rollCallSummaryRow = buildRollCallSummaryRow(vote, rollCallSummary);
+      const rollCallSummaryResult = await upsertRollCallSummaryRow(
+        supabase,
+        rollCallSummaryRow,
+      );
+      rollCallSummaryProcessedCount += rollCallSummaryResult.attemptedCount;
+      rollCallSummaryUpsertedCount += rollCallSummaryResult.upsertedCount;
+
+      const rows = buildRollCallRows(vote, members);
+      if (rows.length === 0) {
+        skippedRollCalls += 1;
+        continue;
+      }
+
+      const summary = await upsertRollCallRows(supabase, rows);
+      const queueSummary = await enqueueVoteNotifications(
+        supabase,
+        syncRunId,
+        summary.insertedRows,
+      );
+
+      processedCount += summary.attemptedCount;
+      insertedCount += summary.insertedCount;
+      insertedVoteQueuedCount += queueSummary.queuedCount;
+      queuedVoteCount += queueSummary.queuedCount;
+      queuedRows.push(...queueSummary.queuedRows);
     }
 
     const billSummaryTargets = buildBillSummaryTargets(houseVotes);
@@ -528,12 +827,30 @@ Deno.serve(async (req) => {
       billSummaryUpsertedCount += summary.upsertedCount;
     }
 
+    const summaryReadyQueueCandidates = await findSummaryReadyVotesMissingOutbox(
+      supabase,
+      houseVotes,
+    );
+    const summaryReadyQueueSummary = await enqueueVoteNotifications(
+      supabase,
+      syncRunId,
+      summaryReadyQueueCandidates,
+    );
+    summaryReadyQueuedVoteCount = summaryReadyQueueSummary.queuedCount;
+    queuedVoteCount += summaryReadyQueueSummary.queuedCount;
+    queuedRows.push(...summaryReadyQueueSummary.queuedRows);
+
     return json({
+      syncRunId,
       freshestVotedOn,
       fetchedCount: houseVotes.length,
       processedCount,
       insertedCount,
       duplicateCount: processedCount - insertedCount,
+      insertedVoteQueuedCount,
+      summaryReadyQueuedVoteCount,
+      queuedVoteCount,
+      queuedRepGroupCount: countQueuedRepGroups(queuedRows),
       skippedRollCalls,
       rollCallSummaryProcessedCount,
       rollCallSummaryUpsertedCount,
