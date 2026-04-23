@@ -7,6 +7,14 @@ const MAX_GROUPS_PER_INVOCATION = 500;
 const MAX_EMAILS_PER_INVOCATION = 100;
 const MAX_RUNTIME_MS = 100_000;
 const MAX_FAILURE_ATTEMPTS = 5;
+const PENDING_OUTBOX_PAGE_SIZE = 1000;
+const MAX_PENDING_OUTBOX_ROWS_PER_INVOCATION = 10_000;
+const RESEND_MAX_SEND_ATTEMPTS = 3;
+const RESEND_MIN_SEND_INTERVAL_MS = 250;
+const RESEND_RETRY_BASE_MS = 1_000;
+
+const wait = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
 
 type SupabaseClient = ReturnType<typeof createClient>;
 
@@ -269,27 +277,55 @@ async function sendEmail(
     text: string;
   },
 ) {
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${resendApiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from,
-      to,
-      subject,
-      html,
-      text,
-    }),
-  });
+  for (let attempt = 1; attempt <= RESEND_MAX_SEND_ATTEMPTS; attempt += 1) {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from,
+        to,
+        subject,
+        html,
+        text,
+      }),
+    });
 
-  if (!response.ok) {
     const details = await response.text();
-    throw new Error(`Resend send failed ${response.status}: ${details}`);
+    if (response.ok) {
+      await wait(RESEND_MIN_SEND_INTERVAL_MS);
+      return details ? JSON.parse(details) : {};
+    }
+
+    const shouldRetry =
+      response.status === 429 && attempt < RESEND_MAX_SEND_ATTEMPTS;
+
+    if (!shouldRetry) {
+      throw new Error(`Resend send failed ${response.status}: ${details}`);
+    }
+
+    await wait(getRetryDelayMs(response.headers.get("Retry-After"), attempt));
   }
 
-  return await response.json();
+  throw new Error("Resend send failed after retry attempts");
+}
+
+function getRetryDelayMs(retryAfter: string | null, attempt: number) {
+  if (retryAfter) {
+    const retryAfterSeconds = Number(retryAfter);
+    if (Number.isFinite(retryAfterSeconds) && retryAfterSeconds > 0) {
+      return retryAfterSeconds * 1000;
+    }
+
+    const retryAfterDateMs = Date.parse(retryAfter);
+    if (Number.isFinite(retryAfterDateMs)) {
+      return Math.max(retryAfterDateMs - Date.now(), RESEND_RETRY_BASE_MS);
+    }
+  }
+
+  return attempt * RESEND_RETRY_BASE_MS;
 }
 
 function groupPendingOutboxRows(rows: OutboxRow[]) {
@@ -323,9 +359,13 @@ function getGroupKey(group: OutboxGroup) {
   return `${group.syncRunId}:${group.memberId}`;
 }
 
-async function buildLatestSummaryReadyGroupKeyByMember(
-  supabase: SupabaseClient,
+function getBillMapKey(vote: BillLookupKey) {
+  return `${vote.legislation_type}:${vote.legislation_number}`;
+}
+
+function buildLatestSummaryReadyGroupKeyByMember(
   groups: OutboxGroup[],
+  billMap: Map<string, BillRow>,
 ) {
   const latestByMember = new Map<
     string,
@@ -333,7 +373,6 @@ async function buildLatestSummaryReadyGroupKeyByMember(
   >();
 
   for (const group of groups) {
-    const billMap = await findBillsForVotes(supabase, group.rows);
     const votes = enrichVotes(group.rows, billMap);
     const summaryReadyRollCallGroups = getSummaryReadyRollCallGroups(votes);
     const newestSummaryReadyVote = summaryReadyRollCallGroups[0]?.[0];
@@ -364,21 +403,41 @@ async function buildLatestSummaryReadyGroupKeyByMember(
 }
 
 async function loadPendingOutboxRows(supabase: SupabaseClient) {
-  const { data, error } = await supabase
-    .from("vote_notification_outbox")
-    .select(
-      "id, sync_run_id, member_id, legislation_type, legislation_number, session_number, roll_call_number, voted_on, vote, created_at, processed_at, attempt_count, last_error",
-    )
-    .is("processed_at", null)
-    .order("created_at", { ascending: true })
-    .order("sync_run_id", { ascending: true })
-    .order("member_id", { ascending: true })
-    .order("session_number", { ascending: false })
-    .order("roll_call_number", { ascending: false })
-    .limit(1000);
+  const rows: OutboxRow[] = [];
 
-  if (error) throw error;
-  return (data ?? []) as OutboxRow[];
+  for (
+    let from = 0;
+    from < MAX_PENDING_OUTBOX_ROWS_PER_INVOCATION;
+    from += PENDING_OUTBOX_PAGE_SIZE
+  ) {
+    const to = Math.min(
+      from + PENDING_OUTBOX_PAGE_SIZE - 1,
+      MAX_PENDING_OUTBOX_ROWS_PER_INVOCATION - 1,
+    );
+    const { data, error } = await supabase
+      .from("vote_notification_outbox")
+      .select(
+        "id, sync_run_id, member_id, legislation_type, legislation_number, session_number, roll_call_number, voted_on, vote, created_at, processed_at, attempt_count, last_error",
+      )
+      .is("processed_at", null)
+      .order("session_number", { ascending: false })
+      .order("roll_call_number", { ascending: false })
+      .order("created_at", { ascending: true })
+      .order("sync_run_id", { ascending: true })
+      .order("member_id", { ascending: true })
+      .range(from, to);
+
+    if (error) throw error;
+
+    const pageRows = (data ?? []) as OutboxRow[];
+    rows.push(...pageRows);
+
+    if (pageRows.length < PENDING_OUTBOX_PAGE_SIZE) {
+      break;
+    }
+  }
+
+  return rows;
 }
 
 async function countPendingOutboxGroups(supabase: SupabaseClient) {
@@ -458,7 +517,10 @@ async function findBillsForVotes(
 
   return new Map(
     ((data ?? []) as BillRow[]).map((bill) => [
-      `${bill.bill_type}:${bill.number}`,
+      getBillMapKey({
+        legislation_type: bill.bill_type,
+        legislation_number: bill.number,
+      }),
       bill,
     ]),
   );
@@ -466,9 +528,7 @@ async function findBillsForVotes(
 
 function enrichVotes(votes: OutboxRow[], billMap: Map<string, BillRow>) {
   return votes.map((vote) => {
-    const bill = billMap.get(
-      `${vote.legislation_type}:${vote.legislation_number}`,
-    );
+    const bill = billMap.get(getBillMapKey(vote));
 
     return {
       outboxId: vote.id,
@@ -505,6 +565,14 @@ function groupVotesByRollCall<
 
 function hasBillSummary(vote: { billSummary: string | null }) {
   return String(vote.billSummary ?? "").trim() !== "";
+}
+
+function isOutboxRowSummaryReady(
+  row: OutboxRow,
+  billMap: Map<string, BillRow>,
+) {
+  const bill = billMap.get(getBillMapKey(row));
+  return hasBillSummary({ billSummary: bill?.summary ?? null });
 }
 
 function isDeliverableHouseRep(rep: RepRow | null | undefined) {
@@ -647,11 +715,7 @@ async function findUsersNeedingBootstrapNotification(
   return ((data ?? []) as UserRow[]).filter(isInitialNotificationUser);
 }
 
-async function findNotificationUsersForDistrict(
-  supabase: SupabaseClient,
-  state: string,
-  district: number,
-) {
+async function findAllNotificationUsers(supabase: SupabaseClient) {
   const { data, error } = await supabase
     .from("users")
     .select(
@@ -659,12 +723,30 @@ async function findNotificationUsersForDistrict(
     )
     .eq("notifications_enabled", true)
     .not("email", "is", null)
-    .eq("state", state)
-    .eq("district", district);
+    .not("state", "is", null)
+    .not("district", "is", null);
 
   if (error) throw error;
 
   return (data ?? []) as UserRow[];
+}
+
+function getDistrictKey(state: string, district: number) {
+  return `${String(state).trim()}:${Number(district)}`;
+}
+
+function groupUsersByDistrict(users: UserRow[]) {
+  const grouped = new Map<string, UserRow[]>();
+
+  for (const user of users) {
+    const key = getDistrictKey(user.state, user.district);
+    if (!grouped.has(key)) {
+      grouped.set(key, []);
+    }
+    grouped.get(key)!.push(user);
+  }
+
+  return grouped;
 }
 
 async function markUserVoteNotificationSent(
@@ -797,26 +879,47 @@ Deno.serve(async (req) => {
       skippedUndeliverableGroupCount += 1;
     }
 
-    const deliverablePendingGroups = allPendingGroups.filter((group) =>
+    const deliverablePendingRows = pendingRows.filter((row) =>
+      isDeliverableHouseRep(repByMemberId.get(row.member_id) ?? null)
+    );
+    const pendingBillMap = await findBillsForVotes(
+      supabase,
+      deliverablePendingRows,
+    );
+    const summaryReadyPendingRows = deliverablePendingRows.filter((row) =>
+      isOutboxRowSummaryReady(row, pendingBillMap)
+    );
+    const noSummaryPendingRows = deliverablePendingRows.filter((row) =>
+      !isOutboxRowSummaryReady(row, pendingBillMap)
+    );
+    const deferredNoSummaryGroupCount =
+      groupPendingOutboxRows(noSummaryPendingRows).length;
+    const deliverablePendingGroups = groupPendingOutboxRows(
+      summaryReadyPendingRows,
+    ).filter((group) =>
       isDeliverableHouseRep(repByMemberId.get(group.memberId) ?? null)
     );
     const latestSummaryReadyGroupKeyByMember =
-      await buildLatestSummaryReadyGroupKeyByMember(
-        supabase,
+      buildLatestSummaryReadyGroupKeyByMember(
         deliverablePendingGroups,
+        pendingBillMap,
       );
     const pendingMemberIds = new Set(
-      deliverablePendingGroups.map((group) => group.memberId),
+      deliverablePendingRows.map((row) => row.member_id),
     );
     const groupsToProcess = deliverablePendingGroups.slice(
       0,
       MAX_GROUPS_PER_INVOCATION,
     );
+    const notificationUsersByDistrict = groupUsersByDistrict(
+      await findAllNotificationUsers(supabase),
+    );
+    const processedOutboxRowIds = new Set<string>();
 
     let processedGroupCount = 0;
     let failedGroupCount = 0;
     let deadLetterGroupCount = 0;
-    let deferredGroupCount = 0;
+    let deferredGroupCount = deferredNoSummaryGroupCount;
     let sentEmailCount = 0;
     let bootstrapEmailCount = 0;
     let bootstrapFailureCount = 0;
@@ -843,8 +946,7 @@ Deno.serve(async (req) => {
           continue;
         }
 
-        const billMap = await findBillsForVotes(supabase, group.rows);
-        const votes = enrichVotes(group.rows, billMap);
+        const votes = enrichVotes(group.rows, pendingBillMap);
         const summaryReadyRollCallGroups = getSummaryReadyRollCallGroups(votes);
 
         if (summaryReadyRollCallGroups.length === 0) {
@@ -862,11 +964,9 @@ Deno.serve(async (req) => {
         );
         failureRows = processableRows;
 
-        const users = await findNotificationUsersForDistrict(
-          supabase,
-          rep.state,
-          rep.congressionaldistrict,
-        );
+        const users = notificationUsersByDistrict.get(
+          getDistrictKey(rep.state, rep.congressionaldistrict),
+        ) ?? [];
         const notificationTargets = users
           .map((user) => {
             const votesForUser = buildVotesForUser(user, summaryReadyRollCallGroups);
@@ -885,10 +985,9 @@ Deno.serve(async (req) => {
           );
 
         if (notificationTargets.length === 0) {
-          await markOutboxRowsProcessed(
-            supabase,
-            processableRows.map((row) => row.id),
-          );
+          for (const row of processableRows) {
+            processedOutboxRowIds.add(row.id);
+          }
           processedGroupCount += 1;
           if (processableRows.length < group.rows.length) {
             deferredGroupCount += 1;
@@ -941,10 +1040,9 @@ Deno.serve(async (req) => {
           break;
         }
 
-        await markOutboxRowsProcessed(
-          supabase,
-          processableRows.map((row) => row.id),
-        );
+        for (const row of processableRows) {
+          processedOutboxRowIds.add(row.id);
+        }
         processedGroupCount += 1;
         if (processableRows.length < group.rows.length) {
           deferredGroupCount += 1;
@@ -966,6 +1064,8 @@ Deno.serve(async (req) => {
         }
       }
     }
+
+    await markOutboxRowsProcessed(supabase, [...processedOutboxRowIds]);
 
     if (hasTimeRemaining(startedAtMs) && sentEmailCount < MAX_EMAILS_PER_INVOCATION) {
       const bootstrapUsers = await findUsersNeedingBootstrapNotification(supabase);
@@ -1072,6 +1172,9 @@ Deno.serve(async (req) => {
     return json({
       loadedPendingVoteCount: pendingRows.length,
       loadedPendingGroupCount: allPendingGroups.length,
+      summaryReadyPendingVoteCount: summaryReadyPendingRows.length,
+      summaryReadyPendingGroupCount: deliverablePendingGroups.length,
+      deferredNoSummaryGroupCount,
       skippedUndeliverableGroupCount,
       processedGroupCount,
       failedGroupCount,
