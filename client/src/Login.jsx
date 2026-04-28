@@ -1,10 +1,20 @@
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { SignIn } from "@clerk/clerk-react";
+import { SignIn, useAuth } from "@clerk/clerk-react";
 import "./LandingPage.css";
 import "./Login.css";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { isLoaded, isSignedIn } = useAuth();
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      navigate("/feed", { replace: true });
+    }
+  }, [isLoaded, isSignedIn, navigate]);
+
+  if (isLoaded && isSignedIn) return null;
 
   return (
     <div className="login-layout">
