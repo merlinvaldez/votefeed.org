@@ -5,6 +5,7 @@ import { API_BASE } from "./constants.js";
 import { useAuth } from "./AuthContext.jsx";
 import AddressFields, {
   formatAddress,
+  saveAddressDraft,
   validateAddressFields,
 } from "./AddressFields.jsx";
 import "./LandingPage.css";
@@ -28,6 +29,10 @@ function LandingPage() {
     } catch {
       return rawError;
     }
+  };
+
+  const handleSignUpClick = () => {
+    saveAddressDraft({ street, city, stateCode, zip });
   };
 
   useEffect(() => {
@@ -88,6 +93,7 @@ function LandingPage() {
         totalPolicyCount = 0,
         selectedPolicyArea = null,
       } = await votesResp.json();
+      saveAddressDraft({ street, city, stateCode, zip });
       navigate("/feed", {
         state: {
           district: districtData,
@@ -162,38 +168,46 @@ function LandingPage() {
 
             {error && <div className="error">{formatErrorMessage(error)}</div>}
           </form>
-          <section className="account-cta" aria-label="Account actions">
-            <div className="account-actions">
-              <SignUpButton
-                mode="modal"
-                forceRedirectUrl="/onboarding"
-                fallbackRedirectUrl="/onboarding"
-                signInForceRedirectUrl="/feed"
-                signInFallbackRedirectUrl="/feed"
+        </div>
+        <div className="account-card" aria-label="Account actions">
+          <div className="account-copy">
+            <h3>Share your voice</h3>
+            <p>
+              Create an account to interact with your rep's voting record and
+              share your comments with their office.
+            </p>
+          </div>
+          <div className="account-actions">
+            <SignUpButton
+              mode="modal"
+              forceRedirectUrl="/onboarding"
+              fallbackRedirectUrl="/onboarding"
+              signInForceRedirectUrl="/feed"
+              signInFallbackRedirectUrl="/feed"
+            >
+              <button
+                type="button"
+                className="account-action account-action-primary"
+                onClick={handleSignUpClick}
               >
-                <button
-                  type="button"
-                  className="account-action account-action-primary"
-                >
-                  Sign up
-                </button>
-              </SignUpButton>
-              <SignInButton
-                mode="modal"
-                forceRedirectUrl="/feed"
-                fallbackRedirectUrl="/feed"
-                signUpForceRedirectUrl="/onboarding"
-                signUpFallbackRedirectUrl="/onboarding"
+                Sign up
+              </button>
+            </SignUpButton>
+            <SignInButton
+              mode="modal"
+              forceRedirectUrl="/feed"
+              fallbackRedirectUrl="/feed"
+              signUpForceRedirectUrl="/onboarding"
+              signUpFallbackRedirectUrl="/onboarding"
+            >
+              <button
+                type="button"
+                className="account-action account-action-secondary"
               >
-                <button
-                  type="button"
-                  className="account-action account-action-secondary"
-                >
-                  Sign in
-                </button>
-              </SignInButton>
-            </div>
-          </section>
+                Sign in
+              </button>
+            </SignInButton>
+          </div>
         </div>
       </section>
     </div>

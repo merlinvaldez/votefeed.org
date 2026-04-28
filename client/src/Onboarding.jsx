@@ -4,7 +4,9 @@ import { useClerk, useUser } from "@clerk/clerk-react";
 import { useAuth } from "./AuthContext";
 import { API_BASE } from "./constants";
 import AddressFields, {
+  clearAddressDraft,
   formatAddress,
+  readAddressDraft,
   validateAddressFields,
 } from "./AddressFields.jsx";
 import "./LandingPage.css";
@@ -15,11 +17,12 @@ export default function Onboarding() {
   const { user } = useUser();
   const { signOut } = useClerk();
   const { isLoaded, isSignedIn, authFetch } = useAuth();
+  const [addressDraft] = useState(readAddressDraft);
   const [pageStatus, setPageStatus] = useState("checking");
-  const [street, setStreet] = useState("");
-  const [city, setCity] = useState("");
-  const [stateCode, setStateCode] = useState("");
-  const [zip, setZip] = useState("");
+  const [street, setStreet] = useState(addressDraft.street);
+  const [city, setCity] = useState(addressDraft.city);
+  const [stateCode, setStateCode] = useState(addressDraft.stateCode);
+  const [zip, setZip] = useState(addressDraft.zip);
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
   const [routeError, setRouteError] = useState("");
@@ -100,6 +103,7 @@ export default function Onboarding() {
       }
       if (!response.ok)
         throw new Error((await response.text()) || "Onboarding failed");
+      clearAddressDraft();
       navigate("/feed", { replace: true });
     } catch (err) {
       setError(err.message || "Onboarding failed");

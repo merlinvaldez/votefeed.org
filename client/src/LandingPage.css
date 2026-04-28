@@ -173,10 +173,27 @@
   color: var(--text-muted);
 }
 
-.account-cta {
-  display: grid;
-  padding-top: 18px;
-  border-top: 1px solid var(--border);
+.account-card {
+  width: 100%;
+  max-width: 520px;
+  padding: 20px 32px;
+  background: var(--surface);
+  border-radius: 18px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.account-copy h3 {
+  margin: 0 0 6px;
+  font-size: 28px;
+  line-height: 1.25;
+}
+
+.account-copy p {
+  margin: 0;
+  color: var(--text-subtle);
 }
 
 .account-actions {
