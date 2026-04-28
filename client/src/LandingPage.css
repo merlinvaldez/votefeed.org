@@ -26,6 +26,9 @@
   gap: 12px;
   font-size: 24px;
   font-weight: 700;
+  width: fit-content;
+  color: inherit;
+  text-decoration: none;
 }
 
 .logo-mark {
@@ -47,6 +50,11 @@
   max-height: 100%;
   object-fit: contain;
   display: block;
+}
+
+.logo-lockup:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 4px;
 }
 
 .hero-copy p {
