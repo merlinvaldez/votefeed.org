@@ -1,20 +1,30 @@
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { SignIn } from "@clerk/clerk-react";
+import { SignIn, useAuth } from "@clerk/clerk-react";
 import "./LandingPage.css";
 import "./Login.css";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { isLoaded, isSignedIn } = useAuth();
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      navigate("/feed", { replace: true });
+    }
+  }, [isLoaded, isSignedIn, navigate]);
+
+  if (isLoaded && isSignedIn) return null;
 
   return (
     <div className="login-layout">
       <section className="hero">
-        <div className="logo-lockup" aria-label="VoteFeed">
+        <Link to="/feed" className="logo-lockup" aria-label="VoteFeed feed">
           <span className="logo-mark">
             <img src="/bullhorn-solid.svg" alt="VoteFeed bullhorn" />
           </span>
           <span className="logo-text">VoteFeed</span>
-        </div>
+        </Link>
         <div className="hero-copy">
           <h1>Democracy happens in your feed.</h1>
           <p>

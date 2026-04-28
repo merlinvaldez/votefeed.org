@@ -28,13 +28,6 @@ function getRepLastName(repName = "") {
   return parts.at(-1) ?? "Representative";
 }
 
-function buildBillPageUrl(appOrigin, legislationType, legislationNumber) {
-  return new URL(
-    `/bill/${encodeURIComponent(String(legislationType).trim().toLowerCase())}/${encodeURIComponent(String(legislationNumber))}`,
-    appOrigin,
-  ).toString();
-}
-
 function getBillLabel(vote) {
   const typeKey = String(vote?.legislationType ?? "").trim().toLowerCase();
   const prefix = BILL_TYPE_LABELS[typeKey] ?? String(typeKey).toUpperCase();
@@ -86,20 +79,15 @@ export function buildRepVoteBatchEmail({ firstName, repName, votes = [] }) {
   const repLastName = getRepLastName(repName);
   const safeRepLastName = escapeHtml(repLastName);
   const safeFirstName = escapeHtml(firstName || "there");
-  const feedUrl = new URL("/feed", appOrigin).toString();
+  const loginUrl = new URL("/login", appOrigin).toString();
   const siteUrl = new URL("/", appOrigin).toString();
   const subject = `Here are Rep. ${repLastName}'s latest votes`;
 
   const itemsHtml = votes
     .map((vote) => {
       const displayTitle = getVoteDisplayTitle(vote);
-      const billUrl = buildBillPageUrl(
-        appOrigin,
-        vote.legislationType,
-        vote.legislationNumber,
-      );
       const votePillHtml = buildVotePillHtml(vote.vote);
-      return `<li style="margin: 0 0 12px;">Rep. ${safeRepLastName} voted ${votePillHtml} on <a href="${billUrl}" style="color: #1d4ed8; text-decoration: underline;">${escapeHtml(displayTitle)}</a></li>`;
+      return `<li style="margin: 0 0 12px;">Rep. ${safeRepLastName} voted ${votePillHtml} on ${escapeHtml(displayTitle)}</li>`;
     })
     .join("");
 
@@ -112,7 +100,7 @@ export function buildRepVoteBatchEmail({ firstName, repName, votes = [] }) {
       </ul>
       <p>Let Rep. ${safeRepLastName} know how you feel about their votes!</p>
       <p style="margin: 24px 0;">
-        <a href="${feedUrl}" style="display: inline-block; padding: 12px 18px; border-radius: 10px; background: #1d4ed8; color: #ffffff; text-decoration: none; font-weight: 700;">Go to VoteFeed</a>
+        <a href="${loginUrl}" style="display: inline-block; padding: 12px 18px; border-radius: 10px; background: #1d4ed8; color: #ffffff; text-decoration: none; font-weight: 700;">Go to VoteFeed</a>
       </p>
       <p style="margin-top: 24px;">Stay Civic,<br /><a href="${siteUrl}" style="color: #1d4ed8; text-decoration: underline;">VoteFeed.org</a></p>
     </div>
@@ -125,16 +113,11 @@ export function buildRepVoteBatchEmail({ firstName, repName, votes = [] }) {
     "",
     ...votes.map((vote) => {
       const displayTitle = getVoteDisplayTitle(vote);
-      const billUrl = buildBillPageUrl(
-        appOrigin,
-        vote.legislationType,
-        vote.legislationNumber,
-      );
-      return `- Rep. ${repLastName} voted ${vote.vote} on ${displayTitle} (${billUrl})`;
+      return `- Rep. ${repLastName} voted ${vote.vote} on ${displayTitle}`;
     }),
     "",
     `Let Rep. ${repLastName} know how you feel about their votes!`,
-    `Go to VoteFeed: ${feedUrl}`,
+    `Go to VoteFeed: ${loginUrl}`,
     "",
     "Stay Civic,",
     `VoteFeed.org (${siteUrl})`,

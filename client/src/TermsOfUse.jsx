@@ -40,12 +40,12 @@ export default function TermsOfUse() {
             <span aria-hidden="true">&larr;</span>
             <span>Back to VoteFeed</span>
           </Link>
-          <div className="logo-lockup" aria-label="VoteFeed">
+          <Link to="/feed" className="logo-lockup" aria-label="VoteFeed feed">
             <span className="logo-mark">
               <img src="/bullhorn-solid.svg" alt="VoteFeed bullhorn" />
             </span>
             <span className="logo-text">VoteFeed</span>
-          </div>
+          </Link>
         </div>
 
         <div className="policy-hero-copy">

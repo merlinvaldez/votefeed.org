@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { SignInButton, SignUpButton } from "@clerk/clerk-react";
 import { API_BASE } from "./constants.js";
 import { useAuth } from "./AuthContext.jsx";
 import AddressFields, {
   formatAddress,
+  saveAddressDraft,
   validateAddressFields,
 } from "./AddressFields.jsx";
 import "./LandingPage.css";
@@ -27,6 +29,10 @@ function LandingPage() {
     } catch {
       return rawError;
     }
+  };
+
+  const handleSignUpClick = () => {
+    saveAddressDraft({ street, city, stateCode, zip });
   };
 
   useEffect(() => {
@@ -87,6 +93,7 @@ function LandingPage() {
         totalPolicyCount = 0,
         selectedPolicyArea = null,
       } = await votesResp.json();
+      saveAddressDraft({ street, city, stateCode, zip });
       navigate("/feed", {
         state: {
           district: districtData,
@@ -112,12 +119,12 @@ function LandingPage() {
   return (
     <div className="page">
       <section className="hero">
-        <div className="logo-lockup" aria-label="VoteFeed">
+        <Link to="/feed" className="logo-lockup" aria-label="VoteFeed feed">
           <span className="logo-mark">
             <img src="/bullhorn-solid.svg" alt="VoteFeed bullhorn" />
           </span>
           <span className="logo-text">VoteFeed</span>
-        </div>
+        </Link>
         <div className="hero-copy">
           <h1>Democracy happens in your feed.</h1>
           <p>
@@ -161,12 +168,45 @@ function LandingPage() {
 
             {error && <div className="error">{formatErrorMessage(error)}</div>}
           </form>
-          <div className="signup-row">
-            New here? <Link to="/signup">Create an account</Link>
+        </div>
+        <div className="account-card" aria-label="Account actions">
+          <div className="account-copy">
+            <h3>Share your voice</h3>
+            <p>
+              Create an account to interact with your rep's voting record and
+              share your comments with their office.
+            </p>
           </div>
-          <div className="login-row">
-            <span>Already have an account?</span>
-            <Link to="/login">Log in</Link>
+          <div className="account-actions">
+            <SignUpButton
+              mode="modal"
+              forceRedirectUrl="/onboarding"
+              fallbackRedirectUrl="/onboarding"
+              signInForceRedirectUrl="/feed"
+              signInFallbackRedirectUrl="/feed"
+            >
+              <button
+                type="button"
+                className="account-action account-action-primary"
+                onClick={handleSignUpClick}
+              >
+                Sign up
+              </button>
+            </SignUpButton>
+            <SignInButton
+              mode="modal"
+              forceRedirectUrl="/feed"
+              fallbackRedirectUrl="/feed"
+              signUpForceRedirectUrl="/onboarding"
+              signUpFallbackRedirectUrl="/onboarding"
+            >
+              <button
+                type="button"
+                className="account-action account-action-secondary"
+              >
+                Sign in
+              </button>
+            </SignInButton>
           </div>
         </div>
       </section>

@@ -501,8 +501,8 @@ function Feed(props) {
               <div className="guest-sub">Your interactions won’t be saved.</div>
             </div>
           </div>
-          <button className="guest-cta" onClick={() => navigate("/login")}>
-            Log In / Sign Up
+          <button className="guest-cta" onClick={() => navigate("/signup")}>
+            Sign Up / Sign In
           </button>
         </div>
       )}

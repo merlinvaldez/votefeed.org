@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import "./Feed.css";
 import { Home, Search, User } from "lucide-react";
 
@@ -19,12 +19,12 @@ export default function FeedLayout() {
   return (
     <div className="feed-layout">
       <aside className="feed-sidebar">
-        <div className="brand">
+        <Link to="/feed" className="brand" aria-label="VoteFeed feed">
           <span className="brand-mark">
             <img src="/bullhorn-solid.svg" alt="VoteFeed bullhorn" />
           </span>
           <span className="brand-name">VoteFeed</span>
-        </div>
+        </Link>
 
         <nav className="nav">
           <NavLink to="/feed" className="nav-item">
