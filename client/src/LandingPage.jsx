@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { SignInButton, SignUpButton } from "@clerk/clerk-react";
 import { API_BASE } from "./constants.js";
 import { useAuth } from "./AuthContext.jsx";
 import AddressFields, {
@@ -161,13 +162,38 @@ function LandingPage() {
 
             {error && <div className="error">{formatErrorMessage(error)}</div>}
           </form>
-          <div className="signup-row">
-            New here? <Link to="/signup">Create an account</Link>
-          </div>
-          <div className="login-row">
-            <span>Already have an account?</span>
-            <Link to="/login">Log in</Link>
-          </div>
+          <section className="account-cta" aria-label="Account actions">
+            <div className="account-actions">
+              <SignUpButton
+                mode="modal"
+                forceRedirectUrl="/onboarding"
+                fallbackRedirectUrl="/onboarding"
+                signInForceRedirectUrl="/feed"
+                signInFallbackRedirectUrl="/feed"
+              >
+                <button
+                  type="button"
+                  className="account-action account-action-primary"
+                >
+                  Sign up
+                </button>
+              </SignUpButton>
+              <SignInButton
+                mode="modal"
+                forceRedirectUrl="/feed"
+                fallbackRedirectUrl="/feed"
+                signUpForceRedirectUrl="/onboarding"
+                signUpFallbackRedirectUrl="/onboarding"
+              >
+                <button
+                  type="button"
+                  className="account-action account-action-secondary"
+                >
+                  Sign in
+                </button>
+              </SignInButton>
+            </div>
+          </section>
         </div>
       </section>
     </div>

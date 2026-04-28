@@ -168,31 +168,59 @@
   box-shadow: 0 10px 24px rgba(29, 78, 216, 0.18);
 }
 
-.login-row {
-  display: flex;
-  gap: 8px;
-  font-size: 14px;
-  color: var(--text-subtle);
-}
-
-.login-row a {
-  color: var(--link);
-}
-
-.signup-row {
-  display: flex;
-  gap: 8px;
-  font-size: 14px;
-  color: var(--text-subtle);
-}
-
-.signup-row a {
-  color: var(--link);
-}
-
 .powered-by {
   font-size: 14px;
   color: var(--text-muted);
+}
+
+.account-cta {
+  display: grid;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.account-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.account-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: 14px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.15s;
+}
+
+.account-action:hover {
+  transform: translateY(-1px);
+}
+
+.account-action:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.account-action-primary {
+  background: var(--primary);
+  color: var(--primary-contrast);
+  box-shadow: 0 10px 24px rgba(29, 78, 216, 0.16);
+}
+
+.account-action-secondary {
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  background: var(--surface);
 }
 
 .error {
