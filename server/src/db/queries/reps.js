@@ -26,13 +26,14 @@ async function fetchMemberContactDetails(bioguideId) {
   }
 
   const { member } = await resp.json();
-  const officeTelephone = member?.addressInformation?.officeTelephone;
+  const officePhone =
+    member?.addressInformation?.phoneNumber ??
+    member?.addressInformation?.officeTelephone?.phoneNumber ??
+    member?.addressInformation?.officeTelephone ??
+    null;
   return {
     officialWebsiteUrl: member?.officialWebsiteUrl ?? null,
-    officePhone:
-      typeof officeTelephone === "string"
-        ? officeTelephone
-        : officeTelephone?.phoneNumber ?? null,
+    officePhone,
   };
 }
 
