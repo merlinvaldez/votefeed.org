@@ -16,6 +16,7 @@ router.get("/", async (req, res) => {
     baseUrl.searchParams.set("limit", "250");
     baseUrl.searchParams.set("currentMember", "true");
     baseUrl.searchParams.set("api_key", apiKey);
+    baseUrl.searchParams.set("format", "json");
     let members = [];
     let nextUrl = baseUrl.toString();
     while (nextUrl) {
@@ -36,6 +37,7 @@ router.get("/", async (req, res) => {
         const next = new URL(paginationNext);
         next.searchParams.set("api_key", apiKey);
         next.searchParams.set("currentMember", "true");
+        next.searchParams.set("format", "json");
         nextUrl = next.toString();
       } else {
         nextUrl = null;

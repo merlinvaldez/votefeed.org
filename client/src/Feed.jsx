@@ -615,13 +615,13 @@ function Feed(props) {
             <div key={voteKey} className="leg-card">
               <div className="leg-top">
                 <div className="leg-meta-row">
-                  <span
-                    className="pill primary"
+                  <button
+                    type="button"
+                    className="pill primary bill-link-pill"
                     onClick={() => goToBill(vote)}
-                    style={{ cursor: "pointer" }}
                   >
                     {billLabel}
-                  </span>
+                  </button>
                   <span className="leg-date">
                     <Clock3 size={14}></Clock3>
                     {formatVotedOn(vote.voted_on)}

@@ -29,7 +29,9 @@ CREATE TABLE reps (
     chamber text NOT NULL,
     state text NOT NULL,
     congressionalDistrict integer, 
-    image_url text
+    image_url text,
+    official_website_url text,
+    office_phone text
 );
 
 CREATE TABLE bills(
