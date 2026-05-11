@@ -439,6 +439,30 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  transition:
+    border-color 0.16s ease,
+    background-color 0.16s ease,
+    color 0.16s ease,
+    transform 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.ghost-btn:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-2);
+  transform: translateY(-1px);
+}
+
+.ghost-btn:focus-visible {
+  outline: none;
+  border-color: var(--border-strong);
+  box-shadow: var(--focus-ring);
+}
+
+.ghost-btn.active {
+  background: var(--primary-soft);
+  color: var(--primary-text);
+  border-color: var(--primary-soft-border);
 }
 
 .ghost-btn.active.approve {

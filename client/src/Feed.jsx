@@ -700,23 +700,37 @@ function Feed(props) {
               </div>
               <div className="leg-actions">
                 <button
+                  type="button"
                   className={`ghost-btn ${
                     interaction?.stance === "approve" ? "active approve" : ""
                   }`}
                   onClick={() => handleStance(vote.bill_id, "approve")}
+                  aria-label={`Agree with Rep. ${repLastName}`}
+                  aria-pressed={interaction?.stance === "approve"}
+                  title={`Agree with Rep. ${repLastName}`}
                 >
-                  <ThumbsUp size={16} /> I agree with Rep. {repLastName}
+                  <ThumbsUp size={16} />
+                  {interaction?.stance === "approve" && (
+                    <span>I agree with Rep. {repLastName}</span>
+                  )}
                 </button>
 
                 <button
+                  type="button"
                   className={`ghost-btn ${
                     interaction?.stance === "disapprove"
                       ? "active disapprove"
                       : ""
                   }`}
                   onClick={() => handleStance(vote.bill_id, "disapprove")}
+                  aria-label={`Disagree with Rep. ${repLastName}`}
+                  aria-pressed={interaction?.stance === "disapprove"}
+                  title={`Disagree with Rep. ${repLastName}`}
                 >
-                  <ThumbsDown size={16} />I disagree with Rep. {repLastName}
+                  <ThumbsDown size={16} />
+                  {interaction?.stance === "disapprove" && (
+                    <span>I disagree with Rep. {repLastName}</span>
+                  )}
                 </button>
 
                 <div

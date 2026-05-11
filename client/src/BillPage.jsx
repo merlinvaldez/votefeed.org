@@ -7,12 +7,13 @@ import {
   ThumbsDown,
   ArrowLeft,
   Clock3,
+  Copy,
   FileText,
   ExternalLink,
   Info,
   CheckCircle2,
   XCircle,
-  MessageCircle,
+  Mail,
   Phone,
 } from "lucide-react";
 import { API_BASE } from "./constants";
@@ -57,6 +58,17 @@ const formatBillLabel = (type, number) => {
   return `${labels[normalized] || normalized.toUpperCase()} ${number}`;
 };
 
+const formatLegislationReference = (type, number) => {
+  const normalized = String(type || "hr").toLowerCase();
+  const labels = {
+    hr: "house bill",
+    hres: "house resolution",
+    hjres: "house joint resolution",
+    hconres: "house concurrent resolution",
+  };
+  return `${labels[normalized] || "legislation"} ${number}`;
+};
+
 const formatDistrictLabel = (state, district) => {
   if (!state || district == null) return "your district";
   return `${state} District ${district}`;
@@ -68,12 +80,11 @@ const buildRepContactUrl = (websiteUrl) => {
     const url = new URL(websiteUrl);
     const normalizedPath = url.pathname.replace(/\/+$/, "");
     const lowerPath = normalizedPath.toLowerCase();
-    url.pathname =
-      !normalizedPath
-        ? "/contact"
-        : lowerPath.endsWith("/contact")
-          ? normalizedPath
-          : `${normalizedPath}/contact`;
+    url.pathname = !normalizedPath
+      ? "/contact"
+      : lowerPath.endsWith("/contact")
+        ? normalizedPath
+        : `${normalizedPath}/contact`;
     url.search = "";
     url.hash = "";
     return url.toString();
@@ -88,6 +99,30 @@ const getDialHref = (phone) => {
   return digits ? `tel:${digits}` : null;
 };
 
+const copyTextToClipboard = async (text) => {
+  if (globalThis.navigator?.clipboard?.writeText) {
+    await globalThis.navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  textarea.style.pointerEvents = "none";
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+
+  const didCopy = document.execCommand("copy");
+  document.body.removeChild(textarea);
+
+  if (!didCopy) {
+    throw new Error("Copy failed");
+  }
+};
+
 export default function BillPage() {
   const navigate = useNavigate();
   const { billType, billNumber } = useParams();
@@ -99,6 +134,7 @@ export default function BillPage() {
   const isAuthed = Boolean(token);
   const guestBarRef = useRef(null);
   const guestHighlightTimeoutRef = useRef(null);
+  const copyNoticeTimeoutRef = useRef(null);
   const [bill, setBill] = useState(state?.bill || state?.vote || null);
   const [status, setStatus] = useState(bill ? "ready" : "loading");
   const [error, setError] = useState("");
@@ -111,6 +147,7 @@ export default function BillPage() {
   const [interactionError, setInteractionError] = useState("");
   const [isGuestBarHighlighted, setIsGuestBarHighlighted] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
+  const [messageCopyStatus, setMessageCopyStatus] = useState("idle");
 
   const [aiToggled, setAiToggled] = useState(false);
   const [aiSummary, setAiSummary] = useState("");
@@ -140,7 +177,10 @@ export default function BillPage() {
     bill?.legislation_type ?? bill?.bill_type,
     bill?.legislationnumber ?? bill?.number ?? billNumber,
   );
-  const billReference = bill?.title ? `${billLabel}, ${bill.title}` : billLabel;
+  const legislationReference = formatLegislationReference(
+    bill?.legislation_type ?? bill?.bill_type ?? billType,
+    bill?.legislationnumber ?? bill?.number ?? billNumber,
+  );
   const districtLabel = formatDistrictLabel(userState, userDistrict);
   const repReference = repFullName
     ? `Rep. ${repLastName || repFullName}`
@@ -150,15 +190,16 @@ export default function BillPage() {
   const repDialHref = getDialHref(rep?.office_phone);
   const actionUserName = userName || "[Your Name]";
   const callScript = currentStance
-    ? `Hello, my name is ${actionUserName}, and I'm a constituent from ${districtLabel}.\n\nI'm calling about ${billReference}.\n\nI ${positionVerb} with ${repReference}'s position because [add your reason here]. Please share my view with the Representative.\n\nThank you.`
+    ? `Hello, my name is ${actionUserName}, and I'm a constituent from ${districtLabel}.\n\nI'm calling about ${legislationReference}.\n\nI ${positionVerb} with ${repReference}'s position because [state your reason]. Please share my view with the Representative.\n\nThank you.`
     : "";
   const messageTemplate = currentStance
-    ? `Hello,\n\nMy name is ${actionUserName}, and I'm a constituent from ${districtLabel}.\n\nI'm reaching out about ${billReference}.\n\nI ${positionVerb} with ${repReference}'s position because [add your reason here].\n\nThank you for your time.`
+    ? `Hello,\n\nMy name is ${actionUserName}, and I'm a constituent from ${districtLabel}.\n\nI'm reaching out about ${legislationReference}.\n\nI ${positionVerb} with ${repReference}'s position because [add your reason here].\n\nThank you for your time.`
     : "";
 
   useEffect(() => {
     return () => {
       window.clearTimeout(guestHighlightTimeoutRef.current);
+      window.clearTimeout(copyNoticeTimeoutRef.current);
     };
   }, []);
 
@@ -277,12 +318,38 @@ export default function BillPage() {
   }, [interaction]);
 
   useEffect(() => {
-    if (!stance) {
+    if (!currentStance) {
       setSelectedAction(null);
-      return;
     }
-    setSelectedAction("call");
-  }, [stance]);
+  }, [currentStance]);
+
+  useEffect(() => {
+    if (selectedAction === "message") return;
+    window.clearTimeout(copyNoticeTimeoutRef.current);
+    setMessageCopyStatus("idle");
+  }, [selectedAction]);
+
+  const toggleSelectedAction = (nextAction) => {
+    setSelectedAction((currentAction) =>
+      currentAction === nextAction ? null : nextAction,
+    );
+  };
+
+  const handleCopyMessage = async () => {
+    if (!messageTemplate) return;
+
+    try {
+      await copyTextToClipboard(messageTemplate);
+      setMessageCopyStatus("success");
+    } catch {
+      setMessageCopyStatus("error");
+    }
+
+    window.clearTimeout(copyNoticeTimeoutRef.current);
+    copyNoticeTimeoutRef.current = window.setTimeout(() => {
+      setMessageCopyStatus("idle");
+    }, 1800);
+  };
 
   const handleStanceClick = async (nextStance) => {
     if (!token) {
@@ -291,7 +358,9 @@ export default function BillPage() {
     }
     if (!billId) return;
     if (!rep?.bioguideid) {
-      setInteractionError("Loading your representative details. Try again in a moment.");
+      setInteractionError(
+        "Loading your representative details. Try again in a moment.",
+      );
       return;
     }
 
@@ -361,9 +430,7 @@ export default function BillPage() {
       <div className="leg-card">
         <div className="leg-top">
           <div className="leg-meta-row">
-            <span className="pill primary">
-              {billLabel}
-            </span>
+            <span className="pill primary">{billLabel}</span>
             {latestVoteDate && (
               <span className="leg-date">
                 <Clock3 size={14}></Clock3>
@@ -460,115 +527,148 @@ export default function BillPage() {
         )}
         <div className="vote-actions">
           <button
+            type="button"
             className={`ghost-btn ${
-              stance === "approve" ? "active approve" : ""
+              currentStance === "approve" ? "active approve" : ""
             }`}
             onClick={() => handleStanceClick("approve")}
+            aria-label={`Agree with ${repReference}`}
+            aria-pressed={currentStance === "approve"}
+            title={`Agree with ${repReference}`}
           >
-            <ThumbsUp size={16} /> I agree with {repReference}
+            <ThumbsUp size={16} />
+            {currentStance === "approve" && (
+              <span>I agree with {repReference}</span>
+            )}
           </button>
           <button
+            type="button"
             className={`ghost-btn ${
-              stance === "disapprove" ? "active disapprove" : ""
+              currentStance === "disapprove" ? "active disapprove" : ""
             }`}
             onClick={() => handleStanceClick("disapprove")}
+            aria-label={`Disagree with ${repReference}`}
+            aria-pressed={currentStance === "disapprove"}
+            title={`Disagree with ${repReference}`}
           >
-            <ThumbsDown size={16} /> I disagree with {repReference}
+            <ThumbsDown size={16} />
+            {currentStance === "disapprove" && (
+              <span>I disagree with {repReference}</span>
+            )}
           </button>
-        </div>
-
-        {currentStance && (
-          <section className="action-guides">
-            <div className="action-guides-header">
-              <div>
-                <div className="action-guides-label">Take Action</div>
-                <h3 className="action-guides-title">
-                  Use your stance to contact the office
-                </h3>
-              </div>
-              <p className="action-guides-helper">
-                Use the phone script or the website contact template to share
-                your view with {repReference}.
-              </p>
-            </div>
-            <div className="action-guide-switcher">
+          {currentStance && (
+            <>
               <button
                 type="button"
-                className={`action-guide-button ${
+                className={`ghost-btn ${
                   selectedAction === "call" ? "active" : ""
                 }`}
-                onClick={() => setSelectedAction("call")}
+                onClick={() => toggleSelectedAction("call")}
+                aria-label={
+                  selectedAction === "call"
+                    ? "Hide call script"
+                    : "Show call script"
+                }
+                aria-expanded={selectedAction === "call"}
+                aria-controls="bill-call-script-panel"
+                title="Call script"
               >
                 <Phone size={16}></Phone>
-                Call Script
+                {selectedAction === "call" && <span>Call</span>}
               </button>
               <button
                 type="button"
-                className={`action-guide-button ${
+                className={`ghost-btn ${
                   selectedAction === "message" ? "active" : ""
                 }`}
-                onClick={() => setSelectedAction("message")}
+                onClick={() => toggleSelectedAction("message")}
+                aria-label={
+                  selectedAction === "message"
+                    ? "Hide message template"
+                    : "Show message template"
+                }
+                aria-expanded={selectedAction === "message"}
+                aria-controls="bill-message-template-panel"
+                title="Message template"
               >
-                <MessageCircle size={16}></MessageCircle>
-                Message Template
+                <Mail size={16}></Mail>
+                {selectedAction === "message" && <span>Message</span>}
               </button>
+            </>
+          )}
+        </div>
+
+        {currentStance && selectedAction === "call" && (
+          <section id="bill-call-script-panel" className="action-guide-card">
+            {repDialHref ? (
+              <a className="action-guide-inline-link" href={repDialHref}>
+                <Phone size={16}></Phone>
+                Call {repReference} at {rep.office_phone}
+              </a>
+            ) : (
+              <span className="action-guide-inline-missing">
+                <Phone size={16}></Phone>
+                Call info unavailable for {repReference}
+              </span>
+            )}
+            <pre className="action-guide-template">{callScript}</pre>
+          </section>
+        )}
+        {currentStance && selectedAction === "message" && (
+          <section
+            id="bill-message-template-panel"
+            className="action-guide-card"
+          >
+            {repContactUrl ? (
+              <a
+                className="action-guide-inline-link"
+                href={repContactUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Mail size={16}></Mail>
+                Message {repReference}
+                <ExternalLink size={16}></ExternalLink>
+              </a>
+            ) : (
+              <span className="action-guide-inline-missing">
+                <Mail size={16}></Mail>
+                Contact page unavailable for {repReference}
+              </span>
+            )}
+            <div className="action-guide-template-wrap">
+              <div className="action-guide-template-tools">
+                <button
+                  type="button"
+                  className="template-copy-btn"
+                  onClick={handleCopyMessage}
+                  aria-label="Copy message template"
+                  title="Copy message template"
+                >
+                  <Copy size={14}></Copy>
+                </button>
+                <span
+                  className={`template-copy-status ${
+                    messageCopyStatus === "success"
+                      ? "success"
+                      : messageCopyStatus === "error"
+                        ? "error"
+                        : ""
+                  }`}
+                  role="status"
+                  aria-live="polite"
+                >
+                  {messageCopyStatus === "success"
+                    ? "Copied to clipboard."
+                    : messageCopyStatus === "error"
+                      ? "Copy failed. Try again."
+                      : ""}
+                </span>
+              </div>
+              <pre className="action-guide-template action-guide-template-copyable">
+                {messageTemplate}
+              </pre>
             </div>
-            {selectedAction === "call" && (
-              <div className="action-guide-card">
-                <div className="action-guide-card-top">
-                  <div>
-                    <div className="action-guide-card-label">Call the Office</div>
-                    <div className="action-guide-card-title">{repReference}</div>
-                  </div>
-                  {repDialHref ? (
-                    <a className="action-guide-link" href={repDialHref}>
-                      <Phone size={16}></Phone>
-                      Call {rep.office_phone}
-                    </a>
-                  ) : (
-                    <span className="action-guide-missing">
-                      Office phone unavailable
-                    </span>
-                  )}
-                </div>
-                <p className="action-guide-copy">
-                  Use this script when you call to leave your opinion on the bill.
-                </p>
-                <pre className="action-guide-template">{callScript}</pre>
-              </div>
-            )}
-            {selectedAction === "message" && (
-              <div className="action-guide-card">
-                <div className="action-guide-card-top">
-                  <div>
-                    <div className="action-guide-card-label">
-                      Website Contact Message
-                    </div>
-                    <div className="action-guide-card-title">{repReference}</div>
-                  </div>
-                  {repContactUrl ? (
-                    <a
-                      className="action-guide-link"
-                      href={repContactUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Open Contact Page
-                      <ExternalLink size={16}></ExternalLink>
-                    </a>
-                  ) : (
-                    <span className="action-guide-missing">
-                      Contact page unavailable
-                    </span>
-                  )}
-                </div>
-                <p className="action-guide-copy">
-                  Use this as a starting point for the message you leave on the
-                  representative&apos;s website contact page.
-                </p>
-                <pre className="action-guide-template">{messageTemplate}</pre>
-              </div>
-            )}
           </section>
         )}
         {interactionError && <p className="error-text">{interactionError}</p>}
