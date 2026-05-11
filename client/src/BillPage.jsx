@@ -5,7 +5,6 @@ import "./BillPage.css";
 import {
   ThumbsUp,
   ThumbsDown,
-  MessageCircle,
   ArrowLeft,
   Clock3,
   FileText,
@@ -13,6 +12,8 @@ import {
   Info,
   CheckCircle2,
   XCircle,
+  MessageCircle,
+  Phone,
 } from "lucide-react";
 import { API_BASE } from "./constants";
 import { useAuth } from "./AuthContext";
@@ -56,11 +57,43 @@ const formatBillLabel = (type, number) => {
   return `${labels[normalized] || normalized.toUpperCase()} ${number}`;
 };
 
+const formatDistrictLabel = (state, district) => {
+  if (!state || district == null) return "your district";
+  return `${state} District ${district}`;
+};
+
+const buildRepContactUrl = (websiteUrl) => {
+  if (!websiteUrl) return null;
+  try {
+    const url = new URL(websiteUrl);
+    const normalizedPath = url.pathname.replace(/\/+$/, "");
+    const lowerPath = normalizedPath.toLowerCase();
+    url.pathname =
+      !normalizedPath
+        ? "/contact"
+        : lowerPath.endsWith("/contact")
+          ? normalizedPath
+          : `${normalizedPath}/contact`;
+    url.search = "";
+    url.hash = "";
+    return url.toString();
+  } catch {
+    return null;
+  }
+};
+
+const getDialHref = (phone) => {
+  if (!phone) return null;
+  const digits = String(phone).replace(/[^\d]/g, "");
+  return digits ? `tel:${digits}` : null;
+};
+
 export default function BillPage() {
   const navigate = useNavigate();
   const { billType, billNumber } = useParams();
   const { state } = useLocation();
-  const repFullName = state?.rep?.full_name ?? "";
+  const [rep, setRep] = useState(state?.rep ?? null);
+  const repFullName = rep?.full_name ?? "";
   const repLastName = getRepLastName(repFullName);
   const { token, authFetch } = useAuth();
   const isAuthed = Boolean(token);
@@ -70,14 +103,14 @@ export default function BillPage() {
   const [status, setStatus] = useState(bill ? "ready" : "loading");
   const [error, setError] = useState("");
   const [stance, setStance] = useState(null);
-  const [comment, setComment] = useState("");
   const [interaction, setInteraction] = useState(null);
   const [userId, setUserId] = useState(null);
   const [userName, setUserName] = useState("");
+  const [userState, setUserState] = useState("");
+  const [userDistrict, setUserDistrict] = useState(null);
   const [interactionError, setInteractionError] = useState("");
-  const [isEditingComment, setIsEditingComment] = useState(false);
-  const [isDraftDirty, setIsDraftDirty] = useState(false);
   const [isGuestBarHighlighted, setIsGuestBarHighlighted] = useState(false);
+  const [selectedAction, setSelectedAction] = useState(null);
 
   const [aiToggled, setAiToggled] = useState(false);
   const [aiSummary, setAiSummary] = useState("");
@@ -102,6 +135,26 @@ export default function BillPage() {
   const repVotePillClass = getVotePillClass(bill?.vote);
   const VoteResultIcon =
     bill?.vote_result === "Failed" ? XCircle : CheckCircle2;
+  const currentStance = interaction?.stance ?? stance;
+  const billLabel = formatBillLabel(
+    bill?.legislation_type ?? bill?.bill_type,
+    bill?.legislationnumber ?? bill?.number ?? billNumber,
+  );
+  const billReference = bill?.title ? `${billLabel}, ${bill.title}` : billLabel;
+  const districtLabel = formatDistrictLabel(userState, userDistrict);
+  const repReference = repFullName
+    ? `Rep. ${repLastName || repFullName}`
+    : "my representative";
+  const positionVerb = currentStance === "approve" ? "agree" : "disagree";
+  const repContactUrl = buildRepContactUrl(rep?.official_website_url);
+  const repDialHref = getDialHref(rep?.office_phone);
+  const actionUserName = userName || "[Your Name]";
+  const callScript = currentStance
+    ? `Hello, my name is ${actionUserName}, and I'm a constituent from ${districtLabel}.\n\nI'm calling about ${billReference}.\n\nI ${positionVerb} with ${repReference}'s position because [add your reason here]. Please share my view with the Representative.\n\nThank you.`
+    : "";
+  const messageTemplate = currentStance
+    ? `Hello,\n\nMy name is ${actionUserName}, and I'm a constituent from ${districtLabel}.\n\nI'm reaching out about ${billReference}.\n\nI ${positionVerb} with ${repReference}'s position because [add your reason here].\n\nThank you for your time.`
+    : "";
 
   useEffect(() => {
     return () => {
@@ -182,6 +235,24 @@ export default function BillPage() {
         if (!cancelled) setUserId(me.id);
         if (!cancelled)
           setUserName(`${me.first_name || ""} ${me.last_name || ""}`.trim());
+        if (!cancelled) setUserState(me.state || "");
+        if (!cancelled) setUserDistrict(me.district ?? null);
+
+        if (
+          (!state?.rep ||
+            !state?.rep?.official_website_url ||
+            !state?.rep?.office_phone) &&
+          me.state &&
+          me.district != null
+        ) {
+          const repResp = await authFetch(
+            `${API_BASE}/reps/district/${me.state}/${me.district}`,
+          );
+          if (repResp.ok) {
+            const repData = await repResp.json();
+            if (!cancelled) setRep(repData);
+          }
+        }
 
         const interactionResp = await authFetch(
           `${API_BASE}/interactions/users/${me.id}/bill/${billId}`,
@@ -203,10 +274,15 @@ export default function BillPage() {
 
   useEffect(() => {
     setStance(interaction?.stance || null);
-    if (!isDraftDirty) {
-      setComment(interaction?.user_comment || "");
+  }, [interaction]);
+
+  useEffect(() => {
+    if (!stance) {
+      setSelectedAction(null);
+      return;
     }
-  }, [interaction, isDraftDirty]);
+    setSelectedAction("call");
+  }, [stance]);
 
   const handleStanceClick = async (nextStance) => {
     if (!token) {
@@ -214,6 +290,10 @@ export default function BillPage() {
       return;
     }
     if (!billId) return;
+    if (!rep?.bioguideid) {
+      setInteractionError("Loading your representative details. Try again in a moment.");
+      return;
+    }
 
     try {
       setInteractionError("");
@@ -239,7 +319,7 @@ export default function BillPage() {
               : {
                   user_id: userId,
                   bill_id: billId,
-                  rep_bioguide_id: state?.rep?.bioguideid,
+                  rep_bioguide_id: rep.bioguideid,
                   stance: nextStance,
                 },
           ),
@@ -252,79 +332,6 @@ export default function BillPage() {
       setInteractionError(err.message || "Failed to save stance");
     }
   };
-
-  const handleCommentSave = async () => {
-    if (!token) {
-      promptGuestInteraction();
-      return;
-    }
-    if (!billId) return;
-
-    try {
-      setInteractionError("");
-      let current = interaction;
-
-      if (!stance && !interaction?.stance) {
-        setInteractionError("Pick approve or disapprove first.");
-        return;
-      }
-
-      if (!current) {
-        const stanceResp = await authFetch(
-          `${API_BASE}/interactions/addstance`,
-          {
-            method: "POST",
-            body: JSON.stringify({
-              user_id: userId,
-              bill_id: billId,
-              rep_bioguide_id: state?.rep?.bioguideid,
-              stance,
-            }),
-          },
-        );
-        if (!stanceResp.ok) throw new Error("Failed to create stance");
-        current = await stanceResp.json();
-        setInteraction(current);
-      }
-
-      const resp = await authFetch(
-        `${API_BASE}/interactions/${current.id}/comment`,
-        {
-          method: "PUT",
-          body: JSON.stringify({ user_comment: comment }),
-        },
-      );
-      if (!resp.ok) throw new Error("Failed to save comment");
-      const saved = await resp.json();
-      setInteraction(saved);
-      setIsEditingComment(false);
-      setIsDraftDirty(false);
-    } catch (err) {
-      setInteractionError(err.message || "Failed to save comment");
-    }
-  };
-
-  const handleCommentDelete = async () => {
-    if (!interaction) return;
-    try {
-      setInteractionError("");
-      const resp = await authFetch(
-        `${API_BASE}/interactions/${interaction.id}/comment`,
-        { method: "DELETE" },
-      );
-      if (!resp.ok) throw new Error("Failed to delete comment");
-      const saved = await resp.json();
-      setInteraction(saved);
-      setComment("");
-      setIsEditingComment(false);
-      setIsDraftDirty(false);
-    } catch (err) {
-      setInteractionError(err.message || "Failed to delete comment");
-    }
-  };
-
-  const hasComment = Boolean(interaction?.user_comment);
-  const showCommentEditor = !hasComment || isEditingComment;
   const showAi = aiToggled;
 
   return (
@@ -355,10 +362,7 @@ export default function BillPage() {
         <div className="leg-top">
           <div className="leg-meta-row">
             <span className="pill primary">
-              {formatBillLabel(
-                bill?.legislation_type ?? bill?.bill_type,
-                bill?.legislationnumber ?? bill?.number ?? billNumber,
-              )}
+              {billLabel}
             </span>
             {latestVoteDate && (
               <span className="leg-date">
@@ -461,7 +465,7 @@ export default function BillPage() {
             }`}
             onClick={() => handleStanceClick("approve")}
           >
-            <ThumbsUp size={16} /> I agree with Rep. {repLastName}
+            <ThumbsUp size={16} /> I agree with {repReference}
           </button>
           <button
             className={`ghost-btn ${
@@ -469,80 +473,105 @@ export default function BillPage() {
             }`}
             onClick={() => handleStanceClick("disapprove")}
           >
-            <ThumbsDown size={16} /> I disagree with Rep. {repLastName}
+            <ThumbsDown size={16} /> I disagree with {repReference}
           </button>
         </div>
 
-        <div className="comment-box">
-          {showCommentEditor && (
-            <div className="comment-ahead">
-              <div className="avatar">Me</div>
-              <div className="comments">
-                <MessageCircle size={16}> 0 Comments</MessageCircle>
+        {currentStance && (
+          <section className="action-guides">
+            <div className="action-guides-header">
+              <div>
+                <div className="action-guides-label">Take Action</div>
+                <h3 className="action-guides-title">
+                  Use your stance to contact the office
+                </h3>
               </div>
+              <p className="action-guides-helper">
+                Use the phone script or the website contact template to share
+                your view with {repReference}.
+              </p>
             </div>
-          )}
-          {hasComment && !isEditingComment && (
-            <div className="comment-card">
-              <div className="comment-label">{userName || "My comment"}</div>
-              <div className="comment-text">{interaction.user_comment}</div>
+            <div className="action-guide-switcher">
+              <button
+                type="button"
+                className={`action-guide-button ${
+                  selectedAction === "call" ? "active" : ""
+                }`}
+                onClick={() => setSelectedAction("call")}
+              >
+                <Phone size={16}></Phone>
+                Call Script
+              </button>
+              <button
+                type="button"
+                className={`action-guide-button ${
+                  selectedAction === "message" ? "active" : ""
+                }`}
+                onClick={() => setSelectedAction("message")}
+              >
+                <MessageCircle size={16}></MessageCircle>
+                Message Template
+              </button>
             </div>
-          )}
-          {showCommentEditor && (
-            <textarea
-              placeholder={
-                isAuthed
-                  ? "Write a comment to your Representative"
-                  : "Log in to comment on this bill"
-              }
-              readOnly={!isAuthed}
-              onFocus={() => {
-                if (!isAuthed) {
-                  promptGuestInteraction();
-                }
-              }}
-              value={comment}
-              onChange={(e) => {
-                setComment(e.target.value);
-                setIsDraftDirty(true);
-              }}
-            ></textarea>
-          )}
-          {interactionError && <p className="error-text">{interactionError}</p>}
-          <div className="comment-actions">
-            {showCommentEditor ? (
-              <>
-                <button className="primary-btn" onClick={handleCommentSave}>
-                  {hasComment ? "Save Comment" : "Comment"}
-                </button>
-                {hasComment && (
-                  <button
-                    className="ghost-btn"
-                    onClick={() => {
-                      setComment(interaction?.user_comment || "");
-                      setIsEditingComment(false);
-                      setIsDraftDirty(false);
-                    }}
-                  >
-                    Cancel
-                  </button>
-                )}
-              </>
-            ) : (
-              <>
-                <button
-                  className="primary-btn"
-                  onClick={() => setIsEditingComment(true)}
-                >
-                  Edit
-                </button>
-                <button className="ghost-btn" onClick={handleCommentDelete}>
-                  Delete
-                </button>
-              </>
+            {selectedAction === "call" && (
+              <div className="action-guide-card">
+                <div className="action-guide-card-top">
+                  <div>
+                    <div className="action-guide-card-label">Call the Office</div>
+                    <div className="action-guide-card-title">{repReference}</div>
+                  </div>
+                  {repDialHref ? (
+                    <a className="action-guide-link" href={repDialHref}>
+                      <Phone size={16}></Phone>
+                      Call {rep.office_phone}
+                    </a>
+                  ) : (
+                    <span className="action-guide-missing">
+                      Office phone unavailable
+                    </span>
+                  )}
+                </div>
+                <p className="action-guide-copy">
+                  Use this script when you call to leave your opinion on the bill.
+                </p>
+                <pre className="action-guide-template">{callScript}</pre>
+              </div>
             )}
-          </div>
-        </div>
+            {selectedAction === "message" && (
+              <div className="action-guide-card">
+                <div className="action-guide-card-top">
+                  <div>
+                    <div className="action-guide-card-label">
+                      Website Contact Message
+                    </div>
+                    <div className="action-guide-card-title">{repReference}</div>
+                  </div>
+                  {repContactUrl ? (
+                    <a
+                      className="action-guide-link"
+                      href={repContactUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Open Contact Page
+                      <ExternalLink size={16}></ExternalLink>
+                    </a>
+                  ) : (
+                    <span className="action-guide-missing">
+                      Contact page unavailable
+                    </span>
+                  )}
+                </div>
+                <p className="action-guide-copy">
+                  Use this as a starting point for the message you leave on the
+                  representative&apos;s website contact page.
+                </p>
+                <pre className="action-guide-template">{messageTemplate}</pre>
+              </div>
+            )}
+          </section>
+        )}
+        {interactionError && <p className="error-text">{interactionError}</p>}
       </div>
     </>
   );
