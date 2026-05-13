@@ -15,6 +15,7 @@ import {
   XCircle,
   Mail,
   Phone,
+  MessageSquare,
 } from "lucide-react";
 import { API_BASE } from "./constants";
 import { useAuth } from "./AuthContext";
@@ -140,6 +141,13 @@ export default function BillPage() {
   const [error, setError] = useState("");
   const [stance, setStance] = useState(null);
   const [interaction, setInteraction] = useState(null);
+  const [ownedCommentId, setOwnedCommentId] = useState(null);
+  const [commentDraftText, setCommentDraftText] = useState("");
+  const [commentModerationStatus, setCommentModerationStatus] = useState(null);
+  const [isCommentPublic, setIsCommentPublic] = useState(false);
+  const [isCommentComposerOpen, setIsCommentComposerOpen] = useState(false);
+  const [isSavingCommentDraft, setIsSavingCommentDraft] = useState(false);
+  const [isSubmittingComment, setIsSubmittingComment] = useState(false);
   const [userId, setUserId] = useState(null);
   const [userName, setUserName] = useState("");
   const [userState, setUserState] = useState("");
@@ -318,10 +326,23 @@ export default function BillPage() {
   }, [interaction]);
 
   useEffect(() => {
+    setOwnedCommentId(interaction?.comment_id ?? null);
+    setCommentDraftText(interaction?.comment_draft_text ?? "");
+    setCommentModerationStatus(interaction?.comment_moderation_status ?? null);
+    setIsCommentPublic(Boolean(interaction?.comment_is_public));
+  }, [interaction]);
+
+  useEffect(() => {
     if (!currentStance) {
       setSelectedAction(null);
     }
   }, [currentStance]);
+
+  useEffect(() => {
+    if (!interaction?.id) {
+      setIsCommentComposerOpen(false);
+    }
+  }, [interaction?.id]);
 
   useEffect(() => {
     if (selectedAction === "message") return;
@@ -349,6 +370,84 @@ export default function BillPage() {
     copyNoticeTimeoutRef.current = window.setTimeout(() => {
       setMessageCopyStatus("idle");
     }, 1800);
+  };
+
+  const mergeCommentIntoInteraction = (currentInteraction, savedComment) =>
+    currentInteraction
+      ? {
+          ...currentInteraction,
+          comment_id: savedComment.id ?? null,
+          comment_draft_text: savedComment.draft_text ?? "",
+          comment_approved_text: savedComment.approved_text ?? null,
+          comment_moderation_status: savedComment.moderation_status ?? "draft",
+          comment_moderation_reason: savedComment.moderation_reason ?? null,
+          comment_moderation_categories:
+            savedComment.moderation_categories ?? null,
+          comment_is_public: Boolean(savedComment.is_public),
+          comment_last_submitted_at: savedComment.last_submitted_at ?? null,
+          comment_last_moderated_at: savedComment.last_moderated_at ?? null,
+          comment_published_at: savedComment.published_at ?? null,
+          comment_updated_at: savedComment.updated_at ?? null,
+        }
+      : currentInteraction;
+
+  const persistCommentDraft = async () => {
+    const resp = await authFetch(`${API_BASE}/interactions/${interaction.id}/comment`, {
+      method: "PUT",
+      body: JSON.stringify({ draft_text: commentDraftText }),
+    });
+    if (!resp.ok) throw new Error("Failed to save draft comment");
+    const savedDraft = await resp.json();
+    setInteraction((currentInteraction) =>
+      mergeCommentIntoInteraction(currentInteraction, savedDraft),
+    );
+    return savedDraft;
+  };
+
+  const handleSaveCommentDraft = async () => {
+    if (!interaction?.id) return;
+    if (!commentDraftText.trim()) return;
+
+    try {
+      setInteractionError("");
+      setIsSavingCommentDraft(true);
+      await persistCommentDraft();
+    } catch (err) {
+      setInteractionError(err.message || "Failed to save draft comment");
+    } finally {
+      setIsSavingCommentDraft(false);
+    }
+  };
+
+  const handleSubmitCommentForModeration = async () => {
+    if (!interaction?.id) return;
+    if (!commentDraftText.trim()) return;
+
+    try {
+      setInteractionError("");
+      setIsSubmittingComment(true);
+      const currentSavedDraft = interaction?.comment_draft_text?.trim() ?? "";
+      if (commentDraftText.trim() !== currentSavedDraft || !ownedCommentId) {
+        await persistCommentDraft();
+      }
+      const resp = await authFetch(
+        `${API_BASE}/interactions/${interaction.id}/comment/submit`,
+        {
+          method: "POST",
+        },
+      );
+      if (!resp.ok) throw new Error("Failed to submit comment for moderation");
+      const moderatedComment = await resp.json();
+      setInteraction((currentInteraction) =>
+        mergeCommentIntoInteraction(currentInteraction, moderatedComment),
+      );
+    } catch (err) {
+      setInteractionError(
+        err.message || "Failed to submit comment for moderation",
+      );
+    } finally {
+      setIsSubmittingComment(false);
+    }
   };
 
   const handleStanceClick = async (nextStance) => {
@@ -556,6 +655,24 @@ export default function BillPage() {
               <span>I disagree with {repReference}</span>
             )}
           </button>
+          {interaction?.id && (
+            <button
+              type="button"
+              className={`ghost-btn ${isCommentComposerOpen ? "active" : ""}`}
+              onClick={() =>
+                setIsCommentComposerOpen((currentValue) => !currentValue)
+              }
+              aria-label={
+                isCommentComposerOpen ? "Hide comment composer" : "Write comment"
+              }
+              aria-expanded={isCommentComposerOpen}
+              aria-controls="bill-comment-composer"
+              title="Write comment"
+            >
+              <MessageSquare size={16}></MessageSquare>
+              {isCommentComposerOpen && <span>Comment</span>}
+            </button>
+          )}
           {currentStance && (
             <>
               <button
@@ -597,6 +714,52 @@ export default function BillPage() {
             </>
           )}
         </div>
+
+        {interaction?.id && isCommentComposerOpen && (
+          <section id="bill-comment-composer" className="comment-box">
+            <div className="comment-ahead">
+              <div className="comment-preview">Draft your comment</div>
+            </div>
+            <textarea
+              value={commentDraftText}
+              onChange={(event) => setCommentDraftText(event.target.value)}
+              placeholder="Write what you think about this bill and why."
+              aria-label="Comment draft"
+            ></textarea>
+            <div className="comment-actions">
+              <button
+                type="button"
+                className="primary-btn"
+                onClick={handleSaveCommentDraft}
+                disabled={
+                  isSavingCommentDraft ||
+                  isSubmittingComment ||
+                  !commentDraftText.trim()
+                }
+              >
+                {isSavingCommentDraft ? "Saving..." : "Save draft"}
+              </button>
+              <button
+                type="button"
+                className="primary-btn"
+                onClick={handleSubmitCommentForModeration}
+                disabled={
+                  isSavingCommentDraft ||
+                  isSubmittingComment ||
+                  !commentDraftText.trim()
+                }
+              >
+                {isSubmittingComment ? "Submitting..." : "Submit for review"}
+              </button>
+            </div>
+            {commentModerationStatus === "blocked" &&
+              interaction?.comment_moderation_reason && (
+                <p className="error-text">
+                  {interaction.comment_moderation_reason}
+                </p>
+              )}
+          </section>
+        )}
 
         {currentStance && selectedAction === "call" && (
           <section id="bill-call-script-panel" className="action-guide-card">

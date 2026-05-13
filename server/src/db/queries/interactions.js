@@ -103,8 +103,22 @@ export async function getAlignmentByUserAndRep(
 }
 
 export async function getUserInteractionsByBill(userId, billId) {
-  const sql = `SELECT * FROM interactions 
-    WHERE user_id=$1 AND bill_id=$2`;
+  const sql = `SELECT
+    interactions.*,
+    bill_comments.id AS comment_id,
+    bill_comments.draft_text AS comment_draft_text,
+    bill_comments.approved_text AS comment_approved_text,
+    bill_comments.moderation_status AS comment_moderation_status,
+    bill_comments.moderation_reason AS comment_moderation_reason,
+    bill_comments.moderation_categories AS comment_moderation_categories,
+    bill_comments.is_public AS comment_is_public,
+    bill_comments.last_submitted_at AS comment_last_submitted_at,
+    bill_comments.last_moderated_at AS comment_last_moderated_at,
+    bill_comments.published_at AS comment_published_at,
+    bill_comments.updated_at AS comment_updated_at
+  FROM interactions
+  LEFT JOIN bill_comments ON bill_comments.interaction_id = interactions.id
+  WHERE interactions.user_id=$1 AND interactions.bill_id=$2`;
   const {
     rows: [userInteractionsOnBill],
   } = await db.query(sql, [userId, billId]);
