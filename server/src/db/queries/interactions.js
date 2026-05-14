@@ -11,10 +11,20 @@ export async function addStance(userId, billId, rep_bioguide_id, stance) {
 }
 
 export async function updateStance(interactionId, newStance) {
-  const sql = `UPDATE interactions 
-  SET stance =$2 
-  WHERE id = $1
-  RETURNING *`;
+  const sql = `WITH updated_interaction AS (
+    UPDATE interactions 
+    SET stance =$2 
+    WHERE id = $1
+    RETURNING *
+  ), cleared_contact_drafts AS (
+    UPDATE bill_comments
+    SET call_script = NULL,
+        message_template = NULL,
+        updated_at = now()
+    WHERE interaction_id = $1
+    RETURNING interaction_id
+  )
+  SELECT * FROM updated_interaction`;
   const {
     rows: [updatedStance],
   } = await db.query(sql, [interactionId, newStance]);
@@ -41,14 +51,13 @@ export async function updateComment(interactionId, comment) {
 }
 
 export async function deleteComment(interactionId) {
-  const sql = `UPDATE interactions
-  SET user_comment= NULL
-  WHERE id=$1 
+  const sql = `DELETE FROM bill_comments
+  WHERE interaction_id=$1 
   RETURNING *`;
   const {
-    rows: [stance],
+    rows: [deletedComment],
   } = await db.query(sql, [interactionId]);
-  return stance;
+  return deletedComment;
 }
 
 export async function getAllUserInteractions(userId) {

@@ -3,6 +3,8 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./Feed.css";
 import "./BillPage.css";
 import {
+  MoreHorizontal,
+  Pencil,
   ThumbsUp,
   ThumbsDown,
   ArrowLeft,
@@ -16,7 +18,10 @@ import {
   Mail,
   Phone,
   MessageSquare,
+  Send,
+  Trash2,
 } from "lucide-react";
+import { UserAvatar } from "@clerk/clerk-react";
 import { API_BASE } from "./constants";
 import { useAuth } from "./AuthContext";
 
@@ -136,6 +141,7 @@ export default function BillPage() {
   const guestBarRef = useRef(null);
   const guestHighlightTimeoutRef = useRef(null);
   const copyNoticeTimeoutRef = useRef(null);
+  const commentMenuRef = useRef(null);
   const [bill, setBill] = useState(state?.bill || state?.vote || null);
   const [status, setStatus] = useState(bill ? "ready" : "loading");
   const [error, setError] = useState("");
@@ -146,7 +152,6 @@ export default function BillPage() {
   const [commentModerationStatus, setCommentModerationStatus] = useState(null);
   const [isCommentPublic, setIsCommentPublic] = useState(false);
   const [isCommentComposerOpen, setIsCommentComposerOpen] = useState(false);
-  const [isSavingCommentDraft, setIsSavingCommentDraft] = useState(false);
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
   const [userId, setUserId] = useState(null);
   const [userName, setUserName] = useState("");
@@ -156,6 +161,10 @@ export default function BillPage() {
   const [isGuestBarHighlighted, setIsGuestBarHighlighted] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
   const [messageCopyStatus, setMessageCopyStatus] = useState("idle");
+  const [isCommentMenuOpen, setIsCommentMenuOpen] = useState(false);
+  const [contactDrafts, setContactDrafts] = useState(null);
+  const [contactDraftStatus, setContactDraftStatus] = useState("idle");
+  const [contactDraftError, setContactDraftError] = useState("");
 
   const [aiToggled, setAiToggled] = useState(false);
   const [aiSummary, setAiSummary] = useState("");
@@ -185,24 +194,21 @@ export default function BillPage() {
     bill?.legislation_type ?? bill?.bill_type,
     bill?.legislationnumber ?? bill?.number ?? billNumber,
   );
-  const legislationReference = formatLegislationReference(
-    bill?.legislation_type ?? bill?.bill_type ?? billType,
-    bill?.legislationnumber ?? bill?.number ?? billNumber,
-  );
-  const districtLabel = formatDistrictLabel(userState, userDistrict);
   const repReference = repFullName
     ? `Rep. ${repLastName || repFullName}`
     : "my representative";
-  const positionVerb = currentStance === "approve" ? "agree" : "disagree";
   const repContactUrl = buildRepContactUrl(rep?.official_website_url);
   const repDialHref = getDialHref(rep?.office_phone);
-  const actionUserName = userName || "[Your Name]";
-  const callScript = currentStance
-    ? `Hello, my name is ${actionUserName}, and I'm a constituent from ${districtLabel}.\n\nI'm calling about ${legislationReference}.\n\nI ${positionVerb} with ${repReference}'s position because [state your reason]. Please share my view with the Representative.\n\nThank you.`
-    : "";
-  const messageTemplate = currentStance
-    ? `Hello,\n\nMy name is ${actionUserName}, and I'm a constituent from ${districtLabel}.\n\nI'm reaching out about ${legislationReference}.\n\nI ${positionVerb} with ${repReference}'s position because [add your reason here].\n\nThank you for your time.`
-    : "";
+  const commentAuthorName = userName || "You";
+  const approvedCommentText = interaction?.comment_approved_text?.trim() ?? "";
+  const hasPostedOwnedComment = Boolean(approvedCommentText);
+  const commentCount = hasPostedOwnedComment ? 1 : 0;
+  const showPostedOwnedComment =
+    hasPostedOwnedComment && !isCommentComposerOpen;
+  const showCommentThread =
+    Boolean(interaction?.id) && (isCommentComposerOpen || showPostedOwnedComment);
+  const callScript = contactDrafts?.callScript ?? "";
+  const messageTemplate = contactDrafts?.messageTemplate ?? "";
 
   useEffect(() => {
     return () => {
@@ -210,6 +216,20 @@ export default function BillPage() {
       window.clearTimeout(copyNoticeTimeoutRef.current);
     };
   }, []);
+
+  useEffect(() => {
+    if (!isCommentMenuOpen) return;
+
+    const handlePointerDown = (event) => {
+      if (commentMenuRef.current?.contains(event.target)) return;
+      setIsCommentMenuOpen(false);
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, [isCommentMenuOpen]);
 
   const promptGuestInteraction = () => {
     if (isAuthed) return false;
@@ -333,10 +353,21 @@ export default function BillPage() {
   }, [interaction]);
 
   useEffect(() => {
-    if (!currentStance) {
+    if (!hasPostedOwnedComment) {
       setSelectedAction(null);
+      setIsCommentMenuOpen(false);
     }
-  }, [currentStance]);
+  }, [hasPostedOwnedComment]);
+
+  useEffect(() => {
+    setContactDrafts(null);
+    setContactDraftStatus("idle");
+    setContactDraftError("");
+  }, [
+    interaction?.comment_id,
+    interaction?.comment_updated_at,
+    interaction?.comment_approved_text,
+  ]);
 
   useEffect(() => {
     if (!interaction?.id) {
@@ -351,10 +382,61 @@ export default function BillPage() {
   }, [selectedAction]);
 
   const toggleSelectedAction = (nextAction) => {
-    setSelectedAction((currentAction) =>
-      currentAction === nextAction ? null : nextAction,
-    );
+    const resolvedAction = selectedAction === nextAction ? null : nextAction;
+    if (resolvedAction && contactDraftStatus === "error") {
+      setContactDraftStatus("idle");
+      setContactDraftError("");
+    }
+    setSelectedAction(resolvedAction);
   };
+
+  const loadContactDrafts = async () => {
+    if (!interaction?.id || !hasPostedOwnedComment) return null;
+    if (contactDrafts?.callScript && contactDrafts?.messageTemplate) {
+      return contactDrafts;
+    }
+    if (contactDraftStatus === "loading") return null;
+
+    try {
+      setContactDraftError("");
+      setContactDraftStatus("loading");
+      const resp = await authFetch(
+        `${API_BASE}/interactions/${interaction.id}/comment/contact-drafts`,
+      );
+      if (!resp.ok) {
+        const details = await resp.text();
+        throw new Error(details || "Failed to prepare contact drafts");
+      }
+      const drafts = await resp.json();
+      setContactDrafts(drafts);
+      setContactDraftStatus("ready");
+      return drafts;
+    } catch (err) {
+      setContactDraftStatus("error");
+      setContactDraftError(err.message || "Failed to prepare contact drafts");
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    if (
+      (selectedAction !== "call" && selectedAction !== "message") ||
+      !hasPostedOwnedComment ||
+      contactDrafts?.callScript ||
+      contactDrafts?.messageTemplate ||
+      contactDraftStatus !== "idle"
+    ) {
+      return;
+    }
+
+    void loadContactDrafts();
+  }, [
+    selectedAction,
+    hasPostedOwnedComment,
+    contactDrafts,
+    contactDraftStatus,
+    interaction?.id,
+  ]);
 
   const handleCopyMessage = async () => {
     if (!messageTemplate) return;
@@ -391,6 +473,24 @@ export default function BillPage() {
         }
       : currentInteraction;
 
+  const clearCommentFromInteraction = (currentInteraction) =>
+    currentInteraction
+      ? {
+          ...currentInteraction,
+          comment_id: null,
+          comment_draft_text: "",
+          comment_approved_text: null,
+          comment_moderation_status: null,
+          comment_moderation_reason: null,
+          comment_moderation_categories: null,
+          comment_is_public: false,
+          comment_last_submitted_at: null,
+          comment_last_moderated_at: null,
+          comment_published_at: null,
+          comment_updated_at: null,
+        }
+      : currentInteraction;
+
   const persistCommentDraft = async () => {
     const resp = await authFetch(`${API_BASE}/interactions/${interaction.id}/comment`, {
       method: "PUT",
@@ -398,25 +498,7 @@ export default function BillPage() {
     });
     if (!resp.ok) throw new Error("Failed to save draft comment");
     const savedDraft = await resp.json();
-    setInteraction((currentInteraction) =>
-      mergeCommentIntoInteraction(currentInteraction, savedDraft),
-    );
     return savedDraft;
-  };
-
-  const handleSaveCommentDraft = async () => {
-    if (!interaction?.id) return;
-    if (!commentDraftText.trim()) return;
-
-    try {
-      setInteractionError("");
-      setIsSavingCommentDraft(true);
-      await persistCommentDraft();
-    } catch (err) {
-      setInteractionError(err.message || "Failed to save draft comment");
-    } finally {
-      setIsSavingCommentDraft(false);
-    }
   };
 
   const handleSubmitCommentForModeration = async () => {
@@ -441,12 +523,44 @@ export default function BillPage() {
       setInteraction((currentInteraction) =>
         mergeCommentIntoInteraction(currentInteraction, moderatedComment),
       );
+      if (moderatedComment?.moderation_status === "approved") {
+        setIsCommentComposerOpen(false);
+      }
     } catch (err) {
       setInteractionError(
         err.message || "Failed to submit comment for moderation",
       );
     } finally {
       setIsSubmittingComment(false);
+    }
+  };
+
+  const handleEditApprovedComment = () => {
+    if (!approvedCommentText) return;
+    setInteractionError("");
+    setCommentDraftText(approvedCommentText);
+    setSelectedAction(null);
+    setIsCommentMenuOpen(false);
+    setIsCommentComposerOpen(true);
+  };
+
+  const handleDeleteComment = async () => {
+    if (!interaction?.id) return;
+
+    try {
+      setInteractionError("");
+      const resp = await authFetch(`${API_BASE}/interactions/${interaction.id}/comment`, {
+        method: "DELETE",
+      });
+      if (!resp.ok) throw new Error("Failed to delete comment");
+      setSelectedAction(null);
+      setIsCommentMenuOpen(false);
+      setIsCommentComposerOpen(false);
+      setInteraction((currentInteraction) =>
+        clearCommentFromInteraction(currentInteraction),
+      );
+    } catch (err) {
+      setInteractionError(err.message || "Failed to delete comment");
     }
   };
 
@@ -655,7 +769,7 @@ export default function BillPage() {
               <span>I disagree with {repReference}</span>
             )}
           </button>
-          {interaction?.id && (
+          {interaction?.id && !hasPostedOwnedComment && (
             <button
               type="button"
               className={`ghost-btn ${isCommentComposerOpen ? "active" : ""}`}
@@ -673,165 +787,250 @@ export default function BillPage() {
               {isCommentComposerOpen && <span>Comment</span>}
             </button>
           )}
-          {currentStance && (
-            <>
-              <button
-                type="button"
-                className={`ghost-btn ${
-                  selectedAction === "call" ? "active" : ""
-                }`}
-                onClick={() => toggleSelectedAction("call")}
-                aria-label={
-                  selectedAction === "call"
-                    ? "Hide call script"
-                    : "Show call script"
-                }
-                aria-expanded={selectedAction === "call"}
-                aria-controls="bill-call-script-panel"
-                title="Call script"
-              >
-                <Phone size={16}></Phone>
-                {selectedAction === "call" && <span>Call</span>}
-              </button>
-              <button
-                type="button"
-                className={`ghost-btn ${
-                  selectedAction === "message" ? "active" : ""
-                }`}
-                onClick={() => toggleSelectedAction("message")}
-                aria-label={
-                  selectedAction === "message"
-                    ? "Hide message template"
-                    : "Show message template"
-                }
-                aria-expanded={selectedAction === "message"}
-                aria-controls="bill-message-template-panel"
-                title="Message template"
-              >
-                <Mail size={16}></Mail>
-                {selectedAction === "message" && <span>Message</span>}
-              </button>
-            </>
-          )}
         </div>
 
-        {interaction?.id && isCommentComposerOpen && (
-          <section id="bill-comment-composer" className="comment-box">
-            <div className="comment-ahead">
-              <div className="comment-preview">Draft your comment</div>
-            </div>
-            <textarea
-              value={commentDraftText}
-              onChange={(event) => setCommentDraftText(event.target.value)}
-              placeholder="Write what you think about this bill and why."
-              aria-label="Comment draft"
-            ></textarea>
-            <div className="comment-actions">
-              <button
-                type="button"
-                className="primary-btn"
-                onClick={handleSaveCommentDraft}
-                disabled={
-                  isSavingCommentDraft ||
-                  isSubmittingComment ||
-                  !commentDraftText.trim()
-                }
-              >
-                {isSavingCommentDraft ? "Saving..." : "Save draft"}
-              </button>
-              <button
-                type="button"
-                className="primary-btn"
-                onClick={handleSubmitCommentForModeration}
-                disabled={
-                  isSavingCommentDraft ||
-                  isSubmittingComment ||
-                  !commentDraftText.trim()
-                }
-              >
-                {isSubmittingComment ? "Submitting..." : "Submit for review"}
-              </button>
-            </div>
-            {commentModerationStatus === "blocked" &&
-              interaction?.comment_moderation_reason && (
-                <p className="error-text">
-                  {interaction.comment_moderation_reason}
-                </p>
-              )}
-          </section>
-        )}
-
-        {currentStance && selectedAction === "call" && (
-          <section id="bill-call-script-panel" className="action-guide-card">
-            {repDialHref ? (
-              <a className="action-guide-inline-link" href={repDialHref}>
-                <Phone size={16}></Phone>
-                Call {repReference} at {rep.office_phone}
-              </a>
-            ) : (
-              <span className="action-guide-inline-missing">
-                <Phone size={16}></Phone>
-                Call info unavailable for {repReference}
-              </span>
-            )}
-            <pre className="action-guide-template">{callScript}</pre>
-          </section>
-        )}
-        {currentStance && selectedAction === "message" && (
-          <section
-            id="bill-message-template-panel"
-            className="action-guide-card"
-          >
-            {repContactUrl ? (
-              <a
-                className="action-guide-inline-link"
-                href={repContactUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Mail size={16}></Mail>
-                Message {repReference}
-                <ExternalLink size={16}></ExternalLink>
-              </a>
-            ) : (
-              <span className="action-guide-inline-missing">
-                <Mail size={16}></Mail>
-                Contact page unavailable for {repReference}
-              </span>
-            )}
-            <div className="action-guide-template-wrap">
-              <div className="action-guide-template-tools">
-                <button
-                  type="button"
-                  className="template-copy-btn"
-                  onClick={handleCopyMessage}
-                  aria-label="Copy message template"
-                  title="Copy message template"
-                >
-                  <Copy size={14}></Copy>
-                </button>
-                <span
-                  className={`template-copy-status ${
-                    messageCopyStatus === "success"
-                      ? "success"
-                      : messageCopyStatus === "error"
-                        ? "error"
-                        : ""
-                  }`}
-                  role="status"
-                  aria-live="polite"
-                >
-                  {messageCopyStatus === "success"
-                    ? "Copied to clipboard."
-                    : messageCopyStatus === "error"
-                      ? "Copy failed. Try again."
-                      : ""}
-                </span>
+        {showCommentThread && (
+          <section className="comment-thread">
+            <div className="comment-thread-header">
+              <div className="comment-thread-title">
+                {`Comments (${commentCount})`}
               </div>
-              <pre className="action-guide-template action-guide-template-copyable">
-                {messageTemplate}
-              </pre>
             </div>
+
+            {isCommentComposerOpen && (
+              <div className="comment-composer-shell">
+                <div
+                  className="comment-author-avatar comment-composer-avatar"
+                  aria-label="Profile photo"
+                >
+                  <UserAvatar rounded={true}></UserAvatar>
+                </div>
+                <section id="bill-comment-composer" className="comment-box">
+                  <textarea
+                    value={commentDraftText}
+                    onChange={(event) => setCommentDraftText(event.target.value)}
+                    placeholder="Write your comment here..."
+                    aria-label="Comment draft"
+                  ></textarea>
+                  <div className="comment-actions">
+                    <button
+                      type="button"
+                      className="primary-btn comment-submit-btn"
+                      onClick={handleSubmitCommentForModeration}
+                      disabled={
+                        isSubmittingComment ||
+                        !commentDraftText.trim()
+                      }
+                      aria-label="Submit comment"
+                      title="Submit comment"
+                    >
+                      <Send size={16}></Send>
+                      <span>{isSubmittingComment ? "Submitting..." : "Submit"}</span>
+                    </button>
+                  </div>
+                  {commentModerationStatus === "blocked" &&
+                    interaction?.comment_moderation_reason && (
+                      <p className="error-text comment-error-text">
+                        {interaction.comment_moderation_reason}
+                      </p>
+                    )}
+                </section>
+              </div>
+            )}
+
+            {showPostedOwnedComment && (
+              <section className="comment-card">
+                <div className="comment-row">
+                  <div className="comment-author-avatar" aria-label="Profile photo">
+                    <UserAvatar rounded={true}></UserAvatar>
+                  </div>
+                  <div className="comment-card-body">
+                    <div className="comment-ahead">
+                      <div className="comment-card-meta">
+                        <div className="comment-author-name">{commentAuthorName}</div>
+                      </div>
+                      <div
+                        ref={commentMenuRef}
+                        className="comment-owner-actions"
+                      >
+                        <button
+                          type="button"
+                          className="ghost-btn comment-owner-icon-btn"
+                          onClick={() => toggleSelectedAction("call")}
+                          aria-label={
+                            selectedAction === "call"
+                              ? "Hide call script"
+                              : "Show call script"
+                          }
+                          aria-expanded={selectedAction === "call"}
+                          aria-controls="bill-call-script-panel"
+                          title="Call script"
+                        >
+                          <Phone size={16}></Phone>
+                        </button>
+                        <button
+                          type="button"
+                          className="ghost-btn comment-owner-icon-btn"
+                          onClick={() => toggleSelectedAction("message")}
+                          aria-label={
+                            selectedAction === "message"
+                              ? "Hide message template"
+                              : "Show message template"
+                          }
+                          aria-expanded={selectedAction === "message"}
+                          aria-controls="bill-message-template-panel"
+                          title="Message template"
+                        >
+                          <Mail size={16}></Mail>
+                        </button>
+                        <button
+                          type="button"
+                          className={`ghost-btn comment-owner-icon-btn ${
+                            isCommentMenuOpen ? "active" : ""
+                          }`}
+                          onClick={() =>
+                            setIsCommentMenuOpen((currentValue) => !currentValue)
+                          }
+                          aria-label={
+                            isCommentMenuOpen
+                              ? "Hide comment actions"
+                              : "Show comment actions"
+                          }
+                          aria-expanded={isCommentMenuOpen}
+                          aria-haspopup="menu"
+                          title="Comment actions"
+                        >
+                          <MoreHorizontal size={16}></MoreHorizontal>
+                        </button>
+                        {isCommentMenuOpen && (
+                          <div className="comment-owner-menu" role="menu">
+                            <button
+                              type="button"
+                              className="comment-owner-menu-item"
+                              onClick={handleEditApprovedComment}
+                              role="menuitem"
+                            >
+                              <Pencil size={16}></Pencil>
+                              <span>Edit</span>
+                            </button>
+                            <button
+                              type="button"
+                              className="comment-owner-menu-item comment-owner-menu-item-danger"
+                              onClick={handleDeleteComment}
+                              role="menuitem"
+                            >
+                              <Trash2 size={16}></Trash2>
+                              <span>Delete</span>
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="comment-text">{approvedCommentText}</div>
+                    {selectedAction === "call" && (
+                      <section
+                        id="bill-call-script-panel"
+                        className="action-guide-card comment-action-panel"
+                      >
+                        {repDialHref ? (
+                          <a className="action-guide-inline-link" href={repDialHref}>
+                            <Phone size={16}></Phone>
+                            Call {repReference} at {rep.office_phone}
+                          </a>
+                        ) : (
+                          <span className="action-guide-inline-missing">
+                            <Phone size={16}></Phone>
+                            Call info unavailable for {repReference}
+                          </span>
+                        )}
+                        {contactDraftStatus === "loading" && (
+                          <p className="comment-action-status">
+                            Preparing your call script...
+                          </p>
+                        )}
+                        {contactDraftStatus === "error" && contactDraftError && (
+                          <p className="error-text comment-error-text">
+                            {contactDraftError}
+                          </p>
+                        )}
+                        {contactDraftStatus === "ready" && callScript && (
+                          <pre className="action-guide-template">{callScript}</pre>
+                        )}
+                      </section>
+                    )}
+                    {selectedAction === "message" && (
+                      <section
+                        id="bill-message-template-panel"
+                        className="action-guide-card comment-action-panel"
+                      >
+                        {repContactUrl ? (
+                          <a
+                            className="action-guide-inline-link"
+                            href={repContactUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <Mail size={16}></Mail>
+                            Message {repReference}
+                            <ExternalLink size={16}></ExternalLink>
+                          </a>
+                        ) : (
+                          <span className="action-guide-inline-missing">
+                            <Mail size={16}></Mail>
+                            Contact page unavailable for {repReference}
+                          </span>
+                        )}
+                        {contactDraftStatus === "loading" && (
+                          <p className="comment-action-status">
+                            Preparing your message draft...
+                          </p>
+                        )}
+                        {contactDraftStatus === "error" && contactDraftError && (
+                          <p className="error-text comment-error-text">
+                            {contactDraftError}
+                          </p>
+                        )}
+                        {contactDraftStatus === "ready" && messageTemplate && (
+                          <div className="action-guide-template-wrap">
+                            <div className="action-guide-template-tools">
+                              <button
+                                type="button"
+                                className="template-copy-btn"
+                                onClick={handleCopyMessage}
+                                aria-label="Copy message template"
+                                title="Copy message template"
+                              >
+                                <Copy size={14}></Copy>
+                              </button>
+                              <span
+                                className={`template-copy-status ${
+                                  messageCopyStatus === "success"
+                                    ? "success"
+                                    : messageCopyStatus === "error"
+                                      ? "error"
+                                      : ""
+                                }`}
+                                role="status"
+                                aria-live="polite"
+                              >
+                                {messageCopyStatus === "success"
+                                  ? "Copied to clipboard."
+                                  : messageCopyStatus === "error"
+                                    ? "Copy failed. Try again."
+                                    : ""}
+                              </span>
+                            </div>
+                            <pre className="action-guide-template action-guide-template-copyable">
+                              {messageTemplate}
+                            </pre>
+                          </div>
+                        )}
+                      </section>
+                    )}
+                  </div>
+                </div>
+              </section>
+            )}
           </section>
         )}
         {interactionError && <p className="error-text">{interactionError}</p>}

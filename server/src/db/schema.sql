@@ -120,6 +120,8 @@ CREATE TABLE bill_comments (
     rep_bioguide_id text NOT NULL REFERENCES reps(bioguideId),
     draft_text text,
     approved_text text,
+    call_script text,
+    message_template text,
     moderation_status text NOT NULL DEFAULT 'draft',
     moderation_reason text,
     moderation_categories jsonb,

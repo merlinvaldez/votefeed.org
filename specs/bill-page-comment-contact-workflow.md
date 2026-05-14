@@ -1,31 +1,30 @@
 # VoteFeed Bill Page Comment And Contact Workflow Spec
 
-Last updated: 2026-05-13
+Last updated: 2026-05-14
 
 ## Why This Exists
 
-The current bill page lets a signed-in user save a stance and immediately open a call script or message template.
+The bill page now has the core moderated comment flow in place, but this spec is still the source of truth for what the workflow is supposed to be and what remains unfinished.
 
-That is not the interaction I want to center going forward.
-
-I want the user's own bill comment to become the bridge between:
+I want the user's own bill comment to stay the bridge between:
 
 - taking a position
 - preparing a real outreach message
 - optionally contributing something useful back to the public bill page
 
-This spec locks that behavior down before implementation work starts.
+This spec now locks that behavior down and tracks the remaining implementation work.
 
 ## Current Repo Reality
 
 Right now:
 
-- `client/src/BillPage.jsx` saves stance and unlocks call and message panels from stance alone
-- `server/src/api/interactions.js` supports stance updates and a raw `user_comment` update route
-- `server/src/db/schema.sql` stores comment text as `interactions.user_comment`
-- there is no moderation status, public visibility flag, or public-comment reaction model
+- `client/src/BillPage.jsx` gates comment creation behind a saved stance, renders the signed-in user's approved comment as its own owned row, and lazily loads cached-or-generated contact drafts only when the user opens `Call` or `Message`
+- `server/src/api/interactions.js` supports draft save, moderation submit, owned comment delete, and an authenticated `contact-drafts` route for the approved comment
+- `server/src/db/schema.sql` stores comment lifecycle state in `bill_comments`, includes `comment_useful_votes`, and now includes cached `call_script` and `message_template` columns
+- `server/src/ai/commentModeration.js` handles server-side moderation and `server/src/utils/contactDraftPipeline.js` handles AI contact-draft generation
+- the public toggle, public comment list, and useful-reaction flow are still not implemented end to end
 
-That means the current data model is too thin for the workflow I want.
+That means the core owned-comment workflow is now real, but the public-comment layer is still incomplete.
 
 ## Product Outcome
 
@@ -73,7 +72,7 @@ The intended bill-page interaction is:
 3. once the interaction exists, the comment icon becomes visible
 4. the user opens the comment composer from that icon, then writes and submits a comment
 5. if the comment is approved, it is shown as the user's owned posted comment
-6. only under that owned approved comment, VoteFeed shows the call and message icons and generates the call script and message draft from that approved comment
+6. only under that owned approved comment, VoteFeed shows the call and message icons and fetches cache-first AI drafts generated from that approved comment
 7. that owned comment also exposes a three-dot menu for edit and delete actions
 
 The scripts should not be created from stance alone.
@@ -96,7 +95,7 @@ The scripts should not appear under other users' public comments.
    - if the user turns that toggle on, the approved posted comment becomes visible in the public comments section
    - the user's owned comment row shows call and message icons
    - the user's owned comment row shows a three-dot menu with `Edit` and `Delete`
-   - both scripts are generated from the approved comment plus the saved stance and bill context
+   - both scripts are loaded from a cache-first server-side AI pipeline that uses the approved comment plus the saved stance and bill context
 10. If the comment is blocked:
 
 - the comment stays in draft mode
@@ -126,18 +125,23 @@ The scripts should not appear under other users' public comments.
 ## Script Generation Rules
 
 - The phone script and message draft should be based on the approved comment, not just the stance.
-- In V1, the comment text should be inserted into a deterministic template instead of being rewritten by another model.
+- In V1, the phone script and message draft should be generated server-side with AI and cached on the approved comment row.
+- If cached drafts already exist for the current approved comment and stance, VoteFeed should return those saved drafts instead of generating them again.
 - The user's own words should stay recognizable in the generated outreach text.
 - Stance still matters because it frames whether the user agrees or disagrees with the representative's vote.
 - If the comment is edited and re-approved, the scripts should refresh from the newest approved version.
+- If the stance changes, the cached drafts should be invalidated and regenerated for the new stance framing.
+- The call script should prioritize read-aloud readability with short spoken paragraphs, not one dense block of text.
+- The message draft can be more polished than the call script, but it should still stay easy to scan and copy.
 
 ## Data Model Direction
 
 The current `interactions.user_comment` field is not enough for this feature.
 
-I should keep `interactions` as the stance record and add a dedicated comment lifecycle model.
+The repo now keeps `interactions` as the stance record and `bill_comments` as the dedicated comment lifecycle model.
+The legacy `interactions.user_comment` field still exists and still needs an explicit cleanup or migration decision.
 
-### Proposed table: `bill_comments`
+### Current table: `bill_comments`
 
 - `id uuid primary key`
 - `interaction_id integer not null unique references interactions(id) on delete cascade`
@@ -146,6 +150,8 @@ I should keep `interactions` as the stance record and add a dedicated comment li
 - `rep_bioguide_id text not null references reps(bioguideId)`
 - `draft_text text`
 - `approved_text text`
+- `call_script text`
+- `message_template text`
 - `moderation_status text not null`
 - `moderation_reason text`
 - `moderation_categories jsonb`
@@ -156,14 +162,15 @@ I should keep `interactions` as the stance record and add a dedicated comment li
 - `created_at timestamptz not null default now()`
 - `updated_at timestamptz not null default now()`
 
-Status values should cover at least:
+Current repo status values cover:
 
 - `draft`
-- `pending_moderation`
 - `approved`
 - `blocked`
 
-### Proposed table: `comment_useful_votes`
+If moderation ever becomes asynchronous later, `pending_moderation` can be added intentionally instead of implied.
+
+### Current table: `comment_useful_votes`
 
 - `comment_id uuid not null references bill_comments(id) on delete cascade`
 - `user_id integer not null references users(id) on delete cascade`
@@ -181,6 +188,7 @@ I do need the backend to support the full comment lifecycle cleanly.
 - create or keep the stance interaction first
 - save a draft comment against that interaction
 - submit a draft for moderation
+- fetch cache-first call and message drafts for an approved owned comment
 - update the public/private flag
 - fetch the current user's interaction plus comment state for the bill page
 - fetch approved public comments for a bill
@@ -200,6 +208,9 @@ The bill page should be able to load one response that includes:
 
 That avoids scattering the bill-page state across too many separate requests.
 
+The current repo intentionally keeps contact drafts out of that main bill-page payload.
+They are fetched lazily from a dedicated route because the route may hit AI on a cache miss.
+
 ## Frontend Behavior Direction
 
 ### Composer behavior
@@ -215,7 +226,9 @@ That avoids scattering the bill-page state across too many separate requests.
 - Render the call and message icons only inside the signed-in user's own approved comment card or row.
 - Never render call and message icons under another user's public comment.
 - Keep the current progressive-disclosure pattern where action panels appear only after the user chooses them.
-- Rebuild the script content from the approved comment instead of the stance placeholder text.
+- Load the script content lazily from the server-side cache-first contact-draft route.
+- Rebuild the script content from the approved comment instead of the old stance placeholder text.
+- Show a small loading state while the contact drafts are being prepared.
 
 ### Owned comment controls
 
@@ -224,6 +237,7 @@ That avoids scattering the bill-page state across too many separate requests.
 - The signed-in user's own approved posted comment should also show a `Make public on VoteFeed` toggle.
 - That public toggle should default to off.
 - `Edit` should reopen the composer with the current comment text so the user can revise and resubmit.
+- While the user is editing, the composer should replace the posted comment row instead of duplicating it below.
 - `Delete` should remove the user's comment and any UI that depends on that approved comment.
 
 ### Public comment behavior
@@ -326,18 +340,26 @@ Likely files:
 - `client/src/BillPage.jsx`
 - `client/src/BillPage.css`
 
-### Task 6: Make the scripts actually use the approved comment
+### Task 6: Add the AI contact-draft pipeline
 
 Work:
 
 - replace the current stance-only placeholder reason text
-- compose the phone script and message draft from approved comment text plus bill, district, and representative context
+- generate the phone script and message draft from approved comment text plus bill, district, representative, and stance context
+- cache generated drafts on `bill_comments`
+- return cached drafts on future requests for the same approved comment and stance
+- invalidate cached drafts when a new approved comment lands or when stance changes
 - keep the copy honest that VoteFeed is preparing text, not sending it
 
 Likely files:
 
+- `server/src/db/schema.sql`
+- `server/src/db/queries/comments.js`
+- `server/src/db/queries/interactions.js`
+- `server/src/api/interactions.js`
+- `server/src/utils/contactDraftPipeline.js`
+- `server/src/ai/prompts/contactDraftMaker.md`
 - `client/src/BillPage.jsx`
-- shared helper module if the template logic becomes large enough to extract
 
 ### Task 7: Add the public comments section and useful reactions
 
@@ -380,27 +402,28 @@ Status key:
 - `[~]` in progress
 - `[ ]` not started
 
-Current repo progress as of 2026-05-13:
+Current repo progress as of 2026-05-14:
 
-- `[~]` Task 1: schema foundation is in place in `server/src/db/schema.sql` with `bill_comments` and `comment_useful_votes`, but follow-up indexes and the legacy `interactions.user_comment` plan are still open
-- `[~]` Task 2: the backend query layer now supports draft save, joined read state, and moderation-result persistence, but does not yet support public toggling, delete, public listing, or useful reactions
+- `[~]` Task 1: schema foundation is in place in `server/src/db/schema.sql` with `bill_comments`, `comment_useful_votes`, and cached `call_script` / `message_template` columns, but follow-up indexes and the legacy `interactions.user_comment` plan are still open
+- `[~]` Task 2: the backend query layer now supports draft save, moderation-result persistence, owned delete, and cache-first contact-draft reads, but does not yet support public toggling, public listing, or useful reactions
 - `[x]` Task 3: the server-side OpenAI moderation module exists, returns VoteFeed-specific statuses, and fails closed when moderation is unavailable
-- `[~]` Task 4: draft-save and submit-for-moderation endpoints exist, and the bill-page read shape now returns comment lifecycle state, but edit/delete/public/useful endpoints are still missing
-- `[~]` Task 5: the bill page now has the interaction-gated comment icon, composer, draft persistence, submit-for-review flow, and blocked-comment feedback, but it does not yet render the approved owned comment row or its owned-only controls
-- `[ ]` Task 6: call and message scripts still use stance-only placeholder text and are not yet generated from the approved comment
+- `[~]` Task 4: draft-save, submit-for-moderation, owned delete, and contact-draft endpoints exist, and the bill-page read shape returns comment lifecycle state, but public-toggle, public-comment, and useful-reaction endpoints are still missing
+- `[~]` Task 5: the bill page now has the interaction-gated comment icon, composer, draft persistence, submit flow, blocked-comment feedback, approved owned comment row, call/message icons, and three-dot menu with edit/delete, but it does not yet include the public toggle
+- `[x]` Task 6: call and message drafts now use a server-side AI pipeline built from the approved comment, saved stance, and bill context, with cache-first reads and invalidation on re-approval or stance change
 - `[ ]` Task 7: the public comments list and `Useful` reactions are not yet implemented beyond the schema foundation
-- `[ ]` Task 8: dedicated QA coverage, ownership guardrail verification, and `specs/tech-stack.md` updates have not been completed yet
+- `[~]` Task 8: core ownership enforcement and targeted build/syntax validation exist, but dedicated QA coverage, public-comment guardrail verification, and `specs/tech-stack.md` updates are still pending
 
 ## Implementation Checklist
 
 1. `[x]` Add `bill_comments` and `comment_useful_votes` to the schema.
 2. `[ ]` Decide what happens to legacy `interactions.user_comment` data and document that choice in the implementation.
-3. `[~]` Build query helpers for draft save, moderation result save, public toggle, delete, public list fetch, and useful-vote toggle.
+3. `[~]` Build query helpers for draft save, moderation result save, cache-first contact drafts, public toggle, delete, public list fetch, and useful-vote toggle.
 4. `[x]` Add a server-side OpenAI moderation module and map its output into `draft`, `approved`, and `blocked` behavior.
 5. `[~]` Add endpoints for:
    - saving a draft comment
    - submitting a draft for moderation
-   - editing an owned comment
+   - fetching cache-first contact drafts for an approved owned comment
+   - editing an owned comment through the existing draft and resubmit flow
    - deleting an owned comment
    - toggling `Make public on VoteFeed`
    - loading public comments for a bill
@@ -408,13 +431,13 @@ Current repo progress as of 2026-05-13:
 6. `[x]` Update the bill-page load shape so the client receives stance state plus the user's current comment lifecycle state in one response.
 7. `[x]` Add the interaction-gated comment icon so it appears only after `agree` or `disagree` has been saved.
 8. `[x]` Add the comment composer flow with draft persistence and gentle moderation feedback.
-9. `[ ]` Render the approved owned comment row with:
+9. `[~]` Render the approved owned comment row with:
    - the `Make public on VoteFeed` toggle
    - the call and message icons
    - the three-dot menu with `Edit` and `Delete`
-10. `[ ]` Make sure call and message icons render only on the signed-in user's own approved comment and never on other public comments.
+10. `[x]` Make sure call and message icons render only on the signed-in user's own approved comment and never on other public comments.
 11. `[ ]` Build the public comments list with privacy-safe author labels and `Useful` reactions.
-12. `[ ]` Verify the full flow end to end, then update `specs/tech-stack.md` if the schema, API shape, or env requirements changed.
+12. `[~]` Verify the full flow end to end, then update `specs/tech-stack.md` if the schema, API shape, or env requirements changed.
 
 ## Acceptance Criteria
 
@@ -429,7 +452,8 @@ Current repo progress as of 2026-05-13:
 - Public visibility is optional and defaults to off.
 - Only approved public comments appear in the bill-page public comments list.
 - Another authenticated user can mark a public comment as useful exactly once.
-- The call script and message draft are generated from the user's approved comment, not from stance alone.
+- The call script and message draft are generated server-side from the user's approved comment, not from stance alone.
+- Cached drafts are reused when they already exist for the current approved comment and stance.
 - VoteFeed never claims that it sent the outreach on the user's behalf.
 
 ## Out Of Scope For This Spec
@@ -438,4 +462,4 @@ Current repo progress as of 2026-05-13:
 - threaded comment replies
 - generic bill-page chat
 - recommendation ranking for comments
-- AI rewriting of the user's outreach comment
+- AI rewriting of the user's posted bill comment itself

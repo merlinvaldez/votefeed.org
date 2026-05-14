@@ -110,6 +110,14 @@ export async function syncMissingBillSummaries(runner = db) {
   };
 }
 
+export async function getBillById(id, runner = db) {
+  const sql = `SELECT * FROM bills WHERE id=$1`;
+  const {
+    rows: [bill],
+  } = await runner.query(sql, [id]);
+  return bill ?? null;
+}
+
 export async function getBillSummary(legislationNumber, billType) {
   const sql = `WITH latest_roll_call_summary AS (
     SELECT DISTINCT ON (legislation_number, legislation_type)

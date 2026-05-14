@@ -12,10 +12,15 @@ import {
 } from "../db/queries/interactions.js";
 import {
   applyCommentModerationResult,
+  getOrCreateCommentContactDrafts,
   getCommentByInteractionId,
   upsertDraftComment,
 } from "../db/queries/comments.js";
+import { getBillById } from "../db/queries/bills.js";
+import { findRepByBioguideId } from "../db/queries/reps.js";
+import { getUserById } from "../db/queries/users.js";
 import { moderateCommentDraft } from "../ai/commentModeration.js";
+import { generateCommentContactDrafts } from "../utils/contactDraftPipeline.js";
 import requireBody from "../middleware/requireBody.js";
 import requireUser from "../middleware/requireUser.js";
 
@@ -140,6 +145,55 @@ router.post("/:interactionId/comment/submit", requireUser, async (req, res) => {
   });
 
   return res.status(200).send(moderatedComment);
+});
+
+router.get("/:interactionId/comment/contact-drafts", requireUser, async (req, res) => {
+  const { interactionId } = req.params;
+  const owned = await getOwnedInteractionsOrSendError(req, res, interactionId);
+  if (!owned) return;
+
+  try {
+    const [user, rep, bill] = await Promise.all([
+      getUserById(owned.user_id),
+      findRepByBioguideId(owned.rep_bioguide_id),
+      getBillById(owned.bill_id),
+    ]);
+
+    if (!user || !rep || !bill) {
+      return res.status(404).send("Contact draft context not found");
+    }
+
+    const drafts = await getOrCreateCommentContactDrafts({
+      interactionId,
+      generateDrafts: async (comment) =>
+        generateCommentContactDrafts({
+          constituentName: [user.first_name, user.last_name]
+            .filter(Boolean)
+            .join(" ")
+            .trim(),
+          userState: user.state,
+          userDistrict: user.district,
+          billType: bill.bill_type,
+          billNumber: bill.number,
+          repFullName: rep.full_name,
+          stance: owned.stance,
+          approvedCommentText: comment.approved_text,
+        }),
+    });
+
+    if (!drafts) {
+      return res.status(409).send("Approved comment required");
+    }
+
+    return res.status(200).json({
+      callScript: drafts.callScript,
+      messageTemplate: drafts.messageTemplate,
+      source: drafts.source,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(503).send("Failed to prepare contact drafts");
+  }
 });
 
 router.delete("/:interactionId/comment", requireUser, async (req, res) => {
