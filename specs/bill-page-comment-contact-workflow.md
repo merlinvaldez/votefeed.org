@@ -1,6 +1,6 @@
 # VoteFeed Bill Page Comment And Contact Workflow Spec
 
-Last updated: 2026-05-14
+Last updated: 2026-07-23
 
 ## Why This Exists
 
@@ -18,13 +18,13 @@ This spec now locks that behavior down and tracks the remaining implementation w
 
 Right now:
 
-- `client/src/BillPage.jsx` gates comment creation behind a saved stance, renders the signed-in user's approved comment as its own owned row, and lazily loads cached-or-generated contact drafts only when the user opens `Call` or `Message`
+- `client/src/BillPage.jsx` gates comment creation behind a saved stance, renders the signed-in user's approved comment as its own owned row, exposes the `Make public on VoteFeed` toggle, and renders public comments plus `Useful` reactions below the owned comment surface
 - `server/src/api/interactions.js` supports draft save, moderation submit, owned comment delete, and an authenticated `contact-drafts` route for the approved comment
-- `server/src/db/schema.sql` stores comment lifecycle state in `bill_comments`, includes `comment_useful_votes`, and now includes cached `call_script` and `message_template` columns
+- `server/src/api/comments.js` now handles public-comment reads, owned public-visibility toggling, and `Useful` toggling
+- `server/src/db/schema.sql` stores comment lifecycle state in `bill_comments`, includes `comment_useful_votes`, cached `call_script` and `message_template` columns, and the public-comment lookup indexes the workflow needs
 - `server/src/ai/commentModeration.js` handles server-side moderation and `server/src/utils/contactDraftPipeline.js` handles AI contact-draft generation
-- the public toggle, public comment list, and useful-reaction flow are still not implemented end to end
 
-That means the core owned-comment workflow is now real, but the public-comment layer is still incomplete.
+That means the owned-comment workflow and the public-comment layer are both implemented in the current repo.
 
 ## Product Outcome
 
@@ -254,12 +254,12 @@ There may already be legacy data in `interactions.user_comment`.
 
 I should not silently auto-publish any legacy comments.
 
-The safe implementation choices are:
+The chosen implementation is:
 
-- backfill old comments into `bill_comments` as private, non-public, legacy records
-- or leave them unread from the new UI and explicitly archive that field later
+- leave `interactions.user_comment` unread by the current UI and API runtime
+- treat that field as archived legacy state until a deliberate cleanup or backfill is planned later
 
-The implementation task should make that choice deliberately instead of letting the old field linger as an accidental source of truth.
+That keeps the current comment source of truth explicit instead of silently reviving or publishing legacy text.
 
 ## Task Breakdown
 
@@ -402,24 +402,24 @@ Status key:
 - `[~]` in progress
 - `[ ]` not started
 
-Current repo progress as of 2026-05-14:
+Current repo progress as of 2026-07-23:
 
-- `[~]` Task 1: schema foundation is in place in `server/src/db/schema.sql` with `bill_comments`, `comment_useful_votes`, and cached `call_script` / `message_template` columns, but follow-up indexes and the legacy `interactions.user_comment` plan are still open
-- `[~]` Task 2: the backend query layer now supports draft save, moderation-result persistence, owned delete, and cache-first contact-draft reads, but does not yet support public toggling, public listing, or useful reactions
+- `[x]` Task 1: schema foundation is in place in `server/src/db/schema.sql`, including public-comment lookup indexes, and the legacy `interactions.user_comment` field is now explicitly treated as archived runtime-dead state
+- `[x]` Task 2: the backend query layer supports draft save, moderation-result persistence, owned delete, cache-first contact-draft reads, public toggling, public listing, and useful reactions
 - `[x]` Task 3: the server-side OpenAI moderation module exists, returns VoteFeed-specific statuses, and fails closed when moderation is unavailable
-- `[~]` Task 4: draft-save, submit-for-moderation, owned delete, and contact-draft endpoints exist, and the bill-page read shape returns comment lifecycle state, but public-toggle, public-comment, and useful-reaction endpoints are still missing
-- `[~]` Task 5: the bill page now has the interaction-gated comment icon, composer, draft persistence, submit flow, blocked-comment feedback, approved owned comment row, call/message icons, and three-dot menu with edit/delete, but it does not yet include the public toggle
+- `[x]` Task 4: draft-save, submit-for-moderation, owned delete, contact-draft, public-toggle, public-comment, and useful-reaction endpoints all exist with auth and ownership enforcement
+- `[x]` Task 5: the bill page has the interaction-gated comment icon, composer, draft persistence, submit flow, blocked-comment feedback, approved owned comment row, public toggle, and three-dot menu with edit/delete
 - `[x]` Task 6: call and message drafts now use a server-side AI pipeline built from the approved comment, saved stance, and bill context, with cache-first reads and invalidation on re-approval or stance change
-- `[ ]` Task 7: the public comments list and `Useful` reactions are not yet implemented beyond the schema foundation
-- `[~]` Task 8: core ownership enforcement and targeted build/syntax validation exist, but dedicated QA coverage, public-comment guardrail verification, and `specs/tech-stack.md` updates are still pending
+- `[x]` Task 7: the public comments list and `Useful` reactions are implemented end to end
+- `[~]` Task 8: core ownership enforcement and targeted build/syntax validation exist, and `specs/tech-stack.md` is updated, but there is still no meaningful automated test suite in the repo
 
 ## Implementation Checklist
 
 1. `[x]` Add `bill_comments` and `comment_useful_votes` to the schema.
-2. `[ ]` Decide what happens to legacy `interactions.user_comment` data and document that choice in the implementation.
-3. `[~]` Build query helpers for draft save, moderation result save, cache-first contact drafts, public toggle, delete, public list fetch, and useful-vote toggle.
+2. `[x]` Decide what happens to legacy `interactions.user_comment` data and document that choice in the implementation.
+3. `[x]` Build query helpers for draft save, moderation result save, cache-first contact drafts, public toggle, delete, public list fetch, and useful-vote toggle.
 4. `[x]` Add a server-side OpenAI moderation module and map its output into `draft`, `approved`, and `blocked` behavior.
-5. `[~]` Add endpoints for:
+5. `[x]` Add endpoints for:
    - saving a draft comment
    - submitting a draft for moderation
    - fetching cache-first contact drafts for an approved owned comment
@@ -431,12 +431,12 @@ Current repo progress as of 2026-05-14:
 6. `[x]` Update the bill-page load shape so the client receives stance state plus the user's current comment lifecycle state in one response.
 7. `[x]` Add the interaction-gated comment icon so it appears only after `agree` or `disagree` has been saved.
 8. `[x]` Add the comment composer flow with draft persistence and gentle moderation feedback.
-9. `[~]` Render the approved owned comment row with:
+9. `[x]` Render the approved owned comment row with:
    - the `Make public on VoteFeed` toggle
    - the call and message icons
    - the three-dot menu with `Edit` and `Delete`
 10. `[x]` Make sure call and message icons render only on the signed-in user's own approved comment and never on other public comments.
-11. `[ ]` Build the public comments list with privacy-safe author labels and `Useful` reactions.
+11. `[x]` Build the public comments list with privacy-safe author labels and `Useful` reactions.
 12. `[~]` Verify the full flow end to end, then update `specs/tech-stack.md` if the schema, API shape, or env requirements changed.
 
 ## Acceptance Criteria

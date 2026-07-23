@@ -142,5 +142,11 @@ CREATE TABLE comment_useful_votes (
 CREATE UNIQUE INDEX idx_comment_useful_votes_comment_user
 ON comment_useful_votes(comment_id, user_id);
 
+CREATE INDEX idx_bill_comments_bill_visibility
+ON bill_comments(bill_id, is_public, moderation_status, published_at DESC);
+
+CREATE INDEX idx_bill_comments_user_bill
+ON bill_comments(user_id, bill_id);
+
 CREATE INDEX idx_interactions_user_rep
 ON interactions(user_id,rep_bioguide_id);

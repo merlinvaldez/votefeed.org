@@ -363,6 +363,60 @@
   gap: 10px;
 }
 
+.toggle {
+  display: inline-flex;
+  align-items: center;
+}
+
+.toggle input {
+  appearance: none;
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--neutral-bg);
+  position: relative;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.toggle input::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--surface);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.toggle input:checked {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.toggle input:checked::after {
+  transform: translateX(20px);
+  background: var(--primary-contrast);
+}
+
+.toggle input:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.toggle input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .comment-ahead {
   display: flex;
   justify-content: space-between;
@@ -571,6 +625,92 @@
   font-weight: 500;
   white-space: pre-wrap;
   line-height: 1.65;
+}
+
+.comment-time {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.public-comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.public-comments-panel {
+  gap: 16px;
+}
+
+.public-comments-toggle {
+  min-width: 0;
+  padding-inline: 14px;
+}
+
+.public-comment-item {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 14px 16px;
+  background: var(--surface-2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.public-comment-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.public-comment-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.public-comment-author {
+  color: var(--text);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.public-comment-time {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.public-comment-text {
+  color: var(--text);
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.public-useful-btn {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-inline: 10px;
+}
+
+.public-useful-btn.active {
+  background: var(--primary-soft);
+  border-color: var(--primary-soft-border);
+  color: var(--primary-text);
+}
+
+.public-useful-count {
+  min-width: 12px;
+  text-align: center;
+  font-weight: 800;
 }
 
 .comment-action-panel {

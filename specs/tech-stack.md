@@ -66,6 +66,7 @@ Mounted API groups:
 - `/housevotes`
 - `/users`
 - `/interactions`
+- `/comments`
 
 Backend responsibility split:
 
@@ -110,8 +111,18 @@ Important note:
 
 `interactions`
 
-- stores VoteFeed-side user stance and optional comment text
+- stores VoteFeed-side user stance
+- legacy `user_comment` still exists on the table but is no longer the runtime comment source of truth
 - this is application state, not proof of congressional delivery
+
+`bill_comments`
+
+- stores the owned comment lifecycle for a user/bill interaction
+- stores draft text, approved text, moderation state, public visibility, and cached call/message drafts
+
+`comment_useful_votes`
+
+- stores one simple `Useful` reaction per `(comment_id, user_id)`
 
 `vote_notification_outbox`
 
@@ -246,6 +257,7 @@ From `server/example.env`:
 - `DATABASE_URL`
 - `NODE_ENV`
 - `JWT_SECRET`
+- `OPENAI_API_KEY`
 - `RESEND_API_KEY`
 - `RESEND_FROM_EMAIL`
 - `APP_ORIGIN`
@@ -297,7 +309,7 @@ Supabase workflow note:
 
 - the README still contains some legacy product framing and older schema language
 - there is no meaningful automated test suite configured yet
-- comments still exist in the schema and parts of the product, even though the current action direction is shifting toward direct representative contact
+- public bill comments and `Useful` reactions now exist, but they still sit alongside the stronger direct-contact workflow rather than replacing it
 - contact-form derivation currently depends on representative website patterns and still needs stronger trust/refresh rules
 - the schedule and production invocation wiring for background jobs are operational concerns, not fully represented as first-class code config in this repo
 

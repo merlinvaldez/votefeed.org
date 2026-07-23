@@ -1,20 +1,25 @@
 import db from "../client.js";
 
-export async function getCommentByInteractionId(interactionId) {
+export async function getCommentByInteractionId(interactionId, runner = db) {
   const sql = `SELECT * FROM bill_comments WHERE interaction_id = $1`;
   const {
     rows: [comment],
-  } = await db.query(sql, [interactionId]);
+  } = await runner.query(sql, [interactionId]);
   return comment ?? null;
 }
 
-export async function upsertDraftComment({
-  interactionId,
-  userId,
-  billId,
-  repBioguideId,
-  draftText,
-}) {
+export async function getCommentById(commentId, runner = db) {
+  const sql = `SELECT * FROM bill_comments WHERE id = $1`;
+  const {
+    rows: [comment],
+  } = await runner.query(sql, [commentId]);
+  return comment ?? null;
+}
+
+export async function upsertDraftComment(
+  { interactionId, userId, billId, repBioguideId, draftText },
+  runner = db,
+) {
   const sql = `
     INSERT INTO bill_comments (
       interaction_id,
@@ -36,7 +41,7 @@ export async function upsertDraftComment({
   `;
   const {
     rows: [comment],
-  } = await db.query(sql, [
+  } = await runner.query(sql, [
     interactionId,
     userId,
     billId,
@@ -46,11 +51,11 @@ export async function upsertDraftComment({
   return comment;
 }
 
-export async function getOrCreateCommentContactDrafts({
-  interactionId,
-  generateDrafts,
-}) {
-  const comment = await getCommentByInteractionId(interactionId);
+export async function getOrCreateCommentContactDrafts(
+  { interactionId, generateDrafts },
+  runner = db,
+) {
+  const comment = await getCommentByInteractionId(interactionId, runner);
   if (!comment) return null;
 
   const approvedText = comment.approved_text?.trim() ?? "";
@@ -88,7 +93,7 @@ export async function getOrCreateCommentContactDrafts({
   `;
   const {
     rows: [savedDrafts],
-  } = await db.query(sql, [interactionId, callScript, messageTemplate]);
+  } = await runner.query(sql, [interactionId, callScript, messageTemplate]);
 
   return {
     callScript: savedDrafts?.call_script ?? callScript,
@@ -98,12 +103,10 @@ export async function getOrCreateCommentContactDrafts({
   };
 }
 
-export async function applyCommentModerationResult({
-  interactionId,
-  status,
-  moderationReason,
-  moderationCategories,
-}) {
+export async function applyCommentModerationResult(
+  { interactionId, status, moderationReason, moderationCategories },
+  runner = db,
+) {
   const sql = `
     UPDATE bill_comments
     SET moderation_status = $2,
@@ -129,11 +132,113 @@ export async function applyCommentModerationResult({
   `;
   const {
     rows: [comment],
-  } = await db.query(sql, [
+  } = await runner.query(sql, [
     interactionId,
     status,
     moderationReason,
     moderationCategories,
   ]);
   return comment ?? null;
+}
+
+export async function setCommentPublicVisibility(
+  { commentId, userId, isPublic },
+  runner = db,
+) {
+  const sql = `
+    UPDATE bill_comments
+    SET is_public = $3,
+        published_at = CASE
+          WHEN $3 = true THEN COALESCE(published_at, now())
+          ELSE NULL
+        END,
+        updated_at = now()
+    WHERE id = $1
+      AND user_id = $2
+    RETURNING *
+  `;
+  const {
+    rows: [comment],
+  } = await runner.query(sql, [commentId, userId, isPublic]);
+  return comment ?? null;
+}
+
+export async function listPublicCommentsByBillId(
+  billId,
+  { viewerUserId = null } = {},
+  runner = db,
+) {
+  const sql = `
+    WITH useful_counts AS (
+      SELECT
+        comment_id,
+        COUNT(*)::integer AS useful_count
+      FROM comment_useful_votes
+      GROUP BY comment_id
+    ),
+    viewer_votes AS (
+      SELECT comment_id
+      FROM comment_useful_votes
+      WHERE user_id = $2
+    )
+    SELECT
+      bill_comments.id,
+      bill_comments.approved_text AS text,
+      bill_comments.published_at,
+      bill_comments.updated_at,
+      COALESCE(NULLIF(TRIM(users.first_name), ''), 'Constituent') AS author_display_name,
+      COALESCE(useful_counts.useful_count, 0)::integer AS useful_count,
+      CASE
+        WHEN $2::integer IS NULL THEN false
+        ELSE viewer_votes.comment_id IS NOT NULL
+      END AS viewer_has_marked_useful,
+      CASE
+        WHEN $2::integer IS NULL THEN false
+        ELSE bill_comments.user_id = $2
+      END AS is_owned_by_viewer
+    FROM bill_comments
+    JOIN users ON users.id = bill_comments.user_id
+    LEFT JOIN useful_counts ON useful_counts.comment_id = bill_comments.id
+    LEFT JOIN viewer_votes ON viewer_votes.comment_id = bill_comments.id
+    WHERE bill_comments.bill_id = $1
+      AND bill_comments.is_public = true
+      AND bill_comments.moderation_status = 'approved'
+      AND bill_comments.approved_text IS NOT NULL
+    ORDER BY
+      COALESCE(bill_comments.published_at, bill_comments.updated_at, bill_comments.created_at) DESC,
+      bill_comments.id DESC
+  `;
+  const { rows } = await runner.query(sql, [billId, viewerUserId]);
+  return rows;
+}
+
+export async function toggleCommentUsefulVote(
+  { commentId, userId },
+  runner = db,
+) {
+  const sql = `
+    WITH deleted AS (
+      DELETE FROM comment_useful_votes
+      WHERE comment_id = $1
+        AND user_id = $2
+      RETURNING 1
+    ),
+    inserted AS (
+      INSERT INTO comment_useful_votes (comment_id, user_id)
+      SELECT $1, $2
+      WHERE NOT EXISTS (SELECT 1 FROM deleted)
+      RETURNING 1
+    )
+    SELECT
+      EXISTS (SELECT 1 FROM inserted) AS viewer_has_marked_useful,
+      (
+        SELECT COUNT(*)::integer
+        FROM comment_useful_votes
+        WHERE comment_id = $1
+      ) AS useful_count
+  `;
+  const {
+    rows: [summary],
+  } = await runner.query(sql, [commentId, userId]);
+  return summary ?? { viewer_has_marked_useful: false, useful_count: 0 };
 }

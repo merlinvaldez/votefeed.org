@@ -16,6 +16,7 @@ import {
   CheckCircle2,
   XCircle,
   Mail,
+  Eye,
   Phone,
   MessageSquare,
   Send,
@@ -64,20 +65,15 @@ const formatBillLabel = (type, number) => {
   return `${labels[normalized] || normalized.toUpperCase()} ${number}`;
 };
 
-const formatLegislationReference = (type, number) => {
-  const normalized = String(type || "hr").toLowerCase();
-  const labels = {
-    hr: "house bill",
-    hres: "house resolution",
-    hjres: "house joint resolution",
-    hconres: "house concurrent resolution",
-  };
-  return `${labels[normalized] || "legislation"} ${number}`;
-};
-
-const formatDistrictLabel = (state, district) => {
-  if (!state || district == null) return "your district";
-  return `${state} District ${district}`;
+const formatCommentTimestamp = (value) => {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(date);
 };
 
 const buildRepContactUrl = (websiteUrl) => {
@@ -129,6 +125,17 @@ const copyTextToClipboard = async (text) => {
   }
 };
 
+const requestPublicComments = async ({ billId, isAuthed, authFetch }) => {
+  const requestUrl = `${API_BASE}/comments/bills/${billId}/public`;
+  const resp = isAuthed ? await authFetch(requestUrl) : await fetch(requestUrl);
+  if (!resp.ok) {
+    const details = await resp.text();
+    throw new Error(details || "Failed to load public comments");
+  }
+  const data = await resp.json();
+  return data.comments ?? [];
+};
+
 export default function BillPage() {
   const navigate = useNavigate();
   const { billType, billNumber } = useParams();
@@ -153,10 +160,9 @@ export default function BillPage() {
   const [isCommentPublic, setIsCommentPublic] = useState(false);
   const [isCommentComposerOpen, setIsCommentComposerOpen] = useState(false);
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
+  const [isSavingCommentPublic, setIsSavingCommentPublic] = useState(false);
   const [userId, setUserId] = useState(null);
   const [userName, setUserName] = useState("");
-  const [userState, setUserState] = useState("");
-  const [userDistrict, setUserDistrict] = useState(null);
   const [interactionError, setInteractionError] = useState("");
   const [isGuestBarHighlighted, setIsGuestBarHighlighted] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
@@ -165,6 +171,12 @@ export default function BillPage() {
   const [contactDrafts, setContactDrafts] = useState(null);
   const [contactDraftStatus, setContactDraftStatus] = useState("idle");
   const [contactDraftError, setContactDraftError] = useState("");
+  const [publicVisibilityError, setPublicVisibilityError] = useState("");
+  const [publicComments, setPublicComments] = useState([]);
+  const [publicCommentsStatus, setPublicCommentsStatus] = useState("idle");
+  const [publicCommentsError, setPublicCommentsError] = useState("");
+  const [isPublicCommentsOpen, setIsPublicCommentsOpen] = useState(false);
+  const [usefulPendingByCommentId, setUsefulPendingByCommentId] = useState({});
 
   const [aiToggled, setAiToggled] = useState(false);
   const [aiSummary, setAiSummary] = useState("");
@@ -202,11 +214,23 @@ export default function BillPage() {
   const commentAuthorName = userName || "You";
   const approvedCommentText = interaction?.comment_approved_text?.trim() ?? "";
   const hasPostedOwnedComment = Boolean(approvedCommentText);
-  const commentCount = hasPostedOwnedComment ? 1 : 0;
+  const publicCommentsFromOthers = publicComments.filter(
+    (comment) => !comment.is_owned_by_viewer,
+  );
   const showPostedOwnedComment =
     hasPostedOwnedComment && !isCommentComposerOpen;
-  const showCommentThread =
+  const showOwnedCommentThread =
     Boolean(interaction?.id) && (isCommentComposerOpen || showPostedOwnedComment);
+  const showPublicCommentsPanel =
+    publicCommentsFromOthers.length > 0 || Boolean(publicCommentsError);
+  const publicCommentsToggleLabel =
+    publicCommentsFromOthers.length === 1
+      ? isPublicCommentsOpen
+        ? "Hide 1 public comment"
+        : "Show 1 public comment"
+      : isPublicCommentsOpen
+        ? `Hide ${publicCommentsFromOthers.length} public comments`
+        : `Show ${publicCommentsFromOthers.length} public comments`;
   const callScript = contactDrafts?.callScript ?? "";
   const messageTemplate = contactDrafts?.messageTemplate ?? "";
 
@@ -304,8 +328,6 @@ export default function BillPage() {
         if (!cancelled) setUserId(me.id);
         if (!cancelled)
           setUserName(`${me.first_name || ""} ${me.last_name || ""}`.trim());
-        if (!cancelled) setUserState(me.state || "");
-        if (!cancelled) setUserDistrict(me.district ?? null);
 
         if (
           (!state?.rep ||
@@ -342,6 +364,40 @@ export default function BillPage() {
   }, [token, billId, authFetch]);
 
   useEffect(() => {
+    if (!billId) return;
+    let cancelled = false;
+
+    (async () => {
+      try {
+        if (!cancelled) {
+          setPublicCommentsStatus("loading");
+          setPublicCommentsError("");
+        }
+        const comments = await requestPublicComments({
+          billId,
+          isAuthed,
+          authFetch,
+        });
+        if (!cancelled) {
+          setPublicComments(comments);
+          setPublicCommentsStatus("ready");
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setPublicCommentsStatus("error");
+          setPublicCommentsError(
+            err.message || "Failed to load public comments",
+          );
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [billId, isAuthed, authFetch]);
+
+  useEffect(() => {
     setStance(interaction?.stance || null);
   }, [interaction]);
 
@@ -358,6 +414,12 @@ export default function BillPage() {
       setIsCommentMenuOpen(false);
     }
   }, [hasPostedOwnedComment]);
+
+  useEffect(() => {
+    if (publicCommentsFromOthers.length === 0) {
+      setIsPublicCommentsOpen(false);
+    }
+  }, [publicCommentsFromOthers.length]);
 
   useEffect(() => {
     setContactDrafts(null);
@@ -523,6 +585,23 @@ export default function BillPage() {
       setInteraction((currentInteraction) =>
         mergeCommentIntoInteraction(currentInteraction, moderatedComment),
       );
+      if (moderatedComment?.moderation_status === "approved" && billId) {
+        try {
+          const comments = await requestPublicComments({
+            billId,
+            isAuthed,
+            authFetch,
+          });
+          setPublicComments(comments);
+          setPublicCommentsStatus("ready");
+          setPublicCommentsError("");
+        } catch (reloadErr) {
+          setPublicCommentsStatus("error");
+          setPublicCommentsError(
+            reloadErr.message || "Failed to load public comments",
+          );
+        }
+      }
       if (moderatedComment?.moderation_status === "approved") {
         setIsCommentComposerOpen(false);
       }
@@ -559,8 +638,114 @@ export default function BillPage() {
       setInteraction((currentInteraction) =>
         clearCommentFromInteraction(currentInteraction),
       );
+      if (billId) {
+        try {
+          const comments = await requestPublicComments({
+            billId,
+            isAuthed,
+            authFetch,
+          });
+          setPublicComments(comments);
+          setPublicCommentsStatus("ready");
+          setPublicCommentsError("");
+        } catch (reloadErr) {
+          setPublicCommentsStatus("error");
+          setPublicCommentsError(
+            reloadErr.message || "Failed to load public comments",
+          );
+        }
+      }
     } catch (err) {
       setInteractionError(err.message || "Failed to delete comment");
+    }
+  };
+
+  const handleToggleCommentPublic = async (nextValue) => {
+    if (!ownedCommentId) return;
+
+    try {
+      setPublicVisibilityError("");
+      setIsSavingCommentPublic(true);
+      const resp = await authFetch(`${API_BASE}/comments/${ownedCommentId}/public`, {
+        method: "PUT",
+        body: JSON.stringify({ is_public: nextValue }),
+      });
+      if (!resp.ok) {
+        const details = await resp.text();
+        throw new Error(details || "Failed to update comment visibility");
+      }
+
+      const updatedComment = await resp.json();
+      setInteraction((currentInteraction) =>
+        mergeCommentIntoInteraction(currentInteraction, updatedComment),
+      );
+
+      if (billId) {
+        try {
+          const comments = await requestPublicComments({
+            billId,
+            isAuthed,
+            authFetch,
+          });
+          setPublicComments(comments);
+          setPublicCommentsStatus("ready");
+          setPublicCommentsError("");
+        } catch (reloadErr) {
+          setPublicCommentsStatus("error");
+          setPublicCommentsError(
+            reloadErr.message || "Failed to load public comments",
+          );
+        }
+      }
+    } catch (err) {
+      setPublicVisibilityError(
+        err.message || "Failed to update comment visibility",
+      );
+    } finally {
+      setIsSavingCommentPublic(false);
+    }
+  };
+
+  const handleToggleUseful = async (commentId) => {
+    if (!isAuthed) {
+      promptGuestInteraction();
+      return;
+    }
+
+    try {
+      setPublicCommentsError("");
+      setUsefulPendingByCommentId((current) => ({
+        ...current,
+        [commentId]: true,
+      }));
+      const resp = await authFetch(`${API_BASE}/comments/${commentId}/useful`, {
+        method: "PUT",
+      });
+      if (!resp.ok) {
+        const details = await resp.text();
+        throw new Error(details || "Failed to update useful reaction");
+      }
+
+      const updated = await resp.json();
+      setPublicComments((currentComments) =>
+        currentComments.map((comment) =>
+          comment.id === commentId
+            ? {
+                ...comment,
+                useful_count: updated.useful_count,
+                viewer_has_marked_useful: updated.viewer_has_marked_useful,
+              }
+            : comment,
+        ),
+      );
+    } catch (err) {
+      setPublicCommentsError(err.message || "Failed to update useful reaction");
+    } finally {
+      setUsefulPendingByCommentId((current) => {
+        const next = { ...current };
+        delete next[commentId];
+        return next;
+      });
     }
   };
 
@@ -579,15 +764,32 @@ export default function BillPage() {
 
     try {
       setInteractionError("");
-      if (interaction?.stance === nextStance) {
-        const resp = await authFetch(
-          `${API_BASE}/interactions/${interaction.id}`,
+        if (interaction?.stance === nextStance) {
+          const resp = await authFetch(
+            `${API_BASE}/interactions/${interaction.id}`,
           { method: "DELETE" },
-        );
-        if (!resp.ok) throw new Error("Failed to delete stance");
-        setInteraction(null);
-        return;
-      }
+          );
+          if (!resp.ok) throw new Error("Failed to delete stance");
+          setInteraction(null);
+          if (billId) {
+            try {
+              const comments = await requestPublicComments({
+                billId,
+                isAuthed,
+                authFetch,
+              });
+              setPublicComments(comments);
+              setPublicCommentsStatus("ready");
+              setPublicCommentsError("");
+            } catch (reloadErr) {
+              setPublicCommentsStatus("error");
+              setPublicCommentsError(
+                reloadErr.message || "Failed to load public comments",
+              );
+            }
+          }
+          return;
+        }
 
       const resp = await authFetch(
         interaction
@@ -789,13 +991,11 @@ export default function BillPage() {
           )}
         </div>
 
-        {showCommentThread && (
-          <section className="comment-thread">
-            <div className="comment-thread-header">
-              <div className="comment-thread-title">
-                {`Comments (${commentCount})`}
-              </div>
-            </div>
+            {showOwnedCommentThread && (
+              <section className="comment-thread">
+                <div className="comment-thread-header">
+                  <div className="comment-thread-title">Comments</div>
+                </div>
 
             {isCommentComposerOpen && (
               <div className="comment-composer-shell">
@@ -886,6 +1086,29 @@ export default function BillPage() {
                         <button
                           type="button"
                           className={`ghost-btn comment-owner-icon-btn ${
+                            isCommentPublic ? "active" : ""
+                          }`}
+                          onClick={() =>
+                            handleToggleCommentPublic(!isCommentPublic)
+                          }
+                          disabled={isSavingCommentPublic}
+                          aria-label={
+                            isCommentPublic
+                              ? "Public to other VoteFeed users"
+                              : "Make public to other VoteFeed users"
+                          }
+                          aria-pressed={isCommentPublic}
+                          title={
+                            isCommentPublic
+                              ? "Public to other VoteFeed users"
+                              : "Make public to other VoteFeed users"
+                          }
+                        >
+                          <Eye size={16}></Eye>
+                        </button>
+                        <button
+                          type="button"
+                          className={`ghost-btn comment-owner-icon-btn ${
                             isCommentMenuOpen ? "active" : ""
                           }`}
                           onClick={() =>
@@ -927,6 +1150,11 @@ export default function BillPage() {
                       </div>
                     </div>
                     <div className="comment-text">{approvedCommentText}</div>
+                    {publicVisibilityError && (
+                      <p className="error-text comment-error-text">
+                        {publicVisibilityError}
+                      </p>
+                    )}
                     {selectedAction === "call" && (
                       <section
                         id="bill-call-script-panel"
@@ -1030,6 +1258,90 @@ export default function BillPage() {
                   </div>
                 </div>
               </section>
+            )}
+          </section>
+        )}
+        {showPublicCommentsPanel && (
+          <section
+            className="comment-thread public-comments-panel"
+            aria-busy={publicCommentsStatus === "loading"}
+          >
+            <div className="comment-thread-header">
+              <div className="comment-thread-title">Public comments</div>
+              {publicCommentsFromOthers.length > 0 && (
+                <button
+                  type="button"
+                  className={`ghost-btn public-comments-toggle ${
+                    isPublicCommentsOpen ? "active" : ""
+                  }`}
+                  onClick={() =>
+                    setIsPublicCommentsOpen((currentValue) => !currentValue)
+                  }
+                  aria-expanded={isPublicCommentsOpen}
+                  aria-controls="public-comments-list"
+                >
+                  {publicCommentsToggleLabel}
+                </button>
+              )}
+            </div>
+            {isPublicCommentsOpen && publicCommentsFromOthers.length > 0 && (
+              <div id="public-comments-list" className="public-comments-list">
+                {publicCommentsFromOthers.map((comment) => {
+                  const isUsefulPending = Boolean(
+                    usefulPendingByCommentId[comment.id],
+                  );
+                  const publishedLabel = formatCommentTimestamp(
+                    comment.published_at,
+                  );
+
+                  return (
+                    <article key={comment.id} className="public-comment-item">
+                      <div className="public-comment-top">
+                        <div className="public-comment-meta">
+                          <div className="public-comment-author">
+                            {comment.author_display_name}
+                          </div>
+                          {publishedLabel && (
+                            <span className="public-comment-time">
+                              {publishedLabel}
+                            </span>
+                          )}
+                        </div>
+                        <button
+                          type="button"
+                          className={`ghost-btn public-useful-btn ${
+                            comment.viewer_has_marked_useful ? "active" : ""
+                          }`}
+                          onClick={() => handleToggleUseful(comment.id)}
+                          disabled={isUsefulPending}
+                          aria-pressed={comment.viewer_has_marked_useful}
+                          aria-label={
+                            comment.viewer_has_marked_useful
+                              ? "Remove useful mark from comment"
+                              : "Mark comment as useful"
+                          }
+                          title={
+                            comment.viewer_has_marked_useful
+                              ? "Remove useful mark"
+                              : "Mark comment as useful"
+                          }
+                        >
+                          <ThumbsUp size={14}></ThumbsUp>
+                          <span className="public-useful-count">
+                            {comment.useful_count}
+                          </span>
+                        </button>
+                      </div>
+                      <div className="public-comment-text">{comment.text}</div>
+                    </article>
+                  );
+                })}
+              </div>
+            )}
+            {publicCommentsError && (
+              <p className="error-text comment-error-text">
+                {publicCommentsError}
+              </p>
             )}
           </section>
         )}
