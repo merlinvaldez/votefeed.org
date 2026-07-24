@@ -369,6 +369,34 @@
   border: 1px solid var(--primary-soft-border);
 }
 
+.bill-link-pill {
+  cursor: pointer;
+  font: inherit;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.bill-link-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-compact);
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-contrast);
+}
+
+.bill-link-pill:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: var(--focus-ring), var(--shadow-compact);
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-contrast);
+  outline: none;
+}
+
 .pill.danger {
   background: var(--danger-bg);
   color: var(--danger);
@@ -411,6 +439,30 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  transition:
+    border-color 0.16s ease,
+    background-color 0.16s ease,
+    color 0.16s ease,
+    transform 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.ghost-btn:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-2);
+  transform: translateY(-1px);
+}
+
+.ghost-btn:focus-visible {
+  outline: none;
+  border-color: var(--border-strong);
+  box-shadow: var(--focus-ring);
+}
+
+.ghost-btn.active {
+  background: var(--primary-soft);
+  color: var(--primary-text);
+  border-color: var(--primary-soft-border);
 }
 
 .ghost-btn.active.approve {

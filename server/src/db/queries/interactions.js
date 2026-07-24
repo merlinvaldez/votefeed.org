@@ -11,10 +11,20 @@ export async function addStance(userId, billId, rep_bioguide_id, stance) {
 }
 
 export async function updateStance(interactionId, newStance) {
-  const sql = `UPDATE interactions 
-  SET stance =$2 
-  WHERE id = $1
-  RETURNING *`;
+  const sql = `WITH updated_interaction AS (
+    UPDATE interactions 
+    SET stance =$2 
+    WHERE id = $1
+    RETURNING *
+  ), cleared_contact_drafts AS (
+    UPDATE bill_comments
+    SET call_script = NULL,
+        message_template = NULL,
+        updated_at = now()
+    WHERE interaction_id = $1
+    RETURNING interaction_id
+  )
+  SELECT * FROM updated_interaction`;
   const {
     rows: [updatedStance],
   } = await db.query(sql, [interactionId, newStance]);
@@ -41,14 +51,13 @@ export async function updateComment(interactionId, comment) {
 }
 
 export async function deleteComment(interactionId) {
-  const sql = `UPDATE interactions
-  SET user_comment= NULL
-  WHERE id=$1 
+  const sql = `DELETE FROM bill_comments
+  WHERE interaction_id=$1 
   RETURNING *`;
   const {
-    rows: [stance],
+    rows: [deletedComment],
   } = await db.query(sql, [interactionId]);
-  return stance;
+  return deletedComment;
 }
 
 export async function getAllUserInteractions(userId) {
@@ -103,8 +112,22 @@ export async function getAlignmentByUserAndRep(
 }
 
 export async function getUserInteractionsByBill(userId, billId) {
-  const sql = `SELECT * FROM interactions 
-    WHERE user_id=$1 AND bill_id=$2`;
+  const sql = `SELECT
+    interactions.*,
+    bill_comments.id AS comment_id,
+    bill_comments.draft_text AS comment_draft_text,
+    bill_comments.approved_text AS comment_approved_text,
+    bill_comments.moderation_status AS comment_moderation_status,
+    bill_comments.moderation_reason AS comment_moderation_reason,
+    bill_comments.moderation_categories AS comment_moderation_categories,
+    bill_comments.is_public AS comment_is_public,
+    bill_comments.last_submitted_at AS comment_last_submitted_at,
+    bill_comments.last_moderated_at AS comment_last_moderated_at,
+    bill_comments.published_at AS comment_published_at,
+    bill_comments.updated_at AS comment_updated_at
+  FROM interactions
+  LEFT JOIN bill_comments ON bill_comments.interaction_id = interactions.id
+  WHERE interactions.user_id=$1 AND interactions.bill_id=$2`;
   const {
     rows: [userInteractionsOnBill],
   } = await db.query(sql, [userId, billId]);

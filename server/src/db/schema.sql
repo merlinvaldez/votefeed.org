@@ -1,4 +1,6 @@
 
+DROP TABLE IF EXISTS comment_useful_votes;
+DROP TABLE IF EXISTS bill_comments;
 DROP TABLE IF EXISTS interactions;
 DROP TABLE IF EXISTS vote_notification_outbox;
 DROP TABLE IF EXISTS roll_call_summaries;
@@ -29,7 +31,9 @@ CREATE TABLE reps (
     chamber text NOT NULL,
     state text NOT NULL,
     congressionalDistrict integer, 
-    image_url text
+    image_url text,
+    official_website_url text,
+    office_phone text
 );
 
 CREATE TABLE bills(
@@ -107,6 +111,42 @@ CREATE TABLE interactions (
     rep_bioguide_id text NOT NULL REFERENCES reps(bioguideId),
     bill_id integer NOT NULL REFERENCES bills(id) ON DELETE CASCADE
 );
+
+CREATE TABLE bill_comments (
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    interaction_id integer NOT NULL UNIQUE REFERENCES interactions(id) ON DELETE CASCADE,
+    user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    bill_id integer NOT NULL REFERENCES bills(id) ON DELETE CASCADE,
+    rep_bioguide_id text NOT NULL REFERENCES reps(bioguideId),
+    draft_text text,
+    approved_text text,
+    call_script text,
+    message_template text,
+    moderation_status text NOT NULL DEFAULT 'draft',
+    moderation_reason text,
+    moderation_categories jsonb,
+    is_public boolean NOT NULL DEFAULT false,
+    last_submitted_at timestamptz,
+    last_moderated_at timestamptz,
+    published_at timestamptz,
+    created_at timestamptz NOT NULL DEFAULT now(),
+    updated_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE TABLE comment_useful_votes (
+    comment_id uuid NOT NULL REFERENCES bill_comments(id) ON DELETE CASCADE,
+    user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    created_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE UNIQUE INDEX idx_comment_useful_votes_comment_user
+ON comment_useful_votes(comment_id, user_id);
+
+CREATE INDEX idx_bill_comments_bill_visibility
+ON bill_comments(bill_id, is_public, moderation_status, published_at DESC);
+
+CREATE INDEX idx_bill_comments_user_bill
+ON bill_comments(user_id, bill_id);
 
 CREATE INDEX idx_interactions_user_rep
 ON interactions(user_id,rep_bioguide_id);

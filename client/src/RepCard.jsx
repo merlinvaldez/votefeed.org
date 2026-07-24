@@ -1,4 +1,4 @@
-import { IdCard, MapPin } from "lucide-react";
+import { Globe, IdCard, MapPin } from "lucide-react";
 import {
   GaugeContainer,
   GaugeReferenceArc,
@@ -89,6 +89,17 @@ export default function RepCard({
               <MapPin size={16} className="meta-icon"></MapPin>
               {rep?.state} District {rep?.congressionaldistrict}
             </span>
+            {rep?.official_website_url && (
+              <a
+                className="meta-line member-website-link"
+                href={rep.official_website_url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Globe size={16} className="meta-icon" />
+                Website
+              </a>
+            )}
           </div>
         </div>
       </div>

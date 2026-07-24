@@ -9,6 +9,7 @@ import billsRouter from "./src/api/bills.js";
 import houseVotesRouter from "./src/api/houseVotes.js";
 import usersRouter from "./src/api/users.js";
 import interactionsRouter from "./src/api/interactions.js";
+import commentsRouter from "./src/api/comments.js";
 import getUserFromToken from "./src/middleware/getUserFromToken.js";
 import { clerkMiddleware } from "@clerk/express";
 
@@ -30,6 +31,7 @@ app.use("/bills", billsRouter);
 app.use("/housevotes", houseVotesRouter);
 app.use("/users", usersRouter);
 app.use("/interactions", interactionsRouter);
+app.use("/comments", commentsRouter);
 
 app.use((err, req, res, next) => {
   switch (err.code) {
