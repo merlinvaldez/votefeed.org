@@ -20,6 +20,7 @@ import {
   Phone,
   MessageSquare,
   Send,
+  ScrollText,
   Trash2,
 } from "lucide-react";
 import { UserAvatar } from "@clerk/clerk-react";
@@ -38,7 +39,9 @@ const getRepLastName = (fullName = "") => {
 
 const getVotePillClass = (voteVal) => {
   if (!voteVal || voteVal === "Not Voting") return "neutral";
-  if (voteVal === "Yea" || voteVal === "Aye") return "success";
+  if (voteVal === "Yea" || voteVal === "Aye" || voteVal === "Yes") {
+    return "success";
+  }
   if (voteVal === "No" || voteVal === "Nay") return "danger";
   return "neutral";
 };
@@ -61,8 +64,32 @@ const formatBillLabel = (type, number) => {
     hres: "H.Res.",
     hjres: "H.J.Res.",
     hconres: "H.Con.Res.",
+    s: "S.",
+    sres: "S.Res.",
+    sjres: "S.J.Res.",
+    sconres: "S.Con.Res.",
   };
   return `${labels[normalized] || normalized.toUpperCase()} ${number}`;
+};
+
+const formatLegislationType = (type) => {
+  const normalized = String(type || "").toLowerCase();
+  if (["hr", "s"].includes(normalized)) return "a bill";
+  if (["hres", "sres"].includes(normalized)) return "a resolution";
+  if (["hjres", "sjres"].includes(normalized)) return "a joint resolution";
+  if (["hconres", "sconres"].includes(normalized)) {
+    return "a concurrent resolution";
+  }
+  return "legislation";
+};
+
+const formatQuickSummary = (summary = "") => {
+  const trimmed = String(summary)
+    .replace(/^\s*to\s+/i, "")
+    .replace(/[.!?]+\s*$/, "")
+    .trim();
+  if (!trimmed) return "summarize what this measure would do";
+  return `${trimmed.charAt(0).toLowerCase()}${trimmed.slice(1)}`;
 };
 
 const formatCommentTimestamp = (value) => {
@@ -178,7 +205,7 @@ export default function BillPage() {
   const [isPublicCommentsOpen, setIsPublicCommentsOpen] = useState(false);
   const [usefulPendingByCommentId, setUsefulPendingByCommentId] = useState({});
 
-  const [aiToggled, setAiToggled] = useState(false);
+  const [showOriginal, setShowOriginal] = useState(true);
   const [aiSummary, setAiSummary] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState("");
@@ -199,6 +226,15 @@ export default function BillPage() {
         ? "danger"
         : "neutral";
   const repVotePillClass = getVotePillClass(bill?.vote);
+  const memberTitle = String(rep?.chamber || "")
+    .toLowerCase()
+    .includes("senate")
+    ? "Sen."
+    : "Rep.";
+  const legislationType = formatLegislationType(
+    bill?.legislation_type ?? bill?.bill_type ?? billType,
+  );
+  const isNotVoting = bill?.vote === "Not Voting";
   const VoteResultIcon =
     bill?.vote_result === "Failed" ? XCircle : CheckCircle2;
   const currentStance = interaction?.stance ?? stance;
@@ -270,25 +306,32 @@ export default function BillPage() {
     return true;
   };
 
-  const handleToggleAi = async (nextValue) => {
-    setAiToggled(nextValue);
-    if (!nextValue) return;
-    if (aiSummary) return;
+  useEffect(() => {
+    let cancelled = false;
+
+    setAiSummary("");
     setAiLoading(true);
     setAiError("");
-    try {
-      const resp = await fetch(
-        `${API_BASE}/bills/${billType}/${billNumber}/ai-summary`,
-      );
-      if (!resp.ok) throw new Error("AI summary failed");
-      const data = await resp.json();
-      setAiSummary(data.aiSummary);
-    } catch {
-      setAiError("AI summary failed");
-    } finally {
-      setAiLoading(false);
-    }
-  };
+
+    (async () => {
+      try {
+        const resp = await fetch(
+          `${API_BASE}/bills/${billType}/${billNumber}/ai-summary`,
+        );
+        if (!resp.ok) throw new Error("AI summary failed");
+        const data = await resp.json();
+        if (!cancelled) setAiSummary(data.aiSummary);
+      } catch {
+        if (!cancelled) setAiError("AI summary failed");
+      } finally {
+        if (!cancelled) setAiLoading(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [billNumber, billType]);
 
   useEffect(() => {
     if (bill) return;
@@ -816,8 +859,6 @@ export default function BillPage() {
       setInteractionError(err.message || "Failed to save stance");
     }
   };
-  const showAi = aiToggled;
-
   return (
     <>
       <button className="back-link" onClick={() => navigate(-1)}>
@@ -853,35 +894,60 @@ export default function BillPage() {
               </span>
             )}
           </div>
-          <label className="toggle toggle-ai" style={{ gap: 8 }}>
-            <input
-              type="checkbox"
-              checked={Boolean(showAi)}
-              onChange={(e) => handleToggleAi(e.target.checked)}
-              aria-label="Toggle AI summary"
-              title="Show simplified AI summary"
-            />
-          </label>
+          <button
+            type="button"
+            className={`summary-source-toggle${showOriginal ? " active" : ""}`}
+            onClick={() => setShowOriginal((current) => !current)}
+            aria-label={
+              showOriginal
+                ? "Show simplified summary"
+                : "Show original bill summary"
+            }
+            aria-pressed={showOriginal}
+            title={
+              showOriginal
+                ? "Show simplified summary"
+                : "Show original bill summary"
+            }
+          >
+            <ScrollText size={24} strokeWidth={2} aria-hidden="true" />
+          </button>
         </div>
         {status === "loading" && <p>Loading summary</p>}
         {status === "error" && <p className="error-text">{error}</p>}
-        {!showAi && bill?.summary && (
+        {(showOriginal || aiError) && bill?.summary && (
           <div
             className="leg-body"
             dangerouslySetInnerHTML={{ __html: bill.summary }}
           ></div>
         )}
-        {showAi && aiLoading && <div className="leg-body">Loading...</div>}
-        {showAi && aiError && bill?.summary && (
-          <div
-            className="leg-body"
-            dangerouslySetInnerHTML={{ __html: bill.summary }}
-          ></div>
+        {status === "ready" &&
+          !showOriginal &&
+          !aiError &&
+          (aiLoading || !aiSummary) && (
+          <div className="leg-body">Creating summary.</div>
         )}
-        {showAi && !aiLoading && !aiError && (
-          <div className="leg-body">{aiSummary}</div>
+        {status === "ready" &&
+          !showOriginal &&
+          !aiLoading &&
+          !aiError &&
+          aiSummary && (
+          <div className="leg-body simple-vote-summary">
+            {memberTitle} {repLastName}{" "}
+            {isNotVoting ? (
+              <>did not vote</>
+            ) : (
+              <>
+                voted{" "}
+                <span className={`pill inline-vote-pill ${repVotePillClass}`}>
+                  {bill.vote}
+                </span>
+              </>
+            )}{" "}
+            on {billLabel}, {legislationType} to {formatQuickSummary(aiSummary)}.
+          </div>
         )}
-        {showAi && aiError && <p className="error-text">{aiError}</p>}
+        {aiError && <p className="error-text">{aiError}</p>}
         {bill?.vote_result && (
           <section className="vote-result-card">
             <div className="vote-result-grid">
