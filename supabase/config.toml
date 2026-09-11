@@ -411,3 +411,9 @@ enabled = true
 verify_jwt = true
 import_map = "./functions/send-vote-notifications/deno.json"
 entrypoint = "./functions/send-vote-notifications/index.ts"
+
+[functions.sync-reps]
+enabled = true
+verify_jwt = true
+import_map = "./functions/sync-reps/deno.json"
+entrypoint = "./functions/sync-reps/index.ts"

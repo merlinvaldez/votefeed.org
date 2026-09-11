@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
   }
 
   try {
-    const baseUrl = new URL("https://api.congress.gov/v3/member/congress/119");
+    const baseUrl = new URL("https://api.congress.gov/v3/member");
     baseUrl.searchParams.set("limit", "250");
     baseUrl.searchParams.set("currentMember", "true");
     baseUrl.searchParams.set("api_key", apiKey);

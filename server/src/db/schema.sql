@@ -33,8 +33,14 @@ CREATE TABLE reps (
     congressionalDistrict integer, 
     image_url text,
     official_website_url text,
-    office_phone text
+    office_phone text,
+    is_current_member boolean NOT NULL DEFAULT true,
+    last_seen_at timestamptz
 );
+
+CREATE UNIQUE INDEX idx_reps_current_district
+ON reps(state, congressionalDistrict)
+WHERE is_current_member = true;
 
 CREATE TABLE bills(
     id serial PRIMARY KEY,

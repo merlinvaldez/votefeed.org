@@ -76,6 +76,8 @@ This section reflects the current application schema in `server/src/db/schema.sq
 | state                 | text    | Not null    |
 | congressionalDistrict | integer | Nullable    |
 | image_url             | text    | Nullable    |
+| is_current_member     | boolean | Not null, defaults to `true` |
+| last_seen_at          | timestamptz | Nullable |
 
 ### bills
 
@@ -170,6 +172,7 @@ Production vote notifications are driven by Supabase Edge Functions:
 
 - `sync-votes` imports new House vote data, upserts roll call and bill summary data, and queues notification work in `vote_notification_outbox`.
 - `send-vote-notifications` reads pending outbox rows, sends emails through Resend, and updates each user's notification cursor fields.
+- `sync-reps` refreshes the current House roster from Congress.gov, preserves historical representatives, and marks departed members inactive. The `sync-reps-monthly` cron invokes it at 08:00 UTC on the first day of each month.
 
 The notification functions require these Supabase function secrets:
 
