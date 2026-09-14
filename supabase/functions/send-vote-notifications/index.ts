@@ -14,9 +14,29 @@ const RESEND_MIN_SEND_INTERVAL_MS = 250;
 const RESEND_RETRY_BASE_MS = 1_000;
 const MAX_AI_SUMMARIES_PER_INVOCATION = 10;
 const DEFAULT_OPENAI_MODEL = "gpt-5.4";
+const NOTIFICATION_START_DATE = "2026-09-10T00:00:00.000Z";
+const OUTBOX_UPDATE_BATCH_SIZE = 100;
 
 const wait = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
+
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message;
+  if (
+    typeof error === "object" &&
+    error !== null &&
+    "message" in error &&
+    typeof error.message === "string"
+  ) {
+    return error.message;
+  }
+  if (typeof error === "string") return error;
+  try {
+    return JSON.stringify(error);
+  } catch {
+    return "Unexpected error";
+  }
+}
 
 type SupabaseClient = ReturnType<typeof createClient>;
 
@@ -431,6 +451,7 @@ async function loadPendingOutboxRows(supabase: SupabaseClient) {
         "id, sync_run_id, member_id, legislation_type, legislation_number, session_number, roll_call_number, voted_on, vote, created_at, processed_at, attempt_count, last_error",
       )
       .is("processed_at", null)
+      .gte("voted_on", NOTIFICATION_START_DATE)
       .order("session_number", { ascending: false })
       .order("roll_call_number", { ascending: false })
       .order("created_at", { ascending: true })
@@ -669,6 +690,7 @@ async function findLatestSummaryReadyRollCallVotesForRep(
       "id, member_id, legislationnumber, legislation_type, session_number, roll_call_number, voted_on, vote",
     )
     .eq("member_id", memberId)
+    .gte("voted_on", NOTIFICATION_START_DATE)
     .order("voted_on", { ascending: false, nullsFirst: false })
     .order("session_number", { ascending: false })
     .order("roll_call_number", { ascending: false })
@@ -792,15 +814,18 @@ async function markOutboxRowsProcessed(
 ) {
   if (ids.length === 0) return;
 
-  const { error } = await supabase
-    .from("vote_notification_outbox")
-    .update({
-      processed_at: new Date().toISOString(),
-      last_error: null,
-    })
-    .in("id", ids);
+  for (let index = 0; index < ids.length; index += OUTBOX_UPDATE_BATCH_SIZE) {
+    const batchIds = ids.slice(index, index + OUTBOX_UPDATE_BATCH_SIZE);
+    const { error } = await supabase
+      .from("vote_notification_outbox")
+      .update({
+        processed_at: new Date().toISOString(),
+        last_error: null,
+      })
+      .in("id", batchIds);
 
-  if (error) throw error;
+    if (error) throw error;
+  }
 }
 
 async function markOutboxRowsSkipped(
@@ -810,18 +835,19 @@ async function markOutboxRowsSkipped(
 ) {
   if (rows.length === 0) return;
 
-  const { error } = await supabase
-    .from("vote_notification_outbox")
-    .update({
-      processed_at: new Date().toISOString(),
-      last_error: reason,
-    })
-    .in(
-      "id",
-      rows.map((row) => row.id),
-    );
+  const ids = rows.map((row) => row.id);
+  for (let index = 0; index < ids.length; index += OUTBOX_UPDATE_BATCH_SIZE) {
+    const batchIds = ids.slice(index, index + OUTBOX_UPDATE_BATCH_SIZE);
+    const { error } = await supabase
+      .from("vote_notification_outbox")
+      .update({
+        processed_at: new Date().toISOString(),
+        last_error: reason,
+      })
+      .in("id", batchIds);
 
-  if (error) throw error;
+    if (error) throw error;
+  }
 }
 
 async function markOutboxRowsFailed(
@@ -837,19 +863,20 @@ async function markOutboxRowsFailed(
     Math.max(...rows.map((row) => row.attempt_count ?? 0)) + 1;
   const deadLettered = nextAttemptCount >= MAX_FAILURE_ATTEMPTS;
 
-  const { error } = await supabase
-    .from("vote_notification_outbox")
-    .update({
-      attempt_count: nextAttemptCount,
-      last_error: errorMessage,
-      processed_at: deadLettered ? new Date().toISOString() : null,
-    })
-    .in(
-      "id",
-      rows.map((row) => row.id),
-    );
+  const ids = rows.map((row) => row.id);
+  for (let index = 0; index < ids.length; index += OUTBOX_UPDATE_BATCH_SIZE) {
+    const batchIds = ids.slice(index, index + OUTBOX_UPDATE_BATCH_SIZE);
+    const { error } = await supabase
+      .from("vote_notification_outbox")
+      .update({
+        attempt_count: nextAttemptCount,
+        last_error: errorMessage,
+        processed_at: deadLettered ? new Date().toISOString() : null,
+      })
+      .in("id", batchIds);
 
-  if (error) throw error;
+    if (error) throw error;
+  }
   return { deadLettered, attemptCount: nextAttemptCount };
 }
 
@@ -1156,8 +1183,7 @@ Deno.serve(async (req) => {
           deferredGroupCount += 1;
         }
       } catch (error) {
-        const message =
-          error instanceof Error ? error.message : "Unexpected error";
+        const message = getErrorMessage(error);
         console.error(
           `[send-vote-notifications] failed ${group.syncRunId}:${group.memberId}: ${message}`,
         );
@@ -1213,8 +1239,7 @@ Deno.serve(async (req) => {
 
           target.users.push(user);
         } catch (error) {
-          const message =
-            error instanceof Error ? error.message : "Unexpected error";
+          const message = getErrorMessage(error);
           console.error(
             `[send-vote-notifications] bootstrap prep failed for user ${user.id}: ${message}`,
           );
@@ -1260,8 +1285,7 @@ Deno.serve(async (req) => {
             sentEmailCount += 1;
             bootstrapEmailCount += 1;
           } catch (error) {
-            const message =
-              error instanceof Error ? error.message : "Unexpected error";
+            const message = getErrorMessage(error);
             console.error(
               `[send-vote-notifications] bootstrap send failed for user ${user.id}: ${message}`,
             );
@@ -1300,7 +1324,7 @@ Deno.serve(async (req) => {
   } catch (error) {
     console.error(error);
     return json(
-      { error: error instanceof Error ? error.message : "Unexpected error" },
+      { error: getErrorMessage(error) },
       500,
     );
   }
