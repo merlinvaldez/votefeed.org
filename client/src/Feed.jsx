@@ -682,13 +682,13 @@ function Feed(props) {
                   aria-label={
                     showOriginal
                       ? "Show simplified summary"
-                      : "Show original bill summary"
+                      : "This is an AI-generated summary. Toggle here to see the original from Congress.gov."
                   }
                   aria-pressed={showOriginal}
                   title={
                     showOriginal
                       ? "Show simplified summary"
-                      : "Show original bill summary"
+                      : "This is an AI-generated summary. Toggle here to see the original from Congress.gov."
                   }
                 >
                   <ScrollText size={24} strokeWidth={2} aria-hidden="true" />
