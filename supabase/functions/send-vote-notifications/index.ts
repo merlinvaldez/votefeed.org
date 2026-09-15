@@ -12,9 +12,31 @@ const MAX_PENDING_OUTBOX_ROWS_PER_INVOCATION = 10_000;
 const RESEND_MAX_SEND_ATTEMPTS = 3;
 const RESEND_MIN_SEND_INTERVAL_MS = 250;
 const RESEND_RETRY_BASE_MS = 1_000;
+const MAX_AI_SUMMARIES_PER_INVOCATION = 10;
+const DEFAULT_OPENAI_MODEL = "gpt-5.4";
+const NOTIFICATION_START_DATE = "2026-09-10T00:00:00.000Z";
+const OUTBOX_UPDATE_BATCH_SIZE = 100;
 
 const wait = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
+
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message;
+  if (
+    typeof error === "object" &&
+    error !== null &&
+    "message" in error &&
+    typeof error.message === "string"
+  ) {
+    return error.message;
+  }
+  if (typeof error === "string") return error;
+  try {
+    return JSON.stringify(error);
+  } catch {
+    return "Unexpected error";
+  }
+}
 
 type SupabaseClient = ReturnType<typeof createClient>;
 
@@ -46,6 +68,7 @@ type RepRow = {
   chamber: string | null;
   state: string;
   congressionaldistrict: number | null;
+  is_current_member: boolean;
 };
 
 type UserRow = {
@@ -64,6 +87,7 @@ type BillRow = {
   number: number;
   title: string | null;
   summary: string | null;
+  aisummary: string | null;
   legislation_url: string | null;
 };
 
@@ -77,6 +101,7 @@ type EnrichedVote = {
   vote: string;
   billTitle: string;
   billSummary: string | null;
+  aiSummary: string | null;
   legislationUrl: string | null;
 };
 
@@ -135,16 +160,27 @@ function getBillLabel(vote: {
   return `${prefix} ${vote.legislation_number}`;
 }
 
-function getVoteDisplayTitle(vote: {
-  legislation_type: string;
-  legislation_number: number;
-  billTitle?: string | null;
-}) {
-  const billLabel = getBillLabel(vote);
-  const typeKey = String(vote.legislation_type ?? "").trim().toLowerCase();
-  if (typeKey.includes("res")) return billLabel;
-  const title = String(vote.billTitle ?? "").trim();
-  return title || billLabel;
+function getLegislationTypeLabel(legislationType: string) {
+  const typeKey = String(legislationType ?? "").trim().toLowerCase();
+  if (typeKey === "hr" || typeKey === "s") return "a bill";
+  if (typeKey === "hres" || typeKey === "sres") return "a resolution";
+  if (typeKey === "hjres" || typeKey === "sjres") {
+    return "a joint resolution";
+  }
+  if (typeKey === "hconres" || typeKey === "sconres") {
+    return "a concurrent resolution";
+  }
+  return "legislation";
+}
+
+function normalizeQuickSummary(summary: string | null) {
+  const normalized = String(summary ?? "")
+    .replace(/^\s*to\s+/i, "")
+    .replace(/[.!?]+\s*$/, "")
+    .trim();
+  return normalized
+    ? `${normalized.charAt(0).toLowerCase()}${normalized.slice(1)}`
+    : "";
 }
 
 function getVotePillStyles(voteValue: string) {
@@ -175,6 +211,27 @@ function buildVotePillHtml(voteValue: string) {
   return `<span style="display: inline-block; padding: 2px 8px; border-radius: 999px; border: 1px solid ${styles.border}; background: ${styles.background}; color: ${styles.text}; font-size: 13px; font-weight: 700; line-height: 1.4; white-space: nowrap;">${escapeHtml(voteValue)}</span>`;
 }
 
+function buildVoteSentenceHtml(repLastName: string, vote: EnrichedVote) {
+  const billLabel = getBillLabel(vote);
+  const legislationType = getLegislationTypeLabel(vote.legislation_type);
+  const quickSummary = normalizeQuickSummary(vote.aiSummary);
+  const safeRepLastName = escapeHtml(repLastName);
+  if (vote.vote === "Not Voting") {
+    return `Rep. ${safeRepLastName} did not vote on ${escapeHtml(billLabel)}, ${escapeHtml(legislationType)} to ${escapeHtml(quickSummary)}.`;
+  }
+  return `Rep. ${safeRepLastName} voted ${buildVotePillHtml(vote.vote)} on ${escapeHtml(billLabel)}, ${escapeHtml(legislationType)} to ${escapeHtml(quickSummary)}.`;
+}
+
+function buildVoteSentenceText(repLastName: string, vote: EnrichedVote) {
+  const billLabel = getBillLabel(vote);
+  const legislationType = getLegislationTypeLabel(vote.legislation_type);
+  const quickSummary = normalizeQuickSummary(vote.aiSummary);
+  if (vote.vote === "Not Voting") {
+    return `Rep. ${repLastName} did not vote on ${billLabel}, ${legislationType} to ${quickSummary}.`;
+  }
+  return `Rep. ${repLastName} voted ${vote.vote} on ${billLabel}, ${legislationType} to ${quickSummary}.`;
+}
+
 function buildRepVoteBatchEmail({
   firstName,
   repName,
@@ -198,11 +255,9 @@ function buildRepVoteBatchEmail({
   const subject = `Here are Rep. ${repLastName}'s latest votes`;
 
   const itemsHtml = votes
-    .map((vote) => {
-      const displayTitle = getVoteDisplayTitle(vote);
-      const votePillHtml = buildVotePillHtml(vote.vote);
-      return `<li style="margin: 0 0 12px;">Rep. ${safeRepLastName} voted ${votePillHtml} on ${escapeHtml(displayTitle)}</li>`;
-    })
+    .map((vote) =>
+      `<li style="margin: 0 0 12px;">${buildVoteSentenceHtml(repLastName, vote)}</li>`
+    )
     .join("");
 
   const html = `
@@ -225,10 +280,7 @@ function buildRepVoteBatchEmail({
     "",
     `Here are Rep. ${repLastName}'s latest votes,`,
     "",
-    ...votes.map((vote) => {
-      const displayTitle = getVoteDisplayTitle(vote);
-      return `- Rep. ${repLastName} voted ${vote.vote} on ${displayTitle}`;
-    }),
+    ...votes.map((vote) => `- ${buildVoteSentenceText(repLastName, vote)}`),
     "",
     `Let Rep. ${repLastName} know how you feel about their votes!`,
     `Go to VoteFeed: ${loginUrl}`,
@@ -399,6 +451,7 @@ async function loadPendingOutboxRows(supabase: SupabaseClient) {
         "id, sync_run_id, member_id, legislation_type, legislation_number, session_number, roll_call_number, voted_on, vote, created_at, processed_at, attempt_count, last_error",
       )
       .is("processed_at", null)
+      .gte("voted_on", NOTIFICATION_START_DATE)
       .order("session_number", { ascending: false })
       .order("roll_call_number", { ascending: false })
       .order("created_at", { ascending: true })
@@ -430,7 +483,7 @@ async function findRepByBioguideId(
 ) {
   const { data, error } = await supabase
     .from("reps")
-    .select("bioguideid, full_name, chamber, state, congressionaldistrict")
+    .select("bioguideid, full_name, chamber, state, congressionaldistrict, is_current_member")
     .eq("bioguideid", bioguideId)
     .maybeSingle();
 
@@ -449,7 +502,7 @@ async function findRepsByBioguideIds(
 
   const { data, error } = await supabase
     .from("reps")
-    .select("bioguideid, full_name, chamber, state, congressionaldistrict")
+    .select("bioguideid, full_name, chamber, state, congressionaldistrict, is_current_member")
     .in("bioguideid", uniqueIds);
 
   if (error) throw error;
@@ -466,9 +519,10 @@ async function findRepByDistrict(
 ) {
   const { data, error } = await supabase
     .from("reps")
-    .select("bioguideid, full_name, chamber, state, congressionaldistrict")
+    .select("bioguideid, full_name, chamber, state, congressionaldistrict, is_current_member")
     .eq("state", state)
     .eq("congressionaldistrict", district)
+    .eq("is_current_member", true)
     .maybeSingle();
 
   if (error) throw error;
@@ -488,7 +542,7 @@ async function findBillsForVotes(
 
   const { data, error } = await supabase
     .from("bills")
-    .select("bill_type, number, title, summary, legislation_url")
+    .select("bill_type, number, title, summary, aisummary, legislation_url")
     .in("bill_type", billTypes)
     .in("number", billNumbers);
 
@@ -521,6 +575,7 @@ function enrichVotes(votes: OutboxRow[], billMap: Map<string, BillRow>) {
         bill?.title ??
         `${String(vote.legislation_type).toUpperCase()} ${vote.legislation_number}`,
       billSummary: bill?.summary ?? null,
+      aiSummary: bill?.aisummary ?? null,
       legislationUrl: bill?.legislation_url ?? null,
     };
   });
@@ -546,17 +601,23 @@ function hasBillSummary(vote: { billSummary: string | null }) {
   return String(vote.billSummary ?? "").trim() !== "";
 }
 
+function hasAiSummary(vote: { aiSummary: string | null }) {
+  return normalizeQuickSummary(vote.aiSummary) !== "";
+}
+
 function isOutboxRowSummaryReady(
   row: OutboxRow,
   billMap: Map<string, BillRow>,
 ) {
   const bill = billMap.get(getBillMapKey(row));
-  return hasBillSummary({ billSummary: bill?.summary ?? null });
+  return hasBillSummary({ billSummary: bill?.summary ?? null }) &&
+    hasAiSummary({ aiSummary: bill?.aisummary ?? null });
 }
 
 function isDeliverableHouseRep(rep: RepRow | null | undefined) {
   const chamber = String(rep?.chamber ?? "").trim().toLowerCase();
-  return chamber.includes("house") && rep?.congressionaldistrict != null;
+  return chamber.includes("house") && rep?.congressionaldistrict != null &&
+    rep?.is_current_member !== false;
 }
 
 function getUndeliverableGroupReason(
@@ -577,7 +638,7 @@ function getUndeliverableGroupReason(
 
 function getSummaryReadyRollCallGroups(votes: EnrichedVote[]) {
   return groupVotesByRollCall(votes).filter((rollCallVotes) =>
-    rollCallVotes.every(hasBillSummary)
+    rollCallVotes.every((vote) => hasBillSummary(vote) && hasAiSummary(vote))
   );
 }
 
@@ -629,6 +690,7 @@ async function findLatestSummaryReadyRollCallVotesForRep(
       "id, member_id, legislationnumber, legislation_type, session_number, roll_call_number, voted_on, vote",
     )
     .eq("member_id", memberId)
+    .gte("voted_on", NOTIFICATION_START_DATE)
     .order("voted_on", { ascending: false, nullsFirst: false })
     .order("session_number", { ascending: false })
     .order("roll_call_number", { ascending: false })
@@ -662,6 +724,7 @@ async function findLatestSummaryReadyRollCallVotesForRep(
         bill?.title ??
         `${String(vote.legislation_type).toUpperCase()} ${vote.legislationnumber}`,
       billSummary: bill?.summary ?? null,
+      aiSummary: bill?.aisummary ?? null,
       legislationUrl: bill?.legislation_url ?? null,
     } satisfies EnrichedVote;
   });
@@ -751,15 +814,18 @@ async function markOutboxRowsProcessed(
 ) {
   if (ids.length === 0) return;
 
-  const { error } = await supabase
-    .from("vote_notification_outbox")
-    .update({
-      processed_at: new Date().toISOString(),
-      last_error: null,
-    })
-    .in("id", ids);
+  for (let index = 0; index < ids.length; index += OUTBOX_UPDATE_BATCH_SIZE) {
+    const batchIds = ids.slice(index, index + OUTBOX_UPDATE_BATCH_SIZE);
+    const { error } = await supabase
+      .from("vote_notification_outbox")
+      .update({
+        processed_at: new Date().toISOString(),
+        last_error: null,
+      })
+      .in("id", batchIds);
 
-  if (error) throw error;
+    if (error) throw error;
+  }
 }
 
 async function markOutboxRowsSkipped(
@@ -769,18 +835,19 @@ async function markOutboxRowsSkipped(
 ) {
   if (rows.length === 0) return;
 
-  const { error } = await supabase
-    .from("vote_notification_outbox")
-    .update({
-      processed_at: new Date().toISOString(),
-      last_error: reason,
-    })
-    .in(
-      "id",
-      rows.map((row) => row.id),
-    );
+  const ids = rows.map((row) => row.id);
+  for (let index = 0; index < ids.length; index += OUTBOX_UPDATE_BATCH_SIZE) {
+    const batchIds = ids.slice(index, index + OUTBOX_UPDATE_BATCH_SIZE);
+    const { error } = await supabase
+      .from("vote_notification_outbox")
+      .update({
+        processed_at: new Date().toISOString(),
+        last_error: reason,
+      })
+      .in("id", batchIds);
 
-  if (error) throw error;
+    if (error) throw error;
+  }
 }
 
 async function markOutboxRowsFailed(
@@ -796,19 +863,20 @@ async function markOutboxRowsFailed(
     Math.max(...rows.map((row) => row.attempt_count ?? 0)) + 1;
   const deadLettered = nextAttemptCount >= MAX_FAILURE_ATTEMPTS;
 
-  const { error } = await supabase
-    .from("vote_notification_outbox")
-    .update({
-      attempt_count: nextAttemptCount,
-      last_error: errorMessage,
-      processed_at: deadLettered ? new Date().toISOString() : null,
-    })
-    .in(
-      "id",
-      rows.map((row) => row.id),
-    );
+  const ids = rows.map((row) => row.id);
+  for (let index = 0; index < ids.length; index += OUTBOX_UPDATE_BATCH_SIZE) {
+    const batchIds = ids.slice(index, index + OUTBOX_UPDATE_BATCH_SIZE);
+    const { error } = await supabase
+      .from("vote_notification_outbox")
+      .update({
+        attempt_count: nextAttemptCount,
+        last_error: errorMessage,
+        processed_at: deadLettered ? new Date().toISOString() : null,
+      })
+      .in("id", batchIds);
 
-  if (error) throw error;
+    if (error) throw error;
+  }
   return { deadLettered, attemptCount: nextAttemptCount };
 }
 
@@ -816,16 +884,93 @@ function hasTimeRemaining(startedAtMs: number) {
   return Date.now() - startedAtMs < MAX_RUNTIME_MS;
 }
 
+function readResponseText(payload: {
+  output?: Array<{ content?: Array<{ type?: string; text?: string }> }>;
+}) {
+  return (payload.output ?? [])
+    .flatMap((item) => item.content ?? [])
+    .filter((item) => item.type === "output_text")
+    .map((item) => item.text ?? "")
+    .join("")
+    .trim();
+}
+
+async function generateQuickSummary(
+  openAiApiKey: string,
+  officialSummary: string,
+) {
+  const instructions = `Turn a bill summary into exactly one short, plain-language action phrase that fits after "a bill to" or "a resolution to". Start with a lowercase base-form action verb such as stop, help, require, delay, allow, add, cut, or protect. Do not begin with "to", "this bill", "the bill", "this resolution", or "the legislation". Use everyday words at a grade 4-6 reading level. Put the main action first. Include who is affected when necessary. Do not add facts, opinions, a representative, a vote, a bill identifier, or a legislation type. Do not write a complete sentence or end with punctuation. Return only the phrase, with a maximum of 180 characters.`;
+  const response = await fetch("https://api.openai.com/v1/responses", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${openAiApiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: Deno.env.get("OPENAI_MODEL") || DEFAULT_OPENAI_MODEL,
+      reasoning: { effort: "low" },
+      instructions,
+      input: officialSummary,
+    }),
+  });
+  const details = await response.text();
+  if (!response.ok) {
+    throw new Error(`AI summary generation failed ${response.status}: ${details}`);
+  }
+  const quickSummary = normalizeQuickSummary(
+    readResponseText(JSON.parse(details)),
+  );
+  if (!quickSummary) throw new Error("AI summary generation returned no text");
+  return quickSummary.slice(0, 180).replace(/[.!?]+$/, "");
+}
+
+async function generateMissingAiSummaries(
+  supabase: SupabaseClient,
+  billMap: Map<string, BillRow>,
+  openAiApiKey: string | undefined,
+) {
+  const missingBills = [...billMap.values()]
+    .filter((bill) =>
+      hasBillSummary({ billSummary: bill.summary }) &&
+      !hasAiSummary({ aiSummary: bill.aisummary })
+    )
+    .slice(0, MAX_AI_SUMMARIES_PER_INVOCATION);
+  if (missingBills.length === 0) return 0;
+  if (!openAiApiKey) {
+    console.warn(
+      "[send-vote-notifications] deferring AI summaries: OPENAI_API_KEY is not configured",
+    );
+    return 0;
+  }
+  let generatedCount = 0;
+  for (const bill of missingBills) {
+    const aiSummary = await generateQuickSummary(openAiApiKey, bill.summary!);
+    const { error } = await supabase
+      .from("bills")
+      .update({ aisummary: aiSummary })
+      .eq("bill_type", bill.bill_type)
+      .eq("number", bill.number);
+    if (error) throw error;
+    bill.aisummary = aiSummary;
+    generatedCount += 1;
+  }
+  return generatedCount;
+}
+
 Deno.serve(async (req) => {
   if (req.method !== "POST") {
     return json({ error: "Method not allowed" }, 405);
   }
+
+  const requestBody = await req.json().catch(() => ({}));
+  const generateOnly = requestBody?.mode === "generate-only";
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   const resendApiKey = Deno.env.get("RESEND_API_KEY");
   const resendFromEmail = Deno.env.get("RESEND_FROM_EMAIL");
   const appOrigin = Deno.env.get("APP_ORIGIN");
+  const openAiApiKey = Deno.env.get("OPENAI_API_KEY");
 
   if (
     !supabaseUrl ||
@@ -865,6 +1010,17 @@ Deno.serve(async (req) => {
       supabase,
       deliverablePendingRows,
     );
+    const generatedAiSummaryCount = await generateMissingAiSummaries(
+      supabase,
+      pendingBillMap,
+      openAiApiKey,
+    );
+    if (generateOnly) {
+      return json({
+        generatedAiSummaryCount,
+        pendingVoteCount: deliverablePendingRows.length,
+      });
+    }
     const summaryReadyPendingRows = deliverablePendingRows.filter((row) =>
       isOutboxRowSummaryReady(row, pendingBillMap)
     );
@@ -1027,8 +1183,7 @@ Deno.serve(async (req) => {
           deferredGroupCount += 1;
         }
       } catch (error) {
-        const message =
-          error instanceof Error ? error.message : "Unexpected error";
+        const message = getErrorMessage(error);
         console.error(
           `[send-vote-notifications] failed ${group.syncRunId}:${group.memberId}: ${message}`,
         );
@@ -1084,8 +1239,7 @@ Deno.serve(async (req) => {
 
           target.users.push(user);
         } catch (error) {
-          const message =
-            error instanceof Error ? error.message : "Unexpected error";
+          const message = getErrorMessage(error);
           console.error(
             `[send-vote-notifications] bootstrap prep failed for user ${user.id}: ${message}`,
           );
@@ -1131,8 +1285,7 @@ Deno.serve(async (req) => {
             sentEmailCount += 1;
             bootstrapEmailCount += 1;
           } catch (error) {
-            const message =
-              error instanceof Error ? error.message : "Unexpected error";
+            const message = getErrorMessage(error);
             console.error(
               `[send-vote-notifications] bootstrap send failed for user ${user.id}: ${message}`,
             );
@@ -1152,6 +1305,7 @@ Deno.serve(async (req) => {
       loadedPendingVoteCount: pendingRows.length,
       loadedPendingGroupCount: allPendingGroups.length,
       summaryReadyPendingVoteCount: summaryReadyPendingRows.length,
+      generatedAiSummaryCount,
       summaryReadyPendingGroupCount: deliverablePendingGroups.length,
       deferredNoSummaryGroupCount,
       skippedUndeliverableGroupCount,
@@ -1170,7 +1324,7 @@ Deno.serve(async (req) => {
   } catch (error) {
     console.error(error);
     return json(
-      { error: error instanceof Error ? error.message : "Unexpected error" },
+      { error: getErrorMessage(error) },
       500,
     );
   }

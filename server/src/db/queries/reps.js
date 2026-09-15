@@ -57,10 +57,12 @@ export async function getAllReps(runner = db) {
       congressionalDistrict,
       image_url,
       official_website_url,
-      office_phone
+      office_phone,
+      is_current_member,
+      last_seen_at
     )
     VALUES
-    ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    ($1, $2, $3, $4, $5, $6, $7, $8, $9, true, NOW())
     ON CONFLICT (bioguideId) DO UPDATE SET
     full_name= EXCLUDED.full_name,
     party= EXCLUDED.party,
@@ -69,7 +71,9 @@ export async function getAllReps(runner = db) {
     congressionalDistrict= EXCLUDED.congressionalDistrict,
     image_url = EXCLUDED.image_url,
     official_website_url = EXCLUDED.official_website_url,
-    office_phone = EXCLUDED.office_phone
+    office_phone = EXCLUDED.office_phone,
+    is_current_member = true,
+    last_seen_at = NOW()
     RETURNING *`;
     const params = [
       rep.bioguideId,
@@ -93,6 +97,7 @@ export async function getAllReps(runner = db) {
 export async function findRepByDistrict(state, congressionalDistrict) {
   const sql = ` SELECT * FROM reps 
   WHERE state=$1 AND congressionalDistrict=$2 
+    AND is_current_member = true
 `;
 
   const {

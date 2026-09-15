@@ -63,6 +63,7 @@ type BillSummary = {
     title?: string;
   };
   text?: string;
+  updateDate?: string;
 };
 
 type BillSummaryRow = {
@@ -515,20 +516,39 @@ async function upsertRollCallSummaryRow(
 }
 
 function buildBillSummaryRows(summaries: BillSummary[]) {
-  return summaries
-    .filter((summary) =>
-      summary?.bill?.number &&
-      summary?.bill?.type &&
-      summary?.bill?.title &&
-      typeof summary?.text === "string" &&
-      hasNonEmptyText(summary.text)
-    )
-    .map((summary) => ({
-      number: Number(summary.bill!.number),
-      bill_type: String(summary.bill!.type).toLowerCase(),
-      title: summary.bill!.title!,
-      summary: summary.text!.trim(),
-    }));
+  const rowsByBill = new Map<
+    string,
+    { row: BillSummaryRow; updatedAt: number }
+  >();
+
+  for (const summary of summaries) {
+    if (
+      !summary?.bill?.number ||
+      !summary?.bill?.type ||
+      !summary?.bill?.title ||
+      typeof summary?.text !== "string" ||
+      !hasNonEmptyText(summary.text)
+    ) {
+      continue;
+    }
+
+    const row = {
+      number: Number(summary.bill.number),
+      bill_type: String(summary.bill.type).toLowerCase(),
+      title: summary.bill.title,
+      summary: summary.text.trim(),
+    } satisfies BillSummaryRow;
+    const key = getBillKey(row.bill_type, row.number);
+    const parsedUpdateDate = Date.parse(summary.updateDate ?? "");
+    const updatedAt = Number.isFinite(parsedUpdateDate) ? parsedUpdateDate : 0;
+    const existing = rowsByBill.get(key);
+
+    if (!existing || updatedAt > existing.updatedAt) {
+      rowsByBill.set(key, { row, updatedAt });
+    }
+  }
+
+  return Array.from(rowsByBill.values(), ({ row }) => row);
 }
 
 async function upsertBillSummaryRows(

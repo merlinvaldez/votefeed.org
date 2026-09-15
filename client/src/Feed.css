@@ -346,6 +346,50 @@
   font-weight: 800;
 }
 
+.simple-vote-summary {
+  color: var(--text);
+}
+
+.inline-vote-pill {
+  margin: 0 2px;
+  padding: 3px 9px;
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+
+.summary-source-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  padding: 4px;
+  border: 0;
+  background: transparent;
+  color: var(--text-subtle);
+  cursor: pointer;
+  line-height: 0;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.summary-source-toggle:hover {
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.summary-source-toggle:focus-visible {
+  border-radius: 6px;
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.summary-source-toggle.active {
+  color: var(--primary);
+}
+
+.summary-source-toggle.active:hover {
+  color: var(--primary-strong);
+}
+
 .leg-vote {
   display: flex;
   align-items: center;
@@ -653,25 +697,4 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.toggle.toggle-ai input::after {
-  /* AI knob text override for this toggle only */
-  content: "AI"; /* always render AI inside the knob */
-  display: grid; /* allow centering */
-  place-items: center; /* center text in the circle */
-  font-size: 9px; /* fit inside 20px knob */
-  font-weight: 800; /* make text readable */
-  line-height: 1; /* avoid vertical drift */
-  letter-spacing: 0.2px; /* tiny spacing for clarity */
-  color: var(--primary); /* blue text on light knob */
-  border: 1px solid var(--border);
-}
-
-.toggle.toggle-ai input:checked::after {
-  color: var(--primary);
-}
-
-.leg-top .toggle.toggle-ai {
-  margin-left: auto;
 }
