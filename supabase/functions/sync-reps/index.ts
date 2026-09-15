@@ -6,6 +6,7 @@ import { json } from "../_shared/http.ts";
 const CONGRESS_MEMBERS_URL = "https://api.congress.gov/v3/member";
 const MIN_EXPECTED_HOUSE_MEMBERS = 400;
 const UPSERT_BATCH_SIZE = 100;
+const UPDATE_BATCH_SIZE = 100;
 
 type CongressTerm = {
   chamber?: string;
@@ -32,6 +33,16 @@ type RepUpsert = {
   is_current_member: true;
   last_seen_at: string;
 };
+
+type CurrentHouseRep = {
+  bioguideid: string;
+  state: string;
+  congressionaldistrict: number;
+};
+
+function districtKey(state: string, district: number) {
+  return `${state.trim().toLowerCase()}:${district}`;
+}
 
 function getCurrentChamber(member: CongressMember) {
   return String(member.terms?.item?.[0]?.chamber ?? "").trim();
@@ -106,6 +117,18 @@ async function fetchCurrentHouseMembers(apiKey: string, seenAt: string) {
       `Refusing to deactivate representatives: Congress returned only ${reps.length} current House members`,
     );
   }
+
+  const districtMembers = new Map<string, string>();
+  for (const rep of reps) {
+    const key = districtKey(rep.state, rep.congressionaldistrict);
+    const existingBioguideId = districtMembers.get(key);
+    if (existingBioguideId && existingBioguideId !== rep.bioguideid) {
+      throw new Error(
+        `Refusing to sync representatives: Congress returned multiple current House members for ${rep.state} district ${rep.congressionaldistrict}`,
+      );
+    }
+    districtMembers.set(key, rep.bioguideid);
+  }
   return reps;
 }
 
@@ -125,6 +148,45 @@ Deno.serve(async (req) => {
     const seenAt = new Date().toISOString();
     const reps = await fetchCurrentHouseMembers(congressApiKey, seenAt);
     const supabase = createClient(supabaseUrl, serviceRoleKey);
+
+    const currentDistrictMembers = new Map(
+      reps.map((rep) => [
+        districtKey(rep.state, rep.congressionaldistrict),
+        rep.bioguideid,
+      ]),
+    );
+    const { data: activeHouseReps, error: activeHouseRepsError } = await supabase
+      .from("reps")
+      .select("bioguideid,state,congressionaldistrict")
+      .ilike("chamber", "%house%")
+      .eq("is_current_member", true)
+      .not("congressionaldistrict", "is", null);
+    if (activeHouseRepsError) throw activeHouseRepsError;
+
+    const displacedBioguideIds = ((activeHouseReps ?? []) as CurrentHouseRep[])
+      .filter((rep) => {
+        const incomingBioguideId = currentDistrictMembers.get(
+          districtKey(rep.state, rep.congressionaldistrict),
+        );
+        return incomingBioguideId !== undefined &&
+          incomingBioguideId !== rep.bioguideid;
+      })
+      .map((rep) => rep.bioguideid);
+
+    for (
+      let offset = 0;
+      offset < displacedBioguideIds.length;
+      offset += UPDATE_BATCH_SIZE
+    ) {
+      const { error } = await supabase
+        .from("reps")
+        .update({ is_current_member: false })
+        .in(
+          "bioguideid",
+          displacedBioguideIds.slice(offset, offset + UPDATE_BATCH_SIZE),
+        );
+      if (error) throw error;
+    }
 
     for (let offset = 0; offset < reps.length; offset += UPSERT_BATCH_SIZE) {
       const { error } = await supabase
