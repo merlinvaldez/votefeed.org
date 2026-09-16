@@ -159,7 +159,11 @@ export async function getOrCreateAiBillSummary(legislationNumber, billType) {
   const bill = billRows?.[0];
   if (!bill) return null;
   if (typeof bill.aisummary === "string" && bill.aisummary.trim() !== "") {
-    return bill.aisummary;
+    const lowerSummary = bill.aisummary.toLowerCase();
+    const isErrorMsg = lowerSummary.includes("ai summary failed") || lowerSummary.includes("failed to generate");
+    if (!isErrorMsg) {
+      return bill.aisummary;
+    }
   }
   const aiSummary = await generateAiBillSummary(bill.summary);
   const sql = `UPDATE bills

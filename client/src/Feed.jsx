@@ -195,12 +195,13 @@ function Feed(props) {
     return true;
   };
 
-  const loadAiSummary = useEffectEvent(async (billType, billNumber) => {
+  const loadAiSummary = useEffectEvent(async (billType, billNumber, forceRetry = false) => {
     const billIdentity = `${billType}-${billNumber}`;
     if (
-      aiSummaryByBill[billIdentity] ||
+      !forceRetry && 
+      (aiSummaryByBill[billIdentity] ||
       aiLoadingByBill[billIdentity] ||
-      aiErrorByBill[billIdentity]
+      aiErrorByBill[billIdentity])
     ) {
       return;
     }
@@ -694,7 +695,16 @@ function Feed(props) {
                   <ScrollText size={24} strokeWidth={2} aria-hidden="true" />
                 </button>
                 {aiError && (
-                  <div className="error-text">{aiError}</div>
+                  <div className="error-text" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    {aiError}
+                    <button 
+                      type="button" 
+                      onClick={() => loadAiSummary(vote.legislation_type, vote.legislationnumber, true)}
+                      style={{ background: 'none', border: 'none', color: 'var(--primary-color)', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
+                    >
+                      Retry
+                    </button>
+                  </div>
                 )}
               </div>
               {useOfficialSummary ? (
