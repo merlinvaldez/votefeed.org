@@ -1,4 +1,8 @@
 import { ADDRESS_NOT_FOUND_MESSAGE } from "../db/queries/districts.js";
+import {
+  buildCensusGeographyUrl,
+  extractDistrictFromCensusMatch,
+} from "../utils/censusDistricts.js";
 import express from "express";
 const router = express.Router();
 export default router;
@@ -15,15 +19,7 @@ router.get("/", async (req, res) => {
   }
 
   try {
-    const url = new URL(
-      "https://geocoding.geo.census.gov/geocoder/geographies/onelineaddress",
-    );
-    url.searchParams.set("address", address);
-    url.searchParams.set("benchmark", "Public_AR_Current");
-    url.searchParams.set("vintage", "Current_Current");
-    url.searchParams.set("format", "json");
-
-    const response = await fetch(url.toString());
+    const response = await fetch(buildCensusGeographyUrl(address));
     if (!response.ok) {
       const body = await response.text();
       return res.status(502).json({
@@ -35,17 +31,15 @@ router.get("/", async (req, res) => {
     const data = await response.json();
 
     const match = data?.result?.addressMatches?.[0];
-    const state = match?.geographies?.["States"]?.[0]?.BASENAME;
-    const district =
-      match?.geographies?.["119th Congressional Districts"]?.[0]?.BASENAME;
+    const districtData = extractDistrictFromCensusMatch(match);
 
-    if (!match || !district) {
+    if (!match || districtData === null) {
       return res.status(404).json({ error: ADDRESS_NOT_FOUND_MESSAGE });
     }
     res.json({
       address: match.matchedAddress,
-      state: state,
-      congressionalDistrict: district,
+      state: districtData.state,
+      congressionalDistrict: districtData.district,
     });
   } catch (err) {
     console.error(err);

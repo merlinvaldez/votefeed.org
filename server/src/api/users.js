@@ -111,7 +111,7 @@ router.get("/me/alignment", requireUser, async (req, res) => {
 router.get("/me/feed", requireUser, async (req, res) => {
   try {
     const { district, state } = req.user;
-    if (!district || !state) {
+    if (district == null || !state) {
       return res.status(400).json({ error: "User is missing district/state" });
     }
     const rep = await findRepByDistrict(state, district);

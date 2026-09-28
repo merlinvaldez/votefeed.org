@@ -42,7 +42,7 @@ export default function RequireOnboarding() {
         }
 
         const me = await response.json();
-        const missingDistrictData = !me?.state || !me?.district;
+        const missingDistrictData = !me?.state || me?.district == null;
         if (!cancelled) {
           setNeedsOnboarding(missingDistrictData);
           setStatus("ready");

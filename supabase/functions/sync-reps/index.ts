@@ -8,6 +8,21 @@ const MIN_EXPECTED_HOUSE_MEMBERS = 400;
 const MIN_EXPECTED_SENATE_MEMBERS = 90;
 const UPSERT_BATCH_SIZE = 100;
 const UPDATE_BATCH_SIZE = 100;
+// Congress.gov omits the district for these at-large House members.
+const AT_LARGE_JURISDICTIONS = new Set([
+  "alaska",
+  "american samoa",
+  "delaware",
+  "district of columbia",
+  "guam",
+  "northern mariana islands",
+  "north dakota",
+  "puerto rico",
+  "south dakota",
+  "vermont",
+  "virgin islands",
+  "wyoming",
+]);
 
 type CongressTerm = {
   chamber?: string;
@@ -57,6 +72,16 @@ function isCurrentHouseRep(
     Number.isInteger(member.congressionaldistrict);
 }
 
+function normalizeHouseDistrict(state: string, rawDistrict: unknown) {
+  const rawValue = rawDistrict == null ? "" : String(rawDistrict).trim();
+  if (!rawValue) {
+    return AT_LARGE_JURISDICTIONS.has(state.trim().toLowerCase()) ? 0 : null;
+  }
+
+  const district = Number(rawValue);
+  return Number.isSafeInteger(district) && district >= 0 ? district : null;
+}
+
 function toCurrentMember(
   member: CongressMember,
   seenAt: string,
@@ -65,18 +90,16 @@ function toCurrentMember(
   const normalizedChamber = chamber.toLowerCase();
   const isHouse = normalizedChamber.includes("house");
   const isSenate = normalizedChamber.includes("senate");
-  const rawDistrict = member.district;
-  const district =
-    rawDistrict == null || String(rawDistrict).trim() === ""
-      ? null
-      : Number(rawDistrict);
+  const district = isHouse
+    ? normalizeHouseDistrict(member.state ?? "", member.district)
+    : null;
   if (
     (!isHouse && !isSenate) ||
     !member.bioguideId ||
     !member.name ||
     !member.partyName ||
     !member.state ||
-    (isHouse && !Number.isInteger(district))
+    (isHouse && district === null)
   ) {
     return null;
   }
