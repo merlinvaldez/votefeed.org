@@ -2,7 +2,10 @@ import express from "express";
 const router = express.Router();
 export default router;
 
-import { findRepByDistrict } from "../db/queries/reps.js";
+import {
+  findCurrentMembersByStateAndChamber,
+  findRepByDistrict,
+} from "../db/queries/reps.js";
 
 const apiKey = process.env.CONGRESS_API_KEY;
 
@@ -48,6 +51,29 @@ router.get("/", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch Members" });
+  }
+});
+
+router.get("/state/:state/senators", async (req, res) => {
+  const state = String(req.params.state ?? "").trim().replace(/\s+/g, " ");
+  if (!state) {
+    return res.status(400).json({ error: "State name is required" });
+  }
+
+  try {
+    const senators = await findCurrentMembersByStateAndChamber(
+      state,
+      "Senate",
+    );
+    return res.json({
+      state: senators[0]?.state ?? state,
+      chamber: "Senate",
+      count: senators.length,
+      senators,
+    });
+  } catch (err) {
+    console.error("Failed to fetch senators by state", err);
+    return res.status(500).json({ error: "Failed to fetch senators" });
   }
 });
 

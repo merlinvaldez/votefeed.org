@@ -5,6 +5,7 @@ import { json } from "../_shared/http.ts";
 
 const CONGRESS_MEMBERS_URL = "https://api.congress.gov/v3/member";
 const MIN_EXPECTED_HOUSE_MEMBERS = 400;
+const MIN_EXPECTED_SENATE_MEMBERS = 90;
 const UPSERT_BATCH_SIZE = 100;
 const UPDATE_BATCH_SIZE = 100;
 
@@ -28,7 +29,7 @@ type RepUpsert = {
   party: string;
   chamber: string;
   state: string;
-  congressionaldistrict: number;
+  congressionaldistrict: number | null;
   image_url: string | null;
   is_current_member: true;
   last_seen_at: string;
@@ -45,22 +46,37 @@ function districtKey(state: string, district: number) {
 }
 
 function getCurrentChamber(member: CongressMember) {
-  return String(member.terms?.item?.[0]?.chamber ?? "").trim();
+  const terms = member.terms?.item ?? [];
+  return String(terms[terms.length - 1]?.chamber ?? "").trim();
 }
 
-function toCurrentHouseRep(
+function isCurrentHouseRep(
+  member: RepUpsert,
+): member is RepUpsert & { congressionaldistrict: number } {
+  return member.chamber.toLowerCase().includes("house") &&
+    Number.isInteger(member.congressionaldistrict);
+}
+
+function toCurrentMember(
   member: CongressMember,
   seenAt: string,
 ): RepUpsert | null {
   const chamber = getCurrentChamber(member);
-  const district = Number(member.district);
+  const normalizedChamber = chamber.toLowerCase();
+  const isHouse = normalizedChamber.includes("house");
+  const isSenate = normalizedChamber.includes("senate");
+  const rawDistrict = member.district;
+  const district =
+    rawDistrict == null || String(rawDistrict).trim() === ""
+      ? null
+      : Number(rawDistrict);
   if (
-    !chamber.toLowerCase().includes("house") ||
+    (!isHouse && !isSenate) ||
     !member.bioguideId ||
     !member.name ||
     !member.partyName ||
     !member.state ||
-    !Number.isInteger(district)
+    (isHouse && !Number.isInteger(district))
   ) {
     return null;
   }
@@ -71,14 +87,14 @@ function toCurrentHouseRep(
     party: member.partyName,
     chamber,
     state: member.state,
-    congressionaldistrict: district,
+    congressionaldistrict: isHouse ? district : null,
     image_url: member.depiction?.imageUrl ?? null,
     is_current_member: true,
     last_seen_at: seenAt,
   };
 }
 
-async function fetchCurrentHouseMembers(apiKey: string, seenAt: string) {
+async function fetchCurrentMembers(apiKey: string, seenAt: string) {
   const members: CongressMember[] = [];
   const firstUrl = new URL(CONGRESS_MEMBERS_URL);
   firstUrl.searchParams.set("api_key", apiKey);
@@ -109,17 +125,26 @@ async function fetchCurrentHouseMembers(apiKey: string, seenAt: string) {
     nextUrl = next.toString();
   }
 
-  const reps = members
-    .map((member) => toCurrentHouseRep(member, seenAt))
+  const currentMembers = members
+    .map((member) => toCurrentMember(member, seenAt))
     .filter((rep): rep is RepUpsert => rep !== null);
-  if (reps.length < MIN_EXPECTED_HOUSE_MEMBERS) {
+  const houseReps = currentMembers.filter(isCurrentHouseRep);
+  const senators = currentMembers.filter((member) =>
+    member.chamber.toLowerCase().includes("senate")
+  );
+  if (houseReps.length < MIN_EXPECTED_HOUSE_MEMBERS) {
     throw new Error(
-      `Refusing to deactivate representatives: Congress returned only ${reps.length} current House members`,
+      `Refusing to deactivate representatives: Congress returned only ${houseReps.length} current House members`,
+    );
+  }
+  if (senators.length < MIN_EXPECTED_SENATE_MEMBERS) {
+    throw new Error(
+      `Refusing to deactivate representatives: Congress returned only ${senators.length} current Senators`,
     );
   }
 
   const districtMembers = new Map<string, string>();
-  for (const rep of reps) {
+  for (const rep of houseReps) {
     const key = districtKey(rep.state, rep.congressionaldistrict);
     const existingBioguideId = districtMembers.get(key);
     if (existingBioguideId && existingBioguideId !== rep.bioguideid) {
@@ -129,7 +154,19 @@ async function fetchCurrentHouseMembers(apiKey: string, seenAt: string) {
     }
     districtMembers.set(key, rep.bioguideid);
   }
-  return reps;
+  const senatorsPerState = new Map<string, number>();
+  for (const senator of senators) {
+    const state = senator.state.trim().toUpperCase();
+    const count = (senatorsPerState.get(state) ?? 0) + 1;
+    if (count > 2) {
+      throw new Error(
+        `Refusing to sync representatives: Congress returned more than two current Senators for ${state}`,
+      );
+    }
+    senatorsPerState.set(state, count);
+  }
+
+  return { currentMembers, houseReps, senators };
 }
 
 Deno.serve(async (req) => {
@@ -146,11 +183,14 @@ Deno.serve(async (req) => {
 
   try {
     const seenAt = new Date().toISOString();
-    const reps = await fetchCurrentHouseMembers(congressApiKey, seenAt);
+    const { currentMembers, houseReps, senators } = await fetchCurrentMembers(
+      congressApiKey,
+      seenAt,
+    );
     const supabase = createClient(supabaseUrl, serviceRoleKey);
 
     const currentDistrictMembers = new Map(
-      reps.map((rep) => [
+      houseReps.map((rep) => [
         districtKey(rep.state, rep.congressionaldistrict),
         rep.bioguideid,
       ]),
@@ -188,27 +228,43 @@ Deno.serve(async (req) => {
       if (error) throw error;
     }
 
-    for (let offset = 0; offset < reps.length; offset += UPSERT_BATCH_SIZE) {
+    for (
+      let offset = 0;
+      offset < currentMembers.length;
+      offset += UPSERT_BATCH_SIZE
+    ) {
       const { error } = await supabase
         .from("reps")
-        .upsert(reps.slice(offset, offset + UPSERT_BATCH_SIZE), {
+        .upsert(currentMembers.slice(offset, offset + UPSERT_BATCH_SIZE), {
           onConflict: "bioguideid",
         });
       if (error) throw error;
     }
 
-    const { data: deactivated, error: deactivateError } = await supabase
+    const { data: deactivatedHouse, error: deactivateHouseError } = await supabase
       .from("reps")
       .update({ is_current_member: false })
       .ilike("chamber", "%house%")
       .eq("is_current_member", true)
       .or(`last_seen_at.is.null,last_seen_at.lt.${seenAt}`)
       .select("bioguideid");
-    if (deactivateError) throw deactivateError;
+    if (deactivateHouseError) throw deactivateHouseError;
+
+    const { data: deactivatedSenate, error: deactivateSenateError } =
+      await supabase
+        .from("reps")
+        .update({ is_current_member: false })
+        .ilike("chamber", "%senate%")
+        .eq("is_current_member", true)
+        .or(`last_seen_at.is.null,last_seen_at.lt.${seenAt}`)
+        .select("bioguideid");
+    if (deactivateSenateError) throw deactivateSenateError;
 
     return json({
-      currentHouseMemberCount: reps.length,
-      deactivatedMemberCount: deactivated?.length ?? 0,
+      currentHouseMemberCount: houseReps.length,
+      currentSenatorCount: senators.length,
+      deactivatedMemberCount:
+        (deactivatedHouse?.length ?? 0) + (deactivatedSenate?.length ?? 0),
       syncedAt: seenAt,
     });
   } catch (error) {
