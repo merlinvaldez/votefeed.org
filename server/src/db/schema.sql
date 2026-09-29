@@ -59,6 +59,7 @@ CREATE TABLE roll_call_summaries (
     legislation_type text,
     session_number integer NOT NULL,
     roll_call_number integer NOT NULL,
+    chamber text NOT NULL,
     voted_on timestamptz,
     result text NOT NULL,
     yes_count integer NOT NULL DEFAULT 0,
@@ -66,8 +67,8 @@ CREATE TABLE roll_call_summaries (
     not_voting_count integer NOT NULL DEFAULT 0
 );
 
-CREATE UNIQUE INDEX idx_roll_call_summaries_session_roll_call
-ON roll_call_summaries(session_number, roll_call_number);
+CREATE UNIQUE INDEX idx_roll_call_summaries_chamber_session_roll_call
+ON roll_call_summaries(chamber, session_number, roll_call_number);
 
 CREATE UNIQUE INDEX idx_bills_bill_type_number
 ON bills(bill_type, number);
@@ -78,13 +79,14 @@ CREATE TABLE member_voting_record (
     legislation_type text,
     session_number integer, 
     roll_call_number integer,
+    chamber text NOT NULL,
     voted_on timestamptz,
     vote text NOT NULL,
     member_id text NOT NULL
 );
 
-CREATE UNIQUE INDEX idx_member_voting_record_member_roll_call
-ON member_voting_record (member_id, session_number, roll_call_number);
+CREATE UNIQUE INDEX idx_member_voting_record_member_chamber_roll_call
+ON member_voting_record (member_id, chamber, session_number, roll_call_number);
 
 CREATE TABLE vote_notification_outbox (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),

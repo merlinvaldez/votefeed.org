@@ -40,6 +40,7 @@ type MemberVotingRecordRow = {
   legislation_type: string;
   session_number: number;
   roll_call_number: number;
+  chamber: string;
   voted_on: string;
   vote: string;
   member_id: string;
@@ -78,6 +79,7 @@ type RollCallSummaryRow = {
   legislation_type: string;
   session_number: number;
   roll_call_number: number;
+  chamber: string;
   voted_on: string;
   result: string;
   yes_count: number;
@@ -417,6 +419,7 @@ function buildRollCallRows(vote: HouseVote, votingRecord: HouseVoteRecord[]) {
       legislation_type: String(vote.legislationType).toLowerCase(),
       session_number: Number(vote.sessionNumber),
       roll_call_number: Number(vote.rollCallNumber),
+      chamber: "House",
       voted_on: vote.startDate!,
       vote: record.voteCast!,
       member_id: record.bioguideID!,
@@ -446,6 +449,7 @@ function buildRollCallSummaryRow(
     legislation_type: String(vote.legislationType).toLowerCase(),
     session_number: Number(vote.sessionNumber),
     roll_call_number: Number(vote.rollCallNumber),
+    chamber: "House",
     voted_on: vote.startDate,
     result: summary.result,
     yes_count: Number(summary.totals.yes ?? 0),
@@ -469,7 +473,7 @@ async function upsertRollCallRows(
   const { data, error } = await supabase
     .from("member_voting_record")
     .upsert(rows, {
-      onConflict: "member_id,session_number,roll_call_number",
+      onConflict: "member_id,chamber,session_number,roll_call_number",
       ignoreDuplicates: true,
       defaultToNull: false,
     })
@@ -499,7 +503,7 @@ async function upsertRollCallSummaryRow(
   const { data, error } = await supabase
     .from("roll_call_summaries")
     .upsert(row, {
-      onConflict: "session_number,roll_call_number",
+      onConflict: "chamber,session_number,roll_call_number",
       ignoreDuplicates: false,
       defaultToNull: false,
     })

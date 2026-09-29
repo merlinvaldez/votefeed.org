@@ -24,13 +24,13 @@ Development roster refresh on September 28, 2026: 427 current House members and 
 
 ## 2. Chamber-aware database migration
 
-- [ ] Create an additive Supabase migration for the development database.
-- [ ] Add `chamber` to `member_voting_record` and `roll_call_summaries`.
-- [ ] Backfill existing vote and summary rows as House records, then make the new values required if compatible with the data.
-- [ ] Update vote uniqueness to include chamber, such as `(member_id, chamber, session_number, roll_call_number)`.
-- [ ] Update roll-call summary uniqueness to include chamber, such as `(chamber, session_number, roll_call_number)`.
-- [ ] Update all sync upsert conflict targets and query joins to use the new keys.
-- [ ] Keep `server/src/db/schema.sql` aligned for fresh database setups. This file starts by dropping tables; do not use it to migrate the existing Supabase development database.
+- [x] Create an additive Supabase migration for the development database.
+- [x] Add `chamber` to `member_voting_record` and `roll_call_summaries`.
+- [x] Backfill existing vote and summary rows as House records, then make the new values required if compatible with the data.
+- [x] Update vote uniqueness to include chamber, such as `(member_id, chamber, session_number, roll_call_number)`.
+- [x] Update roll-call summary uniqueness to include chamber, such as `(chamber, session_number, roll_call_number)`.
+- [x] Update all sync upsert conflict targets and query joins to use the new keys.
+- [x] Keep `server/src/db/schema.sql` aligned for fresh database setups. This file starts by dropping tables; do not use it to migrate the existing Supabase development database.
 
 Likely files: a new migration under `supabase/migrations/`, `server/src/db/schema.sql`, and the vote-sync code that writes these tables.
 

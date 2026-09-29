@@ -66,14 +66,16 @@ async function insertMemberVotes(runner, vote, members) {
         $2::text[],
         $3::integer[],
         $4::integer[],
-        $5::timestamptz[],
-        $6::text[],
-        $7::text[]
+        $5::text[],
+        $6::timestamptz[],
+        $7::text[],
+        $8::text[]
       ) AS incoming(
         legislation_number,
         legislation_type,
         session_number,
         roll_call_number,
+        chamber,
         voted_on,
         vote,
         member_id
@@ -81,12 +83,13 @@ async function insertMemberVotes(runner, vote, members) {
     ),
     inserted AS (
       INSERT INTO member_voting_record
-        (legislationNumber, legislation_type, session_number, roll_call_number, voted_on, vote, member_id)
+        (legislationNumber, legislation_type, session_number, roll_call_number, chamber, voted_on, vote, member_id)
       SELECT
         incoming.legislation_number,
         incoming.legislation_type,
         incoming.session_number,
         incoming.roll_call_number,
+        incoming.chamber,
         incoming.voted_on,
         incoming.vote,
         incoming.member_id
@@ -95,6 +98,7 @@ async function insertMemberVotes(runner, vote, members) {
         SELECT 1
         FROM member_voting_record
         WHERE member_id = incoming.member_id
+          AND chamber = incoming.chamber
           AND session_number = incoming.session_number
           AND roll_call_number = incoming.roll_call_number
       )
@@ -103,6 +107,7 @@ async function insertMemberVotes(runner, vote, members) {
         legislation_type,
         session_number,
         roll_call_number,
+        chamber,
         voted_on,
         vote,
         member_id
@@ -127,6 +132,7 @@ async function insertMemberVotes(runner, vote, members) {
     legislationTypes,
     sessionNumbers,
     rollCallNumbers,
+    members.map(() => 'House'),
     votedOnDates,
     voteCasts,
     memberIds,
@@ -151,14 +157,15 @@ async function upsertRollCallSummary(runner, vote, summary) {
       legislation_type,
       session_number,
       roll_call_number,
+      chamber,
       voted_on,
       result,
       yes_count,
       no_count,
       not_voting_count
     )
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-    ON CONFLICT (session_number, roll_call_number) DO UPDATE SET
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    ON CONFLICT (chamber, session_number, roll_call_number) DO UPDATE SET
       legislation_number = EXCLUDED.legislation_number,
       legislation_type = EXCLUDED.legislation_type,
       voted_on = EXCLUDED.voted_on,
@@ -172,6 +179,7 @@ async function upsertRollCallSummary(runner, vote, summary) {
     String(vote.legislationType).toLowerCase(),
     Number(vote.sessionNumber),
     Number(vote.rollCallNumber),
+    'House',
     vote.startDate,
     summary.result,
     Number(summary.totals.yes ?? 0),
@@ -307,6 +315,7 @@ export async function findMemberVotes(bioguideId, options = {}) {
     legislation_type,
     session_number,
     roll_call_number,
+    chamber,
     voted_on,
     vote
   FROM member_voting_record
@@ -343,6 +352,7 @@ JOIN bills
 LEFT JOIN roll_call_summaries
   ON roll_call_summaries.session_number = latest_vote_per_bill.session_number
  AND roll_call_summaries.roll_call_number = latest_vote_per_bill.roll_call_number
+ AND roll_call_summaries.chamber = latest_vote_per_bill.chamber
  AND roll_call_summaries.legislation_number = latest_vote_per_bill.legislationNumber
  AND roll_call_summaries.legislation_type = latest_vote_per_bill.legislation_type`;
   const policyFilterSql = policyArea
