@@ -1,4 +1,5 @@
 
+DROP TABLE IF EXISTS senate_vote_ingestion;
 DROP TABLE IF EXISTS comment_useful_votes;
 DROP TABLE IF EXISTS bill_comments;
 DROP TABLE IF EXISTS interactions;
@@ -60,15 +61,19 @@ CREATE TABLE roll_call_summaries (
     session_number integer NOT NULL,
     roll_call_number integer NOT NULL,
     chamber text NOT NULL,
+    congress_number integer NOT NULL DEFAULT 119,
     voted_on timestamptz,
     result text NOT NULL,
     yes_count integer NOT NULL DEFAULT 0,
     no_count integer NOT NULL DEFAULT 0,
-    not_voting_count integer NOT NULL DEFAULT 0
+    not_voting_count integer NOT NULL DEFAULT 0,
+    vote_title text,
+    vote_question text,
+    source_url text
 );
 
-CREATE UNIQUE INDEX idx_roll_call_summaries_chamber_session_roll_call
-ON roll_call_summaries(chamber, session_number, roll_call_number);
+CREATE UNIQUE INDEX idx_roll_call_summaries_vote_identity
+ON roll_call_summaries(chamber, congress_number, session_number, roll_call_number);
 
 CREATE UNIQUE INDEX idx_bills_bill_type_number
 ON bills(bill_type, number);
@@ -80,13 +85,27 @@ CREATE TABLE member_voting_record (
     session_number integer, 
     roll_call_number integer,
     chamber text NOT NULL,
+    congress_number integer NOT NULL DEFAULT 119,
     voted_on timestamptz,
     vote text NOT NULL,
     member_id text NOT NULL
 );
 
-CREATE UNIQUE INDEX idx_member_voting_record_member_chamber_roll_call
-ON member_voting_record (member_id, chamber, session_number, roll_call_number);
+CREATE UNIQUE INDEX idx_member_voting_record_vote_identity
+ON member_voting_record (member_id, chamber, congress_number, session_number, roll_call_number);
+
+CREATE TABLE senate_vote_ingestion (
+    congress_number integer NOT NULL,
+    session_number integer NOT NULL,
+    roll_call_number integer NOT NULL,
+    member_count integer NOT NULL CHECK (member_count > 0),
+    source_modified_at timestamptz,
+    completed_at timestamptz NOT NULL DEFAULT now(),
+    PRIMARY KEY (congress_number, session_number, roll_call_number)
+);
+
+ALTER TABLE senate_vote_ingestion ENABLE ROW LEVEL SECURITY;
+GRANT SELECT, INSERT, UPDATE ON senate_vote_ingestion TO service_role;
 
 CREATE TABLE vote_notification_outbox (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),

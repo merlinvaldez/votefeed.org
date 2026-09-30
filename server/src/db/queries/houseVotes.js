@@ -99,6 +99,7 @@ async function insertMemberVotes(runner, vote, members) {
         FROM member_voting_record
         WHERE member_id = incoming.member_id
           AND chamber = incoming.chamber
+          AND congress_number = 119
           AND session_number = incoming.session_number
           AND roll_call_number = incoming.roll_call_number
       )
@@ -165,7 +166,7 @@ async function upsertRollCallSummary(runner, vote, summary) {
       not_voting_count
     )
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-    ON CONFLICT (chamber, session_number, roll_call_number) DO UPDATE SET
+    ON CONFLICT (chamber, congress_number, session_number, roll_call_number) DO UPDATE SET
       legislation_number = EXCLUDED.legislation_number,
       legislation_type = EXCLUDED.legislation_type,
       voted_on = EXCLUDED.voted_on,
@@ -281,7 +282,7 @@ export async function getHouseVotes(runner = db, options = {}) {
 }
 
 export async function getFreshestVotedOn() {
-  const sql = `SELECT MAX(voted_on) AS freshest_voted_on FROM member_voting_record`;
+  const sql = `SELECT MAX(voted_on) AS freshest_voted_on FROM member_voting_record WHERE chamber = 'House'`;
   const {
     rows: [row],
   } = await db.query(sql);
@@ -316,6 +317,7 @@ export async function findMemberVotes(bioguideId, options = {}) {
     session_number,
     roll_call_number,
     chamber,
+    congress_number,
     voted_on,
     vote
   FROM member_voting_record
@@ -353,6 +355,7 @@ LEFT JOIN roll_call_summaries
   ON roll_call_summaries.session_number = latest_vote_per_bill.session_number
  AND roll_call_summaries.roll_call_number = latest_vote_per_bill.roll_call_number
  AND roll_call_summaries.chamber = latest_vote_per_bill.chamber
+  AND roll_call_summaries.congress_number = latest_vote_per_bill.congress_number
  AND roll_call_summaries.legislation_number = latest_vote_per_bill.legislationNumber
  AND roll_call_summaries.legislation_type = latest_vote_per_bill.legislation_type`;
   const policyFilterSql = policyArea

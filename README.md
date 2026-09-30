@@ -105,15 +105,20 @@ Deployed environments also use:
 | legislation_type  | text        | Nullable    |
 | session_number    | integer     | Not null    |
 | roll_call_number  | integer     | Not null    |
+| chamber           | text        | Not null    |
+| congress_number   | integer     | Not null, defaults to `119` |
 | voted_on          | timestamptz | Nullable    |
 | result            | text        | Not null    |
 | yes_count         | integer     | Not null, defaults to `0` |
 | no_count          | integer     | Not null, defaults to `0` |
 | not_voting_count  | integer     | Not null, defaults to `0` |
+| vote_title        | text        | Nullable    |
+| vote_question     | text        | Nullable    |
+| source_url        | text        | Nullable    |
 
 Deployed environments also use:
 
-- `idx_roll_call_summaries_session_roll_call` on `(session_number, roll_call_number)` so roll call summaries stay idempotent.
+- `idx_roll_call_summaries_vote_identity` on `(chamber, congress_number, session_number, roll_call_number)` so roll call summaries stay idempotent across chambers and Congresses.
 
 ### member_voting_record
 
@@ -124,13 +129,19 @@ Deployed environments also use:
 | legislation_type  | text        | Nullable    |
 | session_number    | integer     | Nullable    |
 | roll_call_number  | integer     | Nullable    |
+| chamber           | text        | Not null    |
+| congress_number   | integer     | Not null, defaults to `119` |
 | voted_on          | timestamptz | Nullable    |
 | vote              | text        | Not null    |
 | member_id         | text        | Not null    |
 
 Deployed environments also use:
 
-- `idx_member_voting_record_member_roll_call` on `(member_id, session_number, roll_call_number)` so vote sync stays idempotent.
+- `idx_member_voting_record_vote_identity` on `(member_id, chamber, congress_number, session_number, roll_call_number)` so vote sync stays idempotent across chambers and Congresses.
+
+### senate_vote_ingestion
+
+The development Senate sync marks a roll call complete only after its summary and all member positions have been saved. Its primary key is `(congress_number, session_number, roll_call_number)`. The `completed_at` and `source_modified_at` fields support safe retries and source corrections.
 
 ### vote_notification_outbox
 

@@ -29,6 +29,7 @@ Development roster refresh on September 28, 2026: 427 current House members and 
 - [x] Backfill existing vote and summary rows as House records, then make the new values required if compatible with the data.
 - [x] Update vote uniqueness to include chamber, such as `(member_id, chamber, session_number, roll_call_number)`.
 - [x] Update roll-call summary uniqueness to include chamber, such as `(chamber, session_number, roll_call_number)`.
+- [x] Include Congress in both vote identities and remove the older member-vote index that still omitted chamber.
 - [x] Update all sync upsert conflict targets and query joins to use the new keys.
 - [x] Keep `server/src/db/schema.sql` aligned for fresh database setups. This file starts by dropping tables; do not use it to migrate the existing Supabase development database.
 
@@ -36,16 +37,16 @@ Likely files: a new migration under `supabase/migrations/`, `server/src/db/schem
 
 ## 3. Senate vote ingestion
 
-- [ ] Confirm the Senate vote endpoint and response fields in the current Congress.gov API reference.
-- [ ] Fetch the Senate roll-call list with pagination.
-- [ ] Fetch each roll call's member votes and summary, reusing the House sync's retry and error-handling patterns where they fit.
-- [ ] Store `chamber = Senate` on each vote and summary.
-- [ ] Ensure measure metadata exists in `bills`; the member-feed query joins to that table.
-- [ ] Track the newest sync time separately for each chamber so House activity cannot skip Senate votes.
-- [ ] Make repeat syncs idempotent using the chamber-aware keys.
-- [ ] Deploy the updated sync function to the Supabase development project only.
+- [x] Fetch the official Senate vote menu and roll-call XML from `senate.gov`.
+- [x] Parse the XML into validated vote summaries and complete member positions; map Senate LIS IDs to Bioguide IDs.
+- [x] Store `chamber = Senate` and Congress on each vote and summary.
+- [x] Link real bill measures to `bills`; keep nominations and unrelated procedure votes unlinked rather than inventing a bill.
+- [x] Track completed Senate roll calls independently and retry partial writes.
+- [x] Make repeat writes idempotent with chamber- and Congress-aware keys.
+- [x] Deploy the dedicated `sync-senate-votes` function and quarter-hour schedule to the Supabase development project.
+- [x] Restore the House-only `sync-votes` function and deploy it to development.
 
-Likely file: `supabase/functions/sync-votes/index.ts` and any shared vote-sync helpers or types.
+Files: `supabase/functions/sync-senate-votes/`, `supabase/functions/sync-votes/index.ts`, and the two Senate repair migrations. Senate notifications remain out of scope.
 
 ## 4. Member vote-reading API
 
@@ -69,11 +70,12 @@ Likely files: `client/src/LandingPage.jsx`, `client/src/Feed.jsx`, `server/src/a
 ## 6. Development verification
 
 - [ ] A state lookup returns its current Senators from the development database.
-- [ ] A known Senate roll call stores the expected member votes and roll-call summary with Senate chamber values.
-- [ ] A House and Senate roll call with the same session and roll-call numbers remain separate.
-- [ ] Running the Senate sync twice does not create duplicate vote or summary rows.
+- [x] Senate roll call 119/2/251 stores 100 member positions and the official 48-51-1 tally.
+- [x] House and Senate roll call 119/2/251 have separate summary rows.
+- [x] Reprocessing 119/2/251 left one summary and 100 member positions; all completed roll calls have matching stored member counts.
 - [ ] A Senate-filtered member query returns Senate votes and matching summaries.
-- [ ] The existing House feed still returns House votes and matching summaries.
+- [x] The development House `sync-votes` endpoint returned 200 after the schema repair, with no new duplicate votes.
+- [ ] The existing House feed still returns House votes and matching summaries through the API.
 - [ ] The Vercel Preview UI can load the Senate data while connected to development services.
 
 ## Current code landmarks

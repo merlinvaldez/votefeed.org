@@ -41,6 +41,7 @@ type MemberVotingRecordRow = {
   session_number: number;
   roll_call_number: number;
   chamber: string;
+  congress_number: number;
   voted_on: string;
   vote: string;
   member_id: string;
@@ -80,6 +81,7 @@ type RollCallSummaryRow = {
   session_number: number;
   roll_call_number: number;
   chamber: string;
+  congress_number: number;
   voted_on: string;
   result: string;
   yes_count: number;
@@ -420,6 +422,7 @@ function buildRollCallRows(vote: HouseVote, votingRecord: HouseVoteRecord[]) {
       session_number: Number(vote.sessionNumber),
       roll_call_number: Number(vote.rollCallNumber),
       chamber: "House",
+      congress_number: 119,
       voted_on: vote.startDate!,
       vote: record.voteCast!,
       member_id: record.bioguideID!,
@@ -450,6 +453,7 @@ function buildRollCallSummaryRow(
     session_number: Number(vote.sessionNumber),
     roll_call_number: Number(vote.rollCallNumber),
     chamber: "House",
+    congress_number: 119,
     voted_on: vote.startDate,
     result: summary.result,
     yes_count: Number(summary.totals.yes ?? 0),
@@ -473,7 +477,7 @@ async function upsertRollCallRows(
   const { data, error } = await supabase
     .from("member_voting_record")
     .upsert(rows, {
-      onConflict: "member_id,chamber,session_number,roll_call_number",
+      onConflict: "member_id,chamber,congress_number,session_number,roll_call_number",
       ignoreDuplicates: true,
       defaultToNull: false,
     })
@@ -503,7 +507,7 @@ async function upsertRollCallSummaryRow(
   const { data, error } = await supabase
     .from("roll_call_summaries")
     .upsert(row, {
-      onConflict: "chamber,session_number,roll_call_number",
+      onConflict: "chamber,congress_number,session_number,roll_call_number",
       ignoreDuplicates: false,
       defaultToNull: false,
     })
@@ -756,6 +760,7 @@ Deno.serve(async (req) => {
     const { data, error } = await supabase
       .from("member_voting_record")
       .select("voted_on")
+      .eq("chamber", "House")
       .not("voted_on", "is", null)
       .order("voted_on", { ascending: false })
       .limit(1);
