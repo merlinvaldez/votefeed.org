@@ -58,25 +58,23 @@ Files: `supabase/functions/sync-senate-votes/`, `supabase/functions/sync-votes/i
 
 Likely files: `server/src/api/houseVotes.js`, `server/src/db/queries/houseVotes.js`, and `server/app.js`.
 
-## 5. Vercel Preview integration
+## 5. Vercel Preview backend integration
 
-- [ ] Confirm the Vercel Preview API and client use the Supabase development project.
-- [ ] Connect the preview client to the Senator lookup and member-vote API according to the separate feed-behavior ticket.
-- [ ] Derive `Sen.` or `Rep.` from stored member chamber data; derive the measure label from legislation type.
-- [ ] Check guest and signed-in entry points that currently resolve a representative by district.
+- [x] Confirm the Vercel Preview API serves data matching Supabase development. The September 30, 2026 backend Preview returned New York's two current Senators and Schumer's Senate vote on 119/2/254 (`Nay`), matching the `votefeed-dev` database. This verifies runtime data; the Vercel environment variable value was not exposed by the available project tool.
+- [x] Confirm the Preview API exposes the Senator lookup and chamber-filtered member-vote routes. `GET /reps/state/New%20York/senators` and `GET /membervotes/S000148?chamber=Senate&limit=1` returned 200.
+- [x] Confirm the Preview API continues to resolve a House district and read House votes. `GET /reps/district/New%20York/10` and `GET /membervotes/G000599?chamber=House&limit=1` returned 200.
 
-Likely files: `client/src/LandingPage.jsx`, `client/src/Feed.jsx`, `server/src/api/users.js`, and related feed components.
+The client connection, Senator display choice, member titles, measure labels, and guest/signed-in feed entry points belong to the separate feed-behavior ticket. They have not been changed or verified here. The Preview client's environment target still needs confirmation during that ticket.
 
 ## 6. Development verification
 
-- [ ] A state lookup returns its current Senators from the development database.
+- [x] A state lookup returns its current Senators from the development database via the Vercel Preview API.
 - [x] Senate roll call 119/2/251 stores 100 member positions and the official 48-51-1 tally.
 - [x] House and Senate roll call 119/2/251 have separate summary rows.
 - [x] Reprocessing 119/2/251 left one summary and 100 member positions; all completed roll calls have matching stored member counts.
-- [ ] A Senate-filtered member query returns Senate votes and matching summaries.
+- [x] A Senate-filtered member query returns Senate votes and matching summaries through the Vercel Preview API.
 - [x] The development House `sync-votes` endpoint returned 200 after the schema repair, with no new duplicate votes.
-- [ ] The existing House feed still returns House votes and matching summaries through the API.
-- [ ] The Vercel Preview UI can load the Senate data while connected to development services.
+- [x] A House-filtered member query returns House votes and matching summaries through the Vercel Preview API. The signed-in feed route remains for the later feed ticket.
 
 ## Current code landmarks
 
