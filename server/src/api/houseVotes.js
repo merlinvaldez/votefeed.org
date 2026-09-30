@@ -88,13 +88,23 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/member/:bioguideId", async (req, res) => {
+export async function getMemberVotes(req, res) {
   try {
     const rawLimit = req.query.limit;
     const rawOffset = req.query.offset;
     const parsedLimit = Number.parseInt(rawLimit, 10);
     const parsedOffset = Number.parseInt(rawOffset, 10);
     const policyArea = String(req.query.policyArea ?? "").trim() || null;
+    const rawChamber = req.query.chamber;
+    const chamberName = rawChamber === undefined
+      ? null
+      : String(rawChamber).trim().toLowerCase();
+    if (chamberName !== null && !["house", "senate"].includes(chamberName)) {
+      return res.status(400).json({ error: "Invalid chamber; use House or Senate" });
+    }
+    const chamber = chamberName === null
+      ? null
+      : chamberName === "house" ? "House" : "Senate";
     const limit =
       Number.isInteger(parsedLimit) && parsedLimit > 0
         ? parsedLimit
@@ -106,8 +116,9 @@ router.get("/member/:bioguideId", async (req, res) => {
         limit,
         offset,
         policyArea,
+        chamber,
       }),
-      findMemberPolicyAreas(req.params.bioguideId),
+      findMemberPolicyAreas(req.params.bioguideId, { chamber }),
     ]);
     res.json({
       count: votes.length,
@@ -120,7 +131,9 @@ router.get("/member/:bioguideId", async (req, res) => {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch member votes" });
   }
-});
+}
+
+router.get("/member/:bioguideId", getMemberVotes);
 
 router.get("/:session/:voteNumber/summary", async (req, res) => {
   if (!apiKey) {

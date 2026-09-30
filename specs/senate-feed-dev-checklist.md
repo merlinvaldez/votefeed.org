@@ -50,11 +50,11 @@ Files: `supabase/functions/sync-senate-votes/`, `supabase/functions/sync-votes/i
 
 ## 4. Member vote-reading API
 
-- [ ] Add a chamber-neutral member-vote route, preserving the existing House route for compatibility during the transition.
-- [ ] Add an optional chamber filter to the member-vote query and apply it before the latest-vote-per-bill selection.
-- [ ] Include chamber in the roll-call summary join.
-- [ ] Preserve House results and existing pagination and policy-area behavior.
-- [ ] Confirm the API returns only the requested chamber when a chamber filter is supplied.
+- [x] Add a chamber-neutral member-vote route, preserving the existing House route for compatibility during the transition.
+- [x] Add an optional chamber filter to the member-vote query and apply it before the latest-vote-per-bill selection.
+- [x] Include chamber in the roll-call summary join.
+- [x] Preserve House results and existing pagination and policy-area behavior.
+- [x] Confirm the API returns only the requested chamber when a chamber filter is supplied.
 
 Likely files: `server/src/api/houseVotes.js`, `server/src/db/queries/houseVotes.js`, and `server/app.js`.
 
