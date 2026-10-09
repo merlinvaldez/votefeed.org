@@ -1,19 +1,22 @@
 import db from "../client.js";
+import { getAlignmentByUserAndMembers } from "./alignment.js";
+import { findRepByBioguideId } from "./reps.js";
 
-export async function addStance(userId, billId, rep_bioguide_id, stance) {
-  const sql = `INSERT INTO interactions (user_id, bill_id, rep_bioguide_id, stance)
-  VALUES ($1,$2,$3,$4)
+export async function addStance(userId, billId, rep_bioguide_id, stance, memberVoteId, runner = db) {
+  const sql = `INSERT INTO interactions (user_id, bill_id, rep_bioguide_id, stance, member_vote_id)
+  VALUES ($1,$2,$3,$4,$5)
   RETURNING *`;
   const {
     rows: [addedStance],
-  } = await db.query(sql, [userId, billId, rep_bioguide_id, stance]);
+  } = await runner.query(sql, [userId, billId, rep_bioguide_id, stance, memberVoteId]);
   return addedStance;
 }
 
-export async function updateStance(interactionId, newStance) {
+export async function updateStance(interactionId, newStance, memberVoteId, runner = db) {
   const sql = `WITH updated_interaction AS (
     UPDATE interactions 
-    SET stance =$2 
+    SET stance =$2,
+        member_vote_id = COALESCE($3, member_vote_id)
     WHERE id = $1
     RETURNING *
   ), cleared_contact_drafts AS (
@@ -27,7 +30,7 @@ export async function updateStance(interactionId, newStance) {
   SELECT * FROM updated_interaction`;
   const {
     rows: [updatedStance],
-  } = await db.query(sql, [interactionId, newStance]);
+  } = await runner.query(sql, [interactionId, newStance, memberVoteId ?? null]);
   return updatedStance;
 }
 
@@ -67,51 +70,20 @@ export async function getAllUserInteractions(userId) {
   return userInteractions;
 }
 
-function toAlignmentSummary(summary) {
-  const totalCount = summary?.total_count ?? 0;
-  const approveCount = summary?.approve_count ?? 0;
-  const disapproveCount = summary?.disapprove_count ?? 0;
-  const hasData = totalCount > 0;
-  const percent = hasData ? Math.round((approveCount / totalCount) * 100) : 0;
-
-  return {
-    totalCount,
-    approveCount,
-    disapproveCount,
-    percent,
-    hasData,
-    emptyMessage: null,
-  };
-}
-
 export async function getAlignmentByUserAndRep(
   userId,
   repBioguideId,
   options = {},
 ) {
-  const { policyArea = null } = options;
-  const sql = `SELECT
-  COUNT(*)::integer AS total_count,
-  COALESCE(SUM(CASE WHEN stance = 'approve' THEN 1 ELSE 0 END), 0)::integer AS approve_count,
-  COALESCE(SUM(CASE WHEN stance = 'disapprove' THEN 1 ELSE 0 END), 0)::integer AS disapprove_count
-  FROM interactions
-  JOIN bills
-    ON bills.id = interactions.bill_id
-  WHERE user_id=$1 and rep_bioguide_id=$2${
-    policyArea ? " AND bills.policy_area=$3" : ""
-  }`;
-
-  const {
-    rows: [summary],
-  } = await db.query(
-    sql,
-    policyArea ? [userId, repBioguideId, policyArea] : [userId, repBioguideId],
-  );
-
-  return toAlignmentSummary(summary);
+  const rep = await findRepByBioguideId(repBioguideId, options.runner ?? db);
+  return getAlignmentByUserAndMembers(userId, rep ? [{
+    memberId: rep.bioguideid,
+    name: rep.full_name,
+    chamber: rep.chamber === "Senate" ? "Senate" : "House",
+  }] : [], options);
 }
 
-export async function getUserInteractionsByBill(userId, billId) {
+export async function getUserInteractionsByBill(userId, billId, { memberVoteId = null, repId = null } = {}) {
   const sql = `SELECT
     interactions.*,
     bill_comments.id AS comment_id,
@@ -127,10 +99,14 @@ export async function getUserInteractionsByBill(userId, billId) {
     bill_comments.updated_at AS comment_updated_at
   FROM interactions
   LEFT JOIN bill_comments ON bill_comments.interaction_id = interactions.id
-  WHERE interactions.user_id=$1 AND interactions.bill_id=$2`;
+  WHERE interactions.user_id=$1 AND interactions.bill_id=$2
+    AND ($3::integer IS NULL OR interactions.member_vote_id = $3 OR interactions.member_vote_id IS NULL)
+    AND ($4::text IS NULL OR interactions.rep_bioguide_id = $4)
+  ORDER BY (interactions.member_vote_id = $3) DESC NULLS LAST, interactions.id DESC
+  LIMIT 1`;
   const {
     rows: [userInteractionsOnBill],
-  } = await db.query(sql, [userId, billId]);
+  } = await db.query(sql, [userId, billId, memberVoteId, repId]);
   return userInteractionsOnBill;
 }
 

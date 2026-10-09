@@ -23,6 +23,7 @@ import { moderateCommentDraft } from "../ai/commentModeration.js";
 import { generateCommentContactDrafts } from "../utils/contactDraftPipeline.js";
 import requireBody from "../middleware/requireBody.js";
 import requireUser from "../middleware/requireUser.js";
+import { validateStanceVoteLink } from "../db/queries/memberVoteLinks.js";
 
 async function getOwnedInteractionsOrSendError(req, res, interactionId) {
   const interaction = await getInteractionById(interactionId);
@@ -45,22 +46,33 @@ router.get("/users/:userId", async (req, res) => {
 
 router.get("/users/:userId/bill/:billId", async (req, res) => {
   const { userId, billId } = req.params;
-  const interactions = await getUserInteractionsByBill(userId, billId);
+  const interactions = await getUserInteractionsByBill(userId, billId, {
+    memberVoteId: req.query.memberVoteId ?? null,
+    repId: req.query.repBioguideId ?? null,
+  });
   res.status(200).send(interactions);
 });
 
 router.post(
   "/addstance",
   requireUser,
-  requireBody(["bill_id", "rep_bioguide_id", "stance"]),
+  requireBody(["bill_id", "rep_bioguide_id", "stance", "member_vote_id"]),
   async (req, res) => {
-    const { bill_id, rep_bioguide_id, stance } = req.body;
+    const { bill_id, rep_bioguide_id, stance, member_vote_id } = req.body;
+    if (!["approve", "disapprove"].includes(stance)) {
+      return res.status(400).json({ error: "Invalid stance" });
+    }
+    const linkError = await validateStanceVoteLink({
+      billId: bill_id, memberId: rep_bioguide_id, memberVoteId: member_vote_id,
+    });
+    if (linkError) return res.status(400).json({ error: linkError });
     const user_id = req.user.id;
     const addedStance = await addStance(
       user_id,
       bill_id,
       rep_bioguide_id,
       stance,
+      member_vote_id,
     );
     res.status(201).send(addedStance);
   },
@@ -79,7 +91,16 @@ router.put(
     );
     if (!owned) return;
     const { stance } = req.body;
-    const updatedStance = await updateStance(interactionId, stance);
+    if (!["approve", "disapprove"].includes(stance)) {
+      return res.status(400).json({ error: "Invalid stance" });
+    }
+    const memberVoteId = req.body.member_vote_id ?? owned.member_vote_id;
+    const linkError = await validateStanceVoteLink({
+      billId: owned.bill_id, memberId: owned.rep_bioguide_id,
+      memberVoteId, existingVoteId: owned.member_vote_id,
+    });
+    if (linkError) return res.status(400).json({ error: linkError });
+    const updatedStance = await updateStance(interactionId, stance, memberVoteId);
     res.status(201).send(updatedStance);
   },
 );

@@ -1,0 +1,58 @@
+- generic [ref=f1e3]:
+  - complementary [ref=f1e4]:
+    - link "VoteFeed feed" [ref=f1e5] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f1e7]
+      - generic [ref=f1e8]: VoteFeed
+    - navigation [ref=f1e9]:
+      - link "Feed" [ref=f1e10] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=f1e15] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=f1e20]:
+      - generic [ref=f1e21]:
+        - generic [ref=f1e22]: Policy Areas
+        - button "Search policy areas" [ref=f1e23] [cursor=pointer]
+      - generic [ref=f1e27]:
+        - button "All 2" [ref=f1e28] [cursor=pointer]:
+          - generic [ref=f1e29]: All
+          - generic [ref=f1e30]: "2"
+        - button "Health 1" [ref=f1e97] [cursor=pointer]:
+          - generic [ref=f1e98]: Health
+          - generic [ref=f1e99]: "1"
+        - button "Education 1" [ref=f1e100] [cursor=pointer]:
+          - generic [ref=f1e101]: Education
+          - generic [ref=f1e102]: "1"
+  - main [ref=f1e37]:
+    - generic [ref=f1e103]:
+      - generic [ref=f1e104]:
+        - generic [ref=f1e105]: AE
+        - generic [ref=f1e107]:
+          - generic [ref=f1e108]: Alex Example
+          - generic [ref=f1e109]:
+            - generic [ref=f1e110]: U.S. Representative
+            - generic [ref=f1e115]: Independent Party
+            - generic [ref=f1e117]: New York District 13
+      - generic [ref=f1e121]:
+        - meter "Policy alignment gauge" [ref=f1e150]:
+          - generic [ref=f1e154]: 100%
+        - generic [ref=f1e156]: Average Alignment
+        - paragraph [ref=f1e157]: You agree on 1 out of 1 compared votes
+        - paragraph [ref=f1e158]: Based on 1 of 1 representatives
+    - generic [ref=f1e123]:
+      - heading "Legislative Feed" [level=2] [ref=f1e124]
+      - generic [ref=f1e125]:
+        - generic [ref=f1e126]:
+          - generic [ref=f1e127]:
+            - button "H.R. 7" [ref=f1e128] [cursor=pointer]
+            - generic [ref=f1e129]: Sep 30, 2026
+          - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f1e133] [cursor=pointer]
+        - generic [ref=f1e137]:
+          - text: Rep. Example voted
+          - generic [ref=f1e138]: Yea
+          - text: on H.R. 7, a bill to provide services.
+        - generic [ref=f1e139]:
+          - button "Agree with Rep. Example" [pressed] [ref=f1e140] [cursor=pointer]:
+            - generic [ref=f1e159]: I agree with Rep. Example
+          - button "Disagree with Rep. Example" [ref=f1e143] [cursor=pointer]
+          - generic [ref=f1e146] [cursor=pointer]: 0 Comments

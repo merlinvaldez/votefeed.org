@@ -312,6 +312,7 @@ export async function findMemberVotes(bioguideId, options = {}) {
   const safeOffset = Number.isInteger(offset) && offset >= 0 ? offset : 0;
   const sql = `WITH latest_vote_per_bill AS (
   SELECT DISTINCT ON (legislation_type, legislationNumber)
+    id AS member_vote_id,
     legislationNumber,
     legislation_type,
     session_number,
@@ -334,6 +335,8 @@ export async function findMemberVotes(bioguideId, options = {}) {
 )
 SELECT
   bills.id AS bill_id,
+  latest_vote_per_bill.member_vote_id,
+  latest_vote_per_bill.congress_number,
   latest_vote_per_bill.legislationNumber,
   latest_vote_per_bill.legislation_type,
   latest_vote_per_bill.session_number,

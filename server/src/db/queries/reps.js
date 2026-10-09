@@ -101,7 +101,7 @@ export async function getAllReps(runner = db) {
   return inserted;
 }
 
-export async function findRepByDistrict(state, congressionalDistrict) {
+export async function findRepByDistrict(state, congressionalDistrict, runner = db) {
   const sql = ` SELECT * FROM reps 
   WHERE state=$1 AND congressionalDistrict=$2 
     AND chamber = 'House of Representatives'
@@ -110,7 +110,7 @@ export async function findRepByDistrict(state, congressionalDistrict) {
 
   const {
     rows: [rep],
-  } = await db.query(sql, [state, congressionalDistrict]);
+  } = await runner.query(sql, [state, congressionalDistrict]);
   return rep;
 }
 

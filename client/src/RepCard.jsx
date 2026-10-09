@@ -9,6 +9,7 @@ import {
 } from "@mui/x-charts/Gauge";
 import "./RepCard.css";
 import useCardDelegation from "./useCardDelegation";
+import { selectCardAlignment } from "./voteInteractions";
 
 const getRepInitials = (fullName = "") => {
   const normalized = fullName.trim();
@@ -55,11 +56,14 @@ function GaugePointer() {
 export default function RepCard({
   rep,
   location = null,
-  alignment,
+  alignment: alignmentData,
   alignmentPolicyArea = null,
+  alignmentChamber = "House",
+  alignmentError = "",
 }) {
   const { houseMember } = useCardDelegation(rep, location);
   const repInitials = getRepInitials(houseMember?.name);
+  const alignment = selectCardAlignment(alignmentData, alignmentChamber);
   const alignmentPercent = Math.max(0, Math.min(100, alignment?.percent ?? 0));
   const alignmentColor = getAlignmentColor(alignmentPercent);
 
@@ -107,11 +111,17 @@ export default function RepCard({
           </div>
         </div>
       </div>
-      {alignment && (
+      {(alignment || !alignmentData || alignmentError) && (
         <div
           className="member-alignment"
           style={{ "--alignment-accent": alignmentColor }}
         >
+          {alignmentError ? (
+            <p className="member-alignment-empty" role="alert">{alignmentError}</p>
+          ) : !alignment?.hasData ? (
+            <p className="member-alignment-empty">No alignment data yet</p>
+          ) : (
+          <>
           <div className="member-alignment-chart">
             <GaugeContainer
               width={176}
@@ -155,11 +165,22 @@ export default function RepCard({
           <p className="member-alignment-copy">
             You agree on{" "}
             <span className="member-alignment-emphasis">
-              {alignment.approveCount}
+              {alignment.agreementCount}
             </span>{" "}
-            out of {alignment.totalCount} votes
+            out of {alignment.comparableCount} votes
             {alignmentPolicyArea ? ` in ${alignmentPolicyArea}` : ""}
           </p>
+          {alignment.members.length > 1 && (
+            <ul className="member-alignment-counts">
+              {alignment.members.map(member => (
+                <li key={member.memberId}>
+                  {member.name}: {member.agreementCount}/{member.comparableCount}
+                </li>
+              ))}
+            </ul>
+          )}
+          </>
+          )}
         </div>
       )}
     </section>

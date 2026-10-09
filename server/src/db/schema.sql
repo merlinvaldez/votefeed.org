@@ -136,8 +136,13 @@ CREATE TABLE interactions (
     user_comment text,
     user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     rep_bioguide_id text NOT NULL REFERENCES reps(bioguideId),
+    member_vote_id integer REFERENCES member_voting_record(id) ON DELETE SET NULL,
     bill_id integer NOT NULL REFERENCES bills(id) ON DELETE CASCADE
 );
+
+CREATE INDEX idx_interactions_user_member_vote
+ON interactions(user_id, member_vote_id)
+WHERE member_vote_id IS NOT NULL;
 
 CREATE TABLE bill_comments (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),

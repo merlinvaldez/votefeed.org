@@ -6,7 +6,7 @@ import {
   findMemberPolicyAreas,
   findMemberVotes,
 } from "../db/queries/houseVotes.js";
-import { getAlignmentByUserAndRep } from "../db/queries/interactions.js";
+import { ALIGNMENT_CHAMBERS, getDelegationAlignment } from "../db/queries/alignment.js";
 import {
   updateUserDistrict,
   updateUserNotificationsEnabled,
@@ -95,12 +95,16 @@ router.get("/me/alignment", requireUser, async (req, res) => {
   try {
     const repBioguideId = String(req.query.repBioguideId ?? "").trim();
     const policyArea = String(req.query.policyArea ?? "").trim() || null;
-    if (!repBioguideId) {
-      return res.status(400).json({ error: "Missing repBioguideId" });
+    const chamber = String(req.query.chamber ?? "House").trim();
+    if (!ALIGNMENT_CHAMBERS.includes(chamber)) {
+      return res.status(400).json({ error: "Invalid alignment chamber" });
     }
-    const alignment = await getAlignmentByUserAndRep(req.user.id, repBioguideId, {
-      policyArea,
+    const alignment = await getDelegationAlignment(req.user, {
+      policyArea, chamber,
     });
+    if (repBioguideId && !alignment.members.some(member => member.memberId === repBioguideId)) {
+      return res.status(400).json({ error: "Representative is not in the selected delegation" });
+    }
     res.json(alignment);
   } catch (err) {
     console.error(err);
@@ -125,7 +129,7 @@ router.get("/me/feed", requireUser, async (req, res) => {
     const [votes, policyAreaSummary, alignment] = await Promise.all([
       findMemberVotes(rep.bioguideid, { limit, offset, policyArea }),
       findMemberPolicyAreas(rep.bioguideid),
-      getAlignmentByUserAndRep(req.user.id, rep.bioguideid, { policyArea }),
+      getDelegationAlignment(req.user, { policyArea, houseMember: rep }),
     ]);
     res.json({
       rep,

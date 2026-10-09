@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { isAnsweredVote } from "./voteInteractions";
 import "./Feed.css";
 import "./BillPage.css";
 import {
@@ -179,7 +180,6 @@ export default function BillPage() {
   const [bill, setBill] = useState(state?.bill || state?.vote || null);
   const [status, setStatus] = useState(bill ? "ready" : "loading");
   const [error, setError] = useState("");
-  const [stance, setStance] = useState(null);
   const [interaction, setInteraction] = useState(null);
   const [ownedCommentId, setOwnedCommentId] = useState(null);
   const [commentDraftText, setCommentDraftText] = useState("");
@@ -191,6 +191,8 @@ export default function BillPage() {
   const [userId, setUserId] = useState(null);
   const [userName, setUserName] = useState("");
   const [interactionError, setInteractionError] = useState("");
+  const [isSavingStance, setIsSavingStance] = useState(false);
+  const stancePendingRef = useRef(false);
   const [isGuestBarHighlighted, setIsGuestBarHighlighted] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
   const [messageCopyStatus, setMessageCopyStatus] = useState("idle");
@@ -237,7 +239,8 @@ export default function BillPage() {
   const isNotVoting = bill?.vote === "Not Voting";
   const VoteResultIcon =
     bill?.vote_result === "Failed" ? XCircle : CheckCircle2;
-  const currentStance = interaction?.stance ?? stance;
+  const memberVoteId = bill?.member_vote_id ?? null;
+  const currentStance = isAnsweredVote(interaction, memberVoteId) ? interaction.stance : null;
   const billLabel = formatBillLabel(
     bill?.legislation_type ?? bill?.bill_type,
     bill?.legislationnumber ?? bill?.number ?? billNumber,
@@ -359,6 +362,25 @@ export default function BillPage() {
   }, [bill, billNumber, billType]);
 
   useEffect(() => {
+    if (!billId || !rep?.bioguideid || memberVoteId) return;
+    const controller = new AbortController();
+    async function loadMemberVote() {
+      try {
+        const resp = await fetch(`${API_BASE}/housevotes/member/${rep.bioguideid}/bill/${billId}`, {
+          signal: controller.signal,
+        });
+        if (!resp.ok) throw new Error("No recorded representative vote available for this bill");
+        const vote = await resp.json();
+        if (!controller.signal.aborted) setBill(prev => ({ ...prev, ...vote }));
+      } catch (err) {
+        if (!controller.signal.aborted) setInteractionError(err.message);
+      }
+    }
+    loadMemberVote();
+    return () => controller.abort();
+  }, [billId, rep?.bioguideid, memberVoteId]);
+
+  useEffect(() => {
     if (!token || !billId) return;
     let cancelled = false;
 
@@ -389,7 +411,10 @@ export default function BillPage() {
         }
 
         const interactionResp = await authFetch(
-          `${API_BASE}/interactions/users/${me.id}/bill/${billId}`,
+          `${API_BASE}/interactions/users/${me.id}/bill/${billId}?${new URLSearchParams({
+            ...(memberVoteId ? { memberVoteId: String(memberVoteId) } : {}),
+            ...(rep?.bioguideid ? { repBioguideId: rep.bioguideid } : {}),
+          })}`,
         );
         if (!interactionResp.ok) throw new Error("Failed to load interaction");
         const text = await interactionResp.text();
@@ -404,7 +429,7 @@ export default function BillPage() {
     return () => {
       cancelled = true;
     };
-  }, [token, billId, authFetch]);
+  }, [token, billId, authFetch, memberVoteId, rep?.bioguideid, state?.rep]);
 
   useEffect(() => {
     if (!billId) return;
@@ -439,10 +464,6 @@ export default function BillPage() {
       cancelled = true;
     };
   }, [billId, isAuthed, authFetch]);
-
-  useEffect(() => {
-    setStance(interaction?.stance || null);
-  }, [interaction]);
 
   useEffect(() => {
     setOwnedCommentId(interaction?.comment_id ?? null);
@@ -805,9 +826,13 @@ export default function BillPage() {
       return;
     }
 
+    if (!memberVoteId || stancePendingRef.current) return;
+    stancePendingRef.current = true;
+    setIsSavingStance(true);
+
     try {
       setInteractionError("");
-        if (interaction?.stance === nextStance) {
+        if (isAnsweredVote(interaction, memberVoteId) && interaction.stance === nextStance) {
           const resp = await authFetch(
             `${API_BASE}/interactions/${interaction.id}`,
           { method: "DELETE" },
@@ -842,21 +867,28 @@ export default function BillPage() {
           method: interaction ? "PUT" : "POST",
           body: JSON.stringify(
             interaction
-              ? { stance: nextStance }
+              ? { stance: nextStance, member_vote_id: memberVoteId }
               : {
                   user_id: userId,
                   bill_id: billId,
                   rep_bioguide_id: rep.bioguideid,
+                  member_vote_id: memberVoteId,
                   stance: nextStance,
                 },
           ),
         },
       );
-      if (!resp.ok) throw new Error("Failed to save stance");
+      if (!resp.ok) {
+        const payload = await resp.json().catch(() => null);
+        throw new Error(payload?.error || "Failed to save stance");
+      }
       const saved = await resp.json();
       setInteraction(saved);
     } catch (err) {
       setInteractionError(err.message || "Failed to save stance");
+    } finally {
+      stancePendingRef.current = false;
+      setIsSavingStance(false);
     }
   };
   return (
@@ -1013,6 +1045,7 @@ export default function BillPage() {
               currentStance === "approve" ? "active approve" : ""
             }`}
             onClick={() => handleStanceClick("approve")}
+            disabled={isAuthed && (!memberVoteId || isSavingStance)}
             aria-label={`Agree with ${repReference}`}
             aria-pressed={currentStance === "approve"}
             title={`Agree with ${repReference}`}
@@ -1028,6 +1061,7 @@ export default function BillPage() {
               currentStance === "disapprove" ? "active disapprove" : ""
             }`}
             onClick={() => handleStanceClick("disapprove")}
+            disabled={isAuthed && (!memberVoteId || isSavingStance)}
             aria-label={`Disagree with ${repReference}`}
             aria-pressed={currentStance === "disapprove"}
             title={`Disagree with ${repReference}`}

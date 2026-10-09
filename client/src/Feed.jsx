@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { API_BASE } from "./constants";
 import RepCard from "./RepCard";
+import { findVoteInteraction, isAnsweredVote } from "./voteInteractions";
 import "./Feed.css";
 import {
   Info,
@@ -100,9 +101,9 @@ const buildFeedUrl = ({
   return queryString ? `${baseUrl}?${queryString}` : baseUrl;
 };
 
-const buildAlignmentUrl = ({ repId, policyArea = null }) => {
+const buildAlignmentUrl = ({ policyArea = null }) => {
   const params = new URLSearchParams({
-    repBioguideId: repId,
+    chamber: "House",
   });
   if (policyArea) {
     params.set("policyArea", policyArea);
@@ -124,6 +125,11 @@ function Feed(props) {
   } = useOutletContext();
   const guestBarRef = useRef(null);
   const guestHighlightTimeoutRef = useRef(null);
+  const alignmentRequestRef = useRef(0);
+  const stancePendingRef = useRef(new Set());
+  const [stancePending, setStancePending] = useState({});
+  const [alignmentError, setAlignmentError] = useState("");
+  const [stanceError, setStanceError] = useState("");
 
   const [feedState, setFeedState] = useState(location.state || props.state);
   const [loading, setLoading] = useState(false);
@@ -420,10 +426,6 @@ function Feed(props) {
     };
   }, [token, authFetch]);
 
-  const interactionsByBill = {};
-  for (const interaction of interactions) {
-    interactionsByBill[interaction.bill_id] = interaction;
-  }
   const rep = feedState?.rep;
   // Signed-in profiles take precedence over any guest navigation data.
   const cardLocation = isAuthed
@@ -432,44 +434,58 @@ function Feed(props) {
         state: feedState?.district?.state ?? null,
         district: feedState?.district?.congressionalDistrict ?? null,
       };
-  const alignmentForCard = feedState?.alignment ?? null;
+  const alignmentForCard = isAuthed ? feedState?.alignment ?? null : null;
 
-  const refreshAlignmentSummary = useEffectEvent(async () => {
+  const refreshAlignmentSummary = async () => {
     if (!token || !rep?.bioguideid) return;
-    const resp = await authFetch(
-      buildAlignmentUrl({
-        repId: rep.bioguideid,
-        policyArea: selectedPolicyArea,
-      }),
-    );
-    if (!resp.ok) throw new Error("Failed to refresh alignment");
-    const alignment = await resp.json();
-    setFeedState((prev) =>
-      prev
-        ? {
-            ...prev,
-            alignment,
-          }
-        : prev,
-    );
+    const requestId = ++alignmentRequestRef.current;
+    const policyArea = selectedPolicyArea;
+    setAlignmentError("");
+    try {
+      const resp = await authFetch(buildAlignmentUrl({ policyArea }));
+      if (!resp.ok) throw new Error("Failed to refresh alignment");
+      const alignment = await resp.json();
+      if (requestId !== alignmentRequestRef.current) return;
+      setFeedState(prev => prev && (prev.selectedPolicyArea ?? null) === policyArea
+        ? { ...prev, alignment } : prev);
+    } catch (err) {
+      if (requestId === alignmentRequestRef.current) setAlignmentError(err.message);
+    }
+  };
+
+  const latestAlignmentRefresh = useRef(null);
+  useEffect(() => {
+    latestAlignmentRefresh.current = refreshAlignmentSummary;
   });
 
-  const handleStance = async (billId, stance) => {
-    if (!userId) {
+  // Navigation can restore cached feed data after an answer on BillPage.
+  const refreshAlignmentOnEntry = useEffectEvent(refreshAlignmentSummary);
+  useEffect(() => {
+    refreshAlignmentOnEntry();
+    return () => { alignmentRequestRef.current += 1; };
+  }, [token, rep?.bioguideid, selectedPolicyArea]);
+
+  const handleStance = async (vote, stance) => {
+    if (!isAuthed || !userId) {
       promptGuestInteraction();
       return;
     }
 
+    const memberVoteId = vote.member_vote_id;
+    if (!memberVoteId || stancePendingRef.current.has(memberVoteId)) return;
+    stancePendingRef.current.add(memberVoteId);
+    setStancePending(prev => ({ ...prev, [memberVoteId]: true }));
+    setStanceError("");
     try {
-      const existing = interactionsByBill[billId];
-      if (existing?.stance === stance) {
+      const existing = findVoteInteraction(interactions, vote.bill_id, rep.bioguideid, memberVoteId);
+      if (isAnsweredVote(existing, memberVoteId) && existing.stance === stance) {
         const resp = await authFetch(
           `${API_BASE}/interactions/${existing.id}`,
           { method: "DELETE" },
         );
         if (!resp.ok) throw new Error("Failed to delete stance");
         setInteractions((prev) => prev.filter((i) => i.id !== existing.id));
-        await refreshAlignmentSummary();
+        await latestAlignmentRefresh.current?.();
         return;
       }
 
@@ -481,26 +497,33 @@ function Feed(props) {
           method: existing ? "PUT" : "POST",
           body: JSON.stringify(
             existing
-              ? { stance }
+              ? { stance, member_vote_id: memberVoteId }
               : {
                   user_id: userId,
-                  bill_id: billId,
+                  bill_id: vote.bill_id,
                   rep_bioguide_id: rep.bioguideid,
+                  member_vote_id: memberVoteId,
                   stance,
                 },
           ),
         },
       );
-      if (!resp.ok) throw new Error("Failed to save stance");
+      if (!resp.ok) {
+        const payload = await resp.json().catch(() => null);
+        throw new Error(payload?.error || "Failed to save stance");
+      }
       const saved = await resp.json();
 
       setInteractions((prev) => {
         const withoutCurrent = prev.filter((i) => i.id !== saved.id);
         return [...withoutCurrent, saved];
       });
-      await refreshAlignmentSummary();
+      await latestAlignmentRefresh.current?.();
     } catch (err) {
-      setError(err.message || "Failed to save stance");
+      setStanceError(err.message || "Failed to save stance");
+    } finally {
+      stancePendingRef.current.delete(memberVoteId);
+      setStancePending(prev => ({ ...prev, [memberVoteId]: false }));
     }
   };
 
@@ -571,6 +594,7 @@ function Feed(props) {
         location={cardLocation}
         alignment={alignmentForCard}
         alignmentPolicyArea={feedState?.selectedPolicyArea ?? null}
+        alignmentError={alignmentError}
       ></RepCard>
 
       <section className="feed-section">
@@ -649,8 +673,10 @@ function Feed(props) {
         </div>
         {votes.length === 0 && <p>No votes found for this member.</p>}
 
+        {stanceError && <p className="error-text" role="alert">{stanceError}</p>}
         {votes.map((vote) => {
-          const interaction = interactionsByBill[vote.bill_id];
+          const interaction = findVoteInteraction(interactions, vote.bill_id, rep.bioguideid, vote.member_vote_id);
+          const answeredStance = isAnsweredVote(interaction, vote.member_vote_id) ? interaction.stance : null;
           const billType = vote.legislation_type;
           const billNumber = vote.legislationnumber;
           const billIdentity = `${billType}-${billNumber}`;
@@ -771,15 +797,16 @@ function Feed(props) {
                 <button
                   type="button"
                   className={`ghost-btn ${
-                    interaction?.stance === "approve" ? "active approve" : ""
+                    answeredStance === "approve" ? "active approve" : ""
                   }`}
-                  onClick={() => handleStance(vote.bill_id, "approve")}
+                  onClick={() => handleStance(vote, "approve")}
+                  disabled={isAuthed && (!vote.member_vote_id || Boolean(stancePending[vote.member_vote_id]))}
                   aria-label={`Agree with Rep. ${repLastName}`}
-                  aria-pressed={interaction?.stance === "approve"}
+                  aria-pressed={answeredStance === "approve"}
                   title={`Agree with Rep. ${repLastName}`}
                 >
                   <ThumbsUp size={16} />
-                  {interaction?.stance === "approve" && (
+                  {answeredStance === "approve" && (
                     <span>I agree with Rep. {repLastName}</span>
                   )}
                 </button>
@@ -787,17 +814,18 @@ function Feed(props) {
                 <button
                   type="button"
                   className={`ghost-btn ${
-                    interaction?.stance === "disapprove"
+                    answeredStance === "disapprove"
                       ? "active disapprove"
                       : ""
                   }`}
-                  onClick={() => handleStance(vote.bill_id, "disapprove")}
+                  onClick={() => handleStance(vote, "disapprove")}
+                  disabled={isAuthed && (!vote.member_vote_id || Boolean(stancePending[vote.member_vote_id]))}
                   aria-label={`Disagree with Rep. ${repLastName}`}
-                  aria-pressed={interaction?.stance === "disapprove"}
+                  aria-pressed={answeredStance === "disapprove"}
                   title={`Disagree with Rep. ${repLastName}`}
                 >
                   <ThumbsDown size={16} />
-                  {interaction?.stance === "disapprove" && (
+                  {answeredStance === "disapprove" && (
                     <span>I disagree with Rep. {repLastName}</span>
                   )}
                 </button>

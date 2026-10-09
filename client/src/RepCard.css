@@ -193,6 +193,15 @@
   opacity: 0.78;
 }
 
+.member-alignment-counts {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 900px) {
   .member-card {
     flex-direction: column;

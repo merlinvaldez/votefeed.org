@@ -6,6 +6,7 @@ import {
   findMemberPolicyAreas,
   findMemberVotes,
 } from "../db/queries/houseVotes.js";
+import { findMemberVoteForBill } from "../db/queries/memberVoteLinks.js";
 
 const apiKey = process.env.CONGRESS_API_KEY;
 const CONGRESS_API_ORIGIN = "https://api.congress.gov";
@@ -132,6 +133,16 @@ export async function getMemberVotes(req, res) {
     res.status(500).json({ error: "Failed to fetch member votes" });
   }
 }
+
+router.get("/member/:bioguideId/bill/:billId", async (req, res) => {
+  const billId = Number(req.params.billId);
+  if (!Number.isSafeInteger(billId) || billId <= 0) {
+    return res.status(400).json({ error: "Invalid bill ID" });
+  }
+  const vote = await findMemberVoteForBill(req.params.bioguideId, billId);
+  if (!vote) return res.status(404).json({ error: "No recorded member vote for this bill" });
+  res.json(vote);
+});
 
 router.get("/member/:bioguideId", getMemberVotes);
 
