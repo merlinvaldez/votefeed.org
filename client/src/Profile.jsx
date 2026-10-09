@@ -157,7 +157,11 @@ export default function Profile() {
       <section className="profile-section">
         <h2 className="profile-section-title">Representative</h2>
         {rep ? (
-          <RepCard rep={rep} alignment={alignment}></RepCard>
+          <RepCard
+            rep={rep}
+            location={{ state: user.state, district: user.district ?? null }}
+            alignment={alignment}
+          ></RepCard>
         ) : (
           <section className="profile-card">
             <div className="profile-empty-copy">No representative data.</div>

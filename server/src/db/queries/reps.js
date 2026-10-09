@@ -104,6 +104,7 @@ export async function getAllReps(runner = db) {
 export async function findRepByDistrict(state, congressionalDistrict) {
   const sql = ` SELECT * FROM reps 
   WHERE state=$1 AND congressionalDistrict=$2 
+    AND chamber = 'House of Representatives'
     AND is_current_member = true
 `;
 

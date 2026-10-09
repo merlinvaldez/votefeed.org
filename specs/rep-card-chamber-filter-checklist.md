@@ -22,9 +22,11 @@ The mockup's 89% and 178/201 are examples, not data targets. Vote notifications 
 
 ### 1. Load the delegation for the card
 
-- [ ] Use the signed-in user's saved state and district or the guest's address lookup result. Use full state names and preserve at-large House district `0`.
-- [ ] Find the current House member, if any, and all current Senators for that state. Reuse the existing district lookup and `GET /reps/state/:state/senators` route where practical. Do not assume there are always two Senators or a filled House seat.
-- [ ] Give the card a consistent member shape: Bioguide ID, chamber, name, party, state, House district when relevant, portrait, and official website when available. Represent an absent House member as `null` and Senators as an array.
+- [x] Use the signed-in user's saved state and district or the guest's address lookup result. Use full state names and preserve at-large House district `0`.
+- [x] Find the current House member, if any, and all current Senators for that state. Reuse the existing district lookup and `GET /reps/state/:state/senators` route where practical. Do not assume there are always two Senators or a filled House seat.
+- [x] Give the card a consistent member shape: Bioguide ID, chamber, name, party, state, House district when relevant, portrait, and official website when available. Represent an absent House member as `null` and Senators as an array.
+
+Card data uses `{ houseMember, senators }` through `useCardDelegation`, with each member shaped as `{ bioguideId, chamber, name, party, state, district, portrait, officialWebsite }`. Chamber is `House` or `Senate`; Senate district and unavailable optional fields are `null`. Senate loading and errors stay separate from feed state. Rendering the Senators and chamber empty states remains in step 3.
 
 Likely files: `server/src/api/reps.js`, `server/src/db/queries/reps.js`, and the client code that loads the Rep Card.
 

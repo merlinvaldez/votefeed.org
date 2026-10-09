@@ -8,6 +8,7 @@ import {
   useGaugeState,
 } from "@mui/x-charts/Gauge";
 import "./RepCard.css";
+import useCardDelegation from "./useCardDelegation";
 
 const getRepInitials = (fullName = "") => {
   const normalized = fullName.trim();
@@ -53,10 +54,12 @@ function GaugePointer() {
 
 export default function RepCard({
   rep,
+  location = null,
   alignment,
   alignmentPolicyArea = null,
 }) {
-  const repInitials = getRepInitials(rep?.full_name);
+  const { houseMember } = useCardDelegation(rep, location);
+  const repInitials = getRepInitials(houseMember?.name);
   const alignmentPercent = Math.max(0, Math.min(100, alignment?.percent ?? 0));
   const alignmentColor = getAlignmentColor(alignmentPercent);
 
@@ -64,18 +67,18 @@ export default function RepCard({
     <section className="member-card">
       <div className="member-card-row">
         <div className="member-avatar">
-          {rep?.image_url ? (
+          {houseMember?.portrait ? (
             <img
               className="member-avatar-image"
-              src={rep.image_url}
-              alt={`${rep.full_name} official portrait`}
+              src={houseMember.portrait}
+              alt={`${houseMember.name} official portrait`}
             />
           ) : (
             <span className="member-avatar-fallback">{repInitials}</span>
           )}
         </div>
         <div className="member-copy">
-          <div className="member-name">{rep?.full_name}</div>
+          <div className="member-name">{houseMember?.name}</div>
           <div className="member-meta">
             <span className="meta-line">
               <IdCard size={16} className="meta-icon"></IdCard>
@@ -83,16 +86,17 @@ export default function RepCard({
             </span>
             <span className="meta-line">
               <span className="meta-dot" aria-hidden="true"></span>
-              {rep?.party} Party
+              {houseMember?.party} Party
             </span>
             <span className="meta-line">
               <MapPin size={16} className="meta-icon"></MapPin>
-              {rep?.state} District {rep?.congressionaldistrict}
+              {location?.state ?? houseMember?.state} District{" "}
+              {location?.district ?? houseMember?.district}
             </span>
-            {rep?.official_website_url && (
+            {houseMember?.officialWebsite && (
               <a
                 className="meta-line member-website-link"
-                href={rep.official_website_url}
+                href={houseMember.officialWebsite}
                 target="_blank"
                 rel="noreferrer"
               >

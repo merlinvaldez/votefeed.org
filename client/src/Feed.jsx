@@ -132,6 +132,7 @@ function Feed(props) {
 
   const [interactions, setInteractions] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [savedLocation, setSavedLocation] = useState(null);
   const [hasMore, setHasmore] = useState(true);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const sentinelRef = useRef(null);
@@ -397,7 +398,10 @@ function Feed(props) {
         const meResp = await authFetch(`${API_BASE}/users/me`);
         if (!meResp.ok) throw new Error("Failed to load user");
         const me = await meResp.json();
-        if (!cancelled) setUserId(me.id);
+        if (!cancelled) {
+          setUserId(me.id);
+          setSavedLocation({ state: me.state, district: me.district ?? null });
+        }
 
         const interactionsResp = await authFetch(
           `${API_BASE}/interactions/users/${me.id}`,
@@ -421,6 +425,13 @@ function Feed(props) {
     interactionsByBill[interaction.bill_id] = interaction;
   }
   const rep = feedState?.rep;
+  // Signed-in profiles take precedence over any guest navigation data.
+  const cardLocation = isAuthed
+    ? savedLocation
+    : {
+        state: feedState?.district?.state ?? null,
+        district: feedState?.district?.congressionalDistrict ?? null,
+      };
   const alignmentForCard = feedState?.alignment ?? null;
 
   const refreshAlignmentSummary = useEffectEvent(async () => {
@@ -557,6 +568,7 @@ function Feed(props) {
 
       <RepCard
         rep={rep}
+        location={cardLocation}
         alignment={alignmentForCard}
         alignmentPolicyArea={feedState?.selectedPolicyArea ?? null}
       ></RepCard>
