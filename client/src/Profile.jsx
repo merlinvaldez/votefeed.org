@@ -155,8 +155,8 @@ export default function Profile() {
       </header>
 
       <section className="profile-section">
-        <h2 className="profile-section-title">Representative</h2>
-        {rep ? (
+        <h2 className="profile-section-title">Congressional delegation</h2>
+        {user.state ? (
           <RepCard
             rep={rep}
             location={{ state: user.state, district: user.district ?? null }}

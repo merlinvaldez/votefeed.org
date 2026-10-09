@@ -243,12 +243,12 @@ function Feed(props) {
 
   useEffect(() => {
     if (token) return;
-    if (feedState?.rep && feedState?.votes) return;
+    if (feedState?.votes && (feedState?.rep || feedState?.district?.state)) return;
     navigate("/", { replace: true });
   }, [token, feedState, navigate]);
 
   useEffect(() => {
-    if (feedState?.rep && feedState?.votes) return;
+    if (feedState?.votes && (feedState?.rep || feedState?.district?.state)) return;
     if (!token) return;
 
     let cancelled = false;
@@ -530,11 +530,11 @@ function Feed(props) {
   if (loading) return <div className="feed-loading">Loading feed...</div>;
   if (error) return <div className="error">{error}</div>;
 
-  if (!feedState?.rep || !feedState?.votes) {
+  if (!feedState?.votes) {
     return <div>Missing feed data</div>;
   }
-  const repLastName = getRepLastName(rep.full_name);
-  const memberTitle = String(rep.chamber || "")
+  const repLastName = getRepLastName(rep?.full_name ?? "");
+  const memberTitle = String(rep?.chamber || "")
     .toLowerCase()
     .includes("senate")
     ? "Sen."

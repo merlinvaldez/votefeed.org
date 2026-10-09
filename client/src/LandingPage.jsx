@@ -71,16 +71,16 @@ function LandingPage() {
       const repResp = await fetch(
         `${API_BASE}/reps/district/${districtData.state}/${districtData.congressionalDistrict}`,
       );
-      if (!repResp.ok) {
+      if (!repResp.ok && repResp.status !== 404) {
         const msg = await repResp.text();
         throw new Error(msg || `Rep lookup failed (${repResp.status})`);
       }
-      const repData = await repResp.json();
+      const repData = repResp.status === 404 ? null : await repResp.json();
       setStatus("loading-votes");
-      const repId = repData.bioguideid;
-      const votesResp = await fetch(
+      const repId = repData?.bioguideid;
+      const votesResp = repId ? await fetch(
         `${API_BASE}/housevotes/member/${repId}?limit=${PAGE_SIZE}&offset=0`,
-      );
+      ) : new Response(JSON.stringify({ votes: [] }), { status: 200 });
       if (!votesResp.ok) {
         const msg = await votesResp.text();
         throw new Error(

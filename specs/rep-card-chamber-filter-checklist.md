@@ -46,13 +46,15 @@ Scoring decision (October 9, 2026): give each selected member with alignment dat
 
 ### 3. Add the chamber tabs and member presentation
 
-- [ ] Update `RepCard` to own the selected card tab and show only that tab's members and alignment. Follow the mockup's attached tab bar and blue active accent.
-- [ ] Render chamber-specific titles and locations, portrait fallbacks, and official website links. Fit the visible members and gauge without overflow on mobile, at browser zoom, and with long names.
-- [ ] Use semantic tab or button controls with keyboard support, visible focus, and a clear selected state. Handle loading, an empty chamber, partial delegation, lookup failure, and missing alignment data.
-- [ ] Connect the signed-in and guest card paths. Check the separate `Profile.jsx` use of `RepCard` so its presentation still makes sense after the component changes.
-- [ ] Keep the feed's existing vote retrieval, filters, counts, pagination, and navigation independent of the Rep Card tab state.
+- [x] Update `RepCard` to own the selected card tab and show only that tab's members and alignment. Follow the mockup's attached tab bar and blue active accent.
+- [x] Render chamber-specific titles and locations, portrait fallbacks, and official website links. Fit the visible members and gauge without overflow on mobile, at browser zoom, and with long names.
+- [x] Use semantic tab or button controls with keyboard support, visible focus, and a clear selected state. Handle loading, an empty chamber, partial delegation, lookup failure, and missing alignment data.
+- [x] Connect the signed-in and guest card paths. Check the separate `Profile.jsx` use of `RepCard` so its presentation still makes sense after the component changes.
+- [x] Keep the feed's existing vote retrieval, filters, counts, pagination, and navigation independent of the Rep Card tab state.
 
 Likely files: `client/src/RepCard.jsx`, `client/src/RepCard.css`, `client/src/Feed.jsx`, `client/src/LandingPage.jsx`, and `client/src/Profile.jsx`.
+
+Step 3 implementation status (October 9, 2026): RepCard owns its All Reps/House/Senate selection and follows the mockup tab bar and delegation layout. Keyboard navigation, portrait fallbacks, lookup status, chamber empty states, and responsive layouts are implemented. Profile and guest lookup retain the card for a vacant House seat. Build, targeted lint, and 11 alignment tests pass; Feed retains a pre-existing useEffectEvent lint error. Browser follow-up verified the live New York guest delegation, chamber selection, keyboard Home/ArrowRight navigation, and unchanged feed text. The revised layout follows the PNG proportions with equal-width tabs, larger portraits and gauge, and expandable alignment evidence. A temporary fixture verified 93%/80%/100% chamber gauges and no horizontal overflow at 390px and 640px; fixture files were removed. Live signed-in, browser zoom, and screen-reader QA remain unverified.
 
 ## How to check it works
 
@@ -61,3 +63,5 @@ Likely files: `client/src/RepCard.jsx`, `client/src/RepCard.css`, `client/src/Fe
 - [ ] Switching Rep Card tabs changes the visible members and true alignment counts and percentage. It does not change any feed vote, policy-area choice, count, page, or cursor.
 - [ ] A saved stance change updates the card alignment. A guest with no stances and a user with no comparable votes see the empty state, not a false 0% gauge.
 - [ ] Desktop, mobile, keyboard, and screen-reader checks cover the tabs, member details, and gauge. The House feed still works and no Senate notification emails are triggered.
+
+UI revision (October 9, 2026): removed alignment evidence and coverage from the card at user request. Empty alignment displays a neutral zero-position gauge and a like/dislike prompt. A single visible member uses the original horizontal portrait/details layout. Mobile uses compact member rows, website icons, short chamber labels, and a small gauge beside its copy. Browser-checked the guest House tab and All Reps at 390px; no horizontal overflow.
