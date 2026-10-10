@@ -7,8 +7,8 @@ export const ADDRESS_NOT_FOUND_CODE = "ADDRESS_NOT_FOUND";
 // congressional district layer instead of treating a valid address as unmatched.
 export function getCongressionalDistrict(geographies) {
   const layers = Object.keys(geographies || {})
-    .filter((key) => /^\\d+(?:st|nd|rd|th) Congressional Districts$/.test(key))
-    .sort((a, b) => Number(b.match(/^\\d+/)[0]) - Number(a.match(/^\\d+/)[0]));
+    .filter((key) => /^\d+(?:st|nd|rd|th) Congressional Districts$/.test(key))
+    .sort((a, b) => Number(b.match(/^\d+/)[0]) - Number(a.match(/^\d+/)[0]));
   const preferred = layers.includes("119th Congressional Districts")
     ? ["119th Congressional Districts", ...layers.filter((key) => key !== "119th Congressional Districts")]
     : layers;
