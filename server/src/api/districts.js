@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
     );
     url.searchParams.set("address", address);
     url.searchParams.set("benchmark", "Public_AR_Current");
-    url.searchParams.set("vintage", "Current_Current");
+    url.searchParams.set("vintage", "ACS2025_Current");
     url.searchParams.set("format", "json");
 
     const response = await fetch(url.toString());
