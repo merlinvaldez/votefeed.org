@@ -1,4 +1,4 @@
-import { ADDRESS_NOT_FOUND_MESSAGE } from "../db/queries/districts.js";
+import { ADDRESS_NOT_FOUND_MESSAGE, getCongressionalDistrict } from "../db/queries/districts.js";
 import express from "express";
 const router = express.Router();
 export default router;
@@ -36,8 +36,7 @@ router.get("/", async (req, res) => {
 
     const match = data?.result?.addressMatches?.[0];
     const state = match?.geographies?.["States"]?.[0]?.BASENAME;
-    const district =
-      match?.geographies?.["119th Congressional Districts"]?.[0]?.BASENAME;
+    const district = getCongressionalDistrict(match?.geographies);
 
     if (!match || !district) {
       return res.status(404).json({ error: ADDRESS_NOT_FOUND_MESSAGE });
