@@ -10,7 +10,7 @@ At the top of the feed, the Rep Card shows the user's congressional delegation: 
 
 - The card has three tabs in this order: **All Reps**, **House of Representatives**, and **Senate**. All Reps is selected when the card first loads.
 - All Reps shows the House member and current Senators. House shows only the House member. Senate shows only the current Senators. Changing tabs changes **only the Rep Card**. The feed below, its votes, filters, counts, and pagination stay as they are.
-- Each member has a portrait or initials, name, correct chamber title, party, and location. A House location includes its district; a Senate location shows the state. The member's official website remains available when known.
+- Each member has a portrait or initials, name, party, and location. Chamber titles appear only in All Reps; the House and Senate tabs omit them from member details. On mobile, party labels use member terms such as Democrat, Republican, Independent, Libertarian, and Green. A House location includes its district; a Senate location shows the state. The member's official website remains available when known.
 - The alignment gauge summarizes actual agreement between the user's saved stances and the recorded votes of the members visible on the selected tab. The count and percentage change with the tab. If there are no comparable votes, the card says “No alignment data yet” instead of showing 0%.
 - A vacant seat simply does not appear. If a selected chamber has no current member, the card explains that. Loading and lookup errors are understandable without hiding the rest of the feed.
 - The card works for a signed-in user with a saved address and a guest who has completed address lookup. A guest with no saved stances sees the alignment empty state.

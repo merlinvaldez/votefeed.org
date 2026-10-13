@@ -44,7 +44,21 @@ const CARD_TABS = [
   { value: "Senate", label: "Senate", icon: <Landmark size={22} aria-hidden="true" /> },
 ];
 
-function MemberSummary({ member }) {
+const getPartyMemberLabel = (party) => {
+  if (!party) return "Party unavailable";
+  const name = party.trim().replace(/\s+Party$/i, "");
+  const labels = {
+    democratic: "Democrat",
+    democrat: "Democrat",
+    republican: "Republican",
+    independent: "Independent",
+    libertarian: "Libertarian",
+    green: "Green",
+  };
+  return labels[name.toLowerCase()] ?? name;
+};
+
+function MemberSummary({ member, showChamber }) {
   const [failedPortrait, setFailedPortrait] = useState(null);
   return (
     <article className="member-card-row" aria-label={member.name}>
@@ -57,12 +71,13 @@ function MemberSummary({ member }) {
       <div className="member-copy">
         <h3 className="member-name">{member.name}</h3>
         <p className="member-mobile-summary">
-          {member.chamber === "Senate" ? "Senator" : "Representative"} &middot; {member.party ?? "Party unavailable"}
+          {showChamber && <>{member.chamber === "Senate" ? "Senator" : "Representative"} &middot; </>}
+          {getPartyMemberLabel(member.party)}
           <br />{member.state}{member.chamber === "House" && member.district != null ? ` - District ${member.district}` : ""}
         </p>
         <div className="member-meta">
-          <span className="meta-line"><IdCard className="meta-icon" aria-hidden="true" />
-            {member.chamber === "Senate" ? "U.S. Senator" : "U.S. Representative"}</span>
+          {showChamber && <span className="meta-line"><IdCard className="meta-icon" aria-hidden="true" />
+            {member.chamber === "Senate" ? "U.S. Senator" : "U.S. Representative"}</span>}
           <span className="meta-line"><span className="meta-dot" aria-hidden="true" />
             {member.party ? `${member.party}${member.party.endsWith("Party") ? "" : " Party"}` : "Party unavailable"}</span>
           <span className="meta-line member-location"><MapPin className="meta-icon" aria-hidden="true" />
@@ -122,7 +137,7 @@ export default function RepCard({
         aria-labelledby={`${cardId}-tab-${selectedTab}`} tabIndex={0}>
         <div className="member-delegation">
           <div className="member-list">
-            {members.map(member => <MemberSummary key={member.bioguideId} member={member} />)}
+            {members.map(member => <MemberSummary key={member.bioguideId} member={member} showChamber={selectedTab === "All Reps"} />)}
           </div>
           <div className="member-delegation-status" role="status">
             {includesSenate && delegationLoading && <p>Loading Senators...</p>}
