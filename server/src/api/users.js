@@ -2,6 +2,8 @@ import express from "express";
 const router = express.Router();
 export default router;
 import { findRepByDistrict } from "../db/queries/reps.js";
+import { findCurrentDelegation } from "../db/queries/delegation.js";
+import { delegationFeedHandler } from "./delegationFeed.js";
 import {
   findMemberPolicyAreas,
   findMemberVotes,
@@ -111,6 +113,20 @@ router.get("/me/alignment", requireUser, async (req, res) => {
     res.status(500).json({ error: "Failed to load alignment" });
   }
 });
+
+router.get("/me/delegation", requireUser, async (req, res, next) => {
+  try {
+    // The authenticated user's saved location is authoritative.
+    return res.json(await findCurrentDelegation(req.user));
+  } catch (err) {
+    if (err.code === "INVALID_DELEGATION_LOCATION") {
+      return res.status(400).json({ error: "User is missing a valid district/state" });
+    }
+    return next(err);
+  }
+});
+
+router.get("/me/delegation/feed", requireUser, delegationFeedHandler({ authenticated: true }));
 
 router.get("/me/feed", requireUser, async (req, res) => {
   try {

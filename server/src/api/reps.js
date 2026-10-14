@@ -1,4 +1,6 @@
 import express from "express";
+import { findCurrentDelegation } from "../db/queries/delegation.js";
+import { delegationFeedHandler } from "./delegationFeed.js";
 const router = express.Router();
 export default router;
 
@@ -8,6 +10,22 @@ import {
 } from "../db/queries/reps.js";
 
 const apiKey = process.env.CONGRESS_API_KEY;
+
+router.get("/delegation/feed", delegationFeedHandler());
+
+router.get("/delegation", async (req, res, next) => {
+  try {
+    return res.json(await findCurrentDelegation({
+      state: req.query.state,
+      district: req.query.district,
+    }));
+  } catch (err) {
+    if (err.code === "INVALID_DELEGATION_LOCATION") {
+      return res.status(400).json({ error: err.message });
+    }
+    return next(err);
+  }
+});
 
 router.get("/", async (req, res) => {
   if (!apiKey) {
