@@ -313,6 +313,7 @@ export async function findMemberVotes(bioguideId, options = {}) {
   const sql = `WITH latest_vote_per_bill AS (
   SELECT DISTINCT ON (legislation_type, legislationNumber)
     id AS member_vote_id,
+    member_id,
     legislationNumber,
     legislation_type,
     session_number,
@@ -336,6 +337,7 @@ export async function findMemberVotes(bioguideId, options = {}) {
 SELECT
   bills.id AS bill_id,
   latest_vote_per_bill.member_vote_id,
+  latest_vote_per_bill.member_id,
   latest_vote_per_bill.congress_number,
   latest_vote_per_bill.legislationNumber,
   latest_vote_per_bill.legislation_type,

@@ -52,11 +52,16 @@ export async function upsertDraftComment(
 }
 
 export async function getOrCreateCommentContactDrafts(
-  { interactionId, generateDrafts },
+  { interactionId, generateDrafts, expectedStance },
   runner = db,
 ) {
-  const comment = await getCommentByInteractionId(interactionId, runner);
+  const { rows: [comment] } = await runner.query(`SELECT c.*, c.updated_at::text AS source_version,
+    i.stance AS source_stance FROM bill_comments c
+    JOIN interactions i ON i.id = c.interaction_id WHERE c.interaction_id = $1`, [interactionId]);
   if (!comment) return null;
+  if (comment.source_stance !== expectedStance) {
+    throw Object.assign(new Error("Response changed. Please retry contact drafts."), { status: 409 });
+  }
 
   const approvedText = comment.approved_text?.trim() ?? "";
   const cachedCallScript = comment.call_script?.trim() ?? "";
@@ -89,11 +94,16 @@ export async function getOrCreateCommentContactDrafts(
         message_template = $3,
         updated_at = now()
     WHERE interaction_id = $1
+      AND updated_at::text = $4
+      AND EXISTS (SELECT 1 FROM interactions i WHERE i.id = $1 AND i.stance IS NOT DISTINCT FROM $5::text)
     RETURNING call_script, message_template
   `;
   const {
     rows: [savedDrafts],
-  } = await runner.query(sql, [interactionId, callScript, messageTemplate]);
+  } = await runner.query(sql, [interactionId, callScript, messageTemplate, comment.source_version, expectedStance]);
+  if (!savedDrafts) {
+    throw Object.assign(new Error("Comment or response changed. Please retry contact drafts."), { status: 409 });
+  }
 
   return {
     callScript: savedDrafts?.call_script ?? callScript,

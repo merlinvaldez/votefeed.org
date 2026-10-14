@@ -24,6 +24,19 @@ import { generateCommentContactDrafts } from "../utils/contactDraftPipeline.js";
 import requireBody from "../middleware/requireBody.js";
 import requireUser from "../middleware/requireUser.js";
 import { validateStanceVoteLink } from "../db/queries/memberVoteLinks.js";
+import { saveBatchStances } from "../db/queries/batchStances.js";
+
+router.put("/stances/batch", requireUser, async (req, res) => {
+  try {
+    res.status(200).json(await saveBatchStances(req.user.id, req.body));
+  } catch (error) {
+    if ([400, 401, 403].includes(error.status)) {
+      return res.status(error.status).json({ error: error.message });
+    }
+    console.error("Batch stance save failed", error);
+    res.status(503).json({ error: "Unable to save both responses. Please retry.", retryable: true });
+  }
+});
 
 async function getOwnedInteractionsOrSendError(req, res, interactionId) {
   const interaction = await getInteractionById(interactionId);
@@ -91,10 +104,19 @@ router.put(
     );
     if (!owned) return;
     const { stance } = req.body;
-    if (!["approve", "disapprove"].includes(stance)) {
+    if (![null, "approve", "disapprove"].includes(stance)) {
       return res.status(400).json({ error: "Invalid stance" });
     }
     const memberVoteId = req.body.member_vote_id ?? owned.member_vote_id;
+    // Clearing removes only the answer; it must never reassign its event.
+    // It is still allowed when an old recorded position is no longer comparable.
+    if (stance === null) {
+      if (memberVoteId !== owned.member_vote_id) {
+        return res.status(400).json({ error: "An answer cannot be moved to a different voting event" });
+      }
+      const cleared = await updateStance(interactionId, null, owned.member_vote_id);
+      return res.status(200).send(cleared);
+    }
     const linkError = await validateStanceVoteLink({
       billId: owned.bill_id, memberId: owned.rep_bioguide_id,
       memberVoteId, existingVoteId: owned.member_vote_id,
@@ -186,6 +208,7 @@ router.get("/:interactionId/comment/contact-drafts", requireUser, async (req, re
 
     const drafts = await getOrCreateCommentContactDrafts({
       interactionId,
+      expectedStance: owned.stance,
       generateDrafts: async (comment) =>
         generateCommentContactDrafts({
           constituentName: [user.first_name, user.last_name]
@@ -212,6 +235,7 @@ router.get("/:interactionId/comment/contact-drafts", requireUser, async (req, re
       source: drafts.source,
     });
   } catch (err) {
+    if (err.status === 409) return res.status(409).send(err.message);
     console.error(err);
     return res.status(503).send("Failed to prepare contact drafts");
   }

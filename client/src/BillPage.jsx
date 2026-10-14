@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { isAnsweredVote } from "./voteInteractions";
+import { getVotePosition } from "./votePosition";
 import "./Feed.css";
 import "./BillPage.css";
 import {
@@ -38,14 +39,7 @@ const getRepLastName = (fullName = "") => {
   return parts[parts.length - 1] ?? "";
 };
 
-const getVotePillClass = (voteVal) => {
-  if (!voteVal || voteVal === "Not Voting") return "neutral";
-  if (voteVal === "Yea" || voteVal === "Aye" || voteVal === "Yes") {
-    return "success";
-  }
-  if (voteVal === "No" || voteVal === "Nay") return "danger";
-  return "neutral";
-};
+
 
 const formatVotedOn = (value) => {
   if (!value) return "Unknown date";
@@ -197,9 +191,12 @@ export default function BillPage() {
   const [selectedAction, setSelectedAction] = useState(null);
   const [messageCopyStatus, setMessageCopyStatus] = useState("idle");
   const [isCommentMenuOpen, setIsCommentMenuOpen] = useState(false);
+  const contactDraftRequestRef = useRef(0);
   const [contactDrafts, setContactDrafts] = useState(null);
   const [contactDraftStatus, setContactDraftStatus] = useState("idle");
   const [contactDraftError, setContactDraftError] = useState("");
+
+  useEffect(() => () => { contactDraftRequestRef.current += 1; }, []);
   const [publicVisibilityError, setPublicVisibilityError] = useState("");
   const [publicComments, setPublicComments] = useState([]);
   const [publicCommentsStatus, setPublicCommentsStatus] = useState("idle");
@@ -227,7 +224,7 @@ export default function BillPage() {
       : bill?.vote_result === "Failed"
         ? "danger"
         : "neutral";
-  const repVotePillClass = getVotePillClass(bill?.vote);
+  const repVotePillClass = getVotePosition(bill?.vote).className;
   const memberTitle = String(rep?.chamber || "")
     .toLowerCase()
     .includes("senate")
@@ -236,11 +233,11 @@ export default function BillPage() {
   const legislationType = formatLegislationType(
     bill?.legislation_type ?? bill?.bill_type ?? billType,
   );
-  const isNotVoting = bill?.vote === "Not Voting";
+  const position = getVotePosition(bill?.vote);
   const VoteResultIcon =
     bill?.vote_result === "Failed" ? XCircle : CheckCircle2;
   const memberVoteId = bill?.member_vote_id ?? null;
-  const currentStance = isAnsweredVote(interaction, memberVoteId) ? interaction.stance : null;
+  const currentStance = position.comparable && isAnsweredVote(interaction, memberVoteId) ? interaction.stance : null;
   const billLabel = formatBillLabel(
     bill?.legislation_type ?? bill?.bill_type,
     bill?.legislationnumber ?? bill?.number ?? billNumber,
@@ -470,7 +467,7 @@ export default function BillPage() {
     setCommentDraftText(interaction?.comment_draft_text ?? "");
     setCommentModerationStatus(interaction?.comment_moderation_status ?? null);
     setIsCommentPublic(Boolean(interaction?.comment_is_public));
-  }, [interaction]);
+  }, [interaction?.comment_id, interaction?.comment_draft_text, interaction?.comment_moderation_status, interaction?.comment_is_public]);
 
   useEffect(() => {
     if (!hasPostedOwnedComment) {
@@ -486,10 +483,13 @@ export default function BillPage() {
   }, [publicCommentsFromOthers.length]);
 
   useEffect(() => {
+    contactDraftRequestRef.current += 1;
     setContactDrafts(null);
     setContactDraftStatus("idle");
     setContactDraftError("");
   }, [
+    interaction?.id,
+    interaction?.stance,
     interaction?.comment_id,
     interaction?.comment_updated_at,
     interaction?.comment_approved_text,
@@ -516,13 +516,14 @@ export default function BillPage() {
     setSelectedAction(resolvedAction);
   };
 
-  const loadContactDrafts = async () => {
-    if (!interaction?.id || !hasPostedOwnedComment) return null;
+  const loadContactDrafts = useEffectEvent(async () => {
+    if (stancePendingRef.current || !interaction?.id || !hasPostedOwnedComment) return null;
     if (contactDrafts?.callScript && contactDrafts?.messageTemplate) {
       return contactDrafts;
     }
     if (contactDraftStatus === "loading") return null;
 
+    const requestId = ++contactDraftRequestRef.current;
     try {
       setContactDraftError("");
       setContactDraftStatus("loading");
@@ -534,18 +535,21 @@ export default function BillPage() {
         throw new Error(details || "Failed to prepare contact drafts");
       }
       const drafts = await resp.json();
+      if (requestId !== contactDraftRequestRef.current || stancePendingRef.current) return null;
       setContactDrafts(drafts);
       setContactDraftStatus("ready");
       return drafts;
     } catch (err) {
+      if (requestId !== contactDraftRequestRef.current || stancePendingRef.current) return null;
       setContactDraftStatus("error");
       setContactDraftError(err.message || "Failed to prepare contact drafts");
       return null;
     }
-  };
+  });
 
   useEffect(() => {
     if (
+      isSavingStance ||
       (selectedAction !== "call" && selectedAction !== "message") ||
       !hasPostedOwnedComment ||
       contactDrafts?.callScript ||
@@ -558,6 +562,7 @@ export default function BillPage() {
     void loadContactDrafts();
   }, [
     selectedAction,
+    isSavingStance,
     hasPostedOwnedComment,
     contactDrafts,
     contactDraftStatus,
@@ -565,6 +570,7 @@ export default function BillPage() {
   ]);
 
   const handleCopyMessage = async () => {
+    if (stancePendingRef.current) return;
     if (!messageTemplate) return;
 
     try {
@@ -628,6 +634,7 @@ export default function BillPage() {
   };
 
   const handleSubmitCommentForModeration = async () => {
+    if (stancePendingRef.current) return;
     if (!interaction?.id) return;
     if (!commentDraftText.trim()) return;
 
@@ -679,6 +686,7 @@ export default function BillPage() {
   };
 
   const handleEditApprovedComment = () => {
+    if (stancePendingRef.current) return;
     if (!approvedCommentText) return;
     setInteractionError("");
     setCommentDraftText(approvedCommentText);
@@ -688,6 +696,7 @@ export default function BillPage() {
   };
 
   const handleDeleteComment = async () => {
+    if (stancePendingRef.current) return;
     if (!interaction?.id) return;
 
     try {
@@ -725,6 +734,7 @@ export default function BillPage() {
   };
 
   const handleToggleCommentPublic = async (nextValue) => {
+    if (stancePendingRef.current) return;
     if (!ownedCommentId) return;
 
     try {
@@ -814,6 +824,7 @@ export default function BillPage() {
   };
 
   const handleStanceClick = async (nextStance) => {
+    if (!position.comparable) return;
     if (!token) {
       promptGuestInteraction();
       return;
@@ -826,36 +837,24 @@ export default function BillPage() {
       return;
     }
 
-    if (!memberVoteId || stancePendingRef.current) return;
+    if (!memberVoteId || stancePendingRef.current || isSubmittingComment || isSavingCommentPublic) return;
     stancePendingRef.current = true;
     setIsSavingStance(true);
+    contactDraftRequestRef.current += 1;
+    setContactDrafts(null);
+    setContactDraftStatus("idle");
+    setContactDraftError("");
 
     try {
       setInteractionError("");
         if (isAnsweredVote(interaction, memberVoteId) && interaction.stance === nextStance) {
           const resp = await authFetch(
-            `${API_BASE}/interactions/${interaction.id}`,
-          { method: "DELETE" },
+            `${API_BASE}/interactions/${interaction.id}/stance`,
+            { method: "PUT", body: JSON.stringify({ stance: null, member_vote_id: memberVoteId }) },
           );
-          if (!resp.ok) throw new Error("Failed to delete stance");
-          setInteraction(null);
-          if (billId) {
-            try {
-              const comments = await requestPublicComments({
-                billId,
-                isAuthed,
-                authFetch,
-              });
-              setPublicComments(comments);
-              setPublicCommentsStatus("ready");
-              setPublicCommentsError("");
-            } catch (reloadErr) {
-              setPublicCommentsStatus("error");
-              setPublicCommentsError(
-                reloadErr.message || "Failed to load public comments",
-              );
-            }
-          }
+          if (!resp.ok) throw new Error("Failed to clear stance");
+          const cleared = await resp.json();
+          setInteraction(prev => ({ ...prev, ...cleared }));
           return;
         }
 
@@ -883,7 +882,7 @@ export default function BillPage() {
         throw new Error(payload?.error || "Failed to save stance");
       }
       const saved = await resp.json();
-      setInteraction(saved);
+      setInteraction(prev => ({ ...prev, ...saved }));
     } catch (err) {
       setInteractionError(err.message || "Failed to save stance");
     } finally {
@@ -966,19 +965,20 @@ export default function BillPage() {
           aiSummary && (
           <div className="leg-body simple-vote-summary">
             {memberTitle} {repLastName}{" "}
-            {isNotVoting ? (
-              <>did not vote</>
-            ) : (
-              <>
-                voted{" "}
+            {position.verb}{position.label && (
+              <>{" "}
                 <span className={`pill inline-vote-pill ${repVotePillClass}`}>
-                  {bill.vote}
+                  {position.label}
                 </span>
               </>
             )}{" "}
             on {billLabel}, {legislationType} to {formatQuickSummary(aiSummary)}.
           </div>
         )}
+        {!position.comparable && <p className="response-status">
+          {memberTitle} {repLastName} {position.verb}{position.label ? ` ${position.label}` : ""} on {billLabel}.
+          {" "}{position.unavailableReason}
+        </p>}
         {aiError && <p className="error-text">{aiError}</p>}
         {bill?.vote_result && (
           <section className="vote-result-card">
@@ -1045,7 +1045,7 @@ export default function BillPage() {
               currentStance === "approve" ? "active approve" : ""
             }`}
             onClick={() => handleStanceClick("approve")}
-            disabled={isAuthed && (!memberVoteId || isSavingStance)}
+            disabled={!position.comparable || (isAuthed && (!memberVoteId || isSavingStance || isSubmittingComment || isSavingCommentPublic))}
             aria-label={`Agree with ${repReference}`}
             aria-pressed={currentStance === "approve"}
             title={`Agree with ${repReference}`}
@@ -1061,7 +1061,7 @@ export default function BillPage() {
               currentStance === "disapprove" ? "active disapprove" : ""
             }`}
             onClick={() => handleStanceClick("disapprove")}
-            disabled={isAuthed && (!memberVoteId || isSavingStance)}
+            disabled={!position.comparable || (isAuthed && (!memberVoteId || isSavingStance || isSubmittingComment || isSavingCommentPublic))}
             aria-label={`Disagree with ${repReference}`}
             aria-pressed={currentStance === "disapprove"}
             title={`Disagree with ${repReference}`}
@@ -1075,6 +1075,7 @@ export default function BillPage() {
             <button
               type="button"
               className={`ghost-btn ${isCommentComposerOpen ? "active" : ""}`}
+              disabled={isSavingStance}
               onClick={() =>
                 setIsCommentComposerOpen((currentValue) => !currentValue)
               }
@@ -1092,7 +1093,7 @@ export default function BillPage() {
         </div>
 
             {showOwnedCommentThread && (
-              <section className="comment-thread">
+              <fieldset className="comment-thread" aria-label="Your comment and contact actions" disabled={isSavingStance} style={{ border: 0, margin: 0, padding: 0, minWidth: 0 }}>
                 <div className="comment-thread-header">
                   <div className="comment-thread-title">Comments</div>
                 </div>
@@ -1255,7 +1256,7 @@ export default function BillPage() {
                         {publicVisibilityError}
                       </p>
                     )}
-                    {selectedAction === "call" && (
+                    {!isSavingStance && selectedAction === "call" && (
                       <section
                         id="bill-call-script-panel"
                         className="action-guide-card comment-action-panel"
@@ -1286,7 +1287,7 @@ export default function BillPage() {
                         )}
                       </section>
                     )}
-                    {selectedAction === "message" && (
+                    {!isSavingStance && selectedAction === "message" && (
                       <section
                         id="bill-message-template-panel"
                         className="action-guide-card comment-action-panel"
@@ -1359,7 +1360,7 @@ export default function BillPage() {
                 </div>
               </section>
             )}
-          </section>
+          </fieldset>
         )}
         {showPublicCommentsPanel && (
           <section

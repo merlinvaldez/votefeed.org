@@ -132,7 +132,7 @@ ON vote_notification_outbox(processed_at, created_at, sync_run_id, member_id);
 
 CREATE TABLE interactions (
     id serial PRIMARY KEY,
-    stance text NOT NULL,
+    stance text,
     user_comment text,
     user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     rep_bioguide_id text NOT NULL REFERENCES reps(bioguideId),
