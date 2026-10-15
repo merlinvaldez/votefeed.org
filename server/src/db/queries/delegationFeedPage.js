@@ -3,6 +3,7 @@ import { findCurrentDelegation } from "./delegation.js";
 import { readDelegationFeedRecords } from "./delegationVotes.js";
 import { postgresFeedSnapshots } from "./feedSnapshots.js";
 import { paginateFeed } from "../../utils/feedPagination.js";
+import { getPublicBillCommentCounts } from "./comments.js";
 
 // API adapters must pass the authenticated saved user or the guest location;
 // user identity is supplied by the authentication middleware, never URL claims.
@@ -18,9 +19,10 @@ export async function readDelegationFeedPage(location, options = {}) {
       .map(member => [member.bioguideid, member.chamber])
       .sort((a, b) => a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0),
   };
-  return paginateFeed({ ...pageOptions, scope, store: postgresFeedSnapshots(runner),
+  const page = await paginateFeed({ ...pageOptions, scope, store: postgresFeedSnapshots(runner),
     load: () => readDelegationFeedRecords(location, {
       runner, resolvedDelegation: delegation, policyArea: pageOptions.policyArea ?? null, chamber,
+      includeSummaries: false,
     }),
     validateSnapshot: async snapshot => {
       const expected = snapshot.payload.cards.flatMap(card => card.members.map(member => ({ card, member })));
@@ -42,4 +44,33 @@ export async function readDelegationFeedPage(location, options = {}) {
       });
     },
   });
+  return enrichFeedPage(page, runner);
+}
+
+// Snapshots freeze card membership/order, not discussion totals. Fetch large
+// summaries once per displayed bill instead of per roll call across the roster.
+export async function enrichFeedPage(page, runner = db) {
+  const ids = [...new Set(page.cards.map(card => card.bill.id))];
+  if (!ids.length) return page;
+  const { rows } = await runner.query("SELECT id, summary, aisummary FROM bills WHERE id = ANY($1::integer[])", [ids]);
+  const summaries = new Map(rows.map(row => [row.id, {
+    officialHtml: row.summary || null, simplifiedText: row.aisummary || null,
+  }]));
+  let counts;
+  const warnings = [...(page.warnings ?? [])];
+  try {
+    counts = await getPublicBillCommentCounts(ids, runner);
+  } catch (error) {
+    console.error("Comment count query failed", error);
+    warnings.push({ code: "PUBLIC_COMMENT_COUNTS_UNAVAILABLE",
+      message: "Comment counts are unavailable. Open a bill to view its discussion." });
+  }
+  return { ...page, warnings,
+    dataStatus: warnings.length ? "partial" : page.dataStatus,
+    retry: counts ? page.retry : { mode: "refresh", message: "Refresh to retry comment counts." },
+    cards: page.cards.map(card => ({ ...card,
+      publicCommentCount: counts ? counts.get(card.bill.id) : null,
+      summary: summaries.get(card.bill.id) ?? { officialHtml: null, simplifiedText: null },
+    })),
+  };
 }

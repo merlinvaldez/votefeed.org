@@ -30,6 +30,10 @@ test("rendered cards retain identity, truthful positions, selected states and se
     const answer = (m, stance) => ({id:m.memberVoteId,bill_id:7,rep_bioguide_id:m.bioguideId,member_vote_id:m.memberVoteId,stance});
     const render = changes => renderToStaticMarkup(createElement(Card, {...props,...changes}));
     const neutral = render({});
+    for (const [count, label] of [[0, "0 Comments"], [1, "1 Comment"], [12, "12 Comments"]]) {
+      assert.match(render({ vote: { ...vote, publicCommentCount: count } }), new RegExp(label));
+    }
+    assert.doesNotMatch(render({ vote: { ...vote, publicCommentCount: null } }), /0 Comments/);
     assert.match(neutral,/border-color:#2563eb/);
     assert.match(neutral,/border-color:#dc2626/);
     assert.match(neutral,/Sens\. Schumer and Gillibrand/);

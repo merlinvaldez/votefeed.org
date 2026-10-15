@@ -10,7 +10,7 @@ export async function readBillDelegation(location, { congress, billType, billNum
   if (!bill || !matchesSummaryMeasure(bill, congress, billType, billNumber)) {
     throw fail(404, "Bill not found in the requested Congress");
   }
-  const feed = await readDelegationFeedRecords(location, { runner });
+  const feed = await readDelegationFeedRecords(location, { runner, includeSummaries: false });
   const cards = feed.cards.filter(card => card.bill.id === bill.id && card.bill.congress === congress);
   if (cardId && !cards.some(card => card.id === cardId)) {
     throw fail(409, "This recorded action has changed or is no longer in your delegation. Return to the feed and reopen it.");
@@ -21,7 +21,9 @@ export async function readBillDelegation(location, { congress, billType, billNum
     WHERE congress_number = $1 AND legislation_type = $2 AND legislation_number = $3`,
   [congress, billType, billNumber]) : { rows: [] };
   return { bill, delegation: feed.delegation, warnings: feed.warnings,
-    cards: cards.map(card => ({ ...card, result: results.find(result =>
+    cards: cards.map(card => ({ ...card,
+      summary: { officialHtml: bill.summary || null, simplifiedText: bill.aisummary || null },
+      result: results.find(result =>
       result.chamber === card.event.chamber && result.session_number === card.event.session &&
       result.roll_call_number === card.event.rollCall) ?? null })) };
 }

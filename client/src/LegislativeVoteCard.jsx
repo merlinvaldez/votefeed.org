@@ -4,7 +4,7 @@ import "./LegislativeVoteCard.css";
 import MemberPortrait from "./MemberPortraitAvatar.jsx";
 import { summaryIdentity, hasSummaryText, summaryView } from "./feedSummaries";
 import { getVotePosition } from "./votePosition";
-import { getCardResponseTargets, findVoteInteraction, getCardResponseState } from "./voteInteractions";
+import { getCardResponseTargets, getCardResponseState } from "./voteInteractions";
 import { ThumbsUp, ThumbsDown, MessageCircle, Clock3, ScrollText } from "lucide-react";
 
 const formatVotedOn = (value) => {
@@ -55,8 +55,6 @@ const formatQuickSummary = (summary = "") => {
 
 export default function LegislativeVoteCard({ vote, interactions, isAuthed, stancePending, showOriginalByCard, aiLoadingByBill, aiSummaryByBill, aiErrorByBill, setShowOriginalByCard, loadAiSummary, goToBill, handleStance, handleCommentIntent }) {
   const targets = getCardResponseTargets(vote);
-  const target = targets.length === 1 ? targets[0] : null;
-  const interaction = target ? findVoteInteraction(interactions, target.billId, target.memberId, target.memberVoteId) : null;
   const responseState = getCardResponseState(vote, interactions);
   const position = getVotePosition(vote.position ?? vote.vote, targets.length);
   const answeredStance = responseState.stance;
@@ -219,7 +217,9 @@ export default function LegislativeVoteCard({ vote, interactions, isAuthed, stan
           style={{ cursor: "pointer" }}
         >
           <MessageCircle size={16} />
-          {interaction?.user_comment ? "1 Comment" : "0 Comments"}
+          {Number.isSafeInteger(vote.publicCommentCount) && vote.publicCommentCount >= 0
+            ? `${vote.publicCommentCount} ${vote.publicCommentCount === 1 ? "Comment" : "Comments"}`
+            : "Comments"}
         </button>
       </div>
       </div>

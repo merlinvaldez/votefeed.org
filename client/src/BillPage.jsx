@@ -1,5 +1,5 @@
 import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { isAnsweredVote, getCardResponseState, buildCardStanceRequest, reconcileCardStanceResult } from "./voteInteractions";
 import { panelBill } from "./billDetailContext";
 import BillVoteFolders from "./BillVoteFolders";
@@ -157,7 +157,7 @@ const requestPublicComments = async ({ billId, isAuthed, authFetch }) => {
   const resp = isAuthed ? await authFetch(requestUrl) : await fetch(requestUrl);
   if (!resp.ok) {
     const details = await resp.text();
-    throw new Error(details || "Failed to load public comments");
+    throw new Error(details || "Failed to load comments");
   }
   const data = await resp.json();
   return data.comments ?? [];
@@ -165,6 +165,9 @@ const requestPublicComments = async ({ billId, isAuthed, authFetch }) => {
 
 export default function BillDetailPanel({ detail, folder, active, folders, selectedFolder, onFolderChange, onBusy, showOriginal, setShowOriginal }) {
   const navigate = useNavigate();
+  const { hash } = useLocation();
+  const discussionRequested = hash === "#public-comments";
+  const publicDiscussionRef = useRef(null);
   const { billType, billNumber } = useParams();
   const card = folder.id === "All Reps" ? null : folder.cards[0] ?? null;
   // A combined card has one comment composer and one discussion comment.
@@ -215,7 +218,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
   const [publicComments, setPublicComments] = useState([]);
   const [publicCommentsStatus, setPublicCommentsStatus] = useState("idle");
   const [publicCommentsError, setPublicCommentsError] = useState("");
-  const [isPublicCommentsOpen, setIsPublicCommentsOpen] = useState(false);
+  const [isPublicCommentsOpen, setIsPublicCommentsOpen] = useState(discussionRequested);
   const [usefulPendingByCommentId, setUsefulPendingByCommentId] = useState({});
 
   const [aiSummary, setAiSummary] = useState(detail.bill.aisummary || "");
@@ -255,23 +258,21 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
   const commentAuthorName = userName || "You";
   const approvedCommentText = interaction?.comment_approved_text?.trim() ?? "";
   const hasPostedOwnedComment = Boolean(approvedCommentText);
-  const publicCommentsFromOthers = publicComments.filter(
-    (comment) => !card || !comment.is_owned_by_viewer,
-  );
+  const discussionComments = publicComments;
   const showPostedOwnedComment =
     hasPostedOwnedComment && !isCommentComposerOpen;
   const showOwnedCommentThread =
     Boolean(interaction?.id) && (isCommentComposerOpen || showPostedOwnedComment);
   const showPublicCommentsPanel =
-    publicCommentsFromOthers.length > 0 || Boolean(publicCommentsError);
+    discussionRequested || discussionComments.length > 0 || Boolean(publicCommentsError);
   const publicCommentsToggleLabel =
-    publicCommentsFromOthers.length === 1
+    discussionComments.length === 1
       ? isPublicCommentsOpen
-        ? "Hide 1 public comment"
-        : "Show 1 public comment"
+        ? "Hide 1 comment"
+        : "Show 1 comment"
       : isPublicCommentsOpen
-        ? `Hide ${publicCommentsFromOthers.length} public comments`
-        : `Show ${publicCommentsFromOthers.length} public comments`;
+        ? `Hide ${discussionComments.length} comments`
+        : `Show ${discussionComments.length} comments`;
   const callScript = contactDrafts?.callScript ?? "";
   const messageTemplate = contactDrafts?.messageTemplate ?? "";
 
@@ -380,7 +381,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
         if (!cancelled) {
           setPublicCommentsStatus("error");
           setPublicCommentsError(
-            err.message || "Failed to load public comments",
+            err.message || "Failed to load comments",
           );
         }
       }
@@ -406,10 +407,11 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
   }, [hasPostedOwnedComment]);
 
   useEffect(() => {
-    if (publicCommentsFromOthers.length === 0) {
-      setIsPublicCommentsOpen(false);
+    if (active && discussionRequested && ["ready", "error"].includes(publicCommentsStatus)) {
+      publicDiscussionRef.current?.scrollIntoView({ block: "start" });
+      publicDiscussionRef.current?.focus({ preventScroll: true });
     }
-  }, [publicCommentsFromOthers.length]);
+  }, [active, discussionRequested, publicCommentsStatus]);
 
   useEffect(() => {
     contactDraftRequestRef.current += 1;
@@ -607,7 +609,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
         } catch (reloadErr) {
           setPublicCommentsStatus("error");
           setPublicCommentsError(
-            reloadErr.message || "Failed to load public comments",
+            reloadErr.message || "Failed to load comments",
           );
         }
       }
@@ -664,7 +666,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
         } catch (reloadErr) {
           setPublicCommentsStatus("error");
           setPublicCommentsError(
-            reloadErr.message || "Failed to load public comments",
+            reloadErr.message || "Failed to load comments",
           );
         }
       }
@@ -707,7 +709,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
         } catch (reloadErr) {
           setPublicCommentsStatus("error");
           setPublicCommentsError(
-            reloadErr.message || "Failed to load public comments",
+            reloadErr.message || "Failed to load comments",
           );
         }
       }
@@ -1286,12 +1288,16 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
         )}
         {showPublicCommentsPanel && (
           <section
+            id="public-comments"
+            ref={publicDiscussionRef}
+            tabIndex={-1}
+            aria-label="Comments"
             className="comment-thread public-comments-panel"
             aria-busy={publicCommentsStatus === "loading"}
           >
             <div className="comment-thread-header">
-              <div className="comment-thread-title">Public comments</div>
-              {publicCommentsFromOthers.length > 0 && (
+              <div className="comment-thread-title">Comments</div>
+              {discussionComments.length > 0 && (
                 <button
                   type="button"
                   className={`ghost-btn public-comments-toggle ${
@@ -1307,9 +1313,11 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
                 </button>
               )}
             </div>
-            {isPublicCommentsOpen && publicCommentsFromOthers.length > 0 && (
+            {publicCommentsStatus === "loading" && <p role="status">Loading comments…</p>}
+            {publicCommentsStatus === "ready" && discussionComments.length === 0 && <p>No comments yet.</p>}
+            {isPublicCommentsOpen && discussionComments.length > 0 && (
               <div id="public-comments-list" className="public-comments-list">
-                {publicCommentsFromOthers.map((comment) => {
+                {discussionComments.map((comment) => {
                   const isUsefulPending = Boolean(
                     usefulPendingByCommentId[comment.id],
                   );

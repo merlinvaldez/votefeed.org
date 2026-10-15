@@ -1,5 +1,22 @@
 import db from "../client.js";
 
+// Keep feed totals and the public discussion on exactly the same visibility rule.
+const publicVisibility = `bill_comments.is_public = true
+  AND bill_comments.moderation_status = 'approved'
+  AND bill_comments.approved_text IS NOT NULL`;
+
+export async function getPublicBillCommentCounts(billIds, runner = db) {
+  const ids = [...new Set(billIds)];
+  if (!ids.length) return new Map();
+  const { rows } = await runner.query(`SELECT bill_comments.bill_id, COUNT(*)::integer AS count
+    FROM bill_comments JOIN users ON users.id = bill_comments.user_id
+    WHERE bill_comments.bill_id = ANY($1::integer[]) AND ${publicVisibility}
+    GROUP BY bill_comments.bill_id`, [ids]);
+  const counts = new Map(ids.map(id => [id, 0]));
+  for (const row of rows) counts.set(row.bill_id, row.count);
+  return counts;
+}
+
 export async function getCommentByInteractionId(interactionId, runner = db) {
   const sql = `SELECT * FROM bill_comments WHERE interaction_id = $1`;
   const {
@@ -211,9 +228,7 @@ export async function listPublicCommentsByBillId(
     LEFT JOIN useful_counts ON useful_counts.comment_id = bill_comments.id
     LEFT JOIN viewer_votes ON viewer_votes.comment_id = bill_comments.id
     WHERE bill_comments.bill_id = $1
-      AND bill_comments.is_public = true
-      AND bill_comments.moderation_status = 'approved'
-      AND bill_comments.approved_text IS NOT NULL
+      AND ${publicVisibility}
     ORDER BY
       COALESCE(bill_comments.published_at, bill_comments.updated_at, bill_comments.created_at) DESC,
       bill_comments.id DESC

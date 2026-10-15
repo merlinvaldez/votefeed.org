@@ -385,15 +385,15 @@ function Feed(props) {
   if (!feedState?.votes) {
     return <div>Missing feed data</div>;
   }
-  const goToBill = (vote) => {
-    navigate(billNavigation(vote, selectedChamber, token ? null : feedLocation), {
+  const goToBill = (vote, discussion = false) => {
+    navigate(billNavigation(vote, selectedChamber, token ? null : feedLocation) + (discussion ? "#public-comments" : ""), {
       state: { district: feedLocation, sourceCardId: vote.id, sourceChamber: selectedChamber },
     });
   };
 
   const handleCommentIntent = (vote) => {
     if (promptGuestInteraction()) return;
-    goToBill(vote);
+    goToBill(vote, true);
   };
 
   const handlePolicySelection = (policyArea) => {
@@ -446,6 +446,8 @@ function Feed(props) {
 
       <section className="feed-section">
         <h2 className="section-title">Legislative Feed</h2>
+        {feedState?.warnings?.filter(warning => warning.code === "PUBLIC_COMMENT_COUNTS_UNAVAILABLE")
+          .map(warning => <p key={warning.code} role="status">{warning.message}</p>)}
         <div className="mobile-policy-filter">
           <div className="mobile-policy-header">
             <div className="mobile-policy-current">

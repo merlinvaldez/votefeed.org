@@ -4,7 +4,7 @@ import { selectDelegationVotes, groupDelegationVotes, filterAndCountFeedCards } 
 
 // Read the entire delegation together. Paging and card grouping belong after
 // this selection, never on independently paginated member lists.
-async function findDelegationVoteCandidates(delegation, runner = db) {
+async function findDelegationVoteCandidates(delegation, runner = db, includeSummaries = true) {
   const members = [delegation.houseMember, ...delegation.senators].filter(Boolean);
   const houseIds = members.filter(member => member.chamber === "House of Representatives")
     .map(member => member.bioguideid);
@@ -13,7 +13,8 @@ async function findDelegationVoteCandidates(delegation, runner = db) {
   if (!houseIds.length && !senateIds.length) return [];
   const { rows } = await runner.query(`WITH eligible_votes AS (
     SELECT m.*, b.id AS bill_id, b.title AS bill_title,
-      b.policy_area, b.legislation_url, b.summary, b.aisummary
+      b.policy_area, b.legislation_url,
+      ${includeSummaries ? "b.summary, b.aisummary" : "NULL::text AS summary, NULL::text AS aisummary"}
     FROM member_voting_record m
     JOIN bills b ON b.number = m.legislationnumber
       AND b.bill_type = m.legislation_type
@@ -89,9 +90,9 @@ export async function findLatestDelegationVotes(delegation, runner = db) {
 
 // Shared entry point: callers supply either req.user's saved state/district or
 // the guest address lookup's state/district. No user-supplied member IDs.
-export async function readDelegationFeedRecords(location, { runner = db, policyArea = null, chamber = "All Reps", resolvedDelegation } = {}) {
+export async function readDelegationFeedRecords(location, { runner = db, policyArea = null, chamber = "All Reps", resolvedDelegation, includeSummaries = true } = {}) {
   const delegation = resolvedDelegation ?? await findCurrentDelegation(location, runner);
-  const candidates = await findDelegationVoteCandidates(delegation, runner);
+  const candidates = await findDelegationVoteCandidates(delegation, runner, includeSummaries);
   const { votes, diagnostics } = selectDelegationVotes(candidates);
   const grouped = groupDelegationVotes(votes);
   const chamberCards = chamber === "All Reps" ? grouped.cards : grouped.cards.filter(card => card.event.chamber === chamber);
