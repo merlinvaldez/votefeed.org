@@ -3,80 +3,17 @@ import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { API_BASE } from "./constants";
 import RepCard from "./RepCard";
-import { summaryIdentity, hasSummaryText, summaryView, createSummaryRequests } from "./feedSummaries";
+import LegislativeVoteCard from "./LegislativeVoteCard";
+import { summaryIdentity, hasSummaryText, createSummaryRequests } from "./feedSummaries";
 import { buildFeedUrl, adaptDelegationFeed, mergeFeedPage, createFeedRequests } from "./delegationFeedClient";
 import { fetchDelegationAlignment } from "./alignmentRefresh";
 import { billNavigation } from "./billDetailContext";
-import { getVotePosition } from "./votePosition";
-import { findVoteInteraction, isAnsweredVote, getCardResponseTargets, buildMemberStancePayload, getCardResponseState, buildCardStanceRequest, reconcileCardStanceResult } from "./voteInteractions";
+import { findVoteInteraction, isAnsweredVote, getCardResponseTargets, buildMemberStancePayload, buildCardStanceRequest, reconcileCardStanceResult } from "./voteInteractions";
 import "./Feed.css";
 import {
   Info,
-  ThumbsUp,
-  ThumbsDown,
-  MessageCircle,
-  Clock3,
   Search,
-  CheckCircle2,
-  XCircle,
-  ScrollText,
 } from "lucide-react";
-
-const getRepLastName = (fullName = "") => {
-  const normalized = fullName.trim();
-  if (!normalized) return "";
-  if (normalized.includes(",")) {
-    return normalized.split(",")[0].trim();
-  }
-  const parts = normalized.split(/\s+/).filter(Boolean);
-  return parts[parts.length - 1] ?? "";
-};
-
-const formatVotedOn = (value) => {
-  if (!value) return "Unknown date";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "Unknown date";
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }).format(date);
-};
-
-const formatBillLabel = (type, number) => {
-  const normalized = String(type || "hr").toLowerCase();
-  const labels = {
-    hr: "H.R.",
-    hres: "H.Res.",
-    hjres: "H.J.Res.",
-    hconres: "H.Con.Res.",
-    s: "S.",
-    sres: "S.Res.",
-    sjres: "S.J.Res.",
-    sconres: "S.Con.Res.",
-  };
-  return `${labels[normalized] || normalized.toUpperCase()} ${number}`;
-};
-
-const formatLegislationType = (type) => {
-  const normalized = String(type || "").toLowerCase();
-  if (["hr", "s"].includes(normalized)) return "a bill";
-  if (["hres", "sres"].includes(normalized)) return "a resolution";
-  if (["hjres", "sjres"].includes(normalized)) return "a joint resolution";
-  if (["hconres", "sconres"].includes(normalized)) {
-    return "a concurrent resolution";
-  }
-  return "legislation";
-};
-
-const formatQuickSummary = (summary = "") => {
-  const trimmed = String(summary)
-    .replace(/^\s*to\s+/i, "")
-    .replace(/[.!?]+\s*$/, "")
-    .trim();
-  if (!trimmed) return "summarize what this measure would do";
-  return `${trimmed.charAt(0).toLowerCase()}${trimmed.slice(1)}`;
-};
 
 function Feed(props) {
   const PAGE_SIZE = 5;
@@ -584,195 +521,23 @@ function Feed(props) {
         {votes.length === 0 && <p>No eligible votes found for this delegation.</p>}
 
         {stanceError && <p className="error-text" role="alert">{stanceError}</p>}
-        {votes.map((vote) => {
-          const targets = getCardResponseTargets(vote);
-          const target = targets.length === 1 ? targets[0] : null;
-          const interaction = target ? findVoteInteraction(interactions, target.billId, target.memberId, target.memberVoteId) : null;
-          const responseState = getCardResponseState(vote, interactions);
-          const position = getVotePosition(vote.position ?? vote.vote, targets.length);
-          const answeredStance = responseState.stance;
-          const memberName = target?.name ?? (target?.memberId === rep?.bioguideid ? rep?.full_name : target?.memberId) ?? "";
-          const repLastName = targets.length === 2
-            ? targets.map(member => getRepLastName(member.name || member.memberId)).join(" and ")
-            : getRepLastName(memberName);
-          const memberTitle = targets.length === 2 ? "Sens." : target?.chamber === "Senate" ? "Sen." : "Rep.";
-          const responseDisabled = (isAuthed && (targets.length === 0 || targets.some(member =>
-            !member.memberId || !member.memberVoteId || Boolean(stancePending[member.memberVoteId]))));
-          const billType = vote.legislation_type;
-          const billIdentity = summaryIdentity(vote);
-          const voteKey = vote.id;
-          const billLabel = formatBillLabel(
-            vote.legislation_type,
-            vote.legislationnumber,
-          );
-          const showOriginal = Boolean(showOriginalByCard[voteKey]);
-          const isLoadingAi = aiLoadingByBill[billIdentity];
-          const aiText = hasSummaryText(aiSummaryByBill[billIdentity]) ? aiSummaryByBill[billIdentity]
-            : hasSummaryText(vote.simplifiedText) ? vote.simplifiedText : null;
-          const aiError = aiErrorByBill[billIdentity];
-          const legislationType = formatLegislationType(billType);
-          const voteClass = position.className;
-          const view = summaryView({ showOriginal, officialHtml: vote.officialSummary, simplifiedText: aiText, loading: isLoadingAi, error: aiError });
-          return (
-            <div key={voteKey} className="leg-card">
-              <div className="leg-top">
-                <div className="leg-meta-row">
-                  <button
-                    type="button"
-                    className="pill primary bill-link-pill"
-                    onClick={() => goToBill(vote)}
-                  >
-                    {billLabel}
-                  </button>
-                  <span className="leg-date">
-                    <Clock3 size={14}></Clock3>
-                    {formatVotedOn(vote.voted_on)}
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  className={`summary-source-toggle${showOriginal ? " active" : ""}`}
-                  onClick={() =>
-                    setShowOriginalByCard((prev) => ({
-                      ...prev,
-                      [voteKey]: !prev[voteKey],
-                    }))
-                  }
-                  aria-label={
-                    showOriginal
-                      ? "Show simplified summary"
-                      : "This is an AI-generated summary. Toggle here to see the original from Congress.gov."
-                  }
-                  aria-pressed={showOriginal}
-                  title={
-                    showOriginal
-                      ? "Show simplified summary"
-                      : "This is an AI-generated summary. Toggle here to see the original from Congress.gov."
-                  }
-                >
-                  <ScrollText size={24} strokeWidth={2} aria-hidden="true" />
-                </button>
-                {aiError && (
-                  <div className="error-text" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    {aiError}
-                    <button 
-                      type="button" 
-                      onClick={() => loadAiSummary(vote, true)}
-                      style={{ background: 'none', border: 'none', color: 'var(--primary-color)', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
-                    >
-                      Retry
-                    </button>
-                  </div>
-                )}
-              </div>
-              {view.mode === "official" && vote.officialSummary ? (
-                <div
-                  className="leg-body"
-                  dangerouslySetInnerHTML={{ __html: vote.officialSummary }}
-                />
-              ) : view.mode !== "simplified" ? (
-                <div className="leg-body" role="status">{view.message}</div>
-              ) : (
-                <div className="leg-body simple-vote-summary">
-                  {memberTitle} {repLastName}{" "}
-                  {position.verb}{position.label && (
-                    <>{" "}
-                      <span className={`pill inline-vote-pill ${voteClass}`}>
-                        {position.label}
-                      </span>
-                    </>
-                  )}{" "}
-                  on {billLabel}, {legislationType} to{" "}
-                  {formatQuickSummary(aiText)}.
-                </div>
-              )}
-              <div className="leg-vote">
-                {(() => {
-                  let resultClass = "neutral";
-                  if (vote.vote_result === "Passed") {
-                    resultClass = "success";
-                  } else if (vote.vote_result === "Failed") {
-                    resultClass = "danger";
-                  }
-                  return (
-                    <>
-                      {vote.vote_result && (
-                        <span className={`pill ${resultClass}`}>
-                            {vote.vote_result === "Passed" ? (
-                              <CheckCircle2 size={14} />
-                            ) : vote.vote_result === "Failed" ? (
-                              <XCircle size={14} />
-                            ) : null}
-                            {vote.vote_result}
-                        </span>
-                      )}
-                    </>
-                  );
-                })()}
-              </div>
-              {view.showAction && <p className="response-status">
-                {memberTitle} {repLastName} {position.verb}{position.label ? ` ${position.label}` : ""} on {billLabel}.
-              </p>}
-              {["mixed", "partial"].includes(responseState.status) && (
-                <p className="response-status" role="status">
-                  {responseState.status === "mixed" ? "Mixed responses: " : "Partial response: "}
-                  {responseState.answers.map(answer =>
-                    `${answer.name || answer.memberId}: ${answer.stance === "approve" ? "Agree" : answer.stance === "disapprove" ? "Disagree" : "Unanswered"}`
-                  ).join("; ")}. Choosing a response applies to both Senators.
-                </p>
-              )}
-              {responseState.invalid && <p className="error-text" role="alert">Some saved responses are invalid. Choose a response again or refresh.</p>}
-              <div className="leg-actions">
-                <button
-                  type="button"
-                  className={`ghost-btn ${
-                    answeredStance === "approve" ? "active approve" : ""
-                  }`}
-                  onClick={() => handleStance(vote, "approve")}
-                  disabled={responseDisabled}
-                  aria-label={`Agree with ${memberTitle} ${repLastName}`}
-                  aria-pressed={answeredStance === "approve"}
-                  title={`Agree with ${memberTitle} ${repLastName}`}
-                >
-                  <ThumbsUp size={16} />
-                  {answeredStance === "approve" && (
-                    <span>I agree with {memberTitle} {repLastName}</span>
-                  )}
-                </button>
-
-                <button
-                  type="button"
-                  className={`ghost-btn ${
-                    answeredStance === "disapprove"
-                      ? "active disapprove"
-                      : ""
-                  }`}
-                  onClick={() => handleStance(vote, "disapprove")}
-                  disabled={responseDisabled}
-                  aria-label={`Disagree with ${memberTitle} ${repLastName}`}
-                  aria-pressed={answeredStance === "disapprove"}
-                  title={`Disagree with ${memberTitle} ${repLastName}`}
-                >
-                  <ThumbsDown size={16} />
-                  {answeredStance === "disapprove" && (
-                    <span>I disagree with {memberTitle} {repLastName}</span>
-                  )}
-                </button>
-
-                <button
-                  type="button"
-                  className="comments"
-                  disabled={targets.some(member => Boolean(stancePending[member.memberVoteId]))}
-                  onClick={() => handleCommentIntent(vote)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <MessageCircle size={16} />
-                  {interaction?.user_comment ? "1 Comment" : "0 Comments"}
-                </button>
-              </div>
-            </div>
-          );
-        })}
+        {votes.map(vote => (
+          <LegislativeVoteCard key={vote.id}
+            vote={vote}
+            interactions={interactions}
+            isAuthed={isAuthed}
+            stancePending={stancePending}
+            showOriginalByCard={showOriginalByCard}
+            aiLoadingByBill={aiLoadingByBill}
+            aiSummaryByBill={aiSummaryByBill}
+            aiErrorByBill={aiErrorByBill}
+            setShowOriginalByCard={setShowOriginalByCard}
+            loadAiSummary={loadAiSummary}
+            goToBill={goToBill}
+            handleStance={handleStance}
+            handleCommentIntent={handleCommentIntent}
+          />
+        ))}
         {hasMore && (
           <div ref={sentinelRef} className="feed-loading">
             <div>{isFetchingMore ? "Loading more..." : "Scroll for more"}</div>
