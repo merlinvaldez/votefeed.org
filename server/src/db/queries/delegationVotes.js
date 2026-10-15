@@ -62,6 +62,7 @@ async function findDelegationVoteCandidates(delegation, runner = db) {
         name: member.full_name?.trim() || row.member_id,
         chamber,
         portrait: member.image_url ?? null,
+        party: member.party ?? null,
       },
       bill: {
         id: row.bill_id,
@@ -88,12 +89,13 @@ export async function findLatestDelegationVotes(delegation, runner = db) {
 
 // Shared entry point: callers supply either req.user's saved state/district or
 // the guest address lookup's state/district. No user-supplied member IDs.
-export async function readDelegationFeedRecords(location, { runner = db, policyArea = null, resolvedDelegation } = {}) {
+export async function readDelegationFeedRecords(location, { runner = db, policyArea = null, chamber = "All Reps", resolvedDelegation } = {}) {
   const delegation = resolvedDelegation ?? await findCurrentDelegation(location, runner);
   const candidates = await findDelegationVoteCandidates(delegation, runner);
   const { votes, diagnostics } = selectDelegationVotes(candidates);
   const grouped = groupDelegationVotes(votes);
-  const counted = filterAndCountFeedCards(grouped.cards, policyArea);
+  const chamberCards = chamber === "All Reps" ? grouped.cards : grouped.cards.filter(card => card.event.chamber === chamber);
+  const counted = filterAndCountFeedCards(chamberCards, policyArea);
   const allDiagnostics = [...diagnostics, ...grouped.diagnostics];
   for (const diagnostic of allDiagnostics) {
     console.warn("Delegation feed record diagnostic", diagnostic);
@@ -106,10 +108,10 @@ export async function readDelegationFeedRecords(location, { runner = db, policyA
   const hasMembers = Boolean(delegation.houseMember) || delegation.senators.length > 0;
   const emptyReason = counted.cards.length ? null
     : !hasMembers ? "NO_DELEGATION"
-    : !grouped.cards.length && warnings.length ? "INVALID_VOTE_DATA"
-    : !grouped.cards.length ? "NO_ELIGIBLE_VOTES"
+    : !chamberCards.length && warnings.length ? "INVALID_VOTE_DATA"
+    : !chamberCards.length ? "NO_ELIGIBLE_VOTES"
     : "NO_POLICY_MATCHES";
-  return { delegation, votes, ...counted, diagnostics: allDiagnostics,
+  return { delegation, votes, selectedChamber: chamber, ...counted, diagnostics: allDiagnostics,
     warnings, dataStatus: warnings.length ? "partial" : "complete", emptyReason,
     retry: warnings.length ? { mode: "refresh", message: "Refresh the feed to retry excluded records." } : null };
 }

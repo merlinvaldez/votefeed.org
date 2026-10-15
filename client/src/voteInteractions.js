@@ -1,4 +1,3 @@
-import { getVotePosition } from "./votePosition.js";
 
 export function findVoteInteraction(interactions, billId, memberId, memberVoteId) {
   const matching = interactions.filter(interaction =>
@@ -73,9 +72,6 @@ export function getCardResponseState(card, interactions) {
 }
 
 export function buildCardStanceRequest(card, interactions, stance) {
-  if (!getVotePosition(card.position ?? card.vote).comparable) {
-    throw new Error("This recorded position cannot be compared for alignment");
-  }
   const targets = getCardResponseTargets(card);
   if (targets.length !== 2 || targets.some(target => target.chamber !== "Senate") ||
       targets[0].billId !== targets[1].billId ||

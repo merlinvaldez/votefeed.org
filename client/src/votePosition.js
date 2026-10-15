@@ -10,6 +10,5 @@ export function getVotePosition(position, memberCount = 1) {
     label: normalized && normalized !== "not voting" ? position : null,
     className: ["yea", "aye"].includes(normalized) ? "success" :
       ["nay", "no"].includes(normalized) ? "danger" : "neutral",
-    unavailableReason: comparable ? null : "This recorded position cannot be compared for alignment. Agree and Disagree are unavailable.",
   };
 }

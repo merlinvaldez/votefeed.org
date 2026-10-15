@@ -7,7 +7,8 @@ const timestamp = row => row.voted_on_precise ?? new Date(row.voted_on).toISOStr
 
 // Count complete display groups, including uncategorized cards in All.
 // Preserve exact policy names so sidebar selections use the same equality.
-export function filterAndCountFeedCards(cards, policyArea = null) {
+export function filterAndCountFeedCards(cards, policyArea = null, chamber = "All Reps") {
+  cards = chamber === "All Reps" ? cards : cards.filter(card => card.event.chamber === chamber);
   const counts = new Map();
   for (const card of cards) {
     const name = card.bill.policyArea;

@@ -11,15 +11,13 @@ test("client eligibility matches server classification while retaining raw posit
     if (position.comparable) {
       assert.equal(position.verb, "voted");
       assert.equal(position.label, raw);
-      assert.equal(position.unavailableReason, null);
     } else {
       assert.equal(position.className, "neutral");
-      assert.ok(position.unavailableReason);
     }
   }
 });
 
-test("non-voting and unsupported positions have truthful copy and cannot build a batch response", () => {
+test("all recorded positions have truthful copy and can build a batch response", () => {
   assert.equal(getVotePosition("Not Voting").verb, "did not vote");
   assert.equal(getVotePosition("Not Voting").label, null);
   assert.equal(getVotePosition("Present").verb, "was recorded as");
@@ -31,7 +29,7 @@ test("non-voting and unsupported positions have truthful copy and cannot build a
     { bioguideId: "S2", memberVoteId: 102, chamber: "Senate" },
   ] };
   for (const position of ["Not Voting", "Present", "Paired", "Yes", null]) {
-    assert.throws(() => buildCardStanceRequest({ ...card, position }, [], "approve"), /cannot be compared/);
+    assert.equal(buildCardStanceRequest({ ...card, position }, [], "approve").stance, "approve");
   }
   assert.equal(buildCardStanceRequest({ ...card, position: "Yea" }, [], "approve").stance, "approve");
 });

@@ -32,9 +32,9 @@ function formatLegislationReference(type, number) {
   return `${labels[normalized] || "legislation"} ${number}`;
 }
 
-function buildRepReference(repFullName = "") {
+function buildRepReference(repFullName = "", repChamber = "House") {
   const repLastName = getRepLastName(repFullName);
-  return repFullName ? `Rep. ${repLastName || repFullName}` : "my representative";
+  return repFullName ? `${repChamber === "Senate" ? "Sen." : "Rep."} ${repLastName || repFullName}` : "my representative";
 }
 
 function normalizeParagraphBreaks(text = "") {
@@ -103,13 +103,14 @@ export async function generateCommentContactDrafts({
   billType,
   billNumber,
   repFullName,
+  repChamber = "House",
   stance,
   approvedCommentText,
 }) {
   const contactDraftAgent = await loadContactDraftAgent();
-  const districtLabel = formatDistrictLabel(userState, userDistrict);
+  const districtLabel = repChamber === "Senate" ? userState || "your state" : formatDistrictLabel(userState, userDistrict);
   const legislationReference = formatLegislationReference(billType, billNumber);
-  const repReference = buildRepReference(repFullName);
+  const repReference = buildRepReference(repFullName, repChamber);
   const positionVerb = stance === "approve" ? "agree" : "disagree";
 
   const input = [

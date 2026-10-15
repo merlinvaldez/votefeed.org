@@ -1,5 +1,4 @@
 import db from "../client.js";
-import { normalizeMemberPosition } from "../../utils/voteAlignment.js";
 
 const fail = (status, message) => { throw Object.assign(new Error(message), { status }); };
 const positive = value => Number.isSafeInteger(value) && value > 0;
@@ -50,7 +49,7 @@ export async function saveBatchStances(userId, body, pool = db) {
       const url = typeof row.legislation_url === "string" ? row.legislation_url : "";
       const official = measure && new RegExp(`^https://www[.]congress[.]gov/bill/${row.congress_number}(st|nd|rd|th)-congress/${measure}/${row.legislationnumber}(/|[?#]|$)`).test(url);
       if (![row.congress_number, row.session_number, row.roll_call_number, row.legislationnumber].every(positive) ||
-          !official || !row.event_time || !normalizeMemberPosition(row.vote)) {
+          !official || !row.event_time) {
         fail(400, "Unsupported recorded vote or bill link");
       }
     }

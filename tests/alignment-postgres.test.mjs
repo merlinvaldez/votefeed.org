@@ -51,8 +51,8 @@ test("isolated PostgreSQL: migration, pair query, summaries and answer updates",
     const user = { id: 1, state: "New York", district: 0 };
     const result = await getDelegationAlignment(user, { chamber: "All Reps", policyArea: "Health", runner: client });
     assert.equal(result.percent, 93);
-    assert.equal(result.agreementCount, 82);
-    assert.equal(result.comparableCount, 102);
+    assert.equal(result.agreementCount, 83);
+    assert.equal(result.comparableCount, 103);
     assert.equal(result.byChamber.House.percent, 80);
     assert.equal(result.byChamber.Senate.percent, 100);
     assert.equal(result.membersWithData, 3);
@@ -63,7 +63,7 @@ test("isolated PostgreSQL: migration, pair query, summaries and answer updates",
     assert.equal(await validateStanceVoteLink({ billId: 8, memberId: "H", memberVoteId: 103 }, client), null);
     assert.match(await validateStanceVoteLink({ billId: 7, memberId: "H", memberVoteId: 103 }, client), /does not match/);
     assert.match(await validateStanceVoteLink({ billId: 7, memberId: "S1", memberVoteId: 1 }, client), /does not match/);
-    assert.match(await validateStanceVoteLink({ billId: 7, memberId: "H", memberVoteId: 104 }, client), /cannot be compared/);
+    assert.equal(await validateStanceVoteLink({ billId: 7, memberId: "H", memberVoteId: 104 }, client), null);
     assert.match(await validateStanceVoteLink({ billId: 7, memberId: "H", memberVoteId: 1, existingVoteId: 2 }, client), /different voting event/);
     assert.equal((await findMemberVoteForBill("H", 8, client)).member_vote_id, 103);
 

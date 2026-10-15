@@ -58,3 +58,15 @@ test("direct agreement treats No exactly like Nay", () => {
     }
   }
 });
+
+ test("exact action agreement counts every recorded position without inventing a bill stance", () => {
+  const linked = { bill_id: 7, stance: 'approve', member_vote_id: 10, rep_bioguide_id: 'H001' };
+  for (const position of ['Not Voting', 'Present', 'Paired', 'Abstain', 'Unknown', '', null]) {
+    const action = { ...vote, vote: position };
+    assert.equal(compareStanceWithMemberVote(linked, action).agrees, true);
+    assert.equal(compareStanceWithMemberVote({ ...linked, stance: 'disapprove' }, action).agrees, false);
+    assert.equal(compareStanceWithMemberVote({ ...linked, member_vote_id: 11 }, action), null);
+    assert.equal(compareStanceWithMemberVote({ ...linked, rep_bioguide_id: 'Other' }, action), null);
+    assert.equal(compareStanceWithMemberVote({ bill_id: 7, stance: 'support' }, action), null);
+  }
+});

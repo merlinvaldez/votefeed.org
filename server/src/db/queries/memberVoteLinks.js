@@ -1,5 +1,4 @@
 import db from "../client.js";
-import { normalizeMemberPosition } from "../../utils/voteAlignment.js";
 
 export async function findMemberVoteForBill(memberId, billId, runner = db) {
   const { rows: [vote] } = await runner.query(`SELECT
@@ -26,5 +25,5 @@ export async function validateStanceVoteLink({ billId, memberId, memberVoteId, e
     JOIN bills b ON b.number = m.legislationnumber AND b.bill_type = m.legislation_type
     WHERE m.id = $1 AND m.member_id = $2 AND b.id = $3`, [memberVoteId, memberId, billId]);
   if (!vote) return "Recorded vote does not match the bill and representative";
-  return normalizeMemberPosition(vote.vote) ? null : "This member position cannot be compared";
+  return null;
 }

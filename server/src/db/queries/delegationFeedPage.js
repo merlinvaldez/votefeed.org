@@ -7,9 +7,11 @@ import { paginateFeed } from "../../utils/feedPagination.js";
 // API adapters must pass the authenticated saved user or the guest location;
 // user identity is supplied by the authentication middleware, never URL claims.
 export async function readDelegationFeedPage(location, options = {}) {
-  const { runner = db, userId = null, ...pageOptions } = options;
+  const { runner = db, userId = null, chamber = "All Reps", ...pageOptions } = options;
+  if (!["All Reps", "House", "Senate"].includes(chamber)) throw Object.assign(new Error("Invalid chamber"), { status: 400, code: "INVALID_FEED_CURSOR" });
   const delegation = await findCurrentDelegation(location, runner);
   const scope = {
+    chamber,
     viewer: userId === null ? "guest" : `user:${userId}`,
     state: delegation.state.trim().toLowerCase(), district: delegation.district,
     members: [delegation.houseMember, ...delegation.senators].filter(Boolean)
@@ -18,7 +20,7 @@ export async function readDelegationFeedPage(location, options = {}) {
   };
   return paginateFeed({ ...pageOptions, scope, store: postgresFeedSnapshots(runner),
     load: () => readDelegationFeedRecords(location, {
-      runner, resolvedDelegation: delegation, policyArea: pageOptions.policyArea ?? null,
+      runner, resolvedDelegation: delegation, policyArea: pageOptions.policyArea ?? null, chamber,
     }),
     validateSnapshot: async snapshot => {
       const expected = snapshot.payload.cards.flatMap(card => card.members.map(member => ({ card, member })));

@@ -4,6 +4,7 @@ export default router;
 import { findRepByDistrict } from "../db/queries/reps.js";
 import { findCurrentDelegation } from "../db/queries/delegation.js";
 import { delegationFeedHandler } from "./delegationFeed.js";
+import { billDelegationHandler } from "./billDelegation.js";
 import {
   findMemberPolicyAreas,
   findMemberVotes,
@@ -16,6 +17,7 @@ import {
 } from "../db/queries/users.js";
 import requireBody from "../middleware/requireBody.js";
 import requireUser from "../middleware/requireUser.js";
+router.get("/me/delegation/bills/:billType/:billNumber", requireUser, billDelegationHandler({ authenticated: true }));
 
 import {
   ADDRESS_NOT_FOUND_CODE,

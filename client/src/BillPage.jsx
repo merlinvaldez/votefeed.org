@@ -1,6 +1,11 @@
-import { useEffect, useEffectEvent, useRef, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { isAnsweredVote } from "./voteInteractions";
+import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { isAnsweredVote, getCardResponseState, buildCardStanceRequest, reconcileCardStanceResult } from "./voteInteractions";
+import { panelBill } from "./billDetailContext";
+import BillVoteFolders from "./BillVoteFolders";
+import GroupContactGuides from "./GroupContactGuides";
+import { sharedContactRequest, validateSharedContactDrafts } from "./sharedContactFlow";
+import { officialSummaryHtml } from "./feedSummaries";
 import { getVotePosition } from "./votePosition";
 import "./Feed.css";
 import "./BillPage.css";
@@ -78,13 +83,13 @@ const formatLegislationType = (type) => {
   return "legislation";
 };
 
-const formatQuickSummary = (summary = "") => {
+const formatQuickSummary = (summary = "", capitalize = false) => {
   const trimmed = String(summary)
     .replace(/^\s*to\s+/i, "")
     .replace(/[.!?]+\s*$/, "")
     .trim();
   if (!trimmed) return "summarize what this measure would do";
-  return `${trimmed.charAt(0).toLowerCase()}${trimmed.slice(1)}`;
+  return `${capitalize ? trimmed.charAt(0).toUpperCase() : trimmed.charAt(0).toLowerCase()}${trimmed.slice(1)}`;
 };
 
 const formatCommentTimestamp = (value) => {
@@ -158,11 +163,15 @@ const requestPublicComments = async ({ billId, isAuthed, authFetch }) => {
   return data.comments ?? [];
 };
 
-export default function BillPage() {
+export default function BillDetailPanel({ detail, folder, active, folders, selectedFolder, onFolderChange, onBusy, showOriginal, setShowOriginal }) {
   const navigate = useNavigate();
   const { billType, billNumber } = useParams();
-  const { state } = useLocation();
-  const [rep, setRep] = useState(state?.rep ?? null);
+  const card = folder.id === "All Reps" ? null : folder.cards[0] ?? null;
+  // A combined card has one comment composer and one discussion comment.
+  // Individual recipients appear only inside the contact guides.
+  const member = card?.members[0];
+  const roster = [detail.delegation.houseMember, ...detail.delegation.senators].filter(Boolean);
+  const rep = roster.find(item => item.bioguideid === member?.bioguideId) ?? null;
   const repFullName = rep?.full_name ?? "";
   const repLastName = getRepLastName(repFullName);
   const { token, authFetch } = useAuth();
@@ -171,12 +180,15 @@ export default function BillPage() {
   const guestHighlightTimeoutRef = useRef(null);
   const copyNoticeTimeoutRef = useRef(null);
   const commentMenuRef = useRef(null);
-  const [bill, setBill] = useState(state?.bill || state?.vote || null);
-  const [status, setStatus] = useState(bill ? "ready" : "loading");
-  const [error, setError] = useState("");
+  const bill = useMemo(() => panelBill(detail, card, member), [detail, card, member]);
+  const status = "ready";
+  const error = "";
   const [interaction, setInteraction] = useState(null);
+  const [groupInteractions, setGroupInteractions] = useState([]);
+  const [interactionsReady, setInteractionsReady] = useState(false);
   const [ownedCommentId, setOwnedCommentId] = useState(null);
   const [commentDraftText, setCommentDraftText] = useState("");
+  const commentDraftsRef = useRef(new Map());
   const [commentModerationStatus, setCommentModerationStatus] = useState(null);
   const [isCommentPublic, setIsCommentPublic] = useState(false);
   const [isCommentComposerOpen, setIsCommentComposerOpen] = useState(false);
@@ -186,6 +198,8 @@ export default function BillPage() {
   const [userName, setUserName] = useState("");
   const [interactionError, setInteractionError] = useState("");
   const [isSavingStance, setIsSavingStance] = useState(false);
+  const busy = isSavingStance || isSubmittingComment || isSavingCommentPublic;
+  useEffect(() => { if (active) onBusy(busy); }, [active, busy, onBusy]);
   const stancePendingRef = useRef(false);
   const [isGuestBarHighlighted, setIsGuestBarHighlighted] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
@@ -204,26 +218,15 @@ export default function BillPage() {
   const [isPublicCommentsOpen, setIsPublicCommentsOpen] = useState(false);
   const [usefulPendingByCommentId, setUsefulPendingByCommentId] = useState({});
 
-  const [showOriginal, setShowOriginal] = useState(true);
-  const [aiSummary, setAiSummary] = useState("");
+  const [aiSummary, setAiSummary] = useState(detail.bill.aisummary || "");
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState("");
 
+  const officialHtml = officialSummaryHtml(bill?.summary);
   const billId = bill?.bill_id ?? bill?.id ?? null;
   const fullBillUrl = bill?.legislation_url ?? null;
   const canReadFullBill = Boolean(fullBillUrl);
   const latestVoteDate = bill?.latest_vote_date ?? bill?.voted_on ?? null;
-  const voteYesCount = Number(bill?.vote_yes_count ?? 0);
-  const voteNoCount = Number(bill?.vote_no_count ?? 0);
-  const totalCountedVotes = voteYesCount + voteNoCount;
-  const yesVotePercent =
-    totalCountedVotes > 0 ? (voteYesCount / totalCountedVotes) * 100 : 0;
-  const voteResultPillClass =
-    bill?.vote_result === "Passed"
-      ? "success"
-      : bill?.vote_result === "Failed"
-        ? "danger"
-        : "neutral";
   const repVotePillClass = getVotePosition(bill?.vote).className;
   const memberTitle = String(rep?.chamber || "")
     .toLowerCase()
@@ -234,24 +237,26 @@ export default function BillPage() {
     bill?.legislation_type ?? bill?.bill_type ?? billType,
   );
   const position = getVotePosition(bill?.vote);
-  const VoteResultIcon =
-    bill?.vote_result === "Failed" ? XCircle : CheckCircle2;
   const memberVoteId = bill?.member_vote_id ?? null;
-  const currentStance = position.comparable && isAnsweredVote(interaction, memberVoteId) ? interaction.stance : null;
+  const grouped = card?.members.length === 2;
+  const groupStanceKey = grouped ? JSON.stringify(groupInteractions.map(answer => [answer.id, answer.member_vote_id, answer.stance])) : null;
+  const groupResponse = grouped ? getCardResponseState(card, groupInteractions) : null;
+  const currentStance = grouped ? groupResponse.stance : isAnsweredVote(interaction, memberVoteId) ? interaction.stance : null;
   const billLabel = formatBillLabel(
     bill?.legislation_type ?? bill?.bill_type,
     bill?.legislationnumber ?? bill?.number ?? billNumber,
   );
   const repReference = repFullName
-    ? `Rep. ${repLastName || repFullName}`
+    ? `${memberTitle} ${repLastName || repFullName}`
     : "my representative";
+  const responseReference = grouped ? `Sens. ${card.members.map(item => getRepLastName(item.name)).join(" and ")}` : repReference;
   const repContactUrl = buildRepContactUrl(rep?.official_website_url);
   const repDialHref = getDialHref(rep?.office_phone);
   const commentAuthorName = userName || "You";
   const approvedCommentText = interaction?.comment_approved_text?.trim() ?? "";
   const hasPostedOwnedComment = Boolean(approvedCommentText);
   const publicCommentsFromOthers = publicComments.filter(
-    (comment) => !comment.is_owned_by_viewer,
+    (comment) => !card || !comment.is_owned_by_viewer,
   );
   const showPostedOwnedComment =
     hasPostedOwnedComment && !isCommentComposerOpen;
@@ -307,129 +312,53 @@ export default function BillPage() {
   };
 
   useEffect(() => {
+    if (!active || showOriginal || aiSummary || aiError) return;
     let cancelled = false;
-
-    setAiSummary("");
     setAiLoading(true);
-    setAiError("");
-
     (async () => {
       try {
-        const resp = await fetch(
-          `${API_BASE}/bills/${billType}/${billNumber}/ai-summary`,
-        );
-        if (!resp.ok) throw new Error("AI summary failed");
+        const resp = await fetch(`${API_BASE}/bills/${billType}/${billNumber}/ai-summary?congress=${bill.congress_number}`);
+        if (!resp.ok) throw new Error("Simplified summary unavailable");
         const data = await resp.json();
+        if (typeof data.aiSummary !== "string" || !data.aiSummary.trim()) throw new Error("Simplified summary unavailable");
         if (!cancelled) setAiSummary(data.aiSummary);
       } catch {
-        if (!cancelled) setAiError("AI summary failed");
-      } finally {
-        if (!cancelled) setAiLoading(false);
-      }
+        if (!cancelled) setAiError("Simplified summary unavailable. Showing the official summary.");
+      } finally { if (!cancelled) setAiLoading(false); }
     })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [billNumber, billType]);
+    return () => { cancelled = true; };
+  }, [active, showOriginal, aiSummary, aiError, billNumber, billType, bill.congress_number]);
 
   useEffect(() => {
-    if (bill) return;
+    if (!active || !token || !card) return;
     let cancelled = false;
-    (async () => {
-      try {
-        setStatus("loading");
-        const resp = await fetch(`${API_BASE}/bills/${billType}/${billNumber}`);
-        if (!resp.ok) throw new Error(`Bill load failed (${resp.status})`);
-        const data = await resp.json();
-        if (!cancelled) {
-          setBill(data);
-          setStatus("ready");
-        }
-      } catch (err) {
-        if (!cancelled) {
-          setError(err.message || "Failed to load bill");
-          setStatus("error");
-        }
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [bill, billNumber, billType]);
-
-  useEffect(() => {
-    if (!billId || !rep?.bioguideid || memberVoteId) return;
-    const controller = new AbortController();
-    async function loadMemberVote() {
-      try {
-        const resp = await fetch(`${API_BASE}/housevotes/member/${rep.bioguideid}/bill/${billId}`, {
-          signal: controller.signal,
-        });
-        if (!resp.ok) throw new Error("No recorded representative vote available for this bill");
-        const vote = await resp.json();
-        if (!controller.signal.aborted) setBill(prev => ({ ...prev, ...vote }));
-      } catch (err) {
-        if (!controller.signal.aborted) setInteractionError(err.message);
-      }
-    }
-    loadMemberVote();
-    return () => controller.abort();
-  }, [billId, rep?.bioguideid, memberVoteId]);
-
-  useEffect(() => {
-    if (!token || !billId) return;
-    let cancelled = false;
-
+    setInteractionsReady(false);
     (async () => {
       try {
         setInteractionError("");
         const meResp = await authFetch(`${API_BASE}/users/me`);
         if (!meResp.ok) throw new Error("Failed to load user");
         const me = await meResp.json();
-        if (!cancelled) setUserId(me.id);
-        if (!cancelled)
-          setUserName(`${me.first_name || ""} ${me.last_name || ""}`.trim());
-
-        if (
-          (!state?.rep ||
-            !state?.rep?.official_website_url ||
-            !state?.rep?.office_phone) &&
-          me.state &&
-          me.district != null
-        ) {
-          const repResp = await authFetch(
-            `${API_BASE}/reps/district/${me.state}/${me.district}`,
-          );
-          if (repResp.ok) {
-            const repData = await repResp.json();
-            if (!cancelled) setRep(repData);
-          }
-        }
-
-        const interactionResp = await authFetch(
-          `${API_BASE}/interactions/users/${me.id}/bill/${billId}?${new URLSearchParams({
-            ...(memberVoteId ? { memberVoteId: String(memberVoteId) } : {}),
-            ...(rep?.bioguideid ? { repBioguideId: rep.bioguideid } : {}),
-          })}`,
-        );
-        if (!interactionResp.ok) throw new Error("Failed to load interaction");
-        const text = await interactionResp.text();
-        const data = text ? JSON.parse(text) : null;
-        if (!cancelled) setInteraction(data || null);
-      } catch (err) {
-        if (!cancelled)
-          setInteractionError(err.message || "Failed to load interaction");
-      }
+        const answers = await Promise.all(card.members.map(async target => {
+          const params = new URLSearchParams({ memberVoteId: String(target.memberVoteId), repBioguideId: target.bioguideId });
+          const resp = await authFetch(`${API_BASE}/interactions/users/${me.id}/bill/${billId}?${params}`);
+          if (!resp.ok) throw new Error("Failed to load responses");
+          const text = await resp.text();
+          return text ? JSON.parse(text) : null;
+        }));
+        if (cancelled) return;
+        setUserId(me.id);
+        setUserName(`${me.first_name || ""} ${me.last_name || ""}`.trim());
+        setGroupInteractions(answers.filter(Boolean));
+        setInteraction(answers.find(answer => answer?.rep_bioguide_id === rep?.bioguideid) ?? null);
+        setInteractionsReady(true);
+      } catch (err) { if (!cancelled) setInteractionError(err.message); }
     })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [token, billId, authFetch, memberVoteId, rep?.bioguideid, state?.rep]);
+    return () => { cancelled = true; };
+  }, [active, token, card, billId, authFetch, rep?.bioguideid]);
 
   useEffect(() => {
-    if (!billId) return;
+    if (!active || !billId) return;
     let cancelled = false;
 
     (async () => {
@@ -460,14 +389,14 @@ export default function BillPage() {
     return () => {
       cancelled = true;
     };
-  }, [billId, isAuthed, authFetch]);
+  }, [active, billId, isAuthed, authFetch]);
 
   useEffect(() => {
     setOwnedCommentId(interaction?.comment_id ?? null);
-    setCommentDraftText(interaction?.comment_draft_text ?? "");
+    setCommentDraftText(commentDraftsRef.current.get(memberVoteId) ?? interaction?.comment_draft_text ?? "");
     setCommentModerationStatus(interaction?.comment_moderation_status ?? null);
     setIsCommentPublic(Boolean(interaction?.comment_is_public));
-  }, [interaction?.comment_id, interaction?.comment_draft_text, interaction?.comment_moderation_status, interaction?.comment_is_public]);
+  }, [memberVoteId, interaction?.comment_id, interaction?.comment_draft_text, interaction?.comment_moderation_status, interaction?.comment_is_public]);
 
   useEffect(() => {
     if (!hasPostedOwnedComment) {
@@ -488,6 +417,7 @@ export default function BillPage() {
     setContactDraftStatus("idle");
     setContactDraftError("");
   }, [
+    groupStanceKey,
     interaction?.id,
     interaction?.stance,
     interaction?.comment_id,
@@ -517,8 +447,8 @@ export default function BillPage() {
   };
 
   const loadContactDrafts = useEffectEvent(async () => {
-    if (stancePendingRef.current || !interaction?.id || !hasPostedOwnedComment) return null;
-    if (contactDrafts?.callScript && contactDrafts?.messageTemplate) {
+    if (!active || stancePendingRef.current || !interaction?.id || !hasPostedOwnedComment) return null;
+    if (contactDrafts?.members?.length === 2 || (contactDrafts?.callScript && contactDrafts?.messageTemplate)) {
       return contactDrafts;
     }
     if (contactDraftStatus === "loading") return null;
@@ -528,13 +458,17 @@ export default function BillPage() {
       setContactDraftError("");
       setContactDraftStatus("loading");
       const resp = await authFetch(
-        `${API_BASE}/interactions/${interaction.id}/comment/contact-drafts`,
+        `${API_BASE}/interactions/${interaction.id}/comment/contact-drafts${grouped ? "/group" : ""}`,
+        grouped ? { method: "POST", body: JSON.stringify(sharedContactRequest(card, groupInteractions)) } : undefined,
       );
       if (!resp.ok) {
         const details = await resp.text();
-        throw new Error(details || "Failed to prepare contact drafts");
+        let message = details;
+        try { message = JSON.parse(details).error || details; } catch { /* Plain-text legacy errors. */ }
+        throw new Error(message || "Failed to prepare contact drafts");
       }
       const drafts = await resp.json();
+      if (grouped) validateSharedContactDrafts(card, drafts);
       if (requestId !== contactDraftRequestRef.current || stancePendingRef.current) return null;
       setContactDrafts(drafts);
       setContactDraftStatus("ready");
@@ -549,11 +483,13 @@ export default function BillPage() {
 
   useEffect(() => {
     if (
+      !active ||
       isSavingStance ||
       (selectedAction !== "call" && selectedAction !== "message") ||
       !hasPostedOwnedComment ||
       contactDrafts?.callScript ||
       contactDrafts?.messageTemplate ||
+      contactDrafts?.members?.length ||
       contactDraftStatus !== "idle"
     ) {
       return;
@@ -561,6 +497,7 @@ export default function BillPage() {
 
     void loadContactDrafts();
   }, [
+    active,
     selectedAction,
     isSavingStance,
     hasPostedOwnedComment,
@@ -653,6 +590,7 @@ export default function BillPage() {
       );
       if (!resp.ok) throw new Error("Failed to submit comment for moderation");
       const moderatedComment = await resp.json();
+      commentDraftsRef.current.delete(memberVoteId);
       setInteraction((currentInteraction) =>
         mergeCommentIntoInteraction(currentInteraction, moderatedComment),
       );
@@ -689,6 +627,7 @@ export default function BillPage() {
     if (stancePendingRef.current) return;
     if (!approvedCommentText) return;
     setInteractionError("");
+    commentDraftsRef.current.set(memberVoteId, approvedCommentText);
     setCommentDraftText(approvedCommentText);
     setSelectedAction(null);
     setIsCommentMenuOpen(false);
@@ -705,6 +644,7 @@ export default function BillPage() {
         method: "DELETE",
       });
       if (!resp.ok) throw new Error("Failed to delete comment");
+      commentDraftsRef.current.delete(memberVoteId);
       setSelectedAction(null);
       setIsCommentMenuOpen(false);
       setIsCommentComposerOpen(false);
@@ -824,12 +764,11 @@ export default function BillPage() {
   };
 
   const handleStanceClick = async (nextStance) => {
-    if (!position.comparable) return;
     if (!token) {
       promptGuestInteraction();
       return;
     }
-    if (!billId) return;
+    if (!card || !billId || !interactionsReady) return;
     if (!rep?.bioguideid) {
       setInteractionError(
         "Loading your representative details. Try again in a moment.",
@@ -847,6 +786,19 @@ export default function BillPage() {
 
     try {
       setInteractionError("");
+      if (grouped) {
+        const request = buildCardStanceRequest(card, groupInteractions, nextStance);
+        const resp = await authFetch(`${API_BASE}/interactions/stances/batch`, {
+          method: "PUT", body: JSON.stringify(request),
+        });
+        if (!resp.ok) throw new Error("Failed to save both Senator responses. Please retry.");
+        const result = await resp.json();
+        const confirmed = reconcileCardStanceResult(groupInteractions, request, result.interactions);
+        setGroupInteractions(confirmed);
+        const saved = confirmed.find(answer => answer.rep_bioguide_id === rep.bioguideid);
+        setInteraction(prev => ({ ...prev, ...saved }));
+        return;
+      }
         if (isAnsweredVote(interaction, memberVoteId) && interaction.stance === nextStance) {
           const resp = await authFetch(
             `${API_BASE}/interactions/${interaction.id}/stance`,
@@ -890,6 +842,7 @@ export default function BillPage() {
       setIsSavingStance(false);
     }
   };
+  if (!active) return null;
   return (
     <>
       <button className="back-link" onClick={() => navigate(-1)}>
@@ -928,7 +881,7 @@ export default function BillPage() {
           <button
             type="button"
             className={`summary-source-toggle${showOriginal ? " active" : ""}`}
-            onClick={() => setShowOriginal((current) => !current)}
+            onClick={() => setShowOriginal(!showOriginal)}
             aria-label={
               showOriginal
                 ? "Show simplified summary"
@@ -946,12 +899,13 @@ export default function BillPage() {
         </div>
         {status === "loading" && <p>Loading summary</p>}
         {status === "error" && <p className="error-text">{error}</p>}
-        {(showOriginal || aiError) && bill?.summary && (
+        {(showOriginal || aiError) && officialHtml && (
           <div
             className="leg-body"
-            dangerouslySetInnerHTML={{ __html: bill.summary }}
+            dangerouslySetInnerHTML={{ __html: officialHtml }}
           ></div>
         )}
+        {(showOriginal || aiError) && !officialHtml && <p className="leg-body">The official summary is unavailable.</p>}
         {status === "ready" &&
           !showOriginal &&
           !aiError &&
@@ -964,64 +918,19 @@ export default function BillPage() {
           !aiError &&
           aiSummary && (
           <div className="leg-body simple-vote-summary">
-            {memberTitle} {repLastName}{" "}
+            {card && <>{responseReference}{" "}
             {position.verb}{position.label && (
               <>{" "}
                 <span className={`pill inline-vote-pill ${repVotePillClass}`}>
                   {position.label}
                 </span>
               </>
-            )}{" "}
-            on {billLabel}, {legislationType} to {formatQuickSummary(aiSummary)}.
+            )}{" "}on {billLabel}, </>}{card && <>{legislationType} to </>}{formatQuickSummary(aiSummary, !card)}.
           </div>
         )}
-        {!position.comparable && <p className="response-status">
-          {memberTitle} {repLastName} {position.verb}{position.label ? ` ${position.label}` : ""} on {billLabel}.
-          {" "}{position.unavailableReason}
-        </p>}
         {aiError && <p className="error-text">{aiError}</p>}
-        {bill?.vote_result && (
-          <section className="vote-result-card">
-            <div className="vote-result-grid">
-              {bill?.vote && (
-                <div className="vote-result-block">
-                  <div className="vote-result-label">
-                    Rep. {repLastName} Voted
-                  </div>
-                  <span className={`pill ${repVotePillClass} vote-result-pill`}>
-                    {bill.vote}
-                  </span>
-                </div>
-              )}
-              <div className="vote-result-block">
-                <div className="vote-result-label">Result</div>
-                <span
-                  className={`pill ${voteResultPillClass} vote-result-pill`}
-                >
-                  <VoteResultIcon size={14}></VoteResultIcon>
-                  {bill.vote_result}
-                </span>
-              </div>
-              <div className="vote-result-block vote-result-counts">
-                <div className="vote-result-label">Vote Counts</div>
-                <div className="vote-count-bar" aria-hidden="true">
-                  <span
-                    className="vote-count-bar-yes"
-                    style={{ width: `${yesVotePercent}%` }}
-                  ></span>
-                  <span
-                    className="vote-count-bar-no"
-                    style={{ width: `${100 - yesVotePercent}%` }}
-                  ></span>
-                </div>
-                <div className="vote-count-row">
-                  <span className="vote-count-yes">{voteYesCount} Yea</span>
-                  <span className="vote-count-no">{voteNoCount} Nay</span>
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
+        <BillVoteFolders tabs={folders} selected={selectedFolder} onSelect={onFolderChange} disabled={busy} />
+        {grouped && ["mixed", "partial"].includes(groupResponse.status) && <p className="bill-response-notice" role="status">Your responses differ or are incomplete. Choosing Agree or Disagree applies to both Senators.</p>}
         {canReadFullBill && (
           <div className="bill-reference-row">
             <a
@@ -1038,21 +947,21 @@ export default function BillPage() {
             </a>
           </div>
         )}
-        <div className="vote-actions">
+        {card && <div className="vote-actions">
           <button
             type="button"
             className={`ghost-btn ${
               currentStance === "approve" ? "active approve" : ""
             }`}
             onClick={() => handleStanceClick("approve")}
-            disabled={!position.comparable || (isAuthed && (!memberVoteId || isSavingStance || isSubmittingComment || isSavingCommentPublic))}
-            aria-label={`Agree with ${repReference}`}
+            disabled={isAuthed && (!memberVoteId || !interactionsReady || busy)}
+            aria-label={`Agree with ${responseReference}`}
             aria-pressed={currentStance === "approve"}
-            title={`Agree with ${repReference}`}
+            title={`Agree with ${responseReference}`}
           >
             <ThumbsUp size={16} />
             {currentStance === "approve" && (
-              <span>I agree with {repReference}</span>
+              <span>I agree with {responseReference}</span>
             )}
           </button>
           <button
@@ -1061,14 +970,14 @@ export default function BillPage() {
               currentStance === "disapprove" ? "active disapprove" : ""
             }`}
             onClick={() => handleStanceClick("disapprove")}
-            disabled={!position.comparable || (isAuthed && (!memberVoteId || isSavingStance || isSubmittingComment || isSavingCommentPublic))}
-            aria-label={`Disagree with ${repReference}`}
+            disabled={isAuthed && (!memberVoteId || !interactionsReady || busy)}
+            aria-label={`Disagree with ${responseReference}`}
             aria-pressed={currentStance === "disapprove"}
-            title={`Disagree with ${repReference}`}
+            title={`Disagree with ${responseReference}`}
           >
             <ThumbsDown size={16} />
             {currentStance === "disapprove" && (
-              <span>I disagree with {repReference}</span>
+              <span>I disagree with {responseReference}</span>
             )}
           </button>
           {interaction?.id && !hasPostedOwnedComment && (
@@ -1090,9 +999,9 @@ export default function BillPage() {
               {isCommentComposerOpen && <span>Comment</span>}
             </button>
           )}
-        </div>
+        </div>}
 
-            {showOwnedCommentThread && (
+            {card && showOwnedCommentThread && (
               <fieldset className="comment-thread" aria-label="Your comment and contact actions" disabled={isSavingStance} style={{ border: 0, margin: 0, padding: 0, minWidth: 0 }}>
                 <div className="comment-thread-header">
                   <div className="comment-thread-title">Comments</div>
@@ -1109,7 +1018,10 @@ export default function BillPage() {
                 <section id="bill-comment-composer" className="comment-box">
                   <textarea
                     value={commentDraftText}
-                    onChange={(event) => setCommentDraftText(event.target.value)}
+                    onChange={(event) => {
+                      commentDraftsRef.current.set(memberVoteId, event.target.value);
+                      setCommentDraftText(event.target.value);
+                    }}
                     placeholder="Write your comment here..."
                     aria-label="Comment draft"
                   ></textarea>
@@ -1256,7 +1168,17 @@ export default function BillPage() {
                         {publicVisibilityError}
                       </p>
                     )}
-                    {!isSavingStance && selectedAction === "call" && (
+                    {grouped && !isSavingStance && ["call", "message"].includes(selectedAction) && (
+                      <GroupContactGuides action={selectedAction} status={contactDraftStatus} error={contactDraftError}
+                        drafts={contactDrafts} onRetry={() => { setContactDraftStatus("idle"); setContactDraftError(""); }}
+                        members={card.members.map(target => {
+                          const person = roster.find(item => item.bioguideid === target.bioguideId);
+                          return { id: target.bioguideId, name: getRepLastName(target.name),
+                            phone: person?.office_phone, dialHref: getDialHref(person?.office_phone),
+                            contactUrl: buildRepContactUrl(person?.official_website_url) };
+                        })} />
+                    )}
+                    {!grouped && !isSavingStance && selectedAction === "call" && (
                       <section
                         id="bill-call-script-panel"
                         className="action-guide-card comment-action-panel"
@@ -1287,7 +1209,7 @@ export default function BillPage() {
                         )}
                       </section>
                     )}
-                    {!isSavingStance && selectedAction === "message" && (
+                    {!grouped && !isSavingStance && selectedAction === "message" && (
                       <section
                         id="bill-message-template-panel"
                         className="action-guide-card comment-action-panel"
@@ -1408,7 +1330,7 @@ export default function BillPage() {
                             </span>
                           )}
                         </div>
-                        <button
+                        {card && <button
                           type="button"
                           className={`ghost-btn public-useful-btn ${
                             comment.viewer_has_marked_useful ? "active" : ""
@@ -1431,7 +1353,7 @@ export default function BillPage() {
                           <span className="public-useful-count">
                             {comment.useful_count}
                           </span>
-                        </button>
+                        </button>}
                       </div>
                       <div className="public-comment-text">{comment.text}</div>
                     </article>

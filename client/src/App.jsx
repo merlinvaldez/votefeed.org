@@ -3,7 +3,7 @@ import { Analytics } from "@vercel/analytics/react";
 import RequireFeedData from "./RequireFeedData";
 import LandingPage from "./LandingPage";
 import Feed from "./Feed";
-import BillPage from "./BillPage";
+import BillPage from "./BillPageRoute";
 import Login from "./Login";
 import Signup from "./Signup";
 import Profile from "./Profile";

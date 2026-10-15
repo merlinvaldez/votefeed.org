@@ -58,7 +58,7 @@ test("PostgreSQL: shared delegation read selects latest eligible member measures
     assert.deepEqual(saved.votes.map(row => row.member_vote_id), [2, 3, 4, 8]);
     assert.deepEqual(saved.votes.map(row => row.vote), ["Nay", "Yea", "Aye", "Not Voting"]);
     await client.query("CREATE SCHEMA delegation_snapshot_test");
-    const migration = await readFile(new URL("../supabase/migrations/20261013212148_legislative_feed_snapshots.sql", import.meta.url), "utf8");
+    const migration = await readFile(new URL("../supabase/migrations/20261014192544_legislative_feed_snapshots.sql", import.meta.url), "utf8");
     await client.query(migration.replaceAll("public.", "delegation_snapshot_test."));
     const runner = { query: (sql, params) => client.query(sql.replaceAll(
       "public.legislative_feed_snapshots", "delegation_snapshot_test.legislative_feed_snapshots"), params) };

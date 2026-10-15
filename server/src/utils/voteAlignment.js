@@ -27,7 +27,17 @@ export function compareStanceWithMemberVote(stance, memberVote) {
       !sameId(stance.bill_id, memberVote.bill_id)) return null;
 
   const memberPosition = normalizeMemberPosition(memberVote.vote);
-  if (!memberPosition) return null;
+  // Agreement answers refer directly to the exact recorded action, including
+  // Not Voting and Present. They do not require a support/oppose classification.
+  if (["approve", "disapprove"].includes(stance.stance)) {
+    if (!sameId(stance.member_vote_id, memberVote.id) ||
+        !sameId(stance.rep_bioguide_id, memberVote.member_id)) return null;
+    if (!memberPosition) return {
+      userPosition: stance.stance,
+      memberPosition: memberVote.vote ?? null,
+      agrees: stance.stance === "approve",
+    };
+  } else if (!memberPosition) return null;
 
   let userPosition;
   switch (stance.stance) {
@@ -37,7 +47,7 @@ export function compareStanceWithMemberVote(stance, memberVote) {
       break;
     case "approve":
     case "disapprove":
-      // Legacy agreement is meaningful only for the exact action answered.
+      // Agreement is meaningful only for the exact action answered.
       if (!sameId(stance.member_vote_id, memberVote.id) ||
           !sameId(stance.rep_bioguide_id, memberVote.member_id)) return null;
       userPosition = stance.stance === "approve"

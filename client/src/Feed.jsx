@@ -3,7 +3,10 @@ import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { API_BASE } from "./constants";
 import RepCard from "./RepCard";
+import { summaryIdentity, hasSummaryText, summaryView, createSummaryRequests } from "./feedSummaries";
+import { buildFeedUrl, adaptDelegationFeed, mergeFeedPage, createFeedRequests } from "./delegationFeedClient";
 import { fetchDelegationAlignment } from "./alignmentRefresh";
+import { billNavigation } from "./billDetailContext";
 import { getVotePosition } from "./votePosition";
 import { findVoteInteraction, isAnsweredVote, getCardResponseTargets, buildMemberStancePayload, getCardResponseState, buildCardStanceRequest, reconcileCardStanceResult } from "./voteInteractions";
 import "./Feed.css";
@@ -75,30 +78,9 @@ const formatQuickSummary = (summary = "") => {
   return `${trimmed.charAt(0).toLowerCase()}${trimmed.slice(1)}`;
 };
 
-const buildFeedUrl = ({
-  isGuest,
-  repId,
-  pageSize,
-  offset = 0,
-  policyArea = null,
-}) => {
-  const baseUrl = isGuest
-    ? `${API_BASE}/housevotes/member/${repId}`
-    : `${API_BASE}/users/me/feed`;
-  const params = new URLSearchParams();
-  if (!policyArea) {
-    params.set("limit", String(pageSize));
-    params.set("offset", String(offset));
-  }
-  if (policyArea) {
-    params.set("policyArea", policyArea);
-  }
-  const queryString = params.toString();
-  return queryString ? `${baseUrl}?${queryString}` : baseUrl;
-};
-
 function Feed(props) {
   const PAGE_SIZE = 5;
+  const [selectedChamber, setSelectedChamber] = useState("All Reps");
   const { token, authFetch } = useAuth();
   const isAuthed = Boolean(token);
   const location = useLocation();
@@ -117,7 +99,7 @@ function Feed(props) {
   const [alignmentError, setAlignmentError] = useState("");
   const [stanceError, setStanceError] = useState("");
 
-  const [feedState, setFeedState] = useState(location.state || props.state);
+  const [feedState, setFeedState] = useState(token ? null : location.state || props.state);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [isGuestBarHighlighted, setIsGuestBarHighlighted] = useState(false);
@@ -125,11 +107,18 @@ function Feed(props) {
   const [interactions, setInteractions] = useState([]);
   const [userId, setUserId] = useState(null);
   const [savedLocation, setSavedLocation] = useState(null);
-  const [hasMore, setHasmore] = useState(true);
+  const guestLocation = (location.state || props.state)?.district;
+  const feedLocation = token ? savedLocation : guestLocation;
+  const scopeKey = JSON.stringify([token ? userId : "guest", feedLocation?.state,
+    feedLocation?.congressionalDistrict ?? feedLocation?.district, selectedPolicyArea, selectedChamber, location.key]);
+  const [feedRequests] = useState(createFeedRequests);
+  const isCurrentFeed = feedState?.scopeKey === scopeKey;
+  const hasMore = isCurrentFeed && Boolean(feedState?.page?.hasMore);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const sentinelRef = useRef(null);
-  const votes = useMemo(() => feedState?.votes ?? [], [feedState?.votes]);
+  const votes = useMemo(() => isCurrentFeed ? feedState?.votes ?? [] : [], [isCurrentFeed, feedState?.votes]);
 
+  const [summaryRequests] = useState(createSummaryRequests);
   const [showOriginalByCard, setShowOriginalByCard] = useState({});
   const [aiSummaryByBill, setAiSummaryByBill] = useState({});
   const [aiLoadingByBill, setAiLoadingByBill] = useState({});
@@ -137,7 +126,6 @@ function Feed(props) {
   const [mobilePolicySearch, setMobilePolicySearch] = useState("");
   const [isMobilePolicySearchOpen, setIsMobilePolicySearchOpen] =
     useState(false);
-  const isFilteringByPolicy = selectedPolicyArea !== null;
   const availablePolicyAreas = feedState?.policyAreas ?? [];
   const totalPolicyCount = feedState?.totalPolicyCount ?? 0;
   const normalizedMobilePolicySearch = mobilePolicySearch.trim().toLowerCase();
@@ -148,7 +136,6 @@ function Feed(props) {
   useEffect(() => {
     setSidebarPolicyAreas(feedState?.policyAreas ?? []);
     setSidebarTotalPolicyCount(feedState?.totalPolicyCount ?? 0);
-    setSelectedPolicyArea(feedState?.selectedPolicyArea ?? null);
   }, [
     feedState,
     setSidebarPolicyAreas,
@@ -188,171 +175,89 @@ function Feed(props) {
     return true;
   };
 
-  const loadAiSummary = useEffectEvent(async (billType, billNumber, forceRetry = false) => {
-    const billIdentity = `${billType}-${billNumber}`;
-    if (
-      !forceRetry && 
-      (aiSummaryByBill[billIdentity] ||
-      aiLoadingByBill[billIdentity] ||
-      aiErrorByBill[billIdentity])
-    ) {
-      return;
-    }
-    setAiLoadingByBill((prev) => ({ ...prev, [billIdentity]: true }));
-    setAiErrorByBill((prev) => ({ ...prev, [billIdentity]: null }));
+  const loadAiSummary = async (card, forceRetry = false) => {
+    const billIdentity = summaryIdentity(card);
+    if (!forceRetry && (hasSummaryText(card.simplifiedText) || hasSummaryText(aiSummaryByBill[billIdentity]) || aiErrorByBill[billIdentity])) return;
+    if (!summaryRequests.begin(billIdentity)) return;
+    setAiLoadingByBill(prev => ({ ...prev, [billIdentity]: true }));
+    setAiErrorByBill(prev => ({ ...prev, [billIdentity]: null }));
     try {
-      const resp = await fetch(
-        `${API_BASE}/bills/${billType}/${billNumber}/ai-summary`,
-      );
-      if (!resp.ok) throw new Error("Ai summary failed");
+      const params = new URLSearchParams({ congress: String(card.bill.congress) });
+      const resp = await fetch(`${API_BASE}/bills/${card.bill.type}/${card.bill.number}/ai-summary?${params}`);
+      if (!resp.ok) throw new Error("The simplified summary could not be loaded.");
       const data = await resp.json();
-      setAiSummaryByBill((prev) => ({
-        ...prev,
-        [billIdentity]: data.aiSummary,
-      }));
-    } catch {
-      setAiErrorByBill((prev) => ({
-        ...prev,
-        [billIdentity]: "AI summary failed",
-      }));
+      if (!hasSummaryText(data.aiSummary)) throw new Error("The simplified summary is unavailable.");
+      setAiSummaryByBill(prev => ({ ...prev, [billIdentity]: data.aiSummary }));
+    } catch (err) {
+      setAiErrorByBill(prev => ({ ...prev, [billIdentity]: err.message }));
     } finally {
-      setAiLoadingByBill((prev) => ({ ...prev, [billIdentity]: false }));
+      summaryRequests.finish(billIdentity);
+      setAiLoadingByBill(prev => ({ ...prev, [billIdentity]: false }));
     }
-  });
+  };
 
+  const loadSummaryOnEntry = useEffectEvent(loadAiSummary);
   useEffect(() => {
-    votes.forEach((vote) => {
-      if (!vote.legislation_type || !vote.legislationnumber) return;
-      loadAiSummary(vote.legislation_type, vote.legislationnumber);
-    });
+    votes.forEach(vote => loadSummaryOnEntry(vote));
   }, [votes]);
 
   useEffect(() => {
-    if (token) return;
-    if (feedState?.votes && (feedState?.rep || feedState?.district?.state)) return;
-    navigate("/", { replace: true });
-  }, [token, feedState, navigate]);
+    if (!token && !guestLocation?.state) navigate("/", { replace: true });
+  }, [token, guestLocation?.state, navigate]);
 
   useEffect(() => {
-    if (feedState?.votes && (feedState?.rep || feedState?.district?.state)) return;
-    if (!token) return;
-
-    let cancelled = false;
-
+    feedRequests.reset();
+    setIsFetchingMore(false);
+    setError("");
+    setFeedState(null);
+    if (!feedLocation?.state || (token && !userId)) return;
+    const ticket = feedRequests.begin();
+    setLoading(true);
     (async () => {
       try {
-        setLoading(true);
-        const resp = await authFetch(
-          buildFeedUrl({
-            isGuest: false,
-            pageSize: PAGE_SIZE,
-            offset: 0,
-            policyArea: selectedPolicyArea,
-          }),
-        );
+        const url = buildFeedUrl({ apiBase: API_BASE, isGuest: !token,
+          district: feedLocation, pageSize: PAGE_SIZE, policyArea: selectedPolicyArea, chamber: selectedChamber });
+        const resp = await (token ? authFetch(url, { signal: ticket.controller.signal })
+          : fetch(url, { signal: ticket.controller.signal }));
         if (!resp.ok) throw new Error("Failed to load feed");
-        const feed = await resp.json();
-        if (!cancelled) setFeedState(feed);
-        if (!cancelled)
-          setHasmore(
-            selectedPolicyArea === null && feed.votes.length === PAGE_SIZE,
-          );
+        const feed = adaptDelegationFeed(await resp.json());
+        if (!feedRequests.current(ticket)) return;
+        setFeedState({ ...feed, scopeKey, district: token ? null : feedLocation });
       } catch (err) {
-        if (!cancelled) setError(err.message || "Failed to load feed");
+        if (feedRequests.current(ticket)) setError(err.message || "Failed to load feed");
       } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [feedState, token, authFetch, selectedPolicyArea]);
-
-  useEffect(() => {
-    const currentPolicyArea = feedState?.selectedPolicyArea ?? null;
-    const repId = feedState?.rep?.bioguideid;
-    if (selectedPolicyArea === currentPolicyArea) return;
-    if (!token && !repId) return;
-
-    let cancelled = false;
-
-    (async () => {
-      try {
-        setLoading(true);
-        setError("");
-        const isGuest = !token;
-        const url = buildFeedUrl({
-          isGuest,
-          repId,
-          pageSize: PAGE_SIZE,
-          offset: 0,
-          policyArea: selectedPolicyArea,
-        });
-        const resp = isGuest ? await fetch(url) : await authFetch(url);
-        if (!resp.ok) throw new Error("Failed to filter feed");
-        const nextFeed = await resp.json();
-        if (cancelled) return;
-        setFeedState((prev) => ({
-          ...prev,
-          ...nextFeed,
-          rep: nextFeed.rep ?? prev?.rep ?? null,
-        }));
-        setHasmore(
-          selectedPolicyArea === null &&
-            (nextFeed.votes?.length ?? 0) === PAGE_SIZE,
-        );
-      } catch (err) {
-        if (!cancelled) {
-          setError(err.message || "Failed to filter feed");
-        }
-      } finally {
-        if (!cancelled) {
+        if (feedRequests.current(ticket)) {
           setLoading(false);
+          feedRequests.finish(ticket);
         }
       }
     })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [
-    authFetch,
-    feedState?.rep?.bioguideid,
-    feedState?.selectedPolicyArea,
-    selectedPolicyArea,
-    token,
-  ]);
+    return () => feedRequests.reset();
+  }, [scopeKey, token, userId, feedLocation, selectedPolicyArea, selectedChamber, authFetch, feedRequests]);
 
   const loadMoreVotes = useEffectEvent(async () => {
-    if (isFetchingMore) return;
+    if (!isCurrentFeed || loading || !hasMore || !feedState.page.nextCursor) return;
+    const ticket = feedRequests.begin();
+    if (!ticket) return;
+    const cursor = feedState.page.nextCursor;
     setIsFetchingMore(true);
     try {
-      const offset = votes.length;
-      const repId = feedState?.rep?.bioguideid;
-      const isGuest = !token;
-      const url = buildFeedUrl({
-        isGuest,
-        repId,
-        pageSize: PAGE_SIZE,
-        offset,
-        policyArea: selectedPolicyArea,
-      });
-      const resp = isGuest ? await fetch(url) : await authFetch(url);
+      const url = buildFeedUrl({ apiBase: API_BASE, isGuest: !token,
+        district: feedLocation, pageSize: PAGE_SIZE, cursor, policyArea: selectedPolicyArea, chamber: selectedChamber });
+      const resp = await (token ? authFetch(url, { signal: ticket.controller.signal })
+        : fetch(url, { signal: ticket.controller.signal }));
       if (!resp.ok) throw new Error("Failed to load more votes");
-      const nextFeed = await resp.json();
-      const nextVotes = nextFeed.votes ?? [];
-        setFeedState((prev) => ({
-          ...prev,
-          ...nextFeed,
-          rep: nextFeed.rep ?? prev?.rep ?? null,
-          votes: [...(prev?.votes ?? []), ...nextVotes],
-        }));
-        setHasmore(nextVotes.length === PAGE_SIZE);
+      const nextFeed = adaptDelegationFeed(await resp.json());
+      if (!feedRequests.current(ticket)) return;
+      setFeedState(prev => prev?.scopeKey === scopeKey
+        ? mergeFeedPage(prev, nextFeed, cursor) : prev);
     } catch (err) {
-      setError(err.message || "Failed to load more votes");
+      if (feedRequests.current(ticket)) setError(err.message || "Failed to load more votes");
     } finally {
-      setIsFetchingMore(false);
+      if (feedRequests.current(ticket)) {
+        setIsFetchingMore(false);
+        feedRequests.finish(ticket);
+      }
     }
   });
 
@@ -361,8 +266,7 @@ function Feed(props) {
     const observer = new IntersectionObserver(
       (entries) => {
         if (!entries[0]?.isIntersecting) return;
-        if (selectedPolicyArea !== null) return;
-        if (!token && !feedState?.rep) return;
+        if (!token && !feedLocation?.state) return;
         if (!hasMore || isFetchingMore) return;
         if (loading) return;
         loadMoreVotes();
@@ -373,11 +277,11 @@ function Feed(props) {
     return () => observer.disconnect();
   }, [
     token,
-    feedState?.rep,
+    feedLocation?.state,
     hasMore,
     isFetchingMore,
     loading,
-    votes.length,
+    feedState?.page?.nextCursor,
     selectedPolicyArea,
   ]);
 
@@ -410,16 +314,13 @@ function Feed(props) {
     return () => {
       cancelled = true;
     };
-  }, [token, authFetch]);
+  }, [token, authFetch, location.key]);
 
-  const rep = feedState?.rep;
+  const rep = feedState?.delegation ? feedState.delegation.houseMember : feedState?.rep;
   // Signed-in profiles take precedence over any guest navigation data.
-  const cardLocation = isAuthed
-    ? savedLocation
-    : {
-        state: feedState?.district?.state ?? null,
-        district: feedState?.district?.congressionalDistrict ?? null,
-      };
+  // Location remains available during loading and House vacancies. Preserve
+  // both supported district shapes, including at-large district zero.
+  const cardLocation = feedLocation ?? null;
   const alignmentForCard = isAuthed ? feedState?.alignment ?? null : null;
 
   const refreshAlignmentSummary = async () => {
@@ -430,7 +331,7 @@ function Feed(props) {
     try {
       const alignment = await fetchDelegationAlignment(authFetch, API_BASE, policyArea);
       if (requestId !== alignmentRequestRef.current) return;
-      setFeedState(prev => prev && (prev.selectedPolicyArea ?? null) === policyArea
+      setFeedState(prev => prev?.scopeKey === scopeKey && (prev.selectedPolicyArea ?? null) === policyArea
         ? { ...prev, alignment } : prev);
     } catch (err) {
       if (requestId === alignmentRequestRef.current) setAlignmentError(err.message);
@@ -447,10 +348,9 @@ function Feed(props) {
   useEffect(() => {
     refreshAlignmentOnEntry();
     return () => { alignmentRequestRef.current += 1; };
-  }, [token, savedLocation?.state, savedLocation?.district, selectedPolicyArea]);
+  }, [token, savedLocation?.state, savedLocation?.district, selectedPolicyArea, feedState?.scopeKey]);
 
   const handleStance = async (vote, stance) => {
-    if (!getVotePosition(vote.position ?? vote.vote).comparable) return;
     if (!isAuthed || !userId) {
       promptGuestInteraction();
       return;
@@ -542,16 +442,16 @@ function Feed(props) {
     }
   };
 
-  if (loading) return <div className="feed-loading">Loading feed...</div>;
+  if (loading || (!isCurrentFeed && !error)) return <div className="feed-loading">Loading feed...</div>;
   if (error) return <div className="error">{error}</div>;
 
   if (!feedState?.votes) {
     return <div>Missing feed data</div>;
   }
   const goToBill = (vote) => {
-    const billNumber = vote.legislationnumber;
-    const billType = vote.legislation_type;
-    navigate(`/bill/${billType}/${billNumber}`, { state: { rep, bill: vote } });
+    navigate(billNavigation(vote, selectedChamber, token ? null : feedLocation), {
+      state: { district: feedLocation, sourceCardId: vote.id, sourceChamber: selectedChamber },
+    });
   };
 
   const handleCommentIntent = (vote) => {
@@ -588,7 +488,7 @@ function Feed(props) {
             <Info className="guest-icon" strokeWidth={1.75}></Info>
             <div>
               <div className="guest-title">Viewing as Guest</div>
-              <div className="guest-sub">Your interactions wonâ€™t be saved.</div>
+              <div className="guest-sub">Your interactions won&apos;t be saved.</div>
             </div>
           </div>
           <button className="guest-cta" onClick={() => navigate("/signup")}>
@@ -598,6 +498,8 @@ function Feed(props) {
       )}
 
       <RepCard
+        chamber={selectedChamber}
+        onChamberChange={setSelectedChamber}
         rep={rep}
         location={cardLocation}
         alignment={alignmentForCard}
@@ -679,7 +581,7 @@ function Feed(props) {
             </div>
           )}
         </div>
-        {votes.length === 0 && <p>No votes found for this member.</p>}
+        {votes.length === 0 && <p>No eligible votes found for this delegation.</p>}
 
         {stanceError && <p className="error-text" role="alert">{stanceError}</p>}
         {votes.map((vote) => {
@@ -688,29 +590,29 @@ function Feed(props) {
           const interaction = target ? findVoteInteraction(interactions, target.billId, target.memberId, target.memberVoteId) : null;
           const responseState = getCardResponseState(vote, interactions);
           const position = getVotePosition(vote.position ?? vote.vote, targets.length);
-          const answeredStance = position.comparable ? responseState.stance : null;
+          const answeredStance = responseState.stance;
           const memberName = target?.name ?? (target?.memberId === rep?.bioguideid ? rep?.full_name : target?.memberId) ?? "";
           const repLastName = targets.length === 2
             ? targets.map(member => getRepLastName(member.name || member.memberId)).join(" and ")
             : getRepLastName(memberName);
           const memberTitle = targets.length === 2 ? "Sens." : target?.chamber === "Senate" ? "Sen." : "Rep.";
-          const responseDisabled = !position.comparable || (isAuthed && (targets.length === 0 || targets.some(member =>
+          const responseDisabled = (isAuthed && (targets.length === 0 || targets.some(member =>
             !member.memberId || !member.memberVoteId || Boolean(stancePending[member.memberVoteId]))));
           const billType = vote.legislation_type;
-          const billNumber = vote.legislationnumber;
-          const billIdentity = `${billType}-${billNumber}`;
-          const voteKey = `${vote.legislationnumber}-${vote.session_number}-${vote.roll_call_number}`;
+          const billIdentity = summaryIdentity(vote);
+          const voteKey = vote.id;
           const billLabel = formatBillLabel(
             vote.legislation_type,
             vote.legislationnumber,
           );
           const showOriginal = Boolean(showOriginalByCard[voteKey]);
           const isLoadingAi = aiLoadingByBill[billIdentity];
-          const aiText = aiSummaryByBill[billIdentity];
+          const aiText = hasSummaryText(aiSummaryByBill[billIdentity]) ? aiSummaryByBill[billIdentity]
+            : hasSummaryText(vote.simplifiedText) ? vote.simplifiedText : null;
           const aiError = aiErrorByBill[billIdentity];
           const legislationType = formatLegislationType(billType);
           const voteClass = position.className;
-          const useOfficialSummary = showOriginal || aiError;
+          const view = summaryView({ showOriginal, officialHtml: vote.officialSummary, simplifiedText: aiText, loading: isLoadingAi, error: aiError });
           return (
             <div key={voteKey} className="leg-card">
               <div className="leg-top">
@@ -755,7 +657,7 @@ function Feed(props) {
                     {aiError}
                     <button 
                       type="button" 
-                      onClick={() => loadAiSummary(vote.legislation_type, vote.legislationnumber, true)}
+                      onClick={() => loadAiSummary(vote, true)}
                       style={{ background: 'none', border: 'none', color: 'var(--primary-color)', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
                     >
                       Retry
@@ -763,13 +665,13 @@ function Feed(props) {
                   </div>
                 )}
               </div>
-              {useOfficialSummary ? (
+              {view.mode === "official" && vote.officialSummary ? (
                 <div
                   className="leg-body"
-                  dangerouslySetInnerHTML={{ __html: vote.summary }}
+                  dangerouslySetInnerHTML={{ __html: vote.officialSummary }}
                 />
-              ) : isLoadingAi || !aiText ? (
-                <div className="leg-body">Creating summary.</div>
+              ) : view.mode !== "simplified" ? (
+                <div className="leg-body" role="status">{view.message}</div>
               ) : (
                 <div className="leg-body simple-vote-summary">
                   {memberTitle} {repLastName}{" "}
@@ -808,11 +710,10 @@ function Feed(props) {
                   );
                 })()}
               </div>
-              {!position.comparable && <p className="response-status">
+              {view.showAction && <p className="response-status">
                 {memberTitle} {repLastName} {position.verb}{position.label ? ` ${position.label}` : ""} on {billLabel}.
-                {" "}{position.unavailableReason}
               </p>}
-              {position.comparable && ["mixed", "partial"].includes(responseState.status) && (
+              {["mixed", "partial"].includes(responseState.status) && (
                 <p className="response-status" role="status">
                   {responseState.status === "mixed" ? "Mixed responses: " : "Partial response: "}
                   {responseState.answers.map(answer =>
@@ -872,7 +773,7 @@ function Feed(props) {
             </div>
           );
         })}
-        {!isFilteringByPolicy && hasMore && (
+        {hasMore && (
           <div ref={sentinelRef} className="feed-loading">
             <div>{isFetchingMore ? "Loading more..." : "Scroll for more"}</div>
           </div>

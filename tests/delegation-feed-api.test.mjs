@@ -5,6 +5,56 @@ import db from "../server/src/db/client.js";
 import repsRouter from "../server/src/api/reps.js";
 import usersRouter from "../server/src/api/users.js";
 import { delegationFeedHandler } from "../server/src/api/delegationFeed.js";
+import { paginateFeed } from "../server/src/utils/feedPagination.js";
+import { buildFeedUrl, adaptDelegationFeed, mergeFeedPage } from "../client/src/delegationFeedClient.js";
+
+test("House vacancy permits guest and saved-location Senate continuation with policy filtering", async () => {
+  for (const authenticated of [false, true]) {
+    const snapshots = new Map();
+    const delegation = { state: "Alaska", district: 0, houseMember: null,
+      senators: [{ bioguideid: "S1" }, { bioguideid: "S2" }] };
+    const cards = [1, 2, 3].map(id => ({ id: `senate-${id}`,
+      event: { chamber: "Senate", congress: 119, session: 2, rollCall: id },
+      position: "Yea", votedOn: `2026-10-0${id}T12:00:00.000000Z`,
+      bill: { id, congress: 119, type: "s", number: id, policyArea: id === 1 ? "Education" : "Health" },
+      summary: { officialHtml: null, simplifiedText: "Example" },
+      members: [{ bioguideId: "S1", memberVoteId: id * 2 }, { bioguideId: "S2", memberVoteId: id * 2 + 1 }] }));
+    const app = express();
+    app.use((req, _res, next) => { req.user = { id: 7, state: "Alaska", district: 0 }; next(); });
+    app.get(authenticated ? "/users/me/delegation/feed" : "/reps/delegation/feed",
+      delegationFeedHandler({ authenticated, readPage: async (location, options) => {
+        assert.equal(location.state, "Alaska");
+        assert.equal(Number(location.district), 0);
+        assert.equal(options.userId, authenticated ? 7 : null);
+        return paginateFeed({ ...options,
+          scope: { viewer: authenticated ? "user:7" : "guest", state: location.state,
+            district: Number(location.district), chamber: options.chamber },
+          store: { save: async snapshot => snapshots.set(snapshot.id, snapshot), get: async id => snapshots.get(id) },
+          load: async () => ({ delegation, selectedChamber: options.chamber,
+            cards: cards.filter(card => !options.policyArea || card.bill.policyArea === options.policyArea) }),
+        });
+      } }));
+    await serve(app, async base => {
+      for (const policyArea of [null, "Health"]) {
+        const read = async cursor => {
+          const response = await fetch(buildFeedUrl({ apiBase: base, isGuest: !authenticated,
+            district: { state: "Alaska", district: 0 }, pageSize: 1, chamber: "Senate", policyArea, cursor }));
+          assert.equal(response.status, 200);
+          return adaptDelegationFeed(await response.json());
+        };
+        let feed = await read(null);
+        assert.equal(feed.rep, null);
+        while (feed.page.hasMore) {
+          const cursor = feed.page.nextCursor;
+          feed = mergeFeedPage(feed, await read(cursor), cursor);
+        }
+        assert.deepEqual(feed.cards.map(card => card.id), policyArea ? ["senate-3", "senate-2"] : ["senate-3", "senate-2", "senate-1"]);
+        assert.ok(feed.cards.every(card => card.members.length === 2));
+        assert.equal(feed.page.nextCursor, null);
+      }
+    });
+  }
+});
 
 async function serve(app, run) {
   const server = app.listen(0, "127.0.0.1");
@@ -56,7 +106,8 @@ test("registered routes preserve saved-location authority, guest district zero, 
         "state=Alaska&state=Ohio&district=0", "state=Alaska&district=0&limit=2x",
         "state=Alaska&district=0&limit=51", "state=Alaska&district=0&limit=1&limit=2",
         "state=Alaska&district=0&offset=0", "state=Alaska&district=0&cursor=junk",
-        "state=Alaska&district=0&policyArea=%20"]) {
+        "state=Alaska&district=0&policyArea=%20", "state=Alaska&district=0&chamber=Unknown",
+        "state=Alaska&district=0&chamber=House&chamber=Senate"]) {
         assert.equal((await fetch(`${base}/reps/delegation/feed?${query}`)).status, 400, query);
       }
       assert.equal(calls.length, 0);

@@ -25,6 +25,18 @@ import requireBody from "../middleware/requireBody.js";
 import requireUser from "../middleware/requireUser.js";
 import { validateStanceVoteLink } from "../db/queries/memberVoteLinks.js";
 import { saveBatchStances } from "../db/queries/batchStances.js";
+import { sharedCommentContactDrafts } from "../db/queries/sharedContactDrafts.js";
+
+router.post("/:interactionId/comment/contact-drafts/group", requireUser, async (req, res) => {
+  try {
+    return res.json(await sharedCommentContactDrafts({ userId: req.user.id,
+      sourceInteractionId: Number(req.params.interactionId), interactionIds: req.body?.interactionIds,
+      generateDrafts: generateCommentContactDrafts }));
+  } catch (err) {
+    return res.status([400, 403, 409].includes(err.status) ? err.status : 503)
+      .json({ error: err.status < 500 ? err.message : "Failed to prepare contact drafts. Please retry." });
+  }
+});
 
 router.put("/stances/batch", requireUser, async (req, res) => {
   try {
@@ -220,6 +232,7 @@ router.get("/:interactionId/comment/contact-drafts", requireUser, async (req, re
           billType: bill.bill_type,
           billNumber: bill.number,
           repFullName: rep.full_name,
+          repChamber: rep.chamber,
           stance: owned.stance,
           approvedCommentText: comment.approved_text,
         }),

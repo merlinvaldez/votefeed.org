@@ -1,6 +1,7 @@
 import express from "express";
 import { findCurrentDelegation } from "../db/queries/delegation.js";
 import { delegationFeedHandler } from "./delegationFeed.js";
+import { billDelegationHandler } from "./billDelegation.js";
 const router = express.Router();
 export default router;
 
@@ -12,6 +13,7 @@ import {
 const apiKey = process.env.CONGRESS_API_KEY;
 
 router.get("/delegation/feed", delegationFeedHandler());
+router.get("/delegation/bills/:billType/:billNumber", billDelegationHandler());
 
 router.get("/delegation", async (req, res, next) => {
   try {

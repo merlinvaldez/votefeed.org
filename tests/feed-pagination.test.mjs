@@ -107,3 +107,13 @@ test("microseconds determine latest selection, grouping, and page order", async 
   const { options } = fixture([card("a", "2026-02-01T00:00:00.000001Z"), card("z", "2026-02-01T00:00:00.000002Z")]);
   assert.equal((await paginateFeed(options)).cards[0].id, "z");
 });
+
+ test("a chamber tab change cannot reuse the previous chamber cursor", async () => {
+  const { options } = fixture();
+  const house = { ...options, scope: { ...options.scope, chamber: 'House' } };
+  const first = await paginateFeed(house);
+  await assert.rejects(paginateFeed({ ...house, scope: { ...house.scope, chamber: 'Senate' },
+    cursor: first.page.nextCursor }), { status: 409, code: 'FEED_RESTART_REQUIRED' });
+  const senate = await paginateFeed({ ...house, scope: { ...house.scope, chamber: 'Senate' } });
+  assert.notEqual(senate.page.snapshotId, first.page.snapshotId);
+ });

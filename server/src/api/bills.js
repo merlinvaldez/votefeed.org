@@ -98,7 +98,11 @@ router.get("/:billType/:billNumber/ai-summary", async (req, res) => {
     if (!Number.isInteger(billNumber)) {
       return res.status(400).json({ error: "Invalid bill number" });
     }
-    const aiSummary = await getOrCreateAiBillSummary(billNumber, billType);
+    const rawCongress = req.query.congress;
+    if (rawCongress !== undefined && (typeof rawCongress !== "string" || !/^[1-9]\d*$/.test(rawCongress) || !Number.isSafeInteger(Number(rawCongress)))) {
+      return res.status(400).json({ error: "Invalid Congress" });
+    }
+    const aiSummary = await getOrCreateAiBillSummary(billNumber, billType, rawCongress === undefined ? null : Number(rawCongress));
     if (!aiSummary) {
       return res.status(404).json({ error: "Bill not found" });
     }

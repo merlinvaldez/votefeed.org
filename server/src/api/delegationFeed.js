@@ -6,7 +6,7 @@ const invalid = message => Object.assign(new Error(message), {
 
 export function parseFeedPageOptions(query) {
   // Reject repeated/nested query values rather than coercing arrays or objects.
-  for (const field of ["limit", "policyArea", "cursor"]) {
+  for (const field of ["limit", "policyArea", "cursor", "chamber"]) {
     if (query[field] !== undefined && typeof query[field] !== "string") {
       throw invalid(`Invalid ${field}`);
     }
@@ -22,7 +22,9 @@ export function parseFeedPageOptions(query) {
   if (cursor !== null && (cursor.length > 4096 || !/^[\w-]+\.[\w-]+$/.test(cursor))) {
     throw invalid("Invalid feed cursor");
   }
-  return { limit, policyArea, cursor };
+  const chamber = query.chamber ?? "All Reps";
+  if (!["All Reps", "House", "Senate"].includes(chamber)) throw invalid("Invalid chamber");
+  return { limit, policyArea, cursor, chamber };
 }
 
 export function delegationFeedHandler({ authenticated = false, readPage = readDelegationFeedPage } = {}) {

@@ -1,8 +1,10 @@
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { Globe, IdCard, MapPin, Users, Landmark, Building2, ThumbsUp, ThumbsDown } from "lucide-react";
 import "./RepCard.css";
 import useCardDelegation from "./useCardDelegation";
+import { partyPortraitColor } from "./memberPortrait";
 import { selectCardAlignment } from "./voteInteractions";
+import { availableCardChambers, selectAvailableCardChamber } from "./cardMembers";
 
 const getRepInitials = (fullName = "") => {
   const normalized = fullName.trim();
@@ -62,7 +64,7 @@ function MemberSummary({ member, showChamber }) {
   const [failedPortrait, setFailedPortrait] = useState(null);
   return (
     <article className="member-card-row" aria-label={member.name}>
-      <div className="member-avatar">
+      <div className="member-avatar" style={{ borderColor: partyPortraitColor(member.party) }}>
         {member.portrait && failedPortrait !== member.portrait ? (
           <img className="member-avatar-image" src={member.portrait}
             alt={`${member.name} official portrait`} onError={() => setFailedPortrait(member.portrait)} />
@@ -96,11 +98,24 @@ function MemberSummary({ member, showChamber }) {
 
 export default function RepCard({
   rep, location = null, alignment: alignmentData,
-  alignmentPolicyArea = null, alignmentError = "",
+  alignmentPolicyArea = null, alignmentError = "", chamber, onChamberChange,
 }) {
-  const [selectedTab, setSelectedTab] = useState("All Reps");
+  const [localTab, setLocalTab] = useState("All Reps");
+  const setSelectedTab = value => { setLocalTab(value); onChamberChange?.(value); };
   const cardId = useId();
   const { houseMember, senators, delegationLoading, delegationError } = useCardDelegation(rep, location);
+  const available = availableCardChambers({ houseMember, senators,
+    houseLoading: rep === undefined, delegationLoading, delegationError });
+  const tabs = CARD_TABS.filter(tab => available.includes(tab.value));
+  const requestedTab = chamber ?? localTab;
+  const selectedTab = selectAvailableCardChamber(available, requestedTab);
+  const emptyDelegation = available.length === 0;
+  const showTabs = available.length > 1;
+  if (chamber === undefined && localTab !== selectedTab) setLocalTab(selectedTab);
+  // Keep the parent feed filter in sync if a location change removes its tab.
+  useEffect(() => {
+    if (chamber !== undefined && chamber !== selectedTab) onChamberChange?.(selectedTab);
+  }, [chamber, selectedTab, onChamberChange]);
   const members = [houseMember, ...senators].filter(member => member &&
     (selectedTab === "All Reps" || member.chamber === selectedTab));
   const includesSenate = selectedTab !== "House";
@@ -110,20 +125,20 @@ export default function RepCard({
 
   function handleTabKey(event, index) {
     let next;
-    if (event.key === "ArrowRight") next = (index + 1) % CARD_TABS.length;
-    if (event.key === "ArrowLeft") next = (index + CARD_TABS.length - 1) % CARD_TABS.length;
+    if (event.key === "ArrowRight") next = (index + 1) % tabs.length;
+    if (event.key === "ArrowLeft") next = (index + tabs.length - 1) % tabs.length;
     if (event.key === "Home") next = 0;
-    if (event.key === "End") next = CARD_TABS.length - 1;
+    if (event.key === "End") next = tabs.length - 1;
     if (next === undefined) return;
     event.preventDefault();
-    setSelectedTab(CARD_TABS[next].value);
+    setSelectedTab(tabs[next].value);
     event.currentTarget.parentElement.children[next].focus();
   }
 
   return (
     <section className="member-card" data-chamber={selectedTab} aria-label="Your congressional delegation">
-      <div className="member-card-tabs" role="tablist" aria-label="Delegation chamber">
-        {CARD_TABS.map(({ value, label, icon }, index) => (
+      {showTabs && <div className="member-card-tabs" role="tablist" aria-label="Delegation chamber">
+        {tabs.map(({ value, label, icon }, index) => (
           <button key={value} type="button" role="tab" id={`${cardId}-tab-${value}`}
             aria-controls={`${cardId}-panel`} aria-selected={selectedTab === value}
             tabIndex={selectedTab === value ? 0 : -1}
@@ -132,22 +147,23 @@ export default function RepCard({
             {value === "House" && <span className="member-tab-short">House</span>}
           </button>
         ))}
-      </div>
-      <div className={`member-card-body${members.length === 1 ? " member-card-single" : ""}`} role="tabpanel" id={`${cardId}-panel`}
-        aria-labelledby={`${cardId}-tab-${selectedTab}`} tabIndex={0}>
+      </div>}
+      <div className={`member-card-body${members.length === 1 ? " member-card-single" : ""}`} role={showTabs ? "tabpanel" : undefined} id={`${cardId}-panel`}
+        aria-labelledby={showTabs ? `${cardId}-tab-${selectedTab}` : undefined} tabIndex={showTabs ? 0 : undefined}>
         <div className="member-delegation">
           <div className="member-list">
-            {members.map(member => <MemberSummary key={member.bioguideId} member={member} showChamber={selectedTab === "All Reps"} />)}
+            {members.map(member => <MemberSummary key={member.bioguideId} member={member} showChamber={!showTabs || selectedTab === "All Reps"} />)}
           </div>
           <div className="member-delegation-status" role="status">
+            {emptyDelegation && <p>No current congressional members found for this location.</p>}
             {includesSenate && delegationLoading && <p>Loading Senators...</p>}
             {includesSenate && delegationError && <p>Unable to load Senators. Your other member details are still available.</p>}
-            {selectedTab !== "Senate" && !houseMember && <p>No current House member found for this district.</p>}
-            {includesSenate && !delegationLoading && !delegationError && senators.length === 0 &&
+            {!emptyDelegation && selectedTab !== "Senate" && !houseMember && rep !== undefined && <p>No current House member found for this district.</p>}
+            {!emptyDelegation && includesSenate && !delegationLoading && !delegationError && senators.length === 0 &&
               <p>No current Senators found for this state.</p>}
           </div>
         </div>
-      {(
+      {!emptyDelegation && (
         <div
           className="member-alignment"
           style={{ "--alignment-accent": alignmentColor }}

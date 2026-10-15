@@ -65,6 +65,20 @@ test('PostgreSQL and HTTP: atomic batch, retries, clearing, authorization and fa
     assert.ok(cleared.interactions.every(row => row.stance === null && row.user_comment === 'Keep legacy'));
     assert.ok((await admin.query('SELECT * FROM bill_comments')).rows.every(row => row.approved_text === 'Keep published' && row.call_script === null && row.message_template === null));
     assert.deepEqual(await saveBatchStances(1, { ...body, stance: null }, pool), cleared);
+    for (const position of ['Not Voting', 'Present', 'Paired']) {
+      await admin.query('UPDATE member_voting_record SET vote=$1', [position]);
+      const approved = await saveBatchStances(1, body, pool);
+      assert.ok(approved.interactions.every(row => row.stance === 'approve'));
+      const agrees = await getDelegationAlignment({ id: 1, state: 'Alaska', district: 0 }, { chamber: 'All Reps', runner: pool });
+      assert.equal(agrees.comparableCount, 2);
+      assert.equal(agrees.percent, 100);
+      await saveBatchStances(1, { ...body, stance: 'disapprove' }, pool);
+      const disagrees = await getDelegationAlignment({ id: 1, state: 'Alaska', district: 0 }, { chamber: 'All Reps', runner: pool });
+      assert.equal(disagrees.comparableCount, 2);
+      assert.equal(disagrees.percent, 0);
+    }
+    await admin.query("UPDATE member_voting_record SET vote='Yea'");
+    await saveBatchStances(1, { ...body, stance: null }, pool);
     await assert.rejects(saveBatchStances(2, body, pool), { status: 403 });
     await assert.rejects(saveBatchStances(999, body, pool), { status: 401 });
     await assert.rejects(saveBatchStances(1, { ...body, members: [body.members[0], { ...body.members[1], rep_bioguide_id: 'Other' }] }, pool), { status: 403 });
@@ -103,6 +117,16 @@ test('PostgreSQL and HTTP: atomic batch, retries, clearing, authorization and fa
     assert.ok((await response.json()).interactions.every(row => row.user_id === 1 && row.stance === 'approve'));
     // Single-member clearing uses the existing owned update route, not DELETE.
     db.query = (sql, params) => pool.query(sql, params);
+    for (const position of ['Not Voting', 'Present']) {
+      await admin.query('UPDATE member_voting_record SET vote=$1 WHERE id=101', [position]);
+      const saved = await fetch(url.replace('stances/batch', `${first.interactions[0].id}/stance`), {
+        method: 'PUT', headers: { 'content-type': 'application/json', authorization: 'test' },
+        body: JSON.stringify({ stance: 'approve', member_vote_id: 101 }),
+      });
+      assert.equal(saved.status, 201);
+      assert.equal((await saved.json()).stance, 'approve');
+    }
+    await admin.query("UPDATE member_voting_record SET vote='Yea' WHERE id=101");
     const interactionId = first.interactions[0].id;
     const singleUrl = url.replace('stances/batch', `${interactionId}/stance`);
     const clearSingle = (payload, auth = true) => fetch(singleUrl, { method: 'PUT',

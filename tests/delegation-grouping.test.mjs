@@ -77,3 +77,19 @@ test("policy filtering preserves unknown areas in the unfiltered feed", () => {
   assert.equal(filtered.length, 1);
   assert.equal(filtered[0].members.length, 2);
 });
+
+ test("chamber filter scopes policy counts and keeps Senate groups complete", async () => {
+  const { filterAndCountFeedCards } = await import('../server/src/utils/delegationFeed.js');
+  const list = [
+    { id: 'h', event: { chamber: 'House' }, bill: { policyArea: 'Health' }, members: ['h'] },
+    { id: 's', event: { chamber: 'Senate' }, bill: { policyArea: 'Health' }, members: ['s1','s2'] },
+    { id: 'u', event: { chamber: 'Senate' }, bill: { policyArea: null }, members: ['s1'] },
+  ];
+  const senate = filterAndCountFeedCards(list, 'Health', 'Senate');
+  assert.deepEqual(senate.cards.map(card => card.id), ['s']);
+  assert.equal(senate.cards[0].members.length, 2);
+  assert.equal(senate.totalPolicyCount, 2);
+  assert.deepEqual(senate.policyAreas, [{ name: 'Health', count: 1 }]);
+  assert.equal(filterAndCountFeedCards(list, null, 'House').totalPolicyCount, 1);
+  assert.equal(filterAndCountFeedCards(list).totalPolicyCount, 3);
+ });

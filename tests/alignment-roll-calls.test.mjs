@@ -44,7 +44,7 @@ test("members, chambers, Congresses and sessions have separate event identities"
   ]).length, 5);
 });
 
-test("non-comparable latest answers and incomplete event identities are excluded", () => {
+test("invalid latest answers and incomplete identities are excluded; non-voting agreement counts", () => {
   const invalid = pair(2, 10, "H001", "unknown");
   assert.deepEqual(selectComparableAlignmentVotes([pair(1, 10), invalid]), []);
   for (const field of ["congress_number", "session_number", "roll_call_number"]) {
@@ -57,7 +57,7 @@ test("non-comparable latest answers and incomplete event identities are excluded
   assert.deepEqual(selectComparableAlignmentVotes([missingLink]), []);
   const absent = pair(1, 10);
   absent.memberVote.vote = "Not Voting";
-  assert.deepEqual(selectComparableAlignmentVotes([absent]), []);
+  assert.equal(selectComparableAlignmentVotes([absent])[0].agrees, true);
 });
 
 test("query passes user, unique selected members and policy scope to its runner", async () => {
