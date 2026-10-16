@@ -109,7 +109,7 @@
 }
 
 .vote-result-label {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -319,7 +319,7 @@
   border-radius: 999px;
   padding: 6px 10px;
   font: inherit;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   display: inline-flex;
   align-items: center;
@@ -351,7 +351,7 @@
   border-radius: 999px;
   border: 1px solid transparent;
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
 }
 
@@ -663,7 +663,7 @@
 }
 
 .comment-label {
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--text-muted);

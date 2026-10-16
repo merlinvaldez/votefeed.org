@@ -95,7 +95,7 @@
   .legislative-vote-card .leg-card-content > .leg-body,
   .legislative-vote-card .leg-card-content > .response-status { margin-top: 10px; }
   .legislative-vote-card .leg-meta-row { gap: 6px; min-width: 0; flex-wrap: wrap; }
-  .legislative-vote-card .leg-date { gap: 4px; font-size: 12px; }
+  .legislative-vote-card .leg-date { gap: 4px; font-size: 13px; }
   .legislative-vote-card .bill-link-pill { padding: 4px 8px; }
   .legislative-vote-card .summary-source-toggle { padding: 4px; }
   .legislative-vote-card .member-portrait { width: 28px; height: 28px; flex-basis: 28px; font-size: 11px; }
@@ -115,7 +115,7 @@
   }
   .legislative-vote-card-pair .leg-meta-row { flex-wrap: wrap; gap: 6px; }
   .legislative-vote-card-pair .bill-link-pill { font-size: 14px; white-space: nowrap; }
-  .legislative-vote-card-pair .leg-date { white-space: nowrap; font-size: 11px; }
+  .legislative-vote-card-pair .leg-date { white-space: nowrap; font-size: 13px; }
 }
 
 /* Every control keeps a visible keyboard focus in either theme. */

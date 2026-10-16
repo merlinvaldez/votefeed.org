@@ -168,7 +168,7 @@ export default function LegislativeVoteCard({ vote, interactions, isAuthed, stan
         </p>
       )}
       {responseState.invalid && <p className="error-text" role="alert">Some saved responses are invalid. Choose a response again or refresh.</p>}
-      {isSaving && <p className="response-status" role="status">Saving response?</p>}
+      {isSaving && <p className="response-status" role="status">Saving response</p>}
       <div className="leg-actions">
         <button
           type="button"
