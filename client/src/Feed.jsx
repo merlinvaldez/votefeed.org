@@ -46,6 +46,8 @@ function Feed(props) {
   const [savedLocation, setSavedLocation] = useState(null);
   const guestLocation = (location.state || props.state)?.district;
   const feedLocation = token ? savedLocation : guestLocation;
+  const delegationScope = JSON.stringify([token ? userId : "guest", feedLocation?.state,
+    feedLocation?.congressionalDistrict ?? feedLocation?.district, location.key]);
   const scopeKey = JSON.stringify([token ? userId : "guest", feedLocation?.state,
     feedLocation?.congressionalDistrict ?? feedLocation?.district, selectedPolicyArea, selectedChamber, location.key]);
   const [feedRequests] = useState(createFeedRequests);
@@ -146,7 +148,6 @@ function Feed(props) {
     feedRequests.reset();
     setIsFetchingMore(false);
     setError("");
-    setFeedState(null);
     if (!feedLocation?.state || (token && !userId)) return;
     const ticket = feedRequests.begin();
     setLoading(true);
@@ -159,7 +160,7 @@ function Feed(props) {
         if (!resp.ok) throw new Error("Failed to load feed");
         const feed = adaptDelegationFeed(await resp.json());
         if (!feedRequests.current(ticket)) return;
-        setFeedState({ ...feed, scopeKey, district: token ? null : feedLocation });
+        setFeedState({ ...feed, scopeKey, delegationScope, district: token ? null : feedLocation });
       } catch (err) {
         if (feedRequests.current(ticket)) setError(err.message || "Failed to load feed");
       } finally {
@@ -170,7 +171,7 @@ function Feed(props) {
       }
     })();
     return () => feedRequests.reset();
-  }, [scopeKey, token, userId, feedLocation, selectedPolicyArea, selectedChamber, authFetch, feedRequests]);
+  }, [scopeKey, delegationScope, token, userId, feedLocation, selectedPolicyArea, selectedChamber, authFetch, feedRequests]);
 
   const loadMoreVotes = useEffectEvent(async () => {
     if (!isCurrentFeed || loading || !hasMore || !feedState.page.nextCursor) return;
@@ -379,8 +380,10 @@ function Feed(props) {
     }
   };
 
-  if (loading || (!isCurrentFeed && !error)) return <div className="feed-loading">Loading feed...</div>;
-  if (error) return <div className="error">{error}</div>;
+  const sameDelegation = feedState?.delegationScope === delegationScope;
+  const feedPending = loading || (!isCurrentFeed && !error);
+  if (feedPending && !sameDelegation) return <div className="feed-loading">Loading feed...</div>;
+  if (error && !sameDelegation) return <div className="error">{error}</div>;
 
   if (!feedState?.votes) {
     return <div>Missing feed data</div>;
@@ -439,14 +442,14 @@ function Feed(props) {
         onChamberChange={setSelectedChamber}
         rep={rep}
         location={cardLocation}
-        alignment={alignmentForCard}
+        alignment={isCurrentFeed ? alignmentForCard : null}
         alignmentPolicyArea={feedState?.selectedPolicyArea ?? null}
         alignmentError={alignmentError}
       ></RepCard>
 
       <section className="feed-section">
         <h2 className="section-title">Legislative Feed</h2>
-        {feedState?.warnings?.filter(warning => warning.code === "PUBLIC_COMMENT_COUNTS_UNAVAILABLE")
+        {isCurrentFeed && feedState?.warnings?.filter(warning => warning.code === "PUBLIC_COMMENT_COUNTS_UNAVAILABLE")
           .map(warning => <p key={warning.code} role="status">{warning.message}</p>)}
         <div className="mobile-policy-filter">
           <div className="mobile-policy-header">
@@ -520,7 +523,9 @@ function Feed(props) {
             </div>
           )}
         </div>
-        {votes.length === 0 && <p>No eligible votes found for this delegation.</p>}
+        {feedPending && <p role="status">Loading feed...</p>}
+        {error && <p className="error" role="alert">{error}</p>}
+        {!feedPending && !error && votes.length === 0 && <p>No eligible votes found for this delegation.</p>}
 
         {stanceError && <p className="error-text" role="alert">{stanceError}</p>}
         {votes.map(vote => (
