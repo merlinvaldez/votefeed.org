@@ -180,7 +180,7 @@ export default function LegislativeVoteCard({ vote, interactions, isAuthed, stan
           aria-label={`Agree with ${memberTitle} ${fullNames}`}
           aria-describedby={hasResponseDescription ? responseDescriptionId : undefined}
           aria-pressed={answeredStance === "approve"}
-          title={`Agree with ${memberTitle} ${repLastName}`}
+          title={`Click to record that you agree with how ${memberTitle} ${repLastName} voted on ${billLabel}.`}
         >
           <ThumbsUp size={16} />
           {answeredStance === "approve" && (
@@ -200,7 +200,7 @@ export default function LegislativeVoteCard({ vote, interactions, isAuthed, stan
           aria-label={`Disagree with ${memberTitle} ${fullNames}`}
           aria-describedby={hasResponseDescription ? responseDescriptionId : undefined}
           aria-pressed={answeredStance === "disapprove"}
-          title={`Disagree with ${memberTitle} ${repLastName}`}
+          title={`Click to record that you disagree with how ${memberTitle} ${repLastName} voted on ${billLabel}.`}
         >
           <ThumbsDown size={16} />
           {answeredStance === "disapprove" && (

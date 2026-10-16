@@ -959,7 +959,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
             disabled={isAuthed && (!memberVoteId || !interactionsReady || busy)}
             aria-label={`Agree with ${responseReference}`}
             aria-pressed={currentStance === "approve"}
-            title={`Agree with ${responseReference}`}
+            title={`Click to record that you agree with how ${responseReference} voted on ${billLabel}.`}
           >
             <ThumbsUp size={16} />
             {currentStance === "approve" && (
@@ -975,7 +975,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
             disabled={isAuthed && (!memberVoteId || !interactionsReady || busy)}
             aria-label={`Disagree with ${responseReference}`}
             aria-pressed={currentStance === "disapprove"}
-            title={`Disagree with ${responseReference}`}
+            title={`Click to record that you disagree with how ${responseReference} voted on ${billLabel}.`}
           >
             <ThumbsDown size={16} />
             {currentStance === "disapprove" && (
