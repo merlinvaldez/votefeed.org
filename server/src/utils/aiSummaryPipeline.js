@@ -1,5 +1,6 @@
 import { Agent, run } from "@openai/agents";
 import { readFile } from "node:fs/promises";
+import { isUsableQuickSummary } from "./quickSummaryValidation.js";
 
 const MODEL_CHOICE = process.env.OPENAI_MODEL || "gpt-5.4";
 const MODEL_SETTINGS = { reasoning: { effort: "low" } };
@@ -65,5 +66,7 @@ export async function generateAiBillSummary(billSummary) {
     sanitizerAgent,
     aiSummaryResult.finalOutput,
   );
-  return sanitizedResult.finalOutput;
+  return isUsableQuickSummary(sanitizedResult.finalOutput, billSummary)
+    ? sanitizedResult.finalOutput
+    : null;
 }

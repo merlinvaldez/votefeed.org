@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS comment_useful_votes;
 DROP TABLE IF EXISTS bill_comments;
 DROP TABLE IF EXISTS interactions;
 DROP TABLE IF EXISTS vote_notification_outbox;
+DROP TABLE IF EXISTS user_vote_notification_progress;
 DROP TABLE IF EXISTS roll_call_summaries;
 DROP TABLE IF EXISTS member_voting_record;
 DROP TABLE IF EXISTS bills;
@@ -24,6 +25,25 @@ CREATE TABLE users(
     last_notified_session_number integer, 
     last_notified_roll_call_number integer
 );
+
+CREATE TABLE user_vote_notification_progress (
+    user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    chamber text NOT NULL CHECK (chamber IN ('House', 'Senate')),
+    congress_number integer NOT NULL CHECK (congress_number > 0),
+    last_notified_session_number integer,
+    last_notified_roll_call_number integer,
+    updated_at timestamptz NOT NULL DEFAULT now(),
+    PRIMARY KEY (user_id, chamber, congress_number),
+    CHECK (
+        (last_notified_session_number IS NULL) =
+        (last_notified_roll_call_number IS NULL)
+    )
+);
+
+ALTER TABLE user_vote_notification_progress ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON user_vote_notification_progress FROM PUBLIC, anon, authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE
+    ON user_vote_notification_progress TO service_role;
 
 CREATE TABLE reps (
     bioguideId text PRIMARY KEY,
@@ -111,6 +131,8 @@ CREATE TABLE vote_notification_outbox (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     sync_run_id uuid NOT NULL,
     member_id text NOT NULL,
+    chamber text NOT NULL DEFAULT 'House',
+    congress_number integer NOT NULL DEFAULT 119,
     legislation_type text NOT NULL,
     legislation_number integer NOT NULL,
     session_number integer NOT NULL,
@@ -124,7 +146,14 @@ CREATE TABLE vote_notification_outbox (
 );
 
 CREATE UNIQUE INDEX idx_vote_notification_outbox_sync_member_roll_call
-ON vote_notification_outbox(sync_run_id, member_id, session_number, roll_call_number);
+ON vote_notification_outbox(
+    sync_run_id,
+    member_id,
+    chamber,
+    congress_number,
+    session_number,
+    roll_call_number
+);
 
 CREATE INDEX idx_vote_notification_outbox_pending_lookup
 ON vote_notification_outbox(processed_at, created_at, sync_run_id, member_id);

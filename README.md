@@ -150,6 +150,8 @@ The development Senate sync marks a roll call complete only after its summary an
 | id                 | uuid        | Primary key, defaults to `gen_random_uuid()` |
 | sync_run_id        | uuid        | Not null    |
 | member_id          | text        | Not null    |
+| chamber            | text        | Not null, defaults to `House` |
+| congress_number    | integer     | Not null, defaults to `119` |
 | legislation_type   | text        | Not null    |
 | legislation_number | integer     | Not null    |
 | session_number     | integer     | Not null    |
@@ -163,7 +165,7 @@ The development Senate sync marks a roll call complete only after its summary an
 
 Deployed environments also use:
 
-- `idx_vote_notification_outbox_sync_member_roll_call` on `(sync_run_id, member_id, session_number, roll_call_number)` so each sync run queues a representative vote once.
+- `idx_vote_notification_outbox_sync_member_roll_call` on `(sync_run_id, member_id, chamber, congress_number, session_number, roll_call_number)` so overlapping chamber and Congress roll-call numbers remain separate within each sync run.
 - `idx_vote_notification_outbox_pending_lookup` on `(processed_at, created_at, sync_run_id, member_id)` so the notification sender can load pending work efficiently.
 
 ### interactions
