@@ -523,16 +523,6 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
         }
       : currentInteraction;
 
-  const persistCommentDraft = async () => {
-    const resp = await authFetch(`${API_BASE}/interactions/${interaction.id}/comment`, {
-      method: "PUT",
-      body: JSON.stringify({ draft_text: commentDraftText }),
-    });
-    if (!resp.ok) throw new Error("Failed to save draft comment");
-    const savedDraft = await resp.json();
-    return savedDraft;
-  };
-
   const handleSubmitCommentForModeration = async () => {
     if (stancePendingRef.current) return;
     if (!interaction?.id) return;
@@ -541,14 +531,11 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
     try {
       setInteractionError("");
       setIsSubmittingComment(true);
-      const currentSavedDraft = interaction?.comment_draft_text?.trim() ?? "";
-      if (commentDraftText.trim() !== currentSavedDraft || !ownedCommentId) {
-        await persistCommentDraft();
-      }
       const resp = await authFetch(
         `${API_BASE}/interactions/${interaction.id}/comment/submit`,
         {
           method: "POST",
+          body: JSON.stringify({ draft_text: commentDraftText }),
         },
       );
       if (!resp.ok) throw new Error("Failed to submit comment for moderation");

@@ -131,7 +131,7 @@ export async function getOrCreateCommentContactDrafts(
 }
 
 export async function applyCommentModerationResult(
-  { interactionId, status, moderationReason, moderationCategories },
+  { interactionId, draftText, status, moderationReason, moderationCategories },
   runner = db,
 ) {
   const sql = `
@@ -155,6 +155,7 @@ export async function applyCommentModerationResult(
         last_moderated_at = now(),
         updated_at = now()
     WHERE interaction_id = $1
+      AND draft_text = $5
     RETURNING *
   `;
   const {
@@ -164,6 +165,7 @@ export async function applyCommentModerationResult(
     status,
     moderationReason,
     moderationCategories,
+    draftText,
   ]);
   return comment ?? null;
 }

@@ -73,7 +73,9 @@ const server = await createServer({ root, configFile: false, envDir: false,
             return { memberId: person.bioguideid, interactionId: id, callScript: `Hello Senator ${person.full_name}. ${comments.get(existing.id).approved_text}`, messageTemplate: `Dear Senator ${person.full_name}, ${comments.get(existing.id).approved_text}` };
           }) });
           if (path.endsWith("/comment/submit")) {
-            const comment = { ...comments.get(existing.id), approved_text: comments.get(existing.id).draft_text, moderation_status: "approved", updated_at: "2026-10-15T13:01:00Z" };
+            const priorComment = comments.get(existing.id) ?? {};
+            const comment = { ...priorComment, id: priorComment.id ?? 50, draft_text: body.draft_text,
+              approved_text: body.draft_text, moderation_status: "approved", updated_at: "2026-10-15T13:01:00Z" };
             comments.set(existing.id, comment); return send(comment);
           }
           if (path.endsWith("/comment")) {

@@ -13,13 +13,13 @@ import {
 import {
   applyCommentModerationResult,
   getOrCreateCommentContactDrafts,
-  getCommentByInteractionId,
   upsertDraftComment,
 } from "../db/queries/comments.js";
 import { getBillById } from "../db/queries/bills.js";
 import { findRepByBioguideId } from "../db/queries/reps.js";
 import { getUserById } from "../db/queries/users.js";
 import { moderateCommentDraft } from "../ai/commentModeration.js";
+import { createCommentSubmissionHandler } from "./commentSubmission.js";
 import { generateCommentContactDrafts } from "../utils/contactDraftPipeline.js";
 import requireBody from "../middleware/requireBody.js";
 import requireUser from "../middleware/requireUser.js";
@@ -171,36 +171,17 @@ router.put(
   },
 );
 
-router.post("/:interactionId/comment/submit", requireUser, async (req, res) => {
-  const { interactionId } = req.params;
-  const owned = await getOwnedInteractionsOrSendError(req, res, interactionId);
-  if (!owned) return;
-
-  const comment = await getCommentByInteractionId(interactionId);
-  if (!comment) {
-    return res.status(404).send("Comment draft not found");
-  }
-  if (!comment.draft_text?.trim()) {
-    return res.status(400).send("Comment draft is empty");
-  }
-
-  let moderationResult;
-  try {
-    moderationResult = await moderateCommentDraft(comment.draft_text);
-  } catch (err) {
-    console.error(err);
-    return res.status(503).send("Moderation unavailable. Please try again.");
-  }
-
-  const moderatedComment = await applyCommentModerationResult({
-    interactionId,
-    status: moderationResult.status,
-    moderationReason: moderationResult.moderationReason,
-    moderationCategories: moderationResult.moderationCategories,
-  });
-
-  return res.status(200).send(moderatedComment);
-});
+router.post(
+  "/:interactionId/comment/submit",
+  requireUser,
+  requireBody(["draft_text"]),
+  createCommentSubmissionHandler({
+    getOwnedInteraction: getOwnedInteractionsOrSendError,
+    saveDraft: upsertDraftComment,
+    moderateDraft: moderateCommentDraft,
+    applyModerationResult: applyCommentModerationResult,
+  }),
+);
 
 router.get("/:interactionId/comment/contact-drafts", requireUser, async (req, res) => {
   const { interactionId } = req.params;
