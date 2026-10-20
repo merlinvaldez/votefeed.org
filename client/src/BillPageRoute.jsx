@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./authContext";
 import { API_BASE } from "./constants";
 import { billFolderTabs, initialBillFolder, billDetailUrl } from "./billDetailContext";
 import BillDetailPanel from "./BillPage";

@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { SignInButton, SignUpButton } from "@clerk/clerk-react";
 import { API_BASE } from "./constants.js";
-import { useAuth } from "./AuthContext.jsx";
-import AddressFields, {
+import { useAuth } from "./authContext.js";
+import AddressFields from "./AddressFields.jsx";
+import {
   formatAddress,
   saveAddressDraft,
   validateAddressFields,
-} from "./AddressFields.jsx";
+} from "./addressFields.js";
 import { buildFeedUrl, adaptDelegationFeed } from "./delegationFeedClient";
 import "./LandingPage.css";
 

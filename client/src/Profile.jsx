@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAvatar } from "@clerk/clerk-react";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./authContext";
 import { API_BASE, STATES } from "./constants";
 import RepCard from "./RepCard";
 import "./Profile.css";

@@ -32,7 +32,7 @@ import {
 } from "lucide-react";
 import { UserAvatar } from "@clerk/clerk-react";
 import { API_BASE } from "./constants";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./authContext";
 
 const getRepLastName = (fullName = "") => {
   const normalized = fullName.trim();

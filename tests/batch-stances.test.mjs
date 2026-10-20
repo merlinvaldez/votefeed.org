@@ -9,6 +9,7 @@ import { saveBatchStances, validateBatchStanceRequest } from '../server/src/db/q
 import { getOrCreateCommentContactDrafts } from '../server/src/db/queries/comments.js';
 import { getDelegationAlignment } from '../server/src/db/queries/alignment.js';
 const body = { bill_id: 7, members: [{ rep_bioguide_id: 'S1', member_vote_id: 101 }, { rep_bioguide_id: 'S2', member_vote_id: 102 }], stance: 'approve' };
+const postgresEnabled = process.env.BATCH_STANCES_TEST_POSTGRES === '1';
 
 test('batch request rejects malformed, repeated and missing identities', () => {
   for (const invalid of [null, {}, { ...body, stance: undefined }, { ...body, stance: 'support' },
@@ -18,7 +19,7 @@ test('batch request rejects malformed, repeated and missing identities', () => {
   }
 });
 
-test('PostgreSQL and HTTP: atomic batch, retries, clearing, authorization and failure rollback', async () => {
+test('PostgreSQL and HTTP: atomic batch, retries, clearing, authorization and failure rollback', { skip: !postgresEnabled }, async () => {
   const schema = `batch_test_${process.pid}`;
   const admin = new pg.Client({ host: '127.0.0.1', port: 55439, user: 'postgres', database: 'postgres', ssl: false });
   await admin.connect();

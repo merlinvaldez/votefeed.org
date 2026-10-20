@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import { withRelatedProject } from "@vercel/related-projects";
+import process from "node:process";
 
 const explicitApiHost =
   process.env.VITE_API_URL || process.env.VITE_API_BASE || "";

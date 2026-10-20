@@ -1,8 +1,7 @@
 import { useAuth as useClerkAuth, useClerk } from "@clerk/clerk-react";
-import { createContext, useContext, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
+import { AuthContext } from "./authContext";
 import useClerkAuthFetch from "./useClerkAuthFetch";
-
-const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const { isLoaded, isSignedIn } = useClerkAuth();
@@ -26,7 +25,4 @@ export function AuthProvider({ children }) {
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-export function useAuth() {
-  return useContext(AuthContext);
 }

@@ -1,6 +1,6 @@
 import { useEffect, useEffectEvent, useMemo, useState, useRef } from "react";
 import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./authContext";
 import { API_BASE } from "./constants";
 import RepCard from "./RepCard";
 import LegislativeVoteCard from "./LegislativeVoteCard";

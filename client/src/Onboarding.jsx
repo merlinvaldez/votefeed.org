@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useClerk, useUser } from "@clerk/clerk-react";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./authContext";
 import { API_BASE } from "./constants";
-import AddressFields, {
+import AddressFields from "./AddressFields.jsx";
+import {
   clearAddressDraft,
   formatAddress,
   readAddressDraft,
   validateAddressFields,
-} from "./AddressFields.jsx";
+} from "./addressFields.js";
 import "./LandingPage.css";
 import "./Login.css";
 
