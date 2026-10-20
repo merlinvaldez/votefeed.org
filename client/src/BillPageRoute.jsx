@@ -20,6 +20,7 @@ export default function BillPageRoute() {
   const [retry, setRetry] = useState(0);
   const [busy, setBusy] = useState(false);
   const [summaryPreference, setSummaryPreference] = useState(null);
+  const [summaryResult, setSummaryResult] = useState(null);
   const summaryScope = JSON.stringify([billType, billNumber, congress]);
   const showOriginal = summaryPreference?.scope === summaryScope ? summaryPreference.showOriginal : true;
   const setShowOriginal = value => setSummaryPreference({ scope: summaryScope, showOriginal: value });
@@ -52,6 +53,49 @@ export default function BillPageRoute() {
   }, [scope, token, billType, billNumber, congress, cardId, state, district, authFetch, retry]);
   const detail = loaded?.scope === scope ? loaded.detail : null;
   const folders = useMemo(() => detail ? billFolderTabs(detail) : [], [detail]);
+  const currentSummaryResult = summaryResult?.scope === summaryScope ? summaryResult : null;
+  const aiSummary = currentSummaryResult?.summary || detail?.bill?.aisummary || "";
+  const aiError = currentSummaryResult?.error || "";
+  const aiLoading = Boolean(detail && !showOriginal && !aiSummary && !aiError);
+
+  useEffect(() => {
+    if (!detail || showOriginal || aiSummary || aiError) return;
+
+    let cancelled = false;
+    (async () => {
+      try {
+        const congressNumber = detail.cards[0]?.event?.congress ??
+          Number(detail.bill.legislation_url?.match(/bill\/(\d+)/)?.[1]);
+        if (!Number.isFinite(Number(congressNumber))) {
+          throw new Error("Simplified summary unavailable");
+        }
+        const resp = await fetch(
+          `${API_BASE}/bills/${billType}/${billNumber}/ai-summary?congress=${congressNumber}`,
+        );
+        if (!resp.ok) throw new Error("Simplified summary unavailable");
+        const data = await resp.json();
+        if (typeof data.aiSummary !== "string" || !data.aiSummary.trim()) {
+          throw new Error("Simplified summary unavailable");
+        }
+        if (!cancelled) {
+          setSummaryResult({ scope: summaryScope, summary: data.aiSummary, error: "" });
+        }
+      } catch {
+        if (!cancelled) {
+          setSummaryResult({
+            scope: summaryScope,
+            summary: "",
+            error: "Simplified summary unavailable. Showing the official summary.",
+          });
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [detail, showOriginal, aiSummary, aiError, summaryScope, billType, billNumber]);
+
   if (loaded?.scope === scope && loaded.error) return <div role="alert">
     <p>{loaded.error}</p><button type="button" onClick={() => setRetry(value => value + 1)}>Retry</button> <Link to="/">Find your delegation</Link>
   </div>;
@@ -72,6 +116,7 @@ export default function BillPageRoute() {
     {folders.map(folder => <BillDetailPanel key={`${scope}:${folder.id}`} detail={detail} folder={folder}
       active={folder.id === selected} folders={folders} selectedFolder={selected}
       showOriginal={showOriginal} setShowOriginal={setShowOriginal}
+      aiSummary={aiSummary} aiLoading={aiLoading} aiError={aiError}
       onFolderChange={selectFolder} onBusy={setBusy} />)}
   </>;
 }

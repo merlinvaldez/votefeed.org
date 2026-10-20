@@ -6,7 +6,6 @@ import BillVoteFolders from "./BillVoteFolders";
 import GroupContactGuides from "./GroupContactGuides";
 import { sharedContactRequest, validateSharedContactDrafts } from "./sharedContactFlow";
 import { officialSummaryHtml } from "./feedSummaries";
-import { getVotePosition } from "./votePosition";
 import "./Feed.css";
 import "./BillPage.css";
 import {
@@ -72,24 +71,13 @@ const formatBillLabel = (type, number) => {
   return `${labels[normalized] || normalized.toUpperCase()} ${number}`;
 };
 
-const formatLegislationType = (type) => {
-  const normalized = String(type || "").toLowerCase();
-  if (["hr", "s"].includes(normalized)) return "a bill";
-  if (["hres", "sres"].includes(normalized)) return "a resolution";
-  if (["hjres", "sjres"].includes(normalized)) return "a joint resolution";
-  if (["hconres", "sconres"].includes(normalized)) {
-    return "a concurrent resolution";
-  }
-  return "legislation";
-};
-
-const formatQuickSummary = (summary = "", capitalize = false) => {
+const formatQuickSummary = (summary = "") => {
   const trimmed = String(summary)
     .replace(/^\s*to\s+/i, "")
     .replace(/[.!?]+\s*$/, "")
     .trim();
   if (!trimmed) return "summarize what this measure would do";
-  return `${capitalize ? trimmed.charAt(0).toUpperCase() : trimmed.charAt(0).toLowerCase()}${trimmed.slice(1)}`;
+  return `${trimmed.charAt(0).toUpperCase()}${trimmed.slice(1)}`;
 };
 
 const formatCommentTimestamp = (value) => {
@@ -163,12 +151,12 @@ const requestPublicComments = async ({ billId, isAuthed, authFetch }) => {
   return data.comments ?? [];
 };
 
-export default function BillDetailPanel({ detail, folder, active, folders, selectedFolder, onFolderChange, onBusy, showOriginal, setShowOriginal }) {
+export default function BillDetailPanel({ detail, folder, active, folders, selectedFolder, onFolderChange, onBusy, showOriginal, setShowOriginal, aiSummary, aiLoading, aiError }) {
   const navigate = useNavigate();
   const { hash } = useLocation();
   const discussionRequested = hash === "#public-comments";
   const publicDiscussionRef = useRef(null);
-  const { billType, billNumber } = useParams();
+  const { billNumber } = useParams();
   const card = folder.id === "All Reps" ? null : folder.cards[0] ?? null;
   // A combined card has one comment composer and one discussion comment.
   // Individual recipients appear only inside the contact guides.
@@ -221,25 +209,16 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
   const [isPublicCommentsOpen, setIsPublicCommentsOpen] = useState(discussionRequested);
   const [usefulPendingByCommentId, setUsefulPendingByCommentId] = useState({});
 
-  const [aiSummary, setAiSummary] = useState(detail.bill.aisummary || "");
-  const [aiLoading, setAiLoading] = useState(false);
-  const [aiError, setAiError] = useState("");
-
   const officialHtml = officialSummaryHtml(bill?.summary);
   const billId = bill?.bill_id ?? bill?.id ?? null;
   const fullBillUrl = bill?.legislation_url ?? null;
   const canReadFullBill = Boolean(fullBillUrl);
   const latestVoteDate = bill?.latest_vote_date ?? bill?.voted_on ?? null;
-  const repVotePillClass = getVotePosition(bill?.vote).className;
   const memberTitle = String(rep?.chamber || "")
     .toLowerCase()
     .includes("senate")
     ? "Sen."
     : "Rep.";
-  const legislationType = formatLegislationType(
-    bill?.legislation_type ?? bill?.bill_type ?? billType,
-  );
-  const position = getVotePosition(bill?.vote);
   const memberVoteId = bill?.member_vote_id ?? null;
   const grouped = card?.members.length === 2;
   const groupStanceKey = grouped ? JSON.stringify(groupInteractions.map(answer => [answer.id, answer.member_vote_id, answer.stance])) : null;
@@ -311,24 +290,6 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
     }, 1400);
     return true;
   };
-
-  useEffect(() => {
-    if (!active || showOriginal || aiSummary || aiError) return;
-    let cancelled = false;
-    setAiLoading(true);
-    (async () => {
-      try {
-        const resp = await fetch(`${API_BASE}/bills/${billType}/${billNumber}/ai-summary?congress=${bill.congress_number}`);
-        if (!resp.ok) throw new Error("Simplified summary unavailable");
-        const data = await resp.json();
-        if (typeof data.aiSummary !== "string" || !data.aiSummary.trim()) throw new Error("Simplified summary unavailable");
-        if (!cancelled) setAiSummary(data.aiSummary);
-      } catch {
-        if (!cancelled) setAiError("Simplified summary unavailable. Showing the official summary.");
-      } finally { if (!cancelled) setAiLoading(false); }
-    })();
-    return () => { cancelled = true; };
-  }, [active, showOriginal, aiSummary, aiError, billNumber, billType, bill.congress_number]);
 
   useEffect(() => {
     if (!active || !token || !card) return;
@@ -920,14 +881,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
           !aiError &&
           aiSummary && (
           <div className="leg-body simple-vote-summary">
-            {card && <>{responseReference}{" "}
-            {position.verb}{position.label && (
-              <>{" "}
-                <span className={`pill inline-vote-pill ${repVotePillClass}`}>
-                  {position.label}
-                </span>
-              </>
-            )}{" "}on {billLabel}, </>}{card && <>{legislationType} to </>}{formatQuickSummary(aiSummary, !card)}.
+            {formatQuickSummary(aiSummary)}.
           </div>
         )}
         {aiError && <p className="error-text">{aiError}</p>}
