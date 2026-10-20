@@ -126,8 +126,8 @@ export default function LegislativeVoteCard({ vote, interactions, isAuthed, stan
         {aiError && (
           <div className="error-text leg-summary-error">
             {aiError}
-            <button 
-              type="button" 
+            <button
+              type="button"
               onClick={() => loadAiSummary(vote, true)}
               className="leg-summary-retry"
             >
@@ -226,4 +226,3 @@ export default function LegislativeVoteCard({ vote, interactions, isAuthed, stan
     </article>
   );
 }
-
