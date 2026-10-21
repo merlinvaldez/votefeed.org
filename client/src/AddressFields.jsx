@@ -18,7 +18,7 @@ export default function AddressFields(props) {
       <label htmlFor="street">Street Address</label>
       <input
         id="street"
-        name="street"
+        name="address-line1"
         type="text"
         value={street}
         onChange={(e) => setStreet(e.target.value)}
@@ -30,7 +30,7 @@ export default function AddressFields(props) {
       <label htmlFor="city">City</label>
       <input
         id="city"
-        name="city"
+        name="address-level2"
         type="text"
         value={city}
         onChange={(e) => setCity(e.target.value)}
@@ -42,9 +42,10 @@ export default function AddressFields(props) {
       <label htmlFor="state">State</label>
       <select
         id="state"
-        name="state"
+        name="address-level1"
         value={stateCode}
         onChange={(e) => setStateCode(e.target.value)}
+        autoComplete="address-level1"
         required
       >
         <option value="">Select State</option>
@@ -58,7 +59,7 @@ export default function AddressFields(props) {
       <label htmlFor="zip">ZIP code</label>
       <input
         id="zip"
-        name="zip"
+        name="postal-code"
         type="text"
         value={zip}
         onChange={(e) => setZip(e.target.value)}

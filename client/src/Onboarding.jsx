@@ -146,7 +146,7 @@ export default function Onboarding() {
             address in our databases.
           </p>
           {routeError && <div className="error">{routeError}</div>}
-          <form onSubmit={handleSubmit} className="login-form">
+          <form onSubmit={handleSubmit} className="login-form" autoComplete="on">
             <AddressFields
               street={street}
               setStreet={setStreet}

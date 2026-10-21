@@ -132,7 +132,7 @@ function LandingPage() {
             <h2>Find your District</h2>
             <p>Enter your address to see your Rep&apos;s voting record.</p>
           </div>
-          <form className="address-form" onSubmit={handleSubmit}>
+          <form className="address-form" onSubmit={handleSubmit} autoComplete="on">
             <AddressFields
               street={street}
               setStreet={setStreet}
