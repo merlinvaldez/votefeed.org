@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { SignInButton, SignUpButton } from "@clerk/clerk-react";
 import { API_BASE } from "./constants.js";
-import { useAuth } from "./AuthContext.jsx";
-import AddressFields, {
+import { useAuth } from "./authContext.js";
+import AddressFields from "./AddressFields.jsx";
+import {
   formatAddress,
   saveAddressDraft,
   validateAddressFields,
-} from "./AddressFields.jsx";
+} from "./addressFields.js";
+import { buildFeedUrl, adaptDelegationFeed } from "./delegationFeedClient";
 import "./LandingPage.css";
 
 function LandingPage() {
@@ -68,40 +70,23 @@ function LandingPage() {
       }
       const districtData = await districtResp.json();
 
-      const repResp = await fetch(
-        `${API_BASE}/reps/district/${districtData.state}/${districtData.congressionalDistrict}`,
-      );
-      if (!repResp.ok) {
-        const msg = await repResp.text();
-        throw new Error(msg || `Rep lookup failed (${repResp.status})`);
-      }
-      const repData = await repResp.json();
       setStatus("loading-votes");
-      const repId = repData.bioguideid;
-      const votesResp = await fetch(
-        `${API_BASE}/housevotes/member/${repId}?limit=${PAGE_SIZE}&offset=0`,
-      );
+      const votesResp = await fetch(buildFeedUrl({
+        apiBase: API_BASE,
+        isGuest: true, district: districtData, pageSize: PAGE_SIZE,
+      }));
       if (!votesResp.ok) {
         const msg = await votesResp.text();
         throw new Error(
           msg || `Voting record lookup failed (${votesResp.status})`,
         );
       }
-      const {
-        votes = [],
-        policyAreas = [],
-        totalPolicyCount = 0,
-        selectedPolicyArea = null,
-      } = await votesResp.json();
+      const feed = adaptDelegationFeed(await votesResp.json());
       saveAddressDraft({ street, city, stateCode, zip });
       navigate("/feed", {
         state: {
           district: districtData,
-          rep: repData,
-          votes,
-          policyAreas,
-          totalPolicyCount,
-          selectedPolicyArea,
+          ...feed,
         },
       });
       setStatus("success");
@@ -147,7 +132,7 @@ function LandingPage() {
             <h2>Find your District</h2>
             <p>Enter your address to see your Rep&apos;s voting record.</p>
           </div>
-          <form className="address-form" onSubmit={handleSubmit}>
+          <form className="address-form" onSubmit={handleSubmit} autoComplete="on">
             <AddressFields
               street={street}
               setStreet={setStreet}

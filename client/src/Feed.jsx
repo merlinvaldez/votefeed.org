@@ -1,117 +1,23 @@
 import { useEffect, useEffectEvent, useMemo, useState, useRef } from "react";
 import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./authContext";
 import { API_BASE } from "./constants";
 import RepCard from "./RepCard";
+import LegislativeVoteCard from "./LegislativeVoteCard";
+import { summaryIdentity, hasSummaryText, createSummaryRequests } from "./feedSummaries";
+import { buildFeedUrl, adaptDelegationFeed, mergeFeedPage, createFeedRequests } from "./delegationFeedClient";
+import { fetchDelegationAlignment } from "./alignmentRefresh";
+import { billNavigation } from "./billDetailContext";
+import { findVoteInteraction, isAnsweredVote, getCardResponseTargets, buildMemberStancePayload, buildCardStanceRequest, reconcileCardStanceResult } from "./voteInteractions";
 import "./Feed.css";
 import {
   Info,
-  ThumbsUp,
-  ThumbsDown,
-  MessageCircle,
-  Clock3,
   Search,
-  CheckCircle2,
-  XCircle,
-  ScrollText,
 } from "lucide-react";
-
-const getRepLastName = (fullName = "") => {
-  const normalized = fullName.trim();
-  if (!normalized) return "";
-  if (normalized.includes(",")) {
-    return normalized.split(",")[0].trim();
-  }
-  const parts = normalized.split(/\s+/).filter(Boolean);
-  return parts[parts.length - 1] ?? "";
-};
-
-const formatVotedOn = (value) => {
-  if (!value) return "Unknown date";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "Unknown date";
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }).format(date);
-};
-
-const formatBillLabel = (type, number) => {
-  const normalized = String(type || "hr").toLowerCase();
-  const labels = {
-    hr: "H.R.",
-    hres: "H.Res.",
-    hjres: "H.J.Res.",
-    hconres: "H.Con.Res.",
-    s: "S.",
-    sres: "S.Res.",
-    sjres: "S.J.Res.",
-    sconres: "S.Con.Res.",
-  };
-  return `${labels[normalized] || normalized.toUpperCase()} ${number}`;
-};
-
-const formatLegislationType = (type) => {
-  const normalized = String(type || "").toLowerCase();
-  if (["hr", "s"].includes(normalized)) return "a bill";
-  if (["hres", "sres"].includes(normalized)) return "a resolution";
-  if (["hjres", "sjres"].includes(normalized)) return "a joint resolution";
-  if (["hconres", "sconres"].includes(normalized)) {
-    return "a concurrent resolution";
-  }
-  return "legislation";
-};
-
-const formatQuickSummary = (summary = "") => {
-  const trimmed = String(summary)
-    .replace(/^\s*to\s+/i, "")
-    .replace(/[.!?]+\s*$/, "")
-    .trim();
-  if (!trimmed) return "summarize what this measure would do";
-  return `${trimmed.charAt(0).toLowerCase()}${trimmed.slice(1)}`;
-};
-
-const getVoteClass = (vote = "") => {
-  if (["Yea", "Aye", "Yes"].includes(vote)) return "success";
-  if (["Nay", "No"].includes(vote)) return "danger";
-  return "neutral";
-};
-
-const buildFeedUrl = ({
-  isGuest,
-  repId,
-  pageSize,
-  offset = 0,
-  policyArea = null,
-}) => {
-  const baseUrl = isGuest
-    ? `${API_BASE}/housevotes/member/${repId}`
-    : `${API_BASE}/users/me/feed`;
-  const params = new URLSearchParams();
-  if (!policyArea) {
-    params.set("limit", String(pageSize));
-    params.set("offset", String(offset));
-  }
-  if (policyArea) {
-    params.set("policyArea", policyArea);
-  }
-  const queryString = params.toString();
-  return queryString ? `${baseUrl}?${queryString}` : baseUrl;
-};
-
-const buildAlignmentUrl = ({ repId, policyArea = null }) => {
-  const params = new URLSearchParams({
-    repBioguideId: repId,
-  });
-  if (policyArea) {
-    params.set("policyArea", policyArea);
-  }
-  return `${API_BASE}/users/me/alignment?${params.toString()}`;
-};
 
 function Feed(props) {
   const PAGE_SIZE = 5;
+  const [selectedChamber, setSelectedChamber] = useState("All Reps");
   const { token, authFetch } = useAuth();
   const isAuthed = Boolean(token);
   const location = useLocation();
@@ -124,19 +30,34 @@ function Feed(props) {
   } = useOutletContext();
   const guestBarRef = useRef(null);
   const guestHighlightTimeoutRef = useRef(null);
+  const alignmentRequestRef = useRef(0);
+  const stancePendingRef = useRef(new Set());
+  const [stancePending, setStancePending] = useState({});
+  const [alignmentError, setAlignmentError] = useState("");
+  const [stanceError, setStanceError] = useState("");
 
-  const [feedState, setFeedState] = useState(location.state || props.state);
+  const [feedState, setFeedState] = useState(token ? null : location.state || props.state);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [isGuestBarHighlighted, setIsGuestBarHighlighted] = useState(false);
 
   const [interactions, setInteractions] = useState([]);
   const [userId, setUserId] = useState(null);
-  const [hasMore, setHasmore] = useState(true);
+  const [savedLocation, setSavedLocation] = useState(null);
+  const guestLocation = (location.state || props.state)?.district;
+  const feedLocation = token ? savedLocation : guestLocation;
+  const delegationScope = JSON.stringify([token ? userId : "guest", feedLocation?.state,
+    feedLocation?.congressionalDistrict ?? feedLocation?.district, location.key]);
+  const scopeKey = JSON.stringify([token ? userId : "guest", feedLocation?.state,
+    feedLocation?.congressionalDistrict ?? feedLocation?.district, selectedPolicyArea, selectedChamber, location.key]);
+  const [feedRequests] = useState(createFeedRequests);
+  const isCurrentFeed = feedState?.scopeKey === scopeKey;
+  const hasMore = isCurrentFeed && Boolean(feedState?.page?.hasMore);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const sentinelRef = useRef(null);
-  const votes = useMemo(() => feedState?.votes ?? [], [feedState?.votes]);
+  const votes = useMemo(() => isCurrentFeed ? feedState?.votes ?? [] : [], [isCurrentFeed, feedState?.votes]);
 
+  const [summaryRequests] = useState(createSummaryRequests);
   const [showOriginalByCard, setShowOriginalByCard] = useState({});
   const [aiSummaryByBill, setAiSummaryByBill] = useState({});
   const [aiLoadingByBill, setAiLoadingByBill] = useState({});
@@ -144,7 +65,6 @@ function Feed(props) {
   const [mobilePolicySearch, setMobilePolicySearch] = useState("");
   const [isMobilePolicySearchOpen, setIsMobilePolicySearchOpen] =
     useState(false);
-  const isFilteringByPolicy = selectedPolicyArea !== null;
   const availablePolicyAreas = feedState?.policyAreas ?? [];
   const totalPolicyCount = feedState?.totalPolicyCount ?? 0;
   const normalizedMobilePolicySearch = mobilePolicySearch.trim().toLowerCase();
@@ -155,7 +75,6 @@ function Feed(props) {
   useEffect(() => {
     setSidebarPolicyAreas(feedState?.policyAreas ?? []);
     setSidebarTotalPolicyCount(feedState?.totalPolicyCount ?? 0);
-    setSelectedPolicyArea(feedState?.selectedPolicyArea ?? null);
   }, [
     feedState,
     setSidebarPolicyAreas,
@@ -195,171 +114,88 @@ function Feed(props) {
     return true;
   };
 
-  const loadAiSummary = useEffectEvent(async (billType, billNumber, forceRetry = false) => {
-    const billIdentity = `${billType}-${billNumber}`;
-    if (
-      !forceRetry && 
-      (aiSummaryByBill[billIdentity] ||
-      aiLoadingByBill[billIdentity] ||
-      aiErrorByBill[billIdentity])
-    ) {
-      return;
-    }
-    setAiLoadingByBill((prev) => ({ ...prev, [billIdentity]: true }));
-    setAiErrorByBill((prev) => ({ ...prev, [billIdentity]: null }));
+  const loadAiSummary = async (card, forceRetry = false) => {
+    const billIdentity = summaryIdentity(card);
+    if (!forceRetry && (hasSummaryText(card.simplifiedText) || hasSummaryText(aiSummaryByBill[billIdentity]) || aiErrorByBill[billIdentity])) return;
+    if (!summaryRequests.begin(billIdentity)) return;
+    setAiLoadingByBill(prev => ({ ...prev, [billIdentity]: true }));
+    setAiErrorByBill(prev => ({ ...prev, [billIdentity]: null }));
     try {
-      const resp = await fetch(
-        `${API_BASE}/bills/${billType}/${billNumber}/ai-summary`,
-      );
-      if (!resp.ok) throw new Error("Ai summary failed");
+      const params = new URLSearchParams({ congress: String(card.bill.congress) });
+      const resp = await fetch(`${API_BASE}/bills/${card.bill.type}/${card.bill.number}/ai-summary?${params}`);
+      if (!resp.ok) throw new Error("The simplified summary could not be loaded.");
       const data = await resp.json();
-      setAiSummaryByBill((prev) => ({
-        ...prev,
-        [billIdentity]: data.aiSummary,
-      }));
-    } catch {
-      setAiErrorByBill((prev) => ({
-        ...prev,
-        [billIdentity]: "AI summary failed",
-      }));
+      if (!hasSummaryText(data.aiSummary)) throw new Error("The simplified summary is unavailable.");
+      setAiSummaryByBill(prev => ({ ...prev, [billIdentity]: data.aiSummary }));
+    } catch (err) {
+      setAiErrorByBill(prev => ({ ...prev, [billIdentity]: err.message }));
     } finally {
-      setAiLoadingByBill((prev) => ({ ...prev, [billIdentity]: false }));
+      summaryRequests.finish(billIdentity);
+      setAiLoadingByBill(prev => ({ ...prev, [billIdentity]: false }));
     }
-  });
+  };
 
+  const loadSummaryOnEntry = useEffectEvent(loadAiSummary);
   useEffect(() => {
-    votes.forEach((vote) => {
-      if (!vote.legislation_type || !vote.legislationnumber) return;
-      loadAiSummary(vote.legislation_type, vote.legislationnumber);
-    });
+    votes.forEach(vote => loadSummaryOnEntry(vote));
   }, [votes]);
 
   useEffect(() => {
-    if (token) return;
-    if (feedState?.rep && feedState?.votes) return;
-    navigate("/", { replace: true });
-  }, [token, feedState, navigate]);
+    if (!token && !guestLocation?.state) navigate("/", { replace: true });
+  }, [token, guestLocation?.state, navigate]);
 
   useEffect(() => {
-    if (feedState?.rep && feedState?.votes) return;
-    if (!token) return;
-
-    let cancelled = false;
-
+    feedRequests.reset();
+    setIsFetchingMore(false);
+    setError("");
+    if (!feedLocation?.state || (token && !userId)) return;
+    const ticket = feedRequests.begin();
+    setLoading(true);
     (async () => {
       try {
-        setLoading(true);
-        const resp = await authFetch(
-          buildFeedUrl({
-            isGuest: false,
-            pageSize: PAGE_SIZE,
-            offset: 0,
-            policyArea: selectedPolicyArea,
-          }),
-        );
+        const url = buildFeedUrl({ apiBase: API_BASE, isGuest: !token,
+          district: feedLocation, pageSize: PAGE_SIZE, policyArea: selectedPolicyArea, chamber: selectedChamber });
+        const resp = await (token ? authFetch(url, { signal: ticket.controller.signal })
+          : fetch(url, { signal: ticket.controller.signal }));
         if (!resp.ok) throw new Error("Failed to load feed");
-        const feed = await resp.json();
-        if (!cancelled) setFeedState(feed);
-        if (!cancelled)
-          setHasmore(
-            selectedPolicyArea === null && feed.votes.length === PAGE_SIZE,
-          );
+        const feed = adaptDelegationFeed(await resp.json());
+        if (!feedRequests.current(ticket)) return;
+        setFeedState({ ...feed, scopeKey, delegationScope, district: token ? null : feedLocation });
       } catch (err) {
-        if (!cancelled) setError(err.message || "Failed to load feed");
+        if (feedRequests.current(ticket)) setError(err.message || "Failed to load feed");
       } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [feedState, token, authFetch, selectedPolicyArea]);
-
-  useEffect(() => {
-    const currentPolicyArea = feedState?.selectedPolicyArea ?? null;
-    const repId = feedState?.rep?.bioguideid;
-    if (selectedPolicyArea === currentPolicyArea) return;
-    if (!token && !repId) return;
-
-    let cancelled = false;
-
-    (async () => {
-      try {
-        setLoading(true);
-        setError("");
-        const isGuest = !token;
-        const url = buildFeedUrl({
-          isGuest,
-          repId,
-          pageSize: PAGE_SIZE,
-          offset: 0,
-          policyArea: selectedPolicyArea,
-        });
-        const resp = isGuest ? await fetch(url) : await authFetch(url);
-        if (!resp.ok) throw new Error("Failed to filter feed");
-        const nextFeed = await resp.json();
-        if (cancelled) return;
-        setFeedState((prev) => ({
-          ...prev,
-          ...nextFeed,
-          rep: nextFeed.rep ?? prev?.rep ?? null,
-        }));
-        setHasmore(
-          selectedPolicyArea === null &&
-            (nextFeed.votes?.length ?? 0) === PAGE_SIZE,
-        );
-      } catch (err) {
-        if (!cancelled) {
-          setError(err.message || "Failed to filter feed");
-        }
-      } finally {
-        if (!cancelled) {
+        if (feedRequests.current(ticket)) {
           setLoading(false);
+          feedRequests.finish(ticket);
         }
       }
     })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [
-    authFetch,
-    feedState?.rep?.bioguideid,
-    feedState?.selectedPolicyArea,
-    selectedPolicyArea,
-    token,
-  ]);
+    return () => feedRequests.reset();
+  }, [scopeKey, delegationScope, token, userId, feedLocation, selectedPolicyArea, selectedChamber, authFetch, feedRequests]);
 
   const loadMoreVotes = useEffectEvent(async () => {
-    if (isFetchingMore) return;
+    if (!isCurrentFeed || loading || !hasMore || !feedState.page.nextCursor) return;
+    const ticket = feedRequests.begin();
+    if (!ticket) return;
+    const cursor = feedState.page.nextCursor;
     setIsFetchingMore(true);
     try {
-      const offset = votes.length;
-      const repId = feedState?.rep?.bioguideid;
-      const isGuest = !token;
-      const url = buildFeedUrl({
-        isGuest,
-        repId,
-        pageSize: PAGE_SIZE,
-        offset,
-        policyArea: selectedPolicyArea,
-      });
-      const resp = isGuest ? await fetch(url) : await authFetch(url);
+      const url = buildFeedUrl({ apiBase: API_BASE, isGuest: !token,
+        district: feedLocation, pageSize: PAGE_SIZE, cursor, policyArea: selectedPolicyArea, chamber: selectedChamber });
+      const resp = await (token ? authFetch(url, { signal: ticket.controller.signal })
+        : fetch(url, { signal: ticket.controller.signal }));
       if (!resp.ok) throw new Error("Failed to load more votes");
-      const nextFeed = await resp.json();
-      const nextVotes = nextFeed.votes ?? [];
-        setFeedState((prev) => ({
-          ...prev,
-          ...nextFeed,
-          rep: nextFeed.rep ?? prev?.rep ?? null,
-          votes: [...(prev?.votes ?? []), ...nextVotes],
-        }));
-        setHasmore(nextVotes.length === PAGE_SIZE);
+      const nextFeed = adaptDelegationFeed(await resp.json());
+      if (!feedRequests.current(ticket)) return;
+      setFeedState(prev => prev?.scopeKey === scopeKey
+        ? mergeFeedPage(prev, nextFeed, cursor) : prev);
     } catch (err) {
-      setError(err.message || "Failed to load more votes");
+      if (feedRequests.current(ticket)) setError(err.message || "Failed to load more votes");
     } finally {
-      setIsFetchingMore(false);
+      if (feedRequests.current(ticket)) {
+        setIsFetchingMore(false);
+        feedRequests.finish(ticket);
+      }
     }
   });
 
@@ -368,8 +204,7 @@ function Feed(props) {
     const observer = new IntersectionObserver(
       (entries) => {
         if (!entries[0]?.isIntersecting) return;
-        if (selectedPolicyArea !== null) return;
-        if (!token && !feedState?.rep) return;
+        if (!token && !feedLocation?.state) return;
         if (!hasMore || isFetchingMore) return;
         if (loading) return;
         loadMoreVotes();
@@ -380,11 +215,11 @@ function Feed(props) {
     return () => observer.disconnect();
   }, [
     token,
-    feedState?.rep,
+    feedLocation?.state,
     hasMore,
     isFetchingMore,
     loading,
-    votes.length,
+    feedState?.page?.nextCursor,
     selectedPolicyArea,
   ]);
 
@@ -397,7 +232,10 @@ function Feed(props) {
         const meResp = await authFetch(`${API_BASE}/users/me`);
         if (!meResp.ok) throw new Error("Failed to load user");
         const me = await meResp.json();
-        if (!cancelled) setUserId(me.id);
+        if (!cancelled) {
+          setUserId(me.id);
+          setSavedLocation({ state: me.state, district: me.district ?? null });
+        }
 
         const interactionsResp = await authFetch(
           `${API_BASE}/interactions/users/${me.id}`,
@@ -414,51 +252,99 @@ function Feed(props) {
     return () => {
       cancelled = true;
     };
-  }, [token, authFetch]);
+  }, [token, authFetch, location.key]);
 
-  const interactionsByBill = {};
-  for (const interaction of interactions) {
-    interactionsByBill[interaction.bill_id] = interaction;
-  }
-  const rep = feedState?.rep;
-  const alignmentForCard = feedState?.alignment ?? null;
+  const rep = feedState?.delegation ? feedState.delegation.houseMember : feedState?.rep;
+  // Signed-in profiles take precedence over any guest navigation data.
+  // Location remains available during loading and House vacancies. Preserve
+  // both supported district shapes, including at-large district zero.
+  const cardLocation = feedLocation ?? null;
+  const alignmentForCard = isAuthed ? feedState?.alignment ?? null : null;
 
-  const refreshAlignmentSummary = useEffectEvent(async () => {
-    if (!token || !rep?.bioguideid) return;
-    const resp = await authFetch(
-      buildAlignmentUrl({
-        repId: rep.bioguideid,
-        policyArea: selectedPolicyArea,
-      }),
-    );
-    if (!resp.ok) throw new Error("Failed to refresh alignment");
-    const alignment = await resp.json();
-    setFeedState((prev) =>
-      prev
-        ? {
-            ...prev,
-            alignment,
-          }
-        : prev,
-    );
+  const refreshAlignmentSummary = async () => {
+    if (!token) return;
+    const requestId = ++alignmentRequestRef.current;
+    const policyArea = selectedPolicyArea;
+    setAlignmentError("");
+    try {
+      const alignment = await fetchDelegationAlignment(authFetch, API_BASE, policyArea);
+      if (requestId !== alignmentRequestRef.current) return;
+      setFeedState(prev => prev?.scopeKey === scopeKey && (prev.selectedPolicyArea ?? null) === policyArea
+        ? { ...prev, alignment } : prev);
+    } catch (err) {
+      if (requestId === alignmentRequestRef.current) setAlignmentError(err.message);
+    }
+  };
+
+  const latestAlignmentRefresh = useRef(null);
+  useEffect(() => {
+    latestAlignmentRefresh.current = refreshAlignmentSummary;
   });
 
-  const handleStance = async (billId, stance) => {
-    if (!userId) {
+  // Navigation can restore cached feed data after an answer on BillPage.
+  const refreshAlignmentOnEntry = useEffectEvent(refreshAlignmentSummary);
+  useEffect(() => {
+    refreshAlignmentOnEntry();
+    return () => { alignmentRequestRef.current += 1; };
+  }, [token, savedLocation?.state, savedLocation?.district, selectedPolicyArea, feedState?.scopeKey]);
+
+  const handleStance = async (vote, stance) => {
+    if (!isAuthed || !userId) {
       promptGuestInteraction();
       return;
     }
 
+    const targets = getCardResponseTargets(vote);
+    if (targets.length === 2) {
+      let request;
+      try { request = buildCardStanceRequest(vote, interactions, stance); }
+      catch (err) { setStanceError(err.message); return; }
+      const voteIds = targets.map(target => target.memberVoteId);
+      if (voteIds.some(id => stancePendingRef.current.has(id))) return;
+      voteIds.forEach(id => stancePendingRef.current.add(id));
+      setStancePending(prev => ({ ...prev, ...Object.fromEntries(voteIds.map(id => [id, true])) }));
+      setStanceError("");
+      try {
+        const resp = await authFetch(`${API_BASE}/interactions/stances/batch`, {
+          method: "PUT", body: JSON.stringify(request),
+        });
+        if (!resp.ok) {
+          const error = await resp.json().catch(() => null);
+          throw new Error(error?.error || "Failed to save both member responses. Please try again.");
+        }
+        const result = await resp.json();
+        // Validate outside the state updater so malformed responses reach the error handler.
+        reconcileCardStanceResult([], request, result.interactions);
+        setInteractions(prev => reconcileCardStanceResult(prev, request, result.interactions));
+        await latestAlignmentRefresh.current?.();
+      } catch (err) {
+        setStanceError(err.message || "Failed to save both member responses");
+      } finally {
+        voteIds.forEach(id => stancePendingRef.current.delete(id));
+        setStancePending(prev => ({ ...prev, ...Object.fromEntries(voteIds.map(id => [id, false])) }));
+      }
+      return;
+    }
+    if (targets.length !== 1) return;
+    const target = targets[0];
+    let payload;
+    try { payload = buildMemberStancePayload(target, stance); } catch { return; }
+    const memberVoteId = target.memberVoteId;
+    if (!memberVoteId || stancePendingRef.current.has(memberVoteId)) return;
+    stancePendingRef.current.add(memberVoteId);
+    setStancePending(prev => ({ ...prev, [memberVoteId]: true }));
+    setStanceError("");
     try {
-      const existing = interactionsByBill[billId];
-      if (existing?.stance === stance) {
+      const existing = findVoteInteraction(interactions, target.billId, target.memberId, memberVoteId);
+      if (isAnsweredVote(existing, memberVoteId) && existing.stance === stance) {
         const resp = await authFetch(
-          `${API_BASE}/interactions/${existing.id}`,
-          { method: "DELETE" },
+          `${API_BASE}/interactions/${existing.id}/stance`,
+          { method: "PUT", body: JSON.stringify({ stance: null, member_vote_id: memberVoteId }) },
         );
-        if (!resp.ok) throw new Error("Failed to delete stance");
-        setInteractions((prev) => prev.filter((i) => i.id !== existing.id));
-        await refreshAlignmentSummary();
+        if (!resp.ok) throw new Error("Failed to clear stance");
+        const cleared = await resp.json();
+        setInteractions(prev => prev.map(i => i.id === cleared.id ? { ...i, ...cleared } : i));
+        await latestAlignmentRefresh.current?.();
         return;
       }
 
@@ -470,51 +356,47 @@ function Feed(props) {
           method: existing ? "PUT" : "POST",
           body: JSON.stringify(
             existing
-              ? { stance }
-              : {
-                  user_id: userId,
-                  bill_id: billId,
-                  rep_bioguide_id: rep.bioguideid,
-                  stance,
-                },
+              ? { stance, member_vote_id: memberVoteId }
+              : payload,
           ),
         },
       );
-      if (!resp.ok) throw new Error("Failed to save stance");
+      if (!resp.ok) {
+        const payload = await resp.json().catch(() => null);
+        throw new Error(payload?.error || "Failed to save stance");
+      }
       const saved = await resp.json();
 
       setInteractions((prev) => {
         const withoutCurrent = prev.filter((i) => i.id !== saved.id);
         return [...withoutCurrent, saved];
       });
-      await refreshAlignmentSummary();
+      await latestAlignmentRefresh.current?.();
     } catch (err) {
-      setError(err.message || "Failed to save stance");
+      setStanceError(err.message || "Failed to save stance");
+    } finally {
+      stancePendingRef.current.delete(memberVoteId);
+      setStancePending(prev => ({ ...prev, [memberVoteId]: false }));
     }
   };
 
-  if (loading) return <div className="feed-loading">Loading feed...</div>;
-  if (error) return <div className="error">{error}</div>;
+  const sameDelegation = feedState?.delegationScope === delegationScope;
+  const feedPending = loading || (!isCurrentFeed && !error);
+  if (feedPending && !sameDelegation) return <div className="feed-loading">Loading feed...</div>;
+  if (error && !sameDelegation) return <div className="error">{error}</div>;
 
-  if (!feedState?.rep || !feedState?.votes) {
+  if (!feedState?.votes) {
     return <div>Missing feed data</div>;
   }
-  const repLastName = getRepLastName(rep.full_name);
-  const memberTitle = String(rep.chamber || "")
-    .toLowerCase()
-    .includes("senate")
-    ? "Sen."
-    : "Rep.";
-
-  const goToBill = (vote) => {
-    const billNumber = vote.legislationnumber;
-    const billType = vote.legislation_type;
-    navigate(`/bill/${billType}/${billNumber}`, { state: { rep, bill: vote } });
+  const goToBill = (vote, discussion = false) => {
+    navigate(billNavigation(vote, selectedChamber, token ? null : feedLocation) + (discussion ? "#public-comments" : ""), {
+      state: { district: feedLocation, sourceCardId: vote.id, sourceChamber: selectedChamber },
+    });
   };
 
   const handleCommentIntent = (vote) => {
     if (promptGuestInteraction()) return;
-    goToBill(vote);
+    goToBill(vote, true);
   };
 
   const handlePolicySelection = (policyArea) => {
@@ -546,7 +428,7 @@ function Feed(props) {
             <Info className="guest-icon" strokeWidth={1.75}></Info>
             <div>
               <div className="guest-title">Viewing as Guest</div>
-              <div className="guest-sub">Your interactions won’t be saved.</div>
+              <div className="guest-sub">Your interactions won&apos;t be saved.</div>
             </div>
           </div>
           <button className="guest-cta" onClick={() => navigate("/signup")}>
@@ -556,13 +438,19 @@ function Feed(props) {
       )}
 
       <RepCard
+        chamber={selectedChamber}
+        onChamberChange={setSelectedChamber}
         rep={rep}
-        alignment={alignmentForCard}
+        location={cardLocation}
+        alignment={isCurrentFeed ? alignmentForCard : null}
         alignmentPolicyArea={feedState?.selectedPolicyArea ?? null}
+        alignmentError={alignmentError}
       ></RepCard>
 
       <section className="feed-section">
         <h2 className="section-title">Legislative Feed</h2>
+        {isCurrentFeed && feedState?.warnings?.filter(warning => warning.code === "PUBLIC_COMMENT_COUNTS_UNAVAILABLE")
+          .map(warning => <p key={warning.code} role="status">{warning.message}</p>)}
         <div className="mobile-policy-filter">
           <div className="mobile-policy-header">
             <div className="mobile-policy-current">
@@ -635,174 +523,29 @@ function Feed(props) {
             </div>
           )}
         </div>
-        {votes.length === 0 && <p>No votes found for this member.</p>}
+        {feedPending && <p role="status">Loading feed...</p>}
+        {error && <p className="error" role="alert">{error}</p>}
+        {!feedPending && !error && votes.length === 0 && <p>No eligible votes found for this delegation.</p>}
 
-        {votes.map((vote) => {
-          const interaction = interactionsByBill[vote.bill_id];
-          const billType = vote.legislation_type;
-          const billNumber = vote.legislationnumber;
-          const billIdentity = `${billType}-${billNumber}`;
-          const voteKey = `${vote.legislationnumber}-${vote.session_number}-${vote.roll_call_number}`;
-          const billLabel = formatBillLabel(
-            vote.legislation_type,
-            vote.legislationnumber,
-          );
-          const showOriginal = Boolean(showOriginalByCard[voteKey]);
-          const isLoadingAi = aiLoadingByBill[billIdentity];
-          const aiText = aiSummaryByBill[billIdentity];
-          const aiError = aiErrorByBill[billIdentity];
-          const legislationType = formatLegislationType(billType);
-          const voteClass = getVoteClass(vote.vote);
-          const isNotVoting = vote.vote === "Not Voting";
-          const useOfficialSummary = showOriginal || aiError;
-          return (
-            <div key={voteKey} className="leg-card">
-              <div className="leg-top">
-                <div className="leg-meta-row">
-                  <button
-                    type="button"
-                    className="pill primary bill-link-pill"
-                    onClick={() => goToBill(vote)}
-                  >
-                    {billLabel}
-                  </button>
-                  <span className="leg-date">
-                    <Clock3 size={14}></Clock3>
-                    {formatVotedOn(vote.voted_on)}
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  className={`summary-source-toggle${showOriginal ? " active" : ""}`}
-                  onClick={() =>
-                    setShowOriginalByCard((prev) => ({
-                      ...prev,
-                      [voteKey]: !prev[voteKey],
-                    }))
-                  }
-                  aria-label={
-                    showOriginal
-                      ? "Show simplified summary"
-                      : "This is an AI-generated summary. Toggle here to see the original from Congress.gov."
-                  }
-                  aria-pressed={showOriginal}
-                  title={
-                    showOriginal
-                      ? "Show simplified summary"
-                      : "This is an AI-generated summary. Toggle here to see the original from Congress.gov."
-                  }
-                >
-                  <ScrollText size={24} strokeWidth={2} aria-hidden="true" />
-                </button>
-                {aiError && (
-                  <div className="error-text" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    {aiError}
-                    <button 
-                      type="button" 
-                      onClick={() => loadAiSummary(vote.legislation_type, vote.legislationnumber, true)}
-                      style={{ background: 'none', border: 'none', color: 'var(--primary-color)', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
-                    >
-                      Retry
-                    </button>
-                  </div>
-                )}
-              </div>
-              {useOfficialSummary ? (
-                <div
-                  className="leg-body"
-                  dangerouslySetInnerHTML={{ __html: vote.summary }}
-                />
-              ) : isLoadingAi || !aiText ? (
-                <div className="leg-body">Creating summary.</div>
-              ) : (
-                <div className="leg-body simple-vote-summary">
-                  {memberTitle} {repLastName}{" "}
-                  {isNotVoting ? (
-                    <>did not vote</>
-                  ) : (
-                    <>
-                      voted{" "}
-                      <span className={`pill inline-vote-pill ${voteClass}`}>
-                        {vote.vote}
-                      </span>
-                    </>
-                  )}{" "}
-                  on {billLabel}, {legislationType} to{" "}
-                  {formatQuickSummary(aiText)}.
-                </div>
-              )}
-              <div className="leg-vote">
-                {(() => {
-                  let resultClass = "neutral";
-                  if (vote.vote_result === "Passed") {
-                    resultClass = "success";
-                  } else if (vote.vote_result === "Failed") {
-                    resultClass = "danger";
-                  }
-                  return (
-                    <>
-                      {vote.vote_result && (
-                        <span className={`pill ${resultClass}`}>
-                            {vote.vote_result === "Passed" ? (
-                              <CheckCircle2 size={14} />
-                            ) : vote.vote_result === "Failed" ? (
-                              <XCircle size={14} />
-                            ) : null}
-                            {vote.vote_result}
-                        </span>
-                      )}
-                    </>
-                  );
-                })()}
-              </div>
-              <div className="leg-actions">
-                <button
-                  type="button"
-                  className={`ghost-btn ${
-                    interaction?.stance === "approve" ? "active approve" : ""
-                  }`}
-                  onClick={() => handleStance(vote.bill_id, "approve")}
-                  aria-label={`Agree with Rep. ${repLastName}`}
-                  aria-pressed={interaction?.stance === "approve"}
-                  title={`Agree with Rep. ${repLastName}`}
-                >
-                  <ThumbsUp size={16} />
-                  {interaction?.stance === "approve" && (
-                    <span>I agree with Rep. {repLastName}</span>
-                  )}
-                </button>
-
-                <button
-                  type="button"
-                  className={`ghost-btn ${
-                    interaction?.stance === "disapprove"
-                      ? "active disapprove"
-                      : ""
-                  }`}
-                  onClick={() => handleStance(vote.bill_id, "disapprove")}
-                  aria-label={`Disagree with Rep. ${repLastName}`}
-                  aria-pressed={interaction?.stance === "disapprove"}
-                  title={`Disagree with Rep. ${repLastName}`}
-                >
-                  <ThumbsDown size={16} />
-                  {interaction?.stance === "disapprove" && (
-                    <span>I disagree with Rep. {repLastName}</span>
-                  )}
-                </button>
-
-                <div
-                  className="comments"
-                  onClick={() => handleCommentIntent(vote)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <MessageCircle size={16} />
-                  {interaction?.user_comment ? "1 Comment" : "0 Comments"}
-                </div>
-              </div>
-            </div>
-          );
-        })}
-        {!isFilteringByPolicy && hasMore && (
+        {stanceError && <p className="error-text" role="alert">{stanceError}</p>}
+        {votes.map(vote => (
+          <LegislativeVoteCard key={vote.id}
+            vote={vote}
+            interactions={interactions}
+            isAuthed={isAuthed}
+            stancePending={stancePending}
+            showOriginalByCard={showOriginalByCard}
+            aiLoadingByBill={aiLoadingByBill}
+            aiSummaryByBill={aiSummaryByBill}
+            aiErrorByBill={aiErrorByBill}
+            setShowOriginalByCard={setShowOriginalByCard}
+            loadAiSummary={loadAiSummary}
+            goToBill={goToBill}
+            handleStance={handleStance}
+            handleCommentIntent={handleCommentIntent}
+          />
+        ))}
+        {hasMore && (
           <div ref={sentinelRef} className="feed-loading">
             <div>{isFetchingMore ? "Loading more..." : "Scroll for more"}</div>
           </div>

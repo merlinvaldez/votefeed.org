@@ -2,11 +2,14 @@ import express from "express";
 const router = express.Router();
 export default router;
 import { findRepByDistrict } from "../db/queries/reps.js";
+import { findCurrentDelegation } from "../db/queries/delegation.js";
+import { delegationFeedHandler } from "./delegationFeed.js";
+import { billDelegationHandler } from "./billDelegation.js";
 import {
   findMemberPolicyAreas,
   findMemberVotes,
 } from "../db/queries/houseVotes.js";
-import { getAlignmentByUserAndRep } from "../db/queries/interactions.js";
+import { ALIGNMENT_CHAMBERS, getDelegationAlignment } from "../db/queries/alignment.js";
 import {
   updateUserDistrict,
   updateUserNotificationsEnabled,
@@ -14,6 +17,7 @@ import {
 } from "../db/queries/users.js";
 import requireBody from "../middleware/requireBody.js";
 import requireUser from "../middleware/requireUser.js";
+router.get("/me/delegation/bills/:billType/:billNumber", requireUser, billDelegationHandler({ authenticated: true }));
 
 import {
   ADDRESS_NOT_FOUND_CODE,
@@ -95,12 +99,16 @@ router.get("/me/alignment", requireUser, async (req, res) => {
   try {
     const repBioguideId = String(req.query.repBioguideId ?? "").trim();
     const policyArea = String(req.query.policyArea ?? "").trim() || null;
-    if (!repBioguideId) {
-      return res.status(400).json({ error: "Missing repBioguideId" });
+    const chamber = String(req.query.chamber ?? "House").trim();
+    if (!ALIGNMENT_CHAMBERS.includes(chamber)) {
+      return res.status(400).json({ error: "Invalid alignment chamber" });
     }
-    const alignment = await getAlignmentByUserAndRep(req.user.id, repBioguideId, {
-      policyArea,
+    const alignment = await getDelegationAlignment(req.user, {
+      policyArea, chamber,
     });
+    if (repBioguideId && !alignment.members.some(member => member.memberId === repBioguideId)) {
+      return res.status(400).json({ error: "Representative is not in the selected delegation" });
+    }
     res.json(alignment);
   } catch (err) {
     console.error(err);
@@ -108,10 +116,24 @@ router.get("/me/alignment", requireUser, async (req, res) => {
   }
 });
 
+router.get("/me/delegation", requireUser, async (req, res, next) => {
+  try {
+    // The authenticated user's saved location is authoritative.
+    return res.json(await findCurrentDelegation(req.user));
+  } catch (err) {
+    if (err.code === "INVALID_DELEGATION_LOCATION") {
+      return res.status(400).json({ error: "User is missing a valid district/state" });
+    }
+    return next(err);
+  }
+});
+
+router.get("/me/delegation/feed", requireUser, delegationFeedHandler({ authenticated: true }));
+
 router.get("/me/feed", requireUser, async (req, res) => {
   try {
     const { district, state } = req.user;
-    if (!district || !state) {
+    if (district == null || !state) {
       return res.status(400).json({ error: "User is missing district/state" });
     }
     const rep = await findRepByDistrict(state, district);
@@ -125,7 +147,7 @@ router.get("/me/feed", requireUser, async (req, res) => {
     const [votes, policyAreaSummary, alignment] = await Promise.all([
       findMemberVotes(rep.bioguideid, { limit, offset, policyArea }),
       findMemberPolicyAreas(rep.bioguideid),
-      getAlignmentByUserAndRep(req.user.id, rep.bioguideid, { policyArea }),
+      getDelegationAlignment(req.user, { policyArea, houseMember: rep }),
     ]);
     res.json({
       rep,

@@ -6,15 +6,23 @@ import "./Login.css";
 
 export default function Signup() {
   const navigate = useNavigate();
-  const [showEmailExistsError, setShowEmailExistsError] = useState(false);
+  const [showEmailExistsError] = useState(() => {
+    try {
+      return window.sessionStorage.getItem("signup_error") === "email_exists";
+    } catch {
+      return false;
+    }
+  });
 
   useEffect(() => {
-    const flag = window.sessionStorage.getItem("signup_error");
-    if (flag === "email_exists") {
-      setShowEmailExistsError(true);
-      window.sessionStorage.removeItem("signup_error");
+    if (showEmailExistsError) {
+      try {
+        window.sessionStorage.removeItem("signup_error");
+      } catch {
+        // Storage may be unavailable in restricted browser contexts.
+      }
     }
-  }, []);
+  }, [showEmailExistsError]);
 
   return (
     <div className="login-layout">

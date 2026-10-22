@@ -1,54 +1,62 @@
 import { useEffect, useState } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./authContext";
 import { API_BASE } from "./constants";
 
 export default function RequireOnboarding() {
   const { isLoaded, isSignedIn, authFetch } = useAuth();
   const location = useLocation();
-  const [status, setStatus] = useState("loading");
-  const [needsOnboarding, setNeedsOnboarding] = useState(false);
+  const [checkResult, setCheckResult] = useState(null);
 
   useEffect(() => {
+    if (!isLoaded || !isSignedIn) return;
+
     let cancelled = false;
-    if (!isLoaded) {
-      setStatus("loading");
-      return () => {
-        cancelled = true;
-      };
-    }
-    const isGuestAllowedRoute =
-      location.pathname === "/feed" || location.pathname.startsWith("/bill/");
-    if (!isSignedIn) {
-      setNeedsOnboarding(false);
-      setStatus(isGuestAllowedRoute ? "ready" : "guest");
-      return () => {
-        cancelled = true;
-      };
-    }
     (async () => {
       try {
         const response = await authFetch(`${API_BASE}/users/me`);
         if (response.status === 401 || response.status === 404) {
           if (!cancelled) {
-            setNeedsOnboarding(true);
-            setStatus("ready");
+            setCheckResult({
+              authFetch,
+              pathname: location.pathname,
+              status: "ready",
+              needsOnboarding: true,
+            });
           }
           return;
         }
         if (!response.ok) {
-          if (!cancelled) setStatus("guest");
+          if (!cancelled) {
+            setCheckResult({
+              authFetch,
+              pathname: location.pathname,
+              status: "guest",
+              needsOnboarding: false,
+            });
+          }
           return;
         }
 
         const me = await response.json();
-        const missingDistrictData = !me?.state || !me?.district;
+        const missingDistrictData = !me?.state || me?.district == null;
         if (!cancelled) {
-          setNeedsOnboarding(missingDistrictData);
-          setStatus("ready");
+          setCheckResult({
+            authFetch,
+            pathname: location.pathname,
+            status: "ready",
+            needsOnboarding: missingDistrictData,
+          });
         }
       } catch {
-        if (!cancelled) setStatus("guest");
+        if (!cancelled) {
+          setCheckResult({
+            authFetch,
+            pathname: location.pathname,
+            status: "guest",
+            needsOnboarding: false,
+          });
+        }
       }
     })();
     return () => {
@@ -56,9 +64,20 @@ export default function RequireOnboarding() {
     };
   }, [isLoaded, isSignedIn, authFetch, location.pathname]);
 
-  if (!isLoaded || status === "loading")
+  if (!isLoaded)
     return <div className="feed-loading">Loading...</div>;
-  if (status === "guest") return <Navigate to="/login" replace />;
-  if (needsOnboarding) return <Navigate to="/onboarding" replace />;
+  const isGuestAllowedRoute =
+    location.pathname === "/feed" || location.pathname.startsWith("/bill/");
+  if (!isSignedIn) {
+    return isGuestAllowedRoute ? <Outlet /> : <Navigate to="/login" replace />;
+  }
+
+  const hasCurrentCheck =
+    checkResult?.authFetch === authFetch &&
+    checkResult?.pathname === location.pathname;
+  if (!hasCurrentCheck)
+    return <div className="feed-loading">Loading...</div>;
+  if (checkResult.status === "guest") return <Navigate to="/login" replace />;
+  if (checkResult.needsOnboarding) return <Navigate to="/onboarding" replace />;
   return <Outlet />;
 }

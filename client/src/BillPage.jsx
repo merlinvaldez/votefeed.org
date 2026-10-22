@@ -1,5 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { isAnsweredVote, getCardResponseState, buildCardStanceRequest, reconcileCardStanceResult } from "./voteInteractions";
+import { panelBill } from "./billDetailContext";
+import BillVoteFolders from "./BillVoteFolders";
+import GroupContactGuides from "./GroupContactGuides";
+import { sharedContactRequest, validateSharedContactDrafts } from "./sharedContactFlow";
+import { officialSummaryHtml } from "./feedSummaries";
 import "./Feed.css";
 import "./BillPage.css";
 import {
@@ -25,7 +31,7 @@ import {
 } from "lucide-react";
 import { UserAvatar } from "@clerk/clerk-react";
 import { API_BASE } from "./constants";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./authContext";
 
 const getRepLastName = (fullName = "") => {
   const normalized = fullName.trim();
@@ -37,14 +43,7 @@ const getRepLastName = (fullName = "") => {
   return parts[parts.length - 1] ?? "";
 };
 
-const getVotePillClass = (voteVal) => {
-  if (!voteVal || voteVal === "Not Voting") return "neutral";
-  if (voteVal === "Yea" || voteVal === "Aye" || voteVal === "Yes") {
-    return "success";
-  }
-  if (voteVal === "No" || voteVal === "Nay") return "danger";
-  return "neutral";
-};
+
 
 const formatVotedOn = (value) => {
   if (!value) return "Unknown date";
@@ -72,24 +71,13 @@ const formatBillLabel = (type, number) => {
   return `${labels[normalized] || normalized.toUpperCase()} ${number}`;
 };
 
-const formatLegislationType = (type) => {
-  const normalized = String(type || "").toLowerCase();
-  if (["hr", "s"].includes(normalized)) return "a bill";
-  if (["hres", "sres"].includes(normalized)) return "a resolution";
-  if (["hjres", "sjres"].includes(normalized)) return "a joint resolution";
-  if (["hconres", "sconres"].includes(normalized)) {
-    return "a concurrent resolution";
-  }
-  return "legislation";
-};
-
 const formatQuickSummary = (summary = "") => {
   const trimmed = String(summary)
     .replace(/^\s*to\s+/i, "")
     .replace(/[.!?]+\s*$/, "")
     .trim();
   if (!trimmed) return "summarize what this measure would do";
-  return `${trimmed.charAt(0).toLowerCase()}${trimmed.slice(1)}`;
+  return `${trimmed.charAt(0).toUpperCase()}${trimmed.slice(1)}`;
 };
 
 const formatCommentTimestamp = (value) => {
@@ -157,17 +145,24 @@ const requestPublicComments = async ({ billId, isAuthed, authFetch }) => {
   const resp = isAuthed ? await authFetch(requestUrl) : await fetch(requestUrl);
   if (!resp.ok) {
     const details = await resp.text();
-    throw new Error(details || "Failed to load public comments");
+    throw new Error(details || "Failed to load comments");
   }
   const data = await resp.json();
   return data.comments ?? [];
 };
 
-export default function BillPage() {
+export default function BillDetailPanel({ detail, folder, active, folders, selectedFolder, onFolderChange, onBusy, showOriginal, setShowOriginal, aiSummary, aiLoading, aiError }) {
   const navigate = useNavigate();
-  const { billType, billNumber } = useParams();
-  const { state } = useLocation();
-  const [rep, setRep] = useState(state?.rep ?? null);
+  const { hash } = useLocation();
+  const discussionRequested = hash === "#public-comments";
+  const publicDiscussionRef = useRef(null);
+  const { billNumber } = useParams();
+  const card = folder.id === "All Reps" ? null : folder.cards[0] ?? null;
+  // A combined card has one comment composer and one discussion comment.
+  // Individual recipients appear only inside the contact guides.
+  const member = card?.members[0];
+  const roster = [detail.delegation.houseMember, ...detail.delegation.senators].filter(Boolean);
+  const rep = roster.find(item => item.bioguideid === member?.bioguideId) ?? null;
   const repFullName = rep?.full_name ?? "";
   const repLastName = getRepLastName(repFullName);
   const { token, authFetch } = useAuth();
@@ -176,13 +171,15 @@ export default function BillPage() {
   const guestHighlightTimeoutRef = useRef(null);
   const copyNoticeTimeoutRef = useRef(null);
   const commentMenuRef = useRef(null);
-  const [bill, setBill] = useState(state?.bill || state?.vote || null);
-  const [status, setStatus] = useState(bill ? "ready" : "loading");
-  const [error, setError] = useState("");
-  const [stance, setStance] = useState(null);
+  const bill = useMemo(() => panelBill(detail, card, member), [detail, card, member]);
+  const status = "ready";
+  const error = "";
   const [interaction, setInteraction] = useState(null);
+  const [groupInteractions, setGroupInteractions] = useState([]);
+  const [interactionsReady, setInteractionsReady] = useState(false);
   const [ownedCommentId, setOwnedCommentId] = useState(null);
   const [commentDraftText, setCommentDraftText] = useState("");
+  const commentDraftsRef = useRef(new Map());
   const [commentModerationStatus, setCommentModerationStatus] = useState(null);
   const [isCommentPublic, setIsCommentPublic] = useState(false);
   const [isCommentComposerOpen, setIsCommentComposerOpen] = useState(false);
@@ -191,82 +188,70 @@ export default function BillPage() {
   const [userId, setUserId] = useState(null);
   const [userName, setUserName] = useState("");
   const [interactionError, setInteractionError] = useState("");
+  const [isSavingStance, setIsSavingStance] = useState(false);
+  const busy = isSavingStance || isSubmittingComment || isSavingCommentPublic;
+  useEffect(() => { if (active) onBusy(busy); }, [active, busy, onBusy]);
+  const stancePendingRef = useRef(false);
   const [isGuestBarHighlighted, setIsGuestBarHighlighted] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
   const [messageCopyStatus, setMessageCopyStatus] = useState("idle");
   const [isCommentMenuOpen, setIsCommentMenuOpen] = useState(false);
+  const contactDraftRequestRef = useRef(0);
   const [contactDrafts, setContactDrafts] = useState(null);
   const [contactDraftStatus, setContactDraftStatus] = useState("idle");
   const [contactDraftError, setContactDraftError] = useState("");
+
+  useEffect(() => () => { contactDraftRequestRef.current += 1; }, []);
   const [publicVisibilityError, setPublicVisibilityError] = useState("");
   const [publicComments, setPublicComments] = useState([]);
   const [publicCommentsStatus, setPublicCommentsStatus] = useState("idle");
   const [publicCommentsError, setPublicCommentsError] = useState("");
-  const [isPublicCommentsOpen, setIsPublicCommentsOpen] = useState(false);
+  const [isPublicCommentsOpen, setIsPublicCommentsOpen] = useState(discussionRequested);
   const [usefulPendingByCommentId, setUsefulPendingByCommentId] = useState({});
 
-  const [showOriginal, setShowOriginal] = useState(true);
-  const [aiSummary, setAiSummary] = useState("");
-  const [aiLoading, setAiLoading] = useState(false);
-  const [aiError, setAiError] = useState("");
-
+  const officialHtml = officialSummaryHtml(bill?.summary);
   const billId = bill?.bill_id ?? bill?.id ?? null;
   const fullBillUrl = bill?.legislation_url ?? null;
   const canReadFullBill = Boolean(fullBillUrl);
   const latestVoteDate = bill?.latest_vote_date ?? bill?.voted_on ?? null;
-  const voteYesCount = Number(bill?.vote_yes_count ?? 0);
-  const voteNoCount = Number(bill?.vote_no_count ?? 0);
-  const totalCountedVotes = voteYesCount + voteNoCount;
-  const yesVotePercent =
-    totalCountedVotes > 0 ? (voteYesCount / totalCountedVotes) * 100 : 0;
-  const voteResultPillClass =
-    bill?.vote_result === "Passed"
-      ? "success"
-      : bill?.vote_result === "Failed"
-        ? "danger"
-        : "neutral";
-  const repVotePillClass = getVotePillClass(bill?.vote);
   const memberTitle = String(rep?.chamber || "")
     .toLowerCase()
     .includes("senate")
     ? "Sen."
     : "Rep.";
-  const legislationType = formatLegislationType(
-    bill?.legislation_type ?? bill?.bill_type ?? billType,
-  );
-  const isNotVoting = bill?.vote === "Not Voting";
-  const VoteResultIcon =
-    bill?.vote_result === "Failed" ? XCircle : CheckCircle2;
-  const currentStance = interaction?.stance ?? stance;
+  const memberVoteId = bill?.member_vote_id ?? null;
+  const grouped = card?.members.length === 2;
+  const groupStanceKey = grouped ? JSON.stringify(groupInteractions.map(answer => [answer.id, answer.member_vote_id, answer.stance])) : null;
+  const groupResponse = grouped ? getCardResponseState(card, groupInteractions) : null;
+  const currentStance = grouped ? groupResponse.stance : isAnsweredVote(interaction, memberVoteId) ? interaction.stance : null;
   const billLabel = formatBillLabel(
     bill?.legislation_type ?? bill?.bill_type,
     bill?.legislationnumber ?? bill?.number ?? billNumber,
   );
   const repReference = repFullName
-    ? `Rep. ${repLastName || repFullName}`
+    ? `${memberTitle} ${repLastName || repFullName}`
     : "my representative";
+  const responseReference = grouped ? `Sens. ${card.members.map(item => getRepLastName(item.name)).join(" and ")}` : repReference;
   const repContactUrl = buildRepContactUrl(rep?.official_website_url);
   const repDialHref = getDialHref(rep?.office_phone);
   const commentAuthorName = userName || "You";
   const approvedCommentText = interaction?.comment_approved_text?.trim() ?? "";
   const hasPostedOwnedComment = Boolean(approvedCommentText);
-  const publicCommentsFromOthers = publicComments.filter(
-    (comment) => !comment.is_owned_by_viewer,
-  );
+  const discussionComments = publicComments;
   const showPostedOwnedComment =
     hasPostedOwnedComment && !isCommentComposerOpen;
   const showOwnedCommentThread =
     Boolean(interaction?.id) && (isCommentComposerOpen || showPostedOwnedComment);
   const showPublicCommentsPanel =
-    publicCommentsFromOthers.length > 0 || Boolean(publicCommentsError);
+    discussionRequested || discussionComments.length > 0 || Boolean(publicCommentsError);
   const publicCommentsToggleLabel =
-    publicCommentsFromOthers.length === 1
+    discussionComments.length === 1
       ? isPublicCommentsOpen
-        ? "Hide 1 public comment"
-        : "Show 1 public comment"
+        ? "Hide 1 comment"
+        : "Show 1 comment"
       : isPublicCommentsOpen
-        ? `Hide ${publicCommentsFromOthers.length} public comments`
-        : `Show ${publicCommentsFromOthers.length} public comments`;
+        ? `Hide ${discussionComments.length} comments`
+        : `Show ${discussionComments.length} comments`;
   const callScript = contactDrafts?.callScript ?? "";
   const messageTemplate = contactDrafts?.messageTemplate ?? "";
 
@@ -307,107 +292,35 @@ export default function BillPage() {
   };
 
   useEffect(() => {
+    if (!active || !token || !card) return;
     let cancelled = false;
-
-    setAiSummary("");
-    setAiLoading(true);
-    setAiError("");
-
-    (async () => {
-      try {
-        const resp = await fetch(
-          `${API_BASE}/bills/${billType}/${billNumber}/ai-summary`,
-        );
-        if (!resp.ok) throw new Error("AI summary failed");
-        const data = await resp.json();
-        if (!cancelled) setAiSummary(data.aiSummary);
-      } catch {
-        if (!cancelled) setAiError("AI summary failed");
-      } finally {
-        if (!cancelled) setAiLoading(false);
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [billNumber, billType]);
-
-  useEffect(() => {
-    if (bill) return;
-    let cancelled = false;
-    (async () => {
-      try {
-        setStatus("loading");
-        const resp = await fetch(`${API_BASE}/bills/${billType}/${billNumber}`);
-        if (!resp.ok) throw new Error(`Bill load failed (${resp.status})`);
-        const data = await resp.json();
-        if (!cancelled) {
-          setBill(data);
-          setStatus("ready");
-        }
-      } catch (err) {
-        if (!cancelled) {
-          setError(err.message || "Failed to load bill");
-          setStatus("error");
-        }
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [bill, billNumber, billType]);
-
-  useEffect(() => {
-    if (!token || !billId) return;
-    let cancelled = false;
-
+    setInteractionsReady(false);
     (async () => {
       try {
         setInteractionError("");
         const meResp = await authFetch(`${API_BASE}/users/me`);
         if (!meResp.ok) throw new Error("Failed to load user");
         const me = await meResp.json();
-        if (!cancelled) setUserId(me.id);
-        if (!cancelled)
-          setUserName(`${me.first_name || ""} ${me.last_name || ""}`.trim());
-
-        if (
-          (!state?.rep ||
-            !state?.rep?.official_website_url ||
-            !state?.rep?.office_phone) &&
-          me.state &&
-          me.district != null
-        ) {
-          const repResp = await authFetch(
-            `${API_BASE}/reps/district/${me.state}/${me.district}`,
-          );
-          if (repResp.ok) {
-            const repData = await repResp.json();
-            if (!cancelled) setRep(repData);
-          }
-        }
-
-        const interactionResp = await authFetch(
-          `${API_BASE}/interactions/users/${me.id}/bill/${billId}`,
-        );
-        if (!interactionResp.ok) throw new Error("Failed to load interaction");
-        const text = await interactionResp.text();
-        const data = text ? JSON.parse(text) : null;
-        if (!cancelled) setInteraction(data || null);
-      } catch (err) {
-        if (!cancelled)
-          setInteractionError(err.message || "Failed to load interaction");
-      }
+        const answers = await Promise.all(card.members.map(async target => {
+          const params = new URLSearchParams({ memberVoteId: String(target.memberVoteId), repBioguideId: target.bioguideId });
+          const resp = await authFetch(`${API_BASE}/interactions/users/${me.id}/bill/${billId}?${params}`);
+          if (!resp.ok) throw new Error("Failed to load responses");
+          const text = await resp.text();
+          return text ? JSON.parse(text) : null;
+        }));
+        if (cancelled) return;
+        setUserId(me.id);
+        setUserName(`${me.first_name || ""} ${me.last_name || ""}`.trim());
+        setGroupInteractions(answers.filter(Boolean));
+        setInteraction(answers.find(answer => answer?.rep_bioguide_id === rep?.bioguideid) ?? null);
+        setInteractionsReady(true);
+      } catch (err) { if (!cancelled) setInteractionError(err.message); }
     })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [token, billId, authFetch]);
+    return () => { cancelled = true; };
+  }, [active, token, card, billId, authFetch, rep?.bioguideid]);
 
   useEffect(() => {
-    if (!billId) return;
+    if (!active || !billId) return;
     let cancelled = false;
 
     (async () => {
@@ -429,7 +342,7 @@ export default function BillPage() {
         if (!cancelled) {
           setPublicCommentsStatus("error");
           setPublicCommentsError(
-            err.message || "Failed to load public comments",
+            err.message || "Failed to load comments",
           );
         }
       }
@@ -438,18 +351,14 @@ export default function BillPage() {
     return () => {
       cancelled = true;
     };
-  }, [billId, isAuthed, authFetch]);
-
-  useEffect(() => {
-    setStance(interaction?.stance || null);
-  }, [interaction]);
+  }, [active, billId, isAuthed, authFetch]);
 
   useEffect(() => {
     setOwnedCommentId(interaction?.comment_id ?? null);
-    setCommentDraftText(interaction?.comment_draft_text ?? "");
+    setCommentDraftText(commentDraftsRef.current.get(memberVoteId) ?? interaction?.comment_draft_text ?? "");
     setCommentModerationStatus(interaction?.comment_moderation_status ?? null);
     setIsCommentPublic(Boolean(interaction?.comment_is_public));
-  }, [interaction]);
+  }, [memberVoteId, interaction?.comment_id, interaction?.comment_draft_text, interaction?.comment_moderation_status, interaction?.comment_is_public]);
 
   useEffect(() => {
     if (!hasPostedOwnedComment) {
@@ -459,16 +368,21 @@ export default function BillPage() {
   }, [hasPostedOwnedComment]);
 
   useEffect(() => {
-    if (publicCommentsFromOthers.length === 0) {
-      setIsPublicCommentsOpen(false);
+    if (active && discussionRequested && ["ready", "error"].includes(publicCommentsStatus)) {
+      publicDiscussionRef.current?.scrollIntoView({ block: "start" });
+      publicDiscussionRef.current?.focus({ preventScroll: true });
     }
-  }, [publicCommentsFromOthers.length]);
+  }, [active, discussionRequested, publicCommentsStatus]);
 
   useEffect(() => {
+    contactDraftRequestRef.current += 1;
     setContactDrafts(null);
     setContactDraftStatus("idle");
     setContactDraftError("");
   }, [
+    groupStanceKey,
+    interaction?.id,
+    interaction?.stance,
     interaction?.comment_id,
     interaction?.comment_updated_at,
     interaction?.comment_approved_text,
@@ -495,40 +409,50 @@ export default function BillPage() {
     setSelectedAction(resolvedAction);
   };
 
-  const loadContactDrafts = async () => {
-    if (!interaction?.id || !hasPostedOwnedComment) return null;
-    if (contactDrafts?.callScript && contactDrafts?.messageTemplate) {
+  const loadContactDrafts = useEffectEvent(async () => {
+    if (!active || stancePendingRef.current || !interaction?.id || !hasPostedOwnedComment) return null;
+    if (contactDrafts?.members?.length === 2 || (contactDrafts?.callScript && contactDrafts?.messageTemplate)) {
       return contactDrafts;
     }
     if (contactDraftStatus === "loading") return null;
 
+    const requestId = ++contactDraftRequestRef.current;
     try {
       setContactDraftError("");
       setContactDraftStatus("loading");
       const resp = await authFetch(
-        `${API_BASE}/interactions/${interaction.id}/comment/contact-drafts`,
+        `${API_BASE}/interactions/${interaction.id}/comment/contact-drafts${grouped ? "/group" : ""}`,
+        grouped ? { method: "POST", body: JSON.stringify(sharedContactRequest(card, groupInteractions)) } : undefined,
       );
       if (!resp.ok) {
         const details = await resp.text();
-        throw new Error(details || "Failed to prepare contact drafts");
+        let message = details;
+        try { message = JSON.parse(details).error || details; } catch { /* Plain-text legacy errors. */ }
+        throw new Error(message || "Failed to prepare contact drafts");
       }
       const drafts = await resp.json();
+      if (grouped) validateSharedContactDrafts(card, drafts);
+      if (requestId !== contactDraftRequestRef.current || stancePendingRef.current) return null;
       setContactDrafts(drafts);
       setContactDraftStatus("ready");
       return drafts;
     } catch (err) {
+      if (requestId !== contactDraftRequestRef.current || stancePendingRef.current) return null;
       setContactDraftStatus("error");
       setContactDraftError(err.message || "Failed to prepare contact drafts");
       return null;
     }
-  };
+  });
 
   useEffect(() => {
     if (
+      !active ||
+      isSavingStance ||
       (selectedAction !== "call" && selectedAction !== "message") ||
       !hasPostedOwnedComment ||
       contactDrafts?.callScript ||
       contactDrafts?.messageTemplate ||
+      contactDrafts?.members?.length ||
       contactDraftStatus !== "idle"
     ) {
       return;
@@ -536,7 +460,9 @@ export default function BillPage() {
 
     void loadContactDrafts();
   }, [
+    active,
     selectedAction,
+    isSavingStance,
     hasPostedOwnedComment,
     contactDrafts,
     contactDraftStatus,
@@ -544,6 +470,7 @@ export default function BillPage() {
   ]);
 
   const handleCopyMessage = async () => {
+    if (stancePendingRef.current) return;
     if (!messageTemplate) return;
 
     try {
@@ -596,35 +523,24 @@ export default function BillPage() {
         }
       : currentInteraction;
 
-  const persistCommentDraft = async () => {
-    const resp = await authFetch(`${API_BASE}/interactions/${interaction.id}/comment`, {
-      method: "PUT",
-      body: JSON.stringify({ draft_text: commentDraftText }),
-    });
-    if (!resp.ok) throw new Error("Failed to save draft comment");
-    const savedDraft = await resp.json();
-    return savedDraft;
-  };
-
   const handleSubmitCommentForModeration = async () => {
+    if (stancePendingRef.current) return;
     if (!interaction?.id) return;
     if (!commentDraftText.trim()) return;
 
     try {
       setInteractionError("");
       setIsSubmittingComment(true);
-      const currentSavedDraft = interaction?.comment_draft_text?.trim() ?? "";
-      if (commentDraftText.trim() !== currentSavedDraft || !ownedCommentId) {
-        await persistCommentDraft();
-      }
       const resp = await authFetch(
         `${API_BASE}/interactions/${interaction.id}/comment/submit`,
         {
           method: "POST",
+          body: JSON.stringify({ draft_text: commentDraftText }),
         },
       );
       if (!resp.ok) throw new Error("Failed to submit comment for moderation");
       const moderatedComment = await resp.json();
+      commentDraftsRef.current.delete(memberVoteId);
       setInteraction((currentInteraction) =>
         mergeCommentIntoInteraction(currentInteraction, moderatedComment),
       );
@@ -641,7 +557,7 @@ export default function BillPage() {
         } catch (reloadErr) {
           setPublicCommentsStatus("error");
           setPublicCommentsError(
-            reloadErr.message || "Failed to load public comments",
+            reloadErr.message || "Failed to load comments",
           );
         }
       }
@@ -658,8 +574,10 @@ export default function BillPage() {
   };
 
   const handleEditApprovedComment = () => {
+    if (stancePendingRef.current) return;
     if (!approvedCommentText) return;
     setInteractionError("");
+    commentDraftsRef.current.set(memberVoteId, approvedCommentText);
     setCommentDraftText(approvedCommentText);
     setSelectedAction(null);
     setIsCommentMenuOpen(false);
@@ -667,6 +585,7 @@ export default function BillPage() {
   };
 
   const handleDeleteComment = async () => {
+    if (stancePendingRef.current) return;
     if (!interaction?.id) return;
 
     try {
@@ -675,6 +594,7 @@ export default function BillPage() {
         method: "DELETE",
       });
       if (!resp.ok) throw new Error("Failed to delete comment");
+      commentDraftsRef.current.delete(memberVoteId);
       setSelectedAction(null);
       setIsCommentMenuOpen(false);
       setIsCommentComposerOpen(false);
@@ -694,7 +614,7 @@ export default function BillPage() {
         } catch (reloadErr) {
           setPublicCommentsStatus("error");
           setPublicCommentsError(
-            reloadErr.message || "Failed to load public comments",
+            reloadErr.message || "Failed to load comments",
           );
         }
       }
@@ -704,6 +624,7 @@ export default function BillPage() {
   };
 
   const handleToggleCommentPublic = async (nextValue) => {
+    if (stancePendingRef.current) return;
     if (!ownedCommentId) return;
 
     try {
@@ -736,7 +657,7 @@ export default function BillPage() {
         } catch (reloadErr) {
           setPublicCommentsStatus("error");
           setPublicCommentsError(
-            reloadErr.message || "Failed to load public comments",
+            reloadErr.message || "Failed to load comments",
           );
         }
       }
@@ -797,7 +718,7 @@ export default function BillPage() {
       promptGuestInteraction();
       return;
     }
-    if (!billId) return;
+    if (!card || !billId || !interactionsReady) return;
     if (!rep?.bioguideid) {
       setInteractionError(
         "Loading your representative details. Try again in a moment.",
@@ -805,32 +726,37 @@ export default function BillPage() {
       return;
     }
 
+    if (!memberVoteId || stancePendingRef.current || isSubmittingComment || isSavingCommentPublic) return;
+    stancePendingRef.current = true;
+    setIsSavingStance(true);
+    contactDraftRequestRef.current += 1;
+    setContactDrafts(null);
+    setContactDraftStatus("idle");
+    setContactDraftError("");
+
     try {
       setInteractionError("");
-        if (interaction?.stance === nextStance) {
+      if (grouped) {
+        const request = buildCardStanceRequest(card, groupInteractions, nextStance);
+        const resp = await authFetch(`${API_BASE}/interactions/stances/batch`, {
+          method: "PUT", body: JSON.stringify(request),
+        });
+        if (!resp.ok) throw new Error("Failed to save both Senator responses. Please retry.");
+        const result = await resp.json();
+        const confirmed = reconcileCardStanceResult(groupInteractions, request, result.interactions);
+        setGroupInteractions(confirmed);
+        const saved = confirmed.find(answer => answer.rep_bioguide_id === rep.bioguideid);
+        setInteraction(prev => ({ ...prev, ...saved }));
+        return;
+      }
+        if (isAnsweredVote(interaction, memberVoteId) && interaction.stance === nextStance) {
           const resp = await authFetch(
-            `${API_BASE}/interactions/${interaction.id}`,
-          { method: "DELETE" },
+            `${API_BASE}/interactions/${interaction.id}/stance`,
+            { method: "PUT", body: JSON.stringify({ stance: null, member_vote_id: memberVoteId }) },
           );
-          if (!resp.ok) throw new Error("Failed to delete stance");
-          setInteraction(null);
-          if (billId) {
-            try {
-              const comments = await requestPublicComments({
-                billId,
-                isAuthed,
-                authFetch,
-              });
-              setPublicComments(comments);
-              setPublicCommentsStatus("ready");
-              setPublicCommentsError("");
-            } catch (reloadErr) {
-              setPublicCommentsStatus("error");
-              setPublicCommentsError(
-                reloadErr.message || "Failed to load public comments",
-              );
-            }
-          }
+          if (!resp.ok) throw new Error("Failed to clear stance");
+          const cleared = await resp.json();
+          setInteraction(prev => ({ ...prev, ...cleared }));
           return;
         }
 
@@ -842,23 +768,31 @@ export default function BillPage() {
           method: interaction ? "PUT" : "POST",
           body: JSON.stringify(
             interaction
-              ? { stance: nextStance }
+              ? { stance: nextStance, member_vote_id: memberVoteId }
               : {
                   user_id: userId,
                   bill_id: billId,
                   rep_bioguide_id: rep.bioguideid,
+                  member_vote_id: memberVoteId,
                   stance: nextStance,
                 },
           ),
         },
       );
-      if (!resp.ok) throw new Error("Failed to save stance");
+      if (!resp.ok) {
+        const payload = await resp.json().catch(() => null);
+        throw new Error(payload?.error || "Failed to save stance");
+      }
       const saved = await resp.json();
-      setInteraction(saved);
+      setInteraction(prev => ({ ...prev, ...saved }));
     } catch (err) {
       setInteractionError(err.message || "Failed to save stance");
+    } finally {
+      stancePendingRef.current = false;
+      setIsSavingStance(false);
     }
   };
+  if (!active) return null;
   return (
     <>
       <button className="back-link" onClick={() => navigate(-1)}>
@@ -897,7 +831,7 @@ export default function BillPage() {
           <button
             type="button"
             className={`summary-source-toggle${showOriginal ? " active" : ""}`}
-            onClick={() => setShowOriginal((current) => !current)}
+            onClick={() => setShowOriginal(!showOriginal)}
             aria-label={
               showOriginal
                 ? "Show simplified summary"
@@ -915,12 +849,13 @@ export default function BillPage() {
         </div>
         {status === "loading" && <p>Loading summary</p>}
         {status === "error" && <p className="error-text">{error}</p>}
-        {(showOriginal || aiError) && bill?.summary && (
+        {(showOriginal || aiError) && officialHtml && (
           <div
             className="leg-body"
-            dangerouslySetInnerHTML={{ __html: bill.summary }}
+            dangerouslySetInnerHTML={{ __html: officialHtml }}
           ></div>
         )}
+        {(showOriginal || aiError) && !officialHtml && <p className="leg-body">The official summary is unavailable.</p>}
         {status === "ready" &&
           !showOriginal &&
           !aiError &&
@@ -933,63 +868,12 @@ export default function BillPage() {
           !aiError &&
           aiSummary && (
           <div className="leg-body simple-vote-summary">
-            {memberTitle} {repLastName}{" "}
-            {isNotVoting ? (
-              <>did not vote</>
-            ) : (
-              <>
-                voted{" "}
-                <span className={`pill inline-vote-pill ${repVotePillClass}`}>
-                  {bill.vote}
-                </span>
-              </>
-            )}{" "}
-            on {billLabel}, {legislationType} to {formatQuickSummary(aiSummary)}.
+            {formatQuickSummary(aiSummary)}.
           </div>
         )}
         {aiError && <p className="error-text">{aiError}</p>}
-        {bill?.vote_result && (
-          <section className="vote-result-card">
-            <div className="vote-result-grid">
-              {bill?.vote && (
-                <div className="vote-result-block">
-                  <div className="vote-result-label">
-                    Rep. {repLastName} Voted
-                  </div>
-                  <span className={`pill ${repVotePillClass} vote-result-pill`}>
-                    {bill.vote}
-                  </span>
-                </div>
-              )}
-              <div className="vote-result-block">
-                <div className="vote-result-label">Result</div>
-                <span
-                  className={`pill ${voteResultPillClass} vote-result-pill`}
-                >
-                  <VoteResultIcon size={14}></VoteResultIcon>
-                  {bill.vote_result}
-                </span>
-              </div>
-              <div className="vote-result-block vote-result-counts">
-                <div className="vote-result-label">Vote Counts</div>
-                <div className="vote-count-bar" aria-hidden="true">
-                  <span
-                    className="vote-count-bar-yes"
-                    style={{ width: `${yesVotePercent}%` }}
-                  ></span>
-                  <span
-                    className="vote-count-bar-no"
-                    style={{ width: `${100 - yesVotePercent}%` }}
-                  ></span>
-                </div>
-                <div className="vote-count-row">
-                  <span className="vote-count-yes">{voteYesCount} Yea</span>
-                  <span className="vote-count-no">{voteNoCount} Nay</span>
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
+        <BillVoteFolders tabs={folders} selected={selectedFolder} onSelect={onFolderChange} disabled={busy} />
+        {grouped && ["mixed", "partial"].includes(groupResponse.status) && <p className="bill-response-notice" role="status">Your responses differ or are incomplete. Choosing Agree or Disagree applies to both Senators.</p>}
         {canReadFullBill && (
           <div className="bill-reference-row">
             <a
@@ -1006,20 +890,21 @@ export default function BillPage() {
             </a>
           </div>
         )}
-        <div className="vote-actions">
+        {card && <div className="vote-actions">
           <button
             type="button"
             className={`ghost-btn ${
               currentStance === "approve" ? "active approve" : ""
             }`}
             onClick={() => handleStanceClick("approve")}
-            aria-label={`Agree with ${repReference}`}
+            disabled={isAuthed && (!memberVoteId || !interactionsReady || busy)}
+            aria-label={`Agree with ${responseReference}`}
             aria-pressed={currentStance === "approve"}
-            title={`Agree with ${repReference}`}
+            title={`Click to record that you agree with how ${responseReference} voted on ${billLabel}.`}
           >
             <ThumbsUp size={16} />
             {currentStance === "approve" && (
-              <span>I agree with {repReference}</span>
+              <span>I agree with {responseReference}</span>
             )}
           </button>
           <button
@@ -1028,19 +913,21 @@ export default function BillPage() {
               currentStance === "disapprove" ? "active disapprove" : ""
             }`}
             onClick={() => handleStanceClick("disapprove")}
-            aria-label={`Disagree with ${repReference}`}
+            disabled={isAuthed && (!memberVoteId || !interactionsReady || busy)}
+            aria-label={`Disagree with ${responseReference}`}
             aria-pressed={currentStance === "disapprove"}
-            title={`Disagree with ${repReference}`}
+            title={`Click to record that you disagree with how ${responseReference} voted on ${billLabel}.`}
           >
             <ThumbsDown size={16} />
             {currentStance === "disapprove" && (
-              <span>I disagree with {repReference}</span>
+              <span>I disagree with {responseReference}</span>
             )}
           </button>
           {interaction?.id && !hasPostedOwnedComment && (
             <button
               type="button"
               className={`ghost-btn ${isCommentComposerOpen ? "active" : ""}`}
+              disabled={isSavingStance}
               onClick={() =>
                 setIsCommentComposerOpen((currentValue) => !currentValue)
               }
@@ -1055,10 +942,10 @@ export default function BillPage() {
               {isCommentComposerOpen && <span>Comment</span>}
             </button>
           )}
-        </div>
+        </div>}
 
-            {showOwnedCommentThread && (
-              <section className="comment-thread">
+            {card && showOwnedCommentThread && (
+              <fieldset className="comment-thread" aria-label="Your comment and contact actions" disabled={isSavingStance} style={{ border: 0, margin: 0, padding: 0, minWidth: 0 }}>
                 <div className="comment-thread-header">
                   <div className="comment-thread-title">Comments</div>
                 </div>
@@ -1074,7 +961,10 @@ export default function BillPage() {
                 <section id="bill-comment-composer" className="comment-box">
                   <textarea
                     value={commentDraftText}
-                    onChange={(event) => setCommentDraftText(event.target.value)}
+                    onChange={(event) => {
+                      commentDraftsRef.current.set(memberVoteId, event.target.value);
+                      setCommentDraftText(event.target.value);
+                    }}
                     placeholder="Write your comment here..."
                     aria-label="Comment draft"
                   ></textarea>
@@ -1221,7 +1111,17 @@ export default function BillPage() {
                         {publicVisibilityError}
                       </p>
                     )}
-                    {selectedAction === "call" && (
+                    {grouped && !isSavingStance && ["call", "message"].includes(selectedAction) && (
+                      <GroupContactGuides action={selectedAction} status={contactDraftStatus} error={contactDraftError}
+                        drafts={contactDrafts} onRetry={() => { setContactDraftStatus("idle"); setContactDraftError(""); }}
+                        members={card.members.map(target => {
+                          const person = roster.find(item => item.bioguideid === target.bioguideId);
+                          return { id: target.bioguideId, name: getRepLastName(target.name),
+                            phone: person?.office_phone, dialHref: getDialHref(person?.office_phone),
+                            contactUrl: buildRepContactUrl(person?.official_website_url) };
+                        })} />
+                    )}
+                    {!grouped && !isSavingStance && selectedAction === "call" && (
                       <section
                         id="bill-call-script-panel"
                         className="action-guide-card comment-action-panel"
@@ -1252,7 +1152,7 @@ export default function BillPage() {
                         )}
                       </section>
                     )}
-                    {selectedAction === "message" && (
+                    {!grouped && !isSavingStance && selectedAction === "message" && (
                       <section
                         id="bill-message-template-panel"
                         className="action-guide-card comment-action-panel"
@@ -1325,16 +1225,20 @@ export default function BillPage() {
                 </div>
               </section>
             )}
-          </section>
+          </fieldset>
         )}
         {showPublicCommentsPanel && (
           <section
+            id="public-comments"
+            ref={publicDiscussionRef}
+            tabIndex={-1}
+            aria-label="Comments"
             className="comment-thread public-comments-panel"
             aria-busy={publicCommentsStatus === "loading"}
           >
             <div className="comment-thread-header">
-              <div className="comment-thread-title">Public comments</div>
-              {publicCommentsFromOthers.length > 0 && (
+              <div className="comment-thread-title">Comments</div>
+              {discussionComments.length > 0 && (
                 <button
                   type="button"
                   className={`ghost-btn public-comments-toggle ${
@@ -1350,9 +1254,11 @@ export default function BillPage() {
                 </button>
               )}
             </div>
-            {isPublicCommentsOpen && publicCommentsFromOthers.length > 0 && (
+            {publicCommentsStatus === "loading" && <p role="status">Loading comments…</p>}
+            {publicCommentsStatus === "ready" && discussionComments.length === 0 && <p>No comments yet.</p>}
+            {isPublicCommentsOpen && discussionComments.length > 0 && (
               <div id="public-comments-list" className="public-comments-list">
-                {publicCommentsFromOthers.map((comment) => {
+                {discussionComments.map((comment) => {
                   const isUsefulPending = Boolean(
                     usefulPendingByCommentId[comment.id],
                   );
@@ -1373,7 +1279,7 @@ export default function BillPage() {
                             </span>
                           )}
                         </div>
-                        <button
+                        {card && <button
                           type="button"
                           className={`ghost-btn public-useful-btn ${
                             comment.viewer_has_marked_useful ? "active" : ""
@@ -1396,7 +1302,7 @@ export default function BillPage() {
                           <span className="public-useful-count">
                             {comment.useful_count}
                           </span>
-                        </button>
+                        </button>}
                       </div>
                       <div className="public-comment-text">{comment.text}</div>
                     </article>

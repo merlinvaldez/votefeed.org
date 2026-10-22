@@ -6,6 +6,7 @@ import {
   findMemberPolicyAreas,
   findMemberVotes,
 } from "../db/queries/houseVotes.js";
+import { findMemberVoteForBill } from "../db/queries/memberVoteLinks.js";
 
 const apiKey = process.env.CONGRESS_API_KEY;
 const CONGRESS_API_ORIGIN = "https://api.congress.gov";
@@ -88,13 +89,23 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/member/:bioguideId", async (req, res) => {
+export async function getMemberVotes(req, res) {
   try {
     const rawLimit = req.query.limit;
     const rawOffset = req.query.offset;
     const parsedLimit = Number.parseInt(rawLimit, 10);
     const parsedOffset = Number.parseInt(rawOffset, 10);
     const policyArea = String(req.query.policyArea ?? "").trim() || null;
+    const rawChamber = req.query.chamber;
+    const chamberName = rawChamber === undefined
+      ? null
+      : String(rawChamber).trim().toLowerCase();
+    if (chamberName !== null && !["house", "senate"].includes(chamberName)) {
+      return res.status(400).json({ error: "Invalid chamber; use House or Senate" });
+    }
+    const chamber = chamberName === null
+      ? null
+      : chamberName === "house" ? "House" : "Senate";
     const limit =
       Number.isInteger(parsedLimit) && parsedLimit > 0
         ? parsedLimit
@@ -106,8 +117,9 @@ router.get("/member/:bioguideId", async (req, res) => {
         limit,
         offset,
         policyArea,
+        chamber,
       }),
-      findMemberPolicyAreas(req.params.bioguideId),
+      findMemberPolicyAreas(req.params.bioguideId, { chamber }),
     ]);
     res.json({
       count: votes.length,
@@ -120,7 +132,19 @@ router.get("/member/:bioguideId", async (req, res) => {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch member votes" });
   }
+}
+
+router.get("/member/:bioguideId/bill/:billId", async (req, res) => {
+  const billId = Number(req.params.billId);
+  if (!Number.isSafeInteger(billId) || billId <= 0) {
+    return res.status(400).json({ error: "Invalid bill ID" });
+  }
+  const vote = await findMemberVoteForBill(req.params.bioguideId, billId);
+  if (!vote) return res.status(404).json({ error: "No recorded member vote for this bill" });
+  res.json(vote);
 });
+
+router.get("/member/:bioguideId", getMemberVotes);
 
 router.get("/:session/:voteNumber/summary", async (req, res) => {
   if (!apiKey) {

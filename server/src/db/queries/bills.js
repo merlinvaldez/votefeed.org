@@ -1,3 +1,5 @@
+import { matchesSummaryMeasure } from "../../utils/summaryMeasure.js";
+import { isUsableQuickSummary } from "../../utils/quickSummaryValidation.js";
 import db from "../client.js";
 import { generateAiBillSummary } from "../../utils/aiSummaryPipeline.js";
 
@@ -154,28 +156,28 @@ export async function getBillSummary(legislationNumber, billType) {
   return rows;
 }
 
-export async function getOrCreateAiBillSummary(legislationNumber, billType) {
+export async function getOrCreateAiBillSummary(legislationNumber, billType, congress = null) {
   const billRows = await getBillSummary(legislationNumber, billType);
   const bill = billRows?.[0];
-  if (!bill) return null;
-  if (typeof bill.aisummary === "string" && bill.aisummary.trim() !== "") {
-    const lowerSummary = bill.aisummary.toLowerCase();
-    const isErrorMsg = lowerSummary.includes("ai summary failed") || lowerSummary.includes("failed to generate");
-    if (!isErrorMsg) {
-      return bill.aisummary;
-    }
+  if (!bill || (congress !== null && !matchesSummaryMeasure(bill, congress, billType, legislationNumber))) return null;
+  if (isUsableQuickSummary(bill.aisummary, bill.summary)) {
+    return bill.aisummary;
   }
-  const aiSummary = await generateAiBillSummary(bill.summary);
+  const generatedSummary = await generateAiBillSummary(bill.summary);
+  const aiSummary = isUsableQuickSummary(generatedSummary, bill.summary)
+    ? generatedSummary
+    : null;
   const sql = `UPDATE bills
     SET aisummary=$1
-    WHERE number=$2
-      AND bill_type=$3
+    WHERE id=$2 AND legislation_url IS NOT DISTINCT FROM $3
+      AND summary IS NOT DISTINCT FROM $4
     RETURNING aisummary`;
 
   const { rows } = await db.query(sql, [
     aiSummary,
-    legislationNumber,
-    billType,
+    bill.id,
+    bill.legislation_url,
+    bill.summary,
   ]);
-  return rows?.[0]?.aisummary ?? aiSummary;
+  return rows?.[0]?.aisummary ?? null;
 }

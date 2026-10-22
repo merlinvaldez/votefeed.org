@@ -66,14 +66,16 @@ async function insertMemberVotes(runner, vote, members) {
         $2::text[],
         $3::integer[],
         $4::integer[],
-        $5::timestamptz[],
-        $6::text[],
-        $7::text[]
+        $5::text[],
+        $6::timestamptz[],
+        $7::text[],
+        $8::text[]
       ) AS incoming(
         legislation_number,
         legislation_type,
         session_number,
         roll_call_number,
+        chamber,
         voted_on,
         vote,
         member_id
@@ -81,12 +83,13 @@ async function insertMemberVotes(runner, vote, members) {
     ),
     inserted AS (
       INSERT INTO member_voting_record
-        (legislationNumber, legislation_type, session_number, roll_call_number, voted_on, vote, member_id)
+        (legislationNumber, legislation_type, session_number, roll_call_number, chamber, voted_on, vote, member_id)
       SELECT
         incoming.legislation_number,
         incoming.legislation_type,
         incoming.session_number,
         incoming.roll_call_number,
+        incoming.chamber,
         incoming.voted_on,
         incoming.vote,
         incoming.member_id
@@ -95,6 +98,8 @@ async function insertMemberVotes(runner, vote, members) {
         SELECT 1
         FROM member_voting_record
         WHERE member_id = incoming.member_id
+          AND chamber = incoming.chamber
+          AND congress_number = 119
           AND session_number = incoming.session_number
           AND roll_call_number = incoming.roll_call_number
       )
@@ -103,6 +108,7 @@ async function insertMemberVotes(runner, vote, members) {
         legislation_type,
         session_number,
         roll_call_number,
+        chamber,
         voted_on,
         vote,
         member_id
@@ -127,6 +133,7 @@ async function insertMemberVotes(runner, vote, members) {
     legislationTypes,
     sessionNumbers,
     rollCallNumbers,
+    members.map(() => 'House'),
     votedOnDates,
     voteCasts,
     memberIds,
@@ -151,14 +158,15 @@ async function upsertRollCallSummary(runner, vote, summary) {
       legislation_type,
       session_number,
       roll_call_number,
+      chamber,
       voted_on,
       result,
       yes_count,
       no_count,
       not_voting_count
     )
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-    ON CONFLICT (session_number, roll_call_number) DO UPDATE SET
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    ON CONFLICT (chamber, congress_number, session_number, roll_call_number) DO UPDATE SET
       legislation_number = EXCLUDED.legislation_number,
       legislation_type = EXCLUDED.legislation_type,
       voted_on = EXCLUDED.voted_on,
@@ -172,6 +180,7 @@ async function upsertRollCallSummary(runner, vote, summary) {
     String(vote.legislationType).toLowerCase(),
     Number(vote.sessionNumber),
     Number(vote.rollCallNumber),
+    'House',
     vote.startDate,
     summary.result,
     Number(summary.totals.yes ?? 0),
@@ -273,20 +282,20 @@ export async function getHouseVotes(runner = db, options = {}) {
 }
 
 export async function getFreshestVotedOn() {
-  const sql = `SELECT MAX(voted_on) AS freshest_voted_on FROM member_voting_record`;
+  const sql = `SELECT MAX(voted_on) AS freshest_voted_on FROM member_voting_record WHERE chamber = 'House'`;
   const {
     rows: [row],
   } = await db.query(sql);
   return row?.freshest_voted_on ?? null;
 }
 
-export async function findMemberPolicyAreas(bioguideId) {
-  const baseCte = `WITH latest_vote_per_bill AS ( SELECT DISTINCT ON (legislation_type, legislationNumber) legislationNumber, legislation_type, session_number, roll_call_number, voted_on FROM member_voting_record WHERE member_id = $1 AND voted_on IS NOT NULL ORDER BY legislation_type, legislationNumber, voted_on DESC, session_number DESC, roll_call_number DESC, id DESC ), scoped_bills AS ( SELECT bills.policy_area FROM latest_vote_per_bill JOIN bills ON bills.number = latest_vote_per_bill.legislationNumber AND bills.bill_type = latest_vote_per_bill.legislation_type )`;
+export async function findMemberPolicyAreas(bioguideId, { chamber = null } = {}) {
+  const baseCte = `WITH latest_vote_per_bill AS ( SELECT DISTINCT ON (legislation_type, legislationNumber) legislationNumber, legislation_type, session_number, roll_call_number, voted_on FROM member_voting_record WHERE member_id = $1 AND voted_on IS NOT NULL AND ($2::text IS NULL OR chamber = $2) ORDER BY legislation_type, legislationNumber, voted_on DESC, session_number DESC, roll_call_number DESC, id DESC ), scoped_bills AS ( SELECT bills.policy_area FROM latest_vote_per_bill JOIN bills ON bills.number = latest_vote_per_bill.legislationNumber AND bills.bill_type = latest_vote_per_bill.legislation_type )`;
   const totalSql = `${baseCte} SELECT COUNT(*)::integer AS total_count FROM scoped_bills`;
   const poliAreasSql = `${baseCte} SELECT policy_area, COUNT(*)::integer AS bill_count FROM scoped_bills WHERE policy_area IS NOT NULL AND TRIM(policy_area) <> '' GROUP BY policy_area ORDER BY policy_area ASC`;
   const [totalResult, policyAreasResult] = await Promise.all([
-    db.query(totalSql, [bioguideId]),
-    db.query(poliAreasSql, [bioguideId]),
+    db.query(totalSql, [bioguideId, chamber]),
+    db.query(poliAreasSql, [bioguideId, chamber]),
   ]);
   return {
     totalCount: totalResult.rows[0]?.total_count ?? 0,
@@ -298,20 +307,25 @@ export async function findMemberPolicyAreas(bioguideId) {
 }
 
 export async function findMemberVotes(bioguideId, options = {}) {
-  const { limit, offset = 0, policyArea = null } = options;
+  const { limit, offset = 0, policyArea = null, chamber = null } = options;
   const hasLimit = Number.isInteger(limit) && limit > 0;
   const safeOffset = Number.isInteger(offset) && offset >= 0 ? offset : 0;
   const sql = `WITH latest_vote_per_bill AS (
   SELECT DISTINCT ON (legislation_type, legislationNumber)
+    id AS member_vote_id,
+    member_id,
     legislationNumber,
     legislation_type,
     session_number,
     roll_call_number,
+    chamber,
+    congress_number,
     voted_on,
     vote
   FROM member_voting_record
   WHERE member_id = $1
     AND voted_on IS NOT NULL
+    AND ($2::text IS NULL OR chamber = $2)
   ORDER BY
     legislation_type,
     legislationNumber,
@@ -322,10 +336,14 @@ export async function findMemberVotes(bioguideId, options = {}) {
 )
 SELECT
   bills.id AS bill_id,
+  latest_vote_per_bill.member_vote_id,
+  latest_vote_per_bill.member_id,
+  latest_vote_per_bill.congress_number,
   latest_vote_per_bill.legislationNumber,
   latest_vote_per_bill.legislation_type,
   latest_vote_per_bill.session_number,
   latest_vote_per_bill.roll_call_number,
+  latest_vote_per_bill.chamber,
   latest_vote_per_bill.voted_on,
   bills.title,
   bills.summary,
@@ -343,22 +361,24 @@ JOIN bills
 LEFT JOIN roll_call_summaries
   ON roll_call_summaries.session_number = latest_vote_per_bill.session_number
  AND roll_call_summaries.roll_call_number = latest_vote_per_bill.roll_call_number
+ AND roll_call_summaries.chamber = latest_vote_per_bill.chamber
+  AND roll_call_summaries.congress_number = latest_vote_per_bill.congress_number
  AND roll_call_summaries.legislation_number = latest_vote_per_bill.legislationNumber
  AND roll_call_summaries.legislation_type = latest_vote_per_bill.legislation_type`;
   const policyFilterSql = policyArea
-    ? ` WHERE bills.policy_area = $${hasLimit ? 4 : 2}`
+    ? ` WHERE bills.policy_area = $${hasLimit ? 5 : 3}`
     : "";
   const orderSql =
     " ORDER BY latest_vote_per_bill.voted_on DESC, latest_vote_per_bill.roll_call_number DESC";
-  const pageSql = hasLimit ? " LIMIT $2 OFFSET $3" : "";
+  const pageSql = hasLimit ? " LIMIT $3 OFFSET $4" : "";
   const finalSql = `${sql}${policyFilterSql}${orderSql}${pageSql}`;
   const params = hasLimit
     ? policyArea
-      ? [bioguideId, limit, safeOffset, policyArea]
-      : [bioguideId, limit, safeOffset]
+      ? [bioguideId, chamber, limit, safeOffset, policyArea]
+      : [bioguideId, chamber, limit, safeOffset]
     : policyArea
-      ? [bioguideId, policyArea]
-      : [bioguideId];
+      ? [bioguideId, chamber, policyArea]
+      : [bioguideId, chamber];
   const { rows: memberVotes } = await db.query(finalSql, params);
   return memberVotes;
 }

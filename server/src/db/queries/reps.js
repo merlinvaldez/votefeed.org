@@ -46,6 +46,13 @@ export async function getAllReps(runner = db) {
   const { members = [] } = await resp.json();
   const inserted = [];
   for (const rep of members) {
+    const currentTerms = rep.terms?.item ?? [];
+    const chamber = currentTerms[currentTerms.length - 1]?.chamber;
+    if (!chamber) {
+      throw new Error(
+        `getAllReps Query returned no current chamber for ${rep.bioguideId ?? "unknown member"}`,
+      );
+    }
     const contact = await fetchMemberContactDetails(rep.bioguideId);
     const sql = `INSERT INTO reps
     (
@@ -79,7 +86,7 @@ export async function getAllReps(runner = db) {
       rep.bioguideId,
       rep.name,
       rep.partyName,
-      rep.terms.item[0].chamber,
+      chamber,
       rep.state,
       rep.district,
       rep.depiction?.imageUrl ?? null,
@@ -94,16 +101,33 @@ export async function getAllReps(runner = db) {
   return inserted;
 }
 
-export async function findRepByDistrict(state, congressionalDistrict) {
+export async function findRepByDistrict(state, congressionalDistrict, runner = db) {
   const sql = ` SELECT * FROM reps 
   WHERE state=$1 AND congressionalDistrict=$2 
+    AND chamber = 'House of Representatives'
     AND is_current_member = true
 `;
 
   const {
     rows: [rep],
-  } = await db.query(sql, [state, congressionalDistrict]);
+  } = await runner.query(sql, [state, congressionalDistrict]);
   return rep;
+}
+
+export async function findCurrentMembersByStateAndChamber(
+  state,
+  chamber,
+  runner = db,
+) {
+  const normalizedState = String(state ?? "").trim().replace(/\s+/g, " ");
+  const normalizedChamber = String(chamber ?? "").trim();
+  const sql = `SELECT * FROM reps
+    WHERE LOWER(BTRIM(state)) = LOWER($1)
+      AND LOWER(chamber) = LOWER($2)
+      AND is_current_member = true
+    ORDER BY full_name ASC`;
+  const { rows } = await runner.query(sql, [normalizedState, normalizedChamber]);
+  return rows;
 }
 
 export async function findRepByBioguideId(bioguideId, runner = db) {

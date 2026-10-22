@@ -2,7 +2,29 @@
 
 ## 30 Second Pitch
 
-VoteFeed is a Twitter/Bluesky-like user experience that lets constituents see how their U.S. House representative has voted and respond to those votes with approval, disapproval, and comments.
+VoteFeed lets constituents see how their U.S. House representative and senators voted, compare their positions, and respond with approval, disapproval, and comments.
+
+## Senate Release
+
+This branch adds a delegation feed with All Reps, House, and Senate filters; combined cards for matching Senate actions; member-specific responses; and bill detail folders that retain a shared simplified summary. Vacant seats do not prevent the remaining delegation from loading. Clearing a response preserves its comments.
+
+See [release notes](RELEASE_NOTES.md) for the release scope and the [production rollout checklist](specs/production-rollout-checklist.md) for verified progress. The notes describe the release candidate; application deployment and production browser acceptance are still pending.
+
+## Development And Verification
+
+From the repository root in PowerShell:
+
+```powershell
+npm.cmd run dev
+# In a separate terminal:
+npm.cmd run test:all
+```
+
+`test:all` runs PostgreSQL-backed Node tests, Deno notification tests, client ESLint, and a Vite production build. Install root, client, and server dependencies first. The Windows runner expects PostgreSQL 18 in `C:\Program Files\PostgreSQL\18\bin` and Node/npm in `C:\Program Files\nodejs`. Its disposable PostgreSQL cluster uses `%TEMP%\voteFeed-test-postgres` on `127.0.0.1:55439`. The runner starts/stops the cluster when needed and restores test flags afterward. It does not apply the complete Supabase migration chain or replace browser acceptance.
+
+Run `npm.cmd run test:postgres` for only the Node/database suite. The runner sets `ALIGNMENT_TEST_POSTGRES`, `BATCH_STANCES_TEST_POSTGRES`, and `DELEGATION_TEST_POSTGRES`; these and `CARD_PREVIEW_PORT` are test settings, not production variables.
+
+The client resolves its API base from `VITE_API_URL`, then `VITE_API_BASE`, then the related Vercel backend injected as `VITE_RELATED_API_URL`, then `http://localhost:4000`. `client/vite.config.js` names related project `votefeed-org-backend`. Explicit production API settings are build-time inputs; changes require a new build. Keep credentials on the server, never in `VITE_*` variables.
 
 ## MVP V1 Features (FSA Release)
 
@@ -48,7 +70,7 @@ VoteFeed is a Twitter/Bluesky-like user experience that lets constituents see ho
 
 ## Current DB Schema
 
-This section reflects the current application schema in `server/src/db/schema.sql`, plus the unique indexes used in deployed sync and notification workflows.
+This section summarizes the branch's schema and migrations. `server/src/db/schema.sql` is a destructive development reset, not a production upgrade procedure; it does not replace the migration chain, including feed snapshot setup. Use the rollout checklist for production changes.
 
 ### users
 
@@ -105,15 +127,20 @@ Deployed environments also use:
 | legislation_type  | text        | Nullable    |
 | session_number    | integer     | Not null    |
 | roll_call_number  | integer     | Not null    |
+| chamber           | text        | Not null    |
+| congress_number   | integer     | Not null, defaults to `119` |
 | voted_on          | timestamptz | Nullable    |
 | result            | text        | Not null    |
 | yes_count         | integer     | Not null, defaults to `0` |
 | no_count          | integer     | Not null, defaults to `0` |
 | not_voting_count  | integer     | Not null, defaults to `0` |
+| vote_title        | text        | Nullable    |
+| vote_question     | text        | Nullable    |
+| source_url        | text        | Nullable    |
 
 Deployed environments also use:
 
-- `idx_roll_call_summaries_session_roll_call` on `(session_number, roll_call_number)` so roll call summaries stay idempotent.
+- `idx_roll_call_summaries_vote_identity` on `(chamber, congress_number, session_number, roll_call_number)` so roll call summaries stay idempotent across chambers and Congresses.
 
 ### member_voting_record
 
@@ -124,13 +151,27 @@ Deployed environments also use:
 | legislation_type  | text        | Nullable    |
 | session_number    | integer     | Nullable    |
 | roll_call_number  | integer     | Nullable    |
+| chamber           | text        | Not null    |
+| congress_number   | integer     | Not null, defaults to `119` |
 | voted_on          | timestamptz | Nullable    |
 | vote              | text        | Not null    |
 | member_id         | text        | Not null    |
 
 Deployed environments also use:
 
-- `idx_member_voting_record_member_roll_call` on `(member_id, session_number, roll_call_number)` so vote sync stays idempotent.
+- `idx_member_voting_record_vote_identity` on `(member_id, chamber, congress_number, session_number, roll_call_number)` so vote sync stays idempotent across chambers and Congresses.
+
+### senate_vote_ingestion
+
+Senate sync marks a roll call complete only after its summary, member positions, and eligible notification rows have been saved. Its primary key is `(congress_number, session_number, roll_call_number)`. The `completed_at` and `source_modified_at` fields support retries and source corrections.
+
+### user_vote_notification_progress
+
+Delivery cursors are keyed by `(user_id, chamber, congress_number)`, with `last_notified_session_number`, `last_notified_roll_call_number`, and `updated_at`. Migration preserves existing complete House cursors from `users`. This table is server-managed and inaccessible to browser roles.
+
+### legislative_feed_snapshots
+
+Server-only snapshots store `id`, `signing_key`, `payload`, and `expires_at`. Signed pagination cursors retain a frozen feed order for 30 minutes. The backend role needs SELECT, INSERT, and DELETE access; browser roles must not read signing keys. Expired snapshots are reclaimed when a new snapshot is saved.
 
 ### vote_notification_outbox
 
@@ -139,6 +180,8 @@ Deployed environments also use:
 | id                 | uuid        | Primary key, defaults to `gen_random_uuid()` |
 | sync_run_id        | uuid        | Not null    |
 | member_id          | text        | Not null    |
+| chamber            | text        | Not null, defaults to `House` |
+| congress_number    | integer     | Not null, defaults to `119` |
 | legislation_type   | text        | Not null    |
 | legislation_number | integer     | Not null    |
 | session_number     | integer     | Not null    |
@@ -152,7 +195,7 @@ Deployed environments also use:
 
 Deployed environments also use:
 
-- `idx_vote_notification_outbox_sync_member_roll_call` on `(sync_run_id, member_id, session_number, roll_call_number)` so each sync run queues a representative vote once.
+- `idx_vote_notification_outbox_sync_member_roll_call` on `(sync_run_id, member_id, chamber, congress_number, session_number, roll_call_number)` so overlapping chamber and Congress roll-call numbers remain separate within each sync run.
 - `idx_vote_notification_outbox_pending_lookup` on `(processed_at, created_at, sync_run_id, member_id)` so the notification sender can load pending work efficiently.
 
 ### interactions
@@ -160,10 +203,11 @@ Deployed environments also use:
 | Column       | Type    | Constraints                                                   |
 | ------------ | ------- | ------------------------------------------------------------- |
 | id           | serial  | Primary key                                                   |
-| stance       | text    | Not null                                                      |
+| stance       | text    | Nullable; clearing a response preserves its interaction/comments |
 | user_comment | text    | Nullable                                                      |
 | user_id      | integer | Not null, foreign key to `users(id)` with `ON DELETE CASCADE` |
 | rep_bioguide_id | text | Not null, foreign key to `reps(bioguideId)` |
+| member_vote_id | integer | Nullable, foreign key to `member_voting_record(id)` with `ON DELETE SET NULL` |
 | bill_id      | integer | Not null, foreign key to `bills(id)` with `ON DELETE CASCADE` |
 
 ## Notification Sync And Delivery
@@ -171,8 +215,9 @@ Deployed environments also use:
 Production vote notifications are driven by Supabase Edge Functions:
 
 - `sync-votes` imports new House vote data, upserts roll call and bill summary data, and queues notification work in `vote_notification_outbox`.
-- `send-vote-notifications` reads pending outbox rows, sends emails through Resend, and updates each user's notification cursor fields.
-- `sync-reps` refreshes the current House roster from Congress.gov, preserves historical representatives, and marks departed members inactive. The `sync-reps-monthly` cron invokes it at 08:00 UTC on the first day of each month.
+- `sync-senate-votes` imports Senate.gov votes using the reviewed Congress 119 LIS-to-Bioguide crosswalk. Each invocation selects up to 12 missing roll calls plus recent-vote rechecks; one batch does not establish full historical coverage.
+- `send-vote-notifications` combines eligible House and Senate updates into a user's digest, sends through Resend, and advances chamber/Congress-specific progress after successful delivery. Matching Senate positions can share an email line. Missing usable summaries hold the digest; a compact official bill title can serve as fallback.
+- `sync-reps` refreshes the current House and Senate roster from Congress.gov, preserves historical representatives, and marks departed members inactive. The `sync-reps-monthly` cron invokes it at 08:00 UTC on the first day of each month.
 
 The notification functions require these Supabase function secrets:
 
@@ -180,6 +225,23 @@ The notification functions require these Supabase function secrets:
 - `RESEND_API_KEY`
 - `RESEND_FROM_EMAIL`
 - `APP_ORIGIN`
+- `OPENAI_API_KEY` for generating missing quick summaries; `OPENAI_MODEL` is an optional override.
+
+Supabase supplies `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`. Scheduled requests use Vault entries `project_url` and `edge_function_service_jwt`. Keep JWT verification enabled.
+
+Notification eligibility uses the vote date, not the ingestion date. House votes retain the inclusive September 15, 2026 midnight New York cutoff. Senate votes qualify only **after October 22**, starting **October 23, 2026 at 00:00 America/New_York** (`2026-10-23T04:00:00.000Z`). Historical Senate votes remain available to the feed but are excluded from notification queue creation, backlog seeding, and sender selection. This cutoff does not cap future accumulated eligible votes.
+
+The release defines Senate sync every 15 minutes and a combined daily sender at `10:30 UTC` (06:30 New York daylight time / 05:30 standard time). Activation follows the rollout checklist; keep legacy send schedules inactive.
+
+Manual function modes use POST and service-role authorization:
+
+| Function | JSON body | Effect |
+| --- | --- | --- |
+| `send-vote-notifications` | `{"mode":"preview"}` | Read-only digest selection; no email or progress changes |
+| `sync-votes` | `{"mode":"backfill-pending-bill-data"}` | Repairs pending-vote bill titles/summaries; no email |
+| `send-vote-notifications` | `{"mode":"generate-only"}` | Stores missing AI summaries; no email; model usage may incur costs |
+
+**An empty body on `send-vote-notifications` invokes actual delivery.** Preview is not a test email. Keep keys private. Privileged bill backfill requires a legacy service-role JWT in the Authorization Bearer header. Do not use `replayAttemptId` for routine testing because it changes email idempotency identity.
 
 Use `npx supabase ...` for local Supabase CLI commands in this repo. Production function deployments target the Supabase project ref `ycaldyqnmitdajoguagi`.
 
@@ -189,11 +251,30 @@ High-level mounted API groups:
 
 - `GET /districts/...`
 - `GET /reps/...`
+- `GET /reps/state/:state/senators` returns `{ state, chamber, count, senators }` for the named state, using the full state name returned by the Census geocoder. `senators` contains the current roster rows for that state and may contain fewer than two when a seat is vacant.
 - `GET /bills/...`
 - `GET /housevotes/...`
 - `GET /users/...`
 - `PUT /users/me/notifications`
 - `GET|POST|PUT|DELETE /interactions/...`
+
+Delegation routes introduced by this release:
+
+| Method and route | Purpose |
+| --- | --- |
+| `GET /reps/delegation` | Guest delegation from state/district |
+| `GET /reps/delegation/feed` | Guest paginated feed |
+| `GET /users/me/delegation` | Saved delegation |
+| `GET /users/me/delegation/feed` | Signed-in paginated feed using saved location |
+| `GET /reps/delegation/bills/:billType/:billNumber` | Guest bill voting folders |
+| `GET /users/me/delegation/bills/:billType/:billNumber` | Signed-in bill voting folders |
+| `GET /users/me/alignment` | Alignment scoped to chamber, policy, or member |
+| `PUT /interactions/stances/batch` | Atomic response update for two exact senator vote links |
+| `POST /interactions/:interactionId/comment/contact-drafts/group` | Personalized guides from one approved comment |
+
+Feed requests accept `limit` (1–50, default 5), `chamber` (`All Reps`, `House`, `Senate`), optional `policyArea`, and continuation `cursor`. Guests supply state/district; signed-in routes use saved location. District `0` is valid. Continue using returned `page.nextCursor` while `page.hasMore` is true; offsets are unsupported. Scope changes start a new feed. Invalid cursors return 400, viewer mismatches 403, expired/changed snapshots 409 with refresh instructions, and read failures 503 with retry metadata.
+
+Alignment uses responses linked to exact member votes and separates chamber/Congress/session/roll-call identities. It averages member percentages before rounding the final result. Missing comparisons differ from zero agreement. See the [alignment trace](specs/rep-card-alignment-trace.md) and [pagination verification](specs/legislative-feed-pagination-verification.md).
 
 ## Wireframes
 

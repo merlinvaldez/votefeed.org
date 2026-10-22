@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAvatar } from "@clerk/clerk-react";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./authContext";
 import { API_BASE, STATES } from "./constants";
 import RepCard from "./RepCard";
 import "./Profile.css";
@@ -155,9 +155,13 @@ export default function Profile() {
       </header>
 
       <section className="profile-section">
-        <h2 className="profile-section-title">Representative</h2>
-        {rep ? (
-          <RepCard rep={rep} alignment={alignment}></RepCard>
+        <h2 className="profile-section-title">Congressional delegation</h2>
+        {user.state ? (
+          <RepCard
+            rep={rep}
+            location={{ state: user.state, district: user.district ?? null }}
+            alignment={alignment}
+          ></RepCard>
         ) : (
           <section className="profile-card">
             <div className="profile-empty-copy">No representative data.</div>

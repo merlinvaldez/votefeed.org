@@ -1,5 +1,22 @@
 import db from "../client.js";
 
+// Keep feed totals and the public discussion on exactly the same visibility rule.
+const publicVisibility = `bill_comments.is_public = true
+  AND bill_comments.moderation_status = 'approved'
+  AND bill_comments.approved_text IS NOT NULL`;
+
+export async function getPublicBillCommentCounts(billIds, runner = db) {
+  const ids = [...new Set(billIds)];
+  if (!ids.length) return new Map();
+  const { rows } = await runner.query(`SELECT bill_comments.bill_id, COUNT(*)::integer AS count
+    FROM bill_comments JOIN users ON users.id = bill_comments.user_id
+    WHERE bill_comments.bill_id = ANY($1::integer[]) AND ${publicVisibility}
+    GROUP BY bill_comments.bill_id`, [ids]);
+  const counts = new Map(ids.map(id => [id, 0]));
+  for (const row of rows) counts.set(row.bill_id, row.count);
+  return counts;
+}
+
 export async function getCommentByInteractionId(interactionId, runner = db) {
   const sql = `SELECT * FROM bill_comments WHERE interaction_id = $1`;
   const {
@@ -52,11 +69,16 @@ export async function upsertDraftComment(
 }
 
 export async function getOrCreateCommentContactDrafts(
-  { interactionId, generateDrafts },
+  { interactionId, generateDrafts, expectedStance },
   runner = db,
 ) {
-  const comment = await getCommentByInteractionId(interactionId, runner);
+  const { rows: [comment] } = await runner.query(`SELECT c.*, c.updated_at::text AS source_version,
+    i.stance AS source_stance FROM bill_comments c
+    JOIN interactions i ON i.id = c.interaction_id WHERE c.interaction_id = $1`, [interactionId]);
   if (!comment) return null;
+  if (comment.source_stance !== expectedStance) {
+    throw Object.assign(new Error("Response changed. Please retry contact drafts."), { status: 409 });
+  }
 
   const approvedText = comment.approved_text?.trim() ?? "";
   const cachedCallScript = comment.call_script?.trim() ?? "";
@@ -89,11 +111,16 @@ export async function getOrCreateCommentContactDrafts(
         message_template = $3,
         updated_at = now()
     WHERE interaction_id = $1
+      AND updated_at::text = $4
+      AND EXISTS (SELECT 1 FROM interactions i WHERE i.id = $1 AND i.stance IS NOT DISTINCT FROM $5::text)
     RETURNING call_script, message_template
   `;
   const {
     rows: [savedDrafts],
-  } = await runner.query(sql, [interactionId, callScript, messageTemplate]);
+  } = await runner.query(sql, [interactionId, callScript, messageTemplate, comment.source_version, expectedStance]);
+  if (!savedDrafts) {
+    throw Object.assign(new Error("Comment or response changed. Please retry contact drafts."), { status: 409 });
+  }
 
   return {
     callScript: savedDrafts?.call_script ?? callScript,
@@ -104,7 +131,7 @@ export async function getOrCreateCommentContactDrafts(
 }
 
 export async function applyCommentModerationResult(
-  { interactionId, status, moderationReason, moderationCategories },
+  { interactionId, draftText, status, moderationReason, moderationCategories },
   runner = db,
 ) {
   const sql = `
@@ -128,6 +155,7 @@ export async function applyCommentModerationResult(
         last_moderated_at = now(),
         updated_at = now()
     WHERE interaction_id = $1
+      AND draft_text = $5
     RETURNING *
   `;
   const {
@@ -137,6 +165,7 @@ export async function applyCommentModerationResult(
     status,
     moderationReason,
     moderationCategories,
+    draftText,
   ]);
   return comment ?? null;
 }
@@ -201,9 +230,7 @@ export async function listPublicCommentsByBillId(
     LEFT JOIN useful_counts ON useful_counts.comment_id = bill_comments.id
     LEFT JOIN viewer_votes ON viewer_votes.comment_id = bill_comments.id
     WHERE bill_comments.bill_id = $1
-      AND bill_comments.is_public = true
-      AND bill_comments.moderation_status = 'approved'
-      AND bill_comments.approved_text IS NOT NULL
+      AND ${publicVisibility}
     ORDER BY
       COALESCE(bill_comments.published_at, bill_comments.updated_at, bill_comments.created_at) DESC,
       bill_comments.id DESC

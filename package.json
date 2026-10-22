@@ -2,14 +2,18 @@
   "name": "votefeed-root",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm --prefix server run dev\" \"npm --prefix client run dev\""
+    "dev": "concurrently \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "test:postgres": "powershell -NoProfile -ExecutionPolicy Bypass -File tests/run-postgres-tests.ps1",
+    "test:all": "powershell -NoProfile -ExecutionPolicy Bypass -File tests/run-all-checks.ps1"
   },
   "devDependencies": {
     "concurrently": "^9.0.0",
+    "fast-xml-parser": "5.11.2",
     "supabase": "^2.91.3"
   },
   "dependencies": {
     "@openai/agents": "^0.4.7",
+    "deno": "^2.9.6",
     "openai": "^6.21.0"
   }
 }

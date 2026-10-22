@@ -1,0 +1,138 @@
+.leg-card.legislative-vote-card {
+  display: block;
+  padding: 8px 22px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-compact);
+}
+
+.legislative-vote-card .leg-member-portraits {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.legislative-vote-card .member-portrait {
+  width: 32px;
+  height: 32px;
+  flex-basis: 32px;
+  font-size: 12px;
+  border-width: 2px;
+}
+
+.leg-card-content {
+  min-width: 0;
+}
+
+.leg-card-content > * + * { margin-top: 10px; }
+.legislative-vote-card .leg-card-content > .leg-body,
+.legislative-vote-card .leg-card-content > .response-status { margin-top: 10px; }
+
+.legislative-vote-card .leg-top {
+  align-items: flex-start;
+  justify-content: space-between;
+  color: var(--text-subtle);
+}
+
+.legislative-vote-card .leg-meta-row { gap: 10px; align-items: center; min-width: 0; }
+.legislative-vote-card .leg-date { gap: 10px; font-weight: 400; }
+.legislative-vote-card .bill-link-pill { padding: 6px 14px; }
+.legislative-vote-card .summary-source-toggle {
+  flex-shrink: 0;
+  color: var(--text);
+  padding: 6px;
+}
+
+.legislative-vote-card .leg-body,
+.legislative-vote-card .response-status {
+  color: var(--text);
+  margin: 0;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.legislative-vote-card .inline-vote-pill {
+  padding: 5px 12px;
+  font-size: inherit;
+  line-height: 1.4;
+}
+
+.legislative-vote-card .leg-actions { gap: 14px; }
+.legislative-vote-card .ghost-btn {
+  min-height: 42px;
+  padding: 9px 16px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--text);
+}
+.legislative-vote-card .ghost-btn.active.approve { color: var(--success); }
+.legislative-vote-card .ghost-btn.active.disapprove { color: var(--danger); }
+.legislative-vote-card .comments {
+  min-height: 42px;
+  margin-left: auto;
+  color: var(--text);
+  gap: 12px;
+}
+.legislative-vote-card .comments svg { width: 22px; height: 22px; }
+.legislative-vote-card .ghost-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+.leg-summary-error { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.leg-summary-retry {
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font: inherit;
+}
+
+@media (max-width: 600px) {
+  .leg-card.legislative-vote-card { padding: 8px 16px; }
+  .legislative-vote-card .leg-card-content > .leg-top { align-items: center; gap: 4px; min-width: 0; }
+  .legislative-vote-card .leg-card-content > .leg-body,
+  .legislative-vote-card .leg-card-content > .response-status { margin-top: 10px; }
+  .legislative-vote-card .leg-meta-row { gap: 6px; min-width: 0; flex-wrap: wrap; }
+  .legislative-vote-card .leg-date { gap: 4px; font-size: 13px; }
+  .legislative-vote-card .bill-link-pill { padding: 4px 8px; }
+  .legislative-vote-card .summary-source-toggle { padding: 4px; }
+  .legislative-vote-card .member-portrait { width: 28px; height: 28px; flex-basis: 28px; font-size: 11px; }
+  .legislative-vote-card .ghost-btn { max-width: 100%; text-align: left; }
+}
+
+@media (max-width: 380px) {
+  .legislative-vote-card .member-portrait { width: 26px; height: 26px; flex-basis: 26px; }
+}
+
+@media (max-width: 600px) {
+  .legislative-vote-card-pair .leg-member-portraits { gap: 4px; }
+  .legislative-vote-card-pair .member-portrait { width: 28px; height: 28px; flex-basis: 28px; }
+  .legislative-vote-card-pair .leg-card-content > .leg-top {
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+  .legislative-vote-card-pair .leg-meta-row { flex-wrap: wrap; gap: 6px; }
+  .legislative-vote-card-pair .bill-link-pill { font-size: 14px; white-space: nowrap; }
+  .legislative-vote-card-pair .leg-date { white-space: nowrap; font-size: 13px; }
+}
+
+/* Every control keeps a visible keyboard focus in either theme. */
+.legislative-vote-card button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+.legislative-vote-card .ghost-btn { overflow-wrap: anywhere; min-width: 0; }
+.legislative-vote-card .ghost-btn span { min-width: 0; }
+.legislative-vote-card button:disabled { cursor: wait; opacity: 0.6; }
+.legislative-vote-card .leg-body img { max-width: 100%; height: auto; }
+
+/* Permit reflow with large text and long measure labels. */
+@media (max-width: 600px) {
+  .legislative-vote-card .bill-link-pill { white-space: normal; overflow-wrap: anywhere; }
+  .legislative-vote-card .leg-date { white-space: normal; }
+}
+
+.legislative-vote-card .comments { max-width: 100%; min-width: 0; overflow-wrap: anywhere; }
+.legislative-vote-card .comments svg { flex-shrink: 0; }
