@@ -1,5 +1,13 @@
 # Release notes
 
+## 2026-10-22 — saved House response recovery
+
+- Restored all 298 legacy responses across 12 production accounts to the latest matching recorded House vote for the saved representative, preserving interaction IDs, answers and comments. This recovery policy reproduces the former feed selection; it does not infer the original answer timestamp.
+- Repaired 56 missing official measure URLs with a single verified Congress so the delegation feed can display those bills again.
+- Require recorded-vote links on new responses, prevent duplicate user/bill/member/event rows, and prevent referenced votes from being deleted and silently orphaning responses. Single-response creation now reuses the existing row on retries.
+- House ingestion now supplies official bill links, and metadata refreshes preserve existing links. Recovery and protection migrations, House ingestion v19, and the backend changes are deployed to production.
+- Verified all 201 responses for user 213, restored selected buttons and 178/201 alignment in the live browser, and exercised clear/save without changing the response or vote identity.
+
 ## Pending hotfix — reliable simplified summaries
 
 - Generate short summaries directly from official bill text (or the official title when no summary is available), retaining the source through up to three validation attempts.

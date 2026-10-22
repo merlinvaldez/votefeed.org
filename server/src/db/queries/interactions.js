@@ -5,6 +5,9 @@ import { findRepByBioguideId } from "./reps.js";
 export async function addStance(userId, billId, rep_bioguide_id, stance, memberVoteId, runner = db) {
   const sql = `INSERT INTO interactions (user_id, bill_id, rep_bioguide_id, stance, member_vote_id)
   VALUES ($1,$2,$3,$4,$5)
+  ON CONFLICT (user_id,bill_id,rep_bioguide_id,member_vote_id)
+    WHERE member_vote_id IS NOT NULL
+  DO UPDATE SET stance=EXCLUDED.stance
   RETURNING *`;
   const {
     rows: [addedStance],

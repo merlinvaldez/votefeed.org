@@ -2,6 +2,7 @@ import "@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 
 import { json } from "../_shared/http.ts";
+import { officialBillUrl } from "../_shared/billUrl.ts";
 
 const CONGRESS_API_ORIGIN = "https://api.congress.gov";
 const RETRYABLE_MEMBER_STATUSES = new Set([429, 500, 502, 503, 504]);
@@ -534,15 +535,16 @@ async function backfillOneBill(
   bill: { congress: number; billType: string; number: number },
 ) {
   const { data, error } = await supabase.from("bills")
-    .select("title,summary")
+    .select("title,summary,legislation_url")
     .eq("bill_type", bill.billType)
     .eq("number", bill.number)
     .limit(1);
   if (error) throw error;
-  const existing = (data?.[0] ?? null) as ExistingBillInfo | null;
+  const existing = (data?.[0] ?? null) as (ExistingBillInfo & { legislation_url?: string | null }) | null;
+  const legislationUrl = officialBillUrl(bill.congress, bill.billType, bill.number);
   const needsTitle = !existing?.title?.trim();
   const needsSummary = !existing?.summary?.trim();
-  if (!needsTitle && !needsSummary) {
+  if (!needsTitle && !needsSummary && existing?.legislation_url) {
     return { changed: false, summaryFound: true };
   }
 
@@ -573,6 +575,7 @@ async function backfillOneBill(
 
   if (existing) {
     const update: Record<string, string> = {};
+    if (!existing.legislation_url) update.legislation_url = legislationUrl;
     if (needsTitle) update.title = title;
     if (needsSummary && officialSummary) update.summary = officialSummary;
     if (Object.keys(update).length > 0) {
@@ -591,6 +594,7 @@ async function backfillOneBill(
     number: bill.number,
     title,
     summary: officialSummary ?? "",
+    legislation_url: legislationUrl,
   }, {
     onConflict: "bill_type,number",
     ignoreDuplicates: true,
@@ -698,6 +702,7 @@ async function ensureHouseBillTitles(
             number: bill.number,
             title,
             summary: "",
+            legislation_url: officialBillUrl(119, bill.billType, bill.number),
           }
           : null;
       } catch (error) {

@@ -165,12 +165,16 @@ CREATE TABLE interactions (
     user_comment text,
     user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     rep_bioguide_id text NOT NULL REFERENCES reps(bioguideId),
-    member_vote_id integer REFERENCES member_voting_record(id) ON DELETE SET NULL,
+    member_vote_id integer NOT NULL REFERENCES member_voting_record(id) ON DELETE RESTRICT,
     bill_id integer NOT NULL REFERENCES bills(id) ON DELETE CASCADE
 );
 
 CREATE INDEX idx_interactions_user_member_vote
 ON interactions(user_id, member_vote_id)
+WHERE member_vote_id IS NOT NULL;
+
+CREATE UNIQUE INDEX interactions_user_bill_member_event_unique
+ON interactions(user_id,bill_id,rep_bioguide_id,member_vote_id)
 WHERE member_vote_id IS NOT NULL;
 
 CREATE TABLE bill_comments (
