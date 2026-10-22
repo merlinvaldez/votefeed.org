@@ -43,7 +43,7 @@ Deno.test("keeps fallback titles to a short email length", () => {
   }
 });
 
-Deno.test("falls back to the official title when an AI summary drops a condition", () => {
+Deno.test("does not reject an AI summary based on source keywords", () => {
   const summary = resolveVoteSummary(
     "require big data centers to pay for electric grid upgrades",
     "Ratepayer Protection Act",
@@ -51,9 +51,9 @@ Deno.test("falls back to the official title when an AI summary drops a condition
   );
 
   if (
-    summary?.kind !== "title" || summary.text !== "Ratepayer Protection Act"
+    summary?.kind !== "quick" || summary.text !== "require big data centers to pay for electric grid upgrades"
   ) {
-    throw new Error("Expected a summary that drops a condition to be rejected");
+    throw new Error("Expected source keywords not to gate the AI summary");
   }
 });
 

@@ -11,41 +11,16 @@ const PROMPT_ECHO_PATTERNS = [
   /\b(?:please\s+)?(?:send|paste|provide)\s+(?:the|your)\s+(?:draft|quick\s+summary|summary)\b/i,
 ];
 
-const LEGAL_QUALIFIER_RULES = [
-  {
-    source: /\bconsider(?:s|ed|ing)?\b/i,
-    output: /\b(?:consider(?:s|ed|ing)?|weigh|review)\b/i,
-  },
-  {
-    source: /\bonly\s+(?:if|when)\b/i,
-    output: /\bonly\s+(?:if|when)\b/i,
-  },
-  { source: /\bunless\b/i, output: /\bunless\b/i },
-  { source: /\bsubject\s+to\b/i, output: /\bsubject\s+to\b/i },
-  { source: /\bconditioned\s+on\b/i, output: /\bconditioned\s+on\b/i },
-];
-
-export function preservesLegalQualifiers(
-  officialSummary: string | null,
-  quickSummary: string,
-) {
-  const source = String(officialSummary ?? "");
-  return LEGAL_QUALIFIER_RULES.every((rule) =>
-    !rule.source.test(source) || rule.output.test(quickSummary)
-  );
-}
-
 export function normalizeQuickSummary(
   summary: string | null,
-  officialSummary: string | null = null,
+  _officialSummary: string | null = null,
 ) {
   const normalized = String(summary ?? "")
     .replace(/^\s*to\s+/i, "")
     .replace(/[.!?]+\s*$/, "")
     .trim();
   if (
-    PROMPT_ECHO_PATTERNS.some((pattern) => pattern.test(normalized)) ||
-    !preservesLegalQualifiers(officialSummary, normalized)
+    PROMPT_ECHO_PATTERNS.some((pattern) => pattern.test(normalized))
   ) {
     return "";
   }
@@ -69,7 +44,7 @@ export function resolveVoteSummary(
   fallbackTitle: string | null,
   officialSummary: string | null = null,
 ): VoteSummary | null {
-  const quickSummary = normalizeQuickSummary(aiSummary, officialSummary);
+  const quickSummary = normalizeQuickSummary(aiSummary);
   if (quickSummary) {
     return {
       kind: "quick",

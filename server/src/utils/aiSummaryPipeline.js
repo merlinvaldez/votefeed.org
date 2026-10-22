@@ -12,7 +12,7 @@ async function loadAgent() {
 }
 
 // A single source-grounded call avoids losing the source/qualifiers between agents.
-// Invalid output is retried with actionable feedback and never returned as content.
+// Empty, oversized, or error-like output is retried; source keywords do not gate it.
 export async function generateAiBillSummary(billSummary, options = {}) {
   const source = String(billSummary ?? "").trim();
   if (!source) throw Object.assign(new Error("No official bill text or title available"), { code: "AI_SUMMARY_UNAVAILABLE" });
@@ -20,7 +20,7 @@ export async function generateAiBillSummary(billSummary, options = {}) {
   const runAgent = options.runAgent ?? run;
   let feedback = "";
   for (let attempt = 1; attempt <= 3; attempt++) {
-    const input = JSON.stringify({ bill_summary: source,
+    const input = JSON.stringify({ [options.sourceType === "title" ? "bill_title" : "bill_summary"]: source,
       simplifier_recommendations: "Explain the main action in one phrase under 180 characters. Preserve legal qualifiers appearing in the source. Use the actual supplied text; never ask for a draft.",
       ...(feedback ? { validation_feedback: feedback } : {}) });
     try {

@@ -167,12 +167,15 @@ export async function getOrCreateAiBillSummary(legislationNumber, billType, cong
   if (isUsableQuickSummary(bill.aisummary, bill.summary)) {
     return bill.aisummary;
   }
-  const source = bill.summary?.trim() || bill.title?.trim();
+  const officialText = String(bill.summary ?? "").replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;|&#160;|&#xA0;/gi, " ").trim();
+  const sourceType = officialText ? "summary" : "title";
+  const source = officialText ? bill.summary.trim() : bill.title?.trim();
   const key = JSON.stringify([bill.id, bill.legislation_url, source]);
   if (pendingSummaries.has(key)) return pendingSummaries.get(key);
   const task = (async () => {
-    const generatedSummary = await generate(source);
-    const aiSummary = isUsableQuickSummary(generatedSummary, bill.summary)
+    const generatedSummary = await generate(source, { sourceType });
+    const aiSummary = isUsableQuickSummary(generatedSummary, source)
       ? generatedSummary
       : null;
     if (!aiSummary) throw Object.assign(new Error("Summary generation did not produce valid content"), {

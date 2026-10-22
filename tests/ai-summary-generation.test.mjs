@@ -5,16 +5,15 @@ import { isUsableQuickSummary } from "../server/src/utils/quickSummaryValidation
 import { getOrCreateAiBillSummary } from "../server/src/db/queries/bills.js";
 import { hasSummaryText } from "../client/src/feedSummaries.js";
 
-test("generation retries rejected output with original source and qualifier feedback", async () => {
+test("generation retries invalid responses with the original source without keyword rejection", async () => {
   const inputs = [];
-  const outputs = ["paste the draft_quick_summary you want simplified", "allow joint media sales", "allow joint media sales subject to conditions"];
+  const outputs = ["paste the draft_quick_summary you want simplified", "allow joint media sales"];
   const result = await generateAiBillSummary("Allow joint media sales subject to conditions", {
     agent: {}, runAgent: async (_, input) => { inputs.push(JSON.parse(input)); return { finalOutput: outputs.shift() }; },
   });
-  assert.equal(result, "allow joint media sales subject to conditions");
-  assert.equal(inputs.length, 3);
+  assert.equal(result, "allow joint media sales");
+  assert.equal(inputs.length, 2);
   assert.match(inputs[1].validation_feedback, /prompt echo/);
-  assert.match(inputs[2].validation_feedback, /legal qualifiers/);
   assert.ok(inputs.every(input => input.bill_summary.includes("subject to conditions")));
 });
 
@@ -59,8 +58,52 @@ test("concurrent member cards share successful generation; failures release retr
 });
 
 test("prompt echoes and provider failures are not usable cached content on server or client", () => {
-  for (const text of ["paste the draft_quick_summary you want simplified", "AI summary failed", "Failed to generate summary", "Please provide the summary"]) {
+  for (const text of ["send the bill summary text you want simplified", "paste the draft_quick_summary you want simplified", "AI summary failed", "Failed to generate summary", "Please provide the summary"]) {
     assert.equal(isUsableQuickSummary(text), false);
     assert.equal(hasSummaryText(text), false);
   }
+});
+
+test("missing official summaries use the title and replace a poisoned cache", async () => {
+  for (const summary of [null, "", "  ", "<p>&nbsp;</p>"]) {
+    const bill = { id: 876550, title: "A joint resolution to stop a student loan rule", summary,
+      aisummary: "send the bill summary text you want simplified" };
+    const writes = [];
+    const runner = { query: async (sql, params) => {
+      if (sql.startsWith("UPDATE")) { writes.push(params); return { rows: [{ aisummary: params[0] }] }; }
+      return { rows: [bill] };
+    } };
+    const result = await getOrCreateAiBillSummary(196, "sjres", null, { runner,
+      generate: async (source, options) => {
+        assert.equal(source, bill.title);
+        assert.equal(options.sourceType, "title");
+        return generateAiBillSummary(source, { ...options, agent: {}, runAgent: async (_, input) => {
+          const payload = JSON.parse(input);
+          assert.equal(payload.bill_title, bill.title);
+          assert.equal(payload.bill_summary, undefined);
+          return { finalOutput: "stop a student loan rule" };
+        } });
+      } });
+    assert.equal(result, "stop a student loan rule");
+    assert.equal(writes.length, 1);
+  }
+});
+
+test("official summaries remain preferred over titles", async () => {
+  const bill = { id: 876551, title: "A short title", summary: "Require safety checks", aisummary: null };
+  const runner = { query: async (sql, params) => ({ rows: [sql.startsWith("UPDATE") ? { aisummary: params[0] } : bill] }) };
+  await getOrCreateAiBillSummary(198, "sjres", null, { runner, generate: async (source, options) => {
+    assert.equal(source, bill.summary);
+    assert.equal(options.sourceType, "summary");
+    return "require safety checks";
+  } });
+});
+
+test("source keywords do not gate otherwise valid AI summaries", () => {
+  for (const source of ["consider banning chemicals", "allow grants only if approved", "allow grants only when approved",
+    "allow grants unless denied", "allow grants subject to approval", "allow grants conditioned on approval"]) {
+    assert.equal(isUsableQuickSummary("allow grants after approval", source), true);
+  }
+  assert.equal(isUsableQuickSummary("stop the Medicare payment model",
+    "The notice is subject to the Congressional Review Act."), true);
 });
