@@ -1,4 +1,5 @@
-export const NOTIFICATION_START_AT = "2026-09-15T04:00:00.000Z";
+import { isNotificationDateEligible } from "../_shared/notificationCutoffs.ts";
+export { NOTIFICATION_START_AT } from "../_shared/notificationCutoffs.ts";
 
 export type NotificationUser = {
   id: number;
@@ -155,12 +156,10 @@ export function buildUserDigest<T extends DigestVote>(
   candidates: T[],
   progressByScope: ReadonlyMap<string, VoteProgress>,
 ): DigestSelection<T> {
-  const startAt = Date.parse(NOTIFICATION_START_AT);
   const selectedByEvent = new Map<string, T>();
 
   for (const candidate of candidates) {
-    const votedAt = Date.parse(candidate.voted_on ?? "");
-    if (!Number.isFinite(votedAt) || votedAt < startAt) continue;
+    if (!isNotificationDateEligible(candidate.chamber, candidate.voted_on)) continue;
     if (!matchesOffice(user, candidate)) continue;
 
     const scopeKey = getProgressScopeKey(

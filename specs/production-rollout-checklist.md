@@ -24,22 +24,29 @@ Tests and browser acceptance → backup and inventory → pause background jobs 
 
 Do not run an unrestricted `supabase db push`: two migrations activate schedules and one queues historical emails. Apply and verify individual files in the controlled sequence below. Do not run `server/src/db/schema.sql` against production.
 
-- [ ] **1. Establish the release candidate and pass local checks.**
+- [x] **1. Establish the release candidate and pass local checks.**
   **How to do it:** In PowerShell at `C:\Users\merli\Desktop\repos\voteFeed`, run:
   ```powershell
   git branch --show-current
   git rev-parse HEAD
   & 'C:\Program Files\nodejs\npm.cmd' run test:all
   ```
-  **How to verify it:** Branch and commit match Scope; automated suites, lint, and build finish successfully without skipped database suites. Record current results here. Prior test results are not current release evidence. This runner does not validate the Supabase migration chain.
+  **How to verify it:** Branch and commit match Scope; automated suites, lint, and build finish successfully without skipped database suites. This runner does not validate the Supabase migration chain.
+  **Verified:** Codex ran `npm run test:all` after fixing the migration filename in `tests/batch-stances.test.mjs`: 97 Node tests passed, 17 Deno tests passed, client lint and production build passed; zero skipped tests. The tested candidate includes that uncommitted one-line fix on top of the Scope HEAD. Existing Vite NODE_ENV warning did not fail the build.
 
-- [ ] **2. Prove preview UI behavior before touching production.**
+- [x] **2. Prove preview UI behavior before touching production.**
   **How to do it:** Open the branch preview. Enter a real address, then sign in with a test account. Switch All Reps/House/Senate, load additional feed pages, open a bill, toggle its simplified summary, and switch all three bill folders. Submit a response and comment, clear the response, and reload. Exercise the shared contact draft flow for both senators.
   **How to verify it:** Cards match the selected chamber; pagination has no repeated or missing cards; simplified text differs from official text and persists across all bill folders; clearing a response preserves its comment; alignment refreshes; contact drafts target the chosen members. Record preview URL and results. Stop for any regression.
+  **Verification source:** Merlin confirmed these preview checks were already completed. Codex did not independently repeat the browser checks; preview URL was not recorded in this conversation.
 
 ## Data Safety Checks
 
-- [ ] **3. Record production revisions, backup, and job inventory.**
+- [x] **3. Record production revisions, backup, and job inventory.**
+  **Read-only inventory collected:** 23 users, 298 interactions, 57,185 pending outbox rows. Migration ledger still contains only `20260915161114`. Jobs 1, 6, 7 and 8 remain active with the schedules recorded in Scope. Both legacy member-vote unique indexes (`idx_member_voting_record_member_roll_call` and `member_voting_record_member_roll_call_uidx`) exist; the repair migration explicitly drops both. Existing summary/outbox indexes match the old schema.
+  **Verified production deployments:** Frontend `dpl_7BVg26wCn2U8hpCDaQQ6uXnZ4RRS`, aliases `votefeed.org` and `www.votefeed.org`; backend `dpl_GUWvZgjAivUXVJJgHTLqcmsQwFLQ`, alias `votefeed-org-rgvh.vercel.app`. Both are READY, target production, with Git commit `87b2e968db3f9c152ee003f6193603b0399807ec` on `main`. These are the recorded rollback candidates.
+  **Recovery point:** Merlin confirmed a restore point is available for today, October 22, 2026; exact timestamp was not supplied. Restoration was not performed or tested.
+  **Build settings verified in the live Vercel dashboard:** Frontend root `client`, Vite preset, Build Command override `npm run build`, Output Directory override `/dist`. Backend root `server`, Other preset, Build Command and Output Directory blank with overrides disabled. Both use Node `24.x` and include files outside the root directory. Connector responses omitted these fields; read-only browser inspection established them. No settings were changed.
+  **Candidate update:** Local HEAD is now `b3d29f6e6285cc7816fda21946b5f7b523861f7a`, including the tested filename fix and planning document. Vercel shows its READY frontend branch preview at `https://votefeed-org-5n1c-pkwoajgu3-merlin-projects.vercel.app`.
   **How to do it:** In Vercel, open each project → Deployments → current Production deployment; record deployment IDs, Git commit, domains, root directory, build command, and output directory. In Supabase project `ycaldyqnmitdajoguagi` → Database → Backups, confirm an available recovery point and restore procedure. In SQL Editor run:
   ```sql
   SELECT version, name FROM supabase_migrations.schema_migrations ORDER BY version;
@@ -54,7 +61,7 @@ Do not run an unrestricted `supabase db push`: two migrations activate schedules
   ```
   **How to verify it:** Save counts, indexes, migration versions, schedules, recovery point, and both Vercel production IDs. Investigate duplicate or unexpected indexes before migration; the migration drops known old names only. Do not share credentials or user records in chat.
 
-- [ ] **4. Pause existing sync and email jobs during the cutover.**
+- [x] **4. Pause existing sync and email jobs during the cutover.**
   **How to do it:** In production SQL Editor run:
   ```sql
   SELECT cron.alter_job(jobid, active := false)
@@ -70,6 +77,7 @@ Do not run an unrestricted `supabase db push`: two migrations activate schedules
   ORDER BY start_time DESC LIMIT 20;
   ```
   **How to verify it:** Relevant jobs are inactive. In Edge Functions → Logs, wait for any already-started sync/send invocations to finish before schema work. Pausing a schedule does not cancel an in-flight request. Save the original active states from step 3.
+  **Pause confirmed by Merlin:** Jobs 1 (`sync-votes-daily`), 6 (`send-vote-notifications-0530-0555-et`), 7 (`send-vote-notifications-0600-0625-et`), and 8 (`sync-reps-monthly`) all show `active=false`. Read-only cron history shows the latest dispatch completed at 10:25 UTC; function request logs show its HTTP 200 response at 10:25:02 UTC and no later requests in the returned latest entries, several hours before this checkpoint. No recent scheduled invocation remains indicated by these logs.
 
 ## Supabase Production Changes
 
@@ -150,7 +158,7 @@ Do not run an unrestricted `supabase db push`: two migrations activate schedules
   Expect current House/Senate roster, Senate vote rows and completion markers, and zero member-count mismatches. Vacant seats can reduce the roster; do not force a count of 100.
 
 - [ ] **9. Review and queue the intended Senate backlog, then preview delivery.**
-  **How to do it:** Read `20261019154813_seed_senate_vote_notification_backlog.sql` together before running it. Its cutoff is September 15, 2026 at midnight America/New_York, Congress 119. Confirm that historical delivery is intended. With senders paused, run that file in production SQL Editor once and record its version via step 6. In Edge Functions → `send-vote-notifications` → Test, POST `{"mode":"preview"}` using the service-role authorization option.
+  **How to do it:** Read `20261019154813_seed_senate_vote_notification_backlog.sql` together before running it. Its Senate-only cutoff is October 23, 2026 at midnight America/New_York (`2026-10-23T04:00:00.000Z`), Congress 119: votes on October 22 or earlier must not be emailed. House retains its September 15 cutoff. The seed was changed before production application, as requested; do not rerun it in environments where it is already recorded as applied. With senders paused, run that file in production SQL Editor once and record its version via step 6. In Edge Functions → `send-vote-notifications` → Test, POST `{"mode":"preview"}` using the service-role authorization option. Confirm `senateCutoffInclusive` matches the October 23 timestamp and preview digests contain no earlier Senate votes. Deploy the updated sender and Senate sync before enabling any schedule.
   **How to verify it:** Response says `mode: preview` and reports `loadedPendingVoteCount`, `deliverablePendingVoteCount`, `digestCount`, and `digests`. Review recipients, dates, chamber grouping and enabled users privately. Preview must not send mail or advance delivery cursors. Save before/after pending counts and progress rows to confirm. Stop if the backlog size or recipients are unexpected. Never use `replayAttemptId` for routine testing; it changes delivery identity.
 
 ## Vercel Production Changes
@@ -205,7 +213,7 @@ Do not run an unrestricted `supabase db push`: two migrations activate schedules
 * Live cron name mismatch is confirmed. The digest migration alone leaves both legacy production senders active. Steps 4 and 14 address this explicitly.
 * Migration files change indexes and backfill House/Congress labels. Confirm existing data fits those assumptions and plan a maintenance window; rollback is not simply redeploying old application code.
 * Manual SQL execution requires ledger reconciliation. Do not repair an unexecuted or partially applied migration.
-* The backlog seed may trigger substantial historical delivery. If the cutoff is unacceptable, stop and agree a separate reviewed migration; do not silently edit an applied migration or mark a skipped one applied.
+* Senate notification eligibility starts October 23, 2026 at midnight New York time. Shared code enforces this at queue creation and digest selection; sender queries exclude older Senate rows before pagination. Old Senate queue rows may remain stored but are not eligible for delivery. Historical Senate feed ingestion is unchanged. This does not cap email size if many eligible future votes accumulate while sending is paused.
 * Backend production role, active deployment revisions, function secret validity, and backup recoverability remain unverified.
 * Local main was used as the comparison base. Refresh and re-evaluate scope if remote main or the release candidate changes.
 * Prior memory reported a simplified-summary UI regression. Its present status must be established by step 2, regardless of build results.
@@ -215,6 +223,6 @@ Do not run an unrestricted `supabase db push`: two migrations activate schedules
   **How to do it:** Save test output, preview results, migration ledger, deployment IDs, job schedules, and first delivery evidence beside this checklist. If delivery is wrong, pause the daily sender using the step 4 SQL before investigating. For app regression, Vercel → Deployments → previous known-good production deployment → Rollback, after checking compatibility with the upgraded schema.
   **How to verify it:** The chosen deployment serves successfully; sender remains paused during any email incident; user comments and progress remain intact. Do not drop new tables/columns or restore a backup automatically: restoration can discard new user activity and needs its own recovery decision.
 
-## Start here: checkpoint 1
+## Current checkpoint: step 5, first migration
 
-Run step 1's three PowerShell commands and share the final test summary, including any failed or skipped checks. We will review that result before the next manual action. Do not run production SQL yet.
+Steps 1–4 are complete. Apply only the first migration in step 5, verify the affected at-large House records, and review the result together before continuing to the chamber migration. Codex has not changed production state.

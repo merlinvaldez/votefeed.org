@@ -31,7 +31,7 @@ function vote(
     congress_number: 119,
     session_number: 2,
     roll_call_number: 10,
-    voted_on: "2026-09-15T16:00:00.000Z",
+    voted_on: "2026-10-23T16:00:00.000Z",
     summary_ready: true,
     ...overrides,
   };
@@ -59,6 +59,21 @@ Deno.test("the September 15 Eastern cutoff excludes earlier votes", () => {
     result.outboxIds[0] === "on-cutoff",
     "the included vote should be on the cutoff",
   );
+});
+
+Deno.test("Senate cutoff excludes all October 22 Eastern votes without changing House eligibility", () => {
+  const senate = { member_id: "senate-1", member_chamber: "Senate", chamber: "Senate", member_district: null };
+  const result = buildUserDigest(user, [
+    vote({ ...senate, outboxIds: ["historical"], voted_on: "2026-09-15T16:00:00Z", summary_ready: false }),
+    vote({ ...senate, outboxIds: ["oct22"], voted_on: "2026-10-22T23:59:59-04:00", summary_ready: false }),
+    vote({ ...senate, outboxIds: ["eligible"], voted_on: "2026-10-23T00:00:00-04:00" }),
+    vote({ ...senate, outboxIds: ["missing"], voted_on: null }),
+    vote({ ...senate, outboxIds: ["invalid"], voted_on: "invalid" }),
+    vote({ member_id: "house-1", outboxIds: ["house"], voted_on: "2026-09-15T04:00:00Z" }),
+  ], new Map());
+  assert(result.votes.length === 2, "only the eligible Senate event and existing House cutoff remain");
+  assert(result.outboxIds.includes("eligible") && result.outboxIds.includes("house"), "both chamber-specific boundaries are inclusive");
+  assert(!result.blocked, "excluded historical Senate summaries must not block House delivery");
 });
 
 Deno.test("a digest combines the user's House district and both state Senators", () => {

@@ -5,6 +5,7 @@ import {
 } from "npm:@supabase/supabase-js@2";
 
 import { json } from "../_shared/http.ts";
+import { NOTIFICATION_DATE_FILTER, SENATE_NOTIFICATION_START_AT } from "../_shared/notificationCutoffs.ts";
 import {
   buildUserDigest,
   type DigestVote,
@@ -452,7 +453,7 @@ async function loadPendingOutboxRows(supabase: SupabaseClient) {
         "id, sync_run_id, member_id, chamber, congress_number, legislation_type, legislation_number, session_number, roll_call_number, voted_on, vote, created_at, processed_at, attempt_count, last_error",
       )
       .is("processed_at", null)
-      .gte("voted_on", NOTIFICATION_START_AT)
+      .or(NOTIFICATION_DATE_FILTER)
       .order("voted_on", { ascending: true })
       .order("created_at", { ascending: true })
       .order("id", { ascending: true })
@@ -470,7 +471,7 @@ async function countPendingOutboxRows(supabase: SupabaseClient) {
     .from("vote_notification_outbox")
     .select("id", { count: "exact", head: true })
     .is("processed_at", null)
-    .gte("voted_on", NOTIFICATION_START_AT);
+    .or(NOTIFICATION_DATE_FILTER);
   if (error) throw error;
   return count ?? 0;
 }
@@ -1035,6 +1036,7 @@ Deno.serve(async (req) => {
       return json({
         mode: "preview",
         cutoffInclusive: NOTIFICATION_START_AT,
+        senateCutoffInclusive: SENATE_NOTIFICATION_START_AT,
         loadedPendingVoteCount: pendingRows.length,
         deliverablePendingVoteCount: deliverableRows.length,
         skippedUndeliverableVoteCount: undeliverableRows.length,

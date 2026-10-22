@@ -8,6 +8,7 @@ import {
   type SenateBill,
 } from "./parse.ts";
 import { json } from "../_shared/http.ts";
+import { isNotificationDateEligible } from "../_shared/notificationCutoffs.ts";
 
 const BATCH_SIZE = 12;
 const RECHECK_RECENT = 2;
@@ -176,6 +177,7 @@ async function enqueueVoteNotifications(
   rows: NotificationMemberVote[],
 ) {
   const bill = vote.bill;
+  if (!isNotificationDateEligible("Senate", vote.votedOn)) return 0;
   if (!bill || rows.length === 0) return 0;
 
   const memberIds = rows.map((row) => row.member_id);

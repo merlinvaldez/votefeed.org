@@ -1,4 +1,4 @@
--- Queue already-stored, completed Senate votes from the requested cutoff.
+-- Queue only Senate votes after October 22, 2026 in America/New_York.
 -- This is idempotent across runs and leaves older or incomplete votes alone.
 WITH notification_run AS (
   SELECT gen_random_uuid() AS sync_run_id
@@ -25,7 +25,7 @@ eligible_votes AS (
    AND summary.roll_call_number = m.roll_call_number
   WHERE m.chamber = 'Senate'
     AND m.congress_number = 119
-    AND m.voted_on >= TIMESTAMPTZ '2026-09-15 00:00:00 America/New_York'
+    AND m.voted_on >= TIMESTAMPTZ '2026-10-23 00:00:00 America/New_York'
     AND m.legislation_type IS NOT NULL
     AND m.legislationnumber IS NOT NULL
 )
