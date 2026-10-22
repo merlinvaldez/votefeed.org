@@ -81,7 +81,7 @@ Do not run an unrestricted `supabase db push`: two migrations activate schedules
 
 ## Supabase Production Changes
 
-- [ ] **5. Apply schema migrations one file at a time while schedules remain paused.**
+- [x] **5. Apply schema migrations one file at a time while schedules remain paused.**
   **How to do it:** Open each following file locally, copy its full contents into production SQL Editor, and run it once, in this order. If an object already exists, stop and reconcile its definition rather than rerunning or marking it applied blindly.
 
   1. `supabase/migrations/20260928232928_reactivate_current_at_large_house_members.sql`
@@ -93,12 +93,16 @@ Do not run an unrestricted `supabase db push`: two migrations activate schedules
   7. `supabase/migrations/20261019154303_combined_daily_vote_notification_digest.sql`
   8. `supabase/migrations/20261020171102_nullable_interaction_stance.sql`
 
-  Immediately after file 7, pause its newly created sender:
+  **Migration 1 applied and verified by Merlin:** All 12 specified at-large House members returned district 0, `is_current_member=true`, and `last_seen_at=2026-10-22 14:55:52.148998+00`. Ledger reconciliation is still pending under step 6. Remaining migrations are not yet confirmed applied.
+  **Migration 2 applied and verified:** Merlin returned both expected chamber-aware unique indexes. Codex read-only production verification confirmed 573 roll-call summaries and 247,374 member-vote records, all labeled House; both chamber columns have `is_nullable=NO`. Ledger reconciliation remains pending. Migration 3 and later are not yet confirmed applied.
+
+  Run file 7 inside an explicit transaction: prepend `BEGIN;`, then append the following pause SQL and `COMMIT;` after the complete file contents. This keeps its newly created sender inactive when the transaction commits:
   ```sql
   SELECT cron.alter_job(jobid, active := false)
   FROM cron.job WHERE jobname='send-vote-notifications-daily-1030-utc';
+  COMMIT;
   ```
-  Perform this outside the 10:30 UTC dispatch window. File 7 does not remove production's differently named legacy jobs; keep those paused.
+  File 7 does not remove production's differently named legacy jobs; keep those paused. Verify every sender remains inactive before continuing.
 
   **How to verify it:** Each file succeeds once. Run:
   ```sql
@@ -120,7 +124,7 @@ Do not run an unrestricted `supabase db push`: two migrations activate schedules
   ```
   Expect chamber/Congress columns and final vote-identity indexes, all three new tables, nullable stance, member-vote foreign key, and zero missing House cursors. Compare original counts; investigate unintended loss. Existing votes are labeled House and Congress 119, so confirm this matches stored historical data before applying files 2–3.
 
-- [ ] **6. Record successfully applied migrations in the ledger.**
+- [x] **6. Record successfully applied migrations in the ledger.**
   **How to do it:** After each file's effects are verified, use PowerShell in the repository. First link the intended project, then repair only verified versions (replace the example version with the timestamp of that verified file):
   ```powershell
   npx.cmd supabase link --project-ref ycaldyqnmitdajoguagi
@@ -130,6 +134,7 @@ Do not run an unrestricted `supabase db push`: two migrations activate schedules
   **How to verify it:** Only actually applied files are recorded remotely. Leave the Senate schedule and backlog versions unrecorded until their later steps. Ledger repair records history; it does not execute SQL. See [migration documentation](https://supabase.com/docs/guides/deployment/database-migrations).
 
 - [ ] **7. Confirm function secrets and deploy all four changed functions.**
+  **Deployment verification:** Merlin reported all four deploy commands completed. Live metadata confirms ACTIVE `sync-reps` v7, `sync-votes` v17, `sync-senate-votes` v1, and `send-vote-notifications` v16; all have `verify_jwt=true` and import maps. Required secret names exist. Values/provider validity remain to be proven by runtime checks; APP_ORIGIN and sender-domain confirmation remain outstanding. All five cron jobs were rechecked and remain inactive. Keep this item open until remaining configuration checks pass.
   **How to do it:** Supabase → Edge Functions → Secrets: confirm `CONGRESS_API_KEY`, `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `APP_ORIGIN`, and `OPENAI_API_KEY`; preserve the intended `OPENAI_MODEL` override if used. Confirm sender domain in Resend and APP_ORIGIN against the frontend production domain. Built-in Supabase URL/service-role credentials are supplied by the platform. Vault `project_url` and `edge_function_service_jwt` must target this project and authorize scheduled requests. Do not paste values into chat. Run:
   ```powershell
   npx.cmd supabase functions deploy sync-reps --project-ref ycaldyqnmitdajoguagi
@@ -139,7 +144,9 @@ Do not run an unrestricted `supabase db push`: two migrations activate schedules
   ```
   **How to verify it:** All four deployments succeed. Confirm JWT verification remains enabled, including the newly added Senate function, whose config block is absent locally. No `--no-verify-jwt`. Keep all schedules paused. See [function deployment documentation](https://supabase.com/docs/guides/functions/deploy).
 
-- [ ] **8. Refresh the roster and ingest Senate votes without sending emails.**
+- [x] **8. Refresh the roster and ingest Senate votes without sending emails.**
+  **Roster refresh verified by Merlin:** sync-reps returned `currentHouseMemberCount=439`, `currentSenatorCount=100`, `deactivatedMemberCount=0`, `syncedAt=2026-10-22T15:09:30.864Z`. Senate ingestion remains pending.
+  **Initial Senate ingestion verified:** Run `fd64d6c2-855d-4e49-8ec4-b32308cd3bc4` saved 12 session-2 and 2 session-1 roll calls with no failures and zero queued notifications. Live read-only verification confirmed 14 completion markers, 1,400 Senate member positions, zero member-count mismatches, zero Senate outbox rows, unchanged 57,185 pending House rows, and zero active cron jobs. This verifies initial ingestion, not full historical coverage; remaining history will require more batches.
   **How to do it:** In Edge Functions → `sync-reps` → Test, POST `{}` using the authorized service-role request option. Then do the same for `sync-senate-votes`. These requests write data; run them manually only after step 7.
   **How to verify it:** Both return successful responses and logs show no missing-secret, authorization, parse, or constraint failures. Run:
   ```sql
@@ -157,7 +164,10 @@ Do not run an unrestricted `supabase db push`: two migrations activate schedules
   ```
   Expect current House/Senate roster, Senate vote rows and completion markers, and zero member-count mismatches. Vacant seats can reduce the roster; do not force a count of 100.
 
-- [ ] **9. Review and queue the intended Senate backlog, then preview delivery.**
+- [x] **9. Review and queue the intended Senate backlog, then preview delivery.**
+  **Seed applied and verified by Merlin:** `senate_rows=0`, `excluded_senate_rows=0`, `pending=57185`. The revised October 23 New York cutoff queued no historical Senate votes. Seed ledger registration and sender preview remain pending.
+  **Seed ledger and preview verified:** Live ledger includes `20261019154813`. Merlin's preview returned the correct Senate cutoff `2026-10-23T04:00:00.000Z`, 4,695 loaded/deliverable House rows, 21 selected digests each containing one House vote and zero Senate votes. All 21 digests are blocked by missing bill summaries for the September 16 vote. Read-only investigation found S.2403 absent from public.bills. Pending count remains 57,185 and active cron count remains zero. Keep step 9 open pending bill-data backfill and a clean preview; do not resume sending.
+  **Blocker resolved:** At Merlin's explicit request to implement the backfill, Codex invoked production sync-votes with `mode=backfill-pending-bill-data` using the authenticated CLI fallback (connector has no invocation tool). Ten bills processed, nine changed, ten official summaries available, no failures, no remaining bill batches. A subsequent preview returned 21 unblocked digests, each with one House vote and zero Senate votes; each currently uses its official bill title fallback. Senate cutoff remains `2026-10-23T04:00:00.000Z`. No delivery-mode invocation or schedule activation was performed. Earlier missing-summary preview above is superseded by this successful preview.
   **How to do it:** Read `20261019154813_seed_senate_vote_notification_backlog.sql` together before running it. Its Senate-only cutoff is October 23, 2026 at midnight America/New_York (`2026-10-23T04:00:00.000Z`), Congress 119: votes on October 22 or earlier must not be emailed. House retains its September 15 cutoff. The seed was changed before production application, as requested; do not rerun it in environments where it is already recorded as applied. With senders paused, run that file in production SQL Editor once and record its version via step 6. In Edge Functions → `send-vote-notifications` → Test, POST `{"mode":"preview"}` using the service-role authorization option. Confirm `senateCutoffInclusive` matches the October 23 timestamp and preview digests contain no earlier Senate votes. Deploy the updated sender and Senate sync before enabling any schedule.
   **How to verify it:** Response says `mode: preview` and reports `loadedPendingVoteCount`, `deliverablePendingVoteCount`, `digestCount`, and `digests`. Review recipients, dates, chamber grouping and enabled users privately. Preview must not send mail or advance delivery cursors. Save before/after pending counts and progress rows to confirm. Stop if the backlog size or recipients are unexpected. Never use `replayAttemptId` for routine testing; it changes delivery identity.
 
@@ -223,6 +233,6 @@ Do not run an unrestricted `supabase db push`: two migrations activate schedules
   **How to do it:** Save test output, preview results, migration ledger, deployment IDs, job schedules, and first delivery evidence beside this checklist. If delivery is wrong, pause the daily sender using the step 4 SQL before investigating. For app regression, Vercel → Deployments → previous known-good production deployment → Rollback, after checking compatibility with the upgraded schema.
   **How to verify it:** The chosen deployment serves successfully; sender remains paused during any email incident; user comments and progress remain intact. Do not drop new tables/columns or restore a backup automatically: restoration can discard new user activity and needs its own recovery decision.
 
-## Current checkpoint: step 5, first migration
+## Current checkpoint: step 10, Vercel routing and backend snapshot permissions
 
-Steps 1–4 are complete. Apply only the first migration in step 5, verify the affected at-large House records, and review the result together before continuing to the chamber migration. Codex has not changed production state.
+Steps 1–6, 8 and 9 are complete. Step 7 sender-domain/APP_ORIGIN checks remain open. Codex completed the expressly requested bill-data backfill and clean preview: 21 unblocked one-House-vote digests, no Senate votes, no emails sent. Read-only verification found S.2403 title/summary present, pending count still 57,185, zero active jobs, zero Senate outbox/progress rows and zero House cursor mismatches. Next verify Vercel production API routing and the backend database role's snapshot permissions under step 10. Historical Senate ingestion remains incomplete; Senate schedule `20260930000953` is still pending. Do not run db push or enable delivery yet.
