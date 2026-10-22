@@ -67,7 +67,11 @@ test("isolated PostgreSQL: migration, pair query, summaries and answer updates",
     assert.match(await validateStanceVoteLink({ billId: 7, memberId: "H", memberVoteId: 1, existingVoteId: 2 }, client), /different voting event/);
     assert.equal((await findMemberVoteForBill("H", 8, client)).member_vote_id, 103);
 
+    await client.query(`CREATE UNIQUE INDEX interactions_user_bill_member_event_unique
+      ON interactions(user_id,bill_id,rep_bioguide_id,member_vote_id) WHERE member_vote_id IS NOT NULL`);
     const added = await addStance(1, 8, "H", "approve", 103, client);
+    const retried = await addStance(1, 8, "H", "approve", 103, client);
+    assert.equal(retried.id, added.id);
     assert.equal(added.member_vote_id, 103);
     const changed = await updateStance(added.id, "disapprove", 103, client);
     assert.equal(changed.member_vote_id, 103);

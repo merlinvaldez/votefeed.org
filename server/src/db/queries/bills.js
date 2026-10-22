@@ -45,7 +45,7 @@ export async function getAllBillSummaries(runner = db, options = {}) {
       title = EXCLUDED.title,
       summary = EXCLUDED.summary,
       policy_area= EXCLUDED.policy_area,
-      legislation_url=EXCLUDED.legislation_url
+      legislation_url=COALESCE(EXCLUDED.legislation_url,bills.legislation_url)
     RETURNING *`;
     const params = [
       summary.bill.number,

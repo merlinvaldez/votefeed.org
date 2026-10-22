@@ -44,6 +44,8 @@ test('PostgreSQL and HTTP: atomic batch, retries, clearing, authorization and fa
         (102,'S2','Senate',119,2,5,'hr',7,'Yea','2026-01-01');`);
     const migration = await readFile(new URL('../supabase/migrations/20261020171102_nullable_interaction_stance.sql', import.meta.url), 'utf8');
     await admin.query(migration.replaceAll('public.', `${schema}.`));
+    await admin.query(`CREATE UNIQUE INDEX interactions_user_bill_member_event_unique
+      ON interactions(user_id,bill_id,rep_bioguide_id,member_vote_id) WHERE member_vote_id IS NOT NULL`);
     await admin.query('ALTER TABLE reps ADD COLUMN full_name text, ADD COLUMN congressionaldistrict integer; ALTER TABLE bills ADD COLUMN policy_area text');
     const first = await saveBatchStances(1, body, pool);
     assert.equal(first.interactions.length, 2);
