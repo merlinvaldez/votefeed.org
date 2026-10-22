@@ -42,7 +42,7 @@ test('PostgreSQL and HTTP: atomic batch, retries, clearing, authorization and fa
       INSERT INTO bills VALUES (7,7,'hr','https://www.congress.gov/bill/119th-congress/house-bill/7');
       INSERT INTO member_voting_record VALUES (101,'S1','Senate',119,2,5,'hr',7,'Yea','2026-01-01'),
         (102,'S2','Senate',119,2,5,'hr',7,'Yea','2026-01-01');`);
-    const migration = await readFile(new URL('../supabase/migrations/20261014200000_nullable_interaction_stance.sql', import.meta.url), 'utf8');
+    const migration = await readFile(new URL('../supabase/migrations/20261020171102_nullable_interaction_stance.sql', import.meta.url), 'utf8');
     await admin.query(migration.replaceAll('public.', `${schema}.`));
     await admin.query('ALTER TABLE reps ADD COLUMN full_name text, ADD COLUMN congressionaldistrict integer; ALTER TABLE bills ADD COLUMN policy_area text');
     const first = await saveBatchStances(1, body, pool);
