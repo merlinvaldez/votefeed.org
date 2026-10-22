@@ -24,7 +24,7 @@ const server = await createServer({ root, configFile: false, envDir: false,
   define: { "import.meta.env.VITE_API_URL": JSON.stringify("/test-api") },
   plugins: [{ name: "bill-ui-fixture", enforce: "pre",
     resolveId(source) {
-      if (/AuthContext(?:\.jsx)?$/.test(source)) return "\0fixture-auth";
+      if (/(?:AuthContext(?:\.jsx)?|authContext(?:\.js)?)$/.test(source)) return "\0fixture-auth";
       if (source === "@clerk/clerk-react") return "\0fixture-avatar";
     },
     load(id) {
@@ -44,12 +44,18 @@ const server = await createServer({ root, configFile: false, envDir: false,
         apiCalls.push({ method: req.method, path, query: Object.fromEntries(url.searchParams) });
         const send = (data, status = 200) => { res.statusCode = status; res.setHeader("Content-Type", "application/json"); res.end(JSON.stringify(data)); };
         if (path === "/fixture-calls") return send(apiCalls);
+        if (path.endsWith("/ai-summary")) {
+          const attempts = apiCalls.filter(call => call.path.endsWith("/ai-summary")).length;
+          return attempts === 1
+            ? send({ code: "AI_SUMMARY_UNAVAILABLE", retryable: true }, 503)
+            : send({ aiSummary: "improve public services" });
+        }
         if (path.includes("/delegation/bills/")) {
           const split = url.searchParams.get("district") === "1";
           const senate = split ? [baseCard("senate-a", [members[1]], "Senate", "Yea", "Failed"), baseCard("senate-b", [members[2]], "Senate", "Not Voting", "Failed")]
             : [baseCard("senate", members.slice(1), "Senate", "Yea", "Failed")];
           return send({ bill: { id: 7, number: 7, bill_type: "hr", summary: "<p>This measure improves public services.</p>",
-            aisummary: "improve public services", legislation_url: "https://www.congress.gov/bill/119th-congress/house-bill/7" },
+            aisummary: url.searchParams.get("district") === "3" ? "paste the draft_quick_summary you want simplified" : "improve public services", legislation_url: "https://www.congress.gov/bill/119th-congress/house-bill/7" },
             cards: [baseCard("house", [members[0]], "House", "Nay", "Passed"), ...senate],
             delegation: { houseMember: people[0], senators: people.slice(1) }, warnings: [] });
         }
