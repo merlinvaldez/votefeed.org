@@ -108,7 +108,9 @@ router.get("/:billType/:billNumber/ai-summary", async (req, res) => {
     }
     return res.json({ aiSummary });
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: "Failed to generate AI summary" });
+    console.error("ai_summary_request_failed", { billType: req.params.billType, billNumber: req.params.billNumber,
+      code: err.code, status: err.status, message: err.message });
+    return res.status(503).json({ code: "AI_SUMMARY_UNAVAILABLE", retryable: true,
+      error: "The simplified summary could not be generated. Please retry." });
   }
 });

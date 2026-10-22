@@ -1,72 +1,39 @@
 import { Agent, run } from "@openai/agents";
 import { readFile } from "node:fs/promises";
-import { isUsableQuickSummary } from "./quickSummaryValidation.js";
+import { quickSummaryFailure } from "./quickSummaryValidation.js";
 
 const MODEL_CHOICE = process.env.OPENAI_MODEL || "gpt-5.4";
-const MODEL_SETTINGS = { reasoning: { effort: "low" } };
-
-let cachedAgentsPromise = null;
-
-async function loadAgents() {
-  if (cachedAgentsPromise) return cachedAgentsPromise;
-  cachedAgentsPromise = (async () => {
-    const simplifierInstructions = await readFile(
-      new URL("../ai/prompts/simplifier.md", import.meta.url),
-      "utf8",
-    );
-    const aiSummaryMakerInstructions = await readFile(
-      new URL("../ai/prompts/aiSummaryMaker.md", import.meta.url),
-      "utf8",
-    );
-
-    const sanitizerInstructions = await readFile(
-      new URL("../ai/prompts/sanitizer.md", import.meta.url),
-      "utf8",
-    );
-
-    const simplifierAgent = new Agent({
-      name: "Simplifier Agent",
-      model: MODEL_CHOICE,
-      modelSettings: MODEL_SETTINGS,
-      instructions: simplifierInstructions,
-    });
-
-    const aiSummaryMakerAgent = new Agent({
-      name: "Ai Summary Maker Agent",
-      model: MODEL_CHOICE,
-      modelSettings: MODEL_SETTINGS,
-      instructions: aiSummaryMakerInstructions,
-    });
-
-    const sanitizerAgent = new Agent({
-      name: "Sanitizer Agent",
-      model: MODEL_CHOICE,
-      modelSettings: MODEL_SETTINGS,
-      instructions: sanitizerInstructions,
-    });
-    return { simplifierAgent, aiSummaryMakerAgent, sanitizerAgent };
-  })();
-
-  return cachedAgentsPromise;
+let agentPromise;
+async function loadAgent() {
+  if (!agentPromise) agentPromise = readFile(new URL("../ai/prompts/aiSummaryMaker.md", import.meta.url), "utf8")
+    .then(instructions => new Agent({ name: "Bill Quick Summary", model: MODEL_CHOICE,
+      modelSettings: { reasoning: { effort: "low" } }, instructions }));
+  return agentPromise;
 }
 
-export async function generateAiBillSummary(billSummary) {
-  const { simplifierAgent, aiSummaryMakerAgent, sanitizerAgent } =
-    await loadAgents();
-  const simplifierResult = await run(simplifierAgent, billSummary);
-  const aiSummaryInput = [
-    "bill_summary:",
-    billSummary,
-    "",
-    "simplifier_recommendations:",
-    simplifierResult.finalOutput,
-  ].join("\n");
-  const aiSummaryResult = await run(aiSummaryMakerAgent, aiSummaryInput);
-  const sanitizedResult = await run(
-    sanitizerAgent,
-    aiSummaryResult.finalOutput,
-  );
-  return isUsableQuickSummary(sanitizedResult.finalOutput, billSummary)
-    ? sanitizedResult.finalOutput
-    : null;
+// A single source-grounded call avoids losing the source/qualifiers between agents.
+// Invalid output is retried with actionable feedback and never returned as content.
+export async function generateAiBillSummary(billSummary, options = {}) {
+  const source = String(billSummary ?? "").trim();
+  if (!source) throw Object.assign(new Error("No official bill text or title available"), { code: "AI_SUMMARY_UNAVAILABLE" });
+  const agent = options.agent ?? await loadAgent();
+  const runAgent = options.runAgent ?? run;
+  let feedback = "";
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const input = JSON.stringify({ bill_summary: source,
+      simplifier_recommendations: "Explain the main action in one phrase under 180 characters. Preserve legal qualifiers appearing in the source. Use the actual supplied text; never ask for a draft.",
+      ...(feedback ? { validation_feedback: feedback } : {}) });
+    try {
+      const result = await runAgent(agent, input);
+      const summary = String(result.finalOutput ?? "").trim().replace(/^['"]|['"]$/g, "").replace(/[.!]+$/, "");
+      feedback = quickSummaryFailure(summary, source);
+      if (!feedback) return summary;
+      console.warn("ai_summary_rejected", { attempt, model: MODEL_CHOICE, reason: feedback, outputLength: summary.length });
+    } catch (error) {
+      console.error("ai_summary_provider_error", { attempt, model: MODEL_CHOICE, status: error.status, code: error.code, message: error.message });
+      if ([400, 401, 403, 429].includes(error.status)) throw error;
+      feedback = "The previous request failed. Generate a fresh valid phrase from the supplied source.";
+    }
+  }
+  throw Object.assign(new Error("Summary generation did not produce valid content; retry is available"), { code: "AI_SUMMARY_UNAVAILABLE", status: 503 });
 }

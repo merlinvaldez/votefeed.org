@@ -151,7 +151,7 @@ const requestPublicComments = async ({ billId, isAuthed, authFetch }) => {
   return data.comments ?? [];
 };
 
-export default function BillDetailPanel({ detail, folder, active, folders, selectedFolder, onFolderChange, onBusy, showOriginal, setShowOriginal, aiSummary, aiLoading, aiError }) {
+export default function BillDetailPanel({ detail, folder, active, folders, selectedFolder, onFolderChange, onBusy, showOriginal, setShowOriginal, aiSummary, aiLoading, aiError, onRetrySummary }) {
   const navigate = useNavigate();
   const { hash } = useLocation();
   const discussionRequested = hash === "#public-comments";
@@ -871,7 +871,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
             {formatQuickSummary(aiSummary)}.
           </div>
         )}
-        {aiError && <p className="error-text">{aiError}</p>}
+        {aiError && <p className="error-text">{aiError} <button type="button" onClick={onRetrySummary}>Retry simplified summary</button></p>}
         <BillVoteFolders tabs={folders} selected={selectedFolder} onSelect={onFolderChange} disabled={busy} />
         {grouped && ["mixed", "partial"].includes(groupResponse.status) && <p className="bill-response-notice" role="status">Your responses differ or are incomplete. Choosing Agree or Disagree applies to both Senators.</p>}
         {canReadFullBill && (

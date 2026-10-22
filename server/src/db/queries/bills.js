@@ -120,7 +120,7 @@ export async function getBillById(id, runner = db) {
   return bill ?? null;
 }
 
-export async function getBillSummary(legislationNumber, billType) {
+export async function getBillSummary(legislationNumber, billType, runner = db) {
   const sql = `WITH latest_roll_call_summary AS (
     SELECT DISTINCT ON (legislation_number, legislation_type)
       legislation_number,
@@ -152,32 +152,51 @@ export async function getBillSummary(legislationNumber, billType) {
    AND latest_roll_call_summary.legislation_type = bills.bill_type
   WHERE bills.number = $1
     AND bills.bill_type = $2`;
-  const { rows } = await db.query(sql, [legislationNumber, billType]);
+  const { rows } = await runner.query(sql, [legislationNumber, billType]);
   return rows;
 }
 
-export async function getOrCreateAiBillSummary(legislationNumber, billType, congress = null) {
-  const billRows = await getBillSummary(legislationNumber, billType);
+const pendingSummaries = new Map();
+
+export async function getOrCreateAiBillSummary(legislationNumber, billType, congress = null, options = {}) {
+  const runner = options.runner ?? db;
+  const generate = options.generate ?? generateAiBillSummary;
+  const billRows = await getBillSummary(legislationNumber, billType, runner);
   const bill = billRows?.[0];
   if (!bill || (congress !== null && !matchesSummaryMeasure(bill, congress, billType, legislationNumber))) return null;
   if (isUsableQuickSummary(bill.aisummary, bill.summary)) {
     return bill.aisummary;
   }
-  const generatedSummary = await generateAiBillSummary(bill.summary);
-  const aiSummary = isUsableQuickSummary(generatedSummary, bill.summary)
-    ? generatedSummary
-    : null;
-  const sql = `UPDATE bills
-    SET aisummary=$1
-    WHERE id=$2 AND legislation_url IS NOT DISTINCT FROM $3
-      AND summary IS NOT DISTINCT FROM $4
-    RETURNING aisummary`;
+  const source = bill.summary?.trim() || bill.title?.trim();
+  const key = JSON.stringify([bill.id, bill.legislation_url, source]);
+  if (pendingSummaries.has(key)) return pendingSummaries.get(key);
+  const task = (async () => {
+    const generatedSummary = await generate(source);
+    const aiSummary = isUsableQuickSummary(generatedSummary, bill.summary)
+      ? generatedSummary
+      : null;
+    if (!aiSummary) throw Object.assign(new Error("Summary generation did not produce valid content"), {
+      code: "AI_SUMMARY_UNAVAILABLE", status: 503,
+    });
+    const sql = `UPDATE bills
+      SET aisummary=$1
+      WHERE id=$2 AND legislation_url IS NOT DISTINCT FROM $3
+        AND summary IS NOT DISTINCT FROM $4
+        AND title IS NOT DISTINCT FROM $5
+      RETURNING aisummary`;
 
-  const { rows } = await db.query(sql, [
-    aiSummary,
-    bill.id,
-    bill.legislation_url,
-    bill.summary,
-  ]);
-  return rows?.[0]?.aisummary ?? null;
+    const { rows } = await runner.query(sql, [
+      aiSummary,
+      bill.id,
+      bill.legislation_url,
+      bill.summary,
+      bill.title,
+    ]);
+    if (!rows?.[0]?.aisummary) throw Object.assign(new Error("Bill text changed during summary generation; retry"), {
+      code: "AI_SUMMARY_UNAVAILABLE", status: 503,
+    });
+    return rows[0].aisummary;
+  })();
+  pendingSummaries.set(key, task);
+  try { return await task; } finally { pendingSummaries.delete(key); }
 }

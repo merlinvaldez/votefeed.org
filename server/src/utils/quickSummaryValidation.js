@@ -20,15 +20,19 @@ const LEGAL_QUALIFIER_RULES = [
   { source: /\bconditioned\s+on\b/i, output: /\bconditioned\s+on\b/i },
 ];
 
-export function isUsableQuickSummary(value, officialSummary = null) {
+export function quickSummaryFailure(value, officialSummary = null) {
   const summary = String(value ?? "").replace(/\s+/g, " ").trim();
-  if (
-    summary.length === 0 || summary.length > 180 ||
-    PROMPT_ECHO_PATTERNS.some((pattern) => pattern.test(summary))
-  ) return false;
+  if (!summary) return "empty output";
+  if (summary.length > 180) return "exceeds 180 characters";
+  const normalized = summary.replace(/[_-]+/g, " ");
+  if (/ai summary failed|failed to generate|could not (?:generate|load)|unable to (?:generate|summari[sz]e)/i.test(normalized) ||
+      PROMPT_ECHO_PATTERNS.some(pattern => pattern.test(normalized))) return "prompt echo or failure text";
 
   const source = String(officialSummary ?? "");
-  return LEGAL_QUALIFIER_RULES.every((rule) =>
-    !rule.source.test(source) || rule.output.test(summary)
-  );
+  const missing = LEGAL_QUALIFIER_RULES.filter(rule => rule.source.test(source) && !rule.output.test(summary));
+  return missing.length ? `missing legal qualifiers: ${missing.map(rule => rule.source.source).join(", ")}` : null;
+}
+
+export function isUsableQuickSummary(value, officialSummary = null) {
+  return quickSummaryFailure(value, officialSummary) === null;
 }

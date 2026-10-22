@@ -1,8 +1,16 @@
 # Release notes
 
-## Unreleased — House and Senate delegation feed
+## Pending hotfix — reliable simplified summaries
 
-Prepared October 22, 2026 for `37-add-senate-to-feed`. Application production deployment and post-deploy acceptance are pending. See the [rollout checklist](specs/production-rollout-checklist.md) for operational evidence and outstanding steps.
+- Generate short summaries directly from official bill text (or the official title when no summary is available), retaining the source through up to three validation attempts.
+- Retry rejected output with explicit feedback about length, prompt echoes, and missing legal qualifiers. Invalid output and provider failures are never written as cached summaries.
+- Return a retryable 503 for generation failures instead of misleadingly reporting that an existing bill was not found. Emit structured diagnostics for provider errors and validation rejections.
+- Share concurrent requests for the same bill, release failed requests so Retry can work, reject cached prompt echoes in feed/detail views, and expose a detail-page Retry button.
+- Production summaries for S.4668, S.J.Res.197 and H.R.3633 were regenerated and repaired. The application code hotfix still requires merging its PR and deployment; these repairs alone do not deploy the new retry behavior.
+
+## 2026-10-22 — House and Senate delegation feed
+
+Merged through PR #39 and deployed to both production Vercel projects. Post-deploy acceptance and schedule activation are still in progress. See the [rollout checklist](specs/production-rollout-checklist.md) for operational evidence and outstanding steps.
 
 ### User-facing changes
 
@@ -27,6 +35,7 @@ Prepared October 22, 2026 for `37-add-senate-to-feed`. Application production de
 
 - Vote identities include chamber and Congress to prevent roll-call collisions.
 - Senate ingestion uses completion markers and a reviewed Congress 119 crosswalk for retryable batches and source corrections.
+- Senate bill ingestion now persists official Congress.gov links required by feed identity validation, including when a summary is already cached. Missing links on previously imported bills were repaired to restore Senate cards in production.
 - Migrations add exact member-vote response links, server-only feed snapshots, notification progress, and nullable interaction stances.
 - `npm.cmd run test:all` runs the isolated PostgreSQL Node suite, Deno notification tests, lint, and production build.
 - Frontend and backend are separate Vercel projects. The planned release path is a GitHub PR merge into `main`, followed by checking both production deployments and browser behavior. A merge may deploy them concurrently; it does not deploy Supabase functions or apply migrations.
@@ -35,6 +44,8 @@ Prepared October 22, 2026 for `37-add-senate-to-feed`. Application production de
 
 Production schema changes and the cutoff-constrained seed have been applied and recorded. Updated Edge Functions were deployed. Initial Senate ingestion and notification preview passed. Missing bill metadata was repaired; the clean preview selected one House vote and zero Senate votes per digest. No rollout-test emails were sent, and schedules remain paused at this checkpoint.
 
-Still pending: application merge/deployment, production browser acceptance, remaining sender/domain configuration checks, Senate schedule installation, and schedule reactivation. Initial Senate ingestion is partial; more batches are needed for full historical coverage. Older migration-history differences remain unresolved: follow the checklist rather than running an unrestricted database push.
+The complete published Congress 119 Senate record is now imported: 659 roll calls from 2025 and 256 from 2026, with 91,488 member positions and no completion-count mismatches. Historical feed visibility has no notification-date cutoff. The legislative feed remains bill-based and selects the latest eligible member/measure event; nominations and non-bill roll calls are stored without manufacturing bill cards. Production Senate pagination was verified back into January 2025.
 
-Recorded validation: 97 Node tests passed before the cutoff change; 18 notification tests and both changed function type checks passed after it. These are local checks. Production preview separately verified the deployed cutoff; production browser acceptance remains pending.
+Still pending: remaining production browser acceptance (including observed simplified-summary failures and cached prompt-echo copy), sender/domain configuration checks, Senate schedule installation, and schedule reactivation. Older migration-history differences remain unresolved: follow the checklist rather than running an unrestricted database push. The post-release importer repair and documentation updates need to be committed back to GitHub.
+
+Latest local validation after the feed-link repair: 98 Node tests, 18 notification tests, lint, build, and the changed Senate function type check passed. Production preview separately verified the deployed cutoff. Historical feed visibility and pagination passed live checks; remaining UI acceptance is still open.

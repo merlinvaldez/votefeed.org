@@ -8,6 +8,7 @@ import {
   type SenateBill,
 } from "./parse.ts";
 import { json } from "../_shared/http.ts";
+import { officialBillUrl } from "../_shared/billUrl.ts";
 import { isNotificationDateEligible } from "../_shared/notificationCutoffs.ts";
 
 const BATCH_SIZE = 12;
@@ -116,6 +117,15 @@ async function ensureBill(
     ).limit(1);
   if (lookupError) throw lookupError;
   const existingBill = (existing?.[0] ?? null) as ExistingBill | null;
+  const legislationUrl = officialBillUrl(congress, bill.type, bill.number);
+  // Existing summaries must not skip the identity link required by the feed.
+  if (existingBill) {
+    const { error } = await client.from("bills")
+      .update({ legislation_url: legislationUrl })
+      .eq("bill_type", bill.type).eq("number", bill.number)
+      .is("legislation_url", null);
+    if (error) throw error;
+  }
   if (existingBill?.summary?.trim()) return;
 
   let title = bill.title || existingBill?.title || "";
@@ -166,6 +176,7 @@ async function ensureBill(
     bill_type: bill.type,
     title,
     summary: officialSummary ?? "",
+    legislation_url: legislationUrl,
   }, { onConflict: "bill_type,number", ignoreDuplicates: true });
   if (error) throw error;
 }
