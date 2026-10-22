@@ -3,7 +3,8 @@ export const summaryIdentity = card => JSON.stringify([
 ]);
 
 export const hasSummaryText = value => typeof value === "string" && Boolean(value.trim()) &&
-  !/ai summary failed|failed to generate/i.test(value);
+  value.trim().length <= 180 &&
+  !/ai summary failed|failed to generate|(?:paste|provide|send).*?(?:draft|summary)|draft[\s_-]+quick[\s_-]+summary|quick[\s_-]+summary you want/i.test(value);
 
 // Feed cards carry a summary object; legacy bill responses carry HTML directly.
 export function officialSummaryHtml(summary) {

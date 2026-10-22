@@ -4,6 +4,7 @@ import { useAuth } from "./authContext";
 import { API_BASE } from "./constants";
 import { billFolderTabs, initialBillFolder, billDetailUrl } from "./billDetailContext";
 import BillDetailPanel from "./BillPage";
+import { hasSummaryText } from "./feedSummaries";
 
 export default function BillPageRoute() {
   const { billType, billNumber } = useParams();
@@ -54,7 +55,7 @@ export default function BillPageRoute() {
   const detail = loaded?.scope === scope ? loaded.detail : null;
   const folders = useMemo(() => detail ? billFolderTabs(detail) : [], [detail]);
   const currentSummaryResult = summaryResult?.scope === summaryScope ? summaryResult : null;
-  const aiSummary = currentSummaryResult?.summary || detail?.bill?.aisummary || "";
+  const aiSummary = [currentSummaryResult?.summary, detail?.bill?.aisummary].find(hasSummaryText) || "";
   const aiError = currentSummaryResult?.error || "";
   const aiLoading = Boolean(detail && !showOriginal && !aiSummary && !aiError);
 
@@ -74,7 +75,7 @@ export default function BillPageRoute() {
         );
         if (!resp.ok) throw new Error("Simplified summary unavailable");
         const data = await resp.json();
-        if (typeof data.aiSummary !== "string" || !data.aiSummary.trim()) {
+        if (!hasSummaryText(data.aiSummary)) {
           throw new Error("Simplified summary unavailable");
         }
         if (!cancelled) {
@@ -117,6 +118,7 @@ export default function BillPageRoute() {
       active={folder.id === selected} folders={folders} selectedFolder={selected}
       showOriginal={showOriginal} setShowOriginal={setShowOriginal}
       aiSummary={aiSummary} aiLoading={aiLoading} aiError={aiError}
+      onRetrySummary={() => setSummaryResult(null)}
       onFolderChange={selectFolder} onBusy={setBusy} />)}
   </>;
 }
