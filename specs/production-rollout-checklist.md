@@ -133,7 +133,8 @@ Do not run an unrestricted `supabase db push`: two migrations activate schedules
   ```
   **How to verify it:** Only actually applied files are recorded remotely. Leave the Senate schedule and backlog versions unrecorded until their later steps. Ledger repair records history; it does not execute SQL. See [migration documentation](https://supabase.com/docs/guides/deployment/database-migrations).
 
-- [ ] **7. Confirm function secrets and deploy all four changed functions.**
+- [x] **7. Confirm function secrets and deploy all four changed functions.**
+  **Configuration verified October 22:** CLI secret digests exactly match APP_ORIGIN `https://votefeed.org` and sender `Votefeed <updates@notifications.votefeed.org>`. Resend shows `notifications.votefeed.org` Verified, with a prior delivered message from that exact sender. The fresh preview and Senate smoke request returned HTTP 200 using the Vault authorization used by schedules. Secret values were not exposed. This supersedes the earlier configuration gaps below.
   **Deployment verification:** Merlin reported all four deploy commands completed. Live metadata confirms ACTIVE `sync-reps` v7, `sync-votes` v17, `sync-senate-votes` v1, and `send-vote-notifications` v16; all have `verify_jwt=true` and import maps. Required secret names exist. Values/provider validity remain to be proven by runtime checks; APP_ORIGIN and sender-domain confirmation remain outstanding. All five cron jobs were rechecked and remain inactive. Keep this item open until remaining configuration checks pass.
   **How to do it:** Supabase → Edge Functions → Secrets: confirm `CONGRESS_API_KEY`, `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `APP_ORIGIN`, and `OPENAI_API_KEY`; preserve the intended `OPENAI_MODEL` override if used. Confirm sender domain in Resend and APP_ORIGIN against the frontend production domain. Built-in Supabase URL/service-role credentials are supplied by the platform. Vault `project_url` and `edge_function_service_jwt` must target this project and authorize scheduled requests. Do not paste values into chat. Run:
   ```powershell
@@ -194,12 +195,17 @@ Do not run an unrestricted `supabase db push`: two migrations activate schedules
 
 ## Post-Deploy Verification
 
-- [ ] **12. Verify production feed, sessions, comments and bill summaries.**
+- [x] **12. Verify production feed, sessions, comments and bill summaries.**
+  **Verified October 22 on production main `e4dd8a3b3f2ad8f0c48c79a34981b4cf6cfe242d`:** Frontend `dpl_8pXH9DMjkpzkzaXPTwYaQ9Suqd7r` and backend `dpl_BJPdzC7CqC4gRcBGe4TVsn8i2pVg` are READY Production. Signed-in Chrome retained its session and correct New York district 13 delegation. S.4668 official/simplified text changed visibly; simplified text persisted through All Reps/House/Senate folder changes. Direct bill reload loaded successfully (the summary display defaults to official after reload). Production AI-summary endpoints for S.4668, S.J.Res.197 and H.R.7008 returned HTTP 200 with valid text.
+  **Feed and persistence evidence:** Guest API pagination returned 481 unique All Reps cards over ten pages, 345 House cards over seven pages, and 136 Senate cards over three pages; every response was HTTP 200 and each traversal terminated without duplicates. Senate Health filtering returned only Health cards. These requests exercised snapshot creation, cleanup query and continuation reads through the deployed backend. UI Senate filtering rendered senators and Senate cards. Clearing the existing H.R.7008 House response preserved the same approved public comment and member-vote link in SQL and after browser reload. The original House and Senate responses were restored afterward; alignment refreshed. Existing comment/contact template displayed successfully. Backend error/fatal log lookup returned no matching entries for 17:15-17:35 UTC.
+  **Coverage boundary:** Signed-out coverage used unauthenticated production APIs; a separate private-browser UI session was unavailable. No new public comment was published during this pass. Existing approved-comment persistence was verified directly. These checks supersede the summary blockers below.
   **Post-deploy feed investigation:** The Senate tab was empty because imported bill rows lacked the official Congress.gov links required by the feed's Congress validation. Codex repaired six existing Senate-linked bill URLs and deployed a sync-senate-votes fix that stores official links on insertion and repairs missing links before returning cached summaries. New regression test and full local suite passed (98 Node, 18 Deno, lint/build). Production Senate cards now render for September votes; this proves historical feed visibility is independent of the notification cutoff. Full Congress 119 history ingestion is in progress at Merlin's request; do not treat initial batch completion as full history. Separate summary issues were observed during UI inspection (cached prompt-echo text and failed simplified-summary loads); keep this step open for follow-up rather than asserting all UI checks pass.
   **How to do it:** Open `https://votefeed.org` in a private browser. Repeat step 2 signed out where supported and then with the test account signed in. Refresh a bill deep link directly. Check browser Network responses for `/reps/delegation/feed` while changing chambers and loading another page.
   **How to verify it:** No 503 feed failures or auth loops; backend snapshot save/read/cleanup works; feed continuation and filters work; direct links load; comments survive response clearing; summaries change visibly and persist across folders; current representatives and senators match the saved address. Inspect backend logs for DB permission or missing-column errors.
 
 - [ ] **13. Install and enable ingestion schedules after verification.**
+  **Installed and enabled October 22:** Applied the existing Senate schedule SQL and recorded original migration version `20260930000953` atomically after confirming neither version nor job existed. Senate is active at `*/15 * * * *`, House at `0 9 * * *`, and roster at `0 8 1 * *`. An immediate smoke invocation using the same Vault URL/JWT returned HTTP 200: Congress 119, 256 session-2 and 659 session-1 published roll calls, zero missing votes, zero failures and zero queued notifications; request `2441`, run `878090da-33eb-49dc-b6e5-af14c564bcfd`.
+  **Remaining verification:** First ordinary scheduled Senate run is due October 22 at 17:45 UTC / 1:45 p.m. New York. Keep this checkbox open until its function response is observed; the successful smoke invocation is not scheduled-run evidence.
   **How to do it:** Run `supabase/migrations/20260930000953_schedule_senate_vote_sync.sql` in SQL Editor and record version `20260930000953` through step 6. Restore the original House and roster jobs:
   ```sql
   SELECT cron.alter_job(jobid,active := true) FROM cron.job
@@ -209,6 +215,8 @@ Do not run an unrestricted `supabase db push`: two migrations activate schedules
   **How to verify it:** Senate sync is active on `*/15 * * * *`, House on `0 9 * * *`, and roster on `0 8 1 * *`. Confirm the next Senate invocation reaches the function and returns successfully in Edge Function logs; a successful cron HTTP enqueue alone does not prove ingestion succeeded.
 
 - [ ] **14. Enable only the reviewed combined daily digest.**
+  **Enabled October 22 after production checks:** Exactly one sender is active, `send-vote-notifications-daily-1030-utc` at `30 10 * * *`; both existing legacy senders remain inactive. Fresh preview request `2440` returned HTTP 200, 21 enabled users/digests, 21 total House votes, zero Senate votes, zero blocked digests, 4,695 loaded/deliverable rows, and Senate cutoff `2026-10-23T04:00:00.000Z`. Sender domain and APP_ORIGIN were verified under step 7. No delivery-mode invocation was made.
+  **Remaining verification:** First daily send is due October 23 at 10:30 UTC / 6:30 a.m. New York. Keep this checkbox open until scheduled function success, Resend events, test-account receipt, and outbox/progress changes are observed. Enabling is complete; delivery acceptance is pending that future run.
   **How to do it:** After preview and production acceptance, run:
   ```sql
   SELECT cron.alter_job(jobid,active := false) FROM cron.job
@@ -229,17 +237,37 @@ Do not run an unrestricted `supabase db push`: two migrations activate schedules
 * Migration files change indexes and backfill House/Congress labels. Confirm existing data fits those assumptions and plan a maintenance window; rollback is not simply redeploying old application code.
 * Manual SQL execution requires ledger reconciliation. Do not repair an unexecuted or partially applied migration.
 * Senate notification eligibility starts October 23, 2026 at midnight New York time. Shared code enforces this at queue creation and digest selection; sender queries exclude older Senate rows before pagination. Old Senate queue rows may remain stored but are not eligible for delivery. Historical Senate feed ingestion is unchanged. This does not cap email size if many eligible future votes accumulate while sending is paused.
-* Backend production role, active deployment revisions, function secret validity, and backup recoverability remain unverified.
+* Backend role, production revisions, APP_ORIGIN, sender domain and runtime authorization have been verified in the checkpoints above. Backup restoration itself has not been tested.
 * Local main was used as the comparison base. Refresh and re-evaluate scope if remote main or the release candidate changes.
-* Prior memory reported a simplified-summary UI regression. Its present status must be established by step 2, regardless of build results.
+* The earlier summary regression is resolved by the merged hotfix and live step 12 checks above.
 * No branch-specific Storage or Supabase Auth setting change was established. The app uses Clerk; verify its existing production sessions rather than adding speculative Supabase Auth redirects.
 
 - [ ] **15. Record rollback and final evidence.**
   **How to do it:** Save test output, preview results, migration ledger, deployment IDs, job schedules, and first delivery evidence beside this checklist. If delivery is wrong, pause the daily sender using the step 4 SQL before investigating. For app regression, Vercel → Deployments → previous known-good production deployment → Rollback, after checking compatibility with the upgraded schema.
   **How to verify it:** The chosen deployment serves successfully; sender remains paused during any email incident; user comments and progress remain intact. Do not drop new tables/columns or restore a backup automatically: restoration can discard new user activity and needs its own recovery decision.
 
-## Current checkpoint: step 12, remaining production UI acceptance
+## Current checkpoint: schedules enabled; first scheduled runs pending
 
-Summary hotfix is being prepared on `fix/summary-generation-retries`. Vercel error/query log lookups returned no matching entries; the old generation rejection path emitted no diagnostic. Reproduced S.4668 returning 404 despite an existing bill and found cached underscore-delimited prompt echo on S.J.Res.197. Local live model verification generated valid summaries for S.4668, S.J.Res.197 and H.R.3633, including a successful legal-qualifier retry. Those three production cache entries were repaired. Permanent code adds bounded feedback retries, logs, no failure-cache writes, in-flight deduplication, client invalid-cache checks and a detail Retry button. Production retry behavior remains on the old deployment until the hotfix PR is merged.
+October 22, 2026: production acceptance checks and configuration review are recorded above. All three ingestion schedules and only the combined daily sender are enabled. Senate schedule migration `20260930000953` is registered. Steps 13 and 14 remain unchecked solely for their first scheduled-run acceptance: Senate at 1:45 p.m. today and digest at 6:30 a.m. October 23, New York time. No delivery-mode test was invoked. The pre-enable pending baseline is 57,185 House rows and zero Senate rows.
 
-Steps 1–6 and 8–11 are complete. Step 7 sender-domain/APP_ORIGIN checks remain open before email enablement. Both applications were deployed through merged PR #39. At Merlin's request, the Senate feed-link repair was deployed and the complete published Congress 119 record was imported, independently of notification cutoffs. Final sync reported zero missing votes in both sessions. Audit: 659 session-1 roll calls, 256 session-2 roll calls, 91,488 member positions, zero completion/member/summary mismatches, zero missing bill links, zero Senate outbox rows, unchanged 57,185 pending House rows, zero active cron jobs. Senate API pagination for New York district 13 returned 135 unique bill-based cards across three pages, spanning January 22, 2025 through September 30, 2026, with no repeated cards and a terminal page. Nominations and non-bill events remain stored but do not become legislative feed cards; the existing feed selects the latest eligible event per member/measure. Local verification: 98 Node tests, 18 Deno tests, lint/build and Senate function type check passed. The importer fix/test and this evidence remain uncommitted locally on main. Keep step 12 open for the separately observed summary issues and remaining UI acceptance. Senate schedule `20260930000953` is still pending. Do not run db push or enable delivery yet.
+To verify the next Senate dispatch in Supabase production SQL Editor, run:
+```sql
+SELECT j.jobname,r.status,r.start_time,r.end_time,r.return_message
+FROM cron.job_run_details r JOIN cron.job j ON j.jobid=r.jobid
+WHERE j.jobname='sync-senate-votes-quarter-hour'
+ORDER BY r.start_time DESC LIMIT 5;
+SELECT id,status_code,error_msg,created,content::jsonb AS response
+FROM net._http_response
+WHERE created >= '2026-10-22T17:45:00Z'
+ORDER BY created DESC LIMIT 10;
+```
+Confirm an HTTP 200 Senate response with an empty `failures` array, not just a successful cron enqueue. After the daily send, inspect Edge Functions > send-vote-notifications > Logs and Resend > Emails; confirm the test mailbox received one digest, then run:
+```sql
+SELECT chamber,count(*) AS pending,
+  count(*) FILTER (WHERE last_error IS NOT NULL) AS pending_with_errors
+FROM public.vote_notification_outbox WHERE processed_at IS NULL GROUP BY chamber;
+SELECT chamber,congress_number,count(*) AS users,max(updated_at) AS latest_progress
+FROM public.user_vote_notification_progress GROUP BY chamber,congress_number;
+SELECT jobname,schedule,active FROM cron.job ORDER BY jobid;
+```
+If delivery is wrong, pause only `send-vote-notifications-daily-1030-utc` before investigating. Step 15 remains separate.
