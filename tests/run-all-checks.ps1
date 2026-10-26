@@ -28,6 +28,7 @@ function Invoke-Check {
     $results.Add([pscustomobject]@{ Name = $Name; ExitCode = $exitCode })
 }
 
+Invoke-Check 'Elections shared contracts' 'C:\Program Files\nodejs\node.exe' @('--test', 'tests/elections-contracts.test.mjs')
 Invoke-Check 'PostgreSQL-backed Node test suite' $nodeNpm @('run', 'test:postgres')
 Invoke-Check 'Deno notification tests' $deno @(
     'test',
