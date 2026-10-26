@@ -13,7 +13,8 @@
     "db:sync-votes": "node src/db/syncNewVotes.js",
     "db:sync-bills": "node src/db/syncMissingBills.js",
     "db:backfill-roll-call-summaries": "node src/db/backfillRollCallSummaries.js",
-    "elections:discover": "node src/elections/cli.js"
+    "elections:discover": "node src/elections/cli.js",
+    "elections:crawl": "node src/elections/cli.js --crawl-campaigns"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,7 @@
     "@openai/agents": "^0.4.10",
     "cheerio": "1.2.0",
     "cors": "^2.8.5",
+    "crawlee": "^3.18.2",
     "csv-parse": "7.0.3",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",

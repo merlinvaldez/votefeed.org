@@ -9,6 +9,7 @@ import { extractWyoming, validateBallotRows } from './ballotExtraction.js';
 import { createOpenAiDiscoveryProvider } from './openaiDiscoveryProvider.js';
 import { promoteElectionObservation } from '../db/queries/electionDiscovery.js';
 import { searchSourceCatalog, inspectSourceBatch, onboardingCoverage } from './sourceOnboarding.js';
+import { syncCampaignPositions } from './syncCampaignPositions.js';
 import { RELEASE_SCOPE } from './contracts.js';
 
 const {values} = parseArgs({options:{
@@ -20,6 +21,7 @@ const {values} = parseArgs({options:{
   checkpoint:{type:'string'},resume:{type:'boolean'},'inspect-sources':{type:'boolean'},archive:{type:'string'},
   concurrency:{type:'string'},
   'coverage-report':{type:'boolean'},inspection:{type:'string'},
+  'crawl-campaigns':{type:'boolean'},
 }});
 try {
   if (values.help) console.log(`Election discovery (server-only):
@@ -33,6 +35,7 @@ try {
   --coverage-report --checkpoint path.json --sources path.json --inspection report.json
                                           Local state/office gap report; no network or DB writes
   --write --states WY [--skip-fec|--fec-only] Import into configured DATABASE_URL
+  --crawl-campaigns --write [--states WY] [--candidate-id UUID] Crawl verified campaign sites & extract positions
   --sources path.json                     Reviewed source descriptors; default Wyoming sample
   --offices house,senate                   Narrow the release scope
   --verify-sites                          Check officially linked campaign homepages
@@ -70,6 +73,15 @@ Keys remain in the server environment. --write uses DATABASE_URL; no migrations 
         provider:sources.some(s=>!['wy-csv','mapped-csv'].includes(s.format))?createOpenAiDiscoveryProvider():null,
         onProgress:entry=>console.error(JSON.stringify(entry))});
       process.exitCode=2; // Inspection is partial evidence, never nationwide acceptance.
+    } else if(values['crawl-campaigns']) {
+      if (!values.write) throw new Error('discovery-write-flag-required');
+      result = await syncCampaignPositions({
+        scope,
+        candidacyId: values['candidate-id'] ?? null,
+        maxPages: Number(values['max-pages'] ?? 5),
+        db
+      });
+      if (['failed','partial','unsupported'].includes(result.status)) process.exitCode = 2;
     } else {
       if (!values.write) throw new Error('discovery-write-flag-required');
       if (values['resolve-observation']) {

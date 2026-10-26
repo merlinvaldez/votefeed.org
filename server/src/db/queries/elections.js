@@ -52,7 +52,7 @@ async function importCandidate(input, c) {
       VALUES($1,$2,$3,$4) RETURNING id`, [name, input.matchStatus ?? 'unresolved', input.matchEvidence ?? {}, input.memberId ?? null])).id;
     else await c.query('UPDATE election_candidates SET name=$2,updated_at=now() WHERE id=$1', [id, name]);
     await c.query(`INSERT INTO election_candidate_identities(system,source_id,candidate_id,evidence) VALUES($1,$2,$3,$4)
-      ON CONFLICT(system,source_id) DO UPDATE SET evidence=EXCLUDED.evidence`, [identity.system, identity.id, id, identity.evidence]);
+      ON CONFLICT(system,source_id) DO UPDATE SET evidence=EXCLUDED.evidence`, [identity.system, identity.id, id, identity.evidence ?? {}]);
     return upsertElectionCandidacy({race:r,raceEvidence,party,eligibility,eligibilityEvidence}, id, c);
 }
 
