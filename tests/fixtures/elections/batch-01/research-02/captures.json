@@ -1,0 +1,806 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-26T21:25:10.842Z",
+  "databaseWrites": false,
+  "captures": [
+    {
+      "state": "AL",
+      "id": "AL-ind",
+      "url": "https://www.sos.alabama.gov/sites/default/files/election-2026/2026GeneralElection-StateCertificationofIndependentCandidate.pdf",
+      "allowedOrigins": [
+        "https://www.sos.alabama.gov"
+      ],
+      "status": "captured",
+      "sha256": "707afb050c7bc052ce8eca51ced59b56641acedfb7c28e7ae5a1e164da2f71ae",
+      "bytes": 50648,
+      "requestedUrl": "https://www.sos.alabama.gov/sites/default/files/election-2026/2026GeneralElection-StateCertificationofIndependentCandidate.pdf",
+      "finalUrl": "https://www.sos.alabama.gov/sites/default/files/election-2026/2026GeneralElection-StateCertificationofIndependentCandidate.pdf",
+      "retrievedAt": "2026-10-26T21:25:11.120Z",
+      "mediaType": "application/pdf",
+      "httpStatus": 200,
+      "headers": {
+        "content-type": "application/pdf",
+        "content-length": "50648",
+        "connection": "keep-alive",
+        "accept-ranges": "bytes",
+        "last-modified": "Wed, 26 Aug 2026 19:22:46 GMT",
+        "server": "nginx",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-pantheon-styx-hostname": "styx-us-a-fbbcf58dd-rbxct",
+        "x-styx-req-id": "46de0789-d0d7-11f1-ad76-1e6fceb23b5a",
+        "date": "Mon, 26 Oct 2026 00:50:45 GMT",
+        "x-served-by": "cache-chi-kmdw8640020-CHI, cache-iad-kcgs7200023-IAD",
+        "via": "1.1 varnish, 1.1 varnish, 1.1 bebfdaf3481b8e276dc3fc8a17fefd66.cloudfront.net (CloudFront)",
+        "x-cache-hits": "0, 0",
+        "x-timer": "S1792975845.046124,VS0,VE113",
+        "etag": "\"6a8f3d06-c5d8\"",
+        "x-cache": "Hit from cloudfront",
+        "x-amz-cf-pop": "JFK52-P8",
+        "x-amz-cf-id": "ZDVf40x2PXAGPZl6aSWMxX2Wt0KCpuedpGvkkp7OdbUuF71pf00JHw==",
+        "age": "74066",
+        "x-xss-protection": "1; mode=block",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff"
+      },
+      "file": "707afb050c7bc052ce8eca51ced59b56641acedfb7c28e7ae5a1e164da2f71ae.bin",
+      "textFile": "707afb050c7bc052ce8eca51ced59b56641acedfb7c28e7ae5a1e164da2f71ae.txt",
+      "textLength": 16
+    },
+    {
+      "state": "AL",
+      "id": "AL-dem",
+      "url": "https://www.sos.alabama.gov/sites/default/files/election-2026/2026GeneralElectionStateCertificationofDemocraticCandidates.pdf",
+      "allowedOrigins": [
+        "https://www.sos.alabama.gov"
+      ],
+      "status": "captured",
+      "sha256": "dbb8540ace50584ad92c20fec3fc9fef0f5f24a3d317b13d2ed4eb7d578a00a0",
+      "bytes": 397013,
+      "requestedUrl": "https://www.sos.alabama.gov/sites/default/files/election-2026/2026GeneralElectionStateCertificationofDemocraticCandidates.pdf",
+      "finalUrl": "https://www.sos.alabama.gov/sites/default/files/election-2026/2026GeneralElectionStateCertificationofDemocraticCandidates.pdf",
+      "retrievedAt": "2026-10-26T21:25:11.333Z",
+      "mediaType": "application/pdf",
+      "httpStatus": 200,
+      "headers": {
+        "content-type": "application/pdf",
+        "content-length": "397013",
+        "connection": "keep-alive",
+        "accept-ranges": "bytes",
+        "last-modified": "Wed, 26 Aug 2026 19:22:46 GMT",
+        "server": "nginx",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-pantheon-styx-hostname": "styx-us-a-fbbcf58dd-rstp7",
+        "x-styx-req-id": "cb9a6787-d137-11f1-8b7b-7e584bbb14f3",
+        "date": "Mon, 26 Oct 2026 12:21:39 GMT",
+        "x-served-by": "cache-chi-kigq8000157-CHI, cache-iad-kcgs7200088-IAD",
+        "via": "1.1 varnish, 1.1 varnish, 1.1 9f575b6f0217c33f22e6da5419974422.cloudfront.net (CloudFront)",
+        "x-cache-hits": "0, 0",
+        "x-timer": "S1793017299.424466,VS0,VE188",
+        "etag": "\"6a8f3d06-60ed5\"",
+        "x-cache": "Hit from cloudfront",
+        "x-amz-cf-pop": "JFK52-P8",
+        "x-amz-cf-id": "0ZZLfg3oUphaoLRrLpBt_-7W3usfHtm1NSGPbB1GZLfPWe0grWLDkA==",
+        "age": "32611",
+        "x-xss-protection": "1; mode=block",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff"
+      },
+      "file": "dbb8540ace50584ad92c20fec3fc9fef0f5f24a3d317b13d2ed4eb7d578a00a0.bin",
+      "textFile": "dbb8540ace50584ad92c20fec3fc9fef0f5f24a3d317b13d2ed4eb7d578a00a0.txt",
+      "textLength": 225
+    },
+    {
+      "state": "AL",
+      "id": "AL-rep",
+      "url": "https://www.sos.alabama.gov/sites/default/files/election-2026/2026GeneralElectionStateCertificationofRepublicanCandidates.pdf",
+      "allowedOrigins": [
+        "https://www.sos.alabama.gov"
+      ],
+      "status": "captured",
+      "sha256": "a3a109642073bd075596e0d2a0d3fa5c5a692b1178f12e13532a73987c2c89c6",
+      "bytes": 641392,
+      "requestedUrl": "https://www.sos.alabama.gov/sites/default/files/election-2026/2026GeneralElectionStateCertificationofRepublicanCandidates.pdf",
+      "finalUrl": "https://www.sos.alabama.gov/sites/default/files/election-2026/2026GeneralElectionStateCertificationofRepublicanCandidates.pdf",
+      "retrievedAt": "2026-10-26T21:25:11.359Z",
+      "mediaType": "application/pdf",
+      "httpStatus": 200,
+      "headers": {
+        "content-type": "application/pdf",
+        "content-length": "641392",
+        "connection": "keep-alive",
+        "accept-ranges": "bytes",
+        "last-modified": "Wed, 26 Aug 2026 19:22:47 GMT",
+        "server": "nginx",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-pantheon-styx-hostname": "styx-us-a-fbbcf58dd-mpvzl",
+        "x-styx-req-id": "ea1d5784-d178-11f1-ab95-42232facb639",
+        "date": "Mon, 26 Oct 2026 20:07:48 GMT",
+        "x-served-by": "cache-chi-kmdw8640040-CHI, cache-iad-kcgs7200025-IAD",
+        "via": "1.1 varnish, 1.1 varnish, 1.1 eea48723a858e610f4ce8d4f4093fc88.cloudfront.net (CloudFront)",
+        "x-cache-hits": "0, 0",
+        "x-timer": "S1793045268.907426,VS0,VE158",
+        "etag": "\"6a8f3d07-9c970\"",
+        "x-cache": "Hit from cloudfront",
+        "x-amz-cf-pop": "JFK52-P8",
+        "x-amz-cf-id": "Ge8B4C5MfMMiCYRB9-Msp-XwhQrFTshlexY9kWUxpRSZxK6vw34rTQ==",
+        "age": "4642",
+        "x-xss-protection": "1; mode=block",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff"
+      },
+      "file": "a3a109642073bd075596e0d2a0d3fa5c5a692b1178f12e13532a73987c2c89c6.bin",
+      "textFile": "a3a109642073bd075596e0d2a0d3fa5c5a692b1178f12e13532a73987c2c89c6.txt",
+      "textLength": 243
+    },
+    {
+      "state": "AL",
+      "id": "AL-amended-dem",
+      "url": "https://www.sos.alabama.gov/sites/default/files/election-2026/AmendedCertificationofDemocraticPartyCandidates.pdf",
+      "allowedOrigins": [
+        "https://www.sos.alabama.gov"
+      ],
+      "status": "captured",
+      "sha256": "2fdc47aad58c945ba0869b7a816fe893b51e578e3da916a935c636b44e556fe7",
+      "bytes": 236263,
+      "requestedUrl": "https://www.sos.alabama.gov/sites/default/files/election-2026/AmendedCertificationofDemocraticPartyCandidates.pdf",
+      "finalUrl": "https://www.sos.alabama.gov/sites/default/files/election-2026/AmendedCertificationofDemocraticPartyCandidates.pdf",
+      "retrievedAt": "2026-10-26T21:25:11.392Z",
+      "mediaType": "application/pdf",
+      "httpStatus": 200,
+      "headers": {
+        "content-type": "application/pdf",
+        "content-length": "236263",
+        "connection": "keep-alive",
+        "accept-ranges": "bytes",
+        "etag": "\"6a8db184-39ae7\"",
+        "last-modified": "Tue, 25 Aug 2026 15:15:16 GMT",
+        "server": "nginx",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-pantheon-styx-hostname": "styx-us-a-fbbcf58dd-lbkbs",
+        "x-styx-req-id": "acb73a40-d10c-11f1-bf1f-bac6c6f864a8",
+        "date": "Mon, 26 Oct 2026 07:12:59 GMT",
+        "x-served-by": "cache-chi-klot8100085-CHI, cache-iad-kcgs7200051-IAD",
+        "via": "1.1 varnish, 1.1 varnish, 1.1 9f575b6f0217c33f22e6da5419974422.cloudfront.net (CloudFront)",
+        "x-cache-hits": "0, 0",
+        "x-timer": "S1792998779.249611,VS0,VE105",
+        "x-cache": "Hit from cloudfront",
+        "x-amz-cf-pop": "JFK52-P8",
+        "x-amz-cf-id": "aIL8VjpoFbc4DLvhv1oaYOf1uyj4ncI75Qxpn1CcUHH13y0Prnjyzg==",
+        "age": "51132",
+        "x-xss-protection": "1; mode=block",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff"
+      },
+      "file": "2fdc47aad58c945ba0869b7a816fe893b51e578e3da916a935c636b44e556fe7.bin",
+      "textFile": "2fdc47aad58c945ba0869b7a816fe893b51e578e3da916a935c636b44e556fe7.txt",
+      "textLength": 96
+    },
+    {
+      "state": "AL",
+      "id": "AL-amended-rep",
+      "url": "https://www.sos.alabama.gov/sites/default/files/election-2026/Amended_2026_Republican_Certification.pdf",
+      "allowedOrigins": [
+        "https://www.sos.alabama.gov"
+      ],
+      "status": "captured",
+      "sha256": "890c0d2492d070025abdc16cbb3f0b52ba2abe06d0261a307a3ec6c14494b48b",
+      "bytes": 374929,
+      "requestedUrl": "https://www.sos.alabama.gov/sites/default/files/election-2026/Amended_2026_Republican_Certification.pdf",
+      "finalUrl": "https://www.sos.alabama.gov/sites/default/files/election-2026/Amended_2026_Republican_Certification.pdf",
+      "retrievedAt": "2026-10-26T21:25:11.426Z",
+      "mediaType": "application/pdf",
+      "httpStatus": 200,
+      "headers": {
+        "content-type": "application/pdf",
+        "content-length": "374929",
+        "connection": "keep-alive",
+        "accept-ranges": "bytes",
+        "last-modified": "Fri, 28 Aug 2026 21:51:32 GMT",
+        "server": "nginx",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-pantheon-styx-hostname": "styx-us-a-fbbcf58dd-bxqcv",
+        "x-styx-req-id": "feacd2fe-d137-11f1-994b-4e6e127682a2",
+        "date": "Mon, 26 Oct 2026 12:23:05 GMT",
+        "x-served-by": "cache-chi-klot8100105-CHI, cache-iad-kcgs7200141-IAD",
+        "via": "1.1 varnish, 1.1 varnish, 1.1 eea48723a858e610f4ce8d4f4093fc88.cloudfront.net (CloudFront)",
+        "x-cache-hits": "0, 0",
+        "x-timer": "S1793017385.108759,VS0,VE131",
+        "etag": "\"6a9202e4-5b891\"",
+        "x-cache": "Hit from cloudfront",
+        "x-amz-cf-pop": "JFK52-P8",
+        "x-amz-cf-id": "-aO80z4nkHRlpMR6QbH7tiYHGCw2bL_VRod4mz2yMDtzbZ9huXWVJA==",
+        "age": "32526",
+        "x-xss-protection": "1; mode=block",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff"
+      },
+      "file": "890c0d2492d070025abdc16cbb3f0b52ba2abe06d0261a307a3ec6c14494b48b.bin",
+      "textFile": "890c0d2492d070025abdc16cbb3f0b52ba2abe06d0261a307a3ec6c14494b48b.txt",
+      "textLength": 20414
+    },
+    {
+      "state": "CO",
+      "id": "CO-candidates",
+      "url": "https://www.sos.state.co.us/pubs/elections/Candidates/CandidateHome.html",
+      "allowedOrigins": [
+        "https://www.sos.state.co.us"
+      ],
+      "status": "captured",
+      "sha256": "fcba5f15ce41082c592f295902cd8afcf14383300bd1ceab227fb129c458be62",
+      "bytes": 28688,
+      "requestedUrl": "https://www.sos.state.co.us/pubs/elections/Candidates/CandidateHome.html",
+      "finalUrl": "https://www.sos.state.co.us/pubs/elections/Candidates/CandidateHome.html",
+      "retrievedAt": "2026-10-26T21:25:11.941Z",
+      "mediaType": "text/html",
+      "httpStatus": 200,
+      "headers": {
+        "date": "Mon, 26 Oct 2026 21:25:11 GMT",
+        "content-type": "text/html",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "last-modified": "Sun, 06 Sep 2026 15:01:55 GMT",
+        "accept-ranges": "bytes",
+        "set-cookie": [
+          "__cf_bm=3IqhCzGgXjS4GajVHmfdK0.VSv3v9RsIMzOnKI7R6Kk-1793049911.621574-1.0.1.1-ceIJv1zpGs1c238sLuD.ezS3_Js2IlaOuEnXY6qfSoU8Wmbpjwk5gP.IUADNot_ewmYo2uRUm9UZaRhmLSMglqN7XlEZFLiBK0vp5bytykwsppBzn7KQmmvQXALwqkkg; HttpOnly; SameSite=None; Secure; Path=/; Domain=sos.state.co.us; Expires=Mon, 26 Oct 2026 21:55:11 GMT"
+        ],
+        "x-frame-options": "SAMEORIGIN, ALLOW-FROM https://coloradosos.gov/",
+        "content-security-policy": "frame-ancestors 'self' https://*.electionstats.com.com https://*.elstats-staging.com;",
+        "access-control-allow-origin": "https://coloradosos.gov",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "strict-transport-security": "max-age=16070400; includeSubDomains",
+        "cf-cache-status": "DYNAMIC",
+        "server": "cloudflare",
+        "cf-ray": "a50c883b9a92f5f4-EWR"
+      },
+      "file": "fcba5f15ce41082c592f295902cd8afcf14383300bd1ceab227fb129c458be62.bin",
+      "textFile": "fcba5f15ce41082c592f295902cd8afcf14383300bd1ceab227fb129c458be62.txt",
+      "textLength": 1018,
+      "links": [
+        {
+          "text": "Skip to content",
+          "url": "https://www.sos.state.co.us/pubs/elections/Candidates/CandidateHome.html#main"
+        },
+        {
+          "text": "Menu",
+          "url": "https://www.sos.state.co.us/pubs/elections/Candidates/CandidateHome.html#"
+        },
+        {
+          "text": "Certificate of Good Standing",
+          "url": "https://www.coloradosos.gov/biz/BusinessEntityCriteria.do"
+        },
+        {
+          "text": "DME suppliers FAQs",
+          "url": "https://www.coloradosos.gov/pubs/DME/FAQs/general.html"
+        },
+        {
+          "text": "Candidates",
+          "url": "https://www.coloradosos.gov/pubs/elections/Candidates/CandidateHome.html"
+        },
+        {
+          "text": "Certificate of Good Standing",
+          "url": "https://www.coloradosos.gov/biz/BusinessEntityCriteria.do"
+        },
+        {
+          "text": "Candidates",
+          "url": "https://www.coloradosos.gov/pubs/elections/Candidates/CandidateHome.html"
+        },
+        {
+          "text": "DME suppliers FAQs",
+          "url": "https://www.coloradosos.gov/pubs/DME/FAQs/general.html"
+        },
+        {
+          "text": "Step 1: Become a candidate",
+          "url": "https://www.sos.state.co.us/pubs/elections/Candidates/RunForOffice.html"
+        },
+        {
+          "text": "Step 2: Get my name on the ballot or write-in list",
+          "url": "https://www.sos.state.co.us/pubs/elections/Candidates/BallotAccess.html"
+        },
+        {
+          "text": "2026 Offices up for election",
+          "url": "https://www.sos.state.co.us/pubs/elections/vote/officeUpForElection.html"
+        },
+        {
+          "text": "Ballot access options",
+          "url": "https://www.sos.state.co.us/pubs/elections/Candidates/BallotAccess.html"
+        },
+        {
+          "text": "Qualifications for office",
+          "url": "https://www.sos.state.co.us/pubs/elections/Candidates/qualifications.html"
+        },
+        {
+          "text": "Petition signature requirements",
+          "url": "https://www.sos.state.co.us/pubs/elections/Candidates/SignatureRequirements.html"
+        },
+        {
+          "text": "Forms",
+          "url": "https://www.sos.state.co.us/pubs/elections/Candidates/FormsList.html"
+        },
+        {
+          "text": "Political party contact information",
+          "url": "https://www.sos.state.co.us/pubs/elections/Candidates/PoliticalPartyDirectory.html"
+        },
+        {
+          "text": "Audio recording instructions",
+          "url": "https://www.sos.state.co.us/pubs/elections/Candidates/AudioRecordingInstructions.html"
+        },
+        {
+          "text": "2026 Official Primary Election candidate list",
+          "url": "https://www.sos.state.co.us/pubs/elections/vote/primaryCandidates.html"
+        },
+        {
+          "text": "Petition candidates who submitted petition signatures",
+          "url": "https://www.sos.state.co.us/pubs/elections/vote/primaryPetitionCandidates.html"
+        },
+        {
+          "text": "2026 State Primary Election candidate petition ballot position lot drawing results",
+          "url": "https://www.sos.state.co.us/pubs/elections/vote/petitionCandidateBallotOrder.html"
+        },
+        {
+          "text": "2026 General Election official candidate list",
+          "url": "https://www.sos.state.co.us/pubs/elections/vote/generalCandidates.html"
+        },
+        {
+          "text": "2026 General Election ballot order for major & minor party candidates",
+          "url": "https://www.sos.state.co.us/pubs/elections/vote/generalBallotOrder.html"
+        },
+        {
+          "text": "2026 General Election candidates that filed petitions",
+          "url": "https://www.sos.state.co.us/pubs/elections/vote/generalPetitionCandidates.html"
+        },
+        {
+          "text": "RTD candidate petition ballot position lot drawing results",
+          "url": "https://www.sos.state.co.us/pubs/elections/vote/RTDCandidateBallotOrder.html"
+        },
+        {
+          "text": "Caucuses",
+          "url": "https://www.sos.state.co.us/pubs/elections/Candidates/FAQs/caucuses.html"
+        },
+        {
+          "text": "Major parties",
+          "url": "https://www.sos.state.co.us/pubs/elections/Candidates/FAQs/majorParty.html"
+        },
+        {
+          "text": "Minor parties and qualified political organizations",
+          "url": "https://www.sos.state.co.us/pubs/elections/Candidates/FAQs/QPOandMinorParty.html"
+        },
+        {
+          "text": "Electoral college",
+          "url": "https://www.sos.state.co.us/pubs/elections/Candidates/FAQs/electoralCollege.html"
+        },
+        {
+          "text": "Sign up to receive candidate information email updates",
+          "url": "https://public.govdelivery.com/accounts/COSOS/subscriber/new?topic_id=COSOS_15"
+        }
+      ]
+    },
+    {
+      "state": "CA",
+      "id": "CA-contacts",
+      "url": "https://elections.cdn.sos.ca.gov/statewide-elections/2026-general/contact-list.pdf",
+      "allowedOrigins": [
+        "https://elections.cdn.sos.ca.gov"
+      ],
+      "status": "failed",
+      "errorCode": "discovery-response-too-large"
+    },
+    {
+      "state": "AR",
+      "id": "AR-search",
+      "url": "https://candidates.arkansas.gov/",
+      "allowedOrigins": [
+        "https://candidates.arkansas.gov"
+      ],
+      "status": "captured",
+      "sha256": "faeede12afe49304f750c81f03f879c62f1d67d10006f09b62c3f5ea6bc4aab5",
+      "bytes": 69725,
+      "requestedUrl": "https://candidates.arkansas.gov/",
+      "finalUrl": "https://candidates.arkansas.gov/",
+      "retrievedAt": "2026-10-26T21:25:12.257Z",
+      "mediaType": "text/html; charset=UTF-8",
+      "httpStatus": 200,
+      "headers": {
+        "date": "Mon, 26 Oct 2026 21:25:12 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding, Accept-Encoding,Cookie",
+        "link": "<https://candidates.arkansas.gov/wp-json/>; rel=\"https://api.w.org/\", <https://candidates.arkansas.gov/wp-json/wp/v2/pages/8>; rel=\"alternate\"; title=\"JSON\"; type=\"application/json\", <https://candidates.arkansas.gov/>; rel=shortlink",
+        "x-powered-by": "WP Engine",
+        "x-cacheable": "SHORT",
+        "cache-control": "max-age=600, must-revalidate",
+        "x-cache": "HIT: 1",
+        "x-cache-group": "normal",
+        "last-modified": "Mon, 26 Oct 2026 21:25:12 GMT",
+        "cf-cache-status": "HIT",
+        "set-cookie": [
+          "__cf_bm=UUggPAY8Rh7gLq4k49ZVorqqAhUszS68YYBlESwc9Qg-1793049912.0902398-1.0.1.1-JQqyDfpqzn0z8R55OlVJCQxOMLIsmqt5vEUkIM_b9No7JFybVyhHdDPqdCRNHDSmBfptL.mtSEH2nvj2ju3Y_bRS3ConEaRUuVbc69oKjOoh.OmHeg9C5AN_0PGqhLq4; HttpOnly; SameSite=None; Secure; Path=/; Domain=candidates.arkansas.gov; Expires=Mon, 26 Oct 2026 21:55:12 GMT"
+        ],
+        "cf-ray": "a50c883e8f9ac339-EWR",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "file": "faeede12afe49304f750c81f03f879c62f1d67d10006f09b62c3f5ea6bc4aab5.bin",
+      "textFile": "faeede12afe49304f750c81f03f879c62f1d67d10006f09b62c3f5ea6bc4aab5.txt",
+      "textLength": 669,
+      "links": [
+        {
+          "text": "Skip to content",
+          "url": "https://candidates.arkansas.gov/#content"
+        },
+        {
+          "text": "Download Portrait",
+          "url": "https://ar-sos-candidates.s3.amazonaws.com/photos/%7B%7BFilingOrder%7D%7D+hi.jpg"
+        },
+        {
+          "text": "",
+          "url": "https://candidates.arkansas.gov/#close"
+        },
+        {
+          "text": "[email protected]",
+          "url": "https://candidates.arkansas.gov/cdn-cgi/l/email-protection#dfbcb0adafadbaaeaabaacab9facb0acf1beadb4beb1acbeacf1b8b0a9"
+        }
+      ]
+    },
+    {
+      "state": "CA",
+      "id": "CA-certified",
+      "url": "https://elections.cdn.sos.ca.gov/statewide-elections/2026-general/cert-list-candidates.pdf",
+      "allowedOrigins": [
+        "https://elections.cdn.sos.ca.gov"
+      ],
+      "status": "failed",
+      "errorCode": "discovery-response-too-large"
+    },
+    {
+      "state": "FL",
+      "id": "FL-candidate-index",
+      "url": "https://dos.fl.gov/elections/candidates-committees/candidates-campaign-documents-and-committees/",
+      "allowedOrigins": [
+        "https://dos.fl.gov"
+      ],
+      "status": "captured",
+      "sha256": "125f64bd6f24f2bd9c3e95bdc3969074ecfad9495b059e82d68392a2649f72dd",
+      "bytes": 24925,
+      "requestedUrl": "https://dos.fl.gov/elections/candidates-committees/candidates-campaign-documents-and-committees/",
+      "finalUrl": "https://dos.fl.gov/elections/candidates-committees/candidates-campaign-documents-and-committees/",
+      "retrievedAt": "2026-10-26T21:25:12.459Z",
+      "mediaType": "text/html; charset=utf-8",
+      "httpStatus": 200,
+      "headers": {
+        "date": "Mon, 26 Oct 2026 21:25:12 GMT",
+        "content-type": "text/html; charset=utf-8",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "cache-control": "private",
+        "set-cookie": [
+          "ARRAffinity=cdf0ef902fd35e370e78b9bbfa75bb50c37ae91c51e415b43d1117007289439f;Path=/;HttpOnly;Secure;Domain=dos.fl.gov",
+          "ARRAffinitySameSite=cdf0ef902fd35e370e78b9bbfa75bb50c37ae91c51e415b43d1117007289439f;Path=/;HttpOnly;SameSite=None;Secure;Domain=dos.fl.gov",
+          "__cf_bm=zRChsiI5BOFeOdYLVcg9hgIoSCGcF.wh8DbPMXMngME-1793049912.3142455-1.0.1.1-H.l3ysvIegMmtWk2MOWKDeAlBgXki6zjJxYi68bptRKb7eeMEDxYHIjln6RUFq5IOb7RBJCAN8DHenZ6vFZDetgsZMm3Z70tt1iIeG6VFX9y66jnijeB1fVda3w4EZB_; HttpOnly; SameSite=None; Secure; Path=/; Domain=dos.fl.gov; Expires=Mon, 26 Oct 2026 21:55:12 GMT"
+        ],
+        "vary": "Accept-Encoding",
+        "strict-transport-security": "max-age=10886400; preload",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "sameorigin",
+        "cf-cache-status": "DYNAMIC",
+        "server": "cloudflare",
+        "cf-ray": "a50c883ff9fa7095-EWR"
+      },
+      "file": "125f64bd6f24f2bd9c3e95bdc3969074ecfad9495b059e82d68392a2649f72dd.bin",
+      "textFile": "125f64bd6f24f2bd9c3e95bdc3969074ecfad9495b059e82d68392a2649f72dd.txt",
+      "textLength": 1849,
+      "links": [
+        {
+          "text": "Candidates & Committees",
+          "url": "https://dos.fl.gov/elections/candidates-committees/"
+        },
+        {
+          "text": "Campaign Finance",
+          "url": "https://dos.fl.gov/elections/candidates-committees/campaign-finance/"
+        },
+        {
+          "text": "Public Campaign Finance - Matching Funds Program",
+          "url": "https://dos.fl.gov/elections/candidates-committees/campaign-finance/public-campaign-finance-matching-funds-program/"
+        },
+        {
+          "text": "Candidates, Campaign Documents, and Committees",
+          "url": "https://dos.fl.gov/elections/candidates-committees/candidates-campaign-documents-and-committees/"
+        },
+        {
+          "text": "Offices Up for Election and Retention in 2026",
+          "url": "https://dos.fl.gov/elections/candidates-committees/offices-up-for-election/"
+        },
+        {
+          "text": "Political Parties",
+          "url": "https://dos.fl.gov/elections/candidates-committees/political-parties/"
+        },
+        {
+          "text": "Qualifying Information",
+          "url": "https://dos.fl.gov/elections/candidates-committees/qualifying/"
+        },
+        {
+          "text": "Presidential Candidates, Presidential Electors, and Electoral College",
+          "url": "https://dos.fl.gov/elections/candidates-committees/presidential-candidates-presidential-electors-and-electoral-college/"
+        },
+        {
+          "text": "Notices of General Election",
+          "url": "https://dos.fl.gov/elections/for-voters/notices-of-general-election/"
+        },
+        {
+          "text": "Presidential Electors/Electoral College",
+          "url": "https://dos.fl.gov/elections/candidates-committees/presidential-candidates-presidential-electors-and-electoral-college/"
+        },
+        {
+          "text": "Constitutional Amendments/Initiatives",
+          "url": "https://dos.fl.gov/elections/laws-rules/constitutional-amendmentsinitiatives/"
+        },
+        {
+          "text": "Certified Voting Systems and Vendors",
+          "url": "https://dos.fl.gov/elections/voting-systems/certified-voting-systems-and-vendors/"
+        },
+        {
+          "text": "Certification/Approval Status and Test Schedule",
+          "url": "https://dos.fl.gov/elections/voting-systems/certificationapproval-status-and-test-schedule/"
+        },
+        {
+          "text": "Candidates & Committees",
+          "url": "https://dos.fl.gov/elections/candidates-committees/"
+        },
+        {
+          "text": "Search Candidates and Races Database",
+          "url": "http://dos.elections.myflorida.com/candidates/"
+        },
+        {
+          "text": "Candidates & Committees",
+          "url": "https://dos.fl.gov/elections/candidates-committees/"
+        },
+        {
+          "text": "Campaign Finance",
+          "url": "https://dos.fl.gov/elections/candidates-committees/campaign-finance/"
+        },
+        {
+          "text": "Candidates, Campaign Documents, and Committees",
+          "url": "https://dos.fl.gov/elections/candidates-committees/candidates-campaign-documents-and-committees/"
+        },
+        {
+          "text": "Offices Up for Election and Retention in 2026",
+          "url": "https://dos.fl.gov/elections/candidates-committees/offices-up-for-election/"
+        },
+        {
+          "text": "Political Parties",
+          "url": "https://dos.fl.gov/elections/candidates-committees/political-parties/"
+        },
+        {
+          "text": "Qualifying Information",
+          "url": "https://dos.fl.gov/elections/candidates-committees/qualifying/"
+        },
+        {
+          "text": "Presidential Candidates, Presidential Electors, and Electoral College",
+          "url": "https://dos.fl.gov/elections/candidates-committees/presidential-candidates-presidential-electors-and-electoral-college/"
+        },
+        {
+          "text": "Submit a public records request.",
+          "url": "http://dos.myflorida.com/offices/general-counsel/public-records-requests/"
+        }
+      ]
+    },
+    {
+      "state": "HI",
+      "id": "HI-reports",
+      "url": "https://elections.hawaii.gov/candidates/candidate-reports/",
+      "allowedOrigins": [
+        "https://elections.hawaii.gov"
+      ],
+      "status": "captured",
+      "sha256": "745e9d69427227d3a234c90a42570be29bf92074f05297145f58b19e705280a1",
+      "bytes": 117424,
+      "requestedUrl": "https://elections.hawaii.gov/candidates/candidate-reports/",
+      "finalUrl": "https://elections.hawaii.gov/candidates/candidate-reports/",
+      "retrievedAt": "2026-10-26T21:25:12.503Z",
+      "mediaType": "text/html; charset=UTF-8",
+      "httpStatus": 200,
+      "headers": {
+        "date": "Mon, 26 Oct 2026 21:25:12 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "server": "cloudflare",
+        "x-powered-by": "PHP/8.2.35",
+        "cf-edge-cache": "cache,platform=wordpress",
+        "vary": "Accept-Encoding",
+        "cache-control": "public, max-age=300",
+        "expires": "Mon, 26 Oct 2026 21:30:12 GMT",
+        "cf-apo-via": "tcache",
+        "link": "<https://cdn.gtranslate.net/>; rel=dns-prefetch, <https://elections.hawaii.gov/wp-json/>; rel=\"https://api.w.org/\", <https://elections.hawaii.gov/wp-json/wp/v2/pages/7142>; rel=\"alternate\"; title=\"JSON\"; type=\"application/json\", <https://elections.hawaii.gov/?p=7142>; rel=shortlink",
+        "set-cookie": [
+          "__cf_bm=yBKE10OA438FeJHauRewpqs_qercC.uuCZlJ3yvwshI-1793049912.2954555-1.0.1.1-i6C6z2uy4tYBG43g65OFTJAtkNJXm0NHc1Q4Ws0AUbOgnB.7cZRYJjizadAQU6jYi9ehIsUX6xGZ_MTQf.vDJm_9yzKYYY0tGon4RIsv0_edDvZTj4s3XMJIpqgUzuk5; HttpOnly; SameSite=None; Secure; Path=/; Domain=hawaii.gov; Expires=Mon, 26 Oct 2026 21:55:12 GMT",
+          "_cfuvid=_47S.arYikizbiHOahAQE2sa5RY2eXWNIp17sTX8.jM-1793049912.2954555-1.0.1.1-5gtIZwwK2Latuta2Psp9sCFO2e3StDoGkgpcm9mF0dk; HttpOnly; SameSite=None; Secure; Path=/; Domain=hawaii.gov"
+        ],
+        "last-modified": "Mon, 26 Oct 2026 21:25:12 GMT",
+        "cf-cache-status": "HIT",
+        "cf-ray": "a50c883fdf21c413-EWR"
+      },
+      "file": "745e9d69427227d3a234c90a42570be29bf92074f05297145f58b19e705280a1.bin",
+      "textFile": "745e9d69427227d3a234c90a42570be29bf92074f05297145f58b19e705280a1.txt",
+      "textLength": 985,
+      "links": [
+        {
+          "text": "Skip to Content",
+          "url": "https://elections.hawaii.gov/candidates/candidate-reports/#content"
+        },
+        {
+          "text": "Skip to Navigation",
+          "url": "https://elections.hawaii.gov/candidates/candidate-reports/#menu"
+        },
+        {
+          "text": "Skip to Footer",
+          "url": "https://elections.hawaii.gov/candidates/candidate-reports/#footer"
+        },
+        {
+          "text": "2026 Primary Election Provisional Ballot Dispositions",
+          "url": "https://elections.hawaii.gov/2026-primary-election-provisional-ballot-dispositions/"
+        },
+        {
+          "text": "English",
+          "url": "https://elections.hawaii.gov/wp-content/uploads/VoterGuide_2026_General_English.pdf"
+        },
+        {
+          "text": "Chinese",
+          "url": "https://elections.hawaii.gov/wp-content/uploads/VoterGuide_2026_General_Chinese.pdf"
+        },
+        {
+          "text": "Hawaiian",
+          "url": "https://elections.hawaii.gov/wp-content/uploads/VoterGuide_2026_General_Hawaiian.pdf"
+        },
+        {
+          "text": "Ilocano",
+          "url": "https://elections.hawaii.gov/wp-content/uploads/VoterGuide_2026_General_Ilocano.pdf"
+        },
+        {
+          "text": "Tagalog",
+          "url": "https://elections.hawaii.gov/wp-content/uploads/VoterGuide_2026_General_Tagalog.pdf"
+        },
+        {
+          "text": "2026 Proposed Amendments to the Hawaii State Constitution",
+          "url": "https://elections.hawaii.gov/voting/2026-proposed-amendments-to-the-hawaii-state-constitution/"
+        },
+        {
+          "text": "Candidates",
+          "url": "https://elections.hawaii.gov/candidates/"
+        },
+        {
+          "text": "Become a Candidate",
+          "url": "https://elections.hawaii.gov/candidates/candidate-filing/"
+        },
+        {
+          "text": "Candidate Reports",
+          "url": "https://elections.hawaii.gov/candidates/candidate-reports/"
+        },
+        {
+          "text": "Nonpartisan Candidates in Partisan Contests",
+          "url": "https://elections.hawaii.gov/candidates/nonpartisan-candidates-in-partisan-contests/"
+        },
+        {
+          "text": "Candidates",
+          "url": "https://elections.hawaii.gov/candidates/"
+        },
+        {
+          "text": "Candidate Report",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94"
+        }
+      ]
+    },
+    {
+      "state": "GA",
+      "id": "GA-qualified",
+      "url": "https://sos.ga.gov/page/georgia-qualified-candidates",
+      "allowedOrigins": [
+        "https://sos.ga.gov"
+      ],
+      "status": "failed",
+      "errorCode": "discovery-http-failed"
+    },
+    {
+      "state": "CT",
+      "id": "CT-list-index",
+      "url": "https://portal.ct.gov/SOTS/Election-Services/Candidate-Lists-for-Office",
+      "allowedOrigins": [
+        "https://portal.ct.gov"
+      ],
+      "status": "captured",
+      "sha256": "82f03328772803e3bae214bb41fbf15b2ac1c59b22747cf10bbb2906dd382b0f",
+      "bytes": 28585,
+      "requestedUrl": "https://portal.ct.gov/SOTS/Election-Services/Candidate-Lists-for-Office",
+      "finalUrl": "https://portal.ct.gov/SOTS/Election-Services/Candidate-Lists-for-Office",
+      "retrievedAt": "2026-10-26T21:25:12.655Z",
+      "mediaType": "text/html; charset=utf-8",
+      "httpStatus": 200,
+      "headers": {
+        "date": "Mon, 26 Oct 2026 21:25:12 GMT",
+        "content-type": "text/html; charset=utf-8",
+        "content-length": "28585",
+        "connection": "keep-alive",
+        "cache-control": "private,public, max-age=1800",
+        "set-cookie": [
+          "shell#lang=en; path=/; secure; SameSite=None",
+          "ASP.NET_SessionId=fv0qikohegmzprp0ec3mkwe0; path=/; secure; HttpOnly; SameSite=None",
+          "SC_ANALYTICS_GLOBAL_COOKIE=99d08ca6d9474719b9ad6ee60537bc13|False; expires=Thu, 23-Oct-2036 21:25:12 GMT; path=/; secure; HttpOnly; SameSite=None",
+          "sxa_site=website; path=/; secure; HttpOnly; SameSite=None",
+          "ARRAffinity=a2851722c59c4829bbe6b1257b283e16beda6f04f4858d4d1460170cd77c1e8c;Path=/;HttpOnly;Secure;Domain=portal.ct.gov",
+          "ARRAffinitySameSite=a2851722c59c4829bbe6b1257b283e16beda6f04f4858d4d1460170cd77c1e8c;Path=/;HttpOnly;SameSite=None;Secure;Domain=portal.ct.gov"
+        ],
+        "vary": "Accept-Encoding",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-frame-options": "SAMEORIGIN",
+        "referrer-policy": "same-origin",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "expect-ct": "max-age=86400, enforce",
+        "accept-ch": "Sec-CH-UA-Full-Version-List,Sec-CH-UA-Platform-Version,Sec-CH-UA-Arch,Sec-CH-UA-Model,Sec-CH-UA-Bitness",
+        "x-azure-ref": "20261026T212512Z-16c96f455cdqlxpthC1DFWdqac0000000bx0000000008pm7",
+        "x-fd-int-roxy-purgeid": "0",
+        "x-cache": "PRIVATE_NOSTORE",
+        "accept-ranges": "bytes"
+      },
+      "file": "82f03328772803e3bae214bb41fbf15b2ac1c59b22747cf10bbb2906dd382b0f.bin",
+      "textFile": "82f03328772803e3bae214bb41fbf15b2ac1c59b22747cf10bbb2906dd382b0f.txt",
+      "textLength": 315,
+      "links": [
+        {
+          "text": "Skip to Content",
+          "url": "https://portal.ct.gov/SOTS/Election-Services/Candidate-Lists-for-Office#mainContent"
+        },
+        {
+          "text": "Skip to Chat",
+          "url": "https://portal.ct.gov/SOTS/Election-Services/Candidate-Lists-for-Office#chatContent"
+        },
+        {
+          "text": "Top",
+          "url": "https://portal.ct.gov/SOTS/Election-Services/Candidate-Lists-for-Office#0"
+        },
+        {
+          "text": "Candidate Information",
+          "url": "https://portal.ct.gov/sots/election-services/v5-side-navigation/ele---candidate-information"
+        },
+        {
+          "text": "Filtered Topic Search",
+          "url": "https://portal.ct.gov/SOTS/Election-Services/Candidate-Lists-for-Office#"
+        },
+        {
+          "text": "List of Candidates",
+          "url": "https://portal.ct.gov/sots/election-services/candidate-lists-for-office/list-of-candidates"
+        },
+        {
+          "text": "List of Candidates Archives",
+          "url": "https://portal.ct.gov/sots/election-services/candidate-lists-for-office/list-of-candidates-archives?archived=true"
+        },
+        {
+          "text": "Filed Candidates",
+          "url": "https://portal.ct.gov/sots/election-services/candidate-lists-for-office/filed-candidates"
+        }
+      ]
+    },
+    {
+      "state": "AZ",
+      "id": "AZ-candidates",
+      "url": "https://azsos.gov/elections/candidates",
+      "allowedOrigins": [
+        "https://azsos.gov"
+      ],
+      "status": "failed",
+      "errorCode": "discovery-http-failed"
+    },
+    {
+      "state": "AK",
+      "id": "AK-candidates-no-www",
+      "url": "https://elections.alaska.gov/candidates/?election=26genr",
+      "allowedOrigins": [
+        "https://elections.alaska.gov"
+      ],
+      "status": "failed",
+      "errorCode": "discovery-network-failed"
+    }
+  ]
+}

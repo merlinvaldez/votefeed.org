@@ -4,13 +4,24 @@ The future Elections tab lets a VoteFeed user explore candidates for their House
 
 This specification covers the backend foundations for that experience, not the tab implementation. It defines storage and query contracts for later API/UI tickets. A user response belongs to a specific position version so later campaign edits cannot change what the user answered.
 
+## Current policy: FEC-first candidate positions (2026-10-26)
+
+FEC registration is sufficient to discover candidates, collect verified campaign positions, and include published positions in the exploratory feed. State ballot confirmation is optional enrichment, not a launch prerequisite. Earlier ballot-only gates below are superseded by this policy.
+
+Use the label `fec-registered` alongside a separate `ballotStatus` (`unknown` unless supported by state evidence). Never describe this roster as everyone on your ballot or as a definitive general-election matchup. State records still control ballot confirmation, withdrawals/disqualifications, and definitive ballot claims. Known withdrawn/disqualified candidacies remain excluded; FEC refreshes cannot overwrite state eligibility.
+
+The current release maps FEC House districts and regular Class II Senate contests to November 3, 2026; this is a discovery scope association, not proof a registrant reached the general ballot. Inactive/past FEC records, missing House districts and out-of-scope Senate contests are retained without a feed candidacy. Identity collisions require review, never name-only merging. No state source adapter is required for an FEC-only run. FEC pagination completeness is reported separately from state ballot coverage and proves neither a complete ballot nor no election.
+
+Campaign website verification remains required: an authorized FEC committee link tied to the exact candidate ID, plus destination identity/office checks, can establish ownership. Existing crawl, extraction, semantic validation, publication, geography, and private-response safeguards remain required. State-only candidates remain supported. No production deployment or import is implied.
+
 ## Status and scope
 
 - Created: 2026-10-26.
 - Branch inspected: `42-add-elections-tab`.
-- Step 1 shared contracts implemented locally on 2026-10-26; election-geography verification remains open. Step 2 storage is implemented and verified locally; deployed permissions/migration acceptance and full-suite green status remain open. Steps 3 through 5 remain unimplemented/unverified. See [shared contracts v1](elections-contracts.md).
-- Agreed flow: FEC plus state records -> candidates/races -> verified campaign websites -> Crawlee -> saved source snapshots -> AI extraction/summaries -> validation -> published database records -> later API/feed.
-- AI extraction is included in the Crawlee ticket, as clarified in this conversation.
+- Step 1 shared contracts implemented locally on 2026-10-26; election-geography verification remains open. Step 2 storage is implemented and verified locally; deployed permissions/migration acceptance and full-suite green status remain open. Step 3 discovery and resumable source onboarding are implemented locally; bounded extraction covers WY/DE/MO/NH/NE, with ND blocked on form retrieval. Nationwide acceptance remains open. Steps 4 and 5 remain unimplemented/unverified. See [shared contracts v1](elections-contracts.md).
+- Step 3.1 source research is recorded on 2026-10-26: a 50-state authority inventory and bounded Wyoming/FEC fixtures. The observation-identity gap from 3.2 is now resolved locally; the Wyoming adapter, FEC pagination, AI extraction/verification, site checks and server runner are implemented. Nationwide coverage, geography and production acceptance remain open. See [source evidence and dependencies](elections-sources.md).
+- Agreed flow: FEC discovery plus archived official ballot documents -> deterministic or AI ballot extraction -> independent verification and source checks -> saved observations -> supported candidate/race resolution -> verified campaign websites -> Crawlee -> campaign snapshots -> AI policy extraction/summaries -> validation/publication -> later API/feed. No paid election-data vendor is required; search/model providers remain replaceable.
+- Campaign-position AI extraction belongs to the Crawlee ticket. Ballot-document AI extraction and independent verification belong to discovery; the two prompts and validation contracts are separate.
 - Approved initial coverage: 2026 U.S. House and Senate general elections nationwide. Primaries, runoff stages, and special-election contests are outside this first release. Storage still distinguishes stages and special contests for future expansion. Nationwide scope does not mean both Senate seats in every state have a race; source adapters must report actual coverage and gaps.
 - These three tickets do not implement React screens, public feed routes, public comments, alignment scores, notifications, campaign outreach, production deployment, or a production schedule.
 - Proposed interaction default: approve/disapprove/clear with an optional private comment. No public comment feed or comment moderation/publication is included. Confirm this default against the later interaction/UI ticket before exposing it.
@@ -97,23 +108,79 @@ Outcome: known candidacies and approved official campaign destinations exist bef
 
 Likely locations: `server/src/elections/syncCandidates.js`, source adapters under `server/src/elections/sources/`, shared database queries, fixture tests, and a server package script.
 
-- [ ] Implement the selected FEC/state source adapters, pagination, normalization, and coverage accounting.
-- [ ] Reconcile identities and official ballot facts; retain state-only candidates and unresolved records for review.
-- [ ] Discover proposed campaign URLs from filings/official records and record verification evidence before approval.
-- [ ] Add explicit withdrawal and eligibility updates without treating partial-import absence as withdrawal.
-- [ ] Provide a scoped server-only command with bounded retries, safe logging, and run summaries.
-- [ ] Document adapter limitations. Nationwide support requires explicit coverage evidence; implementing one state does not complete a nationwide release.
+Local discovery implementation and commands are documented in [elections-discovery.md](elections-discovery.md). Wyoming is the bounded implemented state source; a shared AI reader supports reviewed PDF/HTML/text sources. Search returns proposals and cannot approve its own sources. All 50 states now have recorded search outcomes. Five new states were inspected: DE/MO/NH/NE have validated bounded extractions and ND has a form-retrieval gap. Remaining reviews and acceptance are tracked in [elections-onboarding.md](elections-onboarding.md).
+
+### 3.1 Establish official sources and access before writing adapters
+
+- [x] Create a source inventory for all 50 states and both offices. Record the responsible election authority, exact candidate-list/calendar/correction URLs, available format, access requirements, checked-at time, and coverage limitations. Keep unresearched entries explicitly unsupported.
+- [x] Verify the OpenFEC candidate and committee endpoints, required credentials, pagination, rate limits, available source identifiers, and filing/website fields using bounded read-only requests. Record actual response samples without credentials.
+- [x] Inspect official state artifacts for the 2026 regular general election. Establish how each source identifies House districts, Senate classes, election dates, ballot status, state-only candidates, and withdrawals. Do not substitute FEC registration for ballot confirmation.
+- [x] Determine whether official records provide reliable FEC cross-references and campaign ownership evidence. Document missing identifiers and fields; do not fill these gaps by name matching or assume a campaign URL is verified.
+- [x] Select a bounded House/Senate implementation sample, including an at-large district, from sources actually inspected. Save dated fixtures and record source-specific parsing and reconciliation rules. This sample validates the approach without reducing the approved nationwide release scope.
+- [x] Record the chosen adapters, evidence, access prerequisites, and unresolved gaps in a linked source-inventory document. Mark this prerequisite complete only when the selected sample can supply the facts required by the storage contract. Research and inventory preparation do not require production writes.
+
+Evidence checked 2026-10-26: [source research and dependency decision](elections-sources.md), [50-state/100-office inventory](elections-source-inventory.json), and [dated response manifest](../tests/fixtures/elections/discovery/2026-10-26/manifest.json). Checked research items refer to the bounded Wyoming House/Senate sample; Wyoming has a tested partial adapter. The later [onboarding pass](elections-onboarding.md) adds bounded DE/MO/NH/NE extraction acceptance and records ND retrieval gaps; other states have unapproved search proposals or search gaps. The final sample storage-readiness gate is now closed by immutable observation storage and internal candidate IDs; official person/FEC IDs remain optional until supported identity resolution. Row locators never become official person IDs. Wyoming runs remain partial because corrections coverage is not accepted; House geography remains unverified. See [implementation and test evidence](elections-discovery.md).
+
+### 3.2 Resolve contract and storage gaps exposed by the sources
+
+Depends on the source research from 3.1 and the existing step 1/2 contracts. The sample observation-storage gap is resolved and verified locally; election-geography acceptance remains independent and open.
+
+- [x] Confirm canonical mappings for the inspected sources, including at-large districts, Senate classes, regular versus special contests, and authoritative election dates. Preserve uncertain seats/dates as unresolved rather than inventing a race.
+- [x] Establish where raw FEC discoveries and ambiguous/state-only observations are retained before a valid race or cross-source match exists. Check whether the step 2 queries can store them; add any necessary additive persistence changes and tests before wiring imports.
+- [x] Establish dated source precedence, explicit withdrawal handling, and complete/partial/failed/unsupported coverage rules per state, office, and race. Absence from an import must never imply withdrawal.
+- [ ] Resolve the open election-geography prerequisite from step 1 for House location matching. Candidate discovery may proceed with unresolved boundary evidence; House location reads must remain gated until it is verified.
+
+### 3.3 Implement and test the selected source adapters
+
+Depends on 3.1 and 3.2 for each adapter being implemented.
+
+- [x] Implement FEC candidate/committee discovery with all-page pagination, bounded retries/timeouts, normalization, preserved source IDs and references, and safe error codes.
+- [x] Implement the selected official state adapters against captured fixtures, preserving authoritative ballot/date/seat facts and explicit correction/withdrawal evidence.
+- [x] Reconcile through shared storage queries using exact identifiers or documented official cross-references. Retain state-only candidates and unresolved/ambiguous records without name-only merging.
+- [x] Verify repeat-import idempotency, source precedence, explicit eligibility updates, and partial-failure behavior before expanding coverage.
+
+### Ballot-document extraction contract (implemented locally)
+
+- [x] Archive original official-source bytes before parsing or AI. Keep retrieval and source-effective dates separate and preserve earlier evidence.
+- [x] Read structured CSV directly; use separate ballot extraction and independent verification prompts for irregular documents. Require exact supporting excerpts and reviewed race mappings before promotion.
+- [x] Keep ballot confirmation, FEC identity matching and campaign-site verification independent. State-only candidates receive internal IDs; raw FEC discoveries remain available for supported linking.
+- [x] Search only for proposed official source URLs through a replaceable provider. Require reviewed authority/origin/date/seat mappings before using a source as authoritative; search output and model confidence never approve themselves.
+- [x] Record invalid/needs-review outputs and bounded provider failures. Reprocessing a different validation decision preserves the earlier observation rather than rewriting it.
+- [x] Verify bounded live Wyoming source search: it returned the official election center and general candidate PDF, retained only as proposals.
+- [ ] Expand reviewed descriptors, source-search acceptance and coverage to the other 49 states.
+
+### 3.4 Verify campaign ownership before enabling crawling
+
+Depends on persisted candidacies and the ownership evidence identified in 3.1.
+
+- [x] Discover proposed campaign URLs from the inspected filings/official records. Record missing, ambiguous, outdated, or mismatched sites explicitly.
+- [x] Implement ownership verification using official evidence tied to the candidate/race. Save evidence, checked-at time, explicit approved destinations, and a review deadline before setting verified status.
+- [x] Verify that changed or invalidated destinations revoke crawl eligibility while preserving history. Leave public-network enforcement for actual crawl requests to step 4.
+
+### 3.5 Add the runner, expand coverage, and verify the handoff
+
+Depends on tested adapters/reconciliation from 3.3 and site verification from 3.4.
+
+- [x] Provide a scoped server-only command with bounded retries, safe logging, run summaries, and per-state/office/race coverage. Unsupported or incomplete sources must prevent a complete nationwide result.
+- [x] Run the bounded sample against live sources and disposable/local storage; record exact coverage and fixture/live evidence. Do not apply production migrations or add a production schedule.
+- [x] Add resumable all-state source searches, per-source DB-free inspection, reviewed CSV mappings, and a 50-state gap report. Search proposals cannot approve themselves. See [nationwide onboarding checklist and evidence](elections-onboarding.md).
+- [x] Search all 50 states and inspect five new states (DE/ND/MO/NH/NE). Independently compare 54 valid observations across DE/MO/NH/NE; preserve ND's form-based retrieval gap. Recheck the shared CSV mapping on Wyoming's six rows. These are bounded extraction checks, not complete statewide import acceptance.
+- [ ] Resolve ND form retrieval and the six search failures/empty results, research/review remaining candidate endpoints and correction sources, then process further bounded batches with whole-list comparisons.
+- [ ] Extend the same source-research, mapping, adapter, and verification sequence to every remaining state. Document adapter limitations; one working state does not complete nationwide acceptance.
+- [ ] Hand verified campaign destinations to step 4 only for the tested scope. Keep DISC acceptance criteria below open until their corresponding implementation and verification evidence exists; nationwide completion requires all 50 states.
 
 ### Acceptance criteria — DISC
+
+Checked items describe local implementation/fixture verification, not nationwide or production acceptance. The bounded live model check matched all six Wyoming federal rows; no live campaign-site acceptance is claimed.
 
 - [ ] DISC-1: Candidate discovery covers 2026 U.S. House and Senate general elections nationwide, excluding primaries, runoffs, and special-election contests. Document official source adapters and report coverage per state/race; unsupported or incomplete coverage cannot be reported as a complete nationwide import.
 - [ ] DISC-2: Candidate discovery reads all pages of applicable FEC results, preserves FEC candidate/committee IDs and source references, and reconciles race dates and ballot status with official state election records. FEC registration alone is never labeled confirmed ballot access.
 - [ ] DISC-3: Imported candidates and candidacies include name, party when available, office, normalized state, House district or Senate seat, election date/stage, source identifiers, source URLs, verification status, and checked-at time. At-large districts and concurrent Senate contests remain distinguishable.
-- [ ] DISC-4: A candidate listed in official state records without a matching FEC ID can be stored with a state-scoped identifier. Ambiguous matches are flagged for resolution rather than merged by name or silently dropped.
+- [x] DISC-4: A candidate listed in official state records without a matching FEC ID can be stored with an internal candidate ID and state-scoped source observations. Preserve actual official identifiers when provided; never invent one from a row locator. Ambiguous matches remain unresolved instead of name-only merging or dropping records. Verified locally on the bounded sample.
 - [ ] DISC-5: Candidate campaign website URLs from committee filings or official records are treated as proposed URLs until campaign ownership is verified. The saved record includes verification evidence and time; missing, ambiguous, outdated, or mismatched sites are not queued as verified official websites.
-- [ ] DISC-6: Repeating a successful import updates matching records without duplicates and preserves earlier candidacies and sources. Explicit official withdrawal/disqualification updates eligibility without deleting history; absence from a failed or partial import never marks a candidate withdrawn.
-- [ ] DISC-7: Pagination, source timeouts, malformed responses, and rate limits produce bounded retries and actionable run statuses. Partial results are labeled partial, retain provenance, and do not overwrite previously confirmed facts with guessed values.
-- [ ] DISC-8: A documented server-only entry point accepts explicit scope and supports repeat runs without exposing provider credentials. Candidate identity and verified campaign-site records are persisted using the database ticket's shared queries.
+- [x] DISC-6: Repeating a successful import updates matching records without duplicates and preserves earlier candidacies and sources. Explicit official withdrawal/disqualification updates eligibility without deleting history; absence from a failed or partial import never marks a candidate withdrawn.
+- [x] DISC-7: Pagination, source timeouts, malformed responses, and rate limits produce bounded retries and actionable run statuses. Partial results are labeled partial, retain provenance, and do not overwrite previously confirmed facts with guessed values.
+- [x] DISC-8: A documented server-only entry point accepts explicit scope and supports repeat runs without exposing provider credentials. Candidate identity and verified campaign-site records are persisted using the database ticket's shared queries.
 - [ ] DISC-9: Fixture tests cover House, Senate, at-large districts, separate Senate seats, pagination, repeated imports, state-only candidates, ambiguous identity, missing sites, explicit withdrawal, and failed/partial source responses; a bounded live-source check documents the exact coverage verified.
 
 ## 4. Crawl, extract with AI, validate, and publish — CRAWL ticket

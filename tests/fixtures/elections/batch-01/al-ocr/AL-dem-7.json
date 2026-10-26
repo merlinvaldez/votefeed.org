@@ -1,0 +1,23 @@
+{
+    "lines":  [
+                  "c",
+                  "8",
+                  "g",
+                  "E",
+                  "c",
+                  "0",
+                  "8",
+                  "E",
+                  "c",
+                  "o",
+                  "888",
+                  "E",
+                  "c",
+                  "0",
+                  "g",
+                  "E"
+              ],
+    "engine":  "Windows.Media.Ocr",
+    "language":  "en-US",
+    "image":  "AL-dem-7.png"
+}

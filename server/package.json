@@ -12,7 +12,8 @@
     "db:reset": "npm run db:schema && npm run db:seed",
     "db:sync-votes": "node src/db/syncNewVotes.js",
     "db:sync-bills": "node src/db/syncMissingBills.js",
-    "db:backfill-roll-call-summaries": "node src/db/backfillRollCallSummaries.js"
+    "db:backfill-roll-call-summaries": "node src/db/backfillRollCallSummaries.js",
+    "elections:discover": "node src/elections/cli.js"
   },
   "keywords": [],
   "author": "",
@@ -21,10 +22,14 @@
   "dependencies": {
     "@clerk/express": "^1.7.74",
     "@openai/agents": "^0.4.10",
+    "cheerio": "1.2.0",
     "cors": "^2.8.5",
+    "csv-parse": "7.0.3",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "ipaddr.js": "2.2.0",
     "openai": "^6.22.0",
+    "pdf-parse": "2.4.5",
     "pg": "^8.16.3",
     "resend": "^6.10.0"
   },

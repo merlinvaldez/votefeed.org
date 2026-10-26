@@ -1,0 +1,8 @@
+{
+    "lines":  [
+                  "0 0 0 0 000"
+              ],
+    "engine":  "Windows.Media.Ocr",
+    "language":  "en-US",
+    "image":  "AL-dem-11.png"
+}

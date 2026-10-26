@@ -1,0 +1,112 @@
+Office of Elections
+2026  Candidate Report
+Election:
+2026 Candidate Report
+2024 Candidate Report
+2022 Candidate Report
+After the candidate filing deadline and following each election, the status will be updated to reflect the election in which the candidate appears or indicate if the candidate has been elected.
+ContestsPartyBallot NameLegal NameMailing AddressPhoneEmailWebsiteIssuedFiledStatus
+Data pager
+Data pager
+12345678910...
+Page size:
+PageSizeComboBox
+select
+10
+15
+20
+50
+415 items in 28 pages
+U.S. REPRESENTATIVE, DIST IDEMOCRATICBELATTI, Della AuDELLA AU BELATTI
+P.O. BOX 900
+HONOLULU, HI 96808
+(808) 393-0594
+[email protected]www.dellabelatti.com02/17/2026 Issued
+U.S. REPRESENTATIVE, DIST INONPARTISANBERNING, Nathan M.NATHAN M. BERNING
+152 AVALON AVE.
+FLAGLER BEACH, FL 32136
+(260) 498-3415
+[email protected]righttokeep.org06/01/202606/01/2026In General
+U.S. REPRESENTATIVE, DIST IDEMOCRATICBOOKER, JenniferJENNIFER MARGARET BOOKER
+94-207 WAIPAHU ST., #368
+WAIPAHU, HI 96797
+(808) 688-6307
+[email protected]jenbooker.com03/09/202605/05/2026In Primary
+U.S. REPRESENTATIVE, DIST IREPUBLICANBURD, Zachary B.ZACHARY B. BURD
+P.O. BOX 37311
+HONOLULU, HI 96837
+(808) 436-9103
+[email protected]www.facebook.com/zachary.b.burd/03/23/2026 Issued
+U.S. REPRESENTATIVE, DIST IDEMOCRATICCASE, EdEDWARD E. CASE
+P.O. BOX 2941
+HONOLULU, HI 96802
+(808) 546-9509
+[email protected]www.edcase.com02/05/202605/08/2026In General
+U.S. REPRESENTATIVE, DIST IGREENCONLEY, Jordan S.JORDAN S. CONLEY
+98-729 MOANALUA LP., #301
+AIEA, HI 96701
+(808) 492-2213
+[email protected]JordanforHawaii.com02/12/202604/22/2026In General
+U.S. REPRESENTATIVE, DIST ILIBERTARIANCUADRA, Ku Lono (Bobby)KU LONO CUADRA
+1096 KALIHIWAI PL.
+HONOLULU, HI 96825
+(808) 465-5510
+[email protected]ku-lono-cuadra.org02/23/2026 Issued
+U.S. REPRESENTATIVE, DIST IREPUBLICANCUADRA, Ku Lono (BOBBY)KU CUADRA
+1096 KALIHIWAI PL.
+HONOLULU, HI 96825
+(808) 465-5510
+[email protected]ku-lono-cuadra.org02/23/2026 Issued
+U.S. REPRESENTATIVE, DIST IDEMOCRATICFATULA, BenBENJAMIN FATULA
+5059 LIGHTNING ST., #B
+KAPOLEI, HI 96707
+(408) 813-4055
+[email protected]FatulaForCongress.com02/17/202606/02/2026In Primary
+U.S. REPRESENTATIVE, DIST IREPUBLICANFRAZIER, Maxwell T.MAXWELL T. FRAZIER
+92-1230 MAKAKILO DR., #9
+KAPOLEI, HI 96707
+(352) 800-8086
+[email protected]maxwellfrazier.com02/03/2026 Issued
+U.S. REPRESENTATIVE, DIST IDEMOCRATICGISA, Joshua Pule KimoJOSHUA P.K. GISA
+91-1082 HOKUA ST.
+EWA BEACH, HI 96706
+(808) 381-5652
+[email protected] 03/05/2026 Issued
+U.S. REPRESENTATIVE, DIST IREPUBLICANGISA, Joshua P. KimoJOSHUA P.K. GISA
+91-1082 HOKUA ST.
+EWA BEACH, HI 96706
+(808) 381-5652
+[email protected] 03/05/2026 Issued
+U.S. REPRESENTATIVE, DIST IDEMOCRATICKEOHOKALOLE, Jarrett K.JARRETT K. KEOHOKALOLE
+P.O. BOX 2629
+HONOLULU, HI 96803
+(808) 860-0970
+[email protected]jarrettforcongress.com03/12/202605/19/2026In Primary
+U.S. REPRESENTATIVE, DIST IDEMOCRATICKISWANTO, Nicholas (Nick)NICHOLAS KISWANTO
+3350 SIERRA DR., #701
+HONOLULU, HI 96816
+(808) 699-6072
+[email protected]kiswanto2026.org02/02/202605/26/2026In Primary
+U.S. REPRESENTATIVE, DIST IREPUBLICANLAM, Adriel C.ADRIEL C. LAM
+P.O. BOX 4682
+KANEOHE, HI 96744
+(808) 721-9362
+[email protected]www.lam4aloha.com02/02/202604/07/2026In General
+NoFilter
+Contains
+DoesNotContain
+StartsWith
+EndsWith
+EqualTo
+NotEqualTo
+GreaterThan
+LessThan
+GreaterThanOrEqualTo
+LessThanOrEqualTo
+Between
+NotBetween
+IsEmpty
+NotIsEmpty
+IsNull
+NotIsNull
+Custom

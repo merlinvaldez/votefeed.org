@@ -1,0 +1,82 @@
+[
+  {
+    "id": "AL-authority",
+    "state": "AL",
+    "url": "https://www.sos.alabama.gov/alabama-votes/voter/election-information/2026",
+    "allowedOrigins": [
+      "https://www.sos.alabama.gov"
+    ]
+  },
+  {
+    "id": "AK-authority",
+    "state": "AK",
+    "url": "https://www.elections.alaska.gov/candidates/?election=26genr",
+    "allowedOrigins": [
+      "https://www.elections.alaska.gov"
+    ]
+  },
+  {
+    "id": "AZ-authority",
+    "state": "AZ",
+    "url": "https://azsos.gov/elections/election-information/2026-election-info",
+    "allowedOrigins": [
+      "https://azsos.gov"
+    ]
+  },
+  {
+    "id": "AR-authority",
+    "state": "AR",
+    "url": "https://www.sos.arkansas.gov/elections/for-voters",
+    "allowedOrigins": [
+      "https://www.sos.arkansas.gov"
+    ]
+  },
+  {
+    "id": "CA-authority",
+    "state": "CA",
+    "url": "https://www.sos.ca.gov/elections/upcoming-elections/general-election-november-3-2026",
+    "allowedOrigins": [
+      "https://www.sos.ca.gov"
+    ]
+  },
+  {
+    "id": "CO-authority",
+    "state": "CO",
+    "url": "https://www.sos.state.co.us/pubs/elections/",
+    "allowedOrigins": [
+      "https://www.sos.state.co.us"
+    ]
+  },
+  {
+    "id": "CT-authority",
+    "state": "CT",
+    "url": "https://portal.ct.gov/sots/election-services/candidate-information/candidate-ballot-access",
+    "allowedOrigins": [
+      "https://portal.ct.gov"
+    ]
+  },
+  {
+    "id": "FL-authority",
+    "state": "FL",
+    "url": "https://dos.fl.gov/elections/candidates-committees/",
+    "allowedOrigins": [
+      "https://dos.fl.gov"
+    ]
+  },
+  {
+    "id": "GA-authority",
+    "state": "GA",
+    "url": "https://sos.ga.gov/november-3-2026-general-election",
+    "allowedOrigins": [
+      "https://sos.ga.gov"
+    ]
+  },
+  {
+    "id": "HI-authority",
+    "state": "HI",
+    "url": "https://elections.hawaii.gov/candidates/candidate-filing/",
+    "allowedOrigins": [
+      "https://elections.hawaii.gov"
+    ]
+  }
+]

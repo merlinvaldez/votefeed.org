@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-26T21:29:25.359Z",
+  "databaseWrites": false,
+  "captures": [
+    {
+      "state": "GA",
+      "id": "GA-general-zip",
+      "url": "https://sos.ga.gov/sites/default/files/2026-09/November%202026%20Federal%20and%20State%20Candidates.zip",
+      "allowedOrigins": [
+        "https://sos.ga.gov"
+      ],
+      "status": "failed",
+      "errorCode": "discovery-http-failed"
+    },
+    {
+      "state": "CT",
+      "id": "CT-ems",
+      "url": "https://ctemspublic.tgstg.net/",
+      "allowedOrigins": [
+        "https://ctemspublic.tgstg.net"
+      ],
+      "status": "captured",
+      "sha256": "fb072ac34f101948a81ad213be47b71bee16bb6d25129f0bbaf753332c4339fb",
+      "bytes": 16912,
+      "requestedUrl": "https://ctemspublic.tgstg.net/",
+      "finalUrl": "https://ctemspublic.tgstg.net/",
+      "retrievedAt": "2026-10-26T21:29:25.528Z",
+      "mediaType": "text/html",
+      "httpStatus": 200,
+      "headers": {
+        "date": "Mon, 26 Oct 2026 21:29:25 GMT",
+        "content-type": "text/html",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "last-modified": "Wed, 30 Oct 2024 11:38:24 GMT",
+        "accept-ranges": "bytes",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=kv%2BVQlMbm67PvGoqUit185kZfkyac8nlq6g7EAm9SkLKhKC%2BSq%2BADDCrDFmMgCGhstka2H22zx%2FFYfc8ji4KoOyOEcQ%2BWSK98Vop5owsvdiV0jzKY2lNcRXB2MSDIe6DBd%2B8mGdYclxNXzhStPyuIgBrgQ%3D%3D\"}]}",
+        "server": "cloudflare",
+        "x-powered-by": "ASP.NET",
+        "cf-cache-status": "DYNAMIC",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "cf-ray": "a50c8e6dcd170aec-EWR"
+      },
+      "file": "fb072ac34f101948a81ad213be47b71bee16bb6d25129f0bbaf753332c4339fb.bin",
+      "textFile": "fb072ac34f101948a81ad213be47b71bee16bb6d25129f0bbaf753332c4339fb.txt",
+      "textLength": 401,
+      "links": []
+    }
+  ]
+}

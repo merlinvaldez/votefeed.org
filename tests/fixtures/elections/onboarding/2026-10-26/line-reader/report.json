@@ -1,0 +1,2451 @@
+{
+  "version": 1,
+  "signature": "6c12d8b2d05018056146c9550e6cbc0c308c3e98d1db30e42ea07eabaa237e32",
+  "scope": {
+    "cycle": 2026,
+    "stage": "general",
+    "contestType": "regular",
+    "offices": [
+      "house",
+      "senate"
+    ],
+    "states": [
+      "DE",
+      "MO",
+      "ND",
+      "NE",
+      "NH"
+    ],
+    "geography": "2026-election"
+  },
+  "createdAt": "2026-10-26T21:14:43.994Z",
+  "databaseWrites": false,
+  "status": "partial",
+  "sources": [
+    {
+      "sourceId": "de-2026-general-sample",
+      "state": "DE",
+      "url": "https://elections.delaware.gov/candidates/candidatelist/genl_fcddt_2026.html",
+      "source": {
+        "id": "de-2026-general-sample",
+        "state": "DE",
+        "format": "ai",
+        "authoritative": true,
+        "url": "https://elections.delaware.gov/candidates/candidatelist/genl_fcddt_2026.html",
+        "authorityUrl": "https://elections.delaware.gov/candidates/candidatelist/",
+        "allowedOrigins": [
+          "https://elections.delaware.gov"
+        ],
+        "checkedAt": "2026-10-26T21:08:33.883Z",
+        "effectiveAt": null,
+        "completeness": "partial",
+        "coverageAccepted": false,
+        "correctionsAudited": false,
+        "races": [
+          {
+            "label": "Representative in Congress",
+            "race": {
+              "office": "house",
+              "state": "DE",
+              "district": 0,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          },
+          {
+            "label": "U.S. Senator",
+            "race": {
+              "office": "senate",
+              "state": "DE",
+              "district": null,
+              "senateSeat": 2,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          }
+        ],
+        "evidenceUrls": [
+          "https://elections.delaware.gov/candidates/candidatelist/",
+          "https://www.senate.gov/senators/Class_II.htm"
+        ],
+        "reviewNotes": "Bounded source/race review only; no complete-list or corrections acceptance. Senate absence is not accepted as no race.",
+        "confirmationBasis": "The department links this November 3, 2026 list from Ballot Qualified Candidates. Include federal rows with Status Qualified as ballot-confirmed, and the explicitly Withdrawn Lee Murphy row as withdrawn. Status is person-specific. Earlier filing-date column alone is not confirmation."
+      },
+      "status": "validated-sample",
+      "records": [
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Chris Coons",
+            "party": "Democratic",
+            "race": {
+              "office": "senate",
+              "state": "DE",
+              "district": null,
+              "senateSeat": 2,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": "https://chriscoons.com/",
+            "siteRaw": "https://chriscoons.com",
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "U.S. Senator\nStatewide\nDemocratic\nChris Coons\nMailing Address:\nPO Box 9900\nNewark, DE, 19711\nEmail #2: chris@chriscoonscom\nWebsite: https://chriscoons.com\nQualified\n6/12/2026",
+            "locator": "U.S. Senator entry, Democratic, Chris Coons",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Michael \"Dr. Mike\" Katz",
+            "party": "Republican",
+            "race": {
+              "office": "senate",
+              "state": "DE",
+              "district": null,
+              "senateSeat": 2,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": "https://www.drmikekatz.com/",
+            "siteRaw": "https://www.drmikekatz.com",
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "U.S. Senator\nStatewide\nRepublican\nMichael \"Dr. Mike\" Katz\nEmail #1: [email protected]\nWebsite: https://www.drmikekatz.com\nQualified\n3/19/2026",
+            "locator": "U.S. Senator entry, Republican, Michael \"Dr. Mike\" Katz",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Sarah McBride",
+            "party": "Democratic",
+            "race": {
+              "office": "house",
+              "state": "DE",
+              "district": 0,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": "https://sarahmcbride.com/",
+            "siteRaw": "https://sarahmcbride.com",
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "Representative in Congress\nStatewide\nDemocratic\nSarah McBride\nWebsite: https://sarahmcbride.com\nQualified\n6/12/2026",
+            "locator": "Representative in Congress entry, Democratic, Sarah McBride",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Joseph \"Dr. Joe\" Arminio",
+            "party": "Republican",
+            "race": {
+              "office": "house",
+              "state": "DE",
+              "district": 0,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": "https://drjoeforcongress.com/",
+            "siteRaw": "https://drjoeforcongress.com",
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "Representative in Congress\nStatewide\nRepublican\nJoseph \"Dr. Joe\" Arminio\nResidential Address:\n6 Guyencourt Road\nWilmington, DE, 19807\nPhone #1: (888)-547-7208\nWebsite: https://drjoeforcongress.com\nQualified\n7/14/2026",
+            "locator": "Representative in Congress entry, Republican, Joseph \"Dr. Joe\" Arminio",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Lee Murphy",
+            "party": "Republican",
+            "race": {
+              "office": "house",
+              "state": "DE",
+              "district": 0,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": "https://www.leemurphy2026.com/",
+            "siteRaw": "https://www.leemurphy2026.com",
+            "siteIssue": null,
+            "eligibility": "withdrawn",
+            "reinstated": false,
+            "excerpt": "Representative in Congress\nStatewide\nRepublican\nLee Murphy\nWITHDRAWN 7/21/2026\nResidential Address:\n20 W. Woodbound Drive Apt. 20\nWilmington, DE, 19803\nMailing Address:\n20 Woodbound Drive Apt. 20\nWilmington, DE, 19803\nEmail #1: [email protected]\nEmail #2: [email protected]\nPhone #1: (302) 229-9380\nWebsite: https://www.leemurphy2026.com\nWithdrawn\n7/13/2026",
+            "locator": "Representative in Congress entry, Republican, Lee Murphy",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        }
+      ],
+      "model": "gpt-5.4",
+      "promptVersion": "ballot-v3",
+      "archive": "4e0ff1978fac43c49b2c8f4f8eb4cf4c988b4ead19c6305e37ff4ba66527a4f1.bin",
+      "sha256": "4e0ff1978fac43c49b2c8f4f8eb4cf4c988b4ead19c6305e37ff4ba66527a4f1",
+      "retrievedAt": "2026-10-26T21:08:33.883Z",
+      "finalUrl": "https://elections.delaware.gov/candidates/candidatelist/genl_fcddt_2026.html",
+      "mediaType": "text/html; charset=UTF-8",
+      "textFile": "4e0ff1978fac43c49b2c8f4f8eb4cf4c988b4ead19c6305e37ff4ba66527a4f1.txt",
+      "valid": 5,
+      "races": [
+        {
+          "race": {
+            "office": "house",
+            "state": "DE",
+            "district": 0,
+            "senateSeat": null,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 3
+        },
+        {
+          "race": {
+            "office": "senate",
+            "state": "DE",
+            "district": null,
+            "senateSeat": 2,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 2
+        }
+      ],
+      "gaps": [
+        "candidate-list completeness review",
+        "corrections audit",
+        "FEC reconciliation",
+        "campaign-site verification"
+      ]
+    },
+    {
+      "sourceId": "nd-2026-general-sample",
+      "state": "ND",
+      "url": "https://vip.sos.nd.gov/candidatelist.aspx?eid=348",
+      "source": {
+        "id": "nd-2026-general-sample",
+        "state": "ND",
+        "format": "ai",
+        "authoritative": true,
+        "url": "https://vip.sos.nd.gov/candidatelist.aspx?eid=348",
+        "authorityUrl": "https://www.sos.nd.gov/elections",
+        "allowedOrigins": [
+          "https://vip.sos.nd.gov"
+        ],
+        "checkedAt": "2026-10-26T21:08:34.689Z",
+        "effectiveAt": null,
+        "completeness": "partial",
+        "coverageAccepted": false,
+        "correctionsAudited": false,
+        "races": [
+          {
+            "label": "Representative in Congress",
+            "race": {
+              "office": "house",
+              "state": "ND",
+              "district": 0,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          }
+        ],
+        "evidenceUrls": [
+          "https://www.sos.nd.gov/elections",
+          "https://www.senate.gov/senators/Class_II.htm"
+        ],
+        "reviewNotes": "Bounded source/race review only; no complete-list or corrections acceptance. Senate absence is not accepted as no race."
+      },
+      "status": "needs-review",
+      "records": [],
+      "model": "gpt-5.4",
+      "promptVersion": "ballot-v3",
+      "archive": "967514bcb075daf469ea2af5298aef0c49c4159a447d44794302dceca857139c.bin",
+      "sha256": "967514bcb075daf469ea2af5298aef0c49c4159a447d44794302dceca857139c",
+      "retrievedAt": "2026-10-26T21:08:34.689Z",
+      "finalUrl": "https://vip.sos.nd.gov/candidatelist.aspx?eid=348",
+      "mediaType": "text/html; charset=utf-8",
+      "textFile": "967514bcb075daf469ea2af5298aef0c49c4159a447d44794302dceca857139c.txt",
+      "valid": 0,
+      "races": [
+        {
+          "race": {
+            "office": "house",
+            "state": "ND",
+            "district": 0,
+            "senateSeat": null,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 0
+        }
+      ],
+      "gaps": [
+        "candidate-list completeness review",
+        "corrections audit",
+        "FEC reconciliation",
+        "campaign-site verification",
+        "reviewed race has no extracted candidates"
+      ]
+    },
+    {
+      "sourceId": "mo-2026-general-sample",
+      "state": "MO",
+      "url": "https://s1.sos.mo.gov/CMSImages/ElectionCandidates/2026GeneralElectionCertifiedCandidates.pdf",
+      "source": {
+        "id": "mo-2026-general-sample",
+        "state": "MO",
+        "format": "ai",
+        "authoritative": true,
+        "url": "https://s1.sos.mo.gov/CMSImages/ElectionCandidates/2026GeneralElectionCertifiedCandidates.pdf",
+        "authorityUrl": "https://www.sos.mo.gov/elections/candidates",
+        "allowedOrigins": [
+          "https://s1.sos.mo.gov"
+        ],
+        "checkedAt": "2026-10-26T21:08:34.916Z",
+        "effectiveAt": "2026-08-25T00:00:00Z",
+        "completeness": "partial",
+        "coverageAccepted": false,
+        "correctionsAudited": false,
+        "races": [
+          {
+            "label": "For U.S. Representative District 1",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 1,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          },
+          {
+            "label": "For U.S. Representative District 2",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 2,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          },
+          {
+            "label": "For U.S. Representative District 3",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 3,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          },
+          {
+            "label": "For U.S. Representative District 4",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 4,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          },
+          {
+            "label": "For U.S. Representative District 5",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 5,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          },
+          {
+            "label": "For U.S. Representative District 6",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 6,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          },
+          {
+            "label": "For U.S. Representative District 7",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 7,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          },
+          {
+            "label": "For U.S. Representative District 8",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 8,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          }
+        ],
+        "evidenceUrls": [
+          "https://www.sos.mo.gov/elections/candidates",
+          "https://www.senate.gov/senators/Class_II.htm"
+        ],
+        "reviewNotes": "Bounded source/race review only; no complete-list or corrections acceptance. Senate absence is not accepted as no race."
+      },
+      "status": "validated-sample",
+      "records": [
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Paul Berry III",
+            "party": "REPUBLICAN",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 1,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "REPUBLICAN CANDIDATES\nFor State Auditor\nScott Fitzpatrick\nFor U.S. Representative\nDistrict 1, Paul Berry III",
+            "locator": "-- 7 of 34 -- REPUBLICAN CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Ann Wagner",
+            "party": "REPUBLICAN",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 2,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "REPUBLICAN CANDIDATES\nFor State Auditor\nScott Fitzpatrick\nFor U.S. Representative\nDistrict 1, Paul Berry III\nDistrict 2, Ann Wagner",
+            "locator": "-- 7 of 34 -- REPUBLICAN CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Bob Onder",
+            "party": "REPUBLICAN",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 3,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "REPUBLICAN CANDIDATES\nFor State Auditor\nScott Fitzpatrick\nFor U.S. Representative\nDistrict 1, Paul Berry III\nDistrict 2, Ann Wagner\nDistrict 3, Bob Onder",
+            "locator": "-- 7 of 34 -- REPUBLICAN CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Mark Alford",
+            "party": "REPUBLICAN",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 4,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "REPUBLICAN CANDIDATES\nFor State Auditor\nScott Fitzpatrick\nFor U.S. Representative\nDistrict 1, Paul Berry III\nDistrict 2, Ann Wagner\nDistrict 3, Bob Onder\nDistrict 4, Mark Alford",
+            "locator": "-- 7 of 34 -- REPUBLICAN CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Rick Brattin",
+            "party": "REPUBLICAN",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 5,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "REPUBLICAN CANDIDATES\nFor State Auditor\nScott Fitzpatrick\nFor U.S. Representative\nDistrict 1, Paul Berry III\nDistrict 2, Ann Wagner\nDistrict 3, Bob Onder\nDistrict 4, Mark Alford\nDistrict 5, Rick Brattin",
+            "locator": "-- 7 of 34 -- REPUBLICAN CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Chris Stigall",
+            "party": "REPUBLICAN",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 6,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "REPUBLICAN CANDIDATES\nFor State Auditor\nScott Fitzpatrick\nFor U.S. Representative\nDistrict 1, Paul Berry III\nDistrict 2, Ann Wagner\nDistrict 3, Bob Onder\nDistrict 4, Mark Alford\nDistrict 5, Rick Brattin\nDistrict 6, Chris Stigall",
+            "locator": "-- 7 of 34 -- REPUBLICAN CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Eric W. Burlison",
+            "party": "REPUBLICAN",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 7,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "REPUBLICAN CANDIDATES\nFor State Auditor\nScott Fitzpatrick\nFor U.S. Representative\nDistrict 1, Paul Berry III\nDistrict 2, Ann Wagner\nDistrict 3, Bob Onder\nDistrict 4, Mark Alford\nDistrict 5, Rick Brattin\nDistrict 6, Chris Stigall\nDistrict 7, Eric W. Burlison",
+            "locator": "-- 7 of 34 -- REPUBLICAN CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Jason T. Smith",
+            "party": "REPUBLICAN",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 8,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "REPUBLICAN CANDIDATES\nFor State Auditor\nScott Fitzpatrick\nFor U.S. Representative\nDistrict 1, Paul Berry III\nDistrict 2, Ann Wagner\nDistrict 3, Bob Onder\nDistrict 4, Mark Alford\nDistrict 5, Rick Brattin\nDistrict 6, Chris Stigall\nDistrict 7, Eric W. Burlison\nDistrict 8, Jason T. Smith",
+            "locator": "-- 7 of 34 -- REPUBLICAN CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Wesley Bell",
+            "party": "DEMOCRATIC",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 1,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "DEMOCRATIC CANDIDATES\nFor State Auditor\nQuentin Wilson\nFor U.S. Representative\nDistrict 1, Wesley Bell",
+            "locator": "-- 12 of 34 -- DEMOCRATIC CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Fred Wellman",
+            "party": "DEMOCRATIC",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 2,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "DEMOCRATIC CANDIDATES\nFor State Auditor\nQuentin Wilson\nFor U.S. Representative\nDistrict 1, Wesley Bell\nDistrict 2, Fred Wellman",
+            "locator": "-- 12 of 34 -- DEMOCRATIC CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Bethany E Mann",
+            "party": "DEMOCRATIC",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 3,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "DEMOCRATIC CANDIDATES\nFor State Auditor\nQuentin Wilson\nFor U.S. Representative\nDistrict 1, Wesley Bell\nDistrict 2, Fred Wellman\nDistrict 3, Bethany E Mann",
+            "locator": "-- 12 of 34 -- DEMOCRATIC CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Jordan Herrera",
+            "party": "DEMOCRATIC",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 4,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "DEMOCRATIC CANDIDATES\nFor State Auditor\nQuentin Wilson\nFor U.S. Representative\nDistrict 1, Wesley Bell\nDistrict 2, Fred Wellman\nDistrict 3, Bethany E Mann\nDistrict 4, Jordan Herrera",
+            "locator": "-- 12 of 34 -- DEMOCRATIC CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Emanuel Cleaver, II",
+            "party": "DEMOCRATIC",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 5,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "DEMOCRATIC CANDIDATES\nFor State Auditor\nQuentin Wilson\nFor U.S. Representative\nDistrict 1, Wesley Bell\nDistrict 2, Fred Wellman\nDistrict 3, Bethany E Mann\nDistrict 4, Jordan Herrera\nDistrict 5, Emanuel Cleaver, II",
+            "locator": "-- 12 of 34 -- DEMOCRATIC CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Josh Smead",
+            "party": "DEMOCRATIC",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 6,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "DEMOCRATIC CANDIDATES\nFor State Auditor\nQuentin Wilson\nFor U.S. Representative\nDistrict 1, Wesley Bell\nDistrict 2, Fred Wellman\nDistrict 3, Bethany E Mann\nDistrict 4, Jordan Herrera\nDistrict 5, Emanuel Cleaver, II\nDistrict 6, Josh Smead",
+            "locator": "-- 12 of 34 -- DEMOCRATIC CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Missi Hesketh",
+            "party": "DEMOCRATIC",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 7,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "DEMOCRATIC CANDIDATES\nFor State Auditor\nQuentin Wilson\nFor U.S. Representative\nDistrict 1, Wesley Bell\nDistrict 2, Fred Wellman\nDistrict 3, Bethany E Mann\nDistrict 4, Jordan Herrera\nDistrict 5, Emanuel Cleaver, II\nDistrict 6, Josh Smead\nDistrict 7, Missi Hesketh",
+            "locator": "-- 12 of 34 -- DEMOCRATIC CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Chris Reichard",
+            "party": "DEMOCRATIC",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 8,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "DEMOCRATIC CANDIDATES\nFor State Auditor\nQuentin Wilson\nFor U.S. Representative\nDistrict 1, Wesley Bell\nDistrict 2, Fred Wellman\nDistrict 3, Bethany E Mann\nDistrict 4, Jordan Herrera\nDistrict 5, Emanuel Cleaver, II\nDistrict 6, Josh Smead\nDistrict 7, Missi Hesketh\nDistrict 8, Chris Reichard",
+            "locator": "-- 12 of 34 -- DEMOCRATIC CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Tom Schmitz",
+            "party": "LIBERTARIAN",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 1,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "LIBERTARIAN CANDIDATES\nFor State Auditor\nDustin Coffell\nFor U.S. Representative\nDistrict 1, Tom Schmitz",
+            "locator": "-- 17 of 34 -- LIBERTARIAN CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Brandon Coulter Daugherty",
+            "party": "LIBERTARIAN",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 2,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "LIBERTARIAN CANDIDATES\nFor State Auditor\nDustin Coffell\nFor U.S. Representative\nDistrict 1, Tom Schmitz\nDistrict 2, Brandon Coulter Daugherty",
+            "locator": "-- 17 of 34 -- LIBERTARIAN CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Jim Higgins",
+            "party": "LIBERTARIAN",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 3,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "LIBERTARIAN CANDIDATES\nFor State Auditor\nDustin Coffell\nFor U.S. Representative\nDistrict 1, Tom Schmitz\nDistrict 2, Brandon Coulter Daugherty\nDistrict 3, Jim Higgins",
+            "locator": "-- 17 of 34 -- LIBERTARIAN CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Thomas Holbrook",
+            "party": "LIBERTARIAN",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 4,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "LIBERTARIAN CANDIDATES\nFor State Auditor\nDustin Coffell\nFor U.S. Representative\nDistrict 1, Tom Schmitz\nDistrict 2, Brandon Coulter Daugherty\nDistrict 3, Jim Higgins\nDistrict 4, Thomas Holbrook",
+            "locator": "-- 17 of 34 -- LIBERTARIAN CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Randall (Randy) Langkraehr",
+            "party": "LIBERTARIAN",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 5,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "LIBERTARIAN CANDIDATES\nFor State Auditor\nDustin Coffell\nFor U.S. Representative\nDistrict 1, Tom Schmitz\nDistrict 2, Brandon Coulter Daugherty\nDistrict 3, Jim Higgins\nDistrict 4, Thomas Holbrook\nDistrict 5, Randall (Randy) Langkraehr",
+            "locator": "-- 17 of 34 -- LIBERTARIAN CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Andy Maidment",
+            "party": "LIBERTARIAN",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 6,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "LIBERTARIAN CANDIDATES\nFor State Auditor\nDustin Coffell\nFor U.S. Representative\nDistrict 1, Tom Schmitz\nDistrict 2, Brandon Coulter Daugherty\nDistrict 3, Jim Higgins\nDistrict 4, Thomas Holbrook\nDistrict 5, Randall (Randy) Langkraehr\nDistrict 6, Andy Maidment",
+            "locator": "-- 17 of 34 -- LIBERTARIAN CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Kevin Craig",
+            "party": "LIBERTARIAN",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 7,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "LIBERTARIAN CANDIDATES\nFor State Auditor\nDustin Coffell\nFor U.S. Representative\nDistrict 1, Tom Schmitz\nDistrict 2, Brandon Coulter Daugherty\nDistrict 3, Jim Higgins\nDistrict 4, Thomas Holbrook\nDistrict 5, Randall (Randy) Langkraehr\nDistrict 6, Andy Maidment\nDistrict 7, Kevin Craig",
+            "locator": "-- 17 of 34 -- LIBERTARIAN CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Rebecca Sharpe Lombard",
+            "party": "LIBERTARIAN",
+            "race": {
+              "office": "house",
+              "state": "MO",
+              "district": 8,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "LIBERTARIAN CANDIDATES\nFor State Auditor\nDustin Coffell\nFor U.S. Representative\nDistrict 1, Tom Schmitz\nDistrict 2, Brandon Coulter Daugherty\nDistrict 3, Jim Higgins\nDistrict 4, Thomas Holbrook\nDistrict 5, Randall (Randy) Langkraehr\nDistrict 6, Andy Maidment\nDistrict 7, Kevin Craig\nDistrict 8, Rebecca Sharpe Lombard",
+            "locator": "-- 17 of 34 -- LIBERTARIAN CANDIDATES section",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        }
+      ],
+      "model": "gpt-5.4",
+      "promptVersion": "ballot-v3",
+      "archive": "614e004d0f051d1d176cbad7cbb54cf9857a82f552869ed840fba5a3c291f9cb.bin",
+      "sha256": "614e004d0f051d1d176cbad7cbb54cf9857a82f552869ed840fba5a3c291f9cb",
+      "retrievedAt": "2026-10-26T21:08:34.916Z",
+      "finalUrl": "https://s1.sos.mo.gov/CMSImages/ElectionCandidates/2026GeneralElectionCertifiedCandidates.pdf",
+      "mediaType": "application/pdf",
+      "textFile": "614e004d0f051d1d176cbad7cbb54cf9857a82f552869ed840fba5a3c291f9cb.txt",
+      "valid": 24,
+      "races": [
+        {
+          "race": {
+            "office": "house",
+            "state": "MO",
+            "district": 1,
+            "senateSeat": null,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 3
+        },
+        {
+          "race": {
+            "office": "house",
+            "state": "MO",
+            "district": 2,
+            "senateSeat": null,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 3
+        },
+        {
+          "race": {
+            "office": "house",
+            "state": "MO",
+            "district": 3,
+            "senateSeat": null,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 3
+        },
+        {
+          "race": {
+            "office": "house",
+            "state": "MO",
+            "district": 4,
+            "senateSeat": null,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 3
+        },
+        {
+          "race": {
+            "office": "house",
+            "state": "MO",
+            "district": 5,
+            "senateSeat": null,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 3
+        },
+        {
+          "race": {
+            "office": "house",
+            "state": "MO",
+            "district": 6,
+            "senateSeat": null,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 3
+        },
+        {
+          "race": {
+            "office": "house",
+            "state": "MO",
+            "district": 7,
+            "senateSeat": null,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 3
+        },
+        {
+          "race": {
+            "office": "house",
+            "state": "MO",
+            "district": 8,
+            "senateSeat": null,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 3
+        }
+      ],
+      "gaps": [
+        "candidate-list completeness review",
+        "corrections audit",
+        "FEC reconciliation",
+        "campaign-site verification"
+      ]
+    },
+    {
+      "sourceId": "nh-2026-general-sample",
+      "state": "NH",
+      "url": "https://mm.nh.gov/files/uploads/sos/docs/2026-ge-candidate-list.pdf",
+      "source": {
+        "id": "nh-2026-general-sample",
+        "state": "NH",
+        "format": "ai",
+        "authoritative": true,
+        "url": "https://mm.nh.gov/files/uploads/sos/docs/2026-ge-candidate-list.pdf",
+        "authorityUrl": "https://www.sos.nh.gov/2026-election-details",
+        "allowedOrigins": [
+          "https://mm.nh.gov"
+        ],
+        "checkedAt": "2026-10-26T21:08:35.598Z",
+        "effectiveAt": "2026-09-17T00:00:00Z",
+        "completeness": "partial",
+        "coverageAccepted": false,
+        "correctionsAudited": false,
+        "races": [
+          {
+            "label": "Representative in Congress District 1",
+            "race": {
+              "office": "house",
+              "state": "NH",
+              "district": 1,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          },
+          {
+            "label": "Representative in Congress District 2",
+            "race": {
+              "office": "house",
+              "state": "NH",
+              "district": 2,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          },
+          {
+            "label": "United States Senator",
+            "race": {
+              "office": "senate",
+              "state": "NH",
+              "district": null,
+              "senateSeat": 2,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          }
+        ],
+        "evidenceUrls": [
+          "https://www.sos.nh.gov/2026-election-details",
+          "https://www.senate.gov/senators/Class_II.htm"
+        ],
+        "reviewNotes": "Bounded source/race review only; no complete-list or corrections acceptance. Senate absence is not accepted as no race."
+      },
+      "status": "validated-sample",
+      "records": [
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Chris Pappas",
+            "party": "DEM",
+            "race": {
+              "office": "senate",
+              "state": "NH",
+              "district": null,
+              "senateSeat": 2,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "United States Senator\nChris Pappas MANCHESTER 629 KEARNEY CIR MANCHESTER, NH 03104-1885 DEM",
+            "locator": "Page 1, United States Senator",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "John E. Sununu",
+            "party": "REP",
+            "race": {
+              "office": "senate",
+              "state": "NH",
+              "district": null,
+              "senateSeat": 2,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "United States Senator\nChris Pappas MANCHESTER 629 KEARNEY CIR MANCHESTER, NH 03104-1885 DEM\nJohn E. Sununu RYE 799 CENTRAL ROAD\nPO BOX 55\nRYE BEACH, NH 03871 REP",
+            "locator": "Page 1, United States Senator",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Edmond Laplante",
+            "party": "CON",
+            "race": {
+              "office": "senate",
+              "state": "NH",
+              "district": null,
+              "senateSeat": 2,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "United States Senator\nChris Pappas MANCHESTER 629 KEARNEY CIR MANCHESTER, NH 03104-1885 DEM\nJohn E. Sununu RYE 799 CENTRAL ROAD\nPO BOX 55\nRYE BEACH, NH 03871 REP\nEdmond Laplante RICHMOND 365 WHIPPLE HILL RD RICHMOND, NH 03470-4103 CON",
+            "locator": "Page 1, United States Senator",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Stefany Shaheen",
+            "party": "DEM",
+            "race": {
+              "office": "house",
+              "state": "NH",
+              "district": 1,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "Representative in Congress\nDistrict 1\nStefany Shaheen PORTSMOUTH PO BOX 193 MANCHESTER, NH 03105 DEM",
+            "locator": "Page 1, Representative in Congress District 1",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Anthony DiLorenzo",
+            "party": "REP",
+            "race": {
+              "office": "house",
+              "state": "NH",
+              "district": 1,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "Representative in Congress\nDistrict 1\nStefany Shaheen PORTSMOUTH PO BOX 193 MANCHESTER, NH 03105 DEM\nAnthony DiLorenzo PORTSMOUTH 549 HIGHWAY 1 PORTSMOUTH, NH 03801 REP",
+            "locator": "Page 1, Representative in Congress District 1",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Maggie Goodlander",
+            "party": "DEM",
+            "race": {
+              "office": "house",
+              "state": "NH",
+              "district": 2,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "Representative in Congress\nDistrict 1\nStefany Shaheen PORTSMOUTH PO BOX 193 MANCHESTER, NH 03105 DEM\nAnthony DiLorenzo PORTSMOUTH 549 HIGHWAY 1 PORTSMOUTH, NH 03801 REP\nDistrict 2\nMaggie Goodlander CONCORD 15 ROCKLAND RD CONCORD, NH 03301-3133 DEM",
+            "locator": "Page 1, Representative in Congress District 2",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Lily Tang Williams",
+            "party": "REP",
+            "race": {
+              "office": "house",
+              "state": "NH",
+              "district": 2,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "Representative in Congress\nDistrict 1\nStefany Shaheen PORTSMOUTH PO BOX 193 MANCHESTER, NH 03105 DEM\nAnthony DiLorenzo PORTSMOUTH 549 HIGHWAY 1 PORTSMOUTH, NH 03801 REP\nDistrict 2\nMaggie Goodlander CONCORD 15 ROCKLAND RD CONCORD, NH 03301-3133 DEM\nLily Tang Williams WEARE 252 PINE HILL RD WEARE, NH 03281-4224 REP",
+            "locator": "Page 1, Representative in Congress District 2",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Robbie Mahrou",
+            "party": "IND",
+            "race": {
+              "office": "house",
+              "state": "NH",
+              "district": 2,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "Representative in Congress\nDistrict 1\nStefany Shaheen PORTSMOUTH PO BOX 193 MANCHESTER, NH 03105 DEM\nAnthony DiLorenzo PORTSMOUTH 549 HIGHWAY 1 PORTSMOUTH, NH 03801 REP\nDistrict 2\nMaggie Goodlander CONCORD 15 ROCKLAND RD CONCORD, NH 03301-3133 DEM\nLily Tang Williams WEARE 252 PINE HILL RD WEARE, NH 03281-4224 REP\nRobbie Mahrou WALPOLE 98 MARCH HILL RD WALPOLE, NH 03608-4616 IND",
+            "locator": "Page 1, Representative in Congress District 2",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        }
+      ],
+      "model": "gpt-5.4",
+      "promptVersion": "ballot-v3",
+      "archive": "9e4f505d9bf236691d6ee2618a35d32b1270efdf4f91a08f5dc17e794802b02e.bin",
+      "sha256": "9e4f505d9bf236691d6ee2618a35d32b1270efdf4f91a08f5dc17e794802b02e",
+      "retrievedAt": "2026-10-26T21:08:35.598Z",
+      "finalUrl": "https://mm.nh.gov/files/uploads/sos/docs/2026-ge-candidate-list.pdf",
+      "mediaType": "application/pdf",
+      "textFile": "9e4f505d9bf236691d6ee2618a35d32b1270efdf4f91a08f5dc17e794802b02e.txt",
+      "valid": 8,
+      "races": [
+        {
+          "race": {
+            "office": "house",
+            "state": "NH",
+            "district": 1,
+            "senateSeat": null,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 2
+        },
+        {
+          "race": {
+            "office": "house",
+            "state": "NH",
+            "district": 2,
+            "senateSeat": null,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 3
+        },
+        {
+          "race": {
+            "office": "senate",
+            "state": "NH",
+            "district": null,
+            "senateSeat": 2,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 3
+        }
+      ],
+      "gaps": [
+        "candidate-list completeness review",
+        "corrections audit",
+        "FEC reconciliation",
+        "campaign-site verification"
+      ]
+    },
+    {
+      "sourceId": "ne-2026-general-sample",
+      "state": "NE",
+      "url": "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+      "source": {
+        "id": "ne-2026-general-sample",
+        "state": "NE",
+        "format": "ai",
+        "authoritative": true,
+        "url": "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+        "authorityUrl": "https://sos.nebraska.gov/elections",
+        "allowedOrigins": [
+          "https://sos.nebraska.gov"
+        ],
+        "checkedAt": "2026-10-26T21:08:35.936Z",
+        "effectiveAt": "2026-09-11T00:00:00Z",
+        "completeness": "partial",
+        "coverageAccepted": false,
+        "correctionsAudited": false,
+        "races": [
+          {
+            "label": "For Representative in Congress District 01",
+            "race": {
+              "office": "house",
+              "state": "NE",
+              "district": 1,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          },
+          {
+            "label": "For Representative in Congress District 02",
+            "race": {
+              "office": "house",
+              "state": "NE",
+              "district": 2,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          },
+          {
+            "label": "For Representative in Congress District 03",
+            "race": {
+              "office": "house",
+              "state": "NE",
+              "district": 3,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          },
+          {
+            "label": "For United States Senator",
+            "race": {
+              "office": "senate",
+              "state": "NE",
+              "district": null,
+              "senateSeat": 2,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            }
+          }
+        ],
+        "evidenceUrls": [
+          "https://sos.nebraska.gov/elections",
+          "https://www.senate.gov/senators/Class_II.htm"
+        ],
+        "reviewNotes": "Bounded source/race review only; no complete-list or corrections acceptance. Senate absence is not accepted as no race."
+      },
+      "status": "validated-sample",
+      "records": [
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Pete Ricketts",
+            "party": "Republican",
+            "race": {
+              "office": "senate",
+              "state": "NE",
+              "district": null,
+              "senateSeat": 2,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For United States Senator \t6 \t1 \tRepublican \tPete Ricketts \tOmaha \tIncumbent \t(402) 413-8595",
+            "locator": "page 1, U.S. Senate listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Mike Marvin",
+            "party": "Legal Marijuana\nNOW",
+            "race": {
+              "office": "senate",
+              "state": "NE",
+              "district": null,
+              "senateSeat": 2,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For United States Senator \t6 \t1 \tLegal Marijuana\nNOW\nMike Marvin \tOmaha \tNonincumbent \t(402) 659-6175",
+            "locator": "page 1, U.S. Senate listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Robin Richards",
+            "party": "Nebraska Working\nPeople",
+            "race": {
+              "office": "senate",
+              "state": "NE",
+              "district": null,
+              "senateSeat": 2,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For United States Senator \t6 \t1 \tNebraska Working\nPeople\nRobin Richards \tRalston \tNonincumbent \t(402) 201-8858",
+            "locator": "page 1, U.S. Senate listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Chuck Conboy",
+            "party": "America First",
+            "race": {
+              "office": "senate",
+              "state": "NE",
+              "district": null,
+              "senateSeat": 2,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For United States Senator \t6 \t1 \tAmerica First \tChuck Conboy \tPapillion \tNonincumbent \t(402) 305-6035",
+            "locator": "page 1, U.S. Senate listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Dan Osborn",
+            "party": "By Petition",
+            "race": {
+              "office": "senate",
+              "state": "NE",
+              "district": null,
+              "senateSeat": 2,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": "info@osbornforsenate.com",
+            "siteIssue": "invalid-url",
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For United States Senator \t6 \t1 \tBy Petition \tDan Osborn \tOmaha \tNonincumbent \t15418 Weir St., #160\nOmaha NE 68137\n(402) 281-3275\ninfo@osbornforsenate.com",
+            "locator": "page 1, U.S. Senate listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Mike Flood",
+            "party": "Republican",
+            "race": {
+              "office": "house",
+              "state": "NE",
+              "district": 1,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For Representative in Congress \tDistrict 01 \t2 \t1 \tRepublican \tMike Flood \tNorfolk \tIncumbent \t(402) 438-1598",
+            "locator": "page 1, U.S. House District 01 listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Chris Backemeyer",
+            "party": "Democratic",
+            "race": {
+              "office": "house",
+              "state": "NE",
+              "district": 1,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": "chris@backnebraska.com",
+            "siteIssue": "invalid-url",
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For Representative in Congress \tDistrict 01 \t2 \t1 \tDemocratic \tChris Backemeyer \tLincoln \tNonincumbent \tPO Box 6124\nLincoln NE 68506\n(402) 413-1519\nchris@backnebraska.com",
+            "locator": "page 1, U.S. House District 01 listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Nik Sandman",
+            "party": "Libertarian",
+            "race": {
+              "office": "house",
+              "state": "NE",
+              "district": 1,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For Representative in Congress \tDistrict 01 \t2 \t1 \tLibertarian \tNik Sandman \tLincoln \tNonincumbent \t(402) 904-1576",
+            "locator": "page 1, U.S. House District 01 listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Dan Hartong",
+            "party": "America First",
+            "race": {
+              "office": "house",
+              "state": "NE",
+              "district": 1,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For Representative in Congress \tDistrict 01 \t2 \t1 \tAmerica First \tDan Hartong \tLincoln \tNonincumbent \t(531) 216-6651",
+            "locator": "page 1, U.S. House District 01 listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Brinker Harding",
+            "party": "Republican",
+            "race": {
+              "office": "house",
+              "state": "NE",
+              "district": 2,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": "brinker@brinkerharding.com",
+            "siteIssue": "invalid-url",
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For Representative in Congress \tDistrict 02 \t2 \t1 \tRepublican \tBrinker Harding \tOmaha \tNonincumbent \tPO Box 540007\nOmaha NE 68154\n(402) 214-4448\nbrinker@brinkerharding.com",
+            "locator": "page 1, U.S. House District 02 listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Denise Powell",
+            "party": "Democratic",
+            "race": {
+              "office": "house",
+              "state": "NE",
+              "district": 2,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": "denise@deniseforcongress.org",
+            "siteIssue": "invalid-url",
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For Representative in Congress \tDistrict 02 \t2 \t1 \tDemocratic \tDenise Powell \tOmaha \tNonincumbent \tPO Box 6039\nOmaha NE 68106\n(402) 214-4997\ndenise@deniseforcongress.org",
+            "locator": "page 1, U.S. House District 02 listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Eric Michael Foreman",
+            "party": "Libertarian",
+            "race": {
+              "office": "house",
+              "state": "NE",
+              "district": 2,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For Representative in Congress \tDistrict 02 \t2 \t1 \tLibertarian \tEric Michael Foreman \tOmaha \tNonincumbent \t(402) 216-9627",
+            "locator": "page 1, U.S. House District 02 listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Adrian Smith",
+            "party": "Republican",
+            "race": {
+              "office": "house",
+              "state": "NE",
+              "district": 3,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": "committee@joinadrian.com",
+            "siteIssue": "invalid-url",
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For Representative in Congress \tDistrict 03 \t2 \t1 \tRepublican \tAdrian Smith \tGering \tIncumbent \t1126 Ave., #6\nScottsbluff NE 69361\n(308) 220-3211\ncommittee@joinadrian.com",
+            "locator": "page 1, U.S. House District 03 listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Becky Kelly Stille",
+            "party": "Democratic",
+            "race": {
+              "office": "house",
+              "state": "NE",
+              "district": 3,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": "beckystille2026@gmail.com",
+            "siteIssue": "invalid-url",
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For Representative in Congress \tDistrict 03 \t2 \t1 \tDemocratic \tBecky Kelly Stille \tSouth Sioux City Nonincumbent \t(402) 508-2204\nbeckystille2026@gmail.com",
+            "locator": "page 1, U.S. House District 03 listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "David J. Else",
+            "party": "Legal Marijuana\nNOW",
+            "race": {
+              "office": "house",
+              "state": "NE",
+              "district": 3,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For Representative in Congress \tDistrict 03 \t2 \t1 \tLegal Marijuana\nNOW\nDavid J. Else \tOverton \tNonincumbent \t(308) 320-0954",
+            "locator": "page 1, U.S. House District 03 listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Macey Budke",
+            "party": "Nebraska Working\nPeople",
+            "race": {
+              "office": "house",
+              "state": "NE",
+              "district": 3,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For Representative in Congress \tDistrict 03 \t2 \t1 \tNebraska Working\nPeople\nMacey Budke \tNorth Platte \tNonincumbent \t(308) 636-6773",
+            "locator": "page 1, U.S. House District 03 listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        },
+        {
+          "data": {
+            "kind": "ballot",
+            "name": "Mark Cohen",
+            "party": "By Petition",
+            "race": {
+              "office": "house",
+              "state": "NE",
+              "district": 3,
+              "senateSeat": null,
+              "electionDate": "2026-11-03",
+              "stage": "general",
+              "contestType": "regular"
+            },
+            "officialId": null,
+            "fecId": null,
+            "siteUrl": null,
+            "siteRaw": null,
+            "siteIssue": null,
+            "eligibility": "ballot-confirmed",
+            "reinstated": false,
+            "excerpt": "For Representative in Congress \tDistrict 03 \t2 \t1 \tBy Petition \tMark Cohen \tLemoyne \tNonincumbent \tPO Box 81\nLemoyne NE 69146\n(308) 322-9015",
+            "locator": "page 1, U.S. House District 03 listing",
+            "raw": null
+          },
+          "validation": {
+            "outcome": "valid",
+            "errors": [],
+            "validatorVersion": "ballot-validator-v1"
+          }
+        }
+      ],
+      "model": "gpt-5.4",
+      "promptVersion": "ballot-v3",
+      "archive": "d27a071715896b8c82b8cce8d48200b4207ba10c44f1778f56f92c4efcd7cf96.bin",
+      "sha256": "d27a071715896b8c82b8cce8d48200b4207ba10c44f1778f56f92c4efcd7cf96",
+      "retrievedAt": "2026-10-26T21:08:35.936Z",
+      "finalUrl": "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+      "mediaType": "application/pdf",
+      "textFile": "d27a071715896b8c82b8cce8d48200b4207ba10c44f1778f56f92c4efcd7cf96.txt",
+      "valid": 17,
+      "races": [
+        {
+          "race": {
+            "office": "house",
+            "state": "NE",
+            "district": 1,
+            "senateSeat": null,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 4
+        },
+        {
+          "race": {
+            "office": "house",
+            "state": "NE",
+            "district": 2,
+            "senateSeat": null,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 3
+        },
+        {
+          "race": {
+            "office": "house",
+            "state": "NE",
+            "district": 3,
+            "senateSeat": null,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 5
+        },
+        {
+          "race": {
+            "office": "senate",
+            "state": "NE",
+            "district": null,
+            "senateSeat": 2,
+            "electionDate": "2026-11-03",
+            "stage": "general",
+            "contestType": "regular"
+          },
+          "records": 5
+        }
+      ],
+      "gaps": [
+        "candidate-list completeness review",
+        "corrections audit",
+        "FEC reconciliation",
+        "campaign-site verification"
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "state": "DE",
+      "office": "house",
+      "status": "partial",
+      "sources": [
+        "de-2026-general-sample"
+      ]
+    },
+    {
+      "state": "DE",
+      "office": "senate",
+      "status": "partial",
+      "sources": [
+        "de-2026-general-sample"
+      ]
+    },
+    {
+      "state": "MO",
+      "office": "house",
+      "status": "partial",
+      "sources": [
+        "mo-2026-general-sample"
+      ]
+    },
+    {
+      "state": "MO",
+      "office": "senate",
+      "status": "unsupported",
+      "sources": []
+    },
+    {
+      "state": "ND",
+      "office": "house",
+      "status": "partial",
+      "sources": [
+        "nd-2026-general-sample"
+      ]
+    },
+    {
+      "state": "ND",
+      "office": "senate",
+      "status": "unsupported",
+      "sources": []
+    },
+    {
+      "state": "NE",
+      "office": "house",
+      "status": "partial",
+      "sources": [
+        "ne-2026-general-sample"
+      ]
+    },
+    {
+      "state": "NE",
+      "office": "senate",
+      "status": "partial",
+      "sources": [
+        "ne-2026-general-sample"
+      ]
+    },
+    {
+      "state": "NH",
+      "office": "house",
+      "status": "partial",
+      "sources": [
+        "nh-2026-general-sample"
+      ]
+    },
+    {
+      "state": "NH",
+      "office": "senate",
+      "status": "partial",
+      "sources": [
+        "nh-2026-general-sample"
+      ]
+    }
+  ]
+}

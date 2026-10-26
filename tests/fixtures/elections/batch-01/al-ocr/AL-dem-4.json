@@ -1,0 +1,11 @@
+{
+    "lines":  [
+                  "5",
+                  "b",
+                  "8",
+                  "88 g g"
+              ],
+    "engine":  "Windows.Media.Ocr",
+    "language":  "en-US",
+    "image":  "AL-dem-4.png"
+}

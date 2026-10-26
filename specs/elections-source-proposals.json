@@ -1,0 +1,1573 @@
+{
+  "version": 1,
+  "signature": "8b5a5722456561c7c88cf81538747faf212c2d05892c8596b41aba43bae1637a",
+  "scope": {
+    "cycle": 2026,
+    "stage": "general",
+    "contestType": "regular",
+    "offices": [
+      "house",
+      "senate"
+    ],
+    "states": [
+      "AK",
+      "AL",
+      "AR",
+      "AZ",
+      "CA",
+      "CO",
+      "CT",
+      "DE",
+      "FL",
+      "GA",
+      "HI",
+      "IA",
+      "ID",
+      "IL",
+      "IN",
+      "KS",
+      "KY",
+      "LA",
+      "MA",
+      "MD",
+      "ME",
+      "MI",
+      "MN",
+      "MO",
+      "MS",
+      "MT",
+      "NC",
+      "ND",
+      "NE",
+      "NH",
+      "NJ",
+      "NM",
+      "NV",
+      "NY",
+      "OH",
+      "OK",
+      "OR",
+      "PA",
+      "RI",
+      "SC",
+      "SD",
+      "TN",
+      "TX",
+      "UT",
+      "VA",
+      "VT",
+      "WA",
+      "WI",
+      "WV",
+      "WY"
+    ],
+    "geography": "2026-election"
+  },
+  "model": "gpt-5.4",
+  "createdAt": "2026-10-26T21:06:55.040Z",
+  "databaseWrites": false,
+  "authoritative": false,
+  "states": [
+    {
+      "state": "AK",
+      "authorityUrl": "https://www.elections.alaska.gov/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:06:55.045Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.elections.alaska.gov/candidates/?election=26prim",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.elections.alaska.gov/candidates/?election=26genr",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.elections.alaska.gov/election-information/",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.elections.alaska.gov/publications/official-election-pamphlet/",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.elections.alaska.gov/",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "AL",
+      "authorityUrl": "https://www.sos.alabama.gov/alabama-votes",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:07:10.098Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.sos.alabama.gov/alabama-votes/voter/election-information/2026",
+          "title": "2026 Election Information | Alabama Secretary of State",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.alabama.gov/sites/default/files/election-2026/2026-VoterGuide.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.alabama.gov/alabama-votes/voter/upcoming-elections?lv=true",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.alabama.gov/newsroom/secretary-state-wes-allen-announces-sample-ballots-are-available-secretary-states-website",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.alabama.gov/alabama-votes/2026-general-election-sample-ballots",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "AR",
+      "authorityUrl": "https://www.sos.arkansas.gov/elections",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:07:28.008Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.sos.arkansas.gov/elections/for-voters",
+          "title": "Arkansas Secretary of State",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.arkansas.gov/elections/for-voters?lv=true",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.arkansas.gov/elections/for-candidates",
+          "title": "Arkansas Secretary of State",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.arkansas.gov/uploads/elections/2024_Running_for_Public_Office_8-16-23.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.arkansas.gov/uploads/elections/2026_Election_Calendar_Rev._6-2025_.pdf",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "AZ",
+      "authorityUrl": "https://azsos.gov/elections",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:07:46.542Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://azsos.gov/elections/election-information/2026-election-info",
+          "title": "2026 Election Info | Arizona Secretary of State",
+          "status": "proposed"
+        },
+        {
+          "url": "https://azsos.gov/elections/candidates",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://azsos.gov/elections/candidates/elected-office-terms",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://azsos.gov/elections",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://azsos.gov/elections/candidates/statements-interest",
+          "title": "Statements of Interest | Arizona Secretary of State",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "CA",
+      "authorityUrl": "https://www.sos.ca.gov/elections",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:08:05.950Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.sos.ca.gov/administration/news-releases-and-advisories/2026-news-releases-and-advisories/california-secretary-state-shirley-n-weber-phd-certifies-candidate-list-november-3-2026-general-election",
+          "title": "California Secretary of State Shirley N. Weber, Ph.D., Certifies Candidate List for November 3, 2026, General Election :: California Secretary of State",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.ca.gov/elections/upcoming-elections/general-election-november-3-2026",
+          "title": "General Election - November 3, 2026 :: California Secretary of State",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.ca.gov/elections/upcoming-elections",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.ca.gov/elections/candidate-statements",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.ca.gov/administration/news-releases-and-advisories/2026-news-releases-and-advisories/california-secretary-state-shirley-n-weber-phd-certifies-candidate-list-june-2-2026-primary-election",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "CO",
+      "authorityUrl": "https://www.sos.state.co.us/pubs/elections/main.html",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:08:22.430Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.sos.state.co.us/pubs/elections/calendars/2026ElectionCalendar.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.state.co.us/pubs/elections/lawsRulesResources.html?menuheaders=5",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.state.co.us/pubs/info_center/laws/Title1/Title1Article11.html",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.state.co.us/pubs/newsRoom/pressReleases/2024/PR20241217ElectoralCollege.html",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.state.co.us/pubs/info_center/laws/COConstitution/ArticleXSection20.html",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "CT",
+      "authorityUrl": "https://portal.ct.gov/en/SOTS/Common-Elements/V5-Template---Redesign/Elections--Voting--Home-Page",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:08:38.103Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://portal.ct.gov/sots/election-services/certificate-of-endorsement/2026-certificate-of-endorsements",
+          "title": "2026 Certificate of Endorsements",
+          "status": "proposed"
+        },
+        {
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/calendars/2026-elections/2026-election-calendar-122325.pdf?hash=BE7D6473730EDDD12BBF4ECE3F8D66FF&rev=0230dc88395c41f5b28b43df8a0d40a3",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://portal.ct.gov/sots/election-services/calendars/election-calendars",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/nominating_petitions_info/2026/november-2026/2026-ed-607-nov.pdf?hash=41B7DDA22A4FF0366986232CF7B743D6&rev=563bdda262ee485f905e25f60c6374c8",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://portal.ct.gov/sots/election-services/candidate-information/candidate-ballot-access",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "DE",
+      "authorityUrl": "https://elections.delaware.gov/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:09:00.983Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://elections.delaware.gov/candidates/candidatelist/genl_fcddt_2026.html",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://elections.delaware.gov/candidates/candidatelist/prim_fcddt_2026.html",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://elections.delaware.gov/candidates/candidatelist/",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://elections.delaware.gov/candidates/pdfs/Schedule_of_Elections_Table.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://elections.delaware.gov/elections/general/sampleballots/GE2026/09-07.html",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "FL",
+      "authorityUrl": "https://dos.myflorida.com/elections/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:09:19.005Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://dos.myflorida.com/media/695672/candidate-petition-handbook.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://dos.myflorida.com/media/706024/election-code-2022-w-updated-index-20220822.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://dos.myflorida.com/media/702368/dsde39-eng-pre-7066-with-2019-addresses.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://dos.myflorida.com/media/705089/federal-qualifying-handbook-2022-final-11-16-21.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://dos.myflorida.com/media/706952/political-committee-handbook_2024-9-23-1.pdf",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "GA",
+      "authorityUrl": "https://sos.ga.gov/index.php/elections",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:09:19.006Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://sos.ga.gov/2026-offices-appear-ballot",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.ga.gov/index.php/federal-and-state-qualifying-faq-2026",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.ga.gov/candidate-qualifying-elected-office",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.ga.gov/page/georgia-qualified-candidates",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.ga.gov/november-3-2026-general-election",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "HI",
+      "authorityUrl": "https://elections.hawaii.gov/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:09:19.006Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://elections.hawaii.gov/wp-content/uploads/2026-Candidates-Manual.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://elections.hawaii.gov/2026-proclamation/",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://elections.hawaii.gov/voting/contest-schedule/",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://elections.hawaii.gov/u-s-senate/",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://elections.hawaii.gov/candidates/candidate-filing/",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "IA",
+      "authorityUrl": "https://sos.iowa.gov/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:09:31.556Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://sos.iowa.gov/general-election",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.iowa.gov/sites/default/files/2026-06/2026%20General%20-%20Candidate%20List%20Database%20-%20All%20Elections_0.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.iowa.gov/sites/default/files/2026-04/2026%20General%20-%20Candidate%20List%20Database%20-%20All%20Elections_1.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.iowa.gov/sites/default/files/2026-03/2026%20Primary%20-%20Candidate%20List%20Database%20-%20All%20Elections_2.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.iowa.gov/sites/default/files/2026-02/2026%20Primary%20-%20Candidate%20List%20Database%20-%20All%20Elections_2.pdf",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "ID",
+      "authorityUrl": "https://sos.idaho.gov/elections-division/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:09:32.816Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://sos.idaho.gov/elections/forms/even_year/2026_Federal_Candidate_Independent.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.idaho.gov/elections/publications/election_laws.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.idaho.gov/elections/forms/even_year/2026_Statewide_Candidate_Information.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.idaho.gov/election-information/",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.idaho.gov/",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "IL",
+      "authorityUrl": "https://www.elections.il.gov/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:09:38.924Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.elections.il.gov/ElectionOperations/CandidateList.aspx?ElectionID=sejIrI%2BQmww%3D&FileDate=OMFgPlcsTF3ZtuiqO0cC3hmbNmoSdti%2F",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.elections.il.gov/ElectionOperations/CandidateList.aspx?ElectionID=71",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.elections.il.gov/ElectionOperations/CandidateList.aspx?ElectionID=sejIrI%2BQmww%3D&OfficeID=b3l9OOoBLkjHeNv3Pz40NQ%3D%3D",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.elections.il.gov/ElectionOperations/CandidateOfficeFilingSearch.aspx",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.elections.il.gov/ElectionOperations/CandidateList.aspx?ElectionID=sejIrI%2BQmww%3D&FileDate=rVxA%2FkYn5zWvncN%2BrowbA2ctWFP%2BOjT5",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "IN",
+      "authorityUrl": "https://www.in.gov/sos/elections/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:09:44.225Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.in.gov/sos/elections/voter-information/files/2026-Indiana-Voter-Information-Guide.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.in.gov/sos/elections/files/2026-Voter-Registration-Guidebook.FINAL.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.in.gov/sos/elections/?lv=true",
+          "title": "Election Division: Home",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.in.gov/sos/elections/files/2026-Candidate-Guide.FINAL.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.in.gov/dA/1eada35c3e/2026-Candidate-Guide.FINAL.pdf?language_id=1",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "KS",
+      "authorityUrl": "https://www.sos.ks.gov/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:09:49.524Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.sos.ks.gov/elections/candidate-information.html",
+          "title": "Kansas Secretary of State | Elections | Candidate Information",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.ks.gov/media/press-releases/2026/06-01-26-candidate-filing-deadline-closes.html",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.ks.gov/media/press-releases/2026/05-01-26-one-month-countdown-until-candidate-filing-deadline.html",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.ks.gov/elections/26elec/2026-Primary-Election-Official-Vote-Totals.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.ks.gov/elections/election-results.html",
+          "title": "Kansas Secretary of State | Elections | Election Results",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "KY",
+      "authorityUrl": "https://www.sos.ky.gov/Pages/default.aspx",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:09:56.023Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.sos.ky.gov/Documents/2026%20Primary%20Election%20Ballot%20Positions.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.ky.gov/Documents/2026%20Kentucky%20Election%20Guide.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.ky.gov/pages/sitemap.aspx",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.ky.gov/elections/Pages/Constitutional-Amendments.aspx",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.ky.gov/civic-initiatives/Pages/default.aspx",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "LA",
+      "authorityUrl": "https://www.sos.la.gov/ElectionsAndVoting/Pages/default.aspx",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:10:01.132Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.sos.la.gov/elections-voting/election-dates",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.la.gov/elections-voting/types-of-elections",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.la.gov/elections-voting/qualify-for-an-election",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.la.gov/elections-voting/how-candidates-are-elected",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.la.gov/elections-voting/ways-to-vote",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "MA",
+      "authorityUrl": "https://www.sec.state.ma.us/ele/eleidx.htm",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:10:08.378Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.sec.state.ma.us/divisions/elections/research-and-statistics/2026-state-election-candidates.htm",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sec.state.ma.us/divisions/elections/recent-updates/upcoming-elections.htm",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sec.state.ma.us/divisions/elections/getting-on-the-ballot/how-to-run-for-office-2026.htm",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sec.state.ma.us/divisions/elections/research-and-statistics/2026-Information-for-voters/offices.htm",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sec.state.ma.us/divisions/elections/download/information-for-voters/archive/IFV_2026%20English.pdf",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "MD",
+      "authorityUrl": "https://www.elections.maryland.gov/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:10:10.911Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.elections.maryland.gov/candidacy/ballot.html",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.elections.maryland.gov/elections/2026/general_candidates/2026_GG_statewide_candidatelist.html",
+          "title": "Elections",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.elections.maryland.gov/elections/2026/Primary_candidates/2026_GP_statewide_candidatelist.html",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.elections.maryland.gov/elections/2026/index.html",
+          "title": "2026 Gubernatorial Election",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.elections.maryland.gov/elections/2026/vote2026/index.html",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "ME",
+      "authorityUrl": "https://www.maine.gov/sos/cec/elec/index.html",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:10:21.370Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.maine.gov/sos/elections-voting/upcoming-elections",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.maine.gov/ethics/",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.maine.gov/sos/sites/maine.gov.sos/files/inline-files/2026%20Candidates%20Guide%20to%20Ballot%20Access%20Final.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.maine.gov/sos/elections-voting/election-results-data",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.maine.gov/sos/elections-voting/electoral-districts",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "MI",
+      "authorityUrl": "https://www.michigan.gov/sos/0,4670,7-127-1633---,00.html",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:10:25.095Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.michigan.gov/sos/elections",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.michigan.gov/sos/-/media/Project/Websites/sos/BSC-Meeting-Minutes/2026/August-24-2026-BSC-draft-minutes.pdf?hash=06B54418C8559DFD807A1520BCAC66C8&rev=446f26110e0141a1b37d0e18b56040ee",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.michigan.gov/sos/elections/bsc",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.michigan.gov/sos/-/media/Project/Websites/sos/Elections/Ballot-Access/FC-GDE-10-Filing-for-Office-US-Senator.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.michigan.gov/sos/-/media/Project/Websites/sos/Elections/Election-transparency/County-Board-of-Canvassers-Manual.pdf?hash=B9D1725F991DCD4CC56577E104DE0972&rev=56278b9e338148209edda259e452970d",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "MN",
+      "authorityUrl": "https://www.sos.state.mn.us/elections-voting/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:10:26.554Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.sos.state.mn.us/media/5067/minnesota-election-laws-statutes-and-rules.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.state.mn.us/media/4251/county-election-administration-guide.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.state.mn.us/media/4855/1-08-notices-candidate-filings-petitions-ballot-development.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.state.mn.us/media/5517/2024-pnp-elections-administrator-guide.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.state.mn.us/media/4908/minnesota-campaign-manual.pdf",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "MO",
+      "authorityUrl": "https://www.sos.mo.gov/elections/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:10:35.801Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.sos.mo.gov/CMSImages/ElectionCandidates/2026FilingDocuments/2026CandidateFilingInformation.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.mo.gov/CMSImages/Publications/GARoster/2026GARoster.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.mo.gov/CMSImages/ElectionCandidates/2026GeneralElectionCertifiedCandidates.pdf",
+          "title": "Certification of Candidates and Party Emblems",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.mo.gov/elections/calendar.html",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.mo.gov/petitions/2026BallotMeasures",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "MS",
+      "authorityUrl": "https://www.sos.ms.gov/index.php/elections-voting",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:10:42.999Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.sos.ms.gov/content/CandidateQualifying/default.aspx",
+          "title": "Candidate Qualifying List",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.ms.gov/sites/default/files/publications/Election%20Calendar_2026.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.ms.gov/Content/documents/Elections/Links/2026%20Candidate%20Qualifying%20List%2012-26-2025.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.ms.gov/elections-and-voting/candidate-referenda-information/candidate-qualifying-forms",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.ms.gov/elections-voting",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "MT",
+      "authorityUrl": "https://sosmt.gov/elections/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:10:43.788Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://sosmt.gov/Elections/Filing/",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sosmt.gov/es/best-of-luck-to-all-secretary-christi-jacobsen-opens-2026-candidate-filing-period",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sosmt.gov/ELECTIONS/Results/",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sosmt.gov/",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sosmt.gov/Elections/Term_Limits",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "NC",
+      "authorityUrl": "https://www.ncsbe.gov/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:10:54.571Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.ncsbe.gov/results-data/candidate-lists",
+          "title": "Candidate Lists | NCSBE",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.ncsbe.gov/voting/upcoming-election?_cldee=HBctRJJtcaeT4W_zDsGTsE1ZdIK20d-kiafE9T-ep-QkydROzNoqlqInqJxLLBgr&esid=51ff7e7b-9d0f-ee11-9ca6-00155d101230&recipientid=contact-1a29dc25c14e4de1a3006823b8cf522d-bd2bd53c807043a99f7c56f55e16bef2",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.ncsbe.gov/news/press-releases/2026/10/02/regular-voter-registration-deadline-approaching-2026-general-election",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.ncsbe.gov/news/press-releases/2025/11/18/candidate-filing-2026-elections-begins-dec-1",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.ncsbe.gov/news/press-releases/2026/03/25/state-board-certifies-state-and-local-primary-contests-consider-most-federal-contests-april",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "ND",
+      "authorityUrl": "http://sos.nd.gov/elections",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:11:03.218Z",
+      "status": "failed",
+      "sources": [],
+      "errorCode": "discovery-invalid-url"
+    },
+    {
+      "state": "NE",
+      "authorityUrl": "https://sos.nebraska.gov/index",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:11:03.222Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://sos.nebraska.gov/elections",
+          "title": "2026 Elections | Nebraska Secretary of State",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.nebraska.gov/sites/default/files/doc/elections/Candidates/Candidate_Filing_Guide.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.nebraska.gov/elections/information-candidates",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.nebraska.gov/sites/default/files/doc/elections/Candidates/Elected_Offices_and_Maps.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.nebraska.gov/elections-division",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "NH",
+      "authorityUrl": "https://sos.nh.gov/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:11:03.753Z",
+      "status": "no-results",
+      "sources": []
+    },
+    {
+      "state": "NJ",
+      "authorityUrl": "https://www.state.nj.us/state/elections/index.shtml",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:11:10.783Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.state.nj.us/treasury/omb/publications/06fr/pdf/06FR.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.state.nj.us/state/elections/assets/njcivicengage/hs-voter-registration-week-presentation.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.state.nj.us/state/elections/assets/pdf/publications/voter-restore-handbook-2022-0824.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.state.nj.us/state/elections/assets/pdf/election-results/2020/2020-official-primary-results-us-house-amended-0826.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.state.nj.us/state/elections/assets/pdf/election-results/2020/2020-official-primary-results-us-house-amended-0826.pdf?utm_source=openai",
+          "title": "08/26/2020\nPage 1 of 20\nOfficial List\nCandidates f",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "NM",
+      "authorityUrl": "https://www.sos.state.nm.us/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:11:19.517Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.sos.state.nm.us/wp-content/uploads/2021/10/NM-Election-Handbook-SOS.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.state.nm.us/wp-content/uploads/2019/08/2019-07-15-Final-Draft-Amended-CF-Rule.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.state.nm.us/wp-content/uploads/2021/10/NM-Election-Handbook-SOS.pdf?utm_source=openai",
+          "title": "ELECTION HANDBOOK",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "NV",
+      "authorityUrl": "https://www.nvsos.gov/sos/elections",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:11:20.012Z",
+      "status": "no-results",
+      "sources": []
+    },
+    {
+      "state": "NY",
+      "authorityUrl": "https://www.elections.ny.gov/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:11:26.788Z",
+      "status": "no-results",
+      "sources": []
+    },
+    {
+      "state": "OH",
+      "authorityUrl": "https://www.sos.state.oh.us/elections/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:11:28.427Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.sos.state.oh.us/globalassets/publications/election/2026_crg.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.state.oh.us/globalassets/publications/election/2026_crg.pdf?utm_source=openai",
+          "title": "2026",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "OK",
+      "authorityUrl": "https://oklahoma.gov/elections.html",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:11:31.955Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://oklahoma.gov/content/dam/ok/en/elections/candidate-filing-archives/candidate-filing-packets/2026-candidate-filing-packets/2026-district-judge-filing-packet.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://oklahoma.gov/elections/elections-results/next-election.html",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://oklahoma.gov/elections/elections-results/general-elections.html",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://oklahoma.gov/elections/candidates/candidate-filing.html",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://oklahoma.gov/content/dam/ok/en/elections/candidate-filing-archives/candidate-filing-packets/2026-candidate-filing-packets/2026-us-senator-us-rep-filing-packet.pdf",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "OR",
+      "authorityUrl": "https://sos.oregon.gov/voting-elections/Pages/default.aspx",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:11:35.220Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://sos.oregon.gov/elections/pages/current-election.aspx",
+          "title": "Oregon Secretary of State : Upcoming Elections : State of Oregon",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.oregon.gov/elections/Pages/current-election.aspx",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.oregon.gov/elections/get-involved/pages/run-for-office.aspx",
+          "title": "Oregon Secretary of State : Run for Public Office : Get Involved : State of Oregon",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.oregon.gov/elections/Documents/SEL101.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.oregon.gov/elections/Documents/Candidate-SEL101-Highlighted.pdf",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "PA",
+      "authorityUrl": "https://www.dos.pa.gov/VotingElections/Pages/default.aspx",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:11:43.835Z",
+      "status": "no-results",
+      "sources": []
+    },
+    {
+      "state": "RI",
+      "authorityUrl": "https://vote.sos.ri.gov/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:11:45.953Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://vote.sos.ri.gov/",
+          "title": "Welcome to your Voter Information Center",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "SC",
+      "authorityUrl": "https://www.scvotes.gov/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:11:50.445Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.scvotes.gov/",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.scvotes.gov/voters/2026prep/",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.scvotes.gov/wp-content/uploads/2022/08/Poll_Mgr_Handbook_April-2022-Edition-scVOTES.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.scvotes.gov/wp-content/uploads/2022/08/2022-Election-Calendar-scVOTES-2022-08-03.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.scvotes.gov/wp-content/uploads/2022/08/scVOTES-Election-Law-Changes-2021-2022.pdf",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "SD",
+      "authorityUrl": "https://sdsos.gov/elections-voting/default.aspx",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:11:52.019Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://sdsos.gov/elections-voting/assets/2026%20Documents/2026HowToVotePrimarySD.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sdsos.gov/elections-voting/upcoming-elections/general-information/2026%20Election%20Information/2026-offices-to-be-filled.aspx",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sdsos.gov/elections-voting/election-resources/current-elected-officials.aspx",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sdsos.gov/elections-voting/default.aspx",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sdsos.gov/elections-voting/upcoming-elections/general-information/2026%20Election%20Information/2026-signature-requirements-candidates.aspx",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "TN",
+      "authorityUrl": "https://sos.tn.gov/elections",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:11:54.640Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://sos.tn.gov/search?archistartdocument%3A=&authentications=&f%5B0%5D=division_category%3AActs+and+Resolutions&f%5B1%5D=division_category%3AGoVoteTN&f%5B2%5D=division_category%3ALegislative+History+%26+Recording&f%5B3%5D=division_category%3ALimited+Liability+Partnerships&f%5B4%5D=division_category%3ANo+Trespass+Public+Notice+List&f%5B5%5D=division_category%3AOther+Key+Services&f%5B6%5D=division_category%3ATrademarks&facets_query=&page=1&recording=&search_keywords=&service_of_process=&students=",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.tn.gov/search?archivists=&f%5B0%5D=division_category%3AElection+Information&f%5B1%5D=division_category%3AExecutive+Orders&f%5B2%5D=division_category%3AExisting+Charities&f%5B3%5D=division_category%3AForeign+Limited+Liability+Companies&f%5B4%5D=division_category%3AGoVoteTN&f%5B5%5D=division_category%3AMunicipal+Clerks&f%5B6%5D=division_category%3ANon-US+Citizens+Not+Eligible+to+Vote+In+Tennessee+Elections&facets_query=&genealogists=&media=&recording=&search_keywords=",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.tn.gov/search?archivists=&authentications=&commissions=&f%5B0%5D=division_category%3AAbout+Records+Management&f%5B1%5D=division_category%3ACandidate+Qualifying+Information&f%5B2%5D=division_category%3ACorporations&f%5B3%5D=division_category%3AGovernor%27s+Proclamations&f%5B4%5D=division_category%3ANo+Trespass+Public+Notice+List&f%5B5%5D=division_category%3AOther+Key+Services&f%5B6%5D=division_category%3ARecords+Officer+Training&f%5B7%5D=division_category%3AVoter+Registration&facets_query=&genealogists=&media=&recording=&search_keywords=&students=",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.tn.gov/search?search_keywords=registration",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.tn.gov/search?archistartdocument%3A=&authentications=&f%5B0%5D=division_category%3AAccessible+Books+%26+Media&f%5B10%5D=division_category%3ALimited+Partnerships&f%5B11%5D=division_category%3ANonprofit+Corporations&f%5B12%5D=division_category%3ATennessee+Highway+Officials+Certification+Board&f%5B1%5D=division_category%3AActs+and+Resolutions&f%5B2%5D=division_category%3ACandidate+Qualifying+Information&f%5B3%5D=division_category%3ACatastrophic+Illness+Trust&f%5B4%5D=division_category%3ACharitable+Giving&f%5B5%5D=division_category%3ADisaster+Relief+Fundraising&f%5B6%5D=division_category%3ADomestic+Corporations&f%5B7%5D=division_category%3AExisting+Businesses&f%5B8%5D=division_category%3AForeign+Limited+Liability+Partnerships&f%5B9%5D=division_category%3ALimited+Liability+Companies&facets_query=&page=1&recording=&search_keywords=&service_of_process=&students=",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "TX",
+      "authorityUrl": "https://www.sos.state.tx.us/elections/index.shtml",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:12:01.616Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.sos.state.tx.us/elections/forms/2026-ballot-cert.pdf",
+          "title": "2026 Ballot Certification",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.state.tx.us/elections/candidates/guide/2026/offices2026.shtml",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.state.tx.us/elections/laws/2026-november-general-election.shtml",
+          "title": "Current Elections Information List",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.state.tx.us/elections/laws/advisory2026-22.shtml",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.state.tx.us/elections/laws/independent-declarations-2026.shtml",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "UT",
+      "authorityUrl": "https://vote.utah.gov/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:12:04.883Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://vote.utah.gov/current-election-information/",
+          "title": "Current Election Information - Utah Voter Information",
+          "status": "proposed"
+        },
+        {
+          "url": "https://vote.utah.gov/2026-candidate-filings/",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://vote.utah.gov/",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://vote.utah.gov/additional-resources-for-voters/",
+          "title": "Additional Resources for Voters - Utah Voter Information",
+          "status": "proposed"
+        },
+        {
+          "url": "https://vote.utah.gov/wp-content/uploads/2026/01/2026-Candidate-Manual.pdf",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "VA",
+      "authorityUrl": "https://www.elections.virginia.gov/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:12:07.542Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.elections.virginia.gov/casting-a-ballot/candidate-list/?os=avdf",
+          "title": "Virginia Dept. of Elections: Candidates & Referendums",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.elections.virginia.gov/media/candidatesandpacs/2026-candidate-bulletins/2026-11-03_US_Sen_Gen_Bulletin_%282-23-26%29.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.elections.virginia.gov/casting-a-ballot/candidate-list/?os=appref%3Dapp",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.elections.virginia.gov/casting-a-ballot/previous-candidate-lists/",
+          "title": "Virginia Dept. of Elections: Previous Candidate Lists",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.elections.virginia.gov/media/candidatesandpacs/2026-candidate-bulletins/2026-11-03_US_House_Gen_Bulletin_%282-23-26%29.pdf",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "VT",
+      "authorityUrl": "https://sos.vermont.gov/elections/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:12:21.227Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://sos.vermont.gov/commentary-press/2026-vermont-voter-guide",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.vermont.gov/elections/election-info-resources/candidates?os=io....SxJ9oul9",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.vermont.gov/elections/voters/voter-guide",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.vermont.gov/elections/election-info-resources/faqs",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.vermont.gov/secretarys-desk/secretary-state-commentary-press/vermont-secretary-of-state-announces-live-candidate-filing-information",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "WA",
+      "authorityUrl": "https://www.sos.wa.gov/elections/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:12:21.960Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://www.sos.wa.gov/about-office/news/2026/secretary-state-certifies-candidates-and-measures-november-general-election",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.wa.gov/elections",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.wa.gov/elections/elections-calendar/dates-and-deadlines",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.wa.gov/es/node/5974",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://www.sos.wa.gov/so/node/30639",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "WI",
+      "authorityUrl": "https://elections.wi.gov/",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:12:23.829Z",
+      "status": "no-results",
+      "sources": []
+    },
+    {
+      "state": "WV",
+      "authorityUrl": "https://sos.wv.gov/elections/Pages/default.aspx",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:12:30.291Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://sos.wv.gov/media/467/download?inline=",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.wv.gov/elections",
+          "title": "Elections | WV Secretary of State",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.wv.gov/article/secretary-state-kris-warner-rolls-out-online-sample-ballot-tool-ahead-november-general",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.wv.gov/es/media/468/download?inline=",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.wv.gov/FormSearch/Elections/Informational/Current%20Office%20Holders.pdf",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "state": "WY",
+      "authorityUrl": "https://sos.wyo.gov/Elections/Default.aspx",
+      "attempts": 1,
+      "checkedAt": "2026-10-26T21:12:38.775Z",
+      "status": "proposed",
+      "sources": [
+        {
+          "url": "https://sos.wyo.gov/elections/",
+          "title": "Wyoming Secretary of State",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.wyo.gov/Elections/2026ElectionInformation.aspx",
+          "title": "Wyoming Secretary of State",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.wyo.gov/Elections/Docs/2026/2026PrimaryResults.aspx",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.wyo.gov/Elections/Docs/2026/2026_Key_Election_Dates.pdf",
+          "title": "",
+          "status": "proposed"
+        },
+        {
+          "url": "https://sos.wyo.gov/Elections/Docs/2026/2026_WY_Primary_Election_Candidates.pdf",
+          "title": "",
+          "status": "proposed"
+        }
+      ]
+    }
+  ],
+  "updatedAt": "2026-10-26T21:12:53.335Z"
+}

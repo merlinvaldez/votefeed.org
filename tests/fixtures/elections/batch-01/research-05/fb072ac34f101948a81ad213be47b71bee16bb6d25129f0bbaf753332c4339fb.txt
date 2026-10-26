@@ -1,0 +1,22 @@
+ELECTION CENTER
+Select Election:
+-- Select Election --
+{{election.Name}}
+{{election.Name}}
+Legislative Districts by Town
+Official Results
+Statewide
+Select Town
+My Races
+Statewide Reporting Statistics
+Registered Voters Reported:
+Towns Partially Reported:
+Precincts Reported:
+Voters Checked Reported:
+Towns Completely Reported:
+Voter Turnout (%):
+Summary
+Voter Turnout
+Districts
+Reports
+Ballot Questions

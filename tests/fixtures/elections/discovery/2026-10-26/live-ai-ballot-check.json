@@ -1,0 +1,211 @@
+{
+  "checkedOn": "2026-10-26",
+  "model": "gpt-5.4",
+  "promptVersion": "ballot-v1",
+  "sourceFile": "wy-general-candidates.csv",
+  "sourceUrl": "https://sos.wyo.gov/Elections/Docs/2026/2026_WY_General_Election_Candidates.csv",
+  "liveSourceRefresh": false,
+  "databaseWrites": false,
+  "records": [
+    {
+      "data": {
+        "kind": "ballot",
+        "name": "Harriet Hageman",
+        "party": "REP",
+        "race": {
+          "office": "senate",
+          "state": "WY",
+          "district": null,
+          "senateSeat": 2,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        },
+        "officialId": null,
+        "fecId": null,
+        "siteUrl": "https://hagemanforwyoming.com/",
+        "eligibility": "ballot-confirmed",
+        "reinstated": false,
+        "excerpt": "\"2026 GENERAL ELECTION\",\"UNITED STATES SENATOR\",\"REP\",\"HAGEMAN\",\"HARRIET\",\"MAXINE\",\"\",\"P.O. BOX 4157\",\"CHEYENNE WY 82003\",\"307-228-4886\",\"INFO@HAGEMANFORWYOMING.COM\",\"HAGEMANFORWYOMING.COM\",\"05/15/2026\",\"\",\"Harriet Hageman\"",
+        "locator": "CSV row: 2026 GENERAL ELECTION / UNITED STATES SENATOR / Harriet Hageman",
+        "raw": null
+      },
+      "validation": {
+        "outcome": "valid",
+        "errors": [],
+        "validatorVersion": "ballot-validator-v1"
+      }
+    },
+    {
+      "data": {
+        "kind": "ballot",
+        "name": "James Byrd",
+        "party": "DEM",
+        "race": {
+          "office": "senate",
+          "state": "WY",
+          "district": null,
+          "senateSeat": 2,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        },
+        "officialId": null,
+        "fecId": null,
+        "siteUrl": "https://byrdforsenate.com/",
+        "eligibility": "ballot-confirmed",
+        "reinstated": false,
+        "excerpt": "\"2026 GENERAL ELECTION\",\"UNITED STATES SENATOR\",\"DEM\",\"BYRD\",\"JAMES\",\"WILLARD\",\"\",\"2511 N SNYDER AVE\",\"CHEYENNE WY 82001\",\"307-289-9810\",\"DIGITALMOTORHEAD@GMAIL.COM\",\"BYRDFORSENATE.COM\",\"05/19/2026\",\"\",\"James Byrd\"",
+        "locator": "CSV row: 2026 GENERAL ELECTION / UNITED STATES SENATOR / James Byrd",
+        "raw": null
+      },
+      "validation": {
+        "outcome": "valid",
+        "errors": [],
+        "validatorVersion": "ballot-validator-v1"
+      }
+    },
+    {
+      "data": {
+        "kind": "ballot",
+        "name": "Chuck Gray",
+        "party": "REP",
+        "race": {
+          "office": "house",
+          "state": "WY",
+          "district": 0,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        },
+        "officialId": null,
+        "fecId": null,
+        "siteUrl": "https://chuckforwyoming.com/",
+        "eligibility": "ballot-confirmed",
+        "reinstated": false,
+        "excerpt": "\"2026 GENERAL ELECTION\",\"UNITED STATES REPRESENTATIVE\",\"REP\",\"GRAY\",\"CHARLES\",\"JAN\",\"\",\"P.O. BOX 50415\",\"CASPER WY 82605\",\"307-251-1372\",\"INFO@CHUCKFORWYOMING.COM\",\"CHUCKFORWYOMING.COM\",\"05/26/2026\",\"\",\"Chuck Gray\"",
+        "locator": "CSV row: 2026 GENERAL ELECTION / UNITED STATES REPRESENTATIVE / Chuck Gray",
+        "raw": null
+      },
+      "validation": {
+        "outcome": "valid",
+        "errors": [],
+        "validatorVersion": "ballot-validator-v1"
+      }
+    },
+    {
+      "data": {
+        "kind": "ballot",
+        "name": "Lisa Kinney",
+        "party": "DEM",
+        "race": {
+          "office": "house",
+          "state": "WY",
+          "district": 0,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        },
+        "officialId": null,
+        "fecId": null,
+        "siteUrl": "https://lisakinneyforcongress.com/",
+        "eligibility": "ballot-confirmed",
+        "reinstated": false,
+        "excerpt": "\"2026 GENERAL ELECTION\",\"UNITED STATES REPRESENTATIVE\",\"DEM\",\"KINNEY\",\"LISA\",\"\",\"\",\"P.O. BOX 1710\",\"LARAMIE WY 82073\",\"307-275-6431\",\"LISAKINNEY2026@WYOMING.COM\",\"LISAKINNEYFORCONGRESS.COM\",\"05/15/2026\",\"\",\"Lisa Kinney\"",
+        "locator": "CSV row: 2026 GENERAL ELECTION / UNITED STATES REPRESENTATIVE / Lisa Kinney",
+        "raw": null
+      },
+      "validation": {
+        "outcome": "valid",
+        "errors": [],
+        "validatorVersion": "ballot-validator-v1"
+      }
+    },
+    {
+      "data": {
+        "kind": "ballot",
+        "name": "Shawn Johnson",
+        "party": "LBR",
+        "race": {
+          "office": "house",
+          "state": "WY",
+          "district": 0,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        },
+        "officialId": null,
+        "fecId": null,
+        "siteUrl": null,
+        "eligibility": "ballot-confirmed",
+        "reinstated": false,
+        "excerpt": "\"2026 GENERAL ELECTION\",\"UNITED STATES REPRESENTATIVE\",\"LBR\",\"JOHNSON\",\"SHAWN\",\"A.\",\"\",\"108 PEPPERMINT LN\",\"THERMOPOLIS WY 82443\",\"307-277-7377\",\"JOHNSON4WYO@GMAIL.COM\",\"\",\"08/17/2026\",\"\",\"Shawn Johnson\"",
+        "locator": "CSV row: 2026 GENERAL ELECTION / UNITED STATES REPRESENTATIVE / Shawn Johnson",
+        "raw": null
+      },
+      "validation": {
+        "outcome": "valid",
+        "errors": [],
+        "validatorVersion": "ballot-validator-v1"
+      }
+    },
+    {
+      "data": {
+        "kind": "ballot",
+        "name": "Jeffrey Haggit",
+        "party": "CT",
+        "race": {
+          "office": "house",
+          "state": "WY",
+          "district": 0,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        },
+        "officialId": null,
+        "fecId": null,
+        "siteUrl": "https://haggitforhouse.com/",
+        "eligibility": "ballot-confirmed",
+        "reinstated": false,
+        "excerpt": "\"2026 GENERAL ELECTION\",\"UNITED STATES REPRESENTATIVE\",\"CT\",\"HAGGIT\",\"JEFFREY\",\"A.\",\"\",\"P.O. 1028\",\"MT VIEW WY 82939\",\"307-800-7811\",\"HAGGITFORHOUSE@GMAIL.COM\",\"HAGGITFORHOUSE.COM\",\"07/17/2026\",\"\",\"Jeffrey Haggit\"",
+        "locator": "CSV row: 2026 GENERAL ELECTION / UNITED STATES REPRESENTATIVE / Jeffrey Haggit",
+        "raw": null
+      },
+      "validation": {
+        "outcome": "valid",
+        "errors": [],
+        "validatorVersion": "ballot-validator-v1"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "locator": "CSV row: 2026 GENERAL ELECTION / UNITED STATES SENATOR / Harriet Hageman",
+      "supported": true
+    },
+    {
+      "locator": "CSV row: 2026 GENERAL ELECTION / UNITED STATES SENATOR / James Byrd",
+      "supported": true
+    },
+    {
+      "locator": "CSV row: 2026 GENERAL ELECTION / UNITED STATES REPRESENTATIVE / Chuck Gray",
+      "supported": true
+    },
+    {
+      "locator": "CSV row: 2026 GENERAL ELECTION / UNITED STATES REPRESENTATIVE / Lisa Kinney",
+      "supported": true
+    },
+    {
+      "locator": "CSV row: 2026 GENERAL ELECTION / UNITED STATES REPRESENTATIVE / Shawn Johnson",
+      "supported": true
+    },
+    {
+      "locator": "CSV row: 2026 GENERAL ELECTION / UNITED STATES REPRESENTATIVE / Jeffrey Haggit",
+      "supported": true
+    }
+  ]
+}

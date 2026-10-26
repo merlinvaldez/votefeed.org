@@ -1,0 +1,2128 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-26T21:26:59.252Z",
+  "databaseWrites": false,
+  "captures": [
+    {
+      "state": "CO",
+      "id": "CO-general",
+      "url": "https://www.sos.state.co.us/pubs/elections/vote/generalCandidates.html",
+      "allowedOrigins": [
+        "https://www.sos.state.co.us"
+      ],
+      "status": "captured",
+      "sha256": "36efa2660dbdddf471c69ab39f85d370493139aaee63c92174671d2e793cc87c",
+      "bytes": 71969,
+      "requestedUrl": "https://www.sos.state.co.us/pubs/elections/vote/generalCandidates.html",
+      "finalUrl": "https://www.sos.state.co.us/pubs/elections/vote/generalCandidates.html",
+      "retrievedAt": "2026-10-26T21:26:59.948Z",
+      "mediaType": "text/html",
+      "httpStatus": 200,
+      "headers": {
+        "date": "Mon, 26 Oct 2026 21:26:59 GMT",
+        "content-type": "text/html",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "last-modified": "Tue, 15 Sep 2026 17:09:44 GMT",
+        "accept-ranges": "bytes",
+        "set-cookie": [
+          "__cf_bm=b4C.ZFswttdZ6uTnbhjSmfRW91m86QV3EGmkwb73UzY-1793050019.5430675-1.0.1.1-BWLMTnEAJMwdrdgc1bYe4K1K64z16sowHRfxxFjj8__.BD2mLmEMfz5FTulbrEbpWdN4SQ30Tl7kBk7JgbIGDzARouRwoALz_43zJy2Y3du6VF2AsPzcodrmhzJs0jX1; HttpOnly; SameSite=None; Secure; Path=/; Domain=sos.state.co.us; Expires=Mon, 26 Oct 2026 21:56:59 GMT"
+        ],
+        "x-frame-options": "SAMEORIGIN, ALLOW-FROM https://coloradosos.gov/",
+        "content-security-policy": "frame-ancestors 'self' https://*.electionstats.com.com https://*.elstats-staging.com;",
+        "access-control-allow-origin": "https://coloradosos.gov",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "strict-transport-security": "max-age=16070400; includeSubDomains",
+        "cf-cache-status": "DYNAMIC",
+        "server": "cloudflare",
+        "cf-ray": "a50c8ade2c37939a-EWR"
+      },
+      "file": "36efa2660dbdddf471c69ab39f85d370493139aaee63c92174671d2e793cc87c.bin",
+      "textFile": "36efa2660dbdddf471c69ab39f85d370493139aaee63c92174671d2e793cc87c.txt",
+      "textLength": 22465,
+      "links": [
+        {
+          "text": "Skip to content",
+          "url": "https://www.sos.state.co.us/pubs/elections/vote/generalCandidates.html#main"
+        },
+        {
+          "text": "Menu",
+          "url": "https://www.sos.state.co.us/pubs/elections/vote/generalCandidates.html#"
+        },
+        {
+          "text": "Certificate of Good Standing",
+          "url": "https://www.coloradosos.gov/biz/BusinessEntityCriteria.do"
+        },
+        {
+          "text": "DME suppliers FAQs",
+          "url": "https://www.coloradosos.gov/pubs/DME/FAQs/general.html"
+        },
+        {
+          "text": "Candidates",
+          "url": "https://www.coloradosos.gov/pubs/elections/Candidates/CandidateHome.html"
+        },
+        {
+          "text": "Certificate of Good Standing",
+          "url": "https://www.coloradosos.gov/biz/BusinessEntityCriteria.do"
+        },
+        {
+          "text": "Candidates",
+          "url": "https://www.coloradosos.gov/pubs/elections/Candidates/CandidateHome.html"
+        },
+        {
+          "text": "DME suppliers FAQs",
+          "url": "https://www.coloradosos.gov/pubs/DME/FAQs/general.html"
+        },
+        {
+          "text": "Excel version (XLSX)",
+          "url": "https://www.sos.state.co.us/pubs/elections/vote/files/2026/2026GeneralCandidateListOfficial.xlsx"
+        }
+      ]
+    },
+    {
+      "state": "CA",
+      "id": "CA-contacts",
+      "url": "https://elections.cdn.sos.ca.gov/statewide-elections/2026-general/contact-list.pdf",
+      "allowedOrigins": [
+        "https://elections.cdn.sos.ca.gov"
+      ],
+      "maxBytes": 20000000,
+      "status": "captured",
+      "sha256": "b5287a7f5fad976ead2d7a79128bc206901c26f3464f5125e8e78ace6ee6df0c",
+      "bytes": 12754365,
+      "requestedUrl": "https://elections.cdn.sos.ca.gov/statewide-elections/2026-general/contact-list.pdf",
+      "finalUrl": "https://elections.cdn.sos.ca.gov/statewide-elections/2026-general/contact-list.pdf",
+      "retrievedAt": "2026-10-26T21:27:00.106Z",
+      "mediaType": "application/pdf",
+      "httpStatus": 200,
+      "headers": {
+        "content-type": "application/pdf",
+        "content-length": "12754365",
+        "connection": "keep-alive",
+        "accept-ranges": "bytes",
+        "server": "AmazonS3",
+        "last-modified": "Thu, 24 Sep 2026 00:41:40 GMT",
+        "x-amz-meta-cb-modifiedtime": "Thu, 24 Sep 2026 00:41:10 GMT",
+        "x-amz-version-id": "5O.SK4wKPnTzblwO_9E1lLpDpTyZnoXN",
+        "x-amz-server-side-encryption": "AES256",
+        "x-amz-storage-class": "INTELLIGENT_TIERING",
+        "date": "Mon, 26 Oct 2026 21:25:12 GMT",
+        "etag": "\"a1128a7f9c08adc9eac597b4d58166b0-2\"",
+        "x-cache": "Hit from cloudfront",
+        "via": "1.1 255e8a45aff6633687f7e4911e918abc.cloudfront.net (CloudFront)",
+        "x-amz-cf-pop": "JFK52-P3",
+        "x-amz-cf-id": "R6EJ2GnpHnojTT6_U36j_ApkR89-rgoSVLtll5Qp-hhqQQ8k7AN--g==",
+        "age": "108"
+      },
+      "file": "b5287a7f5fad976ead2d7a79128bc206901c26f3464f5125e8e78ace6ee6df0c.bin",
+      "textFile": "b5287a7f5fad976ead2d7a79128bc206901c26f3464f5125e8e78ace6ee6df0c.txt",
+      "textLength": 59008
+    },
+    {
+      "state": "CA",
+      "id": "CA-certified",
+      "url": "https://elections.cdn.sos.ca.gov/statewide-elections/2026-general/cert-list-candidates.pdf",
+      "allowedOrigins": [
+        "https://elections.cdn.sos.ca.gov"
+      ],
+      "maxBytes": 20000000,
+      "status": "captured",
+      "sha256": "0e514ae7b14378b1837bcea99c07e6a05ce35baa9db4c3d3a2297704dc7e6017",
+      "bytes": 14833345,
+      "requestedUrl": "https://elections.cdn.sos.ca.gov/statewide-elections/2026-general/cert-list-candidates.pdf",
+      "finalUrl": "https://elections.cdn.sos.ca.gov/statewide-elections/2026-general/cert-list-candidates.pdf",
+      "retrievedAt": "2026-10-26T21:27:00.793Z",
+      "mediaType": "application/pdf",
+      "httpStatus": 200,
+      "headers": {
+        "content-type": "application/pdf",
+        "content-length": "14833345",
+        "connection": "keep-alive",
+        "accept-ranges": "bytes",
+        "server": "AmazonS3",
+        "last-modified": "Fri, 28 Aug 2026 00:38:33 GMT",
+        "x-amz-meta-cb-modifiedtime": "Fri, 28 Aug 2026 00:38:17 GMT",
+        "x-amz-version-id": "YC64RsTngoMZFHcbGqvJeRPACe1RXcrS",
+        "x-amz-server-side-encryption": "AES256",
+        "x-amz-storage-class": "INTELLIGENT_TIERING",
+        "date": "Mon, 26 Oct 2026 21:25:13 GMT",
+        "etag": "\"c32d1ef1a835617bb24e7693467de987-2\"",
+        "x-cache": "Hit from cloudfront",
+        "via": "1.1 d2b8f634cf8ac5ec77dee366297223bc.cloudfront.net (CloudFront)",
+        "x-amz-cf-pop": "JFK52-P3",
+        "x-amz-cf-id": "IeLAv_SF0zGJFgHXNq68PlmPEVY1pg6ghUwGQ494rENt-oxA3CLVmQ==",
+        "age": "107"
+      },
+      "file": "0e514ae7b14378b1837bcea99c07e6a05ce35baa9db4c3d3a2297704dc7e6017.bin",
+      "textFile": "0e514ae7b14378b1837bcea99c07e6a05ce35baa9db4c3d3a2297704dc7e6017.txt",
+      "textLength": 39602
+    },
+    {
+      "state": "HI",
+      "id": "HI-candidate-report",
+      "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94",
+      "allowedOrigins": [
+        "https://olvr.hawaii.gov"
+      ],
+      "status": "captured",
+      "sha256": "ecbb6f5099c641c6cb18b13c9840bace795d2c60d965dbd2c5040f8e33b92aab",
+      "bytes": 75680,
+      "requestedUrl": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94",
+      "finalUrl": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94",
+      "retrievedAt": "2026-10-26T21:27:01.226Z",
+      "mediaType": "text/html; charset=utf-8",
+      "httpStatus": 200,
+      "headers": {
+        "date": "Mon, 26 Oct 2026 21:27:01 GMT",
+        "content-type": "text/html; charset=utf-8",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "cache-control": "private",
+        "vary": "Accept-Encoding",
+        "server": "cloudflare",
+        "access-control-allow-origin": "*",
+        "cf-apo-via": "origin,host",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "cf-cache-status": "DYNAMIC",
+        "set-cookie": [
+          "ASP.NET_SessionId=hw2h5hpjwlrz4tiu1qpoyait; path=/; secure; HttpOnly; SameSite=Lax",
+          "HIVIP=elID=94; path=/; secure",
+          "__cf_bm=1I5r7OlWsIkcqnj15fzZFGJoZWeUGg.AYVc91T9Vbzk-1793050020.7269838-1.0.1.1-1Xy_kBvmMXHgOmtZ64KVZ21kY5gbsMQ6v_ochUlIofCV5Pxf5HyyBboDJfr943234tSXwwOcsWGoUOhQHa3EfooeDaFJvZD.GGYoKo28flAmsuHlkdRXlI38KKsGAGh2; HttpOnly; SameSite=None; Secure; Path=/; Domain=hawaii.gov; Expires=Mon, 26 Oct 2026 21:57:01 GMT",
+          "_cfuvid=afBBQSYLLMExUyzpJMyIUpM3M1VcC6wTDLYr6OIqFow-1793050020.7269838-1.0.1.1-deh.RFNH.1VPdrgm7wsjr5MAdxCQROQi3fr3vgCRdpA; HttpOnly; SameSite=None; Secure; Path=/; Domain=hawaii.gov"
+        ],
+        "cf-ray": "a50c8ae58a03c2ef-EWR"
+      },
+      "file": "ecbb6f5099c641c6cb18b13c9840bace795d2c60d965dbd2c5040f8e33b92aab.bin",
+      "textFile": "ecbb6f5099c641c6cb18b13c9840bace795d2c60d965dbd2c5040f8e33b92aab.txt",
+      "textLength": 3441,
+      "links": [
+        {
+          "text": "NoFilter",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "Contains",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "DoesNotContain",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "StartsWith",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "EndsWith",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "EqualTo",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "NotEqualTo",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "GreaterThan",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "LessThan",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "GreaterThanOrEqualTo",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "LessThanOrEqualTo",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "Between",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "NotBetween",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "IsEmpty",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "NotIsEmpty",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "IsNull",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "NotIsNull",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        },
+        {
+          "text": "Custom",
+          "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94#"
+        }
+      ]
+    },
+    {
+      "state": "AZ",
+      "id": "AZ-general",
+      "url": "https://apps.arizona.vote/electioninfo/Election/69",
+      "allowedOrigins": [
+        "https://apps.arizona.vote"
+      ],
+      "status": "failed",
+      "errorCode": "discovery-http-failed"
+    },
+    {
+      "state": "CT",
+      "id": "CT-list",
+      "url": "https://portal.ct.gov/sots/election-services/candidate-lists-for-office/list-of-candidates",
+      "allowedOrigins": [
+        "https://portal.ct.gov"
+      ],
+      "status": "captured",
+      "sha256": "697447c5fcf3dbc09b0f7376cf6ebac73e02f8780fe3cf6c64956b50adb4c23e",
+      "bytes": 28426,
+      "requestedUrl": "https://portal.ct.gov/sots/election-services/candidate-lists-for-office/list-of-candidates",
+      "finalUrl": "https://portal.ct.gov/sots/election-services/candidate-lists-for-office/list-of-candidates",
+      "retrievedAt": "2026-10-26T21:27:01.602Z",
+      "mediaType": "text/html; charset=utf-8",
+      "httpStatus": 200,
+      "headers": {
+        "date": "Mon, 26 Oct 2026 21:27:01 GMT",
+        "content-type": "text/html; charset=utf-8",
+        "content-length": "28426",
+        "connection": "keep-alive",
+        "cache-control": "private,public, max-age=1800",
+        "set-cookie": [
+          "shell#lang=en; path=/; secure; SameSite=None",
+          "ASP.NET_SessionId=4ridhxjcawwi3n4rtoxhw0d3; path=/; secure; HttpOnly; SameSite=None",
+          "SC_ANALYTICS_GLOBAL_COOKIE=988921927e724b6d8973a6cf2b42dd08|False; expires=Thu, 23-Oct-2036 21:27:01 GMT; path=/; secure; HttpOnly; SameSite=None",
+          "sxa_site=website; path=/; secure; HttpOnly; SameSite=None",
+          "ARRAffinity=a2851722c59c4829bbe6b1257b283e16beda6f04f4858d4d1460170cd77c1e8c;Path=/;HttpOnly;Secure;Domain=portal.ct.gov",
+          "ARRAffinitySameSite=a2851722c59c4829bbe6b1257b283e16beda6f04f4858d4d1460170cd77c1e8c;Path=/;HttpOnly;SameSite=None;Secure;Domain=portal.ct.gov"
+        ],
+        "vary": "Accept-Encoding",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-frame-options": "SAMEORIGIN",
+        "referrer-policy": "same-origin",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "expect-ct": "max-age=86400, enforce",
+        "accept-ch": "Sec-CH-UA-Full-Version-List,Sec-CH-UA-Platform-Version,Sec-CH-UA-Arch,Sec-CH-UA-Model,Sec-CH-UA-Bitness",
+        "x-azure-ref": "20261026T212701Z-er164f487cbqs5r4hC1DFWb77n00000008bg00000000p6kr",
+        "x-fd-int-roxy-purgeid": "0",
+        "x-cache": "PRIVATE_NOSTORE",
+        "accept-ranges": "bytes"
+      },
+      "file": "697447c5fcf3dbc09b0f7376cf6ebac73e02f8780fe3cf6c64956b50adb4c23e.bin",
+      "textFile": "697447c5fcf3dbc09b0f7376cf6ebac73e02f8780fe3cf6c64956b50adb4c23e.txt",
+      "textLength": 492,
+      "links": [
+        {
+          "text": "Skip to Content",
+          "url": "https://portal.ct.gov/sots/election-services/candidate-lists-for-office/list-of-candidates#mainContent"
+        },
+        {
+          "text": "Skip to Chat",
+          "url": "https://portal.ct.gov/sots/election-services/candidate-lists-for-office/list-of-candidates#chatContent"
+        },
+        {
+          "text": "Top",
+          "url": "https://portal.ct.gov/sots/election-services/candidate-lists-for-office/list-of-candidates#0"
+        },
+        {
+          "text": "Candidate Information",
+          "url": "https://portal.ct.gov/sots/election-services/v5-side-navigation/ele---candidate-information"
+        },
+        {
+          "text": "Filtered Topic Search",
+          "url": "https://portal.ct.gov/sots/election-services/candidate-lists-for-office/list-of-candidates#"
+        },
+        {
+          "text": "Municipal Candidates are not listed on this website per C. G. S. Section 9-462",
+          "url": "http://www.cga.ct.gov/2011/pub/chap153.htm#Sec9-462.htm"
+        },
+        {
+          "text": "February 22, 2011 Special Election List of Candidates",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/lists/list_of_candidates/2011/candidateslistfor22211specialelectionspdf.pdf?rev=5c3bf50f5862474ba8f1bb23e13aad96&hash=09BDD83541B02F60459D844F8160E40E"
+        },
+        {
+          "text": "November 2, 2010 List of Candidates",
+          "url": "http://www.statementofvote-sots.ct.gov/StatementOfVote/WebModules/ReportsLink/CandOfficeTitle.aspx"
+        },
+        {
+          "text": "November 4, 2008 List of Candidates",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/lists/list_of_candidates/2008/2008listofcandidatespdf.pdf?rev=41523b6baff64cd1acab9c952f4609de&hash=122AFF95190475AD2BF4921DDDC74D64"
+        },
+        {
+          "text": "List of Candidates ARCHIVES....",
+          "url": "https://portal.ct.gov/sots/election-services/candidate-lists-for-office/list-of-candidates-archives?archived=true"
+        }
+      ]
+    },
+    {
+      "state": "FL",
+      "id": "FL-federal-general",
+      "url": "https://dos.elections.myflorida.com/candidates/CanList.asp?OfficeGroup=FED&StatusCode=QUA&elecID=20261103-GEN",
+      "allowedOrigins": [
+        "https://dos.elections.myflorida.com"
+      ],
+      "status": "captured",
+      "sha256": "a180cb7fa9fbe1604bf1f3f21fb74bfb27df35ac77c0fd66e0c7e65a2017ebbb",
+      "bytes": 73968,
+      "requestedUrl": "https://dos.elections.myflorida.com/candidates/CanList.asp?OfficeGroup=FED&StatusCode=QUA&elecID=20261103-GEN",
+      "finalUrl": "https://dos.elections.myflorida.com/candidates/CanList.asp?OfficeGroup=FED&StatusCode=QUA&elecID=20261103-GEN",
+      "retrievedAt": "2026-10-26T21:27:01.664Z",
+      "mediaType": "text/html",
+      "httpStatus": 200,
+      "headers": {
+        "date": "Mon, 26 Oct 2026 21:27:01 GMT",
+        "content-type": "text/html",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "cache-control": "private",
+        "vary": "Accept-Encoding",
+        "server": "cloudflare",
+        "set-cookie": [
+          "ASPSESSIONIDSUABRRBT=LAEPFNBDABMBKOGOFBCJGNCI; secure; path=/",
+          "__cf_bm=qNtGLNI1qXX75OehecFDHgGW4oMLRbQdJmwsyHWyfpM-1793050021.1354547-1.0.1.1-rDnl4feynNGYfbcVRDAgIsX3UF02hhZokLLoeGPJjklLj.LkPPQ3H0mEayCQNiEPmAB1x9pnFLv9kZX6ylUSdoJMD5Qfar2rZbIP2pXETK.MsENIHC2mVk7u7QZ1oWAE9kVVQkEvJloJpnqW0ROLag; HttpOnly; SameSite=None; Secure; Path=/; Domain=elections.myflorida.com; Expires=Mon, 26 Oct 2026 21:57:01 GMT"
+        ],
+        "x-powered-by": "ASP.NET",
+        "x-s": "2",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a50c8ae818452560-EWR"
+      },
+      "file": "a180cb7fa9fbe1604bf1f3f21fb74bfb27df35ac77c0fd66e0c7e65a2017ebbb.bin",
+      "textFile": "a180cb7fa9fbe1604bf1f3f21fb74bfb27df35ac77c0fd66e0c7e65a2017ebbb.txt",
+      "textLength": 5549,
+      "links": [
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89955"
+        },
+        {
+          "text": "Gillespie",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89955"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89955"
+        },
+        {
+          "text": "Neil",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89955"
+        },
+        {
+          "text": "J.",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89955"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89119"
+        },
+        {
+          "text": "Moody",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89119"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89119"
+        },
+        {
+          "text": "Ashley",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89119"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89119"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90009"
+        },
+        {
+          "text": "Nixon",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90009"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90009"
+        },
+        {
+          "text": "Angie",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90009"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90009"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89828"
+        },
+        {
+          "text": "Davis",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89828"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89828"
+        },
+        {
+          "text": "Tyler",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89828"
+        },
+        {
+          "text": "L.",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89828"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89686"
+        },
+        {
+          "text": "Patronis",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89686"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89686"
+        },
+        {
+          "text": "Jimmy",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89686"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89686"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89916"
+        },
+        {
+          "text": "Valimont",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89916"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89916"
+        },
+        {
+          "text": "Gay",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89916"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89916"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89535"
+        },
+        {
+          "text": "Green",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89535"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89535"
+        },
+        {
+          "text": "Amanda",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89535"
+        },
+        {
+          "text": "Marie",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89535"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89929"
+        },
+        {
+          "text": "Rogers",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89929"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89929"
+        },
+        {
+          "text": "Austin",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89929"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89929"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91508"
+        },
+        {
+          "text": "Cammack",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91508"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91508"
+        },
+        {
+          "text": "Kat",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91508"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91508"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89177"
+        },
+        {
+          "text": "Harp",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89177"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89177"
+        },
+        {
+          "text": "Seth",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89177"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89177"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91032"
+        },
+        {
+          "text": "Klein",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91032"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91032"
+        },
+        {
+          "text": "Mike",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91032"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91032"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88755"
+        },
+        {
+          "text": "Bean",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88755"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88755"
+        },
+        {
+          "text": "Aaron",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88755"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88755"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89716"
+        },
+        {
+          "text": "Holloway",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89716"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89716"
+        },
+        {
+          "text": "LaShonda",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89716"
+        },
+        {
+          "text": "\"L.J.\"",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89716"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89381"
+        },
+        {
+          "text": "Schaefer",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89381"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89381"
+        },
+        {
+          "text": "Todd",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89381"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89381"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90647"
+        },
+        {
+          "text": "Sell",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90647"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90647"
+        },
+        {
+          "text": "Mike",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90647"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90647"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89665"
+        },
+        {
+          "text": "Grage",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89665"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89665"
+        },
+        {
+          "text": "Rachel",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89665"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89665"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89967"
+        },
+        {
+          "text": "Rutherford",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89967"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89967"
+        },
+        {
+          "text": "John",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89967"
+        },
+        {
+          "text": "H.",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89967"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90602"
+        },
+        {
+          "text": "Upham",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90602"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90602"
+        },
+        {
+          "text": "William",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90602"
+        },
+        {
+          "text": "Lintag",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90602"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90492"
+        },
+        {
+          "text": "Fine",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90492"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90492"
+        },
+        {
+          "text": "Randy",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90492"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90492"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89377"
+        },
+        {
+          "text": "Parrott",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89377"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89377"
+        },
+        {
+          "text": "Andrew",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89377"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89377"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89465"
+        },
+        {
+          "text": "Pavlik",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89465"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89465"
+        },
+        {
+          "text": "Alec",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89465"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89465"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89402"
+        },
+        {
+          "text": "Yonce",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89402"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89402"
+        },
+        {
+          "text": "Eric",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89402"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89402"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90631"
+        },
+        {
+          "text": "Dalton",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90631"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90631"
+        },
+        {
+          "text": "Bale",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90631"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90631"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92377"
+        },
+        {
+          "text": "Dennison",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92377"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92377"
+        },
+        {
+          "text": "Christopher",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92377"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92377"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90696"
+        },
+        {
+          "text": "Elijah",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90696"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90696"
+        },
+        {
+          "text": "Ryan",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90696"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90696"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89522"
+        },
+        {
+          "text": "Haridopolos",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89522"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89522"
+        },
+        {
+          "text": "Mike",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89522"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89522"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90831"
+        },
+        {
+          "text": "Jenkins",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90831"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90831"
+        },
+        {
+          "text": "Jennifer",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90831"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90831"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91337"
+        },
+        {
+          "text": "Green",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91337"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91337"
+        },
+        {
+          "text": "Dan",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91337"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91337"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89339"
+        },
+        {
+          "text": "Soto",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89339"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89339"
+        },
+        {
+          "text": "Darren",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89339"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89339"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88517"
+        },
+        {
+          "text": "Groves",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88517"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88517"
+        },
+        {
+          "text": "Ralph",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88517"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88517"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91715"
+        },
+        {
+          "text": "Pericola",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91715"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91715"
+        },
+        {
+          "text": "James",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91715"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91715"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91717"
+        },
+        {
+          "text": "Strada",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91717"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91717"
+        },
+        {
+          "text": "Joe",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91717"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91717"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88868"
+        },
+        {
+          "text": "Bilirakis",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88868"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88868"
+        },
+        {
+          "text": "Gus",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88868"
+        },
+        {
+          "text": "Michael",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88868"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89453"
+        },
+        {
+          "text": "Overman",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89453"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89453"
+        },
+        {
+          "text": "Kimberly",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89453"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89453"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89778"
+        },
+        {
+          "text": "Scrivener",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89778"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89778"
+        },
+        {
+          "text": "Branden",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89778"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89778"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89497"
+        },
+        {
+          "text": "D'Arrigo",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89497"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89497"
+        },
+        {
+          "text": "Tony",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89497"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89497"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90671"
+        },
+        {
+          "text": "Gray",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90671"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90671"
+        },
+        {
+          "text": "Leela",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90671"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90671"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89765"
+        },
+        {
+          "text": "Luna",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89765"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89765"
+        },
+        {
+          "text": "Anna",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89765"
+        },
+        {
+          "text": "Paulina",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89765"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91313"
+        },
+        {
+          "text": "Beltran",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91313"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91313"
+        },
+        {
+          "text": "Mike",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91313"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91313"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88870"
+        },
+        {
+          "text": "Castor",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88870"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88870"
+        },
+        {
+          "text": "Kathy",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88870"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88870"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91055"
+        },
+        {
+          "text": "Hernandez",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91055"
+        },
+        {
+          "text": "Sr.",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91055"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91055"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91055"
+        },
+        {
+          "text": "Salomon",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91055"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91055"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92395"
+        },
+        {
+          "text": "Lambert",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92395"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92395"
+        },
+        {
+          "text": "Brian",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92395"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92395"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89166"
+        },
+        {
+          "text": "Varian",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89166"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89166"
+        },
+        {
+          "text": "Keith",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89166"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89166"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92409"
+        },
+        {
+          "text": "Boone",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92409"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92409"
+        },
+        {
+          "text": "Angie",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92409"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92409"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89121"
+        },
+        {
+          "text": "Lee",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89121"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89121"
+        },
+        {
+          "text": "Laurel",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89121"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89121"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89116"
+        },
+        {
+          "text": "People",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89116"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89116"
+        },
+        {
+          "text": "Robert",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89116"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89116"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89623"
+        },
+        {
+          "text": "Davis",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89623"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89623"
+        },
+        {
+          "text": "Mark",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89623"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89623"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90251"
+        },
+        {
+          "text": "Gruters",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90251"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90251"
+        },
+        {
+          "text": "Sydney",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90251"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90251"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90779"
+        },
+        {
+          "text": "Kirschner",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90779"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90779"
+        },
+        {
+          "text": "Kelly",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90779"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90779"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89451"
+        },
+        {
+          "text": "Montavon",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89451"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89451"
+        },
+        {
+          "text": "Matthew",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89451"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89451"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90646"
+        },
+        {
+          "text": "Quirk",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90646"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90646"
+        },
+        {
+          "text": "Michael",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90646"
+        },
+        {
+          "text": "J.",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90646"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89179"
+        },
+        {
+          "text": "Steube",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89179"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89179"
+        },
+        {
+          "text": "Greg",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89179"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89179"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89125"
+        },
+        {
+          "text": "Franklin",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89125"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89125"
+        },
+        {
+          "text": "Scott",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89125"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89125"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89631"
+        },
+        {
+          "text": "Gibson",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89631"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89631"
+        },
+        {
+          "text": "Curtis",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89631"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89631"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89643"
+        },
+        {
+          "text": "Simmons",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89643"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89643"
+        },
+        {
+          "text": "Deva",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89643"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89643"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89740"
+        },
+        {
+          "text": "Arias",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89740"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89740"
+        },
+        {
+          "text": "Victor",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89740"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89740"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90744"
+        },
+        {
+          "text": "Haskin",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90744"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90744"
+        },
+        {
+          "text": "Seth",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90744"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90744"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89137"
+        },
+        {
+          "text": "Schwartzel",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89137"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89137"
+        },
+        {
+          "text": "Jim",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89137"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89137"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90481"
+        },
+        {
+          "text": "Zakhvatayev",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90481"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90481"
+        },
+        {
+          "text": "Alexandra",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90481"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90481"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91278"
+        },
+        {
+          "text": "Andersen",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91278"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91278"
+        },
+        {
+          "text": "Brent",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91278"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91278"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90814"
+        },
+        {
+          "text": "Maxime",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90814"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90814"
+        },
+        {
+          "text": "Kedner",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90814"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90814"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91577"
+        },
+        {
+          "text": "Wasserman Schultz",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91577"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91577"
+        },
+        {
+          "text": "Debbie",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91577"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91577"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92578"
+        },
+        {
+          "text": "Cooke",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92578"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92578"
+        },
+        {
+          "text": "Alexander",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92578"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92578"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92567"
+        },
+        {
+          "text": "Fabrikant",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92567"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92567"
+        },
+        {
+          "text": "David",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92567"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92567"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89846"
+        },
+        {
+          "text": "Martin",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89846"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89846"
+        },
+        {
+          "text": "James",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89846"
+        },
+        {
+          "text": "T.",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89846"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88912"
+        },
+        {
+          "text": "Mast",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88912"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88912"
+        },
+        {
+          "text": "Brian",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88912"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88912"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92109"
+        },
+        {
+          "text": "Askar",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92109"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92109"
+        },
+        {
+          "text": "Casey",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92109"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92109"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89301"
+        },
+        {
+          "text": "Dandiya",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89301"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89301"
+        },
+        {
+          "text": "Pia",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89301"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89301"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89070"
+        },
+        {
+          "text": "Adeimy",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89070"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89070"
+        },
+        {
+          "text": "Deborah",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89070"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89070"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89248"
+        },
+        {
+          "text": "Frankel",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89248"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89248"
+        },
+        {
+          "text": "Lois",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89248"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89248"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90703"
+        },
+        {
+          "text": "Brown",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90703"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90703"
+        },
+        {
+          "text": "Te",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90703"
+        },
+        {
+          "text": "Mayonna",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90703"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91544"
+        },
+        {
+          "text": "Gilbert",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91544"
+        },
+        {
+          "text": "III",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91544"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91544"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91544"
+        },
+        {
+          "text": "Oliver",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91544"
+        },
+        {
+          "text": "G.",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91544"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92610"
+        },
+        {
+          "text": "Gonzalez",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92610"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92610"
+        },
+        {
+          "text": "Patricia",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92610"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92610"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=84732"
+        },
+        {
+          "text": "Hamilton",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=84732"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=84732"
+        },
+        {
+          "text": "Michaelangelo",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=84732"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=84732"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92357"
+        },
+        {
+          "text": "Jassenoff",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92357"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92357"
+        },
+        {
+          "text": "Peter",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92357"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92357"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88911"
+        },
+        {
+          "text": "Moskowitz",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88911"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88911"
+        },
+        {
+          "text": "Jared",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88911"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=88911"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89801"
+        },
+        {
+          "text": "Singer",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89801"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89801"
+        },
+        {
+          "text": "Scott",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89801"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89801"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90330"
+        },
+        {
+          "text": "Diaz-Balart",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90330"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90330"
+        },
+        {
+          "text": "Mario",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90330"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90330"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89980"
+        },
+        {
+          "text": "Locklin",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89980"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89980"
+        },
+        {
+          "text": "Nicole",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89980"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89980"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92137"
+        },
+        {
+          "text": "Meidinger Hosey",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92137"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92137"
+        },
+        {
+          "text": "Deborah",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92137"
+        },
+        {
+          "text": "Ann",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=92137"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89933"
+        },
+        {
+          "text": "Rodriguez",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89933"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89933"
+        },
+        {
+          "text": "Eliott",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89933"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=89933"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90721"
+        },
+        {
+          "text": "Salazar",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90721"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90721"
+        },
+        {
+          "text": "Maria",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90721"
+        },
+        {
+          "text": "Elvira",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90721"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91699"
+        },
+        {
+          "text": "Ehr",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91699"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91699"
+        },
+        {
+          "text": "Phil",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91699"
+        },
+        {
+          "text": "\"Felipe\"",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91699"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91226"
+        },
+        {
+          "text": "Gimenez",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91226"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91226"
+        },
+        {
+          "text": "Carlos",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91226"
+        },
+        {
+          "text": "A.",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=91226"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90340"
+        },
+        {
+          "text": "Rojas",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90340"
+        },
+        {
+          "text": ",",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90340"
+        },
+        {
+          "text": "Eddy",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90340"
+        },
+        {
+          "text": "",
+          "url": "https://dos.elections.myflorida.com/candidates/CanDetail.asp?account=90340"
+        }
+      ]
+    }
+  ]
+}

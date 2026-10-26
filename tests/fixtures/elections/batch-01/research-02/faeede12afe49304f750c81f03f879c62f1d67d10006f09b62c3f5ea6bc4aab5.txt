@@ -1,0 +1,30 @@
+Skip to content
+2026 Preferential Primary and Nonpartisan Judicial General Election
+Search Candidate Filings
+{{NameF}} {{NameL}}
+Download Portrait
+{{Descript}}
+{{PartyAffiliation}}
+{{#if Address1}}
+Address:
+{{Address1}} {{Address2}}
+{{City}}, {{State}} {{Zip}}
+{{/if}}
+{{#if CamAddress1}}
+Campaign Address:
+{{CamAddress1}}
+{{CamCity}}, {{CamState}} {{CamZip}}
+{{/if}}
+{{#if County}}
+County:
+{{County}}
+{{/if}}
+Filing Date:
+{{FilingDate}}
+Filing Order:
+{{FilingOrder}}
+Candidate NamePosition/OfficePartyAffiliationSelect OneNon Partisan JudicialRepublicanLibertarianIndependentDemocratic                Submit
+Candidate Name
+Position/Office
+Party Affiliation
+Filing Date

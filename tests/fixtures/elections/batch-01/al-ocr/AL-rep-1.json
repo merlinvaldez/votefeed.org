@@ -1,0 +1,24 @@
+{
+    "lines":  [
+                  "WES ALLEN",
+                  "SECRETARY OF STATE",
+                  "ALABAMA STATE CAPITOL",
+                  "MONTGOMERY, AL 36130",
+                  "STATE OF ALABAMA",
+                  "I, Wes Allen, Secretary of State of the State of Alabama, having custody of the",
+                  "Great and Principal Seal of said State, do hereby certify that",
+                  "in accordance with the Code of Alabama, 1975, as amended, the following names have",
+                  "been certified to the Office of the Secretary of State as candidates for the Alabama",
+                  "Republican Party in the General Election to be held on Tuesday, November 3, 2026.",
+                  "In Testimony Whereof, I have hereunto set my hand",
+                  "and affixed the Great Seal of the State, at the Capitol,",
+                  "in the City of Montgomery, on this day.",
+                  "August 26, 2026",
+                  "Date",
+                  "Wes Allen",
+                  "Secretary of State"
+              ],
+    "engine":  "Windows.Media.Ocr",
+    "language":  "en-US",
+    "image":  "AL-rep-1.png"
+}

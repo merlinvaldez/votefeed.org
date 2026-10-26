@@ -109,9 +109,13 @@ test('elections additive migration and server persistence on disposable PostgreS
       assert.equal((await read()).items[0].response,null);
       assert.equal((await read({},other)).items[0].response.privateComment,'private B');
       assert.equal((await read({district:1})).items.length,0);
-      await elections.importElectionCandidate({...fixture,eligibility:'withdrawn'},pool);
+      await elections.importElectionCandidate({...fixture,eligibility:'withdrawn',eligibilityEvidence:{...fixture.eligibilityEvidence,
+        checkedAt:new Date(Date.parse(checkedAt)+1000).toISOString()}},pool);
       assert.equal((await read()).items.length,0);
       await elections.importElectionCandidate(fixture,pool);
+      assert.equal((await read()).items.length,0); // An ordinary/older list cannot undo withdrawal.
+      await elections.importElectionCandidate({...fixture,eligibilityEvidence:{...fixture.eligibilityEvidence,reinstated:true,
+        checkedAt:new Date(Date.parse(checkedAt)+2000).toISOString()}},pool);
       await assert.rejects(read({scope:{cycle:2028}}),/Scope/);
       await assert.rejects(elections.readElectionPositions({state:'AK'},null,{connect:async()=>{throw new Error('storage unavailable');}}),/storage unavailable/);
     });

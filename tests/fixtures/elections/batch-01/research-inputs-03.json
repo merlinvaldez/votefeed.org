@@ -1,0 +1,60 @@
+[
+  {
+    "state": "CA",
+    "id": "CA-certified",
+    "url": "https://elections.cdn.sos.ca.gov/statewide-elections/2026-general/cert-list-candidates.pdf",
+    "allowedOrigins": [
+      "https://elections.cdn.sos.ca.gov"
+    ],
+    "maxBytes": 20000000
+  },
+  {
+    "state": "CA",
+    "id": "CA-contacts",
+    "url": "https://elections.cdn.sos.ca.gov/statewide-elections/2026-general/contact-list.pdf",
+    "allowedOrigins": [
+      "https://elections.cdn.sos.ca.gov"
+    ],
+    "maxBytes": 20000000
+  },
+  {
+    "state": "CO",
+    "id": "CO-general",
+    "url": "https://www.sos.state.co.us/pubs/elections/vote/generalCandidates.html",
+    "allowedOrigins": [
+      "https://www.sos.state.co.us"
+    ]
+  },
+  {
+    "state": "HI",
+    "id": "HI-candidate-report",
+    "url": "https://olvr.hawaii.gov/Controls/CandidateFiling.aspx?elid=94",
+    "allowedOrigins": [
+      "https://olvr.hawaii.gov"
+    ]
+  },
+  {
+    "state": "CT",
+    "id": "CT-list",
+    "url": "https://portal.ct.gov/sots/election-services/candidate-lists-for-office/list-of-candidates",
+    "allowedOrigins": [
+      "https://portal.ct.gov"
+    ]
+  },
+  {
+    "state": "FL",
+    "id": "FL-federal-general",
+    "url": "https://dos.elections.myflorida.com/candidates/CanList.asp?OfficeGroup=FED&StatusCode=QUA&elecID=20261103-GEN",
+    "allowedOrigins": [
+      "https://dos.elections.myflorida.com"
+    ]
+  },
+  {
+    "state": "AZ",
+    "id": "AZ-general",
+    "url": "https://apps.arizona.vote/electioninfo/Election/69",
+    "allowedOrigins": [
+      "https://apps.arizona.vote"
+    ]
+  }
+]

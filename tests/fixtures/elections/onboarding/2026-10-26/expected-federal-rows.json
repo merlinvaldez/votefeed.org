@@ -1,0 +1,394 @@
+{
+  "basis": "Independent review of captured federal sections. Missouri section/row enumeration is deterministic; Delaware, NH and NE fields transcribed from captured text. No corrections freshness or campaign-site acceptance claimed.",
+  "states": {
+    "DE": [
+      {
+        "name": "Chris Coons",
+        "party": "Democratic",
+        "raceLabel": "U.S. Senator",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": "https://chriscoons.com/"
+      },
+      {
+        "name": "Michael \"Dr. Mike\" Katz",
+        "party": "Republican",
+        "raceLabel": "U.S. Senator",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": "https://www.drmikekatz.com/"
+      },
+      {
+        "name": "Sarah McBride",
+        "party": "Democratic",
+        "raceLabel": "Representative in Congress",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": "https://sarahmcbride.com/"
+      },
+      {
+        "name": "Joseph \"Dr. Joe\" Arminio",
+        "party": "Republican",
+        "raceLabel": "Representative in Congress",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": "https://drjoeforcongress.com/"
+      },
+      {
+        "name": "Lee Murphy",
+        "party": "Republican",
+        "raceLabel": "Representative in Congress",
+        "eligibility": "withdrawn",
+        "siteUrl": "https://www.leemurphy2026.com/"
+      }
+    ],
+    "MO": [
+      {
+        "name": "Paul Berry III",
+        "party": "REPUBLICAN",
+        "raceLabel": "For U.S. Representative District 1",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Ann Wagner",
+        "party": "REPUBLICAN",
+        "raceLabel": "For U.S. Representative District 2",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Bob Onder",
+        "party": "REPUBLICAN",
+        "raceLabel": "For U.S. Representative District 3",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Mark Alford",
+        "party": "REPUBLICAN",
+        "raceLabel": "For U.S. Representative District 4",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Rick Brattin",
+        "party": "REPUBLICAN",
+        "raceLabel": "For U.S. Representative District 5",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Chris Stigall",
+        "party": "REPUBLICAN",
+        "raceLabel": "For U.S. Representative District 6",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Eric W. Burlison",
+        "party": "REPUBLICAN",
+        "raceLabel": "For U.S. Representative District 7",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Jason T. Smith",
+        "party": "REPUBLICAN",
+        "raceLabel": "For U.S. Representative District 8",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Wesley Bell",
+        "party": "DEMOCRATIC",
+        "raceLabel": "For U.S. Representative District 1",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Fred Wellman",
+        "party": "DEMOCRATIC",
+        "raceLabel": "For U.S. Representative District 2",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Bethany E Mann",
+        "party": "DEMOCRATIC",
+        "raceLabel": "For U.S. Representative District 3",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Jordan Herrera",
+        "party": "DEMOCRATIC",
+        "raceLabel": "For U.S. Representative District 4",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Emanuel Cleaver, II",
+        "party": "DEMOCRATIC",
+        "raceLabel": "For U.S. Representative District 5",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Josh Smead",
+        "party": "DEMOCRATIC",
+        "raceLabel": "For U.S. Representative District 6",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Missi Hesketh",
+        "party": "DEMOCRATIC",
+        "raceLabel": "For U.S. Representative District 7",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Chris Reichard",
+        "party": "DEMOCRATIC",
+        "raceLabel": "For U.S. Representative District 8",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Tom Schmitz",
+        "party": "LIBERTARIAN",
+        "raceLabel": "For U.S. Representative District 1",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Brandon Coulter Daugherty",
+        "party": "LIBERTARIAN",
+        "raceLabel": "For U.S. Representative District 2",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Jim Higgins",
+        "party": "LIBERTARIAN",
+        "raceLabel": "For U.S. Representative District 3",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Thomas Holbrook",
+        "party": "LIBERTARIAN",
+        "raceLabel": "For U.S. Representative District 4",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Randall (Randy) Langkraehr",
+        "party": "LIBERTARIAN",
+        "raceLabel": "For U.S. Representative District 5",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Andy Maidment",
+        "party": "LIBERTARIAN",
+        "raceLabel": "For U.S. Representative District 6",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Kevin Craig",
+        "party": "LIBERTARIAN",
+        "raceLabel": "For U.S. Representative District 7",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Rebecca Sharpe Lombard",
+        "party": "LIBERTARIAN",
+        "raceLabel": "For U.S. Representative District 8",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      }
+    ],
+    "NH": [
+      {
+        "name": "Chris Pappas",
+        "party": "DEM",
+        "raceLabel": "United States Senator",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "John E. Sununu",
+        "party": "REP",
+        "raceLabel": "United States Senator",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Edmond Laplante",
+        "party": "CON",
+        "raceLabel": "United States Senator",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Stefany Shaheen",
+        "party": "DEM",
+        "raceLabel": "Representative in Congress District 1",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Anthony DiLorenzo",
+        "party": "REP",
+        "raceLabel": "Representative in Congress District 1",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Maggie Goodlander",
+        "party": "DEM",
+        "raceLabel": "Representative in Congress District 2",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Lily Tang Williams",
+        "party": "REP",
+        "raceLabel": "Representative in Congress District 2",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Robbie Mahrou",
+        "party": "IND",
+        "raceLabel": "Representative in Congress District 2",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      }
+    ],
+    "NE": [
+      {
+        "name": "Pete Ricketts",
+        "party": "Republican",
+        "raceLabel": "For United States Senator",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Mike Marvin",
+        "party": "Legal Marijuana\nNOW",
+        "raceLabel": "For United States Senator",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Robin Richards",
+        "party": "Nebraska Working\nPeople",
+        "raceLabel": "For United States Senator",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Chuck Conboy",
+        "party": "America First",
+        "raceLabel": "For United States Senator",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Dan Osborn",
+        "party": "By Petition",
+        "raceLabel": "For United States Senator",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Mike Flood",
+        "party": "Republican",
+        "raceLabel": "For Representative in Congress District 01",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Chris Backemeyer",
+        "party": "Democratic",
+        "raceLabel": "For Representative in Congress District 01",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Nik Sandman",
+        "party": "Libertarian",
+        "raceLabel": "For Representative in Congress District 01",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Dan Hartong",
+        "party": "America First",
+        "raceLabel": "For Representative in Congress District 01",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Brinker Harding",
+        "party": "Republican",
+        "raceLabel": "For Representative in Congress District 02",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Denise Powell",
+        "party": "Democratic",
+        "raceLabel": "For Representative in Congress District 02",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Eric Michael Foreman",
+        "party": "Libertarian",
+        "raceLabel": "For Representative in Congress District 02",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Adrian Smith",
+        "party": "Republican",
+        "raceLabel": "For Representative in Congress District 03",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Becky Kelly Stille",
+        "party": "Democratic",
+        "raceLabel": "For Representative in Congress District 03",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "David J. Else",
+        "party": "Legal Marijuana\nNOW",
+        "raceLabel": "For Representative in Congress District 03",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Macey Budke",
+        "party": "Nebraska Working\nPeople",
+        "raceLabel": "For Representative in Congress District 03",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      },
+      {
+        "name": "Mark Cohen",
+        "party": "By Petition",
+        "raceLabel": "For Representative in Congress District 03",
+        "eligibility": "ballot-confirmed",
+        "siteUrl": null
+      }
+    ]
+  },
+  "blocked": {
+    "ND": "Initial GET has selection controls and no candidate result table; form retrieval required."
+  }
+}

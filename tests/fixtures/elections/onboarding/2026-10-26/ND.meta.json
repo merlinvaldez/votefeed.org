@@ -1,0 +1,24 @@
+{
+  "status": 200,
+  "headers": {
+    "date": "Mon, 26 Oct 2026 21:08:34 GMT",
+    "content-type": "text/html; charset=utf-8",
+    "transfer-encoding": "chunked",
+    "connection": "keep-alive",
+    "cache-control": "private",
+    "server": "cloudflare",
+    "strict-transport-security": "max-age=31536000; preload",
+    "x-aspnet-version": "4.0.30319",
+    "x-powered-by": "ASP.NET",
+    "cf-cache-status": "DYNAMIC",
+    "set-cookie": [
+      "ASP.NET_SessionId=xfhnhkvcn1i4kppbdc34b54x; path=/; secure; HttpOnly; SameSite=Lax",
+      "BIGipServerf5prdpoolSOSVIPCF_443=!wzCu5KPwpoc9Yeh6phmEy1zuo1mo2e0xYFCgte05qlXK70Yon7ZDV4xa2jR3jQiqJB+KcnZ9GtYIUCU=; path=/; Httponly; Secure",
+      "__cf_bm=6xqJaUqfBvjft2qe.0IydURk5mZJ4S21HgYeDoRz0y8-1793048913.889083-1.0.1.1-.GoPgoDY76L0IOLkOarOY4UdlYX5SSeeU3aGw.iMVDuZWP3yaZDzEfA1FdGqJFVSWE4qYMObzs_KKZ.FV9MaCxf_RmJ.8XuTgGptAjep3oMTrBsS851OSOYNWs4RNoHX; HttpOnly; SameSite=None; Secure; Path=/; Domain=sos.nd.gov; Expires=Mon, 26 Oct 2026 21:38:34 GMT"
+    ],
+    "cf-ray": "a50c6fdfca3ba6af-EWR"
+  },
+  "requestedUrl": "https://vip.sos.nd.gov/candidatelist.aspx?eid=348",
+  "finalUrl": "https://vip.sos.nd.gov/candidatelist.aspx?eid=348",
+  "retrievedAt": "2026-10-26T21:08:34.689Z"
+}

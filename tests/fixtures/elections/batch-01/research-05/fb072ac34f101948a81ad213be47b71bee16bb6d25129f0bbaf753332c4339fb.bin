@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="ct-enr">
+<head>
+    <title>Public Reporting</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="assets/css/styles.css?v=1.30" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="scripts/ng/angular.min.js"></script>
+    <script type="text/javascript" src="scripts/ng/angular-route.min.js"></script>
+    <script type="text/javascript" src="ng-app/app.js"></script>
+    <script type="text/javascript" src="ng-app/app-run.js?v=1.40"></script>
+    <script type="text/javascript" src="scripts/jsall.js"></script>
+    <script type="text/javascript" src="ng-app/controller/HomeController.js?v=1.30"></script>
+    <script type="text/javascript" src="ng-app/controller/RaceController.js?v=1.30"></script>
+    <script type="text/javascript" src="ng-app/controller/ReportController.js"></script>
+    <script type="text/javascript" src="ng-app/controller/SelectTownController.js?v=1.30"></script>
+    <script type="text/javascript" src="ng-app/controller/VoterTurnoutController.js"></script>
+    <script type="text/javascript" src="ng-app/controller/districtController.js"></script>
+    <script type="text/javascript" src="ng-app/controller/ballotQuestionsController.js"></script>
+</head>
+<body>
+    <table class="maincontainer" border="0" align="center" cellpadding="0"
+           cellspacing="0">
+        <tr>
+            <td class="headerbg">
+                <div class="headerseal"></div>
+                <!--<div class="training">
+                </div>-->
+                <!--<div class="headerphoto"></div>-->
+            </td>
+        </tr>
+        <tr>
+            <td align="left" valign="top">
+                <table style="width:100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="85%" height="450" align="left" class="borderthreesides"
+                            valign="top">
+                            <div>
+                                <table style="width:100%" border="0" cellspacing="0" cellpadding="0">
+
+                                   <!--  <tr>
+                                       <td align="right" colspan="2" style="padding:10px">
+	                                            <span class="Welcome">Welcome! <strong>{{userName}} </strong></span> &nbsp;|&nbsp;
+	                                            <a href="" data-ng-click="logout();" style="color: #CC6600;font-weight:bold;">Logout</a>
+	                                            <!--<input type="button"  value="Logout" class="button1" data-ng-click="logout();" />
+	                                        </td>
+	                                    </tr>-->
+	                                <tr>
+                                        <td align="left" valign="top" class="bgblue">
+                                            <div class="electionlabel">ELECTION CENTER</div>
+                                            <div class="electionSelect">Select Election:</div>
+                                            <div class="electionSelect" data-ng-show="electionsCount > 1 || electionsCount == 0">
+                                                <select name="ddlElection" data-ng-model="selectElection" class="txtborder2" data-ng-change="selectElections()">
+                                                    <option value="">-- Select Election --</option>
+                                                    <option data-ng-repeat="election in elections" value="{{election.ID}}">{{election.Name}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="electionSelect" data-ng-show="electionsCount==1">
+                                                <select name="ddlElection" data-ng-model="selectElection" class="txtborder2" data-ng-change="selectElections()">
+                                                    <option data-ng-repeat="election in elections" value="{{election.ID}}">{{election.Name}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="electionname">
+                                                <span data-ng-bind="electionStatic['DNM']"></span>
+                                            </div>
+                                            <div class="listofNomiees"> <a href="Reports/LDbyTown.pdf" target="_blank">Legislative Districts by Town</a></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" valign="top" class="bgblue">
+                                            <div class="official">
+                                                <span data-ng-if="reports.IO=='False'"><img src="assets/images/un_off.gif" alt="" /></span>
+                                                <span style="font-weight: bold; font-size: 16px;color:#008000" data-ng-if="reports.IO=='True'">Official Results</span>
+                                            </div>
+                                            <div style="text-align:right">
+                                                <span style="color:red" data-ng-bind="lastUpdatedTime"></span> <br />
+                                                <span style="color:green" data-ng-bind="nextUpdatedTime"></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="width:100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td align="center" valign="top" class="bggrey1">
+                                            <table style="width:100%" border="0" align="center" cellpadding="0" cellspacing="0" dwcopytype="CopyTableCell">
+                                                <tr>
+                                                    <td align="center" valign="top" class="bgpagetitle1">
+                                                        <!--<div class="menu1" id="dvMainTab">
+                                                            <div class="menu6link" id='mainTab1' data-ng-click="switchTab($event, 1)"></div>
+                                                            <div class="menu2link" id='mainTab2' data-ng-click="switchTab($event, 2)"></div>
+                                                        </div>-->
+                                                        <ul id="tabs">
+                                                            <li><a style="cursor:pointer" data-ng-click="swtichTabs($event)" name="statewide" id="current">Statewide</a></li>
+                                                            <li><a style="cursor:pointer" data-ng-click="swtichTabs($event)" name="selectTown">Select Town</a></li>
+                                                            <li><a style="cursor:pointer" data-ng-click="swtichTabs($event)" name="races">My Races</a></li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            <table style="width:100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td align="left" class="resultssummaryheader">
+                                                        Statewide Reporting Statistics
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" valign="top" class="bggrey1">
+                                                        <div class="colum3">
+                                                            <table style="width:100%" border="0" cellspacing="0" cellpadding="3">
+                                                                <tr>
+                                                                    <td align="right" width="50%" class="borderbottomresults">
+                                                                        <strong>Registered Voters Reported:</strong>
+                                                                    </td>
+                                                                    <td align="left" width="50%" class="borderbottomresults" id='sw_RO' data-ng-bind="electionDynamic.RV"></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        <div class="colum3">
+                                                            <table style="width:100%" border="0" cellspacing="0" cellpadding="3">
+                                                                <tr>
+                                                                    <td align="right" width="50%" class="borderbottomresults">
+                                                                        <strong>Towns Partially Reported: </strong>
+                                                                    </td>
+                                                                    <td align="left" width="50%" class="borderbottomresults" id='sw_TPR' data-ng-bind="electionDynamic.PT"></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        <div class="colum3">
+                                                            <table style="width:100%" border="0" cellspacing="0" cellpadding="3">
+                                                                <tr>
+                                                                    <td align="right" width="50%" class="borderbottomresults">
+                                                                        <strong>Precincts Reported: </strong>
+                                                                    </td>
+                                                                    <td align="left" width="50%" class="borderbottomresults" id='sw_PR' data-ng-bind="electionDynamic.PR"></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        <div class="colum3">
+                                                            <table style="width:100%" border="0" cellspacing="0"
+                                                                   cellpadding="3">
+                                                                <tr>
+                                                                    <td align="right" width="50%" class="borderbottomresults"><strong>Voters Checked Reported:</strong></td>
+                                                                    <td align="left" width="50%" class="borderbottomresults" id='sw_BC' data-ng-bind="electionDynamic.BC"></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        <div class="colum3">
+                                                            <table style="width:100%" border="0" cellspacing="0"
+                                                                   cellpadding="3">
+                                                                <tr>
+                                                                    <td align="right" width="50%" class="borderbottomresults"><strong>Towns Completely Reported: </strong></td>
+                                                                    <td align="left" width="50%" class="borderbottomresults" id='sw_TCR' data-ng-bind="electionDynamic.T"></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        <div class="colum3">
+                                                            <table style="width:100%" border="0" cellspacing="0"
+                                                                   cellpadding="3">
+                                                                <tr>
+                                                                    <td align="right" width="50%" class="borderbottomresults"><strong>Voter Turnout (%):</strong></td>
+                                                                    <td align="left" width="50%" class="borderbottomresults" id='sw_VT' data-ng-bind="electionDynamic.TO"></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr id="subTabsBar">
+                                        <td align="center" valign="top" class="bggrey1">
+                                            <!--<div class="menu3" id="dvSubMainTab">
+                                                <div class="menu5link" id='subtab1' data-ng-click="switchTab($event, 1)"></div>
+                                                <div class="menu4link" id='subtab2' data-ng-click="switchTab($event, 2)"></div>
+                                            </div>-->
+                                            <ul id="tabs_sub">
+                                                <li><a style="cursor:pointer" data-ng-click="swtichTabs($event)" name="home" id="current_sub">Summary</a></li>
+                                                <li><a style="cursor:pointer" data-ng-click="swtichTabs($event)" name="voterTurnout">Voter Turnout</a></li>
+                                                <li><a style="cursor:pointer" data-ng-click="swtichTabs($event)" name="districts">Districts</a></li>
+                                                <li><a style="cursor:pointer" data-ng-click="swtichTabs($event)" name="reports">Reports</a></li>
+												<li><a style="cursor:pointer" data-ng-click="swtichTabs($event)" name="ballotQuestions">Ballot Questions</a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div ng-view></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top">
+                            <img src="assets/images/spacer.gif" width="6" height="6" alt="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="10" align="center" valign="middle" class="infotext">
+                            <!--© 2016 PCC Technology Inc., All Rights Reserved.-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top">&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

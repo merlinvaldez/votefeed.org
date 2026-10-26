@@ -1,0 +1,25 @@
+{
+  "status": 200,
+  "headers": {
+    "connection": "keep-alive",
+    "content-length": "120495",
+    "content-type": "application/pdf",
+    "etag": "\"6aab0ea7-1d6af\"",
+    "last-modified": "Wed, 16 Sep 2026 21:48:23 GMT",
+    "server": "nginx",
+    "strict-transport-security": "max-age=31622400; includeSubDomains; preload",
+    "x-pantheon-styx-hostname": "styx-us-a-fbbcf58dd-lp77p",
+    "x-styx-req-id": "986eabe7-cdfe-11f1-b175-7258f653c1c6",
+    "age": "32",
+    "accept-ranges": "bytes",
+    "via": "1.1 varnish, 1.1 varnish, 1.1 varnish",
+    "date": "Mon, 26 Oct 2026 21:08:35 GMT",
+    "x-served-by": "cache-chi-kigq8000068-CHI, cache-lga-kjfk8660064-LGA, cache-lga-kjfk8660055-LGA",
+    "x-cache": "HIT, HIT, MISS",
+    "x-cache-hits": "620, 0, 0",
+    "x-timer": "S1793048916.760733,VS0,VE29"
+  },
+  "requestedUrl": "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+  "finalUrl": "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+  "retrievedAt": "2026-10-26T21:08:35.936Z"
+}

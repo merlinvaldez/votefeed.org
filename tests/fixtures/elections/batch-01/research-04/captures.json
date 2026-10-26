@@ -1,0 +1,1337 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-26T21:27:58.935Z",
+  "databaseWrites": false,
+  "captures": [
+    {
+      "state": "GA",
+      "id": "GA-qualifying",
+      "url": "https://sos.ga.gov/qualifying-candidate-information",
+      "allowedOrigins": [
+        "https://sos.ga.gov"
+      ],
+      "status": "failed",
+      "errorCode": "discovery-http-failed"
+    },
+    {
+      "state": "GA",
+      "id": "GA-mvp",
+      "url": "https://mvp.sos.ga.gov/s/qualifying-candidates",
+      "allowedOrigins": [
+        "https://mvp.sos.ga.gov"
+      ],
+      "status": "failed",
+      "errorCode": "discovery-http-failed"
+    },
+    {
+      "state": "FL",
+      "id": "FL-offices",
+      "url": "https://dos.fl.gov/elections/candidates-committees/offices-up-for-election/",
+      "allowedOrigins": [
+        "https://dos.fl.gov"
+      ],
+      "status": "captured",
+      "sha256": "7084e3d9008cc6d85dc3775970c414d4386d6677c86e4e8b987b2446a64733fe",
+      "bytes": 25800,
+      "requestedUrl": "https://dos.fl.gov/elections/candidates-committees/offices-up-for-election/",
+      "finalUrl": "https://dos.fl.gov/elections/candidates-committees/offices-up-for-election/",
+      "retrievedAt": "2026-10-26T21:27:59.331Z",
+      "mediaType": "text/html; charset=utf-8",
+      "httpStatus": 200,
+      "headers": {
+        "date": "Mon, 26 Oct 2026 21:27:59 GMT",
+        "content-type": "text/html; charset=utf-8",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "cache-control": "private",
+        "set-cookie": [
+          "ARRAffinity=cdf0ef902fd35e370e78b9bbfa75bb50c37ae91c51e415b43d1117007289439f;Path=/;HttpOnly;Secure;Domain=dos.fl.gov",
+          "ARRAffinitySameSite=cdf0ef902fd35e370e78b9bbfa75bb50c37ae91c51e415b43d1117007289439f;Path=/;HttpOnly;SameSite=None;Secure;Domain=dos.fl.gov",
+          "__cf_bm=XWFkCYnofQV4knHNkQS9AwuH3WWytT7G8dFpuULZlYw-1793050079.1460917-1.0.1.1-klxARiFM1ZMTnS5DvMvx3z5mE5L_vtMPebr3ax2IXySVVMxnlCxYM7NF.s.4aKe0FZFSdmDcgfBylc3iMvPzdFMbIZtfFtNZgQtMfv.WLv.efkQw97GvQkYufGaL2gM7; HttpOnly; SameSite=None; Secure; Path=/; Domain=dos.fl.gov; Expires=Mon, 26 Oct 2026 21:57:59 GMT"
+        ],
+        "vary": "Accept-Encoding",
+        "strict-transport-security": "max-age=10886400; preload",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "sameorigin",
+        "cf-cache-status": "DYNAMIC",
+        "server": "cloudflare",
+        "cf-ray": "a50c8c52aac942b3-EWR"
+      },
+      "file": "7084e3d9008cc6d85dc3775970c414d4386d6677c86e4e8b987b2446a64733fe.bin",
+      "textFile": "7084e3d9008cc6d85dc3775970c414d4386d6677c86e4e8b987b2446a64733fe.txt",
+      "textLength": 2411,
+      "links": [
+        {
+          "text": "Candidates & Committees",
+          "url": "https://dos.fl.gov/elections/candidates-committees/"
+        },
+        {
+          "text": "Campaign Finance",
+          "url": "https://dos.fl.gov/elections/candidates-committees/campaign-finance/"
+        },
+        {
+          "text": "Public Campaign Finance - Matching Funds Program",
+          "url": "https://dos.fl.gov/elections/candidates-committees/campaign-finance/public-campaign-finance-matching-funds-program/"
+        },
+        {
+          "text": "Candidates, Campaign Documents, and Committees",
+          "url": "https://dos.fl.gov/elections/candidates-committees/candidates-campaign-documents-and-committees/"
+        },
+        {
+          "text": "Offices Up for Election and Retention in 2026",
+          "url": "https://dos.fl.gov/elections/candidates-committees/offices-up-for-election/"
+        },
+        {
+          "text": "Political Parties",
+          "url": "https://dos.fl.gov/elections/candidates-committees/political-parties/"
+        },
+        {
+          "text": "Qualifying Information",
+          "url": "https://dos.fl.gov/elections/candidates-committees/qualifying/"
+        },
+        {
+          "text": "Presidential Candidates, Presidential Electors, and Electoral College",
+          "url": "https://dos.fl.gov/elections/candidates-committees/presidential-candidates-presidential-electors-and-electoral-college/"
+        },
+        {
+          "text": "Notices of General Election",
+          "url": "https://dos.fl.gov/elections/for-voters/notices-of-general-election/"
+        },
+        {
+          "text": "Presidential Electors/Electoral College",
+          "url": "https://dos.fl.gov/elections/candidates-committees/presidential-candidates-presidential-electors-and-electoral-college/"
+        },
+        {
+          "text": "Constitutional Amendments/Initiatives",
+          "url": "https://dos.fl.gov/elections/laws-rules/constitutional-amendmentsinitiatives/"
+        },
+        {
+          "text": "Certified Voting Systems and Vendors",
+          "url": "https://dos.fl.gov/elections/voting-systems/certified-voting-systems-and-vendors/"
+        },
+        {
+          "text": "Certification/Approval Status and Test Schedule",
+          "url": "https://dos.fl.gov/elections/voting-systems/certificationapproval-status-and-test-schedule/"
+        },
+        {
+          "text": "Candidates & Committees",
+          "url": "https://dos.fl.gov/elections/candidates-committees/"
+        },
+        {
+          "text": "Notices of General Election",
+          "url": "https://dos.fl.gov/elections/for-voters/notices-of-general-election/"
+        },
+        {
+          "text": "Candidates & Committees",
+          "url": "https://dos.fl.gov/elections/candidates-committees/"
+        },
+        {
+          "text": "Campaign Finance",
+          "url": "https://dos.fl.gov/elections/candidates-committees/campaign-finance/"
+        },
+        {
+          "text": "Candidates, Campaign Documents, and Committees",
+          "url": "https://dos.fl.gov/elections/candidates-committees/candidates-campaign-documents-and-committees/"
+        },
+        {
+          "text": "Offices Up for Election and Retention in 2026",
+          "url": "https://dos.fl.gov/elections/candidates-committees/offices-up-for-election/"
+        },
+        {
+          "text": "Political Parties",
+          "url": "https://dos.fl.gov/elections/candidates-committees/political-parties/"
+        },
+        {
+          "text": "Qualifying Information",
+          "url": "https://dos.fl.gov/elections/candidates-committees/qualifying/"
+        },
+        {
+          "text": "Presidential Candidates, Presidential Electors, and Electoral College",
+          "url": "https://dos.fl.gov/elections/candidates-committees/presidential-candidates-presidential-electors-and-electoral-college/"
+        },
+        {
+          "text": "Submit a public records request.",
+          "url": "http://dos.myflorida.com/offices/general-counsel/public-records-requests/"
+        }
+      ]
+    },
+    {
+      "state": "CO",
+      "id": "CO-offices",
+      "url": "https://www.sos.state.co.us/pubs/elections/vote/officeUpForElection.html",
+      "allowedOrigins": [
+        "https://www.sos.state.co.us"
+      ],
+      "status": "captured",
+      "sha256": "b23994b68d6f29019f693eabbfbafab2d4c05e21922f9ba950b388edff2c9182",
+      "bytes": 34571,
+      "requestedUrl": "https://www.sos.state.co.us/pubs/elections/vote/officeUpForElection.html",
+      "finalUrl": "https://www.sos.state.co.us/pubs/elections/vote/officeUpForElection.html",
+      "retrievedAt": "2026-10-26T21:27:59.427Z",
+      "mediaType": "text/html",
+      "httpStatus": 200,
+      "headers": {
+        "date": "Mon, 26 Oct 2026 21:27:59 GMT",
+        "content-type": "text/html",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "last-modified": "Thu, 21 May 2026 01:37:06 GMT",
+        "accept-ranges": "bytes",
+        "set-cookie": [
+          "__cf_bm=_td28x1NoZ4WifqOlvbCcS3xXhexLmtccm8KsEmXFPY-1793050079.1035562-1.0.1.1-1WuX12xln0zXruwRvDsOW2hLjpIshi9yVuq.yovC3Rz5Eu4cncBT.m8Yi_07WkGmO.kcUqRZrt2y6GnV.XiozM1CNGtqshP0rf0gGSA62oxyvctYtIfMQj8n9vL_PCHs; HttpOnly; SameSite=None; Secure; Path=/; Domain=sos.state.co.us; Expires=Mon, 26 Oct 2026 21:57:59 GMT"
+        ],
+        "x-frame-options": "SAMEORIGIN, ALLOW-FROM https://coloradosos.gov/",
+        "content-security-policy": "frame-ancestors 'self' https://*.electionstats.com.com https://*.elstats-staging.com;",
+        "access-control-allow-origin": "https://coloradosos.gov",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "strict-transport-security": "max-age=16070400; includeSubDomains",
+        "cf-cache-status": "DYNAMIC",
+        "server": "cloudflare",
+        "cf-ray": "a50c8c52684452d3-EWR"
+      },
+      "file": "b23994b68d6f29019f693eabbfbafab2d4c05e21922f9ba950b388edff2c9182.bin",
+      "textFile": "b23994b68d6f29019f693eabbfbafab2d4c05e21922f9ba950b388edff2c9182.txt",
+      "textLength": 4348,
+      "links": [
+        {
+          "text": "Certificate of Good Standing",
+          "url": "https://www.coloradosos.gov/biz/BusinessEntityCriteria.do"
+        },
+        {
+          "text": "DME suppliers FAQs",
+          "url": "https://www.coloradosos.gov/pubs/DME/FAQs/general.html"
+        },
+        {
+          "text": "Candidates",
+          "url": "https://www.coloradosos.gov/pubs/elections/Candidates/CandidateHome.html"
+        },
+        {
+          "text": "Certificate of Good Standing",
+          "url": "https://www.coloradosos.gov/biz/BusinessEntityCriteria.do"
+        },
+        {
+          "text": "Candidates",
+          "url": "https://www.coloradosos.gov/pubs/elections/Candidates/CandidateHome.html"
+        },
+        {
+          "text": "DME suppliers FAQs",
+          "url": "https://www.coloradosos.gov/pubs/DME/FAQs/general.html"
+        }
+      ]
+    },
+    {
+      "state": "AK",
+      "id": "AK-general-list",
+      "url": "https://www.elections.alaska.gov/candidates/?election=26genr",
+      "allowedOrigins": [
+        "https://www.elections.alaska.gov"
+      ],
+      "status": "failed",
+      "errorCode": "discovery-network-failed"
+    },
+    {
+      "state": "AR",
+      "id": "AR-candidate-api",
+      "url": "https://candidates.arkansas.gov/wp-json/metl/v1/all?draw=1&start=0&length=1000",
+      "allowedOrigins": [
+        "https://candidates.arkansas.gov"
+      ],
+      "status": "captured",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "requestedUrl": "https://candidates.arkansas.gov/wp-json/metl/v1/all?draw=1&start=0&length=1000",
+      "finalUrl": "https://candidates.arkansas.gov/wp-json/metl/v1/all?draw=1&start=0&length=1000",
+      "retrievedAt": "2026-10-26T21:28:00.527Z",
+      "mediaType": "application/json; charset=UTF-8",
+      "httpStatus": 200,
+      "headers": {
+        "date": "Mon, 26 Oct 2026 21:28:00 GMT",
+        "content-type": "application/json; charset=UTF-8",
+        "content-length": "0",
+        "connection": "keep-alive",
+        "server": "cloudflare",
+        "access-control-allow-headers": "Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+        "allow": "GET",
+        "link": "<https://candidates.arkansas.gov/wp-json/>; rel=\"https://api.w.org/\"",
+        "x-content-type-options": "nosniff",
+        "x-powered-by": "WP Engine",
+        "x-robots-tag": "noindex",
+        "x-cacheable": "SHORT",
+        "vary": "Accept-Encoding,Cookie",
+        "cache-control": "max-age=600, must-revalidate",
+        "accept-ranges": "bytes",
+        "x-cache": "MISS",
+        "x-cache-group": "normal",
+        "last-modified": "Mon, 26 Oct 2026 21:28:00 GMT",
+        "set-cookie": [
+          "__cf_bm=jvgSHNV.D.Jq_h75ethAFoXOtHq_oSvWX3kW4t952fs-1793050079.0115595-1.0.1.1-iJlZ9Q4iqL85vSjHYTNJErQ24U30HJuD0tyoAbsSeQ1GcHxXp92ulsez9eX3fRsVd_N_SgpJ7woziOFGYxBDdPhGZqVrnnLnoi8STmK2rGlsLr2qkIa2QVGZkD.EOYyh; HttpOnly; SameSite=None; Secure; Path=/; Domain=candidates.arkansas.gov; Expires=Mon, 26 Oct 2026 21:58:00 GMT"
+        ],
+        "cf-cache-status": "MISS",
+        "cf-ray": "a50c8c51dd16a4c6-EWR",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "file": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "textFile": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.txt",
+      "textLength": 0
+    },
+    {
+      "state": "CT",
+      "id": "CT-endorsements",
+      "url": "https://portal.ct.gov/sots/election-services/certificate-of-endorsement/2026-certificate-of-endorsements",
+      "allowedOrigins": [
+        "https://portal.ct.gov"
+      ],
+      "status": "captured",
+      "sha256": "b7a772ef745b4478c631048508e801c954975aab880795ac371ea609c277c961",
+      "bytes": 129874,
+      "requestedUrl": "https://portal.ct.gov/sots/election-services/certificate-of-endorsement/2026-certificate-of-endorsements",
+      "finalUrl": "https://portal.ct.gov/sots/election-services/certificate-of-endorsement/2026-certificate-of-endorsements",
+      "retrievedAt": "2026-10-26T21:28:00.686Z",
+      "mediaType": "text/html; charset=utf-8",
+      "httpStatus": 200,
+      "headers": {
+        "date": "Mon, 26 Oct 2026 21:28:00 GMT",
+        "content-type": "text/html; charset=utf-8",
+        "content-length": "129874",
+        "connection": "keep-alive",
+        "cache-control": "private,public, max-age=1800",
+        "set-cookie": [
+          "shell#lang=en; path=/; secure; SameSite=None",
+          "ASP.NET_SessionId=0utq1ugoypb1oo2dfmfjon3f; path=/; secure; HttpOnly; SameSite=None",
+          "SC_ANALYTICS_GLOBAL_COOKIE=9902771250eb4ca6a88606f882c6341d|False; expires=Thu, 23-Oct-2036 21:27:59 GMT; path=/; secure; HttpOnly; SameSite=None",
+          "sxa_site=website; path=/; secure; HttpOnly; SameSite=None",
+          "ARRAffinity=5124579dac0b8f32606a263994c15ca79cffab6be2dc540fa98adbba34dca233;Path=/;HttpOnly;Secure;Domain=portal.ct.gov",
+          "ARRAffinitySameSite=5124579dac0b8f32606a263994c15ca79cffab6be2dc540fa98adbba34dca233;Path=/;HttpOnly;SameSite=None;Secure;Domain=portal.ct.gov"
+        ],
+        "vary": "Accept-Encoding",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-frame-options": "SAMEORIGIN",
+        "referrer-policy": "same-origin",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "expect-ct": "max-age=86400, enforce",
+        "accept-ch": "Sec-CH-UA-Full-Version-List,Sec-CH-UA-Platform-Version,Sec-CH-UA-Arch,Sec-CH-UA-Model,Sec-CH-UA-Bitness",
+        "x-azure-ref": "20261026T212759Z-er164f487cb96k4shC1DFWku6800000008900000000070y7",
+        "x-fd-int-roxy-purgeid": "0",
+        "x-cache": "PRIVATE_NOSTORE",
+        "accept-ranges": "bytes"
+      },
+      "file": "b7a772ef745b4478c631048508e801c954975aab880795ac371ea609c277c961.bin",
+      "textFile": "b7a772ef745b4478c631048508e801c954975aab880795ac371ea609c277c961.txt",
+      "textLength": 1257,
+      "links": [
+        {
+          "text": "Skip to Content",
+          "url": "https://portal.ct.gov/sots/election-services/certificate-of-endorsement/2026-certificate-of-endorsements#mainContent"
+        },
+        {
+          "text": "Skip to Chat",
+          "url": "https://portal.ct.gov/sots/election-services/certificate-of-endorsement/2026-certificate-of-endorsements#chatContent"
+        },
+        {
+          "text": "Top",
+          "url": "https://portal.ct.gov/sots/election-services/certificate-of-endorsement/2026-certificate-of-endorsements#0"
+        },
+        {
+          "text": "Candidate Information",
+          "url": "https://portal.ct.gov/sots/election-services/v5-side-navigation/ele---candidate-information"
+        },
+        {
+          "text": "Filtered Topic Search",
+          "url": "https://portal.ct.gov/sots/election-services/certificate-of-endorsement/2026-certificate-of-endorsements#"
+        },
+        {
+          "text": "Democrat",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/statewide-congressional/democratic-statewide-combined-ada.pdf?rev=15b850fab0374ae880fbca6667ed702c&hash=1E94C81A857F3D3E451FB48628B66E24"
+        },
+        {
+          "text": "Republican",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/statewide-congressional/statewide-republicans-combined.pdf?rev=09516a52f7b7499b8250bda5bc97ef7d&hash=8D02AE1F635501036ACC9371203A61F4"
+        },
+        {
+          "text": "CD 1",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/us-congress/1st-cd-dem--rep-ada.pdf?rev=c08abba1379b4bf9b1270d93eea86d77&hash=4427CE57A6C59BC92AE22539DE52FCDD"
+        },
+        {
+          "text": "CD 2",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/us-congress/2nd-cd-dem--rep-ada.pdf?rev=1fb1ad44e871443d9e06b48c5e3cb539&hash=340E26A0D4B4371C9C2D7419208777A0"
+        },
+        {
+          "text": "CD 3",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/us-congress/3rd-cd-dem--rep-ada.pdf?rev=b373ae53a3b7456aaca0b643680c6bfc&hash=987BFECE48F83B6E57822C0BFBA8057B"
+        },
+        {
+          "text": "CD 4",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/us-congress/4th-cd-dem--rep-ada.pdf?rev=d5c03973ea0140a8893cb2ecc7aeccde&hash=D27AEBE8616980EE1AFCAB4ED021FF30"
+        },
+        {
+          "text": "CD 5",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/us-congress/5th-cd-dem--rep-ada.pdf?rev=1d8900f5d1cf410d8719a6424e55e450&hash=7A6759E27E761E43DDC5FB18B1B11854"
+        },
+        {
+          "text": "1",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/senate-01-dem-fonfara-docusign.pdf?rev=7c418fe3c07a4325812b4186c8b8b35f&hash=A67479FA7713165F8C3D0C8145F1CCB2"
+        },
+        {
+          "text": "7",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/7th-senate-dem--rep.pdf?rev=8db8edf29089497a8afa62e9d78ed558&hash=A9AEC63A0A6C5FD5B4B63ADD1E102A3E"
+        },
+        {
+          "text": "13",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/senate-13th-dem-fazzio--jinks-combined.pdf?rev=fc4dc8180b6e4da6b6a8b4a46b315fc8&hash=41BACA980084BF82A34A7AC55B2604B5"
+        },
+        {
+          "text": "19",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/19th-senate-dem--rep.pdf?rev=903192c6a32e46cc8bfa3f6dcafdc925&hash=458AEFB834438CDDE820FDCE03985D23"
+        },
+        {
+          "text": "25",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/25th-senate-dem--rep.pdf?rev=ad9422589bbd43a3ad191bbfb185c1f4&hash=39582A6FC9C84878EDD595E959EF7D3B"
+        },
+        {
+          "text": "31",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/31st-senate-combined.pdf?rev=e885c06210bf47fb8d4ff735f063e5f1&hash=BCD46721670359B328BE57B27E93402E"
+        },
+        {
+          "text": "2",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/02nd-senate-combined.pdf?rev=44fdb9a06ea944d7bfc473b916592efa&hash=9619A2D87A110F988D5887A3896BBC9D"
+        },
+        {
+          "text": "8",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/8th-senate-combined.pdf?rev=21447e642f064f2c89addea0e0174744&hash=84716F04075FBB4E2AA4CC242C550BCF"
+        },
+        {
+          "text": "14",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/14th-senate-combined.pdf?rev=8dc25b90de0e42ce9374cee1d578f7de&hash=98D7641BC933F45B90F7FB1F5DCE4626"
+        },
+        {
+          "text": "20",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/20th-senate-combined.pdf?rev=ec3cedcef5a641e0abd58ff7f4963973&hash=4E3D83C2CB09083493FAD6239EADB671"
+        },
+        {
+          "text": "26",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/26th-senate-dem--rep.pdf?rev=5a3211e036564641ac7700419103da17&hash=9AC9DB314706BF886CD704E4551EAEBF"
+        },
+        {
+          "text": "32",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/32nd-senate-dem--rep.pdf?rev=56b5d5f150eb422c9bbd4f8ae7df7522&hash=7CE0C10CDFDF1568BBB3175CABD37765"
+        },
+        {
+          "text": "3",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/3rd-senate-dem--rep.pdf?rev=5feee16e9775494fb2d30c435b7fbe50&hash=B2728DE47087189E5E76BE3B6AEF77F7"
+        },
+        {
+          "text": "9",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/9th-senate-combined.pdf?rev=8d04500e1b2c4361b4dfb38470bef3a6&hash=A6D7574CCF3920089C1087E3BEAB1FC6"
+        },
+        {
+          "text": "15",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/15th-senate-dem--rep.pdf?rev=4ffd8e32915a456aa0bf695240f840e7&hash=40D7A12D78247ED5C894FD7BF89068E5"
+        },
+        {
+          "text": "21",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/21st-senate-combined.pdf?rev=8946696d27e343f4bcb817f0689bdadb&hash=C545B2B2419AA41816C9BDAF03E21105"
+        },
+        {
+          "text": "27",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/senate-27-dem-miller-docusign.pdf?rev=29ebf34cb9b94cee84d2271910012798&hash=B4A3BC77B91068074BBFB5944265C80F"
+        },
+        {
+          "text": "33",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/33rd-senate-dem--rep.pdf?rev=b5c4f62d1cdb45d8955161a11e576d77&hash=0263F17B926DF7192274392F16762839"
+        },
+        {
+          "text": "4",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/04th-senate-combined.pdf?rev=9010e5a96bff41489c43b2d361d5603d&hash=331AE3F011D17E40CAFD3696A88032DD"
+        },
+        {
+          "text": "10",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/senate-10-dem-winfield-docusign.pdf?rev=cea93dbb91d6461994e3896326d2ab7e&hash=51373A5FDB7F72844E0AEB9CB84DAA7D"
+        },
+        {
+          "text": "16",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/16th-senate-combined.pdf?rev=931380b65a6c48569210f571f7be1aeb&hash=CBA3852F60DD6E07473A59DCE809B7FC"
+        },
+        {
+          "text": "22",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/22nd-senate-combined.pdf?rev=99d2e0ce7f994f0aa7befa69beeb3afa&hash=E04EFF5EC3204ABCC47000C2D5D47049"
+        },
+        {
+          "text": "28",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/28th-senate-combined.pdf?rev=fc7bbf00dffe4dce93679ba6eb701e52&hash=587C0AFB860694B020E263732AA088BF"
+        },
+        {
+          "text": "34",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/34th-senate-dem--rep.pdf?rev=b56b437d655f4210a063741dba1f9ed4&hash=1D2500FEB49CD9C124663D0E7DBBC417"
+        },
+        {
+          "text": "5",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/senate-05th-dem-slap-combined.pdf?rev=c7519532a1e841eaa156f4db4b5bfc86&hash=C3CBAD6149A0DE5C53C037A073C82BE2"
+        },
+        {
+          "text": "11",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/senate-11-dem-paolillo-docusign.pdf?rev=e8fcdc575cae4f15b8f12dc41b1ea541&hash=DBE929C12345D07FBF922472973E4754"
+        },
+        {
+          "text": "17",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/17th-senate-dem--rep.pdf?rev=b29fe597458c448181c00819f7e48ca8&hash=778FD89088A4B22D8D46DB1EF3538FE6"
+        },
+        {
+          "text": "23",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/senate-23rd-dem-gaston-combined.pdf?rev=35a5a3be2b134deb898e5a62f95058bc&hash=6BA3BCAD08974FB24E8DC7A941E0A908"
+        },
+        {
+          "text": "29",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/29th-senate-combined.pdf?rev=052943ff33604eea928bca2d843f38a3&hash=E7AB3A831197ABFE7019D7D1853B8ACD"
+        },
+        {
+          "text": "35",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/35th-senate-combined.pdf?rev=e5b614aa214b4ce5884456e65b704280&hash=0CE11348604D73DD219ED957FE5EC4C7"
+        },
+        {
+          "text": "6",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/06th-senate-combined.pdf?rev=c13752d026d64f149dfb9af4b03e10ee&hash=D39FFFFA8F323797F6F9B4AB88E5710A"
+        },
+        {
+          "text": "12",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/12th-senate-dem--rep.pdf?rev=79e83b7aa1d54531935b210bbd7a157f&hash=0897943C017EAC5411699BF036803D71"
+        },
+        {
+          "text": "18",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/18th-senate-dem--rep.pdf?rev=396b6c53edbd48ffa47de8e9ceedda8d&hash=5FF3EF66CCC175BA1F59FFFD113A38A3"
+        },
+        {
+          "text": "24",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/24th-senate-combined.pdf?rev=d6b8470a47664d1cb26edb7ed4e71acc&hash=B714BC1561D033EB0AF03933FE12B1FC"
+        },
+        {
+          "text": "30",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-senate/30th-senate-dem--rep.pdf?rev=459465f7c0d94b878471b9a1d5a1eb06&hash=6EA1252D21070E2C178AE5670C2DBC25"
+        },
+        {
+          "text": "36",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/36th-senate-combined.pdf?rev=a7f9c2be51414d70be78d462da76243d&hash=42A20CAA9F41846D8413E0010E720D48"
+        },
+        {
+          "text": "1",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-001st-dem-ritter-combined.pdf?rev=2480af32759d40daaaeb8fd5ac6f86c8&hash=F6549514B4D2EB30E024912DB1E513C9"
+        },
+        {
+          "text": "18",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/18th-assembly-combined.pdf?rev=c2f6e90d1c094870bd3bf02c4fdff452&hash=EC1ED2DA90BC689DBA8A7F4EA2A1ABF0"
+        },
+        {
+          "text": "35",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/35th-assembly-combined.pdf?rev=3e9a6f02680e482ca7c5713be185fc10&hash=CE9E2681CDD17D33AF178F6A89EB69D2"
+        },
+        {
+          "text": "52",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/052nd-assembly-combined.pdf?rev=7185bc7cee2d47969793b1d982e45dc0&hash=7B0CCAC5A336BD634257F849EAFB8C47"
+        },
+        {
+          "text": "69",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-069-rep-buchsbaum-docusign.pdf?rev=e4710c590dd2494082a945e91439b7dd&hash=DA5A925E7986CD2417BCE73B60B62675"
+        },
+        {
+          "text": "86",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-086-rep-candelora-docusign.pdf?rev=35c2ddc548e341ae98fda0c6e3b639bb&hash=AD614DAD5D7503CE4FC5C360F82B8AE0"
+        },
+        {
+          "text": "103",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/103rd-assembly-combined.pdf?rev=022f944899ba47bb9648006aabda1a52&hash=62F824A335363AA1910FA40FAE514F21"
+        },
+        {
+          "text": "120",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/120th-assembly-combined.pdf?rev=7b00e681e22345aaa04355ce9431ee01&hash=81406E8FA8A263FF541E7DDED59E6876"
+        },
+        {
+          "text": "137",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/137th-assembly-combined.pdf?rev=2b7044fc154142ceb7a981852f1b8746&hash=E97AED0B96A1C758292026F51825B0F1"
+        },
+        {
+          "text": "2",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/2nd-assembly-combined.pdf?rev=25ec96c8e2c04a579a8e09d59557f56b&hash=EB88EC63C4DD796B27410AE14BBF3158"
+        },
+        {
+          "text": "19",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-019-dem-onikuyide-docusign.pdf?rev=ca1b2880832b42a6b1636cb2be0c41cf&hash=D6711041416F41D6A7755FF1E5395C5D"
+        },
+        {
+          "text": "36",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/36th-assembly-combined.pdf?rev=333291f586c6410cad059040ce030a42&hash=178533CD5941ABD34C42927FD6D156E4"
+        },
+        {
+          "text": "53",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/53rd-assembly-combined.pdf?rev=888a8bde5f8a418289c3a2e2f2c17664&hash=B2ADC065C88470976DA29B3AE2050E77"
+        },
+        {
+          "text": "70",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/70th-assembly-combined.pdf?rev=790066fcebbe4318808abe60b5c63e4e&hash=AE682C0B3EE5A56FC942456DD6DB3CE8"
+        },
+        {
+          "text": "87",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/87th-assembly-combined.pdf?rev=2b92b260eb9e444ba018c7c0b0787ea5&hash=FC6D10C5872D6087B82E1F631117F655"
+        },
+        {
+          "text": "104",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/104th-assembly-combined.pdf?rev=fcd9e404d31942e7a2862b4885d13462&hash=1742342BAF8A8422B09252FE3BCB1B27"
+        },
+        {
+          "text": "121",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/121st-assembly-combined.pdf?rev=c8dfcbe8edf94cde82f816251f72639e&hash=8D46ED4C02B4FF03F52DC6FB17A9B7CC"
+        },
+        {
+          "text": "138",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/138th-assembly-combined.pdf?rev=11fa5353fb3c44c4aa91c1c47e600c84&hash=4CDD13729D25473D6CFC104E1D3DEC74"
+        },
+        {
+          "text": "3",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-003rd-dem-gonzalez-combined.pdf?rev=2e4a21a871624499af3a58c20673ca0f&hash=6D6624AC074FF38DA6C5414229A48E52"
+        },
+        {
+          "text": "20",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-020-dem-farrar-docusign.pdf?rev=5679166d3b134d39b9159d991c00427e&hash=95E39F214647201088EF556ECFC3A94B"
+        },
+        {
+          "text": "37",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/037th-assembly-combined.pdf?rev=41a30a006c334b239614e7efc33709a2&hash=805345F261F63F63C9BB48F6CF080C29"
+        },
+        {
+          "text": "54",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-054-dem-haddad-doucsign.pdf?rev=d5542fede614431f8024649f18f86e91&hash=53180AFB2B48DBED92033C3E842E916B"
+        },
+        {
+          "text": "71",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/71st-assembly-combined.pdf?rev=51aeb9e34355462f8647bb3e9c4bbc7e&hash=93FFE9F00CA421AD5B0417E33948FA6B"
+        },
+        {
+          "text": "88",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/88th-assembly-combined.pdf?rev=a286435730f44057a825e5fadc961c1d&hash=1B141C3B734612FCD72787898E2FD4D5"
+        },
+        {
+          "text": "105",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/105th-assembly-combined.pdf?rev=64dbbc71c41f48438223428a0db395e2&hash=DA68E9AA70BFD58EFE4CBD47DA073ECF"
+        },
+        {
+          "text": "122",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/122nd-assembly-combined.pdf?rev=724e840774b14e569ade76509cb9aede&hash=C2F3A7E56377315E73A3F54A28AE0D77"
+        },
+        {
+          "text": "139",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/139th-assembly-combined.pdf?rev=e7e728d01b3a4b7b92d805c51b9d755e&hash=1FEB37267C16C8967508FFDDBD484CDE"
+        },
+        {
+          "text": "4",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-004th-dem-concepion-combined.pdf?rev=dc4b2f168c084e4db90d0033181da88a&hash=B52786828A680CF28AC28EB431A9BEE3"
+        },
+        {
+          "text": "21",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/21st-assembly-combined.pdf?rev=53b870d55b2a48d3bdaf095168df7ceb&hash=378B65453997BF6277F9C7058ABA2C92"
+        },
+        {
+          "text": "38",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/038th-assembly-combined.pdf?rev=3326a91310a4453bb725d4f4236ff501&hash=0522693C92E05C3ADC464081B7139700"
+        },
+        {
+          "text": "55",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/55th-assembly-combined.pdf?rev=cb1d0344254947eda1e0cb24bd47e56e&hash=B71DD32B287242EE29C5F4C7CFA3FF97"
+        },
+        {
+          "text": "72",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-072-dem-butler-docusign.pdf?rev=6351cd98bcb1440a96de3ae41a6e622c&hash=7B7C5F5B4606B99FA2D9FFEF9B708CE1"
+        },
+        {
+          "text": "89",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-089th-rep-zupkus-combined.pdf?rev=1a902cba4ed04602bf8198c7a7807606&hash=4F4F683B8ADA725E6F52391009172321"
+        },
+        {
+          "text": "106",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/106th-assembly-combined.pdf?rev=359088c538f34a478be55a98745f30e3&hash=B9D44462E715E087E92F8B52D2BF1A99"
+        },
+        {
+          "text": "123",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/123rd-assembly-combined.pdf?rev=86f29e235e9e4841b80f3e69720b267e&hash=890AAC641B6E283D0F16AF3EEB43EE9D"
+        },
+        {
+          "text": "140",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/140th-assembly-combined.pdf?rev=fb9af26b63bf489388949ad95077346b&hash=74EE7EB72061C2B2E0A9274A95F228FA"
+        },
+        {
+          "text": "5",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-005-dem-anderson.pdf?rev=1f647f49335c4652b3dc3c00ec9ef9bc&hash=7EA2B779679C5F8AE115DEE23E8DE11B"
+        },
+        {
+          "text": "22",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/22nd-assembly-combined.pdf?rev=fcb85fcc3fe14d038232f375dce70c6a&hash=6D65FDB3658CF97BC0CF75A37E98CAE0"
+        },
+        {
+          "text": "39",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/39th-assembly-combined.pdf?rev=35816c854b5b4d1b965638bde41c591a&hash=4A6B21C7E666D0777AF6391A58BD0E56"
+        },
+        {
+          "text": "56",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/56th-assembly-combined.pdf?rev=6b41c34a925a42afb53b07b7d1e45759&hash=8319C80F60E90B34AF20058696085F91"
+        },
+        {
+          "text": "73",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/73rd-assembly-combined.pdf?rev=91319188db904ecdb624030d61c2e7d8&hash=370210CD58D9FBF31071CC9A8E6FCC43"
+        },
+        {
+          "text": "90",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/90th-assembly-combined.pdf?rev=77c924d9bb964f4dbc24d74bd3aeae78&hash=257D5835168BDC86E02902D364B1E028"
+        },
+        {
+          "text": "107",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/107th-assembly-combined.pdf?rev=dd0c04fb82964083ac5cae8304cb07ae&hash=BCD6E55871F768E36E641089174E75F5"
+        },
+        {
+          "text": "124",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-124-dem-baker-jr-docusign.pdf?rev=a02ead75302c47bdae001b014d41fd3f&hash=7BBA50F664BAA552CD701C22F8725D87"
+        },
+        {
+          "text": "141",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/141st-assembly-combined.pdf?rev=6a175301be9044ef8548e898e5763fc8&hash=30267D7520687DBC1B00B37267CEB727"
+        },
+        {
+          "text": "6",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/006th-assembly-combined.pdf?rev=b39e9ca1de7340ea85ad1fbdb9896dfe&hash=2788C17583EE30CE5231FB25153E7BA2"
+        },
+        {
+          "text": "23",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/23rd-assembly-combined.pdf?rev=05f3d5d3341547668696cc1ac8d296e0&hash=3A64C3E61DD69179B1D1146F196FDA41"
+        },
+        {
+          "text": "40",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/40th-assembly-combined.pdf?rev=c6f5148f51274b038e0177b58791d325&hash=CBEF6E17F9C4750924471E308FDA5F44"
+        },
+        {
+          "text": "57",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-057th-dem-foster-combined.pdf?rev=b034f39002cf435db745e88bc632f08b&hash=1C3FDBDFE00094666BF62F010BF6B087"
+        },
+        {
+          "text": "74",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/74th-assembly-combined.pdf?rev=b30de51e7f3843f6a290d11cd1aab9d0&hash=67C192BE97D6B2367AF3AC944C69CE51"
+        },
+        {
+          "text": "91",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-091-dem-sweet-docusign.pdf?rev=1e64cbf9f97448b7b659208801e5383c&hash=D7F247F39751D2ACF93671B80ED2F4F0"
+        },
+        {
+          "text": "108",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/108th-assembly-combined.pdf?rev=ea1b990b873743c9a1cecafce4715809&hash=35043EF3BE4AD1158BC61BBFF15A171F"
+        },
+        {
+          "text": "125",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/125th-assembly-combined.pdf?rev=f35f6b0c366e4c27ac347bb90c16ef8b&hash=5DE9D4EA5A0B65147FF99CFA9388AC1E"
+        },
+        {
+          "text": "142",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/142nd-assembly-combined.pdf?rev=bd5c0eb5629d40788e65ad6a3f72d65a&hash=062BA6839C0121CB71B8F03A956C5D37"
+        },
+        {
+          "text": "7",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-007-dem-hall-docusign.pdf?rev=544ddc7a69bc42eaa95cebaf13480378&hash=E6864D5839AD70020D5562A854530F53"
+        },
+        {
+          "text": "24",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/24th-assembly-rep-santana.pdf?rev=023b743bd388492e888ce481b3af3fb0&hash=AEE2FAC09BC66E89C43F3292A16A498A"
+        },
+        {
+          "text": "41",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/041st-assembly-combined.pdf?rev=a0bf39a81a224972904544a8ceacd6c5&hash=B9CF3686C2160E954F5A334AFDBA223E"
+        },
+        {
+          "text": "58",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/058th-assembly-combined.pdf?rev=49dc15147c604471b22f7bb56342a0e5&hash=2216F00410E1E167ED5BADEF664DB703"
+        },
+        {
+          "text": "75",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/75th-assembly-combined.pdf?rev=ee7f76067a7d45829d414ac97cfa43a6&hash=DFF31E9F70B344D7E6FF31FB8873CDAF"
+        },
+        {
+          "text": "92",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-092-dem-dillon-docusign.pdf?rev=caff4cd76fa34d9b8c6d31db71c7ca34&hash=4154E448DC6FDE388FE8D5FCF6631620"
+        },
+        {
+          "text": "109",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/109th-assembly-combined.pdf?rev=fe1f14b57fe3453fbd8043be7a6d323b&hash=EC0FD447EFEE9B9915D50257E97E3B43"
+        },
+        {
+          "text": "126",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-126-dem-gee-jr-docusign.pdf?rev=47a589fcf2a740b298e80b7cd3c7f762&hash=79A068E7DFED109A08198A3CE17DD93B"
+        },
+        {
+          "text": "143",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/143rd-assembly-combined.pdf?rev=66a136a2806046cb88f59f0ae8a2f9a4&hash=DCD9669EB6914ACB5DBC4B5CEDE6B604"
+        },
+        {
+          "text": "8",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/8th-assembly-combined.pdf?rev=ac7dee8497324f7a9e34c0f4178dccbb&hash=4CE19FC00210AF2C8FF794A40026815D"
+        },
+        {
+          "text": "25",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/25th-assembly-combined.pdf?rev=5b9379a86e6a4a0fb2681c333fa8cd76&hash=CCAC4D998ECC5CE51039AA465DE0121B"
+        },
+        {
+          "text": "42",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-042-dem-constantine-docusign.pdf?rev=e08c3cab0e0b4c41a73c2102fc635c68&hash=6A2E277F845DBDFAA86B3872D1C05138"
+        },
+        {
+          "text": "59",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/059th-assembly-combined.pdf?rev=8f85da6979d043f9886cf8e4702ae2f4&hash=4722395702E93A6F5FD5148D4E7199B2"
+        },
+        {
+          "text": "76",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/076th-assembly-combined.pdf?rev=1db8942d5f1449949584465f814deb0f&hash=8C78B7CD609C8DA0D86198F335B4D7FB"
+        },
+        {
+          "text": "93",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-093-dem-walker-docu.pdf?rev=2e10e410bfae479890608b8b7096b806&hash=949EA6C61709E4678F14F64803B4E906"
+        },
+        {
+          "text": "110",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/110th-assembly-combined.pdf?rev=8e6ba071ea0f4ec5939c09228af1cad7&hash=80C160E85227D5545D544C4221607767"
+        },
+        {
+          "text": "127",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-127-dem-brown-docusign.pdf?rev=9a579a1fe0e6475dbf842abb90e7055c&hash=0996FA1DC4FE4DD315B4AAEF913D2BFF"
+        },
+        {
+          "text": "144",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/144th-assembly-combined.pdf?rev=5a5f9e1cd314470286c7e7c37279f579&hash=9D4E63279B59719EC7E4D4115E28759E"
+        },
+        {
+          "text": "9",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-009th-dem-rojas-combined.pdf?rev=d995a3aef55b4e309c576c40016fad80&hash=36D444B3577F164528880D71BCDA3BA4"
+        },
+        {
+          "text": "26",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/26th-assembly-combined.pdf?rev=1e56bc82c80743a68592ebd3dbd991d9&hash=BBD58C13BC68BFFB87D74566216B2F72"
+        },
+        {
+          "text": "43",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/43rd-assembly-combined.pdf?rev=97379e2096784e8cb1d789628ba97987&hash=B89FE15F1DE7012A1288841A2FE9AD00"
+        },
+        {
+          "text": "60",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/060th-assembly-combined.pdf?rev=5612632c2de44b03b30130ddd08b5924&hash=D18B426B614E36CABA6AD87CC506B0D0"
+        },
+        {
+          "text": "77",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/077th-assembly-combined.pdf?rev=1480dfcd680a4523b6fe1ad9c5e4ccb0&hash=2657B424C72F1D2AAD9D33365CA19812"
+        },
+        {
+          "text": "94",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-094-dem-winter-docusign.pdf?rev=25358c91dfbc45048cc4cab6a1c52174&hash=09B75643FEE606AADC549059854D0AF0"
+        },
+        {
+          "text": "111",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/111th-assembly-combined.pdf?rev=f6f64c6e66ca4bc2a0b4ac5bf9edbbd7&hash=9309C71F35343F61CCE6158BDE83DAAE"
+        },
+        {
+          "text": "128",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-128-dem-rosario-docusign.pdf?rev=f23b46e912b24e9aa3f64c562ac302ae&hash=4A54B4B13F3700C39AAB527FD2FC72A3"
+        },
+        {
+          "text": "145",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/145th-assembly-combined.pdf?rev=fc2cabfbd50f4ca3b64332de46bb89b2&hash=9E7CB00F91C0EBF5C68AA23155936908"
+        },
+        {
+          "text": "10",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/10th-assembly-combined.pdf?rev=fe048540390d4fd6b89ed1f96b1e9c5a&hash=EE9A5BE2AA6C6B70B4077C4E38353E28"
+        },
+        {
+          "text": "27",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-027th-dem-turco-combined.pdf?rev=15ff6a9477fd4cf48ddc853efd62b1cf&hash=DCC52419E54944F3EB1FEFB30D3F009F"
+        },
+        {
+          "text": "44",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/44th-assembly-combined.pdf?rev=fce4c2f9d6d241f7812e857cca540352&hash=59F150E5DAD77E7BD095FEFDFE1A9D0D"
+        },
+        {
+          "text": "61",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/061st-assembly-combined.pdf?rev=7d248839ae094d3c9c8ea23ff3d6bc79&hash=DE8D33479BB735E00D2D8B48C3D4FDAB"
+        },
+        {
+          "text": "78",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/78th-assembly-combined.pdf?rev=a903ca5b6b4341a395d1df1f8c11df27&hash=3D6393B99A8533ECBF64DBCA874F5353"
+        },
+        {
+          "text": "95",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-095-dem-candelaria-docu.pdf?rev=a1775f88d4b5456fae246169c65b9161&hash=DF9D03EC408A7D2E0E39BC1891DBC322"
+        },
+        {
+          "text": "112",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/112th-assembly-combined.pdf?rev=f7e14515fa57432a8c1e2923ba95d2d9&hash=E6C688156AFB4B909A94D99552A5E0BD"
+        },
+        {
+          "text": "129",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-129-dem-stafstrom-docusign.pdf?rev=2f3c588121e24082aaaac0de2b7c09b3&hash=7F741136A9616F3B8EF0BC1D8707CFF2"
+        },
+        {
+          "text": "146",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-146-dem-main-docusign.pdf?rev=eec7d766a3c74c908f15cbf1e4dcc5b1&hash=CD97E4EED39FBD6EF2670A122B82DC42"
+        },
+        {
+          "text": "11",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/11th-assembly-combined.pdf?rev=efd6c836d5244ba89fcd831ebbd086ef&hash=FA7123602B284A9076723358F95C393E"
+        },
+        {
+          "text": "28",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/28th-assembly-combined.pdf?rev=4fe051bd48c04f0ca4c6cfc3550f9065&hash=E431D4C300970CB600BC02D86DEB700A"
+        },
+        {
+          "text": "45",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/45th-assembly-combined.pdf?rev=155ab3d1bc9c47158c377693953feca7&hash=BF99A16236600EF4C5F3FD28A601EC5D"
+        },
+        {
+          "text": "62",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/062nd-assembly-combined.pdf?rev=d87fdabeff7e4e6fb34e267b4d67e915&hash=B16E7954E2F8AB72685D4369A1B2B81D"
+        },
+        {
+          "text": "79",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/079th-assembly-combined.pdf?rev=3c18722d0bed4098b4081ae409b3aa42&hash=0D3410B34B959A432952AE6740482B36"
+        },
+        {
+          "text": "96",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-096-dem-lemar-docusign.pdf?rev=5f1a45bb9fe14ea8a1d69428fdf167db&hash=1FB48CBFA144A2D03F872F991D3B8192"
+        },
+        {
+          "text": "113",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/113th-assembly-combined.pdf?rev=040906ac89de4197942439465ce32994&hash=E8756549DE91F29C33A9D5EABAD2AFA0"
+        },
+        {
+          "text": "130",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-130-dem-felipe.pdf?rev=490adbb4f38345bca1addc115733bc1b&hash=F3D21B2285E8B41A48036F45AA8FA06C"
+        },
+        {
+          "text": "147",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/147th-assembly-combined.pdf?rev=3b2794a56c3246859e41de556322ce06&hash=59F3931B88CFB19FC91D506E5C0BAF4D"
+        },
+        {
+          "text": "12",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-012-dem-luxenberg-docusign.pdf?rev=b60837912b77439f9999f193da2942f7&hash=8C2DC4C2AA0163BBBF1B5CC8E30A2B2E"
+        },
+        {
+          "text": "29",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/29th-assembly-combined.pdf?rev=c573b8579cad4068a8dc9627944248e8&hash=E10D9225FCE189F5ACE4803B1164D656"
+        },
+        {
+          "text": "46",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/46th-assembly-combined.pdf?rev=acd06cc4828f459eb79ea0b5501d09b9&hash=62666377B9BA4CC29AD3AD4E6CC9AAA6"
+        },
+        {
+          "text": "63",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/63rd-assembly-combined.pdf?rev=8e608840be08422abd0313d2a62a4ef1&hash=0BA9A21F26C22DAAE701FC2C21C06C50"
+        },
+        {
+          "text": "80",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/080th-assembly-combined.pdf?rev=e3c38706a6e1424c848f7667224a2eb3&hash=E25B96A7F81FF0F916DCABED4E265958"
+        },
+        {
+          "text": "97",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/97th-assembly-combined.pdf?rev=0df6a34db2b24e66849bac60c257147e&hash=F1E997F31B32BBBA702C0D5B8AA29548"
+        },
+        {
+          "text": "114",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/114th-assembly-combined.pdf?rev=59ee0ad639b44551b73d806fc39090cc&hash=3B0B467ECB81E20248CD19822F5A4CA7"
+        },
+        {
+          "text": "131",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/131st-assembly-combined.pdf?rev=07b29533f76149c5807377cca89f418b&hash=8E774337326F5D64BCC3054B4EE6216A"
+        },
+        {
+          "text": "148",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/148th-assembly-combined.pdf?rev=30903e3375b04a70a4c2feb18ea411c9&hash=D9F3D22592701663C55AA750DC16E05F"
+        },
+        {
+          "text": "13",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/13th-assembly-combined.pdf?rev=3fbb676e8bf744479032403179d83145&hash=512BB9790EF5BF15F2B03DB9C5C0D378"
+        },
+        {
+          "text": "30",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/30th-assembly-combined.pdf?rev=cec46b01d18f403ca8e1e66e08247c0a&hash=FD45BA7DA34611B947AE3A4095327D2B"
+        },
+        {
+          "text": "47",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/47th-assembly-combined.pdf?rev=cb487a655a1243618a620db4d83e46e7&hash=3D72DD47870AD5DF8B7C74A447122A31"
+        },
+        {
+          "text": "64",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/64th-assembly-combined.pdf?rev=e5096729dba64e80b93296579c070059&hash=67AD149B43B274AE035F7775983CBA5B"
+        },
+        {
+          "text": "81",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/81st-assembly-combined.pdf?rev=336557cc99414a3da2fd2149144e8449&hash=21FB718E61F0124582A0BE065CAB81C7"
+        },
+        {
+          "text": "98",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/98th-assembly-combined.pdf?rev=b3cf573bf40348bcb96cf2d7beb43e5f&hash=D12089B9572B1B2900E819B737E9F4A5"
+        },
+        {
+          "text": "115",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/115th-assembly-combined.pdf?rev=b01ecb23eb9c4eab9a3c3a7cf9f6b4d5&hash=C922FA4EF6A8625F79567DB66CD2363C"
+        },
+        {
+          "text": "132",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/132nd-assembly-combined.pdf?rev=edc3df8ea7e249c8ba35706f7e2d2fb7&hash=B4BA7548A033270E96E7E085F9DAB19A"
+        },
+        {
+          "text": "149",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/149th-assembly-combined.pdf?rev=6c45ec9f7e094146be9964eb09c5b9a5&hash=0493E45C9BAB0271727E9E10FCB28F33"
+        },
+        {
+          "text": "14",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/14th-assembly-combined.pdf?rev=c41ceab09772442288a6e0adbdc816f5&hash=8A4310B919C8E8062A41B6B9EA637BA6"
+        },
+        {
+          "text": "31",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/31st-assembly-combined.pdf?rev=2d755a15cb3e4a128c31685c94b21fcf&hash=72825EDE4B171D3AD26D7B322506065A"
+        },
+        {
+          "text": "48",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/48th-assembly-combined.pdf?rev=ee3532d7205745fb98149eae5277e77b&hash=C8C854BC424F228523DF16DFEF2B71D6"
+        },
+        {
+          "text": "65",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/65th-assembly-combined.pdf?rev=3d9ed88741934c2d9c8b33ae5bb84df1&hash=B6123E72E6BA8EEF4705CF77751081A3"
+        },
+        {
+          "text": "82",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-082-dem-quinn-docusign.pdf?rev=5a85baaa96e54e03a215590dbf334ee7&hash=8354BDC6A3593CBB4EFC7D68A59B8721"
+        },
+        {
+          "text": "99",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/99th-assembly-combined.pdf?rev=b2c41ca103864942bfc1ba2db5d0f211&hash=556500B1D60CCC7BEC46F98D943A790F"
+        },
+        {
+          "text": "116",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-116-dem-mcgee-docu.pdf?rev=1459b38c04354323802819fe87fd3392&hash=530F9A23B539262F29DA8FB4B096CB62"
+        },
+        {
+          "text": "133",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/133rd-assembly-combined.pdf?rev=0972bc5204fb4b0581efb7a32cf11e1a&hash=F8657096A992392B11F740595AC17EEB"
+        },
+        {
+          "text": "150",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/150th-assembly-combined.pdf?rev=bc2e04bece794391b8bc66781b69553f&hash=A58AA3D8C686DCAA88E181D381A8EE36"
+        },
+        {
+          "text": "15",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/15th-assembly-combined.pdf?rev=cf197a84c7ab401babb498ccd90c3f2f&hash=C16A9E2B9BBB2DAF4ED96A3F1D1FFE3D"
+        },
+        {
+          "text": "32",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/32nd-assembly-combined.pdf?rev=86557d0d9248427f9fe82ccf385da1d4&hash=C711CA2CED7F2716F8324E656B145C28"
+        },
+        {
+          "text": "49",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/49th-assembly-combined.pdf?rev=de7b7193648641d28acb4600f2863774&hash=0AE24E1CBCB17742BE3682E1CC5DEA23"
+        },
+        {
+          "text": "66",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/066th-assembly-combined.pdf?rev=8b8de07ce053453e93609b9de18adc1f&hash=C8A34C0781335E5431C370A8A7D81FB1"
+        },
+        {
+          "text": "83",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/083rd-assembly-combined.pdf?rev=82fc9031d89f4f968d5baf1c1246dc02&hash=7354BB50F0A583261A25843DEB111D15"
+        },
+        {
+          "text": "100",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/100th-assembly-combined.pdf?rev=307595937d8d4664ad3ec2a3699a91e6&hash=9AB61946272F5DF7E70BC50B55EBCA74"
+        },
+        {
+          "text": "117",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/117th-assembly-combined.pdf?rev=16c5a218490f43d18c5323bd7204800e&hash=E803CD4DD55A2CA45D03CBD2E37B1131"
+        },
+        {
+          "text": "134",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/134th-assembly-combined.pdf?rev=c8804960bc66434eaafc2b61c5f823f4&hash=9398D4020AAA7B4AC705214A2854AE0E"
+        },
+        {
+          "text": "151",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/151st-assembly-combined.pdf?rev=f2e8283be8ad47309c83f62f65a261de&hash=0F5A6B177CDFC381E22BC30C2C638FA6"
+        },
+        {
+          "text": "16",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/16th-assembly-combined.pdf?rev=4fed614bf7f64973821cf51f6717eefa&hash=98138041D25BB9C57E529D969E72E801"
+        },
+        {
+          "text": "33",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-033-dem-chafee-docusign.pdf?rev=12ea7552d9f4406db45551ca11f4d567&hash=9AE57DF2CAF3BA33F9AC530101171ACB"
+        },
+        {
+          "text": "50",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/50th-assembly-combined.pdf?rev=6c53e8bcba8e422a9f51e024240bb0b5&hash=C1D6B6F6B4F35DE52F61CE32BF9ACA65"
+        },
+        {
+          "text": "67",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/67th-assembly-combined.pdf?rev=40c3fe87c9ef43428fc3bda3de529278&hash=1C999D8432D0378057816C7474CF47E2"
+        },
+        {
+          "text": "84",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-084-dem-santiago-docusign.pdf?rev=176942566c4f460a836a93ac1219b94b&hash=29A0CDFCF227A4171C8A57EFA133DB8D"
+        },
+        {
+          "text": "101",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/101st-assembly-combined.pdf?rev=00b74feb39ec4aec9b7a18f0c8692993&hash=F62F92716B0E3602696B06E1C4E4433D"
+        },
+        {
+          "text": "118",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/118th-assembly-combined.pdf?rev=897f83818e64401b87cd0960990bc23b&hash=C6B6859511F3E4E42C3007DA80363D0B"
+        },
+        {
+          "text": "135",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/135th-assembly-combined.pdf?rev=bdb0dfd431f646c883eb37db32c8243e&hash=068018E2A8AC216138BCD21F2D69AC65"
+        },
+        {
+          "text": "17",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/17th-assembly-combined.pdf?rev=17cee0ad15394f48967d9266ce46c31f&hash=49BC6440108E672F217E225222BA298C"
+        },
+        {
+          "text": "34",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/34th-assembly-combined.pdf?rev=64e3a7aece4f467b82dacdcdd3192cb5&hash=CD193C1F559BDE2023BCB4A2EBD9D2DB"
+        },
+        {
+          "text": "51",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/051st-assembly-combined.pdf?rev=c1f9af7ae67b40aaa936724390ed7dba&hash=5FD67C63FAE8CC189775AE95AA3E4BEE"
+        },
+        {
+          "text": "68",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/house-068-rep-polleta-docusign.pdf?rev=29459af0f7c142b89330da9296cf9c9c&hash=CFFD888B5AB522102A25B90D86F831C1"
+        },
+        {
+          "text": "85",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/85th-assembly-combined.pdf?rev=5592232ae499466fbe690f0de9c08459&hash=CBBC1290A24EF770707364B3C2DFC921"
+        },
+        {
+          "text": "102",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/102nd-assembly-combined.pdf?rev=027fa6a74cce4c8fa85693f677b206b2&hash=48FA343DBA9FD8D43026A7FF68434EF7"
+        },
+        {
+          "text": "119",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/119th-assembly-combined.pdf?rev=e616e6570a11456f9e2e35649049b6a8&hash=C99FF2553F1C792FA8BFDF7EDC0B8F8F"
+        },
+        {
+          "text": "136",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/state-rep/136th-assembly-combined.pdf?rev=e899a12699b64078ab0fd41b822b3fe0&hash=00D50647101BEC8E87FE68CBCB0633DF"
+        },
+        {
+          "text": "1",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-1-dem-smith.pdf?rev=6e29f4a26b044780b8a1d9e0c94fd8b2&hash=43E08C11189F82E3B69E626B3EC807C0"
+        },
+        {
+          "text": "10",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-10th-dem-bedard-combined.pdf?rev=c618bd40e311438592801ce4434b5f35&hash=11ECBC81062A2D959ED385092B8516F5"
+        },
+        {
+          "text": "19",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-19-rep-hamzy-combined.pdf?rev=9d7d120188d5420199f96570fbaeb1de&hash=450228441EC9A0A1307ADDE06FCDCBE4"
+        },
+        {
+          "text": "28",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-28th-dem-baker-combined.pdf?rev=e28b0667a6594d8685d3b5e29c5eb72e&hash=AF33CB9406AE6BD1400D0139A403685B"
+        },
+        {
+          "text": "37",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-37-dem-dolan-docusign.pdf?rev=44314749205f4ceb85686bbbb18039fc&hash=50601E4CFBCDC4792D0E60B037CFCC45"
+        },
+        {
+          "text": "46",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-46-rep-t-r-rowe--docusign.pdf?rev=4925056eb03a4095b565847042191e2b&hash=7884DCB45A89A879E34B61A64A881450"
+        },
+        {
+          "text": "2",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-02-dem-eagan-docusign.pdf?rev=f444e7546ee641558372af8e9b6503d4&hash=E085DE6B6100E3A64426D078A55BF4B5"
+        },
+        {
+          "text": "11",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-11-rep-mccaffrey-docusign.pdf?rev=6ff12c1f94a24127aed59aef1986131d&hash=BB9A8C63266319C2D8CA58F920BEF762"
+        },
+        {
+          "text": "20",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-20-dem-vaccarelli-docusign.pdf?rev=0f5039d7967c4993ae06bbc4dd886c35&hash=34BA7E5AB8490395C6431D47E2294CF0"
+        },
+        {
+          "text": "29",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-29-republican-norris-combined.pdf?rev=cc9ed4e60ddb46089e602e84e17aad12&hash=847913B413A1DCAFA09ACC5ACA17F289"
+        },
+        {
+          "text": "38",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-38-dem-carchia-docusign.pdf?rev=18342f9790bb45568ef0c078220c8424&hash=1AD5AC4CD36EC2893EEBE20CADA21977"
+        },
+        {
+          "text": "47",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/47th-jop-combined.pdf?rev=2d5eabc8b03d464f92b8cb1b08b8e014&hash=889C039A9B8823FD9572EA9C19935608"
+        },
+        {
+          "text": "3",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/3rd-jop-combined.pdf?rev=244c4d2848fd44fab332e11ac4c70897&hash=D33ECA129FFE12C39279370C29FDF62F"
+        },
+        {
+          "text": "12",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-12th-dem-bartlett-combined.pdf?rev=ebbd482a1cbb4b2d9d16121b9a5b0127&hash=B6E854AF49A5CA2855DDD175BE1FC604"
+        },
+        {
+          "text": "21",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-21-rebimbas-combined.pdf?rev=58c2f911b12248c79ea6e05dc2e81657&hash=4753E43F1E56B527ABE18D3D4799BF91"
+        },
+        {
+          "text": "30",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-30-dem-leamon-docu.pdf?rev=d18891a28162468cb0f37d00b6905e4f&hash=6FBA6F5B81B5F68BD066C15EB79F7F21"
+        },
+        {
+          "text": "39",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-39th-dem-gunning-combined.pdf?rev=ed5204aab744423db7b76e7121b6d57a&hash=95E646E3099A6731BD3BA76A5EA4AD4D"
+        },
+        {
+          "text": "48",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-48-dem-ganim-docusign.pdf?rev=1216226558944f729abcf35a65863c48&hash=0D4FBA41A2D103E99964204B68C44D08"
+        },
+        {
+          "text": "4",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-04-dem-deneen-docusign.pdf?rev=c5d17718689d40cf8c0b87a67ece916b&hash=DF5D20D92EB8F5671EF234BECD597886"
+        },
+        {
+          "text": "13",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/13th-jop-dem-e--15-combined.pdf?rev=209d8fe766a948e6a5e7d1cf53af1757&hash=F4A41E0067FED2CC88DBEF8597B72620"
+        },
+        {
+          "text": "22",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-22-rep-labriola-paper-typed.pdf?rev=f208f2e09d90407e80a9dd021ca531ac&hash=0FF11467B5C2D797DBCFA4F4D7C26E78"
+        },
+        {
+          "text": "31",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/31st-jop-combined.pdf?rev=e87684ba3a4b4095990a4d637a2c2b39&hash=F6EAB8C60452934426BDBE33822C4EA6"
+        },
+        {
+          "text": "40",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-40th-combined.pdf?rev=29c89414a58c40f6a9dbae28dae96bbe&hash=F0D37EDFA48621212D56C95D2ADF4D5B"
+        },
+        {
+          "text": "49",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-49th-rep-combined.pdf?rev=dddce5cd87fc4026b11c6bdb0a582a6f&hash=D27BFDB4EE678D6D28B85066BAA1CDB0"
+        },
+        {
+          "text": "5",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-05-dem-gentile-docusign.pdf?rev=adf6823eab6a46f2a938b2d21d316693&hash=610A3AD48CCED8688B91B9DB1AB7CEF5"
+        },
+        {
+          "text": "14",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-14-dem-balaban-docusign.pdf?rev=c697aee32b8f4120b22d4a40f9c16449&hash=6E9297740920958D37A8A87196046D23"
+        },
+        {
+          "text": "23",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-23-republican-steck-combined.pdf?rev=e6d4c36273e44f46aa179913a14eae1c&hash=CAD8A628D8B9BB0BF6D0B8E9323695AB"
+        },
+        {
+          "text": "32",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-32nd-combined.pdf?rev=0fdc58cc4c314cda8605b95425afda10&hash=41CB346F5DBBCEEC243388ACF9FED757"
+        },
+        {
+          "text": "41",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-41-dem-hoyle-docusign.pdf?rev=3320067329954088b52e09ee4c337658&hash=E117B487020C0B53A78FECAF88E6631C"
+        },
+        {
+          "text": "50",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-50-combined.pdf?rev=cc6e962e2b954304a574d7363c7187d9&hash=9B292EDFEFD88DA4C96620CBB468DE52"
+        },
+        {
+          "text": "6",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-06th-dem-peoples-combined.pdf?rev=9b515f29522f4e0ba2c085e1ada01b79&hash=34CA29C9461FE645FC0D49D03F42FA83"
+        },
+        {
+          "text": "15",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-15th-dem-szewczyk-combined.pdf?rev=ed280c7359b7441b81a6d270de45d062&hash=FF2E231FF2040F26F0939160DA7000F2"
+        },
+        {
+          "text": "24",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-24-republican-richards-combined.pdf?rev=74e4b6d4e4db46e58b4e49966fbe64ec&hash=8A4149BD678BF51C61E2AEFA68E8B40C"
+        },
+        {
+          "text": "33",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-33rd-dem-lewis-combined.pdf?rev=e15166e30a404800a2d47d1a6ad58633&hash=9A12D518067F8728CB0F4F73A33E482C"
+        },
+        {
+          "text": "42",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-42-rep-anthony-docusign.pdf?rev=d740def23d5b45569e5337592b3fbd86&hash=790476ECB3C10DCFB43F1A982B32237F"
+        },
+        {
+          "text": "51",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-51-dem-stern-docu.pdf?rev=f5dcc9bae7a54080828ba7f3c5d063f4&hash=90DAAB243F256ADD1D23B8D7CC8B62BE"
+        },
+        {
+          "text": "7",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-07-combined.pdf?rev=4a7153f3a38a464a98411d16406249b8&hash=3222048214AC2E7F1E1725F3D685F8DB"
+        },
+        {
+          "text": "16",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-16th-combined.pdf?rev=ad6ff2b9688b4ebf9661e8a4987d3ca5&hash=3C2CC08FC8925562ABDA1CAEB1F55840"
+        },
+        {
+          "text": "25",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-25-dem-shaikh-docu.pdf?rev=b81a41fec6db4696a53b11acf9a137b5&hash=276BD4F82DFB2663A56992DFDE4CB0C8"
+        },
+        {
+          "text": "34",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/34th-jop-combined.pdf?rev=fe0663be78f04e7b9656d42adaebde78&hash=02B5919C6DFC4900E38346EB8978524E"
+        },
+        {
+          "text": "43",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/43rd-jop-combined.pdf?rev=4912d8cce84b496799bc58f38de78e62&hash=437A10397052915539874FDFC30AF649"
+        },
+        {
+          "text": "52",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-52nd-combined.pdf?rev=db9720de834946b0a23a0655a18997c8&hash=4A73BCDA0C9BAEAA3D10FC0AC27CB4FC"
+        },
+        {
+          "text": "8",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/8th-jop-combined.pdf?rev=93111a627bed4e44b10b5c6fe7c57adc&hash=7D790094DB914C9E8232110CAA08F143"
+        },
+        {
+          "text": "17",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-17-rep-birney-docusign.pdf?rev=e11e0081a47f49a095ea0ca266edbe4d&hash=DA76E1221A853A678D73BB8B6F0E7EF3"
+        },
+        {
+          "text": "26",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-26th-combined.pdf?rev=f043cf23f6254dec8e106a9641fb6525&hash=835BA3D30BE5575E56221729EC5C19AA"
+        },
+        {
+          "text": "35",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-35th-combined.pdf?rev=42d1e5041fa84658ab31649fbcde2167&hash=6B730266FDE74299538A21FA0D6DFCA4"
+        },
+        {
+          "text": "44",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/44th-jop-combined.pdf?rev=dd1684ac88e7471ea2f51ed2df8a316b&hash=9459F8CB077726C805D5CB0F8E28F49F"
+        },
+        {
+          "text": "53",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-53-dem-fox-iii-docusign.pdf?rev=223ffad1e3ff45f69672bd96af0f7dc7&hash=74F7548853BBDA8C79703FD52A755387"
+        },
+        {
+          "text": "9",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-09-dem-shepard-docusign.pdf?rev=926ea5972a2a441fad2f7139009545f6&hash=D08EE12EC4546AAA5A788B2A7240BC40"
+        },
+        {
+          "text": "18",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-18th-combined.pdf?rev=eb54b47bb5d842d19e0bad0e4652c819&hash=91C7A772EAD7DB3CA7A579489FBB47B1"
+        },
+        {
+          "text": "36",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-36-republican-brandt-combine.pdf?rev=73a70e711e304901a9894e634e8a6f8b&hash=B775325AD932CA2C3164515E0DF16519"
+        },
+        {
+          "text": "45",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-45-dem-demoura-docusign.pdf?rev=0b7dee3baac84cbd949aceb18a6fc35a&hash=17457EA9A4E58497B99500ECF08A999E"
+        },
+        {
+          "text": "54",
+          "url": "https://portal.ct.gov/-/media/sots/electionservices/certificates_of_party_endorsement/2026/judge-of-probate/jop-54-rep-hopper-docusign.pdf?rev=7afd0a6431814ec281aaf750f538d9d1&hash=037B6BB85341F4702CA492953289751D"
+        }
+      ]
+    }
+  ]
+}

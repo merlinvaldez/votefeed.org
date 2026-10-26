@@ -1,0 +1,58 @@
+[
+  {
+    "state": "AR",
+    "id": "AR-candidate-api",
+    "url": "https://candidates.arkansas.gov/wp-json/metl/v1/all?draw=1&start=0&length=1000",
+    "allowedOrigins": [
+      "https://candidates.arkansas.gov"
+    ]
+  },
+  {
+    "state": "GA",
+    "id": "GA-qualifying",
+    "url": "https://sos.ga.gov/qualifying-candidate-information",
+    "allowedOrigins": [
+      "https://sos.ga.gov"
+    ]
+  },
+  {
+    "state": "GA",
+    "id": "GA-mvp",
+    "url": "https://mvp.sos.ga.gov/s/qualifying-candidates",
+    "allowedOrigins": [
+      "https://mvp.sos.ga.gov"
+    ]
+  },
+  {
+    "state": "CO",
+    "id": "CO-offices",
+    "url": "https://www.sos.state.co.us/pubs/elections/vote/officeUpForElection.html",
+    "allowedOrigins": [
+      "https://www.sos.state.co.us"
+    ]
+  },
+  {
+    "state": "FL",
+    "id": "FL-offices",
+    "url": "https://dos.fl.gov/elections/candidates-committees/offices-up-for-election/",
+    "allowedOrigins": [
+      "https://dos.fl.gov"
+    ]
+  },
+  {
+    "state": "CT",
+    "id": "CT-endorsements",
+    "url": "https://portal.ct.gov/sots/election-services/certificate-of-endorsement/2026-certificate-of-endorsements",
+    "allowedOrigins": [
+      "https://portal.ct.gov"
+    ]
+  },
+  {
+    "state": "AK",
+    "id": "AK-general-list",
+    "url": "https://www.elections.alaska.gov/candidates/?election=26genr",
+    "allowedOrigins": [
+      "https://www.elections.alaska.gov"
+    ]
+  }
+]

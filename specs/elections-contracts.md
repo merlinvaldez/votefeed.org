@@ -2,6 +2,18 @@
 
 Step 1 implementation contract for DB, DISC, and CRAWL. Executable primitives live in `server/src/elections/contracts.js`. This document specifies persistence and worker behavior for later steps; it does not claim those workers or tables exist.
 
+## Current policy: FEC-first candidate positions (2026-10-26)
+
+FEC registration is sufficient to discover candidates, collect verified campaign positions, and include published positions in the exploratory feed. State ballot confirmation is optional enrichment, not a launch prerequisite. Earlier ballot-only gates below are superseded by this policy.
+
+Use the label `fec-registered` alongside a separate `ballotStatus` (`unknown` unless supported by state evidence). Never describe this roster as everyone on your ballot or as a definitive general-election matchup. State records still control ballot confirmation, withdrawals/disqualifications, and definitive ballot claims. Known withdrawn/disqualified candidacies remain excluded; FEC refreshes cannot overwrite state eligibility.
+
+The current release maps FEC House districts and regular Class II Senate contests to November 3, 2026; this is a discovery scope association, not proof a registrant reached the general ballot. Inactive/past FEC records, missing House districts and out-of-scope Senate contests are retained without a feed candidacy. Identity collisions require review, never name-only merging. No state source adapter is required for an FEC-only run. FEC pagination completeness is reported separately from state ballot coverage and proves neither a complete ballot nor no election.
+
+Campaign website verification remains required: an authorized FEC committee link tied to the exact candidate ID, plus destination identity/office checks, can establish ownership. Existing crawl, extraction, semantic validation, publication, geography, and private-response safeguards remain required. State-only candidates remain supported. No production deployment or import is implied.
+
+Implementation update, 2026-10-26: steps 2 and bounded step 3 now provide the storage and discovery worker described in [elections-discovery.md](elections-discovery.md). Ballot extraction uses deterministic parsing or a replaceable AI extraction/verification provider. Source observations may precede resolved identities/races. Official state-only observations can establish an internally identified candidacy without a FEC match; row locators are evidence identifiers, never official person IDs. Nationwide coverage, House geography, and production acceptance remain separate.
+
 ## Scope and geography
 
 All imports and reads default to `RELEASE_SCOPE`: cycle 2026, House and Senate, 50 states, general stage, regular contests. Explicit overrides may narrow states/offices, never broaden the release. Validate every imported race with `isReleaseRace`; do not derive “current” from the clock. Election dates come from state records, not a guessed nationwide date. DC and territories are outside this voting House/Senate scope.
@@ -26,7 +38,7 @@ Matching outcomes: matched (exact known identifier or explicit official cross-re
 
 [FEC guidance](https://www.fec.gov/help-candidates-and-committees/registering-candidate/gaining-ballot-access/) confirms state law controls ballot access. Conflicts between official artifacts stay unresolved until dated corrections/authority establish precedence. A newer FEC fetch cannot overwrite state ballot facts.
 
-Every observation includes source system/ID, URL, retrievedAt, checkedAt, effective date when provided, and evidence/record locator. Eligibility: unknown, filed, ballot-confirmed, withdrawn, disqualified. Only ballot-confirmed candidacies are feed eligible. Absence is not withdrawal. Reconciliation can mark absence only after a complete authoritative snapshot for that exact scope with an explicit removal result.
+Every observation includes source system/ID, URL, retrievedAt, checkedAt, effective date when provided, and evidence/record locator. Eligibility: unknown, filed, ballot-confirmed, withdrawn, disqualified. FEC-registered or state ballot-confirmed candidacies are feed eligible, excluding known withdrawals/disqualifications. Absence is not withdrawal. Reconciliation can mark absence only after a complete authoritative snapshot for that exact scope with an explicit removal result.
 
 Each run reports requested cycle/stage/type/states/offices, adapter/version, start/end, per-state/office/race status (complete/partial/failed/unsupported), pages expected/read, record counts, unresolved counts, errors and last successful run. No races is authoritative only after complete state coverage; unsupported/partial is `coverage-unknown`. All 50 state adapters and election geography checks are required for a complete nationwide import. None are implemented by step 1; the adapter inventory starts unsupported, never complete.
 
@@ -52,7 +64,7 @@ Publication states: draft, published, superseded, removed, withheld. Successful 
 
 Read input: explicit release scope plus `{state, district, geographyEvidenceId}`, limit default 20 (1–50), optional opaque cursor, optional authenticated server user. Serving-member lookup is never candidate discovery. Later API code derives userId from `req.user.id` via existing Clerk middleware; client user IDs are rejected. Guest reads have no response data.
 
-Filter by approved release scope, matching verified election geography, ballot-confirmed candidacy, verified site and current published valid version. Stable ascending order: electionDate, state, office, seat number, raceId, candidateId, claimId, positionVersionId; compare IDs deterministically, not localized display names. Cursor binds filter/scope and publication snapshot; changes require restart rather than shifting pages.
+Filter by approved release scope, matching verified election geography, FEC-registered or ballot-confirmed candidacy, verified site and current published valid version. Stable ascending order: electionDate, state, office, seat number, raceId, candidateId, claimId, positionVersionId; compare IDs deterministically, not localized display names. Cursor binds filter/scope and publication snapshot; changes require restart rather than shifting pages.
 
 Result: `{scope, coverage, races, items, nextCursor}`. Race entries include identity, availability, lastAttemptAt, lastSuccessAt and safe failure code. Items include candidate `{id, name, party}`, race, candidacyId, claimId, positionVersionId, topic, summary, excerpt, source `{snapshotId, url, retrievedAt}`, availability and requesting user's own `{stance, privateComment}` or null. Never expose other users' interactions or raw ingestion errors. A failed refresh can return last-successful items with original source dates and failure availability. Unknown coverage, verified no-race, missing/unverified site, pending, no-positions, crawl-failed and extraction-failed remain distinguishable (`AVAILABILITY`). Storage errors propagate as errors, never empty success.
 

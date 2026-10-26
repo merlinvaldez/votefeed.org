@@ -53,6 +53,12 @@ async function importCandidate(input, c) {
     else await c.query('UPDATE election_candidates SET name=$2,updated_at=now() WHERE id=$1', [id, name]);
     await c.query(`INSERT INTO election_candidate_identities(system,source_id,candidate_id,evidence) VALUES($1,$2,$3,$4)
       ON CONFLICT(system,source_id) DO UPDATE SET evidence=EXCLUDED.evidence`, [identity.system, identity.id, id, identity.evidence]);
+    return upsertElectionCandidacy({race:r,raceEvidence,party,eligibility,eligibilityEvidence}, id, c);
+}
+
+// Shared with evidence-backed discovery promotion. Caller owns the transaction.
+export async function upsertElectionCandidacy({race,raceEvidence,party=null,eligibility='unknown',eligibilityEvidence={}}, id, c) {
+    const r = normalizeRace(race);
     const savedRace = await one(c, `INSERT INTO election_races(office,state,district,senate_seat,election_date,stage,contest_type,evidence)
       VALUES($1,$2,$3,$4,$5,$6,$7,$8) ON CONFLICT(office,state,district,senate_seat,election_date,stage,contest_type)
       DO UPDATE SET evidence=EXCLUDED.evidence RETURNING *`, [r.office,r.state,r.district,r.senateSeat,r.electionDate,r.stage,r.contestType,raceEvidence]);
@@ -60,12 +66,26 @@ async function importCandidate(input, c) {
       VALUES($1,$2,$3,$4,$5) ON CONFLICT(candidate_id,race_id) DO UPDATE SET
       party=COALESCE(EXCLUDED.party,election_candidacies.party),
       eligibility=CASE WHEN EXCLUDED.eligibility_evidence->>'system' LIKE 'state:%' AND EXCLUDED.eligibility<>'unknown'
-        AND (election_candidacies.eligibility_evidence->>'checkedAt' IS NULL OR
-          (EXCLUDED.eligibility_evidence->>'checkedAt')::timestamptz >= (election_candidacies.eligibility_evidence->>'checkedAt')::timestamptz)
+        AND (COALESCE(election_candidacies.eligibility_evidence->>'effectiveAt',election_candidacies.eligibility_evidence->>'checkedAt') IS NULL OR
+          COALESCE(EXCLUDED.eligibility_evidence->>'effectiveAt',EXCLUDED.eligibility_evidence->>'checkedAt')::timestamptz >=
+          COALESCE(election_candidacies.eligibility_evidence->>'effectiveAt',election_candidacies.eligibility_evidence->>'checkedAt')::timestamptz)
+        AND (election_candidacies.eligibility=EXCLUDED.eligibility OR
+          COALESCE(election_candidacies.eligibility_evidence->>'effectiveAt',election_candidacies.eligibility_evidence->>'checkedAt') IS NULL OR
+          COALESCE(EXCLUDED.eligibility_evidence->>'effectiveAt',EXCLUDED.eligibility_evidence->>'checkedAt')::timestamptz >
+          COALESCE(election_candidacies.eligibility_evidence->>'effectiveAt',election_candidacies.eligibility_evidence->>'checkedAt')::timestamptz)
+        AND (election_candidacies.eligibility NOT IN ('withdrawn','disqualified') OR EXCLUDED.eligibility<>'ballot-confirmed'
+          OR EXCLUDED.eligibility_evidence->>'reinstated'='true')
         THEN EXCLUDED.eligibility ELSE election_candidacies.eligibility END,
       eligibility_evidence=CASE WHEN EXCLUDED.eligibility_evidence->>'system' LIKE 'state:%' AND EXCLUDED.eligibility<>'unknown'
-        AND (election_candidacies.eligibility_evidence->>'checkedAt' IS NULL OR
-          (EXCLUDED.eligibility_evidence->>'checkedAt')::timestamptz >= (election_candidacies.eligibility_evidence->>'checkedAt')::timestamptz)
+        AND (COALESCE(election_candidacies.eligibility_evidence->>'effectiveAt',election_candidacies.eligibility_evidence->>'checkedAt') IS NULL OR
+          COALESCE(EXCLUDED.eligibility_evidence->>'effectiveAt',EXCLUDED.eligibility_evidence->>'checkedAt')::timestamptz >=
+          COALESCE(election_candidacies.eligibility_evidence->>'effectiveAt',election_candidacies.eligibility_evidence->>'checkedAt')::timestamptz)
+        AND (election_candidacies.eligibility=EXCLUDED.eligibility OR
+          COALESCE(election_candidacies.eligibility_evidence->>'effectiveAt',election_candidacies.eligibility_evidence->>'checkedAt') IS NULL OR
+          COALESCE(EXCLUDED.eligibility_evidence->>'effectiveAt',EXCLUDED.eligibility_evidence->>'checkedAt')::timestamptz >
+          COALESCE(election_candidacies.eligibility_evidence->>'effectiveAt',election_candidacies.eligibility_evidence->>'checkedAt')::timestamptz)
+        AND (election_candidacies.eligibility NOT IN ('withdrawn','disqualified') OR EXCLUDED.eligibility<>'ballot-confirmed'
+          OR EXCLUDED.eligibility_evidence->>'reinstated'='true')
         THEN EXCLUDED.eligibility_evidence ELSE election_candidacies.eligibility_evidence END,
       updated_at=now() RETURNING *`, [id,savedRace.id,party,eligibility,eligibilityEvidence]);
     return { candidateId: id, race: savedRace, candidacy };
@@ -87,6 +107,12 @@ export async function reconcileElectionRace({race, records}, pool = db) {
 export async function saveCampaignSite(input, pool = db) {
   return transaction(pool, async c => {
     await c.query('SELECT id FROM election_candidacies WHERE id=$1 FOR UPDATE', [input.candidacyId]);
+    if (input.reuseIfCurrent) {
+      const current = await one(c, 'SELECT * FROM campaign_sites WHERE candidacy_id=$1 AND is_current',[input.candidacyId]);
+      if (current && current.proposed_url === (input.url ?? null) && current.status === input.status
+        && current.evidence.recordKey === input.evidence?.recordKey
+        && (current.status !== 'verified' || new Date(current.review_after)>new Date())) return current;
+    }
     const prior = await one(c, 'SELECT COALESCE(max(revision),0)+1 AS revision FROM campaign_sites WHERE candidacy_id=$1', [input.candidacyId]);
     await c.query('UPDATE campaign_sites SET is_current=false WHERE candidacy_id=$1 AND is_current', [input.candidacyId]);
     return one(c, `INSERT INTO campaign_sites(candidacy_id,revision,proposed_url,status,approved_destinations,evidence,checked_at,review_after,invalidation_reason)
@@ -237,12 +263,16 @@ export async function readElectionPositions(input, auth = null, pool = db) {
     const items = (await c.query(`SELECT p.id AS "positionVersionId",p.claim_id AS "claimId",p.candidacy_id AS "candidacyId",p.topic,p.summary,p.excerpt,
       jsonb_build_object('id',ca.id,'name',ca.name,'party',co.party) AS candidate,
       to_jsonb(r) AS race,jsonb_build_object('snapshotId',s.id,'url',s.final_url,'retrievedAt',s.retrieved_at) AS source,
+      co.eligibility AS "ballotStatus",
+      CASE WHEN EXISTS(SELECT 1 FROM election_candidate_identities fi WHERE fi.candidate_id=ca.id AND fi.system='fec:candidate')
+        THEN 'fec-registered' ELSE 'state-listed' END AS "registrationStatus",
       co.availability,CASE WHEN i.id IS NULL THEN NULL ELSE jsonb_build_object('stance',i.stance,'privateComment',i.private_comment) END AS response
       FROM campaign_position_versions p JOIN election_candidacies co ON co.id=p.candidacy_id
       JOIN election_candidates ca ON ca.id=co.candidate_id JOIN election_races r ON r.id=co.race_id
       JOIN campaign_sources s ON s.id=p.snapshot_id JOIN campaign_sites w ON w.candidacy_id=co.id AND w.is_current
       LEFT JOIN election_interactions i ON i.position_version_id=p.id AND i.user_id=$1
-      WHERE r.id=ANY($2::uuid[]) AND co.eligibility='ballot-confirmed' AND w.status='verified' AND w.review_after>now()
+      WHERE r.id=ANY($2::uuid[]) AND (co.eligibility='ballot-confirmed' OR (co.eligibility NOT IN ('withdrawn','disqualified')
+        AND EXISTS(SELECT 1 FROM election_candidate_identities fi WHERE fi.candidate_id=co.candidate_id AND fi.system='fec:candidate'))) AND w.status='verified' AND w.review_after>now()
       AND p.state='published' AND p.validation->>'outcome'='valid'
       AND EXISTS(SELECT 1 FROM campaign_position_evidence pe JOIN campaign_sources es ON es.id=pe.snapshot_id
         WHERE pe.position_version_id=p.id AND es.site_id=w.id AND es.candidacy_id=p.candidacy_id)

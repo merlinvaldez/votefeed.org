@@ -1,0 +1,426 @@
+
+
+<!DOCTYPE html>
+
+<html id="mstHTMLTag" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head><meta content="en-us" http-equiv="Content-Language" /><meta charset="utf-8" /><meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" /><meta content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" name="viewport" /><meta content="Office of Elections" name="title" /><meta content="State of Hawaii Office Elections" name="description" /><meta content="index,follow" name="robots" /><title>
+	State of Hawaii : Office of Elections Online Voter Registration
+</title><link href="../Content/styles.css" rel="stylesheet" type="text/css" /><style type="text/css">@font-face {font-family:'Open Sans';font-style:normal;font-weight:400;src:url(/cf-fonts/s/open-sans/5.2.7/symbols/400/normal.woff2);unicode-range:U+0001-000C,U+000E-001F,U+007F-009F,U+20DD-20E0,U+20E2-20E4,U+2150-218F,U+2190,U+2192,U+2194-2199,U+21AF,U+21E6-21F0,U+21F3,U+2218-2219,U+2299,U+22C4-22C6,U+2300-243F,U+2440-244A,U+2460-24FF,U+25A0-27BF,U+2800-28FF,U+2921-2922,U+2981,U+29BF,U+29EB,U+2B00-2BFF,U+4DC0-4DFF,U+FFF9-FFFB,U+10140-1018E,U+10190-1019C,U+101A0,U+101D0-101FD,U+102E0-102FB,U+10E60-10E7E,U+1D2C0-1D2D3,U+1D2E0-1D37F,U+1F000-1F0FF,U+1F100-1F1AD,U+1F1E6-1F1FF,U+1F30D-1F30F,U+1F315,U+1F31C,U+1F31E,U+1F320-1F32C,U+1F336,U+1F378,U+1F37D,U+1F382,U+1F393-1F39F,U+1F3A7-1F3A8,U+1F3AC-1F3AF,U+1F3C2,U+1F3C4-1F3C6,U+1F3CA-1F3CE,U+1F3D4-1F3E0,U+1F3ED,U+1F3F1-1F3F3,U+1F3F5-1F3F7,U+1F408,U+1F415,U+1F41F,U+1F426,U+1F43F,U+1F441-1F442,U+1F444,U+1F446-1F449,U+1F44C-1F44E,U+1F453,U+1F46A,U+1F47D,U+1F4A3,U+1F4B0,U+1F4B3,U+1F4B9,U+1F4BB,U+1F4BF,U+1F4C8-1F4CB,U+1F4D6,U+1F4DA,U+1F4DF,U+1F4E3-1F4E6,U+1F4EA-1F4ED,U+1F4F7,U+1F4F9-1F4FB,U+1F4FD-1F4FE,U+1F503,U+1F507-1F50B,U+1F50D,U+1F512-1F513,U+1F53E-1F54A,U+1F54F-1F5FA,U+1F610,U+1F650-1F67F,U+1F687,U+1F68D,U+1F691,U+1F694,U+1F698,U+1F6AD,U+1F6B2,U+1F6B9-1F6BA,U+1F6BC,U+1F6C6-1F6CF,U+1F6D3-1F6D7,U+1F6E0-1F6EA,U+1F6F0-1F6F3,U+1F6F7-1F6FC,U+1F700-1F7FF,U+1F800-1F80B,U+1F810-1F847,U+1F850-1F859,U+1F860-1F887,U+1F890-1F8AD,U+1F8B0-1F8BB,U+1F8C0-1F8C1,U+1F900-1F90B,U+1F93B,U+1F946,U+1F984,U+1F996,U+1F9E9,U+1FA00-1FA6F,U+1FA70-1FA7C,U+1FA80-1FA89,U+1FA8F-1FAC6,U+1FACE-1FADC,U+1FADF-1FAE9,U+1FAF0-1FAF8,U+1FB00-1FBFF;font-display:swap;}@font-face {font-family:'Open Sans';font-style:normal;font-weight:400;src:url(/cf-fonts/s/open-sans/5.2.7/cyrillic-ext/400/normal.woff2);unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;font-display:swap;}@font-face {font-family:'Open Sans';font-style:normal;font-weight:400;src:url(/cf-fonts/s/open-sans/5.2.7/latin-ext/400/normal.woff2);unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:'Open Sans';font-style:normal;font-weight:400;src:url(/cf-fonts/s/open-sans/5.2.7/vietnamese/400/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:'Open Sans';font-style:normal;font-weight:400;src:url(/cf-fonts/s/open-sans/5.2.7/greek/400/normal.woff2);unicode-range:U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;font-display:swap;}@font-face {font-family:'Open Sans';font-style:normal;font-weight:400;src:url(/cf-fonts/s/open-sans/5.2.7/cyrillic/400/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:'Open Sans';font-style:normal;font-weight:400;src:url(/cf-fonts/s/open-sans/5.2.7/latin/400/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:'Open Sans';font-style:normal;font-weight:400;src:url(/cf-fonts/s/open-sans/5.2.7/math/400/normal.woff2);unicode-range:U+0302-0303,U+0305,U+0307-0308,U+0310,U+0312,U+0315,U+031A,U+0326-0327,U+032C,U+032F-0330,U+0332-0333,U+0338,U+033A,U+0346,U+034D,U+0391-03A1,U+03A3-03A9,U+03B1-03C9,U+03D1,U+03D5-03D6,U+03F0-03F1,U+03F4-03F5,U+2016-2017,U+2034-2038,U+203C,U+2040,U+2043,U+2047,U+2050,U+2057,U+205F,U+2070-2071,U+2074-208E,U+2090-209C,U+20D0-20DC,U+20E1,U+20E5-20EF,U+2100-2112,U+2114-2115,U+2117-2121,U+2123-214F,U+2190,U+2192,U+2194-21AE,U+21B0-21E5,U+21F1-21F2,U+21F4-2211,U+2213-2214,U+2216-22FF,U+2308-230B,U+2310,U+2319,U+231C-2321,U+2336-237A,U+237C,U+2395,U+239B-23B7,U+23D0,U+23DC-23E1,U+2474-2475,U+25AF,U+25B3,U+25B7,U+25BD,U+25C1,U+25CA,U+25CC,U+25FB,U+266D-266F,U+27C0-27FF,U+2900-2AFF,U+2B0E-2B11,U+2B30-2B4C,U+2BFE,U+3030,U+FF5B,U+FF5D,U+1D400-1D7FF,U+1EE00-1EEFF;font-display:swap;}@font-face {font-family:'Open Sans';font-style:normal;font-weight:400;src:url(/cf-fonts/s/open-sans/5.2.7/greek-ext/400/normal.woff2);unicode-range:U+1F00-1FFF;font-display:swap;}@font-face {font-family:'Open Sans';font-style:normal;font-weight:400;src:url(/cf-fonts/s/open-sans/5.2.7/hebrew/400/normal.woff2);unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F;font-display:swap;}</style>
+    
+
+    <script type="text/javascript">
+
+        var clicked = false;
+        function CheckBrowser() {
+            if (clicked == false) {
+                //Browser closed   
+            } else {
+                //redirected
+                clicked = false;
+            }
+        }
+        function bodyUnload() {
+            if (clicked == false)//browser is closed  
+            {
+                var request = GetRequest();
+                request.open("POST", "../LogOut.aspx", false);
+                request.send();
+            }
+        }
+
+        function GetRequest() {
+            var xmlhttp;
+            if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            }
+            else {// code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            return xmlhttp;
+        }
+
+</script>
+ <meta http-equiv='refresh' content='1200;url=../SessionExpired.aspx'><link href="/WebResource.axd?d=Nhf6TpUj19KZ9rhEj2xtdfRYOQGogCdVeF-gykm7f0D6eD2A1j61AqcKlcZbf_IjYRlrVZn0n_MfLDewhxyDElWVAsa2H80NzTXklWGXwRskMQll0&amp;t=637780414860000000" type="text/css" rel="stylesheet" class="Telerik_stylesheet" /><link href="/WebResource.axd?d=7RkMGAtaEIp2mKcOqdFCIszkCyxY30eaH0S_zyrrNjMPKvTQ5Ey7wKMO_I4z1pLZ-vDdKUZKFU5TZC1HE1-2LkKE6FXuV4F9ftQWwhRQV58SnCiLn_aYo8kd26unCjwLcgL14Q2&amp;t=637780414860000000" type="text/css" rel="stylesheet" class="Telerik_stylesheet" /><link href="/WebResource.axd?d=b8adWYak0tImLef4A3fc9Zglkf9HlVEU7G9FRtt7oI3JeQ6J3_74tYL70Y8LW2vOnCEOucc8bNQWT8671lOUvsTF8XNtxj-dhGHXxgY-yvdsStJ5_2tSpUP8dPAcLMBUR6nfyQ2&amp;t=637780414860000000" type="text/css" rel="stylesheet" class="Telerik_stylesheet" /><link href="/WebResource.axd?d=h0MkSn0fIoCPzk73lQFHIX51IdRbfH72_4gaDVD11zul40u8xcWLMMEWffBsBcHbpRxFDQ8LnSSX3SBsLBmzkSc8YdfbQdK2haOz4RMNnYyEim3tKLnztNfLhGw9Dem0dXkao5--4gYNpQdA3qCTRR1c6vU1&amp;t=637780414860000000" type="text/css" rel="stylesheet" class="Telerik_stylesheet" /><link href="/WebResource.axd?d=vsKpXOsoEwDUfVug9KOqSl4xhaGPMBvSzW3ax1XPC4jvCm8h3pe60YEyGd5c52H89ietCTgvpyAK8Q7Z25xYGfX8oigFOW9QhBdmlsmKfF1S3Svd0&amp;t=637780414860000000" type="text/css" rel="stylesheet" class="Telerik_stylesheet" /><link href="/WebResource.axd?d=gGPJcKA2egeNvbDi_oMTrSjOHXOyLyaa171P8SJdQ9PFBA4jjg-3-Pv9li5Op73x_QS52TYpZDe4r2qvABtNr6Dy9WN9Q5Wq9MONifYk0wrr2xAvKrieimaEBitXPxlSbrG7RA2&amp;t=637780414860000000" type="text/css" rel="stylesheet" class="Telerik_stylesheet" /></head>
+<body class="claro" onkeydown="return (event.keyCode!=13)" onunload="bodyUnload();" onclick="clicked=true;">
+    <form method="post" action="./CandidateFiling.aspx?elid=94" id="form1">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+
+
+<script src="/ScriptResource.axd?d=NJmAwtEo3Ipnlaxl6CMhvpYASlKbvLA1bEpX15XA8zXzMEfXHPKL8quuVSl_Jih8LYeNdAK7CajZyukwT3oV_DRDi735sUFNdQlATqWDhf6GE0YGaQ9_YMGv4zI6tHU0gJX2szMg2ZBf-Z-zAOsqSeRSxu01&amp;t=ffffffffbec1863d" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=TDVjdgRbdvNAY3tnbizUcFb4xKT6Oka1cO6D5On_whNRgJa-pEOUJWtx7En7plwYeLq2zgdIjqumuQ5iI_BssbLwbXpsCNDxCFWldMDuQFMDPxPP0&amp;t=1b9df66c" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=86EhAqQjfuMKlbK4FWyenLLJuvXYnYFAJ8tUOnZZQ3XjgjMUzaXdIziJg0DoLeDvllBNYUu9fwf-g0dK6o4qCAOIKYyHqY1mckSy2Kr5P37jmRpNh5LOfHzS--lRtB9OR6KsrXg4s0bGPMqj3UgvkxQrJcE1&amp;t=1b9df66c" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=jsREEuQJotslNUdHnktdpqv4ft0cihDnw0A97ycmVXXjJwWgSQEFncnITHrn2UeB9Cqx3sK7FLntT4-CZG-XuCD3ZS8gdMdzZbkqXXAF2k5tGAtD5f48GUXFDUoEDMG59fpd5A2&amp;t=1b9df66c" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=mbGZm65DzNC0tMTq0ElbcRwe82SRgc4l_dTafZANUlTLNV60ozTiyghwSKdx389l7mXG-1oDOKABs3ySYYErhJtDbo1N7dVfupIqR1sG7qdSwPQiLItARBdXBP4f-RTrZxzaOA2&amp;t=1b9df66c" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=cmIcXiVJ__exjjpjrN730iQuWLPTTj2vlDaYLsxtSDbGr8FoBOUP5ChIaJu4vILKlQ3u15AKw-xRauiGF7o9gs3YNv92SevgiOdh3z6ZJqZ3pXz-tp68bgMY9YS4SmssmxQK4w2&amp;t=1b9df66c" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=utaAJrK4EroNO-KNr3p19Jio3Xcv7hQPtWCI2XK67C-gXvchKZ71K4dEtfn6M0Unghf97Putu92jiJySM4_BFVBFsemSqhZjQI8pUqXmTzSoJCu-BpaVrcLmqVxuIoci6eWfDw2&amp;t=1b9df66c" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=-9rjE8XFv-zikiBdee7RrokbCaE6TaX5TRpyqyFyB_yY-_YJS_WhBhm9kjDnVpK8eAvZ2TgZdoptK0tQXs_LtWUiqBkR4YZpqrE3b060Smn96u4sV8P-fSQOyBTURpzNYf7CGYdtiKn717vq_GBUXGokI0g1&amp;t=1b9df66c" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=aoSSiMnLNTC20U5L7LFIKhRyxzyOud62NFp3zT_wPVG0s8wSdFZ3Keu8B9hH_BTOxqy3k1x__oEOc8NjPP7OI2S5-Wl4_1l6ZX4AeGK4tlrh727xXkUSFptucD-s3F5HmMwihjrKUcbcqUX3nmeDnEJ9zTk1&amp;t=1b9df66c" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=uZyysmNAhs23bID72ZUaSighTK6o8cnldGpRMSwZhfkhhRASbuG0aXV9uuaEJpfpGXSlOaY1BHM-OgVVXuDSFTc5C4AC9a-Ql3TXJOy1pgyJ0wL3PNbvgsKGDD9zqw-q1nwR2V946v_9wvjIP6WRxxDj4nA1&amp;t=1b9df66c" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=eKZhdBAoDXLAsQys5JFN8hfWemUdByGkpmeT_w9EZlrOo9GX8BliXVTraksDcqi9J3fHyEV1wBsXXHqtrA5RETwRlBcvpRidc8Tyw0OADR3B2sRf_3m0I0q-QMbSC3PMXYnnN1BJzxdo1lRNPoxGDzlgcmQ1&amp;t=1b9df66c" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=GiyGg6C7coGF_0YjOubjHWk2DD2cUzxYbk-1gDKCkfX09_Wxm6W6cb9znJq6H_HmwK5tH55aL-1wi0SOfBLtdJvceg8ArWQ6G_C0u8b6x6C72bXsrDoA5yJHQieexHmrw7av-A2&amp;t=1b9df66c" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=VxtOoXYuGZUEZcJ30xmYHgK8lSX4Y-wBXYtHQIV1Au2-mten_5VZhpSbmMwsbr3a2P78-XGYfHo0EcJ20t-llCAF17hcUaYILkS_Z-YyDYhsjQvbjQq7mUhlwksrdt-qxpAf5w2&amp;t=1b9df66c" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=OMa_nbU0_VSWnHtE895qh7bSdW3yNfGdp6Sx9SxKkt0CkPNdTMWgxFSvC4j2ajMb79bZEz62RD65CMmSJzR6PdlUQFBLGLsZJ6S3R94qJE72Y_5DnHfXueNj8j92Q6vPFOPpcL-n2AD8dXWQazCNOrf0y4k1&amp;t=1b9df66c" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=xvYBvOx-63dLu5JJe1OI3efXqkjU8T1xrNrjoEhhFOp9EbL0gAgLmCL-ZoOU4y-wTc0HKiziM5P4klgMHoCCo5QnECUiw3GdXp6z0JXxS4Lsdx5BSIHfzXbTtRZQeWIsnGNgOQ2&amp;t=1b9df66c" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=E5x_TPxmFLaA4jSY3dSbO4j0upZAmGyl4XcWvmHPdAk7cjra4tZ6-LMY-H0UY9DMLSkuGFvEl-RyhCXDl89MSYln7W6l04j6sj93MR0VzuAPtdnKu5tiA5Z2LTPtIV-5h29-aqwagFNV6o0PhrnIhwcJGGE1&amp;t=1b9df66c" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=LlwbgV7oh28tpCvE08ZbOZa9ffBrYhtsrbHBb1LB4VByFj99juT3ViM5sGH6T_6oDHd227Vgit_Mcb0cTdB3KEdhI5zv-g1Bbf5l7DVNka3VKArtuohxpXIzCYDmLXvZh8Rcsw2&amp;t=1b9df66c" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=DJqzVDlyNLlLft2Spv1G50v2V0-XnCS3djCsJAriVzmbhpUXCFF1PHyYPIbcKL3YdKmKkLYCtoCkxY-rWar_nllpAqojZpTCbtF7ciU5IChUPpSqiG4sj3Ta3SwNTzH67iZ7LQ2&amp;t=1b9df66c" type="text/javascript"></script>
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="B408693D" />
+<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="g/eQs51X1RT0mq92yZrjwGbZ8T4W1Fr7VEnvxfGCae6cciJ/sHdneJxca+qClimTX7TVjSHVzNlv5EOVyrcIu33Ogi4wax9gpuAnKT7nWj49cf9uZNpBppqdyPFbYv+HwB04kc4zU71vmk5fnT6fHKsvlhjSomXI+rQONmSCH33VedmaGqvZhfrZ20i3/S9JXIYyMp4Ak+HSeR3Uya7h1LVLQTI/uYLCxEEihE+k/oIg76/gX8jp747sD4WxwJGqmjCaK6Q/+TO58V97MNyZGymoSmZenhtjjvdV2FJM9XFvjX0gHG4+RutmChs2z/u3uz5WjbciIGq314jffwOOKCEwyRFmk+NYIm8uF1Rym3RXJci66afjayN78FEse37qOv1geHQhssCzQK/CHLiCubV30x5Sp98IUkYmTkqEypdbo3CxuBWgx/HZPmqXc9XuYJMb2zIvf5GkkpSNhPGGBTLXvKSzAZhHceza58PE0RC18kXadQ82gN53Qmk+3XiApeLh0ti7IMIi+K+VH5gJFX/XMcUvmOE4HxJaLyiELxTS8+n3u3EA/5zJ0OppqCOtg4susQ2bFzkfj0CUE11x9XC0V9V98LTeRCoRYfOTF7OT8CFuu/f2l12/O1kvyoMG4U8K+vAY2Wig+ZVVbv2e/Ijbg59W9J0DHSGc/KrWTUwff0E49LZYh+L4gpFEDnIDoAODQNNjWokh7XrSJFB6ddory8HX3axBoJm8e/mKzrlnaghYinaAcUqDtqREzauBFjeIki5u8UDFEN4WpNw9ZzQp7oJ5Y6npL+GnZbynaiSTsaJJ" />
+        
+        <div class="wrapper" style="padding-bottom: 20px">
+            <div class="section group">
+                <div class="col stateseal">
+                    <a target="_blank" title="Hawaii State Seal" href="http://elections.hawaii.gov" tabindex="-1">
+                        <img alt="Hawaii State Seal" src="../images/hawaii-state-seal.png" tabindex="-1" /></a>
+                </div>
+                <br />
+                <div class="col heading">
+                    <h1>&nbsp;<span id="lblMasterPage_1_1">Office of Elections</span></h1>
+                </div>
+            </div>
+            <!--End Section Group-->
+        </div>
+        <!--End Header Wrapper-->
+
+        
+        <div class="content-area-wrapper">
+            
+            
+        </div>
+        <div>
+            
+<script type="text/javascript">
+    function onKeyPressContest(sender, event) {
+        if (event.keyCode == 13) {
+
+            var masterTable = $find("ctl00_cphFooter_rdgSearch").get_masterTableView();
+            masterTable.filter("Contests", sender.value, "Contains");
+        }
+       
+    }
+     function onKeyPressName(sender, event) {
+        if (event.keyCode == 13) {
+
+            var masterTable = $find("ctl00_cphFooter_rdgSearch").get_masterTableView();
+            masterTable.filter("Name", sender.value, "Contains");
+        }
+       
+     }
+    function onKeyPressParty(sender, event) {
+        if (event.keyCode == 13) {
+
+            var masterTable = $find("ctl00_cphFooter_rdgSearch").get_masterTableView();
+            masterTable.filter("Party", sender.value, "Contains");
+        }
+       
+    }
+    function onKeyPressLegalName(sender, event) {
+        if (event.keyCode == 13) {
+
+            var masterTable = $find("ctl00_cphFooter_rdgSearch").get_masterTableView();
+            masterTable.filter("LegalName", sender.value, "Contains");
+            }
+
+    }
+    function onKeyPressStatus(sender, event) {
+        if (event.keyCode == 13) {
+
+            var masterTable = $find("ctl00_cphFooter_rdgSearch").get_masterTableView();
+                masterTable.filter("Status", sender.value, "Contains");
+            }
+
+        }
+   
+</script>
+
+ 
+       
+
+       <table style="background-color:white;width:100%; overflow-x:auto;">
+           <tr><td colspan="4" style="text-align:center; background-color:grey;">
+               <span id="cphFooter_lblHeader" class="heading" style="color:white; font-weight:bold;"><font size="6">2026  Candidate Report</font></span>
+
+               
+               </td></tr>
+           <tr>
+               <td >
+                   <br />
+                   &nbsp;
+                   &nbsp;
+                   <span id="cphFooter_lblElection">Election: </span>
+                   <select name="ctl00$cphFooter$ddlElection" id="cphFooter_ddlElection" class="ddlMedium">
+	<option selected="selected" value="94">2026 Candidate Report</option>
+	<option value="92">2024 Candidate Report</option>
+	<option value="87">2022 Candidate Report</option>
+
+</select>
+                   
+
+                  
+
+                   <br />
+                   <br />
+               </td>
+              <td>
+                  <span id="cphFooter_lblIntro">After the candidate filing deadline and following each election, the status will be updated to reflect the election in which the candidate appears or indicate if the candidate has been elected.</span>
+               </td>
+ 
+           </tr>
+
+          
+         
+           <tr>
+               <td colspan="4">
+
+                   <div id="ctl00_cphFooter_rdgSearch" class="RadGrid RadGrid_Default">
+
+<!-- 2022.1.119.45 --><table class="rgMasterTable rgClipCells" id="ctl00_cphFooter_rdgSearch_ctl00" width="100%" style="table-layout:fixed;empty-cells:show;">
+	<colgroup>
+		<col  />
+		<col style="width:10%" />
+		<col  />
+		<col  />
+		<col  />
+		<col style="width:10%" />
+		<col  />
+		<col  />
+		<col style="width:7%" />
+		<col style="width:7%" />
+		<col style="width:7%" />
+	</colgroup>
+<thead>
+		<tr class="rgCommandRow">
+			<td class="rgCommandCell" colspan="11"><font size="2">
+                               <table style="width:100%">
+                                   <tr>
+                                       <td style="width:33%;">
+                                             <input type="submit" name="ctl00$cphFooter$rdgSearch$ctl00$ctl02$ctl00$clrRdgFilter" value="Clear Filter" id="ctl00_cphFooter_rdgSearch_ctl00_ctl02_ctl00_clrRdgFilter" />
+
+                                             
+                                       </td>
+                                       <td style="width:33%;">
+                                       </td>
+                                       <td style="width:33%; text-align:right;">
+                                             
+                               <input type="submit" name="ctl00$cphFooter$rdgSearch$ctl00$ctl02$ctl00$ExportToPdfButton" value="" id="ctl00_cphFooter_rdgSearch_ctl00_ctl02_ctl00_ExportToPdfButton" class="rgExpPDF" />
+                               <input type="submit" name="ctl00$cphFooter$rdgSearch$ctl00$ctl02$ctl00$ExportToCsvButton" value="" id="ctl00_cphFooter_rdgSearch_ctl00_ctl02_ctl00_ExportToCsvButton" class="rgExpCSV" />
+                                       </td>
+                                   </tr>
+                               </table>
+                             
+                           </font></td>
+		</tr><tr>
+			<th scope="col" class="rgHeader"><font size="2"><a onclick="Telerik.Web.UI.Grid.Sort($find(&#39;ctl00_cphFooter_rdgSearch_ctl00&#39;), &#39;BallotTitle&#39;); return false;" title="Click here to sort" href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl02$ctl02$ctl00&#39;,&#39;&#39;)">Contests</a></font></th><th scope="col" class="rgHeader"><font size="2"><a onclick="Telerik.Web.UI.Grid.Sort($find(&#39;ctl00_cphFooter_rdgSearch_ctl00&#39;), &#39;PoliticalPartyID&#39;); return false;" title="Click here to sort" href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl02$ctl02$ctl01&#39;,&#39;&#39;)">Party</a></font></th><th scope="col" class="rgHeader"><font size="2"><a onclick="Telerik.Web.UI.Grid.Sort($find(&#39;ctl00_cphFooter_rdgSearch_ctl00&#39;), &#39;Name&#39;); return false;" title="Click here to sort" href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl02$ctl02$ctl02&#39;,&#39;&#39;)">Ballot Name</a></font></th><th scope="col" class="rgHeader"><font size="2"><a onclick="Telerik.Web.UI.Grid.Sort($find(&#39;ctl00_cphFooter_rdgSearch_ctl00&#39;), &#39;LegalName&#39;); return false;" title="Click here to sort" href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl02$ctl02$ctl03&#39;,&#39;&#39;)">Legal Name</a></font></th><th scope="col" class="rgHeader"><font size="2">Mailing Address</font></th><th scope="col" class="rgHeader"><font size="2">Phone</font></th><th scope="col" class="rgHeader"><font size="2"><a onclick="Telerik.Web.UI.Grid.Sort($find(&#39;ctl00_cphFooter_rdgSearch_ctl00&#39;), &#39;elEmailAddress&#39;); return false;" title="Click here to sort" href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl02$ctl02$ctl04&#39;,&#39;&#39;)">Email</a></font></th><th scope="col" class="rgHeader"><font size="2"><a onclick="Telerik.Web.UI.Grid.Sort($find(&#39;ctl00_cphFooter_rdgSearch_ctl00&#39;), &#39;elWebsite&#39;); return false;" title="Click here to sort" href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl02$ctl02$ctl05&#39;,&#39;&#39;)">Website</a></font></th><th scope="col" class="rgHeader"><font size="2"><a onclick="Telerik.Web.UI.Grid.Sort($find(&#39;ctl00_cphFooter_rdgSearch_ctl00&#39;), &#39;IssueDate&#39;); return false;" title="Click here to sort" href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl02$ctl02$ctl06&#39;,&#39;&#39;)">Issued</a></font></th><th scope="col" class="rgHeader"><font size="2"><a onclick="Telerik.Web.UI.Grid.Sort($find(&#39;ctl00_cphFooter_rdgSearch_ctl00&#39;), &#39;PetitionFilingDate&#39;); return false;" title="Click here to sort" href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl02$ctl02$ctl07&#39;,&#39;&#39;)">Filed</a></font></th><th scope="col" class="rgHeader"><font size="2"><a onclick="Telerik.Web.UI.Grid.Sort($find(&#39;ctl00_cphFooter_rdgSearch_ctl00&#39;), &#39;Status&#39;); return false;" title="Click here to sort" href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl02$ctl02$ctl08&#39;,&#39;&#39;)">Status</a></font></th>
+		</tr><tr class="rgFilterRow">
+			<td style="white-space:nowrap;"><font size="2">
+                                      <input name="ctl00$cphFooter$rdgSearch$ctl00$ctl02$ctl03$Contests" type="text" id="ctl00_cphFooter_rdgSearch_ctl00_ctl02_ctl03_Contests" onkeydown="onKeyPressContest(this, event)" />
+                                  </font></td><td style="white-space:nowrap;"><font size="2">
+                                      <input name="ctl00$cphFooter$rdgSearch$ctl00$ctl02$ctl03$Party" type="text" id="ctl00_cphFooter_rdgSearch_ctl00_ctl02_ctl03_Party" onkeydown="onKeyPressParty(this, event)" />
+                                  </font></td><td style="white-space:nowrap;"><font size="2">
+                                      <input name="ctl00$cphFooter$rdgSearch$ctl00$ctl02$ctl03$Name" type="text" id="ctl00_cphFooter_rdgSearch_ctl00_ctl02_ctl03_Name" onkeydown="onKeyPressName(this, event)" />
+                                    </font></td><td style="white-space:nowrap;"><font size="2">
+                                      <input name="ctl00$cphFooter$rdgSearch$ctl00$ctl02$ctl03$LegalName" type="text" id="ctl00_cphFooter_rdgSearch_ctl00_ctl02_ctl03_LegalName" onkeydown="onKeyPressLegalName(this, event)" />
+                                    </font></td><td><font size="2">&nbsp;</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">&nbsp;</font></td>
+		</tr>
+	</thead><tfoot>
+		<tr class="rgFooter">
+			<td><font size="2">&nbsp;</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">&nbsp;</font></td>
+		</tr><tr class="rgPager">
+			<td colspan="11"><font size="2"><table summary="Data pager which controls on which page is the RadGrid control." style="width:100%;border-spacing:0;">
+				<caption>
+					<span style='display: none'>Data pager</span>
+				</caption><thead>
+					<tr>
+						<th scope="col"><font size="2">Data pager</font></th>
+					</tr>
+				</thead><tbody>
+					<tr>
+						<td class="rgPagerCell NextPrevAndNumeric"><font size="2"><div class="rgWrap rgArrPart1">
+							<input type="submit" name="ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$ctl02" value=" " onclick="return false;" title="First Page" class="rgPageFirst" /><input type="submit" name="ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$ctl03" value=" " onclick="return false;" title="Previous Page" class="rgPagePrev" />
+						</div><div class="rgWrap rgNumPart">
+							<a onclick="return false;" class="rgCurrentPage" href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$ctl05&#39;,&#39;&#39;)"><span>1</span></a><a href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$ctl07&#39;,&#39;&#39;)"><span>2</span></a><a href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$ctl09&#39;,&#39;&#39;)"><span>3</span></a><a href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$ctl11&#39;,&#39;&#39;)"><span>4</span></a><a href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$ctl13&#39;,&#39;&#39;)"><span>5</span></a><a href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$ctl15&#39;,&#39;&#39;)"><span>6</span></a><a href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$ctl17&#39;,&#39;&#39;)"><span>7</span></a><a href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$ctl19&#39;,&#39;&#39;)"><span>8</span></a><a href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$ctl21&#39;,&#39;&#39;)"><span>9</span></a><a href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$ctl23&#39;,&#39;&#39;)"><span>10</span></a><a title="Next Pages" href="javascript:__doPostBack(&#39;ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$ctl25&#39;,&#39;&#39;)"><span>...</span></a>
+						</div><div class="rgWrap rgArrPart2">
+							<input type="submit" name="ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$ctl28" value=" " title="Next Page" class="rgPageNext" /><input type="submit" name="ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$ctl29" value=" " title="Last Page" class="rgPageLast" />
+						</div><div class="rgWrap rgAdvPart">
+							<span id="ctl00_cphFooter_rdgSearch_ctl00_ctl03_ctl01_ChangePageSizeLabel" class="rgPagerLabel">Page size:</span><div id="ctl00_cphFooter_rdgSearch_ctl00_ctl03_ctl01_PageSizeComboBox" class="RadComboBox RadComboBox_Default">
+								<table summary="Page Size Drop Down Control" style="border-width:0;border-collapse:collapse;width:100%">
+									<caption>
+										PageSizeComboBox
+									</caption><tr class="rcbReadOnly">
+										<td class="rcbInputCell rcbInputCellLeft" style="width:100%;"><font size="2"><input name="ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$PageSizeComboBox" type="text" class="rcbInput radPreventDecorate" id="ctl00_cphFooter_rdgSearch_ctl00_ctl03_ctl01_PageSizeComboBox_Input" value="15" readonly="readonly" /></font></td><td class="rcbArrowCell rcbArrowCellRight"><font size="2"><a id="ctl00_cphFooter_rdgSearch_ctl00_ctl03_ctl01_PageSizeComboBox_Arrow" style="overflow: hidden;display: block;position: relative;outline: none;">select</a></font></td>
+									</tr>
+								</table><div class="rcbSlide" style="z-index:6000;display:none;"><div id="ctl00_cphFooter_rdgSearch_ctl00_ctl03_ctl01_PageSizeComboBox_DropDown" class="RadComboBoxDropDown RadComboBoxDropDown_Default "><div class="rcbScroll rcbWidth"><ul class="rcbList"><li class="rcbItem">10</li><li class="rcbItem">15</li><li class="rcbItem">20</li><li class="rcbItem">50</li></ul></div></div></div><input id="ctl00_cphFooter_rdgSearch_ctl00_ctl03_ctl01_PageSizeComboBox_ClientState" name="ctl00_cphFooter_rdgSearch_ctl00_ctl03_ctl01_PageSizeComboBox_ClientState" type="hidden" />
+							</div>
+						</div><div class="rgWrap rgInfoPart">
+							 &nbsp;<strong>415</strong> items in <strong>28</strong> pages
+						</div></font></td>
+					</tr>
+				</tbody>
+			</table></font></td>
+		</tr>
+	</tfoot><tbody>
+	<tr class="rgRow" id="ctl00_cphFooter_rdgSearch_ctl00__0">
+		<td class="textentryupper"><font size="2">U.S. REPRESENTATIVE, DIST I</font></td><td><font size="2">DEMOCRATIC</font></td><td><font size="2">BELATTI, Della Au</font></td><td><font size="2">DELLA AU BELATTI </font></td><td><font size="2">
+                                       P.O. BOX 900
+                                       <br />
+                                        HONOLULU, HI 96808
+                                    </font></td><td><font size="2">
+                                        (808) 393-0594
+                                    </font></td><td><font size="2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3b5f5e57575a7b5f5e57575a5d5449535a4c5a525215585456">[email&#160;protected]</a></font></td><td><font size="2">www.dellabelatti.com</font></td><td><font size="2">02/17/2026</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">Issued</font></td>
+	</tr><tr class="rgAltRow" id="ctl00_cphFooter_rdgSearch_ctl00__1">
+		<td class="textentryupper"><font size="2">U.S. REPRESENTATIVE, DIST I</font></td><td><font size="2">NONPARTISAN</font></td><td><font size="2">BERNING, Nathan M.</font></td><td><font size="2">NATHAN M. BERNING </font></td><td><font size="2">
+                                       152 AVALON AVE.
+                                       <br />
+                                        FLAGLER BEACH, FL 32136
+                                    </font></td><td><font size="2">
+                                        (260) 498-3415
+                                    </font></td><td><font size="2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a7c5c2d5c9cec9c0d3d5c6cecbc2d5d4e7c0cac6cecb89c4c8ca">[email&#160;protected]</a></font></td><td><font size="2">righttokeep.org</font></td><td><font size="2">06/01/2026</font></td><td><font size="2">06/01/2026</font></td><td><font size="2">In General</font></td>
+	</tr><tr class="rgRow" id="ctl00_cphFooter_rdgSearch_ctl00__2">
+		<td class="textentryupper"><font size="2">U.S. REPRESENTATIVE, DIST I</font></td><td><font size="2">DEMOCRATIC</font></td><td><font size="2">BOOKER, Jennifer</font></td><td><font size="2">JENNIFER MARGARET BOOKER </font></td><td><font size="2">
+                                       94-207 WAIPAHU ST., #368
+                                       <br />
+                                        WAIPAHU, HI 96797
+                                    </font></td><td><font size="2">
+                                        (808) 688-6307
+                                    </font></td><td><font size="2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f99d969a939c9797909f9c8bcbc9c9c9b99e94989095d79a9694">[email&#160;protected]</a></font></td><td><font size="2">jenbooker.com</font></td><td><font size="2">03/09/2026</font></td><td><font size="2">05/05/2026</font></td><td><font size="2">In Primary</font></td>
+	</tr><tr class="rgAltRow" id="ctl00_cphFooter_rdgSearch_ctl00__3">
+		<td class="textentryupper"><font size="2">U.S. REPRESENTATIVE, DIST I</font></td><td><font size="2">REPUBLICAN</font></td><td><font size="2">BURD, Zachary B.</font></td><td><font size="2">ZACHARY B. BURD </font></td><td><font size="2">
+                                       P.O. BOX 37311
+                                       <br />
+                                        HONOLULU, HI 96837
+                                    </font></td><td><font size="2">
+                                        (808) 436-9103
+                                    </font></td><td><font size="2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8af0ebe9e2ebf8f3e8efe4e0e3caf3ebe2e5e5a4e9e5e7">[email&#160;protected]</a></font></td><td><font size="2">www.facebook.com/zachary.b.burd/</font></td><td><font size="2">03/23/2026</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">Issued</font></td>
+	</tr><tr class="rgRow" id="ctl00_cphFooter_rdgSearch_ctl00__4">
+		<td class="textentryupper"><font size="2">U.S. REPRESENTATIVE, DIST I</font></td><td><font size="2">DEMOCRATIC</font></td><td><font size="2">CASE, Ed</font></td><td><font size="2">EDWARD E. CASE </font></td><td><font size="2">
+                                       P.O. BOX 2941
+                                       <br />
+                                        HONOLULU, HI 96802
+                                    </font></td><td><font size="2">
+                                        (808) 546-9509
+                                    </font></td><td><font size="2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="06636265677563466362656775632865696b">[email&#160;protected]</a></font></td><td><font size="2">www.edcase.com</font></td><td><font size="2">02/05/2026</font></td><td><font size="2">05/08/2026</font></td><td><font size="2">In General</font></td>
+	</tr><tr class="rgAltRow" id="ctl00_cphFooter_rdgSearch_ctl00__5">
+		<td class="textentryupper"><font size="2">U.S. REPRESENTATIVE, DIST I</font></td><td><font size="2">GREEN</font></td><td><font size="2">CONLEY, Jordan S.</font></td><td><font size="2">JORDAN S. CONLEY </font></td><td><font size="2">
+                                       98-729 MOANALUA LP., #301
+                                       <br />
+                                        AIEA, HI 96701
+                                    </font></td><td><font size="2">
+                                        (808) 492-2213
+                                    </font></td><td><font size="2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="aecdc1c0c2cbd7c8c7dac0cbddddeec9c3cfc7c280cdc1c3">[email&#160;protected]</a></font></td><td><font size="2">JordanforHawaii.com</font></td><td><font size="2">02/12/2026</font></td><td><font size="2">04/22/2026</font></td><td><font size="2">In General</font></td>
+	</tr><tr class="rgRow" id="ctl00_cphFooter_rdgSearch_ctl00__6">
+		<td class="textentryupper"><font size="2">U.S. REPRESENTATIVE, DIST I</font></td><td><font size="2">LIBERTARIAN</font></td><td><font size="2">CUADRA, Ku Lono (Bobby)</font></td><td><font size="2">KU LONO CUADRA </font></td><td><font size="2">
+                                       1096 KALIHIWAI PL.
+                                       <br />
+                                        HONOLULU, HI 96825
+                                    </font></td><td><font size="2">
+                                        (808) 465-5510
+                                    </font></td><td><font size="2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="335b1d581d505f5c475b5a5d54735a505f5c46571d505c5e">[email&#160;protected]</a></font></td><td><font size="2">ku-lono-cuadra.org</font></td><td><font size="2">02/23/2026</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">Issued</font></td>
+	</tr><tr class="rgAltRow" id="ctl00_cphFooter_rdgSearch_ctl00__7">
+		<td class="textentryupper"><font size="2">U.S. REPRESENTATIVE, DIST I</font></td><td><font size="2">REPUBLICAN</font></td><td><font size="2">CUADRA, Ku Lono (BOBBY)</font></td><td><font size="2">KU CUADRA </font></td><td><font size="2">
+                                       1096 KALIHIWAI PL.
+                                       <br />
+                                        HONOLULU, HI 96825
+                                    </font></td><td><font size="2">
+                                        (808) 465-5510
+                                    </font></td><td><font size="2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3e561055105d52514a565750597e575d52514b5a105d5153">[email&#160;protected]</a></font></td><td><font size="2">ku-lono-cuadra.org</font></td><td><font size="2">02/23/2026</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">Issued</font></td>
+	</tr><tr class="rgRow" id="ctl00_cphFooter_rdgSearch_ctl00__8">
+		<td class="textentryupper"><font size="2">U.S. REPRESENTATIVE, DIST I</font></td><td><font size="2">DEMOCRATIC</font></td><td><font size="2">FATULA, Ben</font></td><td><font size="2">BENJAMIN FATULA </font></td><td><font size="2">
+                                       5059 LIGHTNING ST., #B
+                                       <br />
+                                        KAPOLEI, HI 96707
+                                    </font></td><td><font size="2">
+                                        (408) 813-4055
+                                    </font></td><td><font size="2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c4aca5a0b6abaab7acadb6a184a3a9a5ada8eaa7aba9">[email&#160;protected]</a></font></td><td><font size="2">FatulaForCongress.com</font></td><td><font size="2">02/17/2026</font></td><td><font size="2">06/02/2026</font></td><td><font size="2">In Primary</font></td>
+	</tr><tr class="rgAltRow" id="ctl00_cphFooter_rdgSearch_ctl00__9">
+		<td class="textentryupper"><font size="2">U.S. REPRESENTATIVE, DIST I</font></td><td><font size="2">REPUBLICAN</font></td><td><font size="2">FRAZIER, Maxwell T.</font></td><td><font size="2">MAXWELL T. FRAZIER </font></td><td><font size="2">
+                                       92-1230 MAKAKILO DR., #9
+                                       <br />
+                                        KAPOLEI, HI 96707
+                                    </font></td><td><font size="2">
+                                        (352) 800-8086
+                                    </font></td><td><font size="2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="adddd8cfc1c4ce80cccbcbccc4dfdeedc0ccd5dac8c1c1cbdfccd7c4c8df83cec2c0">[email&#160;protected]</a></font></td><td><font size="2">maxwellfrazier.com</font></td><td><font size="2">02/03/2026</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">Issued</font></td>
+	</tr><tr class="rgRow" id="ctl00_cphFooter_rdgSearch_ctl00__10">
+		<td class="textentryupper"><font size="2">U.S. REPRESENTATIVE, DIST I</font></td><td><font size="2">DEMOCRATIC</font></td><td><font size="2">GISA, Joshua Pule Kimo</font></td><td><font size="2">JOSHUA P.K. GISA </font></td><td><font size="2">
+                                       91-1082 HOKUA ST.
+                                       <br />
+                                        EWA BEACH, HI 96706
+                                    </font></td><td><font size="2">
+                                        (808) 381-5652
+                                    </font></td><td><font size="2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9afbf6f6e9eefbe8b4f1f3f7f5dafdf7fbf3f6b4f9f5f7">[email&#160;protected]</a></font></td><td><font size="2">&nbsp;</font></td><td><font size="2">03/05/2026</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">Issued</font></td>
+	</tr><tr class="rgAltRow" id="ctl00_cphFooter_rdgSearch_ctl00__11">
+		<td class="textentryupper"><font size="2">U.S. REPRESENTATIVE, DIST I</font></td><td><font size="2">REPUBLICAN</font></td><td><font size="2">GISA, Joshua P. Kimo</font></td><td><font size="2">JOSHUA P.K. GISA </font></td><td><font size="2">
+                                       91-1082 HOKUA ST.
+                                       <br />
+                                        EWA BEACH, HI 96706
+                                    </font></td><td><font size="2">
+                                        (808) 381-5652
+                                    </font></td><td><font size="2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="aacbc6c6d9decbd884c1c3c7c5eacdc7cbc3c684c9c5c7">[email&#160;protected]</a></font></td><td><font size="2">&nbsp;</font></td><td><font size="2">03/05/2026</font></td><td><font size="2">&nbsp;</font></td><td><font size="2">Issued</font></td>
+	</tr><tr class="rgRow" id="ctl00_cphFooter_rdgSearch_ctl00__12">
+		<td class="textentryupper"><font size="2">U.S. REPRESENTATIVE, DIST I</font></td><td><font size="2">DEMOCRATIC</font></td><td><font size="2">KEOHOKALOLE, Jarrett K.</font></td><td><font size="2">JARRETT K. KEOHOKALOLE </font></td><td><font size="2">
+                                       P.O. BOX 2629
+                                       <br />
+                                        HONOLULU, HI 96803
+                                    </font></td><td><font size="2">
+                                        (808) 860-0970
+                                    </font></td><td><font size="2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c9a0a7afa689a3a8bbbbacbdbdafa6bbaaa6a7aebbacbabae7aaa6a4">[email&#160;protected]</a></font></td><td><font size="2">jarrettforcongress.com</font></td><td><font size="2">03/12/2026</font></td><td><font size="2">05/19/2026</font></td><td><font size="2">In Primary</font></td>
+	</tr><tr class="rgAltRow" id="ctl00_cphFooter_rdgSearch_ctl00__13">
+		<td class="textentryupper"><font size="2">U.S. REPRESENTATIVE, DIST I</font></td><td><font size="2">DEMOCRATIC</font></td><td><font size="2">KISWANTO, Nicholas (Nick)</font></td><td><font size="2">NICHOLAS KISWANTO </font></td><td><font size="2">
+                                       3350 SIERRA DR., #701
+                                       <br />
+                                        HONOLULU, HI 96816
+                                    </font></td><td><font size="2">
+                                        (808) 699-6072
+                                    </font></td><td><font size="2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7a1413191215161b09541113090d1b140e153a0a08150e1514171b131654191517">[email&#160;protected]</a></font></td><td><font size="2">kiswanto2026.org</font></td><td><font size="2">02/02/2026</font></td><td><font size="2">05/26/2026</font></td><td><font size="2">In Primary</font></td>
+	</tr><tr class="rgRow" id="ctl00_cphFooter_rdgSearch_ctl00__14">
+		<td class="textentryupper"><font size="2">U.S. REPRESENTATIVE, DIST I</font></td><td><font size="2">REPUBLICAN</font></td><td><font size="2">LAM, Adriel C.</font></td><td><font size="2">ADRIEL C. LAM </font></td><td><font size="2">
+                                       P.O. BOX 4682
+                                       <br />
+                                        KANEOHE, HI 96744
+                                    </font></td><td><font size="2">
+                                        (808) 721-9362
+                                    </font></td><td><font size="2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="99f8fdebf0fcf5d9f5f8f4adf8f5f6f1f8b7faf6f4">[email&#160;protected]</a></font></td><td><font size="2">www.lam4aloha.com</font></td><td><font size="2">02/02/2026</font></td><td><font size="2">04/07/2026</font></td><td><font size="2">In General</font></td>
+	</tr>
+	</tbody>
+
+</table><div id="ctl00_cphFooter_rdgSearch_SharedCalendarContainer" style="display:none;">
+
+</div><div tabindex="0" id="ctl00_cphFooter_rdgSearch_rfltMenu">
+	<div class="RadMenu RadMenu_Default RadMenu_Context RadMenu_Default_Context">
+		<ul class="rmActive rmVertical rmGroup rmLevel1">
+			<li class="rmItem rmFirst"><a class="rmLink" href="#"><span class="rmText">NoFilter</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">Contains</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">DoesNotContain</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">StartsWith</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">EndsWith</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">EqualTo</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">NotEqualTo</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">GreaterThan</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">LessThan</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">GreaterThanOrEqualTo</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">LessThanOrEqualTo</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">Between</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">NotBetween</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">IsEmpty</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">NotIsEmpty</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">IsNull</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">NotIsNull</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="#"><span class="rmText">Custom</span></a></li>
+		</ul>
+	</div><input id="ctl00_cphFooter_rdgSearch_rfltMenu_ClientState" name="ctl00_cphFooter_rdgSearch_rfltMenu_ClientState" type="hidden" />
+</div><input id="ctl00_cphFooter_rdgSearch_ClientState" name="ctl00_cphFooter_rdgSearch_ClientState" type="hidden" />	</div>
+
+               </td>
+           </tr>
+       </table>
+    <br />
+    <br />
+       
+
+        </div>
+    
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript">
+//<![CDATA[
+Sys.Application.add_init(function() {
+    $create(Telerik.Web.UI.RadComboBox, {"_dropDownWidth":0,"_height":0,"_skin":"Default","_text":"15","_uniqueId":"ctl00$cphFooter$rdgSearch$ctl00$ctl03$ctl01$PageSizeComboBox","_value":"15","clientStateFieldID":"ctl00_cphFooter_rdgSearch_ctl00_ctl03_ctl01_PageSizeComboBox_ClientState","collapseAnimation":"{\"duration\":450}","expandAnimation":"{\"duration\":450}","itemData":[{"value":"10","attributes":{"ownerTableViewId":"ctl00_cphFooter_rdgSearch_ctl00"}},{"value":"15","selected":true,"attributes":{"ownerTableViewId":"ctl00_cphFooter_rdgSearch_ctl00"}},{"value":"20","attributes":{"ownerTableViewId":"ctl00_cphFooter_rdgSearch_ctl00"}},{"value":"50","attributes":{"ownerTableViewId":"ctl00_cphFooter_rdgSearch_ctl00"}}],"localization":"{\"AllItemsCheckedString\":\"All items checked\",\"ItemsCheckedString\":\"items checked\",\"CheckAllString\":\"Check All\"}","selectedIndex":1}, {"selectedIndexChanged":Telerik.Web.UI.Grid.ChangePageSizeComboHandler,"selectedIndexChanging":Telerik.Web.UI.Grid.ChangingPageSizeComboHandler}, null, $get("ctl00_cphFooter_rdgSearch_ctl00_ctl03_ctl01_PageSizeComboBox"));
+});
+Sys.Application.add_init(function() {
+    $create(Telerik.Web.UI.RadContextMenu, {"_childListElementCssClass":null,"_skin":"Default","clickToOpen":true,"clientStateFieldID":"ctl00_cphFooter_rdgSearch_rfltMenu_ClientState","collapseAnimation":"{\"duration\":450}","expandAnimation":"{\"duration\":450}","itemData":[{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"NoFilter"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"Contains"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"DoesNotContain"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"StartsWith"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"EndsWith"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"EqualTo"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"NotEqualTo"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"GreaterThan"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"LessThan"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"GreaterThanOrEqualTo"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"LessThanOrEqualTo"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"Between"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"NotBetween"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"IsEmpty"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"NotIsEmpty"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"IsNull"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"NotIsNull"},{"attributes":{"columnUniqueName":"","tableID":""},"postBack":0,"value":"Custom"}],"targets":[],"webServiceSettings":"{\"ODataSettings\":{\"ResponseType\":0,\"InitialContainerName\":\"\",\"Entities\":[],\"EntityContainer\":[]},\"Path\":\"\",\"Method\":\"\",\"UseHttpGet\":false,\"ViewState\":{}}"}, null, null, $get("ctl00_cphFooter_rdgSearch_rfltMenu"));
+});
+Sys.Application.add_init(function() {
+    $create(Telerik.Web.UI.RadGrid, {"ClientID":"ctl00_cphFooter_rdgSearch","ClientSettings":{"AllowAutoScrollOnDragDrop":true,"ShouldCreateRows":true,"DataBinding":{},"Selecting":{"CellSelectionMode":0},"Scrolling":{},"Resizing":{},"ClientMessages":{},"KeyboardNavigationSettings":{"AllowActiveRowCycle":false,"EnableKeyboardShortcuts":true,"FocusKey":89,"InitInsertKey":73,"RebindKey":82,"ExitEditInsertModeKey":27,"UpdateInsertItemKey":13,"DeleteActiveRow":127,"ExpandDetailTableKey":39,"CollapseDetailTableKey":37,"MoveDownKey":40,"MoveUpKey":38,"SaveChangesKey":85,"CancelChangesKey":81},"Animation":{},"Virtualization":{}},"Skin":"Default","SortingSettings":{"SortToolTip":"Click here to sort","SortedAscToolTip":"Sorted asc","SortedDescToolTip":"Sorted desc","SortedBackColor":{"R":0,"G":0,"B":0,"A":0,"IsKnownColor":false,"IsEmpty":true,"IsNamedColor":false,"IsSystemColor":false,"Name":"0"},"EnableSkinSortStyles":true,"ViewState":{}},"UniqueID":"ctl00$cphFooter$rdgSearch","_activeRowIndex":"","_controlToFocus":"","_currentPageIndex":0,"_defaultDateTimeFormat":"M/d/yyyy h:mm:ss tt","_editIndexes":"[]","_embeddedSkin":true,"_freezeText":"Freeze","_gridTableViewsData":"[{\"ClientID\":\"ctl00_cphFooter_rdgSearch_ctl00\",\"UniqueID\":\"ctl00$cphFooter$rdgSearch$ctl00\",\"PageSize\":15,\"PageCount\":28,\"EditMode\":\"EditForms\",\"AllowPaging\":true,\"CurrentPageIndex\":0,\"VirtualItemCount\":0,\"AllowMultiColumnSorting\":false,\"AllowNaturalSort\":true,\"AllowFilteringByColumn\":true,\"PageButtonCount\":10,\"HasDetailTables\":false,\"HasMultiHeaders\":false,\"CheckListWebServicePath\":\"\",\"GroupLoadMode\":\"Server\",\"PagerAlwaysVisible\":true,\"IsItemInserted\":false,\"clientDataKeyNames\":[],\"hasDetailItemTemplate\":false,\"_dataBindTemplates\":false,\"_selectedItemStyle\":\"\",\"_selectedItemStyleClass\":\"rgSelectedRow\",\"isFilterItemExpanded\":true,\"_columnsData\":[{\"UniqueName\":\"Contests\",\"Resizable\":true,\"Reorderable\":true,\"Selectable\":true,\"Groupable\":true,\"ColumnType\":\"GridBoundColumn\",\"ColumnGroupName\":\"\",\"Editable\":true,\"SortExpression\":\"BallotTitle\",\"DataTypeName\":\"System.String\",\"FilterListOptions\":0,\"CurrentFilterFunction\":1,\"CurrentFilterValue\":\"\",\"AndCurrnetFilterFunction\":0,\"AndCurrentFilterValue\":\"\",\"Acff\":\"Contains\",\"CurrentFilterFunctionName\":\"Contains\",\"AndCurrentFilterFunctionName\":\"NoFilter\",\"DataField\":\"BallotTitle\",\"Display\":true},{\"UniqueName\":\"Party\",\"Resizable\":true,\"Reorderable\":true,\"Selectable\":true,\"Groupable\":true,\"ColumnType\":\"GridBoundColumn\",\"ColumnGroupName\":\"\",\"Editable\":true,\"SortExpression\":\"PoliticalPartyID\",\"DataTypeName\":\"System.String\",\"FilterListOptions\":0,\"CurrentFilterFunction\":1,\"CurrentFilterValue\":\"\",\"AndCurrnetFilterFunction\":0,\"AndCurrentFilterValue\":\"\",\"Acff\":\"Contains\",\"CurrentFilterFunctionName\":\"Contains\",\"AndCurrentFilterFunctionName\":\"NoFilter\",\"DataField\":\"PoliticalPartyID\",\"Display\":true},{\"UniqueName\":\"Name\",\"Resizable\":true,\"Reorderable\":true,\"Selectable\":true,\"Groupable\":true,\"ColumnType\":\"GridBoundColumn\",\"ColumnGroupName\":\"\",\"Editable\":true,\"SortExpression\":\"Name\",\"DataTypeName\":\"System.String\",\"FilterListOptions\":0,\"CurrentFilterFunction\":1,\"CurrentFilterValue\":\"\",\"AndCurrnetFilterFunction\":0,\"AndCurrentFilterValue\":\"\",\"Acff\":\"Contains\",\"CurrentFilterFunctionName\":\"Contains\",\"AndCurrentFilterFunctionName\":\"NoFilter\",\"DataField\":\"Name\",\"Display\":true},{\"UniqueName\":\"LegalName\",\"Resizable\":true,\"Reorderable\":true,\"Selectable\":true,\"Groupable\":true,\"ColumnType\":\"GridBoundColumn\",\"ColumnGroupName\":\"\",\"Editable\":true,\"SortExpression\":\"LegalName\",\"DataTypeName\":\"System.String\",\"FilterListOptions\":0,\"CurrentFilterFunction\":0,\"CurrentFilterValue\":\"\",\"AndCurrnetFilterFunction\":0,\"AndCurrentFilterValue\":\"\",\"Acff\":\"Contains\",\"CurrentFilterFunctionName\":\"NoFilter\",\"AndCurrentFilterFunctionName\":\"NoFilter\",\"DataField\":\"LegalName\",\"Display\":true},{\"UniqueName\":\"Address\",\"Resizable\":true,\"Reorderable\":true,\"Selectable\":true,\"Groupable\":true,\"ColumnType\":\"GridTemplateColumn\",\"ColumnGroupName\":\"\",\"Editable\":false,\"DataTypeName\":\"System.String\",\"FilterListOptions\":0,\"CurrentFilterFunction\":0,\"CurrentFilterValue\":\"\",\"AndCurrnetFilterFunction\":0,\"AndCurrentFilterValue\":\"\",\"Acff\":\"Contains\",\"CurrentFilterFunctionName\":\"NoFilter\",\"AndCurrentFilterFunctionName\":\"NoFilter\",\"DataField\":\"\",\"Display\":true},{\"UniqueName\":\"Phone\",\"Resizable\":true,\"Reorderable\":true,\"Selectable\":true,\"Groupable\":true,\"ColumnType\":\"GridTemplateColumn\",\"ColumnGroupName\":\"\",\"Editable\":false,\"DataTypeName\":\"System.String\",\"FilterListOptions\":0,\"CurrentFilterFunction\":0,\"CurrentFilterValue\":\"\",\"AndCurrnetFilterFunction\":0,\"AndCurrentFilterValue\":\"\",\"Acff\":\"Contains\",\"CurrentFilterFunctionName\":\"NoFilter\",\"AndCurrentFilterFunctionName\":\"NoFilter\",\"DataField\":\"elPhone\",\"Display\":true},{\"UniqueName\":\"Email\",\"Resizable\":true,\"Reorderable\":true,\"Selectable\":true,\"Groupable\":true,\"ColumnType\":\"GridBoundColumn\",\"ColumnGroupName\":\"\",\"Editable\":true,\"SortExpression\":\"elEmailAddress\",\"DataTypeName\":\"System.String\",\"FilterListOptions\":0,\"CurrentFilterFunction\":0,\"CurrentFilterValue\":\"\",\"AndCurrnetFilterFunction\":0,\"AndCurrentFilterValue\":\"\",\"Acff\":\"Contains\",\"CurrentFilterFunctionName\":\"NoFilter\",\"AndCurrentFilterFunctionName\":\"NoFilter\",\"DataField\":\"elEmailAddress\",\"Display\":true},{\"UniqueName\":\"Web\",\"Resizable\":true,\"Reorderable\":true,\"Selectable\":true,\"Groupable\":true,\"ColumnType\":\"GridBoundColumn\",\"ColumnGroupName\":\"\",\"Editable\":true,\"SortExpression\":\"elWebsite\",\"DataTypeName\":\"System.String\",\"FilterListOptions\":0,\"CurrentFilterFunction\":0,\"CurrentFilterValue\":\"\",\"AndCurrnetFilterFunction\":0,\"AndCurrentFilterValue\":\"\",\"Acff\":\"Contains\",\"CurrentFilterFunctionName\":\"NoFilter\",\"AndCurrentFilterFunctionName\":\"NoFilter\",\"DataField\":\"elWebsite\",\"Display\":true},{\"UniqueName\":\"Issued\",\"Resizable\":true,\"Reorderable\":true,\"Selectable\":true,\"Groupable\":true,\"ColumnType\":\"GridDateTimeColumn\",\"ColumnGroupName\":\"\",\"Editable\":true,\"SortExpression\":\"IssueDate\",\"DataTypeName\":\"System.DateTime\",\"FilterListOptions\":0,\"CurrentFilterFunction\":0,\"CurrentFilterValue\":\"\",\"AndCurrnetFilterFunction\":0,\"AndCurrentFilterValue\":\"\",\"Acff\":\"EqualTo\",\"CurrentFilterFunctionName\":\"NoFilter\",\"AndCurrentFilterFunctionName\":\"NoFilter\",\"DataField\":\"IssueDate\",\"DataFormatString\":\"{0:MM/dd/yyyy}\",\"EnableRangeFiltering\":false,\"Display\":true},{\"UniqueName\":\"Filed\",\"Resizable\":true,\"Reorderable\":true,\"Selectable\":true,\"Groupable\":true,\"ColumnType\":\"GridDateTimeColumn\",\"ColumnGroupName\":\"\",\"Editable\":true,\"SortExpression\":\"PetitionFilingDate\",\"DataTypeName\":\"System.DateTime\",\"FilterListOptions\":0,\"CurrentFilterFunction\":0,\"CurrentFilterValue\":\"\",\"AndCurrnetFilterFunction\":0,\"AndCurrentFilterValue\":\"\",\"Acff\":\"EqualTo\",\"CurrentFilterFunctionName\":\"NoFilter\",\"AndCurrentFilterFunctionName\":\"NoFilter\",\"DataField\":\"PetitionFilingDate\",\"DataFormatString\":\"{0:MM/dd/yyyy}\",\"EnableRangeFiltering\":false,\"Display\":true},{\"UniqueName\":\"Status\",\"Resizable\":true,\"Reorderable\":true,\"Selectable\":true,\"Groupable\":true,\"ColumnType\":\"GridDateTimeColumn\",\"ColumnGroupName\":\"\",\"Editable\":true,\"SortExpression\":\"Status\",\"DataTypeName\":\"System.String\",\"FilterListOptions\":0,\"CurrentFilterFunction\":0,\"CurrentFilterValue\":\"\",\"AndCurrnetFilterFunction\":0,\"AndCurrentFilterValue\":\"\",\"Acff\":\"Contains\",\"CurrentFilterFunctionName\":\"NoFilter\",\"AndCurrentFilterFunctionName\":\"NoFilter\",\"DataField\":\"Status\",\"EnableRangeFiltering\":false,\"Display\":true}]}]","_masterClientID":"ctl00_cphFooter_rdgSearch_ctl00","_shouldFocusOnPage":false,"_unfreezeText":"Unfreeze","allowMultiRowSelection":false,"clientStateFieldID":"ctl00_cphFooter_rdgSearch_ClientState","expandItems":{},"renderMode":1}, null, null, $get("ctl00_cphFooter_rdgSearch"));
+});
+//]]>
+</script>
+</form>
+<!-- Google tag (gtag.js) --> 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N13Y2KHK2G"></script>
+    <script>   window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-N13Y2KHK2G');
+    </script>
+    <div style="vertical-align: bottom; text-align: right; font-size: small;"></div>
+<script>window.__CF$cv$params={r:'a50c8ae58a03c2ef',t:'MTc5MzA1MDAyMA==',u:'01a17a1c0cdb70f48149b6151c2f9205',ut:'8eu_NfIOPXLZroYX3PU717o73QtMK9OYULCReSRATZ0-1793050021-1.2.1.1-o6WueBp7CDBZuUxYVIlprriAwhCZ1LLifJmqQGvmaf55UoO02ONFXkc65ezGzxa5P8_ehYPHCX6Bue9ZhU.kPUrZTJ_bxdHFAFHFK3tjPlY',i:60};(function(){if(!document.body)return;var s=document.createElement('script');s.src='/cdn-cgi/challenge-platform/scripts/precursor/main.js';document.head.appendChild(s);})();</script></body>
+</html>

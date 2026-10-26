@@ -1,0 +1,2216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- description and page title -->
+<meta name="description" content="Delaware General Election 2026">
+<meta name="keywords" content="Delaware, General, Election, 2026">
+<meta name="author" content="The State of Delaware">
+
+<title>
+  Department of Elections - State of Delaware
+</title>
+
+    
+<!-- Header Include File -->
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/assets/favicons/favicon.png">
+
+<!-- Google tag (gtag.js) --> 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CB055P36N8"></script> 
+    <script> 
+      window.dataLayer = window.dataLayer || []; 
+      function gtag(){dataLayer.push(arguments);} 
+      gtag('js', new Date()); 
+      gtag('config', 'G-CB055P36N8'); 
+    </script> 
+
+    <!-- Body Font Styles (From Google.com/fonts) -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+    <!-- Header Font Styles (From Google.com/fonts) -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <!-- Core JavaScript
+    ================================================== -->
+    
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+	<link href="/assets/css/lighthouse.css" rel="stylesheet" type='text/css'>
+ 	<link href="/assets/css/agency.css" rel="stylesheet" type='text/css'>
+   
+	
+	<!-- Funnelback INCLUDES -->
+    
+    <link type="text/css" media="screen" rel="stylesheet" href="/funnelback/funnelback.css" />
+
+    <script src="/funnelback/funnelbackConfig.js"></script>
+
+    <script defer src="/funnelback/funnelback.search.js"></script> 
+    
+    <!-- END FUNNELBACK INCLUDES -->
+    <script src="/assets/ens/ens.js" defer></script> 	
+    <!-- Read Speaker -->
+    
+	
+    
+	<!--
+    <script>
+      FontAwesomeConfig = { searchPseudoElements: true };
+    </script>
+    -->
+    <!-- Font Awesome Icons -->
+	<script defer id="fa-all-js" src="/assets/js/all.min.js" data-observe-mutations></script>
+    <script defer id="fa-js" src="/assets/js/fontawesome.min.js" data-observe-mutations></script>
+	<!--
+    <script src="https://use.fontawesome.com/releases/v5.1.0-6/assets/js/all.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.1.0-6/assets/js/v4-shims.js"></script>
+	-->
+
+</head>
+
+
+<body>
+        <header aria-label="Site Header">
+            <div id="state-header" role="banner" aria-label="Official Web Statement" class="bg-primary py-2">
+                <div class="container">
+                <div class="row">
+                    <div class="col col-lg-6 d-flex flex-row justify-content-between column-gap-lg-8 align-items-center">
+                    <a id="state-of-delaware-logo" href="https://delaware.gov"><img src="/assets/img/state-of-delaware-logo.gif" alt="State of Delaware" ></a>
+                    <div class="d-flex flex-column flex-md-row align-items-md-center">
+                        <p class="text-nowrap">An official State of Delaware site.</p>
+                        <button id="official-web-statement-toggle" class="text-start text-nowrap collapsed" data-bs-toggle="collapse" data-bs-target="#official-web-statement" aria-expanded="false" aria-controls="official-web-statement">
+                        Here's how you know
+                        <svg class="icon icon-24" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-384.85q-6.46 0-11.92-2.11-5.46-2.12-10.7-7.35L281.85-569.85q-5.62-5.61-6-13.77-.39-8.15 6-14.53 6.38-6.39 14.15-6.39 7.77 0 14.15 6.39L480-428.31l169.85-169.84q5.61-5.62 13.77-6 8.15-.39 14.53 6 6.39 6.38 6.39 14.15 0 7.77-6.39 14.15L502.62-394.31q-5.24 5.23-10.7 7.35-5.46 2.11-11.92 2.11Z"></path></svg>
+                        </button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div id="official-web-statement" class="collapse py-4">
+                <div class="container">
+                <div class="row mb-4">
+                    <div class="col col-xxl-7">
+                    <h2 class="d-flex align-items-center">
+                        <svg class="icon icon-24 me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M280-200v-180h-38.46q-8.5 0-14.25-5.76t-5.75-14.27q0-8.51 5.75-14.24t14.25-5.73h39.38q2.77-71.92 54.58-122.19 51.81-50.27 124.5-56.89V-733.8q0-13.97 9.29-23.16t23.02-9.19h138.46q13.73 0 23.02 9.28 9.29 9.29 9.29 23.02v49.23q0 13.74-9.38 23.02-9.38 9.29-23.24 9.29H500v53.23q72.69 6.62 124.5 56.89T679.08-420h39.38q8.5 0 14.25 5.76t5.75 14.27q0 8.51-5.75 14.24T718.46-380H680v180h96.92q8.5 0 14.25 5.76t5.75 14.27q0 8.51-5.75 14.24T776.92-160H183.08q-8.5 0-14.25-5.76t-5.75-14.27q0-8.51 5.75-14.24t14.25-5.73H280Zm40 0h140v-180H320v180Zm180 0h140v-180H500v180ZM321.38-420h317.24q-3.24-60.69-49.7-100.35Q542.46-560 480-560t-108.92 39.65q-46.46 39.66-49.7 100.35ZM480-420Z"></path></svg>
+                        <span>Official websites end in .gov</span>
+                    </h2>
+                    <p>A .gov website belongs to an official government organization in the United States.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-xxl-7">
+                    <h2 class="d-flex align-items-center">
+                        <svg class="icon icon-24 me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M264.62-120q-26.85 0-45.74-18.88Q200-157.77 200-184.62v-350.76q0-26.85 18.88-45.74Q237.77-600 264.62-600H320v-80q0-66.85 46.58-113.42Q413.15-840 480-840t113.42 46.58Q640-746.85 640-680v80h55.38q26.85 0 45.74 18.88Q760-562.23 760-535.38v350.76q0 26.85-18.88 45.74Q722.23-120 695.38-120H264.62Zm0-40h430.76q10.77 0 17.7-6.92 6.92-6.93 6.92-17.7v-350.76q0-10.77-6.92-17.7-6.93-6.92-17.7-6.92H264.62q-10.77 0-17.7 6.92-6.92 6.93-6.92 17.7v350.76q0 10.77 6.92 17.7 6.93 6.92 17.7 6.92ZM480-300q25.31 0 42.65-17.35Q540-334.69 540-360t-17.35-42.65Q505.31-420 480-420t-42.65 17.35Q420-385.31 420-360t17.35 42.65Q454.69-300 480-300ZM360-600h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80ZM240-160v-400 400Z"></path></svg>
+                        <span>Secure .gov websites use https://</span>
+                    </h2>
+                    <p>The https:// at the beginning of the delaware.gov address means you are safely connected to the government website. Any information that you provide is securely transmitted.</p>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        <div class="d-none d-lg-block">
+          <nav>
+          <div class="agency-header-primary container d-grid gap-5 align-items-center">
+            <a href="/" class="navbar-brand col-9 align-items-center h5 mb-0 fw-semibold text-decoration-none">
+            <img src="/assets/img/agency-logos/agency-logo-white88x88.png" class="img-fluid d-inline-block align-text-middle me-1 me-lg-3" alt="Agency Logo" width="88" height="88" >
+              Department of Elections
+            </a>
+            <div class="d-flex align-items-center">
+              <search class="w-100 me-0">
+                <form id="desktopSearchForm" class="search-form" action="/" novalidate="">
+                  <label for="query-on-desktop" class="visually-hidden-focusable">Search this site</label>
+                  <div class="input-group mb-3 mb-lg-0">
+                    <input type="search" class="form-control" id="query-on-desktop" placeholder="Search…" aria-label="Enter your keywords" aria-describedby="search-icon-on-desktop" />
+                    <button class="btn btn-primary" type="button" id="search-icon-on-desktop">
+                      <span class="visually-hidden-focusable">Search</span>
+                      <svg class="icon icon-40 pe-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M380.77-335.39q-102.46 0-173.54-71.07-71.07-71.08-71.07-173.54t71.07-173.54q71.08-71.07 173.54-71.07t173.54 71.07q71.07 71.08 71.07 173.54 0 42.85-14.38 81.85-14.39 39-38.39 67.84l230.16 230.16q8.31 8.3 8.5 20.88.19 12.58-8.5 21.27t-21.08 8.69q-12.38 0-21.07-8.69L530.46-388.16q-30 24.77-69 38.77-39 14-80.69 14Zm0-59.99q77.31 0 130.96-53.66 53.66-53.65 53.66-130.96t-53.66-130.96q-53.65-53.66-130.96-53.66t-130.96 53.66Q196.15-657.31 196.15-580t53.66 130.96q53.65 53.66 130.96 53.66Z"></path></svg>
+                    </button>
+                  </div>
+                </form>
+              </search>
+
+            </div>
+            </div>   
+            <nav class="container">
+                  <ul class="nav">
+                    <li class="nav-item dropdown me-1">
+                      <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page">About</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/aboutagency.shtml">About Elections</a></li>
+                        <li><a class="dropdown-item" href="/public/calendar/calendars.shtml">Calendars</a></li>
+                        <li><a class="dropdown-item" href="/public/letter.shtml">Commissioner&apos;s Letter</a></li>
+                        <li><a class="dropdown-item" href="/public/faq">FAQs</a></li>
+                        <!--
+                        <li><a class="dropdown-item" href="#">Fifth Subcategory Title</a></li>
+                        <li><a class="dropdown-item" href="#">Sixth Subcategory Title</a></li>
+                        <li><a class="dropdown-item" href="#">Seventh Subcategory (maximum)</a></li>
+                        -->
+                      </ul>
+                    </li>
+                    <li class="nav-item dropdown me-1">
+                      <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/voter/absentee/absentee_aff.shtml">Absentee Statement</a></li>
+                        <li><a class="dropdown-item" href="/voter/absentee/">Absentee Voting</a></li>
+                        <li><a class="dropdown-item" href="https://cfrs.elections.delaware.gov/">Campaign Finance</a></li>
+                        <li><a class="dropdown-item" href="/candidates/">Candidates</a></li>
+                        <li><a class="dropdown-item" href="/public/foia/foia.shtml">FOIA</a></li>
+                        <li><a class="dropdown-item" href="/voter/absentee/uocava.shtml">Uniformed &amp; Overseas</a></li>
+                        <li><a class="dropdown-item" href="/voter/">Voter Registration</a></li>
+                      </ul>
+                    </li>
+                    <li class="nav-item dropdown me-1">
+                      <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Information</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/candidates/candidatelist">Ballot Qualified Candidates</a></li>
+                        <li><a class="dropdown-item" href="/public/calendar/calendars.shtml">Calendars</a></li>
+                        <li><a class="dropdown-item" href="/elections/elections.shtml">Elections</a></li>
+                        <li><a class="dropdown-item" href="/public/forms/index.shtml">Forms &amp; Publications</a></li>
+                        <li><a class="dropdown-item" href="/maps/">Maps</a></li>
+                        <li><a class="dropdown-item" href="/candidates/regtotals.shtml">Voter Registration Data</a></li>
+                        <li><a class="dropdown-item" href="/voter/technology.shtml">Voting Machines</a></li>
+                        <li><a class="dropdown-item" href="/elections/electionofficers.shtml">Working at the Polls</a></li>
+                      </ul>
+                    </li>
+                    <li class="nav-item dropdown me-1">
+                      <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Social</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="https://www.facebook.com/DoE.Delaware">Faceboook</a></li>
+                        <li><a class="dropdown-item" href="https://twitter.com/DE_Elections">X</a></li>
+                        <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCYITHvWQRkGXNIZ3ctvH7VQ">Youtube</a></li>
+                        <li><a class="dropdown-item" href="https://www.instagram.com/doe.delaware/">Instagram</a></li>
+                        <!--
+                        <li><a class="dropdown-item" href="#">Fifth Subcategory Title</a></li>
+                        <li><a class="dropdown-item" href="#">Sixth Subcategory Title</a></li>
+                        <li><a class="dropdown-item" href="#">Seventh Subcategory (maximum)</a></li>
+                        -->
+                      </ul>
+                    </li>
+                    <li class="nav-item dropdown me-1">
+                      <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Contact Us</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/locations.shtml">Directory &amp; Locations</a></li>
+                        <!--
+                        <li><a class="dropdown-item" href="#">Another Subcategory</a></li>
+                        <li><a class="dropdown-item" href="#">Longer Subcategory Title That Wraps</a></li>
+                        <li><a class="dropdown-item" href="#">Fourth Subcategory Title</a></li>
+                        <li><a class="dropdown-item" href="#">Fifth Subcategory Title</a></li>
+                        <li><a class="dropdown-item" href="#">Sixth Subcategory Title</a></li>
+                        <li><a class="dropdown-item" href="#">Seventh Subcategory (maximum)</a></li>
+                        -->
+                      </ul>
+                    </li>
+                  </ul>
+            </nav>
+          </div>
+        </div>
+              <div class="d-lg-none">
+                <nav class="navbar container">
+                <a href="/" class="navbar-brand col-9 align-items-center h5 mb-0 fw-semibold text-decoration-none">
+                  <img src="/assets/img/agency-logos/agency-logo-white88x88.png" class="img-fluid d-inline-block align-text-middle me-1 me-lg-3" alt="Agency Logo" width="88" height="88" >
+                  Department of Elections
+                </a>
+                <button type="button" class="menu-toggler-button btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMainMenu">
+                    <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                    Menu
+                  </button>
+                  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasMainMenu" aria-labelledby="offcanvasMainMenuLabel">
+                    <div class="offcanvas-header">
+                      <div class="offcanvas-title visually-hidden" id="offcanvasMainMenuLabel">Menu</div>
+                      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                      <!--<search>-->
+                        <form id="searchForm" class="search-form container" action="/" novalidate="" role="search">
+                          <label for="query-on-mobile" class="visually-hidden-focusable">Search this site</label>
+                          <div class="input-group mb-3">
+                            <input type="search" class="form-control" id="query-on-mobile" placeholder="Search…" aria-label="Enter your keywords" aria-describedby="search-icon-on-mobile" >
+                            <button class="btn btn-primary" type="button" id="search-icon-on-mobile">
+                              <span class="visually-hidden-focusable">Search</span>
+                              <svg class="icon icon-40 pe-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M380.77-335.39q-102.46 0-173.54-71.07-71.07-71.08-71.07-173.54t71.07-173.54q71.08-71.07 173.54-71.07t173.54 71.07q71.07 71.08 71.07 173.54 0 42.85-14.38 81.85-14.39 39-38.39 67.84l230.16 230.16q8.31 8.3 8.5 20.88.19 12.58-8.5 21.27t-21.08 8.69q-12.38 0-21.07-8.69L530.46-388.16q-30 24.77-69 38.77-39 14-80.69 14Zm0-59.99q77.31 0 130.96-53.66 53.66-53.65 53.66-130.96t-53.66-130.96q-53.65-53.66-130.96-53.66t-130.96 53.66Q196.15-657.31 196.15-580t53.66 130.96q53.65 53.66 130.96 53.66Z"></path></svg>
+                            </button>
+                          </div>
+                        </form>
+                      <!--</search>-->
+                      <nav aria-label="main menu" class="container">
+                        <ul class="navbar-nav gap-1">
+                          <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle active" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page">About</a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="/aboutagency.shtml">About Elections</a></li>
+                              <li><a class="dropdown-item" href="/public/calendar/calendars.shtml">Calendars</a></li>
+                              <li><a class="dropdown-item" href="/public/letter.shtml">Commissioner&apos;s Letter</a></li>
+                              <li><a class="dropdown-item" href="/public/faq">FAQs</a></li>
+                              <!--
+                              <li><a class="dropdown-item" href="#">Fifth Subcategory Title</a></li>
+                              <li><a class="dropdown-item" href="#">Sixth Subcategory Title</a></li>
+                              <li><a class="dropdown-item" href="#">Seventh Subcategory (maximum)</a></li>
+                              -->
+                            </ul>
+                          </li>
+                          <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="/voter/absentee/absentee_aff.shtml">Absentee Statement</a></li>
+                              <li><a class="dropdown-item" href="/voter/absentee/">Absentee Voting</a></li>
+                              <li><a class="dropdown-item" href="https://cfrs.elections.delaware.gov/">Campaign Finance</a></li>
+                              <li><a class="dropdown-item" href="/candidates/">Candidates</a></li>
+                              <li><a class="dropdown-item" href="/public/foia/foia.shtml">FOIA</a></li>
+                              <li><a class="dropdown-item" href="/voter/absentee/uocava.shtml">Uniformed &amp; Overseas</a></li>
+                              <li><a class="dropdown-item" href="/voter/">Voter Registration</a></li>
+                            </ul>
+                          </li>
+                          <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Information</a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="/candidates/candidatelist">Ballot Qualified Candidates</a></li>
+                              <li><a class="dropdown-item" href="/public/calendar/calendars.shtml">Calendars</a></li>
+                              <li><a class="dropdown-item" href="/elections/elections.shtml">Elections</a></li>
+                              <li><a class="dropdown-item" href="/public/forms/index.shtml">Forms &amp; Publications</a></li>
+                              <li><a class="dropdown-item" href="/maps/">Maps</a></li>
+                              <li><a class="dropdown-item" href="/candidates/regtotals.shtml">Voter Registration Data</a></li>
+                              <li><a class="dropdown-item" href="/voter/technology.shtml">Voting Machines</a></li>
+                              <li><a class="dropdown-item" href="/elections/electionofficers.shtml">Working at the Polls</a></li>
+                            </ul>
+                          </li>
+                          <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Social</a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="https://www.facebook.com/DoE.Delaware">Faceboook</a></li>
+                              <li><a class="dropdown-item" href="https://twitter.com/DE_Elections">X</a></li>
+                              <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCYITHvWQRkGXNIZ3ctvH7VQ">Youtube</a></li>
+                              <li><a class="dropdown-item" href="https://www.instagram.com/doe.delaware/">Instagram</a></li>
+                              <!--
+                              <li><a class="dropdown-item" href="#">Fifth Subcategory Title</a></li>
+                              <li><a class="dropdown-item" href="#">Sixth Subcategory Title</a></li>
+                              <li><a class="dropdown-item" href="#">Seventh Subcategory (maximum)</a></li>
+                              -->
+                            </ul>
+                          </li>
+                          <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Contact Us</a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Directory &amp; Locations</a></li>
+                              <!--
+                              <li><a class="dropdown-item" href="#">Another Subcategory</a></li>
+                              <li><a class="dropdown-item" href="#">Longer Subcategory Title That Wraps</a></li>
+                              <li><a class="dropdown-item" href="#">Fourth Subcategory Title</a></li>
+                              <li><a class="dropdown-item" href="#">Fifth Subcategory Title</a></li>
+                              <li><a class="dropdown-item" href="#">Sixth Subcategory Title</a></li>
+                              <li><a class="dropdown-item" href="#">Seventh Subcategory (maximum)</a></li>
+                              -->
+                            </ul>
+                          </li>
+                        </ul>
+                      </nav>
+          </div>
+        </header>
+
+<!-- B E G I N   M A I N   C O N T E N T -->
+    <main id="main-content" >
+      
+      <div class="container" id="main-content-container">
+		  	<!-- Customized content start -->
+        <h1>General Election 11/3/2026</h1>
+        <h2>Filed Candidates by Office</h2>
+        <span class='local-note-small'>Last Updated: 2026-10-26 04:56 PM</span><br><br>
+        <span class='psuedoh4'>Clicking on a candidate name will expand the cell to show additional contact information, if available</span><br>
+        
+
+<table class='lighthouse-table m-1'> 
+	<caption>Filed Candidates Table</caption>
+	<thead>
+		<tr>
+			<th>Office</th>
+			<th>County</th>
+			<th>Party</th>
+			<th>Candidate</th>
+			<th>Status</th>
+			<th>Filed</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr data-county='Statewide'>
+			<td data-label='Office'>U.S. Senator</td>
+			<td data-label='County'>Statewide</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Chris Coons<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>PO Box 9900
+			<br>Newark, DE, 19711
+			<br>
+			<br>Email #2: chris@chriscoonscom
+			<br>Website: <a href='https://chriscoons.com'>https://chriscoons.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/12/2026</td>
+		</tr>
+		<tr data-county='Statewide'>
+			<td data-label='Office'>U.S. Senator</td>
+			<td data-label='County'>Statewide</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Michael "Dr. Mike" Katz<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="11787f777e5175637c787a747a70656b3f727e7c">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.drmikekatz.com'>https://www.drmikekatz.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>3/19/2026</td>
+		</tr>
+		<tr data-county='Statewide'>
+			<td data-label='Office'>Representative in Congress</td>
+			<td data-label='County'>Statewide</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Sarah McBride<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Website: <a href='https://sarahmcbride.com'>https://sarahmcbride.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/12/2026</td>
+		</tr>
+		<tr data-county='Statewide'>
+			<td data-label='Office'>Representative in Congress</td>
+			<td data-label='County'>Statewide</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Joseph "Dr. Joe" Arminio<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>6 Guyencourt Road
+			<br>Wilmington, DE, 19807
+			<br>
+			<br>Phone #1: (888)-547-7208
+			<br>Website: <a href='https://drjoeforcongress.com'>https://drjoeforcongress.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>7/14/2026</td>
+		</tr>
+		<tr data-county='Statewide'>
+			<td data-label='Office'>Representative in Congress</td>
+			<td data-label='County'>Statewide</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Lee Murphy<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'><span class='font-canceled'>WITHDRAWN 7/21/2026</span><br>
+			Residential Address:
+			<br>20 W. Woodbound Drive Apt. 20
+			<br>Wilmington, DE, 19803
+			<br>
+			<br>Mailing Address:
+			<br>20 Woodbound Drive Apt. 20
+			<br>Wilmington, DE, 19803
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="284440455d5a58406840475c45494144064b4745">[email&#160;protected]</a>
+			<br>Email #2: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1cdc4c4e1cdc4c4ccd4d1d3c9d8939193978fc2cecc">[email&#160;protected]</a>
+			<br>Phone #1: (302) 229-9380
+			<br>Website: <a href='https://www.leemurphy2026.com'>https://www.leemurphy2026.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Withdrawn</td>
+			<td data-label='Date Filed'>7/13/2026</td>
+		</tr>
+		<tr data-county='Statewide'>
+			<td data-label='Office'>Attorney General</td>
+			<td data-label='County'>Statewide</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Kathy Jennings<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>PO Box 1077
+			<br>Wilmington, DE,19899
+			<br>
+			<br>Email #2: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ddb4b3bbb29d96bca9b5a4bbb2af99b8b1bcaabcafb8f3beb2b0">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.kathyfordelaware.com'>https://www.kathyfordelaware.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>3/27/2026</td>
+		</tr>
+		<tr data-county='Statewide'>
+			<td data-label='Office'>Attorney General</td>
+			<td data-label='County'>Statewide</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>David C. "Dave" Graham<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>P.O. Box 840
+			<br>Smyrna, DE19977-0840
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d7b3b6a1b2b0a5b6bfb6bae2e397b0bab6bebbf9b4b8ba">[email&#160;protected]</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>8/24/2026</td>
+		</tr>
+		<tr data-county='Statewide'>
+			<td data-label='Office'>Auditor of Accounts</td>
+			<td data-label='County'>Statewide</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Lydia York<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>651 Valley Road Suite 1124
+			<br>Hockessin, DE, 10707
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="074b7e636e66476b7e636e667e68756c2964686a">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.lydiayork.com'>https://www.lydiayork.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>4/20/2026</td>
+		</tr>
+		<tr data-county='Statewide'>
+			<td data-label='Office'>Auditor of Accounts</td>
+			<td data-label='County'>Statewide</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>April Callaway<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Phone #1: (302) 258-6629
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>8/26/2026</td>
+		</tr>
+		<tr data-county='Statewide'>
+			<td data-label='Office'>Auditor of Accounts</td>
+			<td data-label='County'>Statewide</td>
+			<td data-label='Party'>Ind Pty of DE</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Austin Cassidy<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>1003 N. Bancroft Parkway
+			<br>Wilmington, DE, 19805
+			<br>
+			<br>Mailing Address:
+			<br>1003 N. Bancroft Parkway
+			<br>Wilmington, DE, 19805
+			<br>
+			<br>Website: <a href='https://www.votecassidy.org'>https://www.votecassidy.org</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>8/5/2026</td>
+		</tr>
+		<tr data-county='Statewide'>
+			<td data-label='Office'>State Treasurer</td>
+			<td data-label='County'>Statewide</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Ted Lauzen<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>P.O. Box 292
+			<br>Wilmington, DE 19899
+			<br>
+			<br>Email #2: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8ac3e4ece5cadeefeec6ebfff0efe4a4e9e5e7">[email&#160;protected]</a>
+			<br>Phone #2: (302) 464-0695
+			<br>Website: <a href='https://tedlauzen.com'>https://tedlauzen.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>1/23/2026</td>
+		</tr>
+		<tr data-county='Statewide'>
+			<td data-label='Office'>State Treasurer</td>
+			<td data-label='County'>Statewide</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Michael Ramone<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>211 Nathan Court
+			<br>Newark, DE, 19711
+			<br>
+			<br>Mailing Address:
+			<br>211 Nathan Court
+			<br>Newark, DE, 19711
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0c616567694c616567697e6d61636269226f6361">[email&#160;protected]</a>
+			<br>Phone #1: (302) 584-8602
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>7/13/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Senator District 1</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Dan Cruce<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>1702 N. Park Dr., #77
+			<br>Wilmington, DE 19806
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1256737c5256737c51606771773c717d7f">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.dancruce.com'>https://www.dancruce.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>3/16/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Senator District 1</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Hildi Bachtle<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #2: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="95d7f4f6fde1f9f0a1f4d7f0e1e1f0e7d1d0d5f2f8f4fcf9bbf6faf8">[email&#160;protected]</a>
+			<br>Phone #2: (302) 521-1231
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>8/28/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Senator District 1</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Ind Pty of DE</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Steven Washington<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b2c1c6d7c4d7c5d3c1daf2d1dddfd1d3c1c69cdcd7c6">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.votestevewashington.com'>https://www.votestevewashington.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>8/11/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Senator District 5</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Shay Frisby<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2f7b40484a5b474a5d58465b477c474e566f48424e4643014c4042">[email&#160;protected]</a>
+			<br>Phone #1: (302) 365-0913
+			<br>Website: <a href='https://TogetherwithShay.com'>https://TogetherwithShay.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>2/13/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Senator District 5</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Brent Burdge<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>1 Birch Knoll Rd.
+			<br>Wilmington, DE 19810
+			<br>
+			<br>Email #2: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1755626573707223547f7679707257707a767e7b3974787a">[email&#160;protected]</a>
+			<br>Phone #1: (302) 307-3965
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>8/26/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Senator District 5</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Ind Pty of DE</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Carolyn Frank<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>8/10/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Senator District 7</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Spiros Mantzavinos<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4330332a312c300330332a312c3077303722372630262d2237266d202c2e">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.spiros4statesenate.com'>https://www.spiros4statesenate.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>4/10/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Senator District 7</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Chris Rowe<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="abe8c3d9c2d8ebd8dcc2cddfcad8d8c2ccc585c8c4c6">[email&#160;protected]</a>
+			<br>Phone #1: (302) 897-8558
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>7/13/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Senator District 8</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Mara Gorman<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7b161a091a3b161a091a1d14091f1e171a0c1a091e55181416">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.marafordelaware.com'>https://www.marafordelaware.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>2/27/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Senator District 8</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Shane Cavanaugh<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>4 Carriage Ln
+			<br>Newark, DE 19711
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f2819a939c97949d8081979c9386979697b2959f939b9edc919d9f">[email&#160;protected]</a>
+			<br>Phone #1: (302) 547-4780
+			<br>Website: <a href='https://shane4senate.com/'>https://shane4senate.com/</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/5/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Senator District 9</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Jack Walsh<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>2607 Belaire Dr
+			<br>Wilmington, DE 19808
+			<br>
+			<br>Mailing Address:
+			<br>2607 Belaire Dr
+			<br>Wilmington, DE 19808
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="462c2c31272a352e6874767306212b272f2a6825292b">[email&#160;protected]</a>
+			<br>Phone #1: (302) 660-6295
+			<br>Website: <a href='https://senatorjackwalsh.com'>https://senatorjackwalsh.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/15/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Senator District 12</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Nicole Poore<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>350 Wheatsheaf Dr
+			<br>New Castle, DE 19720
+			<br>
+			<br>Email #2: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d6bfb8b0b996b8bfb5b9bab3a6b9b9a4b3f8b5b9bb">[email&#160;protected]</a>
+			<br>Phone #1: (302) 561-1760
+			<br>Website: <a href='https://nicolepoore.com'>https://nicolepoore.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/15/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Senator District 12</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Mark Esposito<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b9d1d6cbcadcc9d6cedccbd1dcd8d5cdd1f9ded4d8d0d597dad6d4">[email&#160;protected]</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/15/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Senator District 13</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Marie Pinkney<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2c414d5e4549185f49424d58496c4b414d4540024f4341">[email&#160;protected]</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/27/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>State Senator District 14</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Kyra L. Hoffner<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>3024 Fast Landing Rd
+			<br>Dover, DE 19901-3108
+			<br>
+			<br>Mailing Address:
+			<br>3024 Fast Landing Rd
+			<br>Dover, DE 19901-3108
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d9b2a0abb89992a0abb891b6bfbfb7bcabed8abcb7b8adbcf7bab6b4">[email&#160;protected]</a>
+			<br>Phone #1: (302) 508-0929
+			<br>Website: <a href='https://KyraHoffner4Senate.com'>https://KyraHoffner4Senate.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>3/30/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>State Senator District 14</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Mark Pugh<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>260 Front St
+			<br>Leipsic, DE, 19901
+			<br>
+			<br>Mailing Address:
+			<br>260 Front St
+			<br>Leipsic, DE, 19901
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="98d5f9eaf3d8dbf7f5f5f7f6cbfdf6ebfdaba8aab6fbf7f5">[email&#160;protected]</a>
+			<br>Phone #1: (302) 632-9833
+			<br>Website: <a href='https://www.commonsense302.com'>https://www.commonsense302.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>1/13/2025</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>State Senator District 15</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Nisha Lodhavia <i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e18f8d8e858980978880a1868c80888dcf828e8c">[email&#160;protected]</a>
+			<br>Website: <a href='https://nishaforsenate.com/'>https://nishaforsenate.com/</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>1/12/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>State Senator District 15</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Emily A. Thompson<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>PO Box 25
+			<br>Hartly, DE, 19953
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="88dce0e7e5f8fbe7e6cee7faccede4e9ffe9faedc8efe5e9e1e4a6ebe7e5">[email&#160;protected]</a>
+			<br>Website: <a href='https://thompsonfordelaware.org/'>https://thompsonfordelaware.org/</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>1/5/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Senator District 19</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Brian G. Pettyjohn<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>PO Box 616
+			<br>Georgetown, DE 19947
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="86c4d4cfc7c8c6c4d4cfc7c8d6c3d2d2dfccc9cec8a8c5c9cb">[email&#160;protected]</a>
+			<br>Website: <a href='https://BrianPettyjohn.com'>https://BrianPettyjohn.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>1/14/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Senator District 20</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Harry S. Gold<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4109203333387505242d203620332401262c20282d6f222e2c">[email&#160;protected]</a>
+			<br>Phone #1: (302) 402-5978
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>8/25/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Senator District 20</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Gerald W. Hocker<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>38489 Hickman Rd
+			<br>Ocean View, DE 19970
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fdba988f9c919995929e96988fbd9a909c9491d39e9290">[email&#160;protected]</a>
+			<br>Phone #1: (302) 539-4140
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>11/18/2025</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 1</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Nnamdi O. Chukwuocha<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>P.O. Box 9350
+			<br>Wilmington, DE 19809
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ed7f0f8f1ded0f0fff3faf7b3dadbb0fdf1f3">[email&#160;protected]</a>
+			<br>Phone #1: (302) 635-9196
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/27/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 1</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Lisa McInnis<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="24484d574549474d4a4a4d5764474b49474557500a4a4150">[email&#160;protected]</a>
+			<br>Phone #1: (302) 438-9022
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>8/30/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 2</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Michelle H. Booker<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e08388858c8c998d8183ce8d82a0878d81898cce838f8d">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.michellebooker.com'>https://www.michellebooker.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/16/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 3</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Branden Fletcher-Dominguez<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>1904 W 2nd St
+			<br>Wilmington, DE 19805
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="61080f070e210313000f05040f070e1315090411040e110d044f020e0c">[email&#160;protected]</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>7/6/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 3</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Shawn L. Dottery<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>1921 W. 7th St.
+			<br>Wilmington, DE 19805
+			<br>
+			<br>Email #1: DotteryForDelaware.com
+			<br>Phone #1: (302) 513-3182
+			<br>Website: <a href='https://www.thequietcoalition.com'>https://www.thequietcoalition.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>7/10/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 3</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Ind Pty of DE</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Dexter "Dizzy" Bland<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>3 Germay Dr., Unit 4 #2580
+			<br>Wilmington, DE 19804
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b5d7d0d9dcd0c3d0dcdbd7d9d4dbd184f5d2d8d4dcd99bd6dad8">[email&#160;protected]</a>
+			<br>Phone #1: (302) 549-5738
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/24/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 4</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Gregg Lindner<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Website: <a href='https://lindner4delaware.com'>https://lindner4delaware.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/10/2025</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 4</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Dan Zitofsky<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="591d1817190f160d1c03100d161f0a1200771a1614">[email&#160;protected]</a>
+			<br>Email #2: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0246434c584b564d4451495b425b434a4d4d2c414d4f">[email&#160;protected]</a>
+			<br>Phone #1: (302) 480-1207
+			<br>Website: <a href='https://votezitofsky.com'>https://votezitofsky.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/12/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 5</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Kendra Johnson<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="54223b2031323b263f313a302635143339353d387a373b39">[email&#160;protected]</a>
+			<br>Phone #1: (302) 257-0199
+			<br>Website: <a href='https://kendrafordelaware.com'>https://kendrafordelaware.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/26/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 6</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Rachel "Rae" Krantz<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f3819296b3819296959c8197969f9284928196dd909c9e">[email&#160;protected]</a>
+			<br>Phone #1: (302) 635-0756
+			<br>Website: <a href='https://www.raefordelaware.com'>https://www.raefordelaware.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>3/23/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 6</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Tanya Hettler<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="14706660757a6d757c71606078716622667164547379757d783a777b79">[email&#160;protected]</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>8/26/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 7</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Larry Lambert<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e4a88596969dcaa8858986819690a48081888593859681ca838b92">[email&#160;protected]</a>
+			<br>Phone #1: (302) 408-0901
+			<br>Website: <a href='https://larryfordelaware.com'>https://larryfordelaware.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>7/13/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 7</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Shane Stoneman<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>8/26/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 8</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Sherae'a "Rae" Moore<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2940474f46694446465b4c4f465b4d4c074a4644">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.mooreforde.com'>https://www.mooreforde.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/4/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 8</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Gary Taylor<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>PO Box 161
+			<br>Middletown, DE 19709
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2b62454d446b7f4a524744591f4f4e05484446">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.Taylor4de.com'>https://www.Taylor4de.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>1/27/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 9</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Ayanna Khan-Flowers<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e7a28b828493a69e86898986a7808a868e8bc984888a">[email&#160;protected]</a>
+			<br>Phone #1: (302) 514-7830
+			<br>Phone #2: (302) 709-1708
+			<br>Website: <a href='https://ElectAyanna.com'>https://ElectAyanna.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/29/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 9</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Jamar Money<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>768 Ashington Dr.
+			<br>Middletown, DE 19709
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="670d060a0615010815030227000a060e0b4904080a">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.jamarforde.com'>https://www.jamarforde.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/5/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 10</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Melanie Ross Levin<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>PO Box 7015, 3911 Concord Pike
+			<br>Wilmington, DE 19803
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="18557d747976717d58557d747976717d4a776b6b547d6e7176367b7775">[email&#160;protected]</a>
+			<br>Phone #1: (302) 518-0166
+			<br>Website: <a href='https://www.MelanieRossLevin.com'>https://www.MelanieRossLevin.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>2/12/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 10</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Dolores Dunleavy<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>8/26/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 11</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Tori Parker<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e5918a978c848b8b9584978e8097a58288848c89cb868a88">[email&#160;protected]</a>
+			<br>Phone #1: (302) 383-9149
+			<br>Website: <a href='https://www.pleasevoteparker.com'>https://www.pleasevoteparker.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>8/28/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>State Representative District 11</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Jeffrey N. Spiegelman<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>PO Box 869 
+			<br>Clayton, DE 19938
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="513b343737113b3437373534233421233422343f2530253827347f323e3c">[email&#160;protected]</a>
+			<br>Phone #1: (302) 399-7728
+			<br>Website: <a href='https://www.jeffderepresentative.com/'>https://www.jeffderepresentative.com/</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>3/18/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 12</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Krista Griffith<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>2212 Amhurst Rd.
+			<br>Wilmington, DE 19803
+			<br>
+			<br>Mailing Address:
+			<br>2207 Concord Pike #119
+			<br>Wilmington, DE 19803
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fb92959d94bb908992888f9a9c89929d9d928f93d5989496">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.kristagriffith.com'>https://www.kristagriffith.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>1/29/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 12</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Steve Pickering<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>P. O. Box 123
+			<br>Yorklyn, DE 19736
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bacad3d9d1c9cedfccdf8ededfd6dbcddbc8dffaddd7dbd3d694d9d5d7">[email&#160;protected]</a>
+			<br>Phone #1: (302) 319-4041
+			<br>Website: <a href='https://www.picksteve4delaware.com'>https://www.picksteve4delaware.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/29/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 13</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>DeShanna U. Neal<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>PO Box 30825
+			<br>Wilmington, DE 19805
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ff9b9a8c979e91919ecb9b968c8b8d969c8bceccbf98929e9693d19c9092">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.deshanna4district13.com'>https://www.deshanna4district13.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>4/29/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 14</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Claire Snyder-Hall<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="10737c71796275767f6274757c716771627550777d71797c3e737f7d">[email&#160;protected]</a>
+			<br>Phone #1: (302) 569-9205
+			<br>Website: <a href='https://clairesnyderhall.com'>https://clairesnyderhall.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/2/2025</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 14</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Mike Simpler<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>179 Rehoboth Ave Suite 24
+			<br>Rehoboth Beach, DE 19971
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8cc5e2eae3ccc1e5e7e9eae3fec8e9e0edfbedfee9a2efe3e1">[email&#160;protected]</a>
+			<br>Phone #1: (302) 514-1414
+			<br>Website: <a href='https://MikeforDelaware.com'>https://MikeforDelaware.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>4/10/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 15</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Kamela T. Smith<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a0ebc1cdc5ccc1d3cdc9d4c8c3c1cdd0c1c9c7cee0c7cdc1c9cc8ec3cfcd">[email&#160;protected]</a>
+			<br>Phone #2: (302) 307-2558
+			<br>Website: <a href='https://www.kamelasmithfordelaware.com/'>https://www.kamelasmithfordelaware.com/</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/27/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 16</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Pamela Salaam<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bcccddd1d9d0ddcfddd0ddddd1fcdfd3d1dfddcfc892d2d9c8">[email&#160;protected]</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>3/24/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 16</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Enala A. Mwashitete<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>501 Hawley St.
+			<br>Wilmington, DE 19805
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1277737f617d7e67667b7d7c6121222052757f737b7e3c717d7f">[email&#160;protected]</a>
+			<br>Phone #1: (856) 376-7015
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>8/28/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 17</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Melissa Minor Brown<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #2: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b3fedadddcc1f1c1dcc4ddd5dcc18284f3d4ded2dadf9dd0dcde">[email&#160;protected]</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/27/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 18</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Sophie Phillips<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Website: <a href='https://www.sophiekp4de.com'>https://www.sophiekp4de.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/22/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 19</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Kim Williams<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>23 Weer Circle
+			<br>Wilmington, DE 19808
+			<br>
+			<br>Mailing Address:
+			<br>23 Weer Circle
+			<br>Wilmington, DE 19808
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="204b494d57494c4c49414d53111960434f4d434153540e4e4554">[email&#160;protected]</a>
+			<br>Phone #1: (302) 633-1289
+			<br>Website: <a href='https://kimwilliamsforstaterep.weebly.com'>https://kimwilliamsforstaterep.weebly.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/15/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 19</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Janyce Colmery<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Phone #1: (302) 598-5689
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>7/13/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 20</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Alonna Berry<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>PO Box 34
+			<br>Milton, DE 19968
+			<br>
+			<br>Email #2: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1d7e7273697c7e695d7c717273737c7f786f6f64337e7270">[email&#160;protected]</a>
+			<br>Phone #2: (302) 448-4237
+			<br>Website: <a href='http://alonnaberry.com'>http://alonnaberry.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>7/25/2025</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 20</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Gene Dvornick<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>511 Chestnut Street
+			<br>Milton, DE 19968
+			<br>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/8/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 20</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Nikki Miller<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'><span class='font-canceled'>WITHDRAWN 2/20/2026</span><br>
+			Mailing Address:
+			<br>PO Box 373
+			<br>Nassau, DE 19969
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a6c8cfcdcdcfcbcfcacac3d4c0c9d4e2e3e6c1cbc7cfca88c5c9cb">[email&#160;protected]</a>
+			<br>Phone #1: (302) 329-8684
+			<br></span></td>
+			<td  data-label='Status'>Withdrawn</td>
+			<td data-label='Date Filed'>6/25/2025</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 20</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Dan Poliseno<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'><span class='font-canceled'>WITHDRAWN 3/16/2026</span><br>
+			Mailing Address:
+			<br>P.O. Box 583
+			<br>Nassau, DE, 19969
+			<br>
+			<br>Email #2: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c084a1ae80a4a1aeb0afaca9b3a5aeafeea3afad">[email&#160;protected]</a>
+			<br>Phone #2: (302) 213-3476
+			<br>Website: <a href='https://danpoliseno.com/'>https://danpoliseno.com/</a>
+			<br></span></td>
+			<td  data-label='Status'>Withdrawn</td>
+			<td data-label='Date Filed'>3/6/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 21</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Frank Burns<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1f796d7e71745f7c777e71787a79706d6b777a2d2e6c6b31706d78">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.changeforthe21st.org'>https://www.changeforthe21st.org</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/22/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 22</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Alex Green<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e2838e879aa2838e879a859087878c848d9086878e8395839087cc818d8f">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.alexgreenfordelaware.com'>https://www.alexgreenfordelaware.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/30/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 22</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Mike Smith<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d79abebcb284babea3bfb1b8a593b2bbb6a0b6a5b297b0bab6bebbf9b4b8ba">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.MikeSmithforDelaware.com'>https://www.MikeSmithforDelaware.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/26/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 23</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Dave Redlawsk<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0f4b6e796a4f6b6e796a69607d3d3c216c6062">[email&#160;protected]</a>
+			<br>Email #2: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9acee8fffbe9efe8ffe8dafefbecfffcf5e8a8a9b4f9f5f7">[email&#160;protected]</a>
+			<br>Phone #1: (302) 533-8388
+			<br>Website: <a href='https://www.davefor23.com'>https://www.davefor23.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>4/8/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 24</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Ed Osienski<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="abcec4d8c2cec5d8c0c2ebc8c4c6c8cad8df85c5cedf">[email&#160;protected]</a>
+			<br>Phone #1: (302) 824-9542
+			<br>Website: <a href='https://GoEddieO.org'>https://GoEddieO.org</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>2/12/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 24</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Stephen P. Ondich<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>210 Warfield Rd
+			<br>Newark, DE 19713
+			<br>
+			<br>Mailing Address:
+			<br>210 Warfield Rd
+			<br>Newark, DE 19713
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a7d4d7c8c9c3cec4cf9292e7c0cac6cecb89c4c8ca">[email&#160;protected]</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>7/13/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 25</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Cyndie Romer<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="097b66646c7b6f667b6d6c65687e687b6c496e64686065276a6664">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.romerfordelaware.com'>https://www.romerfordelaware.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/1/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 26</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Madinah Wilson-Anton<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ddb4b3bbb29db0bcb9b4b3bcb5bbb2afb9b8b1bcaabcafb8f3beb2b0">[email&#160;protected]</a>
+			<br>Phone #1: (302) 729-2261
+			<br>Website: <a href='https://www.madinahfordelaware.com'>https://www.madinahfordelaware.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/1/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 27</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Eric Morrison<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b2d7c0dbd1dfddc0c0dbc1dddc86c6dad78085c6daf2d5dfd3dbde9cd1dddf">[email&#160;protected]</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/28/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>State Representative District 27</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Mary "Penny" Kubin<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="77071219190e431312454037101a161e1b5914181a">[email&#160;protected]</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/17/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>State Representative District 28</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Tyeisha "Tye" Grier<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b6c2cfd3dfc5ded7d1c4dfd3c4f6d1dbd7dfda98d5d9db">[email&#160;protected]</a>
+			<br>Phone #1: (302) 339-1559
+			<br>Website: <a href='https://www.tyeishagrier.com/'>https://www.tyeishagrier.com/</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>7/14/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>State Representative District 29</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>William Bush<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>4/9/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>State Representative District 30</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Wm Shannon Morris<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>3/26/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>State Representative District 31</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Sean M. Lynn<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dc8bb99db0b08bb5b28bb5a8b490a5b2b29cbbb1bdb5b0f2bfb3b1">[email&#160;protected]</a>
+			<br>Phone #2: (302) 734-2000
+			<br>Website: <a href='https://WinWithLynn.org'>https://WinWithLynn.org</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>4/28/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>State Representative District 31</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Anton Brogden<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>32 W Loockerman St
+			<br>Dover, DE, 19904
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a6d6c3c9d6cac3c0c9d4c4d4c9c1c2c3c8e6c1cbc7cfca88c5c9cb">[email&#160;protected]</a>
+			<br>Phone #1: (302) 331-5630
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>8/6/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>State Representative District 32</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Kerri Evelyn Harris <i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>PO Box 1000 
+			<br>Dover, DE, 19903
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6a03040c052a010f1818030c05180e0f060b1d0b180f44090507">[email&#160;protected]</a>
+			<br>Phone #1: (302) 592-7659
+			<br>Website: <a href='https://www.kerrifordelaware.com/'>https://www.kerrifordelaware.com/</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/15/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>State Representative District 33</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Joshua Pennington<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>14 S Main St
+			<br>Magnolia, DE 19962
+			<br>
+			<br>Mailing Address:
+			<br>14 S Main St
+			<br>Magnolia, DE 19962
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cd87a2bea5e39da8a3a3a4a3aab9a2a3ff8daca2a1e3aea2a0">[email&#160;protected]</a>
+			<br>Phone #1: (302) 242-9421
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>3/9/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>State Representative District 33</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Morgan Hudson<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="61091405120e0f070e135252130521060c00080d4f020e0c">[email&#160;protected]</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>12/1/2025</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>State Representative District 34</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Annie Norman<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="81e0efefe8e4efeef3ece0efb2b1b3c1e6ece0e8edafe2eeec">[email&#160;protected]</a>
+			<br>Phone #1: (302) 632-2054
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/30/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>State Representative District 34</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Lyndon D. Yearick <i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>703 E Pebworth Rd 
+			<br>Magnolia, DE 19962
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c0acb9aea4afaeeeb9a5a1b2a9a3abf3f4b2a480a7ada1a9aceea3afad">[email&#160;protected]</a>
+			<br>Phone #1: (302) 387-2510
+			<br>Website: <a href='https://lyearickfordelaware.com/'>https://lyearickfordelaware.com/</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>2/19/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 35</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Jesse R. Vanderwende<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Phone #1: (302) 381-2651
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/8/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 36</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Andrew "Andy" Gorlich<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>PO Box 118
+			<br>Milton, DE 19968
+			<br>
+			<br>Email #2: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="82e3ece6fbc2e3ece6fbe5edf0eeebe1eaace1edef">[email&#160;protected]</a>
+			<br>Phone #2: (302) 747-4133
+			<br>Website: <a href='https://www.andygorlich.com'>https://www.andygorlich.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/24/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 36</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Bryan William Shupe<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Website: <a href='http://BryanShupe.com'>http://BryanShupe.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/3/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 37</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Valerie Jones Giltner<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>PO Box 744
+			<br>Georgetown, DE 19947
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ca9caba6afb8a3af80a5a4afb98da3a6bea4afb88aada7aba3a6e4a9a5a7">[email&#160;protected]</a>
+			<br>Phone #1: (302) 470-7533
+			<br>Website: <a href='http://valeriefor37th.com'>http://valeriefor37th.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>1/14/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 38</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Maureen Madden<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>PO Box 58
+			<br>Ocean View, DE 19970
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8fe2eeebebeae1e9e0fdebeae3eef8eefdeacfe8e2eee6e3a1ece0e2">[email&#160;protected]</a>
+			<br>Phone #1: (302) 316-6424
+			<br>Website: <a href='http://maddenfordelaware.com'>http://maddenfordelaware.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>7/8/2025</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 38</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Carlie Carey<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="793a180b15101c3a180b1c004a410d11391e14181015571a1614">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.carliecarey38th.com/'>https://www.carliecarey38th.com/</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>4/10/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 39</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Daniel B. Short<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>1203 W Stein Hwy
+			<br>Seaford, DE 19973
+			<br>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/8/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 40</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Timothy Dale Dukes<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="14646070617f7167547379757d783a777b79">[email&#160;protected]</a>
+			<br>Email #2: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="23574a4e4c574b5a0d47564846506347464f42544251460d444c55">[email&#160;protected]</a>
+			<br>Phone #1: (302) 744-4301
+			<br>Phone #2: (443) 235-9806
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/8/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 41</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Ryan Stuckey<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c3aba6afafac83b1baa2adb0b7b6a0a8a6baeda0acae">[email&#160;protected]</a>
+			<br>Website: <a href='http://RyanStuckey.com'>http://RyanStuckey.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>10/23/2025</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>State Representative District 41</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>John Atkins<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>4/9/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>New Castle County Recorder of Deeds</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>David Tackett<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>312 E. Silver Fox Rd.
+			<br>Newark, DE 19702
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="401421232b25343472707276120f0400272d21292c6e232f2d">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.tackett4deeds.netlify.app'>https://www.tackett4deeds.netlify.app</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/24/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>New Castle County Register of Wills</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Ciro Poppiti<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="12717b607d627d62627b667b52757f737b7e3c717d7f">[email&#160;protected]</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>3/17/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>New Castle County Sheriff</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Scott Phillips<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>4 S. Cliffe Dr.
+			<br>Wilmington, DE 19809
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f281919d8686829a9b9e9e9b8281949d80819a97809b9494b2959f939b9edc919d9f">[email&#160;protected]</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>2/10/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>New Castle County Council District 1</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Brandon Toole<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>103 Belltown Terrace
+			<br>Bear, DE 19701
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c7a5b5a6a9a3a8a987a5b5a6a9a3a8a9f3a3a2e9a4a8aa">[email&#160;protected]</a>
+			<br>Phone #1: (302) 983-5602
+			<br>Website: <a href='https://www.brandon4de.com'>https://www.brandon4de.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/15/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>New Castle County Council District 2</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Dee Durham<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e78382828392958f868a898484a7808a868e8bc984888a">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.friendsfordeedurham.us'>https://www.friendsfordeedurham.us</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>3/17/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>New Castle County Council District 2</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Jamie Collins<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>108 Dickinson Ln.
+			<br>Wilmington, DE 19807
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="701a111d191504131f1c1c191e0330171d11191c5e131f1d">[email&#160;protected]</a>
+			<br>Phone #1: (302) 598-6029
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>7/14/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>New Castle County Council District 3</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Kira Alejandro<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>PO Box 3
+			<br>Yorklyn, DE 19736
+			<br>
+			<br>Email #2: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="462f282029062d2f342720293425293328252f2a6825292b">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.kiraforcouncil.com'>https://www.kiraforcouncil.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>2/10/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>New Castle County Council District 3</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Melissa S. Brayman<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3c515950554f4f5d7c5e4e5d45515d525a534e5f545d525b59125f5351">[email&#160;protected]</a>
+			<br>Website: <a href='https://braymanforchange.com/'>https://braymanforchange.com/</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>6/22/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>New Castle County Council District 4</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Jason Hoover<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b1dbd0c2dedff1d6ded9dedec7d4c39fd2dedc">[email&#160;protected]</a>
+			<br>Website: <a href='https://gohoover.com'>https://gohoover.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>3/27/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>New Castle County Council District 5</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Valerie George<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e096818c85928985ce87858f928785a08e8597838193948c858485ce878f96">[email&#160;protected]</a>
+			<br>Phone #1: (302) 983-3564
+			<br>Phone #2: (302) 395-8365
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>2/19/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>New Castle County Council District 6</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>David Carter<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="660207100f022605071412031400091408050548091401">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.carterforncc.org'>https://www.carterforncc.org</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>2/17/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>New Castle County Council District 6</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Christopher W. Muntz<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'><span class='font-canceled'>WITHDRAWN 7/13/2026</span><br>
+			Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f192869c849f858b979e839f9292b1969c90989ddf929e9c">[email&#160;protected]</a>
+			<br>Website: <a href='https://www.muntzforncc.com'>https://www.muntzforncc.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Withdrawn</td>
+			<td data-label='Date Filed'>1/8/2026</td>
+		</tr>
+		<tr data-county='New Castle'>
+			<td data-label='Office'>New Castle County Council District 6</td>
+			<td data-label='County'>New Castle</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Alison T. Gibbs<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>7/13/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>Kent County Recorder of Deeds</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Ramona Bracy<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>P.O. Box 84
+			<br>Magnolia, DE 19962
+			<br>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>3/18/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>Kent County Recorder of Deeds</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Eugenia Thornton<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Mailing Address:
+			<br>Headquarters
+			<br>195 Lakeside Ln, Frederica, DE 19946
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0265676c6742677765676c6b63766a6d706c766d6c2c616d6f">[email&#160;protected]</a>
+			<br>Phone #1: (302) 335-1655
+			<br>Phone #2: (302) 222-0601
+			<br>Website: <a href='https://www.eugeniathornton.com'>https://www.eugeniathornton.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/19/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>Kent County Sheriff</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Norman R. Barlow <i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Phone #1: (302) 632-8825
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>4/17/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>Kent County Levy Court At-Large</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Terry L. Pepper<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>104 Captain Davis Dr
+			<br>Camden, DE, 19934
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="05716077777c756075756077636a776960737c666a707771456268646c692b666a68">[email&#160;protected]</a>
+			<br>Phone #1: (302) 384-9099
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>5/1/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>Kent County Levy Court At-Large</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Frank E Coleman<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>538 Brenford Rd
+			<br>Dover, DE 19904
+			<br>
+			<br>Phone #1: (302) 270-4692
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>4/22/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>Kent County Levy Court District 2</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Jeff Hall<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>240 S Shore Dr
+			<br>Dover, DE 19901
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1973717875752d757c6f607a766c6b6d597e74787075377a7674">[email&#160;protected]</a>
+			<br>Phone #1: (302) 242-2643
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>2/17/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>Kent County Levy Court District 4</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Robert "Bobby" Scott <i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Residential Address:
+			<br>894 Bloomfield Dr
+			<br>Harrington, DE 19952
+			<br>
+			<br>Mailing Address:
+			<br>894 Bloomfield Dr
+			<br>Harrington, DE 19952
+			<br>
+			<br>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="780a120b1b170c0c4d4a4941380119101717561b1715">[email&#160;protected]</a>
+			<br>Phone #1: (302) 270-5328
+			<br>Phone #2: (302) 505-0198
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>4/17/2026</td>
+		</tr>
+		<tr data-county='Kent'>
+			<td data-label='Office'>Kent County Levy Court District 6</td>
+			<td data-label='County'>Kent</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Paul Hertz<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bec8d1cadbd6dbcccac4fed9d3dfd7d290ddd1d3">[email&#160;protected]</a>
+			<br>Phone #2: (302) 505-2310
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>4/17/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>Sussex County Recorder of Deeds</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Alexandra Reed Baker<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dbbab7bea3b7a9b9bab0bea99bbcb6bab2b7f5b8b4b6">[email&#160;protected]</a>
+			<br>Phone #1: (302) 430-1600
+			<br>Website: <a href='https://www.facebook.com/AlexandraReedBakerforRecorderofDeedsinSussex/'>https://www.facebook.com/AlexandraReedBakerforRecorderofDeedsinSussex/</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>2/18/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>Sussex County Register of Wills</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Greg Fuller<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="72150017151d000b14071e1e1700414b32151f131b1e5c111d1f">[email&#160;protected]</a>
+			<br>Phone #1: (302) 430-0789
+			<br>Website: <a href='https://www.gregfullersr.com'>https://www.gregfullersr.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>11/19/2025</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>Sussex County Sheriff</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Robert T. Lee<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f3a1bfc0c7c3c1c3b39b9c879e929a9fdd909c9e">[email&#160;protected]</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>1/15/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>Sussex County Council District 4</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Justine Cuccia<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="29635c5a5d40474c1d7a5c5a5a4c51694e44484045074a4644">[email&#160;protected]</a>
+			<br>Phone #1: (917) 405-0438
+			<br>Website: <a href='https://Justine4Sussex.com'>https://Justine4Sussex.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>4/14/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>Sussex County Council District 4</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Douglas B. Hudson<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="92d6fde7f5bcdae7f6e1fdfcd2e1e7e1e1f7eaf1fde7fce6ebf6f7bcf5fde4">[email&#160;protected]</a>
+			<br>Phone #1: (302) 855-7743
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>1/14/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>Sussex County Council District 5</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Democratic</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>Jill Hicks<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1451787177605e7d78785c7d777f67547379757d783a777b79">[email&#160;protected]</a>
+			<br>Website: <a href='https://ElectJillHicks.com'>https://ElectJillHicks.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>3/11/2026</td>
+		</tr>
+		<tr data-county='Sussex'>
+			<td data-label='Office'>Sussex County Council District 5</td>
+			<td data-label='County'>Sussex</td>
+			<td data-label='Party'>Republican</td>
+			<td data-label='Candidate'><span class='main-span' tabindex='0' role='button'  aria-expanded='false'>John L. Rieley<i class='fa-solid fa-chevron-down' style='color: #006391'></i></span>
+						<span class='sub-span' style='display: none'>Email #1: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f3a19a969f968ac7b09c869d909a9fb3949e929a9fdd909c9e">[email&#160;protected]</a>
+			<br>Phone #1: (302) 856-8649
+			<br>Website: <a href='https://johnrieley.com'>https://johnrieley.com</a>
+			<br></span></td>
+			<td  data-label='Status'>Qualified</td>
+			<td data-label='Date Filed'>1/15/2026</td>
+		</tr>
+	</tbody>
+</table> 
+
+            
+				<a href="/candidates/candidatelist/genl_fcddt_2026.xlsx" title="Download Candidates List" download>Download the candidate list Excel<i class="far fa-file-excel"></i> file.</a>
+				<br/><br/>
+
+				<div class="card card-default">
+					<div class="card-header">
+						<strong>Explanation Regarding Status of Filed Candidate Status Listing:</strong>
+					</div>
+					<div class="card-body">
+						<p>
+						Effective January 1, 2024, and pursuant to 15 Del. C. &sect; 3002, &sect; 3106, &sect; 3301, &sect; 3402 and &sect; 7103, all candidates for statewide office, the General Assembly, and any elected County office must request a criminal history background check from the State Bureau of Identification (&quot;SBI&quot;) no later than the filing deadline.  Delaware law does not require background checks for candidates for federal office and City of Wilmington office.
+						<br><br>
+						<strong>Provisional Status</strong>
+						<ul>
+            				<li>Filed candidate for statewide, General Assembly, or elected County office has scheduled a criminal history background check from the State Bureau of Identification (“SBI”), and the State Election Commissioner is awaiting the results of the criminal background check in order to determine the candidate qualifies for candidacy pursuant to Section 21, Article II of the Delaware Constitution.</li>
+            				<li>Filed candidates for all offices have submitted materials proving that they meet durational residency requirements in the State and the district for the office sought, and these materials are being reviewed by the State Election Commissioner.</li>
+						</ul>
+						<strong>Qualified Status</strong>
+						<ul>
+						<li>State Election Commissioner has received and reviewed the SBI criminal history background check results of the candidate who filed for statewide, General Assembly, or elected County office, and has determined the candidate qualifies for candidacy pursuant to Section 21, Article II of the Delaware Constitution.<br>
+            			<ul>
+							<li>
+								NOTE: Background checks for candidates who have filed for a federal or City of Wilmington office are not required by Delaware law.<br>
+							</li>
+						</ul>
+						</li>
+						<li>
+							State Election Commissioner has confirmed that the candidate satisfies durational residency requirements in the State and the district and for the office sought.
+						</li>
+					</ul>
+					</div>
+				</div>
+				<span class='local-note-small'>	
+					<strong>Disclaimer:</strong><br>
+					The information on this list is entered by the agency that accepted the nomination. 
+					The list is periodically updated.
+					Filings received on a day may not be reported until the next business day.
+				</span>
+
+			
+ 			<!-- Customized content end -->
+		  </div>
+        </div>
+          </div>
+            </main>
+<!-- END: MAIN BODY AREA --> 
+     <!-- BEGIN Portal Footer -->
+
+              <footer>
+            <div id="lighthouse-footer" class="bg-primary">
+              <div class="container py-4">
+                <div class="d-flex flex-column flex-md-row">
+                  <div id="footer-logo">
+                    <a href="/"><img src="/assets/img/agency-logos/agency-logo-white88x88.png" alt="Agency Logo" class="agency-logo" ></a>
+                  </div>
+                  <div class="d-md-flex flex-md-row justify-content-md-between justify-content-xl-start flex-basis-100">
+                    <div class="d-md-flex flex-md-column flex-xl-row pt-5 pb-4 pt-md-0 pb-md-0">
+                      <div class="mb-4 mb-xl-0 ps-md-2 ps-xl-7">
+                        <h2 class="mb-2 mb-xl-3">How can we help?</h2>
+                        <div class="ps-2 ps-md-0">
+                          <address class="d-flex flex-column">
+                            <p><a href="/locations.shtml">Contact Page</a></p>
+                            <!---->
+                            <!---->
+                            <!---->
+                            <!---->
+                          </address>
+                          <!---->
+                          <!---->
+                          <!---->
+                          <!---->
+                        </div>
+                      </div>
+                      <div id="quick-links" class="ps-md-2 ps-xl-7">
+                        <h2 class="mb-2 mb-xl-3">Quick Links</h2>
+                        <ul class="list-unstyled d-flex flex-column mb-0 ps-2 ps-md-0">
+                          <!---->
+                          <!---->
+                          <!---->
+                          <!---->
+                          <!---->
+                          <!---->
+                          <li class="text-nowrap"><a href="/public/foia/foia.shtml">Freedom of Information Act</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="d-md-flex flex-md-column width-md-50 ps-xl-7">
+                        <div id="subscribe-and-social-media">
+                          <h2>Stay Connected</h2>
+                          <ul id="social-icons" class="list-unstyled d-flex flex-row">
+                            <li>
+                              <a href="https://www.instagram.com/doe.delaware/">
+                                <span class="align-self-center">
+                                  <svg class="icon icon-24 icon-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"></path></svg>
+                                </span>
+                                <span class="visually-hidden">Instagram</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="https://www.facebook.com/DoE.Delaware">
+                                <span class="align-self-center">
+                                  <svg class="icon icon-24 icon-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"></path></svg>
+                                </span>
+                                <span class="visually-hidden">Facebook</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="https://www.youtube.com/channel/UCYITHvWQRkGXNIZ3ctvH7VQ">
+                                <span class="align-self-center">
+                                  <svg class="icon icon-24 icon-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z"></path></svg>
+                                </span>
+                                <span class="visually-hidden">YouTube</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="https://twitter.com/DE_Elections">
+                                <span class="align-self-center">
+                                  <svg class="icon icon-24 icon-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"></path></svg>
+                                </span>
+                                <span class="visually-hidden">Twitter</span>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+              <!---->
+              <div id="legal-links-and-copyright-wrapper">
+                <div class="container py-2">
+                  <ul id="legal-links" class="list-unstyled d-flex flex-row">
+                    <li><a href="#">Help</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Cookies</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </footer>
+          <!--
+          <script type="text/javascript" src="/assets/js/utils.js"></script>
+          <script type="text/javascript" src="/assets/js/dialog.js"></script>
+          -->
+    <!-- END Portal Footer -->
+        <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        var coll = document.getElementsByClassName("main-span");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var indicator = this.children[1];
+            var content = this.nextElementSibling;
+            if (content.style.display === "none") {
+                content.style.display = "block";
+                indicator.outerHTML = "<i class='fa-solid fa-chevron-up' style='color: #006391;'></i>"
+                this.setAttribute('aria-expanded', 'true')
+            } else {
+                content.style.display = "none";
+                indicator.outerHTML = "<i class='fa-solid fa-chevron-down' style='color: #006391;'></i>"
+                this.setAttribute('aria-expanded', 'false')
+            }
+            });
+            coll[i].addEventListener("keydown", function(e) {
+            if(e.key === 'Enter' || e.key ==='Space'){
+                this.classList.toggle("active");
+                var indicator = this.children[1];
+                var content = this.nextElementSibling;
+                indicator.ariaExpanded = indicator.ariaExpanded !== 'true';
+                if (content.style.display === "none") {
+                    content.style.display = "block";
+                    indicator.outerHTML = "<i class='fa-solid fa-chevron-up' style='color: #006391;'></i>"
+                    this.setAttribute('aria-expanded', 'true')
+                } else {
+                    content.style.display = "none";
+                    indicator.outerHTML = "<i class='fa-solid fa-chevron-down' style='color: #006391;'></i>"
+                    this.setAttribute('aria-expanded', 'false')
+                }
+            }
+            });  
+        }
+        </script>
+</body>
+
+
+</html>

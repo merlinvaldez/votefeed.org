@@ -1,0 +1,334 @@
+[
+  {
+    "id": "de-2026-general-sample",
+    "state": "DE",
+    "format": "ai",
+    "authoritative": true,
+    "url": "https://elections.delaware.gov/candidates/candidatelist/genl_fcddt_2026.html",
+    "authorityUrl": "https://elections.delaware.gov/candidates/candidatelist/",
+    "allowedOrigins": [
+      "https://elections.delaware.gov"
+    ],
+    "checkedAt": "2026-10-26T21:08:33.883Z",
+    "effectiveAt": null,
+    "completeness": "partial",
+    "coverageAccepted": false,
+    "correctionsAudited": false,
+    "races": [
+      {
+        "label": "Representative in Congress",
+        "race": {
+          "office": "house",
+          "state": "DE",
+          "district": 0,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      },
+      {
+        "label": "U.S. Senator",
+        "race": {
+          "office": "senate",
+          "state": "DE",
+          "district": null,
+          "senateSeat": 2,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      }
+    ],
+    "evidenceUrls": [
+      "https://elections.delaware.gov/candidates/candidatelist/",
+      "https://www.senate.gov/senators/Class_II.htm"
+    ],
+    "reviewNotes": "Bounded source/race review only; no complete-list or corrections acceptance. Senate absence is not accepted as no race.",
+    "confirmationBasis": "The department links this November 3, 2026 list from Ballot Qualified Candidates. Include federal rows with Status Qualified as ballot-confirmed, and rows with explicit person-specific Withdrawn status as withdrawn. The earlier filing-date column alone is not confirmation."
+  },
+  {
+    "id": "nd-2026-general-sample",
+    "state": "ND",
+    "format": "ai",
+    "authoritative": true,
+    "url": "https://vip.sos.nd.gov/candidatelist.aspx?eid=348",
+    "authorityUrl": "https://www.sos.nd.gov/elections",
+    "allowedOrigins": [
+      "https://vip.sos.nd.gov"
+    ],
+    "checkedAt": "2026-10-26T21:08:34.689Z",
+    "effectiveAt": null,
+    "completeness": "partial",
+    "coverageAccepted": false,
+    "correctionsAudited": false,
+    "races": [
+      {
+        "label": "Representative in Congress",
+        "race": {
+          "office": "house",
+          "state": "ND",
+          "district": 0,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      }
+    ],
+    "evidenceUrls": [
+      "https://www.sos.nd.gov/elections",
+      "https://www.senate.gov/senators/Class_II.htm"
+    ],
+    "reviewNotes": "Bounded source/race review only; no complete-list or corrections acceptance. Senate absence is not accepted as no race."
+  },
+  {
+    "id": "mo-2026-general-sample",
+    "state": "MO",
+    "format": "ai",
+    "authoritative": true,
+    "url": "https://s1.sos.mo.gov/CMSImages/ElectionCandidates/2026GeneralElectionCertifiedCandidates.pdf",
+    "authorityUrl": "https://www.sos.mo.gov/elections/candidates",
+    "allowedOrigins": [
+      "https://s1.sos.mo.gov"
+    ],
+    "checkedAt": "2026-10-26T21:08:34.916Z",
+    "effectiveAt": "2026-08-25T00:00:00Z",
+    "completeness": "partial",
+    "coverageAccepted": false,
+    "correctionsAudited": false,
+    "races": [
+      {
+        "label": "For U.S. Representative District 1",
+        "race": {
+          "office": "house",
+          "state": "MO",
+          "district": 1,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      },
+      {
+        "label": "For U.S. Representative District 2",
+        "race": {
+          "office": "house",
+          "state": "MO",
+          "district": 2,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      },
+      {
+        "label": "For U.S. Representative District 3",
+        "race": {
+          "office": "house",
+          "state": "MO",
+          "district": 3,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      },
+      {
+        "label": "For U.S. Representative District 4",
+        "race": {
+          "office": "house",
+          "state": "MO",
+          "district": 4,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      },
+      {
+        "label": "For U.S. Representative District 5",
+        "race": {
+          "office": "house",
+          "state": "MO",
+          "district": 5,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      },
+      {
+        "label": "For U.S. Representative District 6",
+        "race": {
+          "office": "house",
+          "state": "MO",
+          "district": 6,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      },
+      {
+        "label": "For U.S. Representative District 7",
+        "race": {
+          "office": "house",
+          "state": "MO",
+          "district": 7,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      },
+      {
+        "label": "For U.S. Representative District 8",
+        "race": {
+          "office": "house",
+          "state": "MO",
+          "district": 8,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      }
+    ],
+    "evidenceUrls": [
+      "https://www.sos.mo.gov/elections/candidates",
+      "https://www.senate.gov/senators/Class_II.htm"
+    ],
+    "reviewNotes": "Bounded source/race review only; no complete-list or corrections acceptance. Senate absence is not accepted as no race."
+  },
+  {
+    "id": "nh-2026-general-sample",
+    "state": "NH",
+    "format": "ai",
+    "authoritative": true,
+    "url": "https://mm.nh.gov/files/uploads/sos/docs/2026-ge-candidate-list.pdf",
+    "authorityUrl": "https://www.sos.nh.gov/2026-election-details",
+    "allowedOrigins": [
+      "https://mm.nh.gov"
+    ],
+    "checkedAt": "2026-10-26T21:08:35.598Z",
+    "effectiveAt": "2026-09-17T00:00:00Z",
+    "completeness": "partial",
+    "coverageAccepted": false,
+    "correctionsAudited": false,
+    "races": [
+      {
+        "label": "Representative in Congress District 1",
+        "race": {
+          "office": "house",
+          "state": "NH",
+          "district": 1,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      },
+      {
+        "label": "Representative in Congress District 2",
+        "race": {
+          "office": "house",
+          "state": "NH",
+          "district": 2,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      },
+      {
+        "label": "United States Senator",
+        "race": {
+          "office": "senate",
+          "state": "NH",
+          "district": null,
+          "senateSeat": 2,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      }
+    ],
+    "evidenceUrls": [
+      "https://www.sos.nh.gov/2026-election-details",
+      "https://www.senate.gov/senators/Class_II.htm"
+    ],
+    "reviewNotes": "Bounded source/race review only; no complete-list or corrections acceptance. Senate absence is not accepted as no race."
+  },
+  {
+    "id": "ne-2026-general-sample",
+    "state": "NE",
+    "format": "ai",
+    "authoritative": true,
+    "url": "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "authorityUrl": "https://sos.nebraska.gov/elections",
+    "allowedOrigins": [
+      "https://sos.nebraska.gov"
+    ],
+    "checkedAt": "2026-10-26T21:08:35.936Z",
+    "effectiveAt": "2026-09-11T00:00:00Z",
+    "completeness": "partial",
+    "coverageAccepted": false,
+    "correctionsAudited": false,
+    "races": [
+      {
+        "label": "For Representative in Congress District 01",
+        "race": {
+          "office": "house",
+          "state": "NE",
+          "district": 1,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      },
+      {
+        "label": "For Representative in Congress District 02",
+        "race": {
+          "office": "house",
+          "state": "NE",
+          "district": 2,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      },
+      {
+        "label": "For Representative in Congress District 03",
+        "race": {
+          "office": "house",
+          "state": "NE",
+          "district": 3,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      },
+      {
+        "label": "For United States Senator",
+        "race": {
+          "office": "senate",
+          "state": "NE",
+          "district": null,
+          "senateSeat": 2,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      }
+    ],
+    "evidenceUrls": [
+      "https://sos.nebraska.gov/elections",
+      "https://www.senate.gov/senators/Class_II.htm"
+    ],
+    "reviewNotes": "Bounded source/race review only; no complete-list or corrections acceptance. Senate absence is not accepted as no race."
+  }
+]

@@ -1,0 +1,13 @@
+{
+    "lines":  [
+                  "8",
+                  "O",
+                  "O",
+                  "o",
+                  "8",
+                  "0"
+              ],
+    "engine":  "Windows.Media.Ocr",
+    "language":  "en-US",
+    "image":  "AL-dem-6.png"
+}

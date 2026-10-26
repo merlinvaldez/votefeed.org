@@ -1,0 +1,131 @@
+{
+  "source": {
+    "id": "de-2026-general-sample",
+    "state": "DE",
+    "format": "ai",
+    "authoritative": true,
+    "url": "https://elections.delaware.gov/candidates/candidatelist/genl_fcddt_2026.html",
+    "authorityUrl": "https://elections.delaware.gov/candidates/candidatelist/",
+    "allowedOrigins": [
+      "https://elections.delaware.gov"
+    ],
+    "checkedAt": "2026-10-26T21:08:33.883Z",
+    "effectiveAt": null,
+    "completeness": "partial",
+    "coverageAccepted": false,
+    "correctionsAudited": false,
+    "races": [
+      {
+        "label": "Representative in Congress",
+        "race": {
+          "office": "house",
+          "state": "DE",
+          "district": 0,
+          "senateSeat": null,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      },
+      {
+        "label": "U.S. Senator",
+        "race": {
+          "office": "senate",
+          "state": "DE",
+          "district": null,
+          "senateSeat": 2,
+          "electionDate": "2026-11-03",
+          "stage": "general",
+          "contestType": "regular"
+        }
+      }
+    ],
+    "evidenceUrls": [
+      "https://elections.delaware.gov/candidates/candidatelist/",
+      "https://www.senate.gov/senators/Class_II.htm"
+    ],
+    "reviewNotes": "Bounded source/race review only; no complete-list or corrections acceptance. Senate absence is not accepted as no race.",
+    "confirmationBasis": "The department links this November 3, 2026 list from Ballot Qualified Candidates. Include federal rows with Status Qualified as ballot-confirmed, and the explicitly Withdrawn Lee Murphy row as withdrawn. Status is person-specific. Earlier filing-date column alone is not confirmation."
+  },
+  "model": "gpt-5.4",
+  "promptVersion": "ballot-v1",
+  "rows": [
+    {
+      "name": "Chris Coons",
+      "party": "Democratic",
+      "raceLabel": "U.S. Senator",
+      "officialId": null,
+      "fecId": null,
+      "website": "https://chriscoons.com",
+      "eligibility": "ballot-confirmed",
+      "excerpt": "U.S. Senator\nStatewide\nDemocratic\nChris Coons\nMailing Address:\nPO Box 9900\nNewark, DE, 19711\nEmail #2: chris@chriscoonscom\nWebsite: https://chriscoons.com\nQualified\n6/12/2026",
+      "locator": "Filed Candidates Table > U.S. Senator > Chris Coons"
+    },
+    {
+      "name": "Michael \"Dr. Mike\" Katz",
+      "party": "Republican",
+      "raceLabel": "U.S. Senator",
+      "officialId": null,
+      "fecId": null,
+      "website": "https://www.drmikekatz.com",
+      "eligibility": "ballot-confirmed",
+      "excerpt": "U.S. Senator\nStatewide\nRepublican\nMichael \"Dr. Mike\" Katz\nEmail #1: [email protected]\nWebsite: https://www.drmikekatz.com\nQualified\n3/19/2026",
+      "locator": "Filed Candidates Table > U.S. Senator > Michael \"Dr. Mike\" Katz"
+    },
+    {
+      "name": "Sarah McBride",
+      "party": "Democratic",
+      "raceLabel": "Representative in Congress",
+      "officialId": null,
+      "fecId": null,
+      "website": "https://sarahmcbride.com",
+      "eligibility": "ballot-confirmed",
+      "excerpt": "Representative in Congress\nStatewide\nDemocratic\nSarah McBride\nWebsite: https://sarahmcbride.com\nQualified\n6/12/2026",
+      "locator": "Filed Candidates Table > Representative in Congress > Sarah McBride"
+    },
+    {
+      "name": "Joseph \"Dr. Joe\" Arminio",
+      "party": "Republican",
+      "raceLabel": "Representative in Congress",
+      "officialId": null,
+      "fecId": null,
+      "website": "https://drjoeforcongress.com",
+      "eligibility": "ballot-confirmed",
+      "excerpt": "Representative in Congress\nStatewide\nRepublican\nJoseph \"Dr. Joe\" Arminio\nResidential Address:\n6 Guyencourt Road\nWilmington, DE, 19807\nPhone #1: (888)-547-7208\nWebsite: https://drjoeforcongress.com\nQualified\n7/14/2026",
+      "locator": "Filed Candidates Table > Representative in Congress > Joseph \"Dr. Joe\" Arminio"
+    },
+    {
+      "name": "Lee Murphy",
+      "party": "Republican",
+      "raceLabel": "Representative in Congress",
+      "officialId": null,
+      "fecId": null,
+      "website": "https://www.leemurphy2026.com",
+      "eligibility": "withdrawn",
+      "excerpt": "Representative in Congress\nStatewide\nRepublican\nLee Murphy\nWITHDRAWN 7/21/2026\nResidential Address:\n20 W. Woodbound Drive Apt. 20\nWilmington, DE, 19803\nMailing Address:\n20 Woodbound Drive Apt. 20\nWilmington, DE, 19803\nEmail #1: [email protected]\nEmail #2: [email protected]\nPhone #1: (302) 229-9380\nWebsite: https://www.leemurphy2026.com\nWithdrawn\n7/13/2026",
+      "locator": "Filed Candidates Table > Representative in Congress > Lee Murphy"
+    }
+  ],
+  "checks": [
+    {
+      "locator": "Filed Candidates Table > U.S. Senator > Chris Coons",
+      "supported": true
+    },
+    {
+      "locator": "Filed Candidates Table > U.S. Senator > Michael \"Dr. Mike\" Katz",
+      "supported": true
+    },
+    {
+      "locator": "Filed Candidates Table > Representative in Congress > Sarah McBride",
+      "supported": true
+    },
+    {
+      "locator": "Filed Candidates Table > Representative in Congress > Joseph \"Dr. Joe\" Arminio",
+      "supported": true
+    },
+    {
+      "locator": "Filed Candidates Table > Representative in Congress > Lee Murphy",
+      "supported": true
+    }
+  ]
+}

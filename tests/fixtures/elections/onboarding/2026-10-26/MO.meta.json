@@ -1,0 +1,35 @@
+{
+  "status": 200,
+  "headers": {
+    "date": "Mon, 26 Oct 2026 21:08:34 GMT",
+    "content-type": "application/pdf",
+    "content-length": "813890",
+    "connection": "keep-alive",
+    "cache-control": "public, max-age=3600",
+    "last-modified": "Thu, 27 Aug 2026 20:22:26 GMT",
+    "accept-ranges": "bytes",
+    "etag": "\"b7d98ec66136dd1:0\"",
+    "strict-transport-security": "max-age=15552000; includeSubDomains; preload",
+    "x-xss-protection": "1; mode=block",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "number": "145374",
+    "x-frame-options": "ALLOWALL",
+    "set-cookie": [
+      "__cf_bm=xDasr_irRCZy3DgDwK1q9sWhwNgYbdBWQc6UhWfOT_Y-1793048914.7155495-1.0.1.1-G2aTFjHDVuhQYJgjLtPEnJaI7v_1qS5EReLX3t_e_HIDGDRZkuit6M0AHyzuBk9EasoRrSbQcwUaA6vB.CrMIze7TOVFjeEf2LjVIqhj5vyMz9ZDGD_LZGfe1e9o5kk3; HttpOnly; SameSite=None; Secure; Path=/; Domain=s1.sos.mo.gov; Expires=Mon, 26 Oct 2026 21:38:34 GMT"
+    ],
+    "feature-policy": "accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; payment 'none'; usb 'none';",
+    "x-permitted-cross-domain-policies": "none",
+    "access-control-allow-origin": "*",
+    "permissions-policy": "accelerometer=(), ambient-light-sensor=(), autoplay=*, battery=(), camera=*, cross-origin-isolated=*, display-capture=*, document-domain=(), encrypted-media=*, execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=*, geolocation=*, gyroscope=(), keyboard-map=*, magnetometer=(), microphone=(), midi=*, navigation-override=*, payment=*, picture-in-picture=(), publickey-credentials-get=*, screen-wake-lock=(), sync-xhr=*, usb=*, web-share=(), xr-spatial-tracking=(), clipboard-read=*, clipboard-write=*, gamepad=(), speaker-selection=*, hid=*",
+    "content-security-policy": "default-src 'self' *.sos.mo.gov; script-src 'self' 'unsafe-inline' 'unsafe-eval' ajax.googleapis.com *.twitter.com *.gstatic.com *.google-analytics.com *.googletagmanager.com cdn.syndication.twimg.com *.sos.mo.gov l2.io *.cloudflare.com *.google.com; script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' ajax.googleapis.com *.twitter.com *.gstatic.com *.google-analytics.com *.googletagmanager.com cdn.syndication.twimg.com *.sos.mo.gov l2.io *.cloudflare.com *.google.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com *.twitter.com *.sos.mo.gov *.cloudflare.com; connect-src 'self' *.twitter.com *.sos.mo.gov *.google-analytics.com wss://*.sos.mo.gov; font-src 'self' data: fonts.gstatic.com *.sos.mo.gov; frame-src *.twitter.com *.sos.mo.gov *.google.com *.cloudflare.com; img-src 'self' data: *.sos.mo.gov *.google-analytics.com *.twitter.com pbs.twimg.com *.cloudflare.com *.googletagmanager.com; object-src 'none'; frame-ancestors 'self' *.sos.mo.gov; worker-src blob:; report-uri /ContentSecurityPolicyReporting",
+    "age": "14721",
+    "expires": "Mon, 26 Oct 2026 22:08:34 GMT",
+    "cf-cache-status": "HIT",
+    "server": "cloudflare",
+    "cf-ray": "a50c6fe4fc7b0c74-EWR"
+  },
+  "requestedUrl": "https://s1.sos.mo.gov/CMSImages/ElectionCandidates/2026GeneralElectionCertifiedCandidates.pdf",
+  "finalUrl": "https://s1.sos.mo.gov/CMSImages/ElectionCandidates/2026GeneralElectionCertifiedCandidates.pdf",
+  "retrievedAt": "2026-10-26T21:08:34.916Z"
+}

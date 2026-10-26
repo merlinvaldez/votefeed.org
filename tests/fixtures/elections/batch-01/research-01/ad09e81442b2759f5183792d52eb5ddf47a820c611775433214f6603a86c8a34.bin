@@ -1,0 +1,667 @@
+
+
+
+<!doctype html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+
+<html class="no-js" lang="en">
+
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Ballot Access</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+            <meta name="robots" content="index, follow" />
+
+    
+    <meta property="og:description" content="" />
+    <meta property="og:title" content="Candidate Ballot Access" />
+    <meta property="og:url" content="https://portal.ct.gov/sots/election-services/candidate-information/candidate-ballot-access" />
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="CT.gov - Connecticut's Official State Website">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image"
+          content="https://portal.ct.gov/Assets/Images/facebook-default_01.png">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="https://portal.ct.gov/sots/election-services/candidate-information/candidate-ballot-access">
+    <meta name="twitter:title" content="Candidate Ballot Access">
+    <meta name="twitter:description" content="">
+    
+
+
+<!--Google Search Meta filters starts here-->
+
+    <meta name="pagetype" content="webpages" />
+    <!-- <PageMap>
+            <DataObject type="PageData">
+                <Attribute name="type">webpages</Attribute>
+                <Attribute name="metatitle">Candidate Ballot Access</Attribute>
+            </DataObject>
+        </PageMap> -->
+<!--Google Search Meta filters ends here-->
+<!--Google Search Rich Snippet FAQ starts here-->
+
+
+
+<!--Google Search Rich Snippet FAQ ends here-->
+    
+
+<link rel="canonical" href="https://portal.ct.gov/sots/election-services/candidate-information/candidate-ballot-access" />
+
+    
+    <link rel="dns-prefetch" href="https://www.google.com" />
+    <link rel="dns-prefetch" href="https://www.gstatic.com" />
+    <link rel="dns-prefetch" href="https://translate.googleapis.com" />
+    <link rel="dns-prefetch" href="https://static.hotjar.com" />
+    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+    <link rel="dns-prefetch" href="https://vc.hotjar.io" />
+    <link rel="dns-prefetch" href="https://script.hotjar.com" />
+    <link rel="dns-prefetch" href="https://vars.hotjar.com" />
+    <link rel="dns-prefetch" href="https://rum-static.pingdom.net" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://ipmeta.io">
+    <link rel="dns-prefetch" href="https://use.typekit.net">
+    <link rel="dns-prefetch" href="https://translate.google.com">
+
+
+    
+    <!-- Google Tag Manager -->
+
+        <script>
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || []; w[l].push(
+
+                    { 'gtm.start': new Date().getTime(), event: 'gtm.js' }
+                ); var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-56QR6CG');</script>
+        <!-- IpMeta must be included after Google Analytics -->
+        <script src="https://ipmeta.io/plugin.js"></script>
+        <script>
+            var data = provideGtmPlugin({
+                apiKey: '10c1f82633b1a4f3685aa4e6b627aacbf78a898979bd89ce49582af001c8cc50',
+            });
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push(data);
+        </script>
+        <!-- End Google Tag Manager -->
+        <!-- Google Tag Manager (noscript) -->
+    <!-- End Google Tag Manager (noscript) -->
+    <style>
+        :focus {
+            outline: -webkit-focus-ring-color auto 5px !important;
+        }
+    </style>
+
+    
+    <link rel="preload" href="/assets/css/app.css?v=20261025040154" as="style">
+    <link rel="preload" href="/assets/css/dsf-legacy-styles.css?v=20261025040154" as="style">
+
+    
+    <link rel="stylesheet" as="style" media="print" onload="this.media='all'" href="/assets/css/app.css?v=20261025040154">
+
+    <link rel="stylesheet" as="style" media="print" onload="this.media='all'"
+          href="/assets/css/dsf-legacy-styles.css?v=20261025040154">
+
+    
+    <noscript>
+        <link rel="stylesheet" href="/assets/css/app.css?v=20261025040154">
+    </noscript>
+    <noscript>
+        <link rel="stylesheet" href="/assets/css/dsf-legacy-styles.css?v=20261025040154">
+    </noscript>
+
+    
+
+    <!--[if lt IE 9]>
+        <script src="/assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <script src="https://use.typekit.net/pyg1doj.js"></script>
+
+    <script>try { Typekit.load({ async: true }); } catch (e) { }</script>
+    <script>
+        var _prum = [['id', '5579d063abe53d913a55de35'],
+        ['mark', 'firstbyte', (new Date()).getTime()]];
+        (function () {
+            var s = document.getElementsByTagName('script')[0]
+                , p = document.createElement('script');
+            p.async = 'async';
+            p.src = '//rum-static.pingdom.net/prum.min.js';
+            s.parentNode.insertBefore(p, s);
+        })();
+    </script>
+
+    <script>
+        (function (h, o, t, j, a, r) {
+            h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) }
+                ;
+            h._hjSettings =
+                { hjid: 218205, hjsv: 5 }
+                ;
+            a = o.getElementsByTagName('head')[0];
+            r = o.createElement('script'); r.async = 1;
+            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window, document, '//static.hotjar.com/c/hotjar-', '.js?sv=');
+    </script>
+    <script src="/assets/js/acc-bundle.js?v=20261025040154"></script>
+</head>
+
+<body class="body-main">
+        <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-56QR6CG" height="0" width="0"
+                    style="display:none;visibility:hidden"></iframe>
+        </noscript>
+    <!--[if lte IE 8]>
+         <div class="browser">
+             <h3>If you are viewing this version of CT.gov, you are using an unsupported browser or you are in Internet Explorer 9 using
+             compatibility mode. This means that the design and layout of the site is not fully supported, however the content of the
+             site is still fully accessible and functional. For the full website experience, please update your browser to one of the
+             following:
+                 <a href="/web/20130921201018/https://www.google.com/intl/en/chrome/browser/">Google Chrome</a>,
+                 <a href="/web/20130921201018/http://www.mozilla.org/en-US/firefox/new/">Firefox</a>,
+                 <a href="/web/20130921201018/http://www.apple.com/safari/">Safari</a>,
+                 <a href="/web/20130921201018/http://windows.microsoft.com/en-us/internet-explorer/download-ie">Internet Explorer 10</a>         or higher.</h3>
+         </div>
+     <![endif]-->
+    <a tab-index="0" aria-label="skip to content" class="show-on-focus skip-link" href="#mainContent">Skip to Content</a>
+    <a tab-index="0" aria-label="skip to chat" id="skipToChat" class="show-on-focus skip-link" style="display: none;" href="#chatContent">Skip to Chat</a>
+
+    <script>
+        function checkAndShowAnchor() {
+            const helpButton = document.querySelector('.helpButton');
+            const messagesWindow = document.querySelector('.messageWrapper');
+            const messagesArea = document.querySelector('.messageArea');
+            const dialogElement = document.querySelector('div[role="dialog"][aria-labelledby="sidebarDialogAssistiveText"].dockableContainer.showDockableContainer');
+            const anchorTag = document.getElementById('skipToChat');
+
+            if ((helpButton || dialogElement) && anchorTag) {
+                if (dialogElement && !dialogElement.attributes['aria-live'] && !messagesWindow.attributes['aria-live']) {
+
+                    dialogElement.setAttribute('aria-live', 'assertive');
+
+                    messagesWindow.setAttribute('aria-live', 'assertive');
+                    messagesWindow.setAttribute('aria-atomic', 'false');
+
+                    dialogElement.focus();
+                }
+
+                anchorTag.style.display = 'block';
+
+                //if (dialogElement)
+                //    clearInterval(interval);
+            }
+        }
+
+        function skipToChatProcess() {
+            var elementExists = document.getElementsByClassName("helpButtonEnabled")[0];
+            if (elementExists && window.innerWidth > 640) {
+                document.getElementsByClassName("helpButtonEnabled")[0].setAttribute('id', 'chatContent');
+                clearInterval(skip_to_chat_interval);
+            }
+        }
+
+        const interval = setInterval(checkAndShowAnchor, 500);
+        const skip_to_chat_interval = setInterval(skipToChatProcess, 500);
+    </script>
+
+    <noscript>
+        <div class="row">
+            <div class="small-12 columns">
+                <br>
+                <strong>Warning!</strong>
+            </div>
+            <div class="small-12 columns">
+                <p>
+                    It seems that JavaScript is not working in your browser. It could be because it is not supported, or
+                    that JavaScript is intentionally disabled. Some of the features on CT.gov will not function properly
+                    with out javascript enabled.
+                </p>
+            </div>
+        </div>
+    </noscript>
+    <access-bar></access-bar>
+    <div class="off-canvas-wrapper">
+        <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+            <div class="off-canvas position-right" id="offCanvasRight" data-off-canvas data-position="right">
+                <!-- Close button -->
+                <button class="close-button" aria-label="Close menu" type="button" data-close>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+                <p class="title">Settings Menu</p>
+                <!-- Menu -->
+                <ul class="settings-menu">
+
+                    <li class="language">
+                        <strong>Language</strong>
+                        <!-- Google Translate Widget -->
+                        <style>
+                            .goog-te-menu-value:before {
+                                background-image: url("/Assets/img/Google_Translate_logo.svg");
+                            }
+                        </style>
+
+                        <div class="language-widget">
+                            <div id="google_translate_element"></div>
+                        </div>
+                        <script type="text/javascript"
+                                src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+                                async></script>
+
+                        <script>
+                            function googleTranslateElementInit() {
+                                new google.translate.TranslateElement(
+                                    {
+                                        pageLanguage: "en",
+                                        includedLanguages: "ar,zh-CN,zh-TW,en,fr,de,ht,hi,it,ko,ps,pl,pt,ru,es,tl,uk,vi",
+                                        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                                        autoDisplay: false
+                                    },
+                                    "google_translate_element"
+                                );
+                            }
+                        </script>
+
+                    </li>
+                    <li class="contrast">
+                        <strong>High Contrast</strong>
+                        <div class="switch">
+                            <input class="switch-input" id="contrast-btn" type="checkbox" name="contrast-btn"
+                                   tabindex="0">
+                            <label class="switch-paddle notranslate" for="contrast-btn">
+                                <span class="show-for-sr">High Contrast Mode On or Off switch</span>
+                                <span class="switch-active" aria-hidden="true">On</span>
+                                <span class="switch-inactive" aria-hidden="true">Off</span>
+                            </label>
+                        </div>
+                    </li>
+
+                    <li class="font-size">
+                        <strong>Font Size</strong>
+                        <button id="resetFont" title="Reset font size" tabindex="0">
+                            <span class="show-for-sr">
+                                regular
+                                font size
+                            </span>
+                        </button>
+                        <button id="increaseFont" title="Increase font size" tabindex="0">
+                            <span class="show-for-sr">large font size</span>
+                        </button>
+                    </li>
+                    <li>
+                        <a href="/portal/policies/disclaimer/#translate" class="link" title="See Translation Disclaimer"
+                           tabindex="0">Disclaimer</a>
+                    </li>
+                    <li>
+                        <button class="link" aria-label="Close menu" type="button" data-close
+                                style="width: 100%; text-align: left">
+                            Close
+                        </button>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="off-canvas-content" data-off-canvas-content>
+
+                
+                
+
+
+
+
+
+                
+
+
+                <header class="cg-c-header" role="banner">
+                    <div class="row">
+
+                        <div class="cg-c-logo">
+                            <a class="cg-c-logo__link" href="/" title="CT.gov Home">
+
+                                <img class="cg-c-logo__img" src="/Assets/Images/CT Gov Logo.svg" title="CT.gov Logo"
+                                     alt="CT.gov Logo" />
+                                <span class="cg-c-logo__title">
+                                    Connecticut's Official <br>State Website
+                                </span>
+                            </a>
+                        </div>
+
+                        <div class="cg-c-header__menu">
+
+                            <div class="row">
+                                <div class="small-12 medium-10 large-8 columns">
+
+
+
+<div class="cg-c-search cg-c-search--" role="search">
+    <label for="searchVal" class="show-for-sr">Search Bar for CT.gov</label>
+    <input class="cg-c-search__input" type="search" placeholder="Search Connecticut Government..." id="searchVal" title="Search Connecticut Government">
+    <div class="cg-c-search__group-button">
+        <button id="btnSearch" type="submit" class="cg-c-search__button" value="Search">
+            <span class="cg-c-search__icon" aria-hidden="true"></span>
+            <span class="cg-c-search__label show-for-sr">Search</span>
+        </button> 
+    </div>
+</div>                                </div>
+                                <div class="small-12 medium-2 large-4 columns">
+
+                                    <div class="cg-c-settings cg-c-settings--">
+                                        <button class="cg-c-settings__button" title="Language and Visual Settings"
+                                                data-toggle="offCanvasRight">
+                                            <span class="cg-c-settings__icon" aria-hidden="true">
+                                            </span>
+                                            <span class="cg-c-settings__label">
+                                                Language + Settings
+                                            </span>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+
+                <a href="#0" aria-hidden="true" class="backto-top">Top</a>
+                <main id="mainContent" role="main">
+                    
+
+
+
+
+
+
+<style>
+    @media screen and (min-width: 39.9375em) {
+        .page-header {
+            background-position: top;
+            padding: 2.5em 0;
+        }
+
+            .page-header:after {
+                display: none
+            }
+    }
+</style>
+    <section class="page-header" style="background-image: url('https://portal.ct.gov/-/media/sots/banner/2026/secretary_thomas_sots_banner_notext_2026.jpg?rev=5023eed16067418d95f5561f1d579527')" }>
+        <div class="container row">
+            <div class="small-12 columns">
+<a href="https://portal.ct.gov/sots" title="SOTS Homepage" ><img src="https://portal.ct.gov/-/media/sots/2023-sots-seal-white.png?rev=9dfc66e77c2a4d7f937b8c2adda61d14&amp;la=en&amp;h=3467&amp;w=3467&amp;hash=8CAC3B1A33D690F11B4D565C8F287208" class="agency-logo" alt="CT Secretary of the State - white seal" /></a>                <div class="page-header__title">
+                    <span>
+                        Office of the
+                    </span>
+                    Secretary of the State
+                </div>
+
+
+            </div>
+        </div>
+    </section>      
+    
+
+
+
+
+
+
+
+<section>
+    <div class="row">
+        
+
+
+
+
+
+    <div class="row">
+        <div class="small-12 columns">
+
+            <nav aria-label="You are here:" role="navigation">
+                <ul class="cg-c-breadcrumbs">
+                            <li class="cg-c-breadcrumbs__item">
+                                <a class="cg-c-breadcrumbs__link" href="https://portal.ct.gov/" Title="Portal Homepage of CT.gov">CT.gov Home</a></li>
+                            <li class="cg-c-breadcrumbs__item">
+
+                                <a class="cg-c-breadcrumbs__link" href="https://portal.ct.gov/sots" Title="Secretary of the State">Secretary of the State</a>
+                            </li>
+                            <li class="cg-c-breadcrumbs__item"><span class="show-for-sr">Current: </span>Candidate Ballot Access</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+        <div class="small-12 medium-4 columns">
+            
+
+
+
+<nav class="cg-c-menu" data-equalizer-watch>
+    <ul class="cg-c-list">
+                    <li class="cg-c-list__item">
+                        <a href="https://portal.ct.gov/sots/election-services/v5-side-navigation/ele---voter-information" title="ELE - Voter Information" target="_self" class='cg-c-list__link cg-c-list__link--arrow'>Voter Information</a>
+                    </li>
+                    <li class="cg-c-list__item">
+                        <a href="https://portal.ct.gov/sots/election-services/v5-side-navigation/ele---election-information" title="ELE - Election Information" target="_self" class='cg-c-list__link cg-c-list__link--arrow'>Election Information and Statistics</a>
+                    </li>
+                    <li class="cg-c-list__item">
+                        <a href="https://portal.ct.gov/sots/election-services/v5-side-navigation/ele---candidate-information" title="ELE - Candidate Information" target="_self" class='cg-c-list__link cg-c-list__link--arrow'>Candidate Information</a>
+                    </li>
+                    <li class="cg-c-list__item">
+                        <a href="https://portal.ct.gov/sots/election-services/v5-side-navigation/ele---election-resources" title="ELE - Election Resources" target="_self" class='cg-c-list__link cg-c-list__link--arrow'>Election Resources</a>
+                    </li>
+                    <li class="cg-c-list__item">
+                        <a href="https://portal.ct.gov/sots/election-services/v5-side-navigation/ele---party-and-committee-information" title="ELE - Party and Committee Information" target="_self" class='cg-c-list__link cg-c-list__link--arrow'>Party and Committee Information</a>
+                    </li>
+                    <li class="cg-c-list__item">
+                        <a href="https://portal.ct.gov/sots/common-elements/v5-template---redesign/elections--voting--home-page" title="Elections  Voting  Home Page" target="_self" class='cg-c-list__link cg-c-list__link--arrow'>More</a>
+                    </li>
+    </ul>
+    
+
+    
+        <form class="cg-c-search-form">
+            <fieldset>
+                
+                <legend class="cg-c-search-form__legend">Search Office of The Secretary of State</legend>
+                
+                                                
+
+                        <div class="cg-c-search-form__input-group">
+                            <label class="cg-c-search-form__label show-for-sr" for="agencySpeceificSearch">Search the current Agency with a Keyword</label>
+                            <input class="cg-c-search-form__input-group-field" value="" required id="agencySpeceificSearch" name="agencySpeceificSearch" placeholder="by Keyword" type="text" onkeypress="return gotoSearchEnter(event, 'https://portal.ct.gov/sots/search-results');">
+                            <div class="cg-c-search-form__input-group-button">
+                                <a class="cg-c-button cg-c-button--search" title="Search Topic by Keyword" href="#" onclick="return gotoSearch('https://portal.ct.gov/sots/search-results');">
+                                    <span class="show-for-sr">Filtered Topic Search</span>
+                                    <i class="cg-c-button__icon cg-c-button--search__icon" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+            </fieldset>
+
+        </form>
+</nav>
+
+        </div>
+        <div class="small-12 medium-8 columns">
+            
+
+
+
+
+            <div class="content">
+                
+                    <h1 class=show-for-sr>Candidate Ballot Access</h1>
+                <h1 style="text-align: center;"><strong>Candidate Ballot Access</strong></h1>
+<p style="text-align: left;">Thank you for your interest in running for office in Connecticut. Here you can find <strong><a href="https://portal.ct.gov/sots/election-services/candidate-information/candidate-qualifications" target="_self">information regarding the qualifications you must meet to run for office in Connecticut</a></strong>.</p>
+<h3 style="text-align: left;"><strong>How do I get on the ballot?</strong></h3>
+<ul>
+    <li style="text-align: left;">Consult local party officials to determine how to qualify for nomination by an established political party.</li>
+</ul>
+<ul>
+    <li style="text-align: left;">Learn how to <strong><a href="https://portal.ct.gov/sots/election-services/nominating-petitions/primary-and-nominating-petitions">petition</a></strong>&nbsp;your way onto the ballot.</li>
+</ul>
+<ul>
+    <li style="text-align: left;">Learn how to become a <a href="https://portal.ct.gov/sots/election-services/write-in-candidates/write-in-application"><strong>write-in candidate</strong></a>&nbsp;for office.</li>
+</ul>
+<p style="text-align: left;"><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" data-ccp-charstyle-defn="{'ObjectId':'ac0262f4-8a9e-5820-b908-2d943c5f7113|1','ClassId':1073872969,'Properties':[201342446,'1',201342447,'5',201342448,'1',201342449,'1',469777841,'Aptos',469777842,'Arial',469777843,'Aptos',469777844,'Aptos',201341986,'1',469769226,'Aptos,Arial',268442635,'24',469775450,'normaltextrun',201340122,'1',134233614,'true',469778129,'normaltextrun',335572020,'1',469778324,'Default Paragraph Font']}" style="margin: 0px; padding: 0px; color: #333333;">Below you will find information for</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">&nbsp;filing&nbsp;</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">or applying for a Primary Petition (statewide, congressional, and multi-district offices only)</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">,&nbsp;</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">Certificate of Party Endorsement</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">, 15% Eligibility (multi-town only),&nbsp;</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">or Nomination</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">&nbsp;(</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">m</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">inor&nbsp;</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">p</span><span class="NormalTextRun CommentStart SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">arties</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">)</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">&nbsp;for office</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">&nbsp;using Docusign and paper forms</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">.&nbsp;</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;"></span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">Please note that primary petitions are&nbsp;</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;"></span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">available to enrolled&nbsp;</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">major&nbsp;</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">party members</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">&nbsp;only</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">. Minor part</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">y members</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">&nbsp;are not&nbsp;</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">eligible to&nbsp;</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">participate</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">&nbsp;in primaries.&nbsp;</span><span class="NormalTextRun CommentStart SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">Single-town</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">&nbsp;offices</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">&nbsp;(Assembly</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">, Judge of Probate,</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">&nbsp;and Registrar of Voters)&nbsp;</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">are</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">&nbsp;available from your local Registrar of Voters</span><span class="NormalTextRun SCXW234935527 BCX8" data-ccp-charstyle="normaltextrun" style="margin: 0px; padding: 0px; color: #333333;">.</span></p>
+<h3><strong>Eligibility:</strong></h3>
+<p> These forms are only for candidates who meet one of the following criteria and whose eligibility has been certified by the Chairperson, Presiding Office or Secretary of the convention:&nbsp;</p>
+<ul>
+    <li>Have been endorsed, or</li>
+</ul>
+<ul>
+    <li>Have received at least 15% of the vote, or</li>
+</ul>
+<ul>
+    <li>Have been nominated by a minor party with statewide ballot access.</li>
+</ul>
+<h3><strong>Primary Petition Application: Statewide or Congressional Office:</strong></h3>
+<p><span class="callout--primary">If you would like a primary petition for statewide or congressional office, email <strong><a href="mailto:sots.ballotaccess@ct.gov">sots.ballotaccess@ct.gov</a></strong>.</span></p>
+<h3><span data-contrast="auto" class="TextRun SCXW157467110 BCX8" style="border: 0px #000000; opacity: 1; height: auto; width: auto; margin: 0px; padding: 0px; border-spacing: 0px; list-style-type: disc; list-style-image: none; text-decoration: #000000; line-height: 22.0083px;"><span class="NormalTextRun SCXW157467110 BCX8"><strong>Primary Petition Application: District Office of State Senate, State Assembly </strong>(Multi-Town)<strong>, or Judge of Probate </strong>(Multi-Town):</span></span></h3>
+<p>Availability of Primary Petitions: In accordance with CGS &sect; 9-404a, primary petitions for major party candidates for multi-town offices become available on the 77th day preceding the day of the primary, which is Tuesday, May 26, 2026. These petitions are available from the Secretary of the State for candidates running for multi-town senator, state representative, or judge of probate.</p>
+<ul>
+    <li><strong>Deadline for Primary Petitions:</strong> Petitions must be submitted to the respective Registrar of Voters no later than 4:00 pm on Tuesday, June 9, 2026.&nbsp; Petitions received after this deadline will be rejected, as required by law. Please see the<strong> <a href="https://portal.ct.gov/sots/election-services/find-your-town-clerk-registrar-and-elected-officials/find-your-town-clerk-registrar-of-voters-and-elected-officials" target="_self">list of Registrar of Voters</a></strong>.</li>
+</ul>
+<ul>
+    <li><strong>Application for Primary Petition District Offices:</strong> Electronic Submission Requirements: To apply using Docusign, the candidate must have an email address. The candidate may complete the application themselves, or another individual may begin the application on their behalf. However, the candidate must complete their portion, including providing their electronic signature. Email addresses are required for all participants.</li>
+</ul>
+<h4><strong>Select your Docusign application: Available May 26, 2026</strong>&nbsp;</h4>
+<h3><strong>Major Party Endorsements, 15% Eligibility for Multi-Town Districts, and Minor Party Nominations with Statewide Ballot Access</strong></h3>
+<p><strong></strong>Please note that this form is intended only for candidates who have been endorsed, who have received at least 15% of the vote, or who have been nominated by a minor party with statewide ballot access, and whose endorsement or nomination has been attested by the Chairperson, Presiding Officer, or Secretary of the convention. </p>
+<ul>
+    <li><strong>Deadlines:</strong> The major party deadline to file is within 14 days of the meeting, by 4 pm (if it is a Saturday, Sunday, or Legal Holiday, forms are due the next business day). The minor party deadline is September 2, 2026, at 4 pm.</li>
+</ul>
+<ul>
+    <li><strong>Application for Major Party Endorsements, 15% Eligibility for Multi-Town Districts, and Minor Party Nominations with Statewide Ballot Access:</strong> To apply with Docusign, you must have an email address for the candidate and the Chairperson, Presiding Officer, or Secretary. <strong>The Chairperson, Presiding Officer, or Secretary must start the form.</strong> The candidate will receive an email from the Chairperson, Presiding Officer, or Secretary.</li>
+</ul>
+<h4><strong>Select your Docusign application: </strong></h4>
+<ul>
+    <li>
+    <h4><a href="https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=2a93e667-f4f8-43cc-ba4f-e8f9ae7d5338&amp;env=na4&amp;acct=b765b78e-2f85-4470-a9d3-d2e2921c42b9&amp;v=2" target="_self">Chairperson, Presiding Officer, or Secretary start Major Party Endorsements, 15% Eligibility, and Minor Party Nominations with Statewide Ballot Access application</a></h4>
+    </li>
+</ul>
+<h3><strong>Vacancy in Nomination (Available to all parties after an original withdrawal form is received by the Secretary of State):</strong></h3>
+<p>Please note this form is only intended for candidates who have been nominated to fill a vacancy in endorsement. The original withdrawal letter must have been received by the Secretary of State for a vacancy to exist. &nbsp;<br />
+<strong></strong></p>
+<ul>
+    <li><strong>Deadlines:</strong> The last day for a candidate to withdraw is September 18th, and for the Party to replace a candidate is September 22nd.&nbsp;<br />
+    <strong></strong></li>
+</ul>
+<ul>
+    <li><strong>Application for Vacancy in Nomination:</strong> To apply with Docusign, you must have an email address for the candidate and the Chairperson, Presiding Officer, or Secretary of the Vacancy Committee. <strong>The Chairperson, Presiding Officer, or Secretary must start the form.</strong> The candidate will receive an email from the Chairperson, Presiding Officer, or Secretary.&nbsp;</li>
+</ul>
+<h4><span class="NormalTextRun SCXW227823062 BCX8" style="background-color: #ffffff; margin: 0px; padding: 0px;"><strong>Select your Docu</strong></span><strong><span class="NormalTextRun SCXW227823062 BCX8" style="background-color: #ffffff; margin: 0px; padding: 0px;">si</span><span class="NormalTextRun SCXW227823062 BCX8" style="background-color: #ffffff; margin: 0px; padding: 0px;">gn application: Coming soon!</span></strong>&nbsp;</h4>
+<h3><span data-contrast="auto" class="TextRun SCXW193277288 BCX8" style="background-color: #ffffff; margin: 0px; padding: 0px; line-height: 25.4833px;"><span class="NormalTextRun SCXW193277288 BCX8" style="margin: 0px; padding: 0px;"><strong>Paper Forms:</strong></span></span></h3>
+<p>If you require a paper form, it may be available below or please email <strong style="color: #0a0a0a;"><a href="mailto:sots.ballotaccess@ct.gov">sots.ballotaccess@ct.gov</a>&nbsp;</strong><span style="color: #0a0a0a;">for the form.&nbsp;</span><strong style="color: #0a0a0a;"></strong>You may submit your application through a paper form in person to the Secretary of the State&rsquo;s Office during regular business hours.</p>
+<ul>
+    <li><strong>Monday &ndash; Friday, 8:30 am &ndash; 4 pm:</strong> (<strong><a href="https://www.google.com/maps/place/165+Capitol+Ave,+Hartford,+CT+06106/@41.761851,-72.6834679,17z/data=!3m1!4b1!4m6!3m5!1s0x89e65368d00cd3cb:0xa93e805747788ac7!8m2!3d41.761851!4d-72.680893!16s%2Fg%2F11cpm5zslm?entry=ttu&amp;g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D" target="_self">165 Capitol Ave, Hartford, CT 06106</a></strong>), or </li>
+    <li><strong>By mail to Secretary of the State</strong> (Attn: LEAD, P.O. Box 150470 Hartford, CT 06115-0470)</li>
+    <li><span class="NormalTextRun SCXW148154731 BCX8" style="background-color: #ffffff; margin: 0px; padding: 0px;"><a href="https://portal.ct.gov/-/media/sots/electionservices/candidate_ballot_information/2026/certificate-of-party-endorsement-15-eligibility-or-nomination.pdf?rev=03f5ddbe6d234babb155d6900820b976&amp;hash=537C1ECBFD7E6E5BBA0E13A8123E31AD"><strong>Endorsement (Major Parties), 15% Eligibility (Multi-Town Districts, and Nomination (Minor Parties with statewide status)<br />
+    </strong></a></span></li>
+    <li><strong><a href="https://portal.ct.gov/-/media/sots/electionservices/candidate_ballot_information/2026/2026-vacancy-in-nomination-form.pdf?rev=a919fcb7e2b7401d949af819353f39c9&amp;hash=1E27C1CBBF1416083CCC78E1E11AA8C4" target="_self">2026 Vacancy in Nomination</a></strong></li>
+</ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+                </main>
+
+                <footer class="footer" role="contentinfo">
+                    
+
+
+
+
+<div class="container">
+    <div class="footer-left">
+       
+        <ul>
+    <li><a href="https://portal.ct.gov/Policies/State-Privacy-Policy">Policies</a></li>
+    <li><a href="https://portal.ct.gov/-/media/sitecore-center/accessibility/it-accessibility-policy-final-for-release-07142025.pdf?rev=bd9ac94fd0bd4b5ea7ed11227682895a&amp;hash=14740C9BD9B5E081B47BBF0D0A5E9CF1">Accessibility</a></li>
+    <li><a href="https://portal.ct.gov/About">About CT</a></li>
+    <li><a href="https://portal.ct.gov/Directories">Directories</a></li>
+    <li><a href="https://portal.ct.gov/social_media">Social Media</a></li>
+    <li><a href="https://portal.ct.gov/for_state_employees_footer">For State Employees</a></li>
+</ul>
+            <ul class="flag-status">
+                <li>
+                    <img src="https://portal.ct.gov/-/media/connecticut-interactive/images/resources/usflag240.jpg?rev=270711ee169044df8f0f1faded74b3e5&amp;la=en&amp;h=137&amp;w=240&amp;hash=D92C6A2F5792896DF09B730F82ED65B7" alt="United States Flag" />
+                    <a href="/governor/flag-status" title="United States flag status - FULL ">
+                    United States 
+                        <span>
+                            FULL
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <img src="https://portal.ct.gov/-/media/connecticut-interactive/images/resources/ctflag240.jpg?rev=7cd4d6cd249845c49bc61ff823a8f06a&amp;la=en&amp;h=137&amp;w=240&amp;hash=19C228858B5EABC80CB91AECCEF7A268" alt="Connecticut Flag" />
+                    <a href="/governor/flag-status" title="Connecticut state flag status - FULL ">
+                        Connecticut
+                        <span>
+                            FULL
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        <p class="copy">
+            &copy;
+            <a href="/" title="Connecticut's Official State Website">
+                <span class="year">2016</span> CT.gov <span>|</span> Connecticut's Official State Website
+            </a>
+        </p>
+    </div>
+    <div class="footer-right">
+        <a href="http://www.ctvisit.com/" title="Connecticut Still Revolutionary"  target="_blank" class="tourism">
+            <img src="/assets/images/Connecticut logo.svg" alt="Connecticut Logo" />
+        </a>
+    </div>
+</div>
+
+                </footer>
+            </div>
+        </div>
+    </div>
+
+
+
+    
+
+<script src="/assets/js/app.js?v=20261025040154"></script>
+<script src="/Assets/js/Ie-shims.js?v=20261025040154"></script>
+<script src="/assets/js/google.search.js?v=20261025040154"></script>
+<script src="/assets/js/ga-externallink.js?v=20261025040154"></script>
+
+
+
+    <script>
+
+        // Search Left side navigation redirect
+        function gotoGoogleSearch(searchLink) {
+            var url = searchLink + "?q=" + $("#agencySpeceificSearch").val();
+            location.href = url;
+            return true;
+        }
+        // jQuery Ready
+        function gotoGoogleSearchEnter(e, searchLink, sites) {
+            if (e.which == 13 || e.charCode == 13) {
+                e.preventDefault();
+                gotoGoogleSearch(searchLink);
+                return true;
+            }
+        }
+    </script>
+
+</body>
+
+</html>

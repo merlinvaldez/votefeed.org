@@ -1,0 +1,337 @@
+{
+  "checkedOn": "2026-10-26",
+  "purpose": "Read-only step 3.1 source research; no import or coverage certification",
+  "authentication": "Public DEMO_KEY passed in request header; no credentials stored",
+  "requests": [
+    {
+      "file": "api-data-gov-limits.html",
+      "url": "https://api.data.gov/docs/errors/",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "d6143e50701c152e567edf4e91e49653721bbca212d3c6a9e31ec13810bfbf45",
+      "bytes": 285,
+      "headers": {
+        "Date": "Mon, 26 Oct 2026 20:00:08 GMT",
+        "Etag": "\"a1c89dfd4419ee78777f07c27e472b18\"",
+        "Last-Modified": "Fri, 27 Mar 2026 17:52:59 GMT"
+      }
+    },
+    {
+      "file": "fec-candidate-committees.json",
+      "url": "https://api.open.fec.gov/v1/candidate/S0WY00137/committees/?cycle=2026&per_page=100&page=1",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "application/json",
+      "sha256": "fe2e9e38c3e55eaf14c6aeb343ac5dbcb516862581ad0cb4662e55c5f7d022a8",
+      "bytes": 2353,
+      "headers": {
+        "Date": "Mon, 26 Oct 2026 20:00:12 GMT",
+        "X-Ratelimit-Limit": "10",
+        "X-Ratelimit-Remaining": "5"
+      }
+    },
+    {
+      "file": "fec-committee-filings.json",
+      "url": "https://api.open.fec.gov/v1/committee/C00443580/filings/?form_type=F1&per_page=1&page=1&sort=-receipt_date",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "application/json",
+      "sha256": "be63615151ee5e0c8028840c630d102804f0be33ac9302dace5ed0be9e10e635",
+      "bytes": 2179,
+      "headers": {
+        "Date": "Mon, 26 Oct 2026 20:00:13 GMT",
+        "X-Ratelimit-Limit": "10",
+        "X-Ratelimit-Remaining": "3"
+      }
+    },
+    {
+      "file": "fec-committee.json",
+      "url": "https://api.open.fec.gov/v1/committee/C00443580/?cycle=2026",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "application/json",
+      "sha256": "8d160eb3a8779c3133f484c84ac68b93e675f7437ccbaa6b022e096fa7d08736",
+      "bytes": 2352,
+      "headers": {
+        "Date": "Mon, 26 Oct 2026 20:00:13 GMT",
+        "X-Ratelimit-Limit": "10",
+        "X-Ratelimit-Remaining": "4"
+      }
+    },
+    {
+      "file": "fec-developers.html",
+      "url": "https://api.open.fec.gov/developers/",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "d5e350cc27e99a7f5a12c48bc09f6b2837f23d3ff112699491553719d60c569a",
+      "bytes": 3973,
+      "headers": {
+        "Date": "Mon, 26 Oct 2026 20:00:08 GMT",
+        "X-Ratelimit-Limit": "120",
+        "X-Ratelimit-Remaining": "116"
+      }
+    },
+    {
+      "file": "fec-openapi.json",
+      "url": "https://api.open.fec.gov/swagger/",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "application/json",
+      "sha256": "425ff9ef89610864e311b9e09f877ca764ba1f42e9a8cb191a25635304b12eae",
+      "bytes": 870458,
+      "headers": {
+        "Date": "Mon, 26 Oct 2026 20:00:09 GMT",
+        "X-Ratelimit-Limit": "120",
+        "X-Ratelimit-Remaining": "115"
+      }
+    },
+    {
+      "file": "fec-state-offices.html",
+      "url": "https://www.fec.gov/introduction-campaign-finance/how-to-research-public-records/state-election-offices/",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "487b261ab8623ac5cbdeae596fec25e7e1a1808a5da3c2b47330c50e299f46cd",
+      "bytes": 166309,
+      "headers": {
+        "Date": "Mon, 26 Oct 2026 19:59:01 GMT"
+      }
+    },
+    {
+      "file": "fec-wy-house-page-1.json",
+      "url": "https://api.open.fec.gov/v1/candidates/search/?election_year=2026&state=WY&office=H&per_page=2&page=1&sort=candidate_id",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "application/json",
+      "sha256": "0092c73747a9d5d72183c94a74acd97d03a162720f6ae623c7d5ab6f1a6fc2dd",
+      "bytes": 3440,
+      "headers": {
+        "Date": "Mon, 26 Oct 2026 20:00:10 GMT",
+        "X-Ratelimit-Limit": "10",
+        "X-Ratelimit-Remaining": "8"
+      }
+    },
+    {
+      "file": "fec-wy-house-page-2.json",
+      "url": "https://api.open.fec.gov/v1/candidates/search/?election_year=2026&state=WY&office=H&per_page=2&page=2&sort=candidate_id",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "application/json",
+      "sha256": "036b772a1f0fc5f3255db6c833257a4a65b2fb4daf6a811710b15dd2e585b730",
+      "bytes": 3287,
+      "headers": {
+        "Date": "Mon, 26 Oct 2026 20:00:11 GMT",
+        "X-Ratelimit-Limit": "10",
+        "X-Ratelimit-Remaining": "7"
+      }
+    },
+    {
+      "file": "fec-wy-senate.json",
+      "url": "https://api.open.fec.gov/v1/candidates/search/?election_year=2026&state=WY&office=S&per_page=100&page=1&sort=candidate_id",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "application/json",
+      "sha256": "2aa94e2a5a3a74a97ff392fb866f1e5ae3bc002d707eed7293549b2d69c3ba68",
+      "bytes": 11914,
+      "headers": {
+        "Date": "Mon, 26 Oct 2026 20:00:11 GMT",
+        "X-Ratelimit-Limit": "10",
+        "X-Ratelimit-Remaining": "6"
+      }
+    },
+    {
+      "file": "senate-class-ii.html",
+      "url": "https://www.senate.gov/senators/Class_II.htm",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "text/html; charset=UTF-8",
+      "sha256": "2cec4a3935927dc250c4b964746aceca026ee49adf0f5a78397861b5ce31667d",
+      "bytes": 19562,
+      "headers": {
+        "Date": "Mon, 26 Oct 2026 20:00:08 GMT"
+      }
+    },
+    {
+      "file": "wy-election-calendar.pdf",
+      "url": "https://sos.wyo.gov/Elections/Docs/2026/2026_Election_Calendar.pdf",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "application/pdf",
+      "sha256": "4f9539dbe25c844ec85bce3c9555865e94571aa0ef7d1a834299638c9709a818",
+      "bytes": 1104818,
+      "headers": {
+        "Last-Modified": "Mon, 03 Nov 2025 15:20:41 GMT",
+        "ETag": "\"23d6b76ad54cdc1:0\"",
+        "Date": "Mon, 26 Oct 2026 20:00:08 GMT"
+      }
+    },
+    {
+      "file": "wy-election-center.html",
+      "url": "https://sos.wyo.gov/elections/default.aspx",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "54a0e6643da4b4b9e60adc6d4be468d06cc29db81c206dc7b4e65b96e5c6b310",
+      "bytes": 54723,
+      "headers": {
+        "Date": "Mon, 26 Oct 2026 20:00:06 GMT"
+      }
+    },
+    {
+      "file": "wy-general-candidates.csv",
+      "url": "https://sos.wyo.gov/Elections/Docs/2026/2026_WY_General_Election_Candidates.csv",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "application/octet-stream",
+      "sha256": "2f5727287045d2596097ddbfc84e98984f18c518009ca61e4ef194807b6080a2",
+      "bytes": 31030,
+      "headers": {
+        "Last-Modified": "Wed, 09 Sep 2026 18:01:34 GMT",
+        "ETag": "\"b9fe64408540dd1:0\"",
+        "Date": "Mon, 26 Oct 2026 20:00:06 GMT"
+      }
+    },
+    {
+      "file": "wy-general-candidates.pdf",
+      "url": "https://sos.wyo.gov/Elections/Docs/2026/2026_WY_General_Election_Candidates.pdf",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "application/pdf",
+      "sha256": "72303805c37f2058e8092dc330b62cb7b592ca48c828ae0afbdcbf18c8622d16",
+      "bytes": 84715,
+      "headers": {
+        "Last-Modified": "Wed, 09 Sep 2026 18:04:58 GMT",
+        "ETag": "\"8c12dbb98540dd1:0\"",
+        "Date": "Mon, 26 Oct 2026 20:00:06 GMT"
+      }
+    },
+    {
+      "file": "wy-key-dates.pdf",
+      "url": "https://sos.wyo.gov/Elections/Docs/2026/2026_Key_Election_Dates.pdf",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "application/pdf",
+      "sha256": "1537129ab6e47956104cf032bb76513b0a94f0352573bfea3a924168af294922",
+      "bytes": 1318816,
+      "headers": {
+        "Last-Modified": "Fri, 20 Feb 2026 18:46:18 GMT",
+        "ETag": "\"5842f33299a2dc1:0\"",
+        "Date": "Mon, 26 Oct 2026 20:00:06 GMT"
+      }
+    },
+    {
+      "file": "wy-offices.pdf",
+      "url": "https://sos.wyo.gov/Elections/Docs/2026/2026_Offices_Up_for_Election.pdf",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "application/pdf",
+      "sha256": "b7c7af9174d695ca37d2f8719803118306c723e7f556234ddc37ef453f666e4a",
+      "bytes": 175898,
+      "headers": {
+        "Last-Modified": "Wed, 09 Sep 2026 18:02:14 GMT",
+        "ETag": "\"65511c588540dd1:0\"",
+        "Date": "Mon, 26 Oct 2026 20:00:06 GMT"
+      }
+    },
+    {
+      "file": "fec-wy-house-complete.json",
+      "url": "https://api.open.fec.gov/v1/candidates/search/?election_year=2026&state=WY&office=H&per_page=100&page=1&sort=candidate_id",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "application/json",
+      "sha256": "446886f9e65d0234813bd29223750882a22c1f60b084814b3e6ca755b84ce33d",
+      "bytes": 20673,
+      "headers": {
+        "Date": "Mon, 26 Oct 2026 20:00:54 GMT",
+        "X-Ratelimit-Limit": "10",
+        "X-Ratelimit-Remaining": "2"
+      }
+    },
+    {
+      "file": "fec-hageman-committees.json",
+      "url": "https://api.open.fec.gov/v1/candidate/S6WY00209/committees/?cycle=2026&per_page=100&page=1",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "application/json",
+      "sha256": "360cd868b14c5d4094cc4ec34c575ae9e08cbf52b001965e1b49a81df1792e77",
+      "bytes": 2232,
+      "headers": {
+        "Date": "Mon, 26 Oct 2026 20:00:55 GMT",
+        "X-Ratelimit-Limit": "10",
+        "X-Ratelimit-Remaining": "1"
+      }
+    },
+    {
+      "file": "api-data-gov-manual.html",
+      "url": "https://api.data.gov/docs/developer-manual/",
+      "checkedOn": "2026-10-26",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "c09641f25041d3c81f39988262f0fef407a166eb9210fbecf04d803afadc0c62",
+      "bytes": 24393,
+      "headers": {
+        "Date": "Mon, 26 Oct 2026 20:00:55 GMT",
+        "Etag": "\"ed40efe67ecb20763aa75eceaca48df5\"",
+        "Last-Modified": "Wed, 13 May 2026 19:21:47 GMT"
+      }
+    }
+  ],
+  "derivedArtifacts": [
+    {
+      "file": "wy-federal-observations.json",
+      "sources": [
+        "wy-general-candidates.csv"
+      ],
+      "sha256": "740b5451e4a52ce3053456465661a6601815f9af8b6c6c651a36762d54b228c9",
+      "bytes": 8833,
+      "method": "CSV parsed with Python csv.DictReader; source IDs left null"
+    },
+    {
+      "file": "wy-offices.txt",
+      "sources": [
+        "wy-offices.pdf"
+      ],
+      "sha256": "d0890eb78c8dc66517f7990f166fb4a5a79abae6a8f930f0f9d0db1a81fbdc97",
+      "bytes": 2409,
+      "method": "PyMuPDF text extraction, explicit page boundaries"
+    },
+    {
+      "file": "wy-key-dates.txt",
+      "sources": [
+        "wy-key-dates.pdf"
+      ],
+      "sha256": "d299d9a6ca0ca1804674e9c387c987fbe0d801ccf27e657da8fc533cbd6cfb1a",
+      "bytes": 3123,
+      "method": "PyMuPDF text extraction, explicit page boundaries"
+    },
+    {
+      "file": "wy-election-calendar.txt",
+      "sources": [
+        "wy-election-calendar.pdf"
+      ],
+      "sha256": "23e29b83db589f2b7ed00c30d3d51eb3f2b6da543b4a1b08eb61f3279c09b22c",
+      "bytes": 28900,
+      "method": "PyMuPDF text extraction, explicit page boundaries"
+    },
+    {
+      "file": "live-ai-ballot-check.json",
+      "sources": [
+        "wy-general-candidates.csv"
+      ],
+      "sha256": "f2128e23a95df123d9d7b70baa7b86883f3813f272fadbfa9510f7913c136133",
+      "bytes": 7402,
+      "method": "Live gpt-5.4 structured extraction and independent verification; all six rows compared with deterministic CSV output"
+    },
+    {
+      "file": "live-source-search.json",
+      "sources": [
+        "fec-state-offices.html"
+      ],
+      "sha256": "ca966478bc9a5b151c49bab848e4db6ba9d55842132409b86351dbf034351b7f",
+      "bytes": 846,
+      "method": "Live gpt-5.4 source search restricted to the official Wyoming origin; proposals only, no database writes"
+    }
+  ]
+}

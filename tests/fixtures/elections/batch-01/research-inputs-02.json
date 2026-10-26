@@ -1,0 +1,122 @@
+[
+  {
+    "state": "AL",
+    "id": "AL-dem",
+    "url": "https://www.sos.alabama.gov/sites/default/files/election-2026/2026GeneralElectionStateCertificationofDemocraticCandidates.pdf",
+    "allowedOrigins": [
+      "https://www.sos.alabama.gov"
+    ]
+  },
+  {
+    "state": "AL",
+    "id": "AL-rep",
+    "url": "https://www.sos.alabama.gov/sites/default/files/election-2026/2026GeneralElectionStateCertificationofRepublicanCandidates.pdf",
+    "allowedOrigins": [
+      "https://www.sos.alabama.gov"
+    ]
+  },
+  {
+    "state": "AL",
+    "id": "AL-ind",
+    "url": "https://www.sos.alabama.gov/sites/default/files/election-2026/2026GeneralElection-StateCertificationofIndependentCandidate.pdf",
+    "allowedOrigins": [
+      "https://www.sos.alabama.gov"
+    ]
+  },
+  {
+    "state": "AL",
+    "id": "AL-amended-dem",
+    "url": "https://www.sos.alabama.gov/sites/default/files/election-2026/AmendedCertificationofDemocraticPartyCandidates.pdf",
+    "allowedOrigins": [
+      "https://www.sos.alabama.gov"
+    ]
+  },
+  {
+    "state": "AL",
+    "id": "AL-amended-rep",
+    "url": "https://www.sos.alabama.gov/sites/default/files/election-2026/Amended_2026_Republican_Certification.pdf",
+    "allowedOrigins": [
+      "https://www.sos.alabama.gov"
+    ]
+  },
+  {
+    "state": "CA",
+    "id": "CA-certified",
+    "url": "https://elections.cdn.sos.ca.gov/statewide-elections/2026-general/cert-list-candidates.pdf",
+    "allowedOrigins": [
+      "https://elections.cdn.sos.ca.gov"
+    ]
+  },
+  {
+    "state": "CA",
+    "id": "CA-contacts",
+    "url": "https://elections.cdn.sos.ca.gov/statewide-elections/2026-general/contact-list.pdf",
+    "allowedOrigins": [
+      "https://elections.cdn.sos.ca.gov"
+    ]
+  },
+  {
+    "state": "CO",
+    "id": "CO-candidates",
+    "url": "https://www.sos.state.co.us/pubs/elections/Candidates/CandidateHome.html",
+    "allowedOrigins": [
+      "https://www.sos.state.co.us"
+    ]
+  },
+  {
+    "state": "AR",
+    "id": "AR-search",
+    "url": "https://candidates.arkansas.gov/",
+    "allowedOrigins": [
+      "https://candidates.arkansas.gov"
+    ]
+  },
+  {
+    "state": "CT",
+    "id": "CT-list-index",
+    "url": "https://portal.ct.gov/SOTS/Election-Services/Candidate-Lists-for-Office",
+    "allowedOrigins": [
+      "https://portal.ct.gov"
+    ]
+  },
+  {
+    "state": "HI",
+    "id": "HI-reports",
+    "url": "https://elections.hawaii.gov/candidates/candidate-reports/",
+    "allowedOrigins": [
+      "https://elections.hawaii.gov"
+    ]
+  },
+  {
+    "state": "FL",
+    "id": "FL-candidate-index",
+    "url": "https://dos.fl.gov/elections/candidates-committees/candidates-campaign-documents-and-committees/",
+    "allowedOrigins": [
+      "https://dos.fl.gov"
+    ]
+  },
+  {
+    "state": "GA",
+    "id": "GA-qualified",
+    "url": "https://sos.ga.gov/page/georgia-qualified-candidates",
+    "allowedOrigins": [
+      "https://sos.ga.gov"
+    ]
+  },
+  {
+    "state": "AZ",
+    "id": "AZ-candidates",
+    "url": "https://azsos.gov/elections/candidates",
+    "allowedOrigins": [
+      "https://azsos.gov"
+    ]
+  },
+  {
+    "state": "AK",
+    "id": "AK-candidates-no-www",
+    "url": "https://elections.alaska.gov/candidates/?election=26genr",
+    "allowedOrigins": [
+      "https://elections.alaska.gov"
+    ]
+  }
+]

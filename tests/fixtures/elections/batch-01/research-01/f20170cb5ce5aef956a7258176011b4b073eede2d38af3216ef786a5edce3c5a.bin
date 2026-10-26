@@ -1,0 +1,999 @@
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# ">
+  <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BDPZ3GJCSV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-BDPZ3GJCSV');
+</script>
+    <meta charset="utf-8" />
+<meta name="Generator" content="Drupal 11 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="/themes/custom/sos/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="canonical" href="https://www.sos.alabama.gov/alabama-votes/voter/election-information/2026" />
+<link rel="shortlink" href="https://www.sos.alabama.gov/node/3447" />
+
+    <title>2026 Election Information | Alabama Secretary of State</title>
+    <link rel="stylesheet" media="all" href="/themes/contrib/stable/css/system/components/align.module.css?tn9nx4" />
+<link rel="stylesheet" media="all" href="/themes/contrib/stable/css/system/components/container-inline.module.css?tn9nx4" />
+<link rel="stylesheet" media="all" href="/themes/contrib/stable/css/system/components/clearfix.module.css?tn9nx4" />
+<link rel="stylesheet" media="all" href="/themes/contrib/stable/css/system/components/hidden.module.css?tn9nx4" />
+<link rel="stylesheet" media="all" href="/themes/contrib/stable/css/system/components/js.module.css?tn9nx4" />
+<link rel="stylesheet" media="all" href="/modules/contrib/paragraphs/css/paragraphs.unpublished.css?tn9nx4" />
+<link rel="stylesheet" media="all" href="/themes/custom/sos/css/reset.css?tn9nx4" />
+<link rel="stylesheet" media="all" href="/themes/custom/sos/css/style.css?tn9nx4" />
+<link rel="stylesheet" media="all" href="/themes/custom/sos/css/avid.css?tn9nx4" />
+<link rel="stylesheet" media="all" href="/themes/custom/sos/css/act.css?tn9nx4" />
+<link rel="stylesheet" media="all" href="/themes/custom/sos/css/print.css?tn9nx4" />
+<link rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+
+    <script src="/core/assets/vendor/jquery/jquery.min.js?v=4.0.0"></script>
+<script src="/themes/custom/sos/js/main.js?tn9nx4"></script>
+
+<meta name="google-site-verification" content="nQozxlmPohYy17o3LEXt4GPSE41Vqkkcvay-Su_SchI" />
+  </head>
+  <body class="not-front">
+    <a href="#main-content" class="visually-hidden focusable">
+      Skip to main content
+    </a>
+    <a href="/contact/braille_voter_request_form" class="visually-hidden focusable">
+      Braille Voter Guide
+    </a>
+    
+      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    <header class="sos-header">
+	<div class="main-nav-container">
+		<div class="branding">
+			  <div>
+    <div id="block-sos-branding">
+  
+    
+    <div>
+      <a href="https://www.sos.alabama.gov" title="Home" rel="home" class="site-logo">
+      <img src="/sites/default/files/seal.png" alt="Home" />
+    </a>
+        <a href="https://www.sos.alabama.gov" title="Home" rel="home" class="site-name">Alabama Secretary of State</a>
+    
+  </div>
+</div>
+
+  </div>
+
+		</div>
+
+		<div class="nav-right-container">
+
+			<div class="main-navigation">
+			  <div>
+    
+<nav role="navigation" aria-label="Navigation menu" id="block-sos-main-menu">
+ <div class="navigation-header"></div>
+            
+  <h2 class="visually-hidden"">Main navigation</h2>
+  
+
+        
+              <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/sos-office" title="SOS Office Information">SOS Office</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/sos-office/biography" title="Biography of Wes Allen">Biography</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/sos-office/history" title="History of SOS">History</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/alabama-votes/voter/register-to-vote" title="Voter Registration">Voter Registration</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/sos-office/fees-funds" title="Fees and Funds Information">Fees &amp; Funds</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/sites/default/files/form-files/FeeSchedule.pdf" title="Fee Schedule">Fee Schedule</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/sites/default/files/CHARTFORFUNDS-12-20-22.pdf" title="Funds Guide">Funds Guide</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/sites/default/files/voter-pdfs/VR%20LIST%20REQUEST%20FORM.pdf" title="Voter List Fee Schedule">Voter List Fee Schedule</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/sos-office/transparency" title="Boards, Commissions, and Committees">Committees</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/sites/default/files/Boards-Commissions-Committees/BoardsandCommissions(withAmendments)02-08-2023.pdf" title="Boards Commissions and Committees Guide">Committees Guide</a>
+              </li>
+          <li>
+        <a href="/sos-office/meeting-minutes" title="Meeting Minutes" data-drupal-link-system-path="sos-office/meeting-minutes">Meeting Minutes</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="" title="Student Center">Student Center</a>
+                                <ul>
+              <li>
+        <a href="https://alison.legislature.state.al.us/legislative-internship-program?search=internship" title="Alabama Legislative Internship">Legislative Internship</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/student-poll-worker-internship">Student Poll Worker Internship</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/newsroom">Newsroom</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/sos-office/event-scheduling-form">Event Scheduling</a>
+              </li>
+          <li>
+        <a href="/act">Alabama Combats Trafficking</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="http://www.alabamavotes.gov/" title="Alabama&#039;s Official Election Center">Elections</a>
+              </li>
+          <li>
+        <a href="" title="Business Services">Services</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/administrative-services/athlete-agents">Athlete Agents</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/administrative-services/authentications">Authentications</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-entities" title="Business Entities">Business Entities</a>
+                                <ul>
+              <li>
+        <a href="https://www.alabamainteractive.org/sos/welcome.action" title="Online Business Services">Online Services</a>
+              </li>
+          <li>
+        <a href="https://www.youtube.com/watch?v=3RZpnJEMBv0" target="_blank">Tutorial</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-entities/domestic-corporations" title="Domestic Corporations">Domestic Corporations</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-entities/foreign-corporations" title="Foreign Corporations">Foreign Corporations</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-entities/homeowners-associations" title="Homeowner&#039;s Associations">Homeowners&#039; Associations</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/sites/default/files/2022-01/2021FeeSchedule.pdf" title="Fees">Fees</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-entities/llcs" title="Domestic and Foreign LLCs">LLCs</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-entities/llps" title="Domestic and Foreign LLPs">LLPs</a>
+              </li>
+          <li>
+        <a href="/business-entities/business-downloads" data-drupal-link-system-path="business-entities/business-downloads">Business Downloads</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/administrative-services/lands" title="Lands">Lands</a>
+              </li>
+          <li>
+        <a href="">Notaries</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/administrative-services/notaries-public">Notaries Public</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/administrative-services/civil-law-notaries">Civil Law Notaries</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/node/1533" title="Oath of Office Forms">Oath of Office Information Center</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/administrative-services/trademarks">Trademarks</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-services" title="Business Services">UCC Services</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/business-services/ucc-home" title="Universal Commercial Code">UCC Home</a>
+              </li>
+          <li>
+        <a href="https://www.alabamainteractive.org/ucc_filing/" title="Online UCC Filings">Online Filings</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-services/filing-fees" title="UCC Paper Form Filing Fees">Filing Fees</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/sites/default/files/form-files/Chapter-820-4-3.pdf" title="Procedures">Procedures</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-services/ucc-downloads" title="UCC Downloads">UCC Downloads</a>
+              </li>
+        </ul>
+  
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records">Records</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/public-records-request">Public Records Request</a>
+              </li>
+          <li>
+        <a href="">Records Searches</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/alabama-votes/media/campaign-finance-reports">Campaign Finance Records</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/notary-public">Notary Public Records</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/business-entity-records">Business Entity Records</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/civil-law-notary-records">Civil Law Notary Records</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/ucc-records">UCC Records</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/land-records">Land Records</a>
+              </li>
+          <li>
+        <a href="https://arc-sos.state.al.us/cgi/contrsrh.mbr/input">Statutory Filings</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/trademark-records">Trademark Records</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/athlete-agent-search">Athlete Agents Search</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="https://alison.legislature.state.al.us/code-of-alabama">Code of Alabama</a>
+              </li>
+          <li>
+        <a href="https://arc-sos.state.al.us/cgi/elactnum.mbr/output">Proposed Amendments</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/records-disposition-authority">Disposition Authority</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/legislative-acts">Legislative Acts</a>
+              </li>
+          <li>
+        <a href="http://www.alabamaadministrativecode.state.al.us/docs/sos/index.html">Administrative Code</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/government-records/proposed-rules">Proposed Rules</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/record-of-proclamations">Record of Proclamations</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/city-county-lookup">City - County Lookup</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/Accessibility-Statement">Accessibility Statement</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/contact">Contact</a>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+
+  </div>
+
+			</div>
+			<div class="search">
+				<div class="search-close">
+					<i class="fa fa-times" aria-hidden="true"></i>
+				</div>
+				  <div class="search-container">
+    <div id="block-sos-search" role="search">
+  
+    
+      <form class="search-block-form" data-drupal-selector="search-block-form" action="/search/node" method="get" id="search-block-form" accept-charset="UTF-8">
+  <div class="js-form-item form-item js-form-type-search form-item-keys js-form-item-keys form-no-label">
+      <label for="edit-keys" class="visually-hidden">Search</label>
+        <input title="Enter the terms you wish to search for." data-drupal-selector="edit-keys" type="search" id="edit-keys" name="keys" value="" size="15" maxlength="128" class="form-search" placeholder="Search" />
+
+        </div>
+<div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper" id="edit-actions"><input value="Search" aria-label="Submit search" data-drupal-selector="edit-submit" type="submit" id="edit-submit" class="button js-form-submit form-submit" />
+
+</div>
+
+</form>
+
+  </div>
+<div id="block-searchform-mobile" role="search">
+  
+    
+      <form class="search-block-form" data-drupal-selector="search-block-form-2" action="/search/node" method="get" id="search-block-form--2" accept-charset="UTF-8">
+  <div class="js-form-item form-item js-form-type-search form-item-keys js-form-item-keys form-no-label">
+      <label for="edit-keys--2" class="visually-hidden">Search</label>
+        <input title="Enter the terms you wish to search for." data-drupal-selector="edit-keys" type="search" id="edit-keys--2" name="keys" value="" size="15" maxlength="128" class="form-search" placeholder="Search" />
+
+        </div>
+<div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper" id="edit-actions--2"><input value="Search" aria-label="Submit search" data-drupal-selector="edit-submit" type="submit" id="edit-submit--2" class="button js-form-submit form-submit" />
+
+</div>
+
+</form>
+
+  </div>
+
+  </div>
+
+			</div>
+			<div class="social-icons">
+				<ul>
+					<!-- <li class="search-icon">
+						<a href="#" aria-label="search icon"><i class="fa fa-search" aria-hidden="true"></i></a>
+					</li> -->
+					
+					<li class="search-icon">
+						<a href="#" aria-label="search icon"><i class="fa fa-search" aria-hidden="true"></i></a>
+					</li>
+					<li class="social-icon">
+						<a href="https://www.facebook.com/alasecretaryofstate/" aria-label="facebook icon" target="_blank" rel="noopener noreferrer"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+					</li>
+					<li class="social-icon">
+						<a href="https://twitter.com/alasecofstate" aria-label="x icon" target="_blank" rel="noopener noreferrer"><svg width="17" height="17" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<style>svg {fill: white;}</style>
+  <path d="M178.57 127.15 290.27 0h-26.46l-97.03 110.38L89.34 0H0l117.13 166.93L0 300.25h26.46l102.4-116.59 81.8 116.59h89.34M36.01 19.54H76.66l187.13 262.13h-40.66"/>
+</svg></a>
+					</li>
+					<li class="social-icon">
+						<a href="https://www.youtube.com/channel/UCDf-1WkR7KJSPGAWsHt3GCg" aria-label="youtube icon" target="_blank" rel="noopener noreferrer"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+					</li>
+					<li class="social-icon">
+						<a href="http://sos.alabama.gov/newsroom/rss" aria-label="rss icon"><i class="fa fa-rss" title="Alabama Secretary of State RSS Feed" aria-hidden="true"></i></a>
+					</li>
+					<li class="social-toggle">
+						<a href="#" aria-label="share icon"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+
+		<div class="mobile-menu-toggle">
+			<a href="#" role="button" aria-label="mobile menu" aria-expanded="false" aria-controls="mobile-menu"><i class="fa fa-bars" aria-hidden="true"></i></a>
+		</div>
+
+		<div class="social-networks-mobile hidden">
+			<ul>
+				<li class="social-icon">
+					<a href="https://www.facebook.com/alasecretaryofstate/" aria-label="facebook icon" target="_blank" rel="noopener noreferrer"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+				</li>
+				<li class="social-icon">
+					<a href="https://twitter.com/alasecofstate" aria-label="x icon" target="_blank" rel="noopener noreferrer"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+				</li>
+				<li class="social-icon">
+					<a href="https://www.youtube.com/channel/UCDf-1WkR7KJSPGAWsHt3GCg" aria-label="youtube icon" target="_blank" rel="noopener noreferrer"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+				</li>
+				<li class="social-icon">
+					<a href="http://sos.alabama.gov/newsroom/rss" aria-label="rss icon"><i class="fa fa-rss" title="Alabama Secretary of State RSS Feed" aria-hidden="true"></i></a>
+				</li>
+			</ul>
+		</div>
+
+	</div>
+
+	<div class="mobile-menu" id="mobile-menu">
+		  <div>
+    
+<nav role="navigation" aria-label="Navigation menu" id="block-sos-main-menu">
+ <div class="navigation-header"></div>
+            
+  <h2 class="visually-hidden"">Main navigation</h2>
+  
+
+        
+              <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/sos-office" title="SOS Office Information">SOS Office</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/sos-office/biography" title="Biography of Wes Allen">Biography</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/sos-office/history" title="History of SOS">History</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/alabama-votes/voter/register-to-vote" title="Voter Registration">Voter Registration</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/sos-office/fees-funds" title="Fees and Funds Information">Fees &amp; Funds</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/sites/default/files/form-files/FeeSchedule.pdf" title="Fee Schedule">Fee Schedule</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/sites/default/files/CHARTFORFUNDS-12-20-22.pdf" title="Funds Guide">Funds Guide</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/sites/default/files/voter-pdfs/VR%20LIST%20REQUEST%20FORM.pdf" title="Voter List Fee Schedule">Voter List Fee Schedule</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/sos-office/transparency" title="Boards, Commissions, and Committees">Committees</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/sites/default/files/Boards-Commissions-Committees/BoardsandCommissions(withAmendments)02-08-2023.pdf" title="Boards Commissions and Committees Guide">Committees Guide</a>
+              </li>
+          <li>
+        <a href="/sos-office/meeting-minutes" title="Meeting Minutes" data-drupal-link-system-path="sos-office/meeting-minutes">Meeting Minutes</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="" title="Student Center">Student Center</a>
+                                <ul>
+              <li>
+        <a href="https://alison.legislature.state.al.us/legislative-internship-program?search=internship" title="Alabama Legislative Internship">Legislative Internship</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/student-poll-worker-internship">Student Poll Worker Internship</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/newsroom">Newsroom</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/sos-office/event-scheduling-form">Event Scheduling</a>
+              </li>
+          <li>
+        <a href="/act">Alabama Combats Trafficking</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="http://www.alabamavotes.gov/" title="Alabama&#039;s Official Election Center">Elections</a>
+              </li>
+          <li>
+        <a href="" title="Business Services">Services</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/administrative-services/athlete-agents">Athlete Agents</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/administrative-services/authentications">Authentications</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-entities" title="Business Entities">Business Entities</a>
+                                <ul>
+              <li>
+        <a href="https://www.alabamainteractive.org/sos/welcome.action" title="Online Business Services">Online Services</a>
+              </li>
+          <li>
+        <a href="https://www.youtube.com/watch?v=3RZpnJEMBv0" target="_blank">Tutorial</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-entities/domestic-corporations" title="Domestic Corporations">Domestic Corporations</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-entities/foreign-corporations" title="Foreign Corporations">Foreign Corporations</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-entities/homeowners-associations" title="Homeowner&#039;s Associations">Homeowners&#039; Associations</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/sites/default/files/2022-01/2021FeeSchedule.pdf" title="Fees">Fees</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-entities/llcs" title="Domestic and Foreign LLCs">LLCs</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-entities/llps" title="Domestic and Foreign LLPs">LLPs</a>
+              </li>
+          <li>
+        <a href="/business-entities/business-downloads" data-drupal-link-system-path="business-entities/business-downloads">Business Downloads</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/administrative-services/lands" title="Lands">Lands</a>
+              </li>
+          <li>
+        <a href="">Notaries</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/administrative-services/notaries-public">Notaries Public</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/administrative-services/civil-law-notaries">Civil Law Notaries</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/node/1533" title="Oath of Office Forms">Oath of Office Information Center</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/administrative-services/trademarks">Trademarks</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-services" title="Business Services">UCC Services</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/business-services/ucc-home" title="Universal Commercial Code">UCC Home</a>
+              </li>
+          <li>
+        <a href="https://www.alabamainteractive.org/ucc_filing/" title="Online UCC Filings">Online Filings</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-services/filing-fees" title="UCC Paper Form Filing Fees">Filing Fees</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/sites/default/files/form-files/Chapter-820-4-3.pdf" title="Procedures">Procedures</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/business-services/ucc-downloads" title="UCC Downloads">UCC Downloads</a>
+              </li>
+        </ul>
+  
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records">Records</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/public-records-request">Public Records Request</a>
+              </li>
+          <li>
+        <a href="">Records Searches</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/alabama-votes/media/campaign-finance-reports">Campaign Finance Records</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/notary-public">Notary Public Records</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/business-entity-records">Business Entity Records</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/civil-law-notary-records">Civil Law Notary Records</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/ucc-records">UCC Records</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/land-records">Land Records</a>
+              </li>
+          <li>
+        <a href="https://arc-sos.state.al.us/cgi/contrsrh.mbr/input">Statutory Filings</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/trademark-records">Trademark Records</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/athlete-agent-search">Athlete Agents Search</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="https://alison.legislature.state.al.us/code-of-alabama">Code of Alabama</a>
+              </li>
+          <li>
+        <a href="https://arc-sos.state.al.us/cgi/elactnum.mbr/output">Proposed Amendments</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/records-disposition-authority">Disposition Authority</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/legislative-acts">Legislative Acts</a>
+              </li>
+          <li>
+        <a href="http://www.alabamaadministrativecode.state.al.us/docs/sos/index.html">Administrative Code</a>
+                                <ul>
+              <li>
+        <a href="https://www.sos.alabama.gov/government-records/proposed-rules">Proposed Rules</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/government-records/record-of-proclamations">Record of Proclamations</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/city-county-lookup">City - County Lookup</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/Accessibility-Statement">Accessibility Statement</a>
+              </li>
+        </ul>
+  
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/contact">Contact</a>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+
+  </div>
+
+		<div id="block-searchform-mobile" role="search">
+  
+    
+      <form class="search-block-form" data-drupal-selector="search-block-form-2" action="/search/node" method="get" id="search-block-form--2" accept-charset="UTF-8">
+  <div class="js-form-item form-item js-form-type-search form-item-keys js-form-item-keys form-no-label">
+      <label for="edit-keys--2" class="visually-hidden">Search</label>
+        <input title="Enter the terms you wish to search for." data-drupal-selector="edit-keys" type="search" id="edit-keys--2" name="keys" value="" size="15" maxlength="128" class="form-search" placeholder="Search" />
+
+        </div>
+<div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper" id="edit-actions--2"><input value="Search" aria-label="Submit search" data-drupal-selector="edit-submit" type="submit" id="edit-submit--2" class="button js-form-submit form-submit" />
+
+</div>
+
+</form>
+
+  </div>
+
+
+	</div>
+
+	<script>
+
+		(function ($) {
+
+			$( ".mobile-menu-toggle" ).click(function() {
+			  $( ".mobile-menu" ).toggleClass("block");
+			  var $toggle = $( this ).find('a[aria-expanded]');
+			  var isExpanded = $toggle.attr('aria-expanded') === 'true';
+			  $toggle.attr('aria-expanded', !isExpanded);
+			});
+
+			$('.mobile-menu #block-sos-main-menu ul li ul').before('<span class="mobile-menu-slide-open" role="button" aria-expanded="false" aria-label="Expand submenu" tabindex="0"><i class="fa fa-plus" aria-hidden="true"></i></span>');
+
+			$('.mobile-menu #block-sos-main-menu ul li ul').before('<span class="mobile-menu-slide-close hidden" role="button" aria-expanded="true" aria-label="Collapse submenu" tabindex="0"><i class="fa fa-minus" aria-hidden="true"></i></span>');
+
+			$( ".mobile-menu-slide-open" ).click(function() {
+			  $( this ).toggleClass("hidden");
+			  $( this ).attr('aria-expanded', 'true');
+			  $( this ).siblings(".mobile-menu-slide-close").toggleClass("hidden");
+			  $( this ).siblings(".mobile-menu-slide-close").attr('aria-expanded', 'true');
+			  $( this ).siblings("ul").toggleClass("block");
+			});
+
+			$( ".mobile-menu-slide-close" ).click(function() {
+			  $( this ).toggleClass("hidden");
+			  $( this ).attr('aria-expanded', 'false');
+			  $( this ).siblings(".mobile-menu-slide-open").toggleClass("hidden");
+			  $( this ).siblings(".mobile-menu-slide-open").attr('aria-expanded', 'false');
+			  $( this ).siblings("ul").toggleClass("block");
+			});
+
+			$(".search-icon").click(function() { 
+				$(".search-container").css("display","block");
+				$(".search").css("display","block");
+				$(".main-navigation").css("display","none");
+				$(".search-close").css("display","block");
+			});
+
+			$(".search-close").click(function() { 
+				$(".search-container").css("display","none");
+				$(".search").css("display","none");
+				$(".main-navigation").css("display","inline-block");
+				$(".search-close").css("display","none");
+			});
+
+			$(".social-toggle").click(function() { 
+				$(".social-networks-mobile").toggleClass("hidden");
+			});
+
+		})(jQuery);
+
+	</script>
+
+</header>
+
+    <section class="voter-header">
+        <div class="voter-header-container">
+      <div class="voter-branding">
+        <a href="/alabama-votes">Alabama Votes</a>
+      </div>
+
+      <div class="voter-navigation">
+          <div>
+    
+<nav role="navigation" aria-label="Navigation menu" id="block-alabamavotesmenu">
+ <div class="navigation-header"></div>
+            
+  <h2 class="visually-hidden"">Alabama Votes Menu</h2>
+  
+
+        
+              <ul>
+              <li>
+        <a href="/alabama-votes/faqs" target="" data-drupal-link-system-path="node/1549">FAQ</a>
+              </li>
+          <li>
+        <a href="/alabama-votes/voter/election-information" target="" data-drupal-link-system-path="node/1550">Voters</a>
+              </li>
+          <li>
+        <a href="/alabama-votes/candidates/candidate-resources" target="" data-drupal-link-system-path="node/1551">Candidates</a>
+              </li>
+          <li>
+        <a href="/alabama-votes/pac-resources" data-drupal-link-system-path="node/1557">PACs</a>
+              </li>
+          <li>
+        <a href="https://www.sos.alabama.gov/newsroom">Public &amp; Media</a>
+              </li>
+          <li>
+        <a href="/alabama-votes/contact-us" target="" data-drupal-link-system-path="node/1559">Contact Us</a>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+
+  </div>
+
+      </div>
+    </div>
+  </section>
+  
+  <main role="main" class="page">
+
+    <a id="main-content" tabindex="-1"></a>
+    <div class="main-content">
+
+    	      <div class="page-banner voter">
+        <div class="container">
+            <div>
+    <div id="block-sos-page-title">
+  
+    
+      
+  <h1><span property="schema:name">2026 Election Information</span>
+</h1>
+
+
+  </div>
+<div id="block-sos-breadcrumbs">
+  
+    
+        <nav role="navigation" aria-label="Breadcrumb">
+    <h2 class="visually-hidden">Breadcrumb</h2>
+    <ol>
+          <li>
+                  <a href="/">Home</a>
+              </li>
+          <li>
+                  <a href="/alabama-votes">Alabama Votes</a>
+              </li>
+          <li>
+                  <a href="/alabama-votes/voter/election-information">Election Information</a>
+              </li>
+          <li>
+                  2026 Election Information
+              </li>
+        </ol>
+  </nav>
+
+  </div>
+
+  </div>
+
+        </div>
+      </div>
+      
+      
+      <div class="container main-sidebar">
+
+        
+
+        <div class="content">
+            <div>
+    <div data-drupal-messages-fallback class="hidden"></div><div id="block-sos-content">
+  
+    
+      <article data-history-node-id="3447" about="/alabama-votes/voter/election-information/2026" typeof="schema:WebPage">
+
+  
+      <span property="schema:name" content="2026 Election Information" class="hidden"></span>
+
+
+  
+  <div>
+    
+            <div property="schema:text"><p>Welcome to the 2026 Election Information page! This page is the primary resource on the World Wide Web for information on elections in Alabama that are scheduled for the year 2026. The purpose of this page is to provide you a quick reference to answer questions you may have about such topics as voter registration, the dates of the elections, and voting procedures.<br><br>Use the links below to explore the information we have already posted and return on a regular basis to keep up with new information we will be posting for elections in 2026.</p><hr><h3>General Information and Resources</h3><blockquote><p><a href="/sites/default/files/election-2026/AdminCalendar%20-2026.pdf">Administrative Calendar</a></p><p><a href="/sites/default/files/election-2026/2026%20FCPA%20Filing%20Calendar%20(2).pdf">2026 FCPA Filing Calendar</a></p><p><a href="/sites/default/files/election-2026/2026-VoterGuide.pdf">2026 Voter Guide</a></p><p><a href="/sites/default/files/election-2026/2026CandidateFilingGuide.pdf">2026 Candidate Filing Guide</a></p><p><a href="/sites/default/files/election-2026/PhotoVoterIDGuide.pdf">Photo Voter ID Guide</a></p><p>Independent Candidates</p><ul><li style="margin-bottom:11px;" data-list-item-id="e1ff7b3e380ae018d2c75ed98f52f06aa"><a href="/sites/default/files/election-2026/2026%20Independent%20Candidate%20Ballot%20Access.pdf">Information for prospective independent candidates</a></li><li style="margin-bottom:11px;" data-list-item-id="e74dd95f06551270de2ef9ed741add763"><a href="/sites/default/files/election-2026/Independent%20Candidate%20Petition%20Form_0.pdf">Sample Petition - Independent Candidate</a></li><li style="margin-bottom:11px;" data-list-item-id="e54f3275a53a1ea1dc9c36c8cb075b81d"><a href="/sites/default/files/election-2026/Administrative%20rule%20governing%20ballot%20access%20petitions%20for%20prospective%20independent%20candidates.pdf"><span style="background-color:white;color:#124b91;font-family:&quot;Lora&quot;,serif;font-size:12.0pt;line-height:normal;tab-stops:list .5in;">Administrative rule governing ballot access petitions for prospective independent candidates</span></a></li><li style="margin-bottom:11px;" data-list-item-id="e87585a7f2db3c06152d23c16da2cd16b"><span style="background-color:white;color:black;font-family:&quot;Lora&quot;,serif;font-size:12.0pt;line-height:normal;tab-stops:list .5in;"><strong>Ballot access signature requirements for potential independent candidates</strong>&nbsp;<strong>seeking district offices at the federal or state levels in Alabama&nbsp;</strong>(i.e., U.S. Congress; State Senate; State House, and State School Board) are being recalculated by the Elections Division.&nbsp; The revised signature requirements will reflect the new district lines approved by the Alabama Legislature this year based on the 2020 U.S. Census.</span><span style="background-color:white;color:red;font-family:&quot;Lora&quot;,serif;font-size:12.0pt;line-height:normal;tab-stops:list .5in;"><strong>&nbsp;If you have a question about the signature requirement, please contact Jeff Elrod&nbsp;at the Elections Division by email at&nbsp;</strong></span><a href="mailto:jeff.elrod@sos.alabama.gov" target="_blank"><span style="background-color:white;color:#124b91;font-family:&quot;Lora&quot;,serif;font-size:12.0pt;line-height:normal;tab-stops:list .5in;"><strong>Jeff.Elrod@sos.alabama.gov</strong></span></a><span style="background-color:white;color:red;font-family:&quot;Lora&quot;,serif;font-size:12.0pt;line-height:normal;tab-stops:list .5in;"><strong>&nbsp;or by phone at 334-353-7177.</strong></span></li></ul><p>Minor Political Parties</p><ul><li style="margin-bottom:11px;" data-list-item-id="e5b881446af83856a34c1aca4071fa741"><a href="/sites/default/files/election-2026/2026%20Minor%20Party%20Ballot%20Access.pdf">Information for prospective minor political parties</a></li><li style="margin-bottom:11px;" data-list-item-id="e7f6dadba5eb3fc826620d6e66e31a297"><a href="/sites/default/files/election-2026/Administrative%20rule%20governing%20ballot%20access%20petitions%20for%20prospective%20minor%20political%20parties.pdf"><span style="background-color:white;color:#124b91;font-family:&quot;Lora&quot;,serif;font-size:12.0pt;line-height:normal;tab-stops:list .5in;">Administrative rule governing ballot access petitions for prospective minor political parties</span></a></li><li style="margin-bottom:11px;" data-list-item-id="e32e274cc7345a7d8915999468812a702"><span style="background-color:white;color:black;font-family:&quot;Lora&quot;,serif;font-size:12.0pt;line-height:normal;tab-stops:list .5in;"><strong>Ballot access signature requirements for potential minor political parties</strong>&nbsp;<strong>seeking to nominate candidates for district offices at the federal or state levels in Alabama&nbsp;</strong>(i.e., U.S. Congress; State Senate; State House, and State School Board) are being recalculated by the Elections Division.&nbsp;The revised signature requirements will reflect the new district lines approved by the Alabama Legislature this year based on the 2020 U.S. Census.</span><span style="background-color:white;color:red;font-family:&quot;Lora&quot;,serif;font-size:12.0pt;line-height:normal;tab-stops:list .5in;"><strong> If you have a question about the signature requirement, please contact Jeff Elrod&nbsp;at the Elections Division by email at&nbsp;</strong></span><a href="mailto:jeff.elrod@sos.alabama.gov" target="_blank"><span style="background-color:white;color:#124b91;font-family:&quot;Lora&quot;,serif;font-size:12.0pt;line-height:normal;tab-stops:list .5in;"><strong>Jeff.Elrod@sos.alabama.gov</strong></span></a><span style="background-color:white;color:red;font-family:&quot;Lora&quot;,serif;font-size:12.0pt;line-height:normal;tab-stops:list .5in;"><strong>&nbsp;or by phone at 334-353-7177.</strong></span></li></ul><p>Municipal Resources</p><ul><li style="margin-bottom:11px;" data-list-item-id="e15253265f220a4761c51feab94b82f42"><a href="/sites/default/files/election-2026/2026%20City%20of%20Montgomery%20Special%20Election%20FCPA%20Calendar.pdf">2026 City of Montgomery Special Election FCPA Filing Calendar</a></li><li data-list-item-id="e1b11542618420399fc6c544a416e8575"><a href="/sites/default/files/election-2026/2026MunicipalElectionFCPACalendar.pdf">2026 Municipal Election FCPA Filing Calendar</a></li></ul></blockquote><hr><h3>Special General Election House District 63 – January 13, 2026</h3><blockquote><p><a href="/sites/default/files/election-2026/State%20Certification%20of%20Democratic%20General%20Candidates%20HD%2063%2011.14.2025.pdf">State Certification of Democratic General Candidate</a> (certified by State 11/14/2025)</p><p><a href="/sites/default/files/election-2026/State%20Certification%20of%20Republican%20General%20Candidates%20HD%2063%2011.14.2025.pdf">State Certification of Republican General Candidate</a> (certified by State 11/14/2025)</p><p>Unofficial Election Night Results (<a href="/sites/default/files/election-2026/HouseDistrict-63-SpecialGeneralElection-UnofficialResults.xlsx">Excel file with vote totals</a>)</p><p><a href="/sites/default/files/election-2026/StateCertificationofGeneralElectionResults-HD-63.pdf">State Certification of General Election Results</a> (certified by State Canvassing Board 2/3/2026)</p></blockquote><hr><h3>Special General Election House District 38 – February 3, 2026</h3><blockquote><p><a href="/sites/default/files/election-2026/StateCertificationofDemocraticGeneralCandidate-HD-38.pdf">State Certification of Democratic General Candidate</a> (certified by State 12/5/2025)</p><p><a href="/sites/default/files/election-2026/StateCertificationofRepublicanGeneralCandidate-HD-38.pdf">State Certification of Republican General Candidate</a> (certified by State 12/5/2025)</p><p><a href="/sites/default/files/election-2026/State%20Certification%20of%20General%20Election%20Results.pdf">State Certification of General Election Results</a> (certified by State Canvassing Board 2/25/2026)</p></blockquote><hr><h3>Primary Election – May 19, 2026</h3><blockquote><p><a href="https://www.sos.alabama.gov/alabama-votes/2026-primary-election-sample-ballots">Sample Ballots</a></p><p><a href="/sites/default/files/election-2026/2026RepublicanCertification.pdf">Republican Party Certification of Candidates</a> (certified by Party 2/25/2026)</p><p><a href="https://www.sos.alabama.gov/sites/default/files/election-2026/Democratic%20Certifcation.pdf">Democratic Party Certification of Candidates</a> (certified by Party 2/26/2026)</p><p><a href="/sites/default/files/election-2026/Amended2026RepublicanCertification.pdf">Republican Party Amended Certification of Candidates</a> (certified by Party 3/4/2026)</p><p><a href="https://www.sos.alabama.gov/sites/default/files/election-2026/Amended2026DemocratCertification.pdf">Democratic Party Amended Certification of Candidates</a> (certified by Party 3/4/2026)</p><p><a href="https://www.sos.alabama.gov/sites/default/files/election-2026/2026StateCertificationOfRepublicanCandidates.pdf">State Certification of Republican Candidates</a> (certified by State 3/6/2026)</p><p><a href="https://www.sos.alabama.gov/sites/default/files/election-2026/2026StateCertificationOfDemocraticCandidates.pdf">State Certification of Democratic Candidates</a> (certified by State 3/6/2026)</p><p><a href="https://www.sos.alabama.gov/sites/default/files/election-2026/2026StateCertificationOfStatewideAmendments.pdf">State Certification of Statewide Amendments</a> (certified by State 3/6/2026)</p><p><a href="/sites/default/files/election-2026/DemocraticPartyCertificationofCandidates2026PrimaryRunoff.pdf">Certification of Results - Democratic Party</a> (certified by party 5/27/2026)</p><p><a href="/sites/default/files/election-2026/RepublicanPartyCertificationofCandidates2026PrimaryNominee.pdf">Certification of Results - Republican Party</a> (certified by party 5/27/2026)</p><p>Certification of Results - Democratic Party (<a href="/sites/default/files/election-2026/2026%20Democratic%20Primary%20Election%20Results.xlsx">Excel file with vote totals</a>) (certified by party 6/2/2026)</p><p>Certification of Results- Republican Party (<a href="https://www.sos.alabama.gov/sites/default/files/05-29-2026/GOP%20Results.xlsx">Excel file with vote totals</a>) (certified by party 6/2/2026)</p><p><a href="/sites/default/files/election-2026/State%20Canvassing%20-%20Constitutional%20Amendments.pdf">State Certification of Constitutional Amendments</a> (certified by State Canvassing Board 6/10/2026)</p></blockquote><hr><h3>Primary Runoff Election – June 16, 2026</h3><blockquote><p><a href="https://www.sos.alabama.gov/alabama-votes/2026-primary-runoff-election-sample-ballots">Sample Ballots</a></p><p><a href="/sites/default/files/election-2026/DemocraticPartyCertificationofCandidates2026PrimaryRunoff.pdf">Certification of Democratic Party Candidates</a> (certified by party on 5/27/2026)</p><p><a href="/sites/default/files/election-2026/RepublicanPartyCertificationofCandidates2026PrimaryRunoff.pdf">Certification of Republican Party Candidates</a> (certified by party on 5/27/2026)</p><p><a href="/sites/default/files/election-2026/AmendedDemocraticPartyCertificationofCandidates2026PrimaryRunoff.pdf">Amended Certification of Democratic Party Candidates</a> (certified by party on 5/27/2026)</p><p><a href="/sites/default/files/election-2026/CertificationofResults-RepublicanParty-PrimaryRunoff.pdf">Certification of Results - Republican Party</a> (certified by party 6/24/2026)</p><p><a href="/sites/default/files/election-2026/CertificationofResults-DemocraticParty-PrimaryRunoff.pdf">Certification of Results - Democratic Party</a> (certified by party 7/1/2026)</p><p>Certification of Results - Democratic Party (<a href="/sites/default/files/election-2026/2026%20Democratic%20Primary%20Runoff%20Election%20Results.xlsx">Excel file with vote totals</a>) (certified by party 7/1/2026)</p></blockquote><hr><h3>Special Primary Election Congressional Districts 1, 2, 6, and 7 – August 11, 2026</h3><blockquote><p><a href="https://www.sos.alabama.gov/alabama-votes/2026-special-primary-election-sample-ballots">Sample Ballots</a></p><p><a href="/sites/default/files/election-2026/Amended2026SpecialPrimaryElectionCalendar_05.27.2026.pdf">Special Primary Election Calendar</a></p><p><a href="https://www.sos.alabama.gov/sites/default/files/06-03-2026/Republican%20Certification%20of%20Candidates.pdf">Republican Party Certification of Candidates</a> (certified by Party 5/26/2026)</p><p><a href="https://www.sos.alabama.gov/sites/default/files/06-03-2026/Democratic%20Certification%20of%20Candidates.pdf">Democratic Party Certification of Candidates</a> (certified by Party 5/26/2026)</p><p><a href="/sites/default/files/election-2026/StateCertificationofDemocraticCandidatesCongressionalDistricts.pdf">State Certification of Democratic Candidates</a> (certified by State 6/3/2026)</p><p><a href="/sites/default/files/election-2026/StateCertificationofRepublicanCandidatesCongressionalDistricts.pdf">State Certification of Republican Candidates</a> (certified by State 6/3/2026)</p><p><a href="/sites/default/files/election-2026/DemocraticCertificationofResultsforSpecialPrimary.pdf">Certification of Results - Democratic Party</a> (certified by party 8/24/2026)</p></blockquote><hr><h3>Special Primary Election State Senate Districts 25 and 26 – August 11, 2026</h3><blockquote><p><a href="https://www.sos.alabama.gov/sites/default/files/05-29-2026/2026%20State%20Senate%20Special%20Primary%20Election%20Calendar%2005.29.2026.pdf">Special Primary Election Calendar</a></p><p><a href="/sites/default/files/election-2026/RepublicanCertificationofCandidates-SD25.pdf">Republican Party Certification of Candidates for State Senate District 25</a> (certified by Party 6/2/2026)</p><p><a href="/sites/default/files/election-2026/DemocratCertificationofCandidates-SD25and26.pdf">Democratic Party Certification of Candidates for State Senate District 25 and 26</a> (certified by Party 6/2/2026)</p><p><a href="/sites/default/files/election-2026/StateCertificationofDemocraticCandidates-SD25and26.pdf">State Certification of Democratic Candidates</a> (certified by State 6/3/2026)</p><p><a href="/sites/default/files/election-2026/StateCertificationofRepublicanCandidates-SD25and26.pdf">State Certification of Republican Candidates</a> (certified by State 6/3/2026)</p></blockquote><hr><h3>General Election – November 3, 2026</h3><blockquote><p><a href="https://www.sos.alabama.gov/alabama-votes/2026-general-election-sample-ballots">Sample Ballots</a></p><p><a href="/sites/default/files/election-2026/CertificationofRepublicanPartyCandidates-2026General.pdf">Certification of Republican Party Candidates</a> (certified by party 6/30/2026)</p><p><a href="/sites/default/files/election-2026/CertificationofDemocraticPartyCandidates-2026General.pdf">Certification of Democratic Party Candidates</a> (certified by party 7/1/2026)</p><p><a href="/sites/default/files/election-2026/AmendedCertificationofDemocraticPartyCandidates.pdf">Amended Certification of Democratic Party Candidates</a> (certified by party 8/24/2026)</p><p><a href="/sites/default/files/election-2026/2026GeneralElectionStateCertificationofConstitutionalAmendments.pdf">State Certification of Constitutional Amendments</a> (certified by State 8/26/2026)</p><p><a href="/sites/default/files/election-2026/2026GeneralElectionStateCertificationofDemocraticCandidates.pdf">State Certification of Democratic Party Candidates</a> (certified by State 8/26/2026)</p><p><a href="/sites/default/files/election-2026/2026GeneralElectionStateCertificationofRepublicanCandidates.pdf">State Certification of Republican Party Candidates</a> (certified by State 8/26/2026)</p><p><a href="/sites/default/files/election-2026/2026GeneralElection-StateCertificationofIndependentCandidate.pdf">State Certification of Independent Candidate</a> (certified by State 8/26/2026)</p><p><a href="/sites/default/files/election-2026/Amended_2026_Republican_Certification.pdf">Republican Party Amended Certification of Candidates</a> (received by Party 8/28/2026)</p><p><a href="/sites/default/files/election-2026/ALGOPAmendedCertification-SD25.pdf">Republican Party Amended Certification of Candidates</a> (certified by Party 9/2/2026)</p></blockquote></div>
+      
+      <div>
+              <div>  <div class="paragraph paragraph--type--mobile-id-location paragraph--view-mode--default">
+          
+      </div>
+</div>
+          </div>
+  
+  </div>
+
+</article>
+
+  </div>
+
+  </div>
+
+        </div>
+
+        <div class="sidebar-navigation">
+            <div>
+    
+<nav role="navigation" aria-label="Navigation menu" id="block-voters">
+ <div class="navigation-header"></div>
+      
+  <h2">Voters</h2>
+  
+
+        
+              <ul>
+              <li>
+        <a href="/alabama-votes/voter/absentee-voting" target="" data-drupal-link-system-path="node/1545">Absentee Voting</a>
+              </li>
+          <li>
+        <a href="/alabama-votes/voter/assistance-disability" title="Assistance for Voters with Disabilities" data-drupal-link-system-path="node/2694">Assistance for Voters with Disabilities</a>
+              </li>
+          <li>
+        <a href="/city-county-lookup">County Election Officials</a>
+              </li>
+          <li>
+        <a href="/alabama-votes/voter/election-information" target="" data-drupal-link-system-path="node/1550">Election Information</a>
+              </li>
+          <li>
+        <a href="/alabama-votes/voter/election-data" target="" data-drupal-link-system-path="alabama-votes/voter/election-data">Elections Data</a>
+              </li>
+          <li>
+        <a href="/alabama-votes/elected-official-map" target="" data-drupal-link-system-path="node/1700">Find Your Elected Official Map</a>
+              </li>
+          <li>
+        <a href="https://myinfo.alabamavotes.gov/" target="">Find Your Polling Location</a>
+              </li>
+          <li>
+        <a href="/alabama-votes/voter/military-overseas-voting" target="" data-drupal-link-system-path="node/1561">Military/Overseas Voting</a>
+              </li>
+          <li>
+        <a href="/alabama-votes/voter/pollworker" title="Poll Worker Information" data-drupal-link-system-path="node/2681">Poll Worker Information</a>
+              </li>
+          <li>
+        <a href="https://myinfo.alabamavotes.gov/" target="">Provisional Ballot Status</a>
+              </li>
+          <li>
+        <a href="https://arc-sos.state.al.us/cgi/vetform.mbr/form" title="Vote in Honor of a Veteran">Vote in Honor of a Veteran</a>
+              </li>
+          <li>
+        <a href="/alabama-votes/voter/voter-id" target="" data-drupal-link-system-path="node/1571">Voter ID requirements</a>
+              </li>
+          <li>
+        <a href="/alabama-votes/voter/register-to-vote" target="" data-drupal-link-system-path="node/1544">Voter Registration</a>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+
+  </div>
+
+        </div>
+
+      </div>
+
+            
+    </div>
+  </main>
+
+<section class="footer">
+	<div class="container">
+		  <div>
+    
+<nav role="navigation" aria-label="Navigation menu" id="block-sos-footer">
+ <div class="navigation-header"></div>
+            
+  <h2 class="visually-hidden"">Footer menu</h2>
+  
+
+        
+              <ul class="footer-menu">
+              <li>
+        <a href="http://www.info.alabama.gov/">Alabama Directory</a>
+              </li>
+          <li>
+        <a href="https://www.alabamainteractive.org/sos/" target="">Online Services</a>
+              </li>
+          <li>
+        <a href="http://alabama.gov">Alabama.gov</a>
+              </li>
+          <li>
+        <a href="http://isd.alabama.gov/isd/statements.aspx">Statements &amp; Policies</a>
+              </li>
+          <li>
+        <a href="http://sos.alabama.gov/newsroom/rss" target="">Feeds</a>
+              </li>
+          <li>
+        <a href="/contact" data-drupal-link-system-path="node/7">Contact Us</a>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+
+  </div>
+
+		<div class="contact-menu">
+			<ul>
+				<li>P.O. Box 5616 Montgomery, AL 36103-5616</li>
+				<li>Phone: (334) 242-7200</li>
+				<li>Fax: (334) 242-4993</li>
+			</ul>
+		</div>
+	</div>
+</section>
+
+<!-- Status Cake token do not remove
+1bf7cea2-2458-4f1f-a893-bdb57fa62adb 
+-->
+
+	
+  </div>
+
+    
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","pathPrefix":"","currentPath":"node\/3447","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"statistics":{"data":{"nid":"3447"},"url":"\/modules\/contrib\/statistics\/statistics.php"},"ajaxTrustedUrl":{"\/search\/node":true},"user":{"uid":0,"permissionsHash":"ab5f99fc7d7c0d53db9fe7c2ae74618ef36618f58ac4b11dbcb871b4a49e7ddb"}}</script>
+<script src="/core/misc/drupalSettingsLoader.js?v=11.4.11"></script>
+<script src="/core/misc/drupal.js?v=11.4.11"></script>
+<script src="/core/misc/drupal.init.js?v=11.4.11"></script>
+<script src="/modules/contrib/statistics/statistics.js?v=11.4.11"></script>
+
+  </body>
+</html>

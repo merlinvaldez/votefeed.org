@@ -1,0 +1,2656 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="google-translate-customization" content="87dce3d3779adf85-da78af4e2af4c4dd-g2686ecbf8bb49f9c-18"></meta>
+
+<meta http-equiv="Reply-To:" content="DivElections@mail.dos.state.fl.us">
+<meta http-equiv="Keywords" content="Candidates, Candidate for President, Candidate for Senate, Candidate for the Senate, Candidates for the House or Representatives, Florida Candidates, ">
+<title>Candidate Listing - Florida Division of Elections - Department of State</title>
+<link type="text/css" rel="stylesheet" media="print" href="/css/print.css">
+<!--[if IE]><link rel="stylesheet" type="text/css" href="/css/printIE.css" media="print"><![endif]-->
+
+<style type="text/css"> 
+@import "/css/main.css"; /*IE and NN6x styles*/
+
+@import "/css/candidate.css"; /*IE and NN6x styles*/
+
+</style>
+<!--<script type="text/javascript" src="js/core.js"></script><!--load function to load all scripts-->
+<!--<script type="text/javascript" src="js/smallText.js"></script><!--load function to load all scripts-->
+<script type="text/javascript" src="/js/global.js"></script><!--load function to load all scripts-->
+<script type="text/javascript" src="/js/bookmarks.js"></script><!--bookmarks-->
+
+</head>
+
+<body>
+
+
+
+
+<div id="wrapper">
+
+	<div id="content"> <!--This is the beginning of the content-->
+		<div id="mainContentWrap">
+				  
+		  <div id="rightContent">
+		    <table width="95%">
+              <tr>
+                <td>
+                  
+					<h2 style="text-align:center">Candidate Listing for 2026 General Election</h2>
+					
+					
+					<div class="float-right"><input type="button" onClick="parent.location='Index.asp'" value="Change Election" name="button" /></div>
+                    
+                 
+				  
+                    <form name="CandSelection" action="canlist.asp" method="post">
+                      <input type="hidden" name="elecid" value="20261103-GEN" />
+                      
+                      <table border=1 cellpadding=3>
+      	   <tr>
+      	   	<td width=54%><font size="2" FACE="Arial,Helvetica,Univers,Zurich BT">
+	        
+		Group:		
+		<select name="OfficeGroup" size="1" style="min-width:283px">
+          <option 
+ 			
+ 			value="ALL">ALL </option>
+          
+          <option 
+	         selected 
+	        value="FED">Federal Offices </option>
+          
+          <option 
+	        
+	        value="CAB">Governor and Cabinet </option>
+          
+          <option 
+	        
+	        value="ATT">State Attorney / Public Defender </option>
+          
+          <option 
+	        
+	        value="LEG">Senate and House </option>
+          
+          <option 
+	        
+	        value="JUD">Judicial Offices </option>
+          
+          <option 
+	        
+	        value="SPD">Special Districts </option>
+          
+        </select></td>
+			
+
+			
+
+      	   	<td width=46%><font size="2" FACE="Arial,Helvetica,Univers,Zurich BT">
+	        Status:&nbsp;&nbsp;<SELECT NAME="StatusCode" >
+	               <option 
+ 			   
+ 			    value="ALX">ALL (except WIT/DNQ) 		       </option>
+ 	               <option 
+ 			   
+ 			    value="ALL">ALL 		       </option>
+
+			<option 
+	        
+	        value="DEF">Defeated	        </option>	 
+
+			<option 
+	        
+	        value="ELE">Elected/Retained/Unopposed	        </option>	 
+
+			<option 
+	         selected 
+	        value="QUA">Qualified	        </option>	 
+
+			<option 
+	        
+	        value="XTL">Transferred to Local	        </option>	 
+
+			<option 
+	        
+	        value="WIT">Withdrawn/Did Not Qualify	        </option>	 
+
+	     </select></font>
+		</td></tr>
+		<tr>	     
+	        <td><font size="2" FACE="Arial,Helvetica,Univers,Zurich BT">Office:   	   	
+
+<select name="OfficeCode"  size="1" style="min-width:276px">
+  <option 
+ 			
+ 			value="ALL">ALL </option>
+  
+  <option 
+	        
+	        value="USS">United States Senator                              </option>
+  
+  <option 
+	        
+	        value="USR">United States Representative                       </option>
+  
+  <option 
+	        
+	        value="GOV">Governor                                           </option>
+  
+  <option 
+	        
+	        value="ATG">Attorney General                                   </option>
+  
+  <option 
+	        
+	        value="CFO">Chief Financial Officer                            </option>
+  
+  <option 
+	        
+	        value="AGR">Commissioner of Agriculture                        </option>
+  
+  <option 
+	        
+	        value="STA">State Attorney                                     </option>
+  
+  <option 
+	        
+	        value="PUB">Public Defender                                    </option>
+  
+  <option 
+	        
+	        value="STS">State Senator                                      </option>
+  
+  <option 
+	        
+	        value="STR">State Representative                               </option>
+  
+  <option 
+	        
+	        value="SCJ">Supreme Court Justice                              </option>
+  
+  <option 
+	        
+	        value="DCA">District Court of Appeal                           </option>
+  
+  <option 
+	        
+	        value="CTJ">Circuit Judge                                      </option>
+  
+  <option 
+	        
+	        value="CHI">Chipola River S&W Conserv. Dist </option>
+  
+  <option 
+	        
+	        value="EWC">Englewood Water District                           </option>
+  
+  <option 
+	        
+	        value="GBA">Gasparilla Island Bridge Authority                 </option>
+  
+  <option 
+	        
+	        value="ECW">Lehigh Acres Municipal Services Improvement Dist </option>
+  
+  <option 
+	        
+	        value="LOX">Loxahatchee River Environmental Dist </option>
+  
+  <option 
+	        
+	        value="MED">Mediterra Community Development District </option>
+  
+  <option 
+	        
+	        value="PLB">Port LaBelle Community Dev Dist </option>
+  
+  <option 
+	        
+	        value="SEB">Sebastian Inlet Tax District                       </option>
+  
+  <option 
+	        
+	        value="TOL">Tolomato Community Development District </option>
+  
+</select>
+	        </font>
+		</td>
+
+ 		
+     	   	<td><font size="2" FACE="Arial,Helvetica,Univers,Zurich BT">
+     	   	County:&nbsp;&nbsp;<SELECT NAME="CountyCode" ><option 
+ 			
+ 			value="ALL">ALL </option>
+
+                     <option 
+	        
+	        value="ALA">
+	        Alachua                   
+	        </option>	 
+
+                     <option 
+	        
+	        value="BAK">
+	        Baker                     
+	        </option>	 
+
+                     <option 
+	        
+	        value="BAY">
+	        Bay                       
+	        </option>	 
+
+                     <option 
+	        
+	        value="BRA">
+	        Bradford                  
+	        </option>	 
+
+                     <option 
+	        
+	        value="BRE">
+	        Brevard                   
+	        </option>	 
+
+                     <option 
+	        
+	        value="BRO">
+	        Broward                   
+	        </option>	 
+
+                     <option 
+	        
+	        value="CAL">
+	        Calhoun                   
+	        </option>	 
+
+                     <option 
+	        
+	        value="CHA">
+	        Charlotte                 
+	        </option>	 
+
+                     <option 
+	        
+	        value="CIT">
+	        Citrus                    
+	        </option>	 
+
+                     <option 
+	        
+	        value="CLA">
+	        Clay                      
+	        </option>	 
+
+                     <option 
+	        
+	        value="CLL">
+	        Collier                   
+	        </option>	 
+
+                     <option 
+	        
+	        value="CLM">
+	        Columbia                  
+	        </option>	 
+
+                     <option 
+	        
+	        value="DES">
+	        DeSoto                    
+	        </option>	 
+
+                     <option 
+	        
+	        value="DIX">
+	        Dixie                     
+	        </option>	 
+
+                     <option 
+	        
+	        value="DUV">
+	        Duval                     
+	        </option>	 
+
+                     <option 
+	        
+	        value="ESC">
+	        Escambia                  
+	        </option>	 
+
+                     <option 
+	        
+	        value="FLA">
+	        Flagler                   
+	        </option>	 
+
+                     <option 
+	        
+	        value="FRA">
+	        Franklin                  
+	        </option>	 
+
+                     <option 
+	        
+	        value="GAD">
+	        Gadsden                   
+	        </option>	 
+
+                     <option 
+	        
+	        value="GIL">
+	        Gilchrist                 
+	        </option>	 
+
+                     <option 
+	        
+	        value="GLA">
+	        Glades                    
+	        </option>	 
+
+                     <option 
+	        
+	        value="GUL">
+	        Gulf                      
+	        </option>	 
+
+                     <option 
+	        
+	        value="HAM">
+	        Hamilton                  
+	        </option>	 
+
+                     <option 
+	        
+	        value="HAR">
+	        Hardee                    
+	        </option>	 
+
+                     <option 
+	        
+	        value="HEN">
+	        Hendry                    
+	        </option>	 
+
+                     <option 
+	        
+	        value="HER">
+	        Hernando                  
+	        </option>	 
+
+                     <option 
+	        
+	        value="HIG">
+	        Highlands                 
+	        </option>	 
+
+                     <option 
+	        
+	        value="HIL">
+	        Hillsborough              
+	        </option>	 
+
+                     <option 
+	        
+	        value="HOL">
+	        Holmes                    
+	        </option>	 
+
+                     <option 
+	        
+	        value="IND">
+	        Indian River              
+	        </option>	 
+
+                     <option 
+	        
+	        value="JAC">
+	        Jackson                   
+	        </option>	 
+
+                     <option 
+	        
+	        value="JEF">
+	        Jefferson                 
+	        </option>	 
+
+                     <option 
+	        
+	        value="LAF">
+	        Lafayette                 
+	        </option>	 
+
+                     <option 
+	        
+	        value="LAK">
+	        Lake                      
+	        </option>	 
+
+                     <option 
+	        
+	        value="LEE">
+	        Lee                       
+	        </option>	 
+
+                     <option 
+	        
+	        value="LEO">
+	        Leon                      
+	        </option>	 
+
+                     <option 
+	        
+	        value="LEV">
+	        Levy                      
+	        </option>	 
+
+                     <option 
+	        
+	        value="LIB">
+	        Liberty                   
+	        </option>	 
+
+                     <option 
+	        
+	        value="MAD">
+	        Madison                   
+	        </option>	 
+
+                     <option 
+	        
+	        value="MAN">
+	        Manatee                   
+	        </option>	 
+
+                     <option 
+	        
+	        value="MRN">
+	        Marion                    
+	        </option>	 
+
+                     <option 
+	        
+	        value="MRT">
+	        Martin                    
+	        </option>	 
+
+                     <option 
+	        
+	        value="DAD">
+	        Miami-Dade                
+	        </option>	 
+
+                     <option 
+	        
+	        value="MON">
+	        Monroe                    
+	        </option>	 
+
+                     <option 
+	        
+	        value="NAS">
+	        Nassau                    
+	        </option>	 
+
+                     <option 
+	        
+	        value="OKA">
+	        Okaloosa                  
+	        </option>	 
+
+                     <option 
+	        
+	        value="OKE">
+	        Okeechobee                
+	        </option>	 
+
+                     <option 
+	        
+	        value="ORA">
+	        Orange                    
+	        </option>	 
+
+                     <option 
+	        
+	        value="OSC">
+	        Osceola                   
+	        </option>	 
+
+                     <option 
+	        
+	        value="PAL">
+	        Palm Beach                
+	        </option>	 
+
+                     <option 
+	        
+	        value="PAS">
+	        Pasco                     
+	        </option>	 
+
+                     <option 
+	        
+	        value="PIN">
+	        Pinellas                  
+	        </option>	 
+
+                     <option 
+	        
+	        value="POL">
+	        Polk                      
+	        </option>	 
+
+                     <option 
+	        
+	        value="PUT">
+	        Putnam                    
+	        </option>	 
+
+                     <option 
+	        
+	        value="SAN">
+	        Santa Rosa                
+	        </option>	 
+
+                     <option 
+	        
+	        value="SAR">
+	        Sarasota                  
+	        </option>	 
+
+                     <option 
+	        
+	        value="SEM">
+	        Seminole                  
+	        </option>	 
+
+                     <option 
+	        
+	        value="STJ">
+	        St. Johns                 
+	        </option>	 
+
+                     <option 
+	        
+	        value="STL">
+	        St. Lucie                 
+	        </option>	 
+
+                     <option 
+	        
+	        value="SUM">
+	        Sumter                    
+	        </option>	 
+
+                     <option 
+	        
+	        value="SUW">
+	        Suwannee                  
+	        </option>	 
+
+                     <option 
+	        
+	        value="TAY">
+	        Taylor                    
+	        </option>	 
+
+                     <option 
+	        
+	        value="UNI">
+	        Union                     
+	        </option>	 
+
+                     <option 
+	        
+	        value="VOL">
+	        Volusia                   
+	        </option>	 
+
+                     <option 
+	        
+	        value="WAK">
+	        Wakulla                   
+	        </option>	 
+
+                     <option 
+	        
+	        value="WAL">
+	        Walton                    
+	        </option>	 
+
+                     <option 
+	        
+	        value="WAS">
+	        Washington                
+	        </option>	 
+
+	     </select></font>
+		
+		</td>		</tr>
+		<tr>	     
+	        <td><font size="2" FACE="Arial,Helvetica,Univers,Zurich BT">	     
+	     Last Name Like: </font><input type="text" name=CanName value="" size=26 maxlength=25></input>		</td>	
+
+		<td><font size="2" FACE="Arial,Helvetica,Univers,Zurich BT">
+
+	      Order by:</font>
+		  <select name="OrderBy" >
+            <option value="NAM" 
+	        >Name</option>
+            <option value="PTY" 
+	        >Party / Name</option>
+          </select></td>
+	  </tr>     
+	<tr>
+      	   	<td colspan="2" align="center"><font size="2" FACE="Arial,Helvetica,Univers,Zurich BT">
+	        <p valign="center"><font size="2" FACE="Arial,Helvetica,Univers,Zurich BT">	        
+			
+			<ul class="redStar">
+		<li>You can narrow your search results for candidates by county.  A search by county will provide a list of candidates running for offices for which all or a portion of the geographical area represented by the office is located in that county.  For information on county or municipal candidates, please contact your local <a href="https://dos.myflorida.com/elections/contacts/supervisor-of-elections/"> Supervisor of Elections</a>.</li>
+		</ul>
+		<p align="center">
+			<input type="submit" name="FormsButton1" value="RUN QUERY">&nbsp;</p></font>              </td>
+	 </tr></table>
+                      
+	      <br><center><font size=+1 color="#CCOOOO" face=arial><b>United States Senator                             
+  		      </b></font>
+	        	      
+	      <table class="results" border=1 cellpadding=4  align=center >
+		<tr bgcolor="#D7DBFD">
+		    
+	    	    <th>Candidate</th>    
+	    	    <th>Status</th>    
+	    	    <th>Primary</th>    
+		
+	    	    <th>General</th>    
+	</tr>
+	  
+
+
+	  
+	<tr bgcolor="White">
+	
+	    <td align=left><a href="CanDetail.asp?account=89955">
+	      
+	          </a><a href="CanDetail.asp?account=89955">Gillespie</a><a href="CanDetail.asp?account=89955">,
+            
+            </a><a href="CanDetail.asp?account=89955">Neil</a><a href="CanDetail.asp?account=89955">&nbsp;J.</a>
+	        (NPA)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    <td align=left><a href="CanDetail.asp?account=89119">
+	      
+	          </a><a href="CanDetail.asp?account=89119">Moody</a><a href="CanDetail.asp?account=89119">,
+            
+            </a><a href="CanDetail.asp?account=89119">Ashley</a><a href="CanDetail.asp?account=89119">&nbsp;</a>
+	        (REP)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    <td align=left><a href="CanDetail.asp?account=90009">
+	      
+	          </a><a href="CanDetail.asp?account=90009">Nixon</a><a href="CanDetail.asp?account=90009">,
+            
+            </a><a href="CanDetail.asp?account=90009">Angie</a><a href="CanDetail.asp?account=90009">&nbsp;</a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	    
+                  </form></td>
+              </tr>
+			  
+	        </table>
+			
+		    
+	      <br><center><font size=+1 color="#CCOOOO" face=arial><b>United States Representative                      
+  		      </b></font>
+	        	      
+	      <table class="results" border=1 cellpadding=4  align=center >
+		<tr bgcolor="#D7DBFD">
+		    		        
+		    	<td align=center><font color="black">  <B>
+			    District                                          
+		    	</B></font></td> 
+		     
+	    	    <th>Candidate</th>    
+	    	    <th>Status</th>    
+	    	    <th>Primary</th>    
+		
+	    	    <th>General</th>    
+	</tr>
+	  
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>1</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89828">
+	      
+	          </a><a href="CanDetail.asp?account=89828">Davis</a><a href="CanDetail.asp?account=89828">,
+            
+            </a><a href="CanDetail.asp?account=89828">Tyler</a><a href="CanDetail.asp?account=89828">&nbsp;L.</a>
+	        (NPA)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89686">
+	      
+	          </a><a href="CanDetail.asp?account=89686">Patronis</a><a href="CanDetail.asp?account=89686">,
+            
+            </a><a href="CanDetail.asp?account=89686">Jimmy</a><a href="CanDetail.asp?account=89686">&nbsp;</a>
+	        (REP)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89916">
+	      
+	          </a><a href="CanDetail.asp?account=89916">Valimont</a><a href="CanDetail.asp?account=89916">,
+            
+            </a><a href="CanDetail.asp?account=89916">Gay</a><a href="CanDetail.asp?account=89916">&nbsp; </a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>2</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89535">
+	      
+	          </a><a href="CanDetail.asp?account=89535">Green</a><a href="CanDetail.asp?account=89535">,
+            
+            </a><a href="CanDetail.asp?account=89535">Amanda</a><a href="CanDetail.asp?account=89535">&nbsp;Marie</a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89929">
+	      
+	          </a><a href="CanDetail.asp?account=89929">Rogers</a><a href="CanDetail.asp?account=89929">,
+            
+            </a><a href="CanDetail.asp?account=89929">Austin</a><a href="CanDetail.asp?account=89929">&nbsp;</a>
+	        (REP)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>3</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=91508">
+	      
+	          </a><a href="CanDetail.asp?account=91508">Cammack</a><a href="CanDetail.asp?account=91508">,
+            
+            </a><a href="CanDetail.asp?account=91508">Kat</a><a href="CanDetail.asp?account=91508">&nbsp;</a>
+	        (REP)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89177">
+	      
+	          </a><a href="CanDetail.asp?account=89177">Harp</a><a href="CanDetail.asp?account=89177">,
+            
+            </a><a href="CanDetail.asp?account=89177">Seth</a><a href="CanDetail.asp?account=89177">&nbsp; </a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=91032">
+	      
+	          </a><a href="CanDetail.asp?account=91032">Klein</a><a href="CanDetail.asp?account=91032">,
+            
+            </a><a href="CanDetail.asp?account=91032">Mike</a><a href="CanDetail.asp?account=91032">&nbsp;</a>
+	        (NPA)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>4</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=88755">
+	      
+	          </a><a href="CanDetail.asp?account=88755">Bean</a><a href="CanDetail.asp?account=88755">,
+            
+            </a><a href="CanDetail.asp?account=88755">Aaron</a><a href="CanDetail.asp?account=88755">&nbsp; </a>
+	        (REP)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89716">
+	      
+	          </a><a href="CanDetail.asp?account=89716">Holloway</a><a href="CanDetail.asp?account=89716">,
+            
+            </a><a href="CanDetail.asp?account=89716">LaShonda</a><a href="CanDetail.asp?account=89716">&nbsp;"L.J."</a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89381">
+	      
+	          </a><a href="CanDetail.asp?account=89381">Schaefer</a><a href="CanDetail.asp?account=89381">,
+            
+            </a><a href="CanDetail.asp?account=89381">Todd</a><a href="CanDetail.asp?account=89381">&nbsp;</a>
+	        (NPA)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90647">
+	      
+	          </a><a href="CanDetail.asp?account=90647">Sell</a><a href="CanDetail.asp?account=90647">,
+            
+            </a><a href="CanDetail.asp?account=90647">Mike</a><a href="CanDetail.asp?account=90647">&nbsp;</a>
+	        (FFP)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>5</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89665">
+	      
+	          </a><a href="CanDetail.asp?account=89665">Grage</a><a href="CanDetail.asp?account=89665">,
+            
+            </a><a href="CanDetail.asp?account=89665">Rachel</a><a href="CanDetail.asp?account=89665">&nbsp; </a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89967">
+	      
+	          </a><a href="CanDetail.asp?account=89967">Rutherford</a><a href="CanDetail.asp?account=89967">,
+            
+            </a><a href="CanDetail.asp?account=89967">John</a><a href="CanDetail.asp?account=89967">&nbsp;H.</a>
+	        (REP)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90602">
+	      
+	          </a><a href="CanDetail.asp?account=90602">Upham</a><a href="CanDetail.asp?account=90602">,
+            
+            </a><a href="CanDetail.asp?account=90602">William</a><a href="CanDetail.asp?account=90602">&nbsp;Lintag</a>
+	        (WRI)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>6</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90492">
+	      
+	          </a><a href="CanDetail.asp?account=90492">Fine</a><a href="CanDetail.asp?account=90492">,
+            
+            </a><a href="CanDetail.asp?account=90492">Randy</a><a href="CanDetail.asp?account=90492">&nbsp;</a>
+	        (REP)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89377">
+	      
+	          </a><a href="CanDetail.asp?account=89377">Parrott</a><a href="CanDetail.asp?account=89377">,
+            
+            </a><a href="CanDetail.asp?account=89377">Andrew</a><a href="CanDetail.asp?account=89377">&nbsp;</a>
+	        (LPF)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89465">
+	      
+	          </a><a href="CanDetail.asp?account=89465">Pavlik</a><a href="CanDetail.asp?account=89465">,
+            
+            </a><a href="CanDetail.asp?account=89465">Alec</a><a href="CanDetail.asp?account=89465">&nbsp;</a>
+	        (WRI)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89402">
+	      
+	          </a><a href="CanDetail.asp?account=89402">Yonce</a><a href="CanDetail.asp?account=89402">,
+            
+            </a><a href="CanDetail.asp?account=89402">Eric</a><a href="CanDetail.asp?account=89402">&nbsp; </a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>7</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90631">
+	      
+	          </a><a href="CanDetail.asp?account=90631">Dalton</a><a href="CanDetail.asp?account=90631">,
+            
+            </a><a href="CanDetail.asp?account=90631">Bale</a><a href="CanDetail.asp?account=90631">&nbsp;</a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=92377">
+	      
+	          </a><a href="CanDetail.asp?account=92377">Dennison</a><a href="CanDetail.asp?account=92377">,
+            
+            </a><a href="CanDetail.asp?account=92377">Christopher</a><a href="CanDetail.asp?account=92377">&nbsp;</a>
+	        (LPF)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90696">
+	      
+	          </a><a href="CanDetail.asp?account=90696">Elijah</a><a href="CanDetail.asp?account=90696">,
+            
+            </a><a href="CanDetail.asp?account=90696">Ryan</a><a href="CanDetail.asp?account=90696">&nbsp;</a>
+	        (REP)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>8</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89522">
+	      
+	          </a><a href="CanDetail.asp?account=89522">Haridopolos</a><a href="CanDetail.asp?account=89522">,
+            
+            </a><a href="CanDetail.asp?account=89522">Mike</a><a href="CanDetail.asp?account=89522">&nbsp;</a>
+	        (REP)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90831">
+	      
+	          </a><a href="CanDetail.asp?account=90831">Jenkins</a><a href="CanDetail.asp?account=90831">,
+            
+            </a><a href="CanDetail.asp?account=90831">Jennifer</a><a href="CanDetail.asp?account=90831">&nbsp;</a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>9</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=91337">
+	      
+	          </a><a href="CanDetail.asp?account=91337">Green</a><a href="CanDetail.asp?account=91337">,
+            
+            </a><a href="CanDetail.asp?account=91337">Dan</a><a href="CanDetail.asp?account=91337">&nbsp;</a>
+	        (REP)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89339">
+	      
+	          </a><a href="CanDetail.asp?account=89339">Soto</a><a href="CanDetail.asp?account=89339">,
+            
+            </a><a href="CanDetail.asp?account=89339">Darren</a><a href="CanDetail.asp?account=89339">&nbsp;</a>
+	        (DEM)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>11</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=88517">
+	      
+	          </a><a href="CanDetail.asp?account=88517">Groves</a><a href="CanDetail.asp?account=88517">,
+            
+            </a><a href="CanDetail.asp?account=88517">Ralph</a><a href="CanDetail.asp?account=88517">&nbsp;</a>
+	        (LPF)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=91715">
+	      
+	          </a><a href="CanDetail.asp?account=91715">Pericola</a><a href="CanDetail.asp?account=91715">,
+            
+            </a><a href="CanDetail.asp?account=91715">James</a><a href="CanDetail.asp?account=91715">&nbsp;</a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=91717">
+	      
+	          </a><a href="CanDetail.asp?account=91717">Strada</a><a href="CanDetail.asp?account=91717">,
+            
+            </a><a href="CanDetail.asp?account=91717">Joe</a><a href="CanDetail.asp?account=91717">&nbsp;</a>
+	        (REP)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>12</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=88868">
+	      
+	          </a><a href="CanDetail.asp?account=88868">Bilirakis</a><a href="CanDetail.asp?account=88868">,
+            
+            </a><a href="CanDetail.asp?account=88868">Gus</a><a href="CanDetail.asp?account=88868">&nbsp;Michael</a>
+	        (REP)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89453">
+	      
+	          </a><a href="CanDetail.asp?account=89453">Overman</a><a href="CanDetail.asp?account=89453">,
+            
+            </a><a href="CanDetail.asp?account=89453">Kimberly</a><a href="CanDetail.asp?account=89453">&nbsp; </a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89778">
+	      
+	          </a><a href="CanDetail.asp?account=89778">Scrivener</a><a href="CanDetail.asp?account=89778">,
+            
+            </a><a href="CanDetail.asp?account=89778">Branden</a><a href="CanDetail.asp?account=89778">&nbsp;</a>
+	        (NPA)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>13</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89497">
+	      
+	          </a><a href="CanDetail.asp?account=89497">D'Arrigo</a><a href="CanDetail.asp?account=89497">,
+            
+            </a><a href="CanDetail.asp?account=89497">Tony</a><a href="CanDetail.asp?account=89497">&nbsp;</a>
+	        (NPA)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90671">
+	      
+	          </a><a href="CanDetail.asp?account=90671">Gray</a><a href="CanDetail.asp?account=90671">,
+            
+            </a><a href="CanDetail.asp?account=90671">Leela</a><a href="CanDetail.asp?account=90671">&nbsp; </a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89765">
+	      
+	          </a><a href="CanDetail.asp?account=89765">Luna</a><a href="CanDetail.asp?account=89765">,
+            
+            </a><a href="CanDetail.asp?account=89765">Anna</a><a href="CanDetail.asp?account=89765">&nbsp;Paulina</a>
+	        (REP)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>14</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=91313">
+	      
+	          </a><a href="CanDetail.asp?account=91313">Beltran</a><a href="CanDetail.asp?account=91313">,
+            
+            </a><a href="CanDetail.asp?account=91313">Mike</a><a href="CanDetail.asp?account=91313">&nbsp;</a>
+	        (REP)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=88870">
+	      
+	          </a><a href="CanDetail.asp?account=88870">Castor</a><a href="CanDetail.asp?account=88870">,
+            
+            </a><a href="CanDetail.asp?account=88870">Kathy</a><a href="CanDetail.asp?account=88870">&nbsp;</a>
+	        (DEM)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=91055">
+	      
+	    </a><a href="CanDetail.asp?account=91055">Hernandez&nbsp;</a><a href="CanDetail.asp?account=91055">Sr.</a><a href="CanDetail.asp?account=91055">,</a><a href="CanDetail.asp?account=91055">
+	          
+            </a><a href="CanDetail.asp?account=91055">Salomon</a><a href="CanDetail.asp?account=91055">&nbsp;</a>
+	        (WRI)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=92395">
+	      
+	          </a><a href="CanDetail.asp?account=92395">Lambert</a><a href="CanDetail.asp?account=92395">,
+            
+            </a><a href="CanDetail.asp?account=92395">Brian</a><a href="CanDetail.asp?account=92395">&nbsp;</a>
+	        (LPF)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89166">
+	      
+	          </a><a href="CanDetail.asp?account=89166">Varian</a><a href="CanDetail.asp?account=89166">,
+            
+            </a><a href="CanDetail.asp?account=89166">Keith</a><a href="CanDetail.asp?account=89166">&nbsp;</a>
+	        (WRI)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>15</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=92409">
+	      
+	          </a><a href="CanDetail.asp?account=92409">Boone</a><a href="CanDetail.asp?account=92409">,
+            
+            </a><a href="CanDetail.asp?account=92409">Angie</a><a href="CanDetail.asp?account=92409">&nbsp;</a>
+	        (WRI)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89121">
+	      
+	          </a><a href="CanDetail.asp?account=89121">Lee</a><a href="CanDetail.asp?account=89121">,
+            
+            </a><a href="CanDetail.asp?account=89121">Laurel</a><a href="CanDetail.asp?account=89121">&nbsp;</a>
+	        (REP)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89116">
+	      
+	          </a><a href="CanDetail.asp?account=89116">People</a><a href="CanDetail.asp?account=89116">,
+            
+            </a><a href="CanDetail.asp?account=89116">Robert</a><a href="CanDetail.asp?account=89116">&nbsp; </a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>16</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89623">
+	      
+	          </a><a href="CanDetail.asp?account=89623">Davis</a><a href="CanDetail.asp?account=89623">,
+            
+            </a><a href="CanDetail.asp?account=89623">Mark</a><a href="CanDetail.asp?account=89623">&nbsp;</a>
+	        (NPA)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90251">
+	      
+	          </a><a href="CanDetail.asp?account=90251">Gruters</a><a href="CanDetail.asp?account=90251">,
+            
+            </a><a href="CanDetail.asp?account=90251">Sydney</a><a href="CanDetail.asp?account=90251">&nbsp;</a>
+	        (REP)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90779">
+	      
+	          </a><a href="CanDetail.asp?account=90779">Kirschner</a><a href="CanDetail.asp?account=90779">,
+            
+            </a><a href="CanDetail.asp?account=90779">Kelly</a><a href="CanDetail.asp?account=90779">&nbsp;</a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>17</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89451">
+	      
+	          </a><a href="CanDetail.asp?account=89451">Montavon</a><a href="CanDetail.asp?account=89451">,
+            
+            </a><a href="CanDetail.asp?account=89451">Matthew</a><a href="CanDetail.asp?account=89451">&nbsp; </a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90646">
+	      
+	          </a><a href="CanDetail.asp?account=90646">Quirk</a><a href="CanDetail.asp?account=90646">,
+            
+            </a><a href="CanDetail.asp?account=90646">Michael</a><a href="CanDetail.asp?account=90646">&nbsp;J.</a>
+	        (NPA)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89179">
+	      
+	          </a><a href="CanDetail.asp?account=89179">Steube</a><a href="CanDetail.asp?account=89179">,
+            
+            </a><a href="CanDetail.asp?account=89179">Greg</a><a href="CanDetail.asp?account=89179">&nbsp;</a>
+	        (REP)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>18</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89125">
+	      
+	          </a><a href="CanDetail.asp?account=89125">Franklin</a><a href="CanDetail.asp?account=89125">,
+            
+            </a><a href="CanDetail.asp?account=89125">Scott</a><a href="CanDetail.asp?account=89125">&nbsp;</a>
+	        (REP)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89631">
+	      
+	          </a><a href="CanDetail.asp?account=89631">Gibson</a><a href="CanDetail.asp?account=89631">,
+            
+            </a><a href="CanDetail.asp?account=89631">Curtis</a><a href="CanDetail.asp?account=89631">&nbsp;</a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89643">
+	      
+	          </a><a href="CanDetail.asp?account=89643">Simmons</a><a href="CanDetail.asp?account=89643">,
+            
+            </a><a href="CanDetail.asp?account=89643">Deva</a><a href="CanDetail.asp?account=89643">&nbsp; </a>
+	        (NPA)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>19</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89740">
+	      
+	          </a><a href="CanDetail.asp?account=89740">Arias</a><a href="CanDetail.asp?account=89740">,
+            
+            </a><a href="CanDetail.asp?account=89740">Victor</a><a href="CanDetail.asp?account=89740">&nbsp; </a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90744">
+	      
+	          </a><a href="CanDetail.asp?account=90744">Haskin</a><a href="CanDetail.asp?account=90744">,
+            
+            </a><a href="CanDetail.asp?account=90744">Seth</a><a href="CanDetail.asp?account=90744">&nbsp;</a>
+	        (NPA)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89137">
+	      
+	          </a><a href="CanDetail.asp?account=89137">Schwartzel</a><a href="CanDetail.asp?account=89137">,
+            
+            </a><a href="CanDetail.asp?account=89137">Jim</a><a href="CanDetail.asp?account=89137">&nbsp;</a>
+	        (REP)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90481">
+	      
+	          </a><a href="CanDetail.asp?account=90481">Zakhvatayev</a><a href="CanDetail.asp?account=90481">,
+            
+            </a><a href="CanDetail.asp?account=90481">Alexandra</a><a href="CanDetail.asp?account=90481">&nbsp;</a>
+	        (WRI)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>20</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=91278">
+	      
+	          </a><a href="CanDetail.asp?account=91278">Andersen</a><a href="CanDetail.asp?account=91278">,
+            
+            </a><a href="CanDetail.asp?account=91278">Brent</a><a href="CanDetail.asp?account=91278">&nbsp;</a>
+	        (REP)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90814">
+	      
+	          </a><a href="CanDetail.asp?account=90814">Maxime</a><a href="CanDetail.asp?account=90814">,
+            
+            </a><a href="CanDetail.asp?account=90814">Kedner</a><a href="CanDetail.asp?account=90814">&nbsp;</a>
+	        (IND)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=91577">
+	      
+	          </a><a href="CanDetail.asp?account=91577">Wasserman Schultz</a><a href="CanDetail.asp?account=91577">,
+            
+            </a><a href="CanDetail.asp?account=91577">Debbie</a><a href="CanDetail.asp?account=91577">&nbsp; </a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>21</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=92578">
+	      
+	          </a><a href="CanDetail.asp?account=92578">Cooke</a><a href="CanDetail.asp?account=92578">,
+            
+            </a><a href="CanDetail.asp?account=92578">Alexander</a><a href="CanDetail.asp?account=92578">&nbsp;</a>
+	        (NPA)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=92567">
+	      
+	          </a><a href="CanDetail.asp?account=92567">Fabrikant</a><a href="CanDetail.asp?account=92567">,
+            
+            </a><a href="CanDetail.asp?account=92567">David</a><a href="CanDetail.asp?account=92567">&nbsp;</a>
+	        (WRI)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89846">
+	      
+	          </a><a href="CanDetail.asp?account=89846">Martin</a><a href="CanDetail.asp?account=89846">,
+            
+            </a><a href="CanDetail.asp?account=89846">James</a><a href="CanDetail.asp?account=89846">&nbsp;T.</a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=88912">
+	      
+	          </a><a href="CanDetail.asp?account=88912">Mast</a><a href="CanDetail.asp?account=88912">,
+            
+            </a><a href="CanDetail.asp?account=88912">Brian</a><a href="CanDetail.asp?account=88912">&nbsp; </a>
+	        (REP)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>22</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=92109">
+	      
+	          </a><a href="CanDetail.asp?account=92109">Askar</a><a href="CanDetail.asp?account=92109">,
+            
+            </a><a href="CanDetail.asp?account=92109">Casey</a><a href="CanDetail.asp?account=92109">&nbsp;</a>
+	        (REP)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89301">
+	      
+	          </a><a href="CanDetail.asp?account=89301">Dandiya</a><a href="CanDetail.asp?account=89301">,
+            
+            </a><a href="CanDetail.asp?account=89301">Pia</a><a href="CanDetail.asp?account=89301">&nbsp;</a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>23</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89070">
+	      
+	          </a><a href="CanDetail.asp?account=89070">Adeimy</a><a href="CanDetail.asp?account=89070">,
+            
+            </a><a href="CanDetail.asp?account=89070">Deborah</a><a href="CanDetail.asp?account=89070">&nbsp;</a>
+	        (REP)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89248">
+	      
+	          </a><a href="CanDetail.asp?account=89248">Frankel</a><a href="CanDetail.asp?account=89248">,
+            
+            </a><a href="CanDetail.asp?account=89248">Lois</a><a href="CanDetail.asp?account=89248">&nbsp;</a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>24</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90703">
+	      
+	          </a><a href="CanDetail.asp?account=90703">Brown</a><a href="CanDetail.asp?account=90703">,
+            
+            </a><a href="CanDetail.asp?account=90703">Te</a><a href="CanDetail.asp?account=90703">&nbsp;Mayonna</a>
+	        (REP)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=91544">
+	      
+	    </a><a href="CanDetail.asp?account=91544">Gilbert&nbsp;</a><a href="CanDetail.asp?account=91544">III</a><a href="CanDetail.asp?account=91544">,</a><a href="CanDetail.asp?account=91544">
+	          
+            </a><a href="CanDetail.asp?account=91544">Oliver</a><a href="CanDetail.asp?account=91544">&nbsp;G.</a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=92610">
+	      
+	          </a><a href="CanDetail.asp?account=92610">Gonzalez</a><a href="CanDetail.asp?account=92610">,
+            
+            </a><a href="CanDetail.asp?account=92610">Patricia</a><a href="CanDetail.asp?account=92610">&nbsp;</a>
+	        (WRI)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>25</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=84732">
+	      
+	          </a><a href="CanDetail.asp?account=84732">Hamilton</a><a href="CanDetail.asp?account=84732">,
+            
+            </a><a href="CanDetail.asp?account=84732">Michaelangelo</a><a href="CanDetail.asp?account=84732">&nbsp; </a>
+	        (WRI)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=92357">
+	      
+	          </a><a href="CanDetail.asp?account=92357">Jassenoff</a><a href="CanDetail.asp?account=92357">,
+            
+            </a><a href="CanDetail.asp?account=92357">Peter</a><a href="CanDetail.asp?account=92357">&nbsp;</a>
+	        (LPF)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=88911">
+	      
+	          </a><a href="CanDetail.asp?account=88911">Moskowitz</a><a href="CanDetail.asp?account=88911">,
+            
+            </a><a href="CanDetail.asp?account=88911">Jared</a><a href="CanDetail.asp?account=88911">&nbsp;</a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89801">
+	      
+	          </a><a href="CanDetail.asp?account=89801">Singer</a><a href="CanDetail.asp?account=89801">,
+            
+            </a><a href="CanDetail.asp?account=89801">Scott</a><a href="CanDetail.asp?account=89801">&nbsp; </a>
+	        (REP)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>26</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90330">
+	      
+	          </a><a href="CanDetail.asp?account=90330">Diaz-Balart</a><a href="CanDetail.asp?account=90330">,
+            
+            </a><a href="CanDetail.asp?account=90330">Mario</a><a href="CanDetail.asp?account=90330">&nbsp; </a>
+	        (REP)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89980">
+	      
+	          </a><a href="CanDetail.asp?account=89980">Locklin</a><a href="CanDetail.asp?account=89980">,
+            
+            </a><a href="CanDetail.asp?account=89980">Nicole</a><a href="CanDetail.asp?account=89980">&nbsp;</a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=92137">
+	      
+	          </a><a href="CanDetail.asp?account=92137">Meidinger Hosey</a><a href="CanDetail.asp?account=92137">,
+            
+            </a><a href="CanDetail.asp?account=92137">Deborah</a><a href="CanDetail.asp?account=92137">&nbsp;Ann</a>
+	        (NPA)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>27</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=89933">
+	      
+	          </a><a href="CanDetail.asp?account=89933">Rodriguez</a><a href="CanDetail.asp?account=89933">,
+            
+            </a><a href="CanDetail.asp?account=89933">Eliott</a><a href="CanDetail.asp?account=89933">&nbsp;</a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="#D7DBFD">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90721">
+	      
+	          </a><a href="CanDetail.asp?account=90721">Salazar</a><a href="CanDetail.asp?account=90721">,
+            
+            </a><a href="CanDetail.asp?account=90721">Maria</a><a href="CanDetail.asp?account=90721">&nbsp;Elvira</a>
+	        (REP)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Won</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>28</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=91699">
+	      
+	          </a><a href="CanDetail.asp?account=91699">Ehr</a><a href="CanDetail.asp?account=91699">,
+            
+            </a><a href="CanDetail.asp?account=91699">Phil</a><a href="CanDetail.asp?account=91699">&nbsp;"Felipe"</a>
+	        (DEM)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=91226">
+	      
+	          </a><a href="CanDetail.asp?account=91226">Gimenez</a><a href="CanDetail.asp?account=91226">,
+            
+            </a><a href="CanDetail.asp?account=91226">Carlos</a><a href="CanDetail.asp?account=91226">&nbsp;A.</a>
+	        (REP)
+	        
+	            &nbsp;*Incumbent   	  
+	            </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>Unopposed</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	      
+
+
+	  
+	<tr bgcolor="White">
+	
+	    	<td align=center><b>&nbsp;</b></td>   
+	    
+	    <td align=left><a href="CanDetail.asp?account=90340">
+	      
+	          </a><a href="CanDetail.asp?account=90340">Rojas</a><a href="CanDetail.asp?account=90340">,
+            
+            </a><a href="CanDetail.asp?account=90340">Eddy</a><a href="CanDetail.asp?account=90340">&nbsp;</a>
+	        (NPA)
+	        </td>	
+	     
+		    	<td align=center>Qualified                                         </td>   
+		
+	    	<td align=center>&nbsp;</td>   
+	    	
+	    	<td align=center>&nbsp;</td>   
+	</tr>
+	    	
+					
+                    
+	  </form>
+	
+	 
+	</td></tr></table>
+	</td></tr></table>
+				
+	      </div>
+        </div>
+    </div>
+	
+
+
+<div id="footer">
+<div>
+<!--
+<a target="_blank" href="http://www.dos.state.fl.us/"accesskey="m">Depart<em>m</em>ent of State</a><img class="separator" src="/images/greystar.gif" alt="star divider" width="15" height="14" /><a target="_blank" href="http://oss.dos.state.fl.us/accessibility.cfm" accesskey="b">Accessi<em>b</em>ility</a><img class="separator" src="/images/greystar.gif" alt="star divider" width="15" height="14" /><a target="_blank" href="http://oss.dos.state.fl.us/privacy-policy.cfm" accesskey="i">Pr<em>i</em>vacy Policy<img class="separator" src="/images/greystar.gif" alt="star divider" width="15" height="14" /></a>
+<a href="/contact-us/contact.shtml" accesskey="c"><em>C</em>ontact Us</a><img class="separator" src="/images/greystar.gif" alt="star divider" width="15" height="14" />-->
+<p><a href="http://dos.myflorida.com/elections/">Florida Division of Elections</a>, Room 316, R.A. Gray Building, 500 South Bronough Street, Tallahassee, Fl. 32399-0250, 850.245.6200</p>
+<!--<p><span style="color:#F00">Some components of this webpage are incompatible with Internet Explorer 10. If you are having<br /> problems, please try running your browser in compatibility mode. Instructions can be found <a style="color:#F00" href="http://windows.microsoft.com/en-us/internet-explorer/use-compatibility-view">here</a>.</span></p>-->
+</div> 
+<!---- Secondary DOS Site Banner code snippet starts ----->
+
+<div id="dosbanner">
+	<div class="clearfix">
+	<div>
+		<!--- leave alone --->
+
+		<p class="replace" id="dosLogo"><a href="http://dos.myflorida.com" target="_blank"><span></span>Florida Department of State</a></p>
+		<ul class="clearfix division-name" id="dosDivision">
+			<!--- update with appropriate division name, website and title --->
+			<li><a href="http://dos.myflorida.com/elections/" target="_blank">Division of Elections</a></li>
+		</ul>
+	</div>
+	</div>
+</div>
+
+<!----/ Secondary DOS Site Banner code snippet starts ----->
+
+<script type="text/javascript">
+
+ var _gaq = _gaq || [];
+ _gaq.push(['_setAccount', 'UA-3263504-2']);
+ _gaq.push(['_setDomainName', 'dos.state.fl.us']);
+ _gaq.push(['_trackPageview']);
+
+ (function() {
+   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ })();
+
+</script>
+</div>
+
+
+
+</div>
+
+</body>
+</html>

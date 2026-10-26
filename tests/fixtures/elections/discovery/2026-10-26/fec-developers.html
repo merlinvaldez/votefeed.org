@@ -1,0 +1,163 @@
+<!doctype html>
+
+<html>
+  <head>
+    <title>OpenFEC API Documentation</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/docs/static/dist/main.css"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/docs/static/favicon.ico"
+    />
+    <style>
+      html {
+        box-sizing: border-box;
+        overflow: -moz-scrollbars-vertical;
+        overflow-y: scroll;
+      }
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+
+      body {
+        margin: 0;
+        background: #fafafa;
+      }
+
+      label[for="user_first_name"]:before {
+        content: " *";
+        color: #e87723;
+        font-weight: 1000;
+        font-family: "Verdana";
+      }
+
+      label[for="user_last_name"]:before {
+        content: " *";
+        color: #e87723;
+        font-weight: 1000;
+        font-family: "Verdana";
+      }
+
+      label[for="user_email"]:before {
+        content: " *";
+        color: #e87723;
+        font-weight: 1000;
+        font-family: "Verdana";
+      }
+
+      #signup_head {
+        font-size: 24px;
+      }
+
+      /* npm package, swagger-ui-dist@4.5.0 causes overlapping of columns(name, description) in swagger UI. Override the value of response-col_description value from width: 99 to width: unset */
+      .swagger-ui .parameters-col_description,
+      .swagger-ui .response-col_description {
+        width: unset;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div >
+      <div id="swagger-ui"></div>
+    </div>
+    <script type="text/javascript">
+      /*  */
+      var apiUmbrellaSignupOptions = {
+        /*  */
+        registrationSource: "fec-api",
+
+        /*  */
+        apiKey: "biBFxtbrDU2ehmjg0iSmY3p6W431fVfxV2omuPrf",
+
+        /*  */
+        contactUrl: "mailto:APIinfo@fec.gov",
+
+        /*  */
+        siteName: "openFEC",
+
+        /*  */
+        emailFromName: "FEC",
+
+        /*  */
+        exampleApiUrl:
+          'https://api.open.fec.gov/v1/legal/search/?api_key={{api_key}}',
+
+        /*  */
+
+        /*  */
+        verifyEmail: true,
+
+        /*  */
+        sendWelcomeEmail: true,
+      };
+    </script>
+    <noscript
+      >Please enable JavaScript to signup for an
+      <a href="https://api.data.gov/">api.data.gov</a> API key.</noscript
+    >
+
+    <script src="/docs/static/dist/swagger-layout.js"></script>
+
+    <script>
+      window.onload = function () {
+        SwaggerLayout("/swagger/", document.getElementById("swagger-ui"));
+        function addSignUpForm() {
+          var apiUmbrella = document.createElement("script");
+          apiUmbrella.type = "text/javascript";
+          apiUmbrella.async = true;
+          apiUmbrella.src =
+            "https://api.data.gov/static/javascripts/signup_embed.js";
+          document.getElementsByTagName("head")[0].appendChild(apiUmbrella);
+        }
+        window.setTimeout(addSignUpForm, 1000);
+      };
+    </script>
+
+    
+    <script>
+      (function (i, s, o, g, r, a, m) {
+        i["GoogleAnalyticsObject"] = r;
+        (i[r] =
+          i[r] ||
+          function () {
+            (i[r].q = i[r].q || []).push(arguments);
+          }),
+          (i[r].l = 1 * new Date());
+        (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m);
+      })(
+        window,
+        document,
+        "script",
+        "https://www.google-analytics.com/analytics.js",
+        "ga"
+      );
+
+      ga("set", "anonymizeIp", true);
+      ga("set", "forceSSL", true);
+      ga("create", "UA-16134356-1", {
+        cookieFlags: "SameSite=None; Secure",
+      });
+      ga("send", "pageview");
+    </script>
+    <script
+      id="_fed_an_ua_tag"
+      src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=FEC"
+    ></script>
+    
+  </body>
+</html>
