@@ -217,13 +217,13 @@ Checked items describe local unit and PostgreSQL integration test verification a
 
 ## 5. Integrate the three tickets and hand off the feed contract
 
-Outcome: later API/UI work can read published records without invoking ingestion.
+Outcome: later API/UI work can read published records without invoking ingestion. See [elections-crawl.md](elections-crawl.md) for full contract specification, route patterns, and UI requirements.
 
-- [ ] Demonstrate discovery -> site verification -> captured source -> AI extraction -> validation -> database publication on a small House/Senate sample.
-- [ ] Document input scope and returned fields for matching-race queries. Include current eligibility, safe source availability, and requesting-user-only response fields.
-- [ ] Document how later routes obtain `req.user.id` using existing middleware and how guest reads differ from authenticated writes.
-- [ ] Record the later work required for API endpoint implementation, pagination/filter UI, loading/empty/error presentation, and browser acceptance. Those surfaces are not completion requirements for these three foundation tickets.
-- [ ] Keep the acceptance-criteria IDs in this file and the respective Notion tickets aligned when scope changes.
+- [x] Demonstrate discovery -> site verification -> captured source -> AI extraction -> validation -> database publication on a small House/Senate sample. Verified in `tests/elections-crawl-postgres.test.mjs` (8/8 passing).
+- [x] Document input scope and returned fields for matching-race queries. Include current eligibility, safe source availability, and requesting-user-only response fields. Documented in `specs/elections-crawl.md` and implemented in `readElectionPositions`.
+- [x] Document how later routes obtain `req.user.id` using existing middleware and how guest reads differ from authenticated writes. Documented in `specs/elections-crawl.md` section 3.3.
+- [x] Record the later work required for API endpoint implementation, pagination/filter UI, loading/empty/error presentation, and browser acceptance. Those surfaces are not completion requirements for these three foundation tickets. Documented in `specs/elections-crawl.md` section 4.
+- [x] Keep the acceptance-criteria IDs in this file and the respective Notion tickets aligned when scope changes. (DB-1 through DB-9, DISC-1 through DISC-9, CRAWL-1 through CRAWL-10).
 
 ## Source references and current code
 
