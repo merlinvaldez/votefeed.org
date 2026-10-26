@@ -8,7 +8,7 @@ This specification covers the backend foundations for that experience, not the t
 
 - Created: 2026-10-26.
 - Branch inspected: `42-add-elections-tab`.
-- Step 1 shared contracts implemented locally on 2026-10-26; election-geography verification remains open. Later steps remain unimplemented/unverified. See [shared contracts v1](elections-contracts.md).
+- Step 1 shared contracts implemented locally on 2026-10-26; election-geography verification remains open. Step 2 storage is implemented and verified locally; deployed permissions/migration acceptance and full-suite green status remain open. Steps 3 through 5 remain unimplemented/unverified. See [shared contracts v1](elections-contracts.md).
 - Agreed flow: FEC plus state records -> candidates/races -> verified campaign websites -> Crawlee -> saved source snapshots -> AI extraction/summaries -> validation -> published database records -> later API/feed.
 - AI extraction is included in the Crawlee ticket, as clarified in this conversation.
 - Approved initial coverage: 2026 U.S. House and Senate general elections nationwide. Primaries, runoff stages, and special-election contests are outside this first release. Storage still distinguishes stages and special contests for future expansion. Nationwide scope does not mean both Senate seats in every state have a race; source adapters must report actual coverage and gaps.
@@ -68,26 +68,28 @@ Suggested entities (names may be refined during implementation):
 | election_interactions | Existing VoteFeed user, position version, stance and private comment |
 | election_ingestion_runs | Stage/scope, completeness, counts, timestamps and errors |
 
-- [ ] Add required constraints, relationships, source IDs, content fingerprints, timestamps, and lookup indexes.
-- [ ] Store source evidence before AI processing, and record model/prompt versions for generated items.
-- [ ] Add transactions for atomic publication and per-race/source reconciliation. Do not hold a database transaction open while waiting for network or AI calls.
-- [ ] Keep failed refreshes separate from last-successful data. Successful empty/removed content needs an explicit reconciliation result.
-- [ ] Add shared queries for imports, snapshot saving, publication, matching-race reads, and owned responses.
-- [ ] Use the current Clerk-to-user mapping, ownership checks, parameterized SQL, and role-appropriate grants/RLS. Do not assume Supabase `auth.uid()` maps to the current integer user ID or that direct database roles obey browser policies.
-- [ ] Preserve all legislative tables and queries. Election responses do not enter bill interactions.
+- [x] Add required constraints, relationships, source IDs, content fingerprints, timestamps, and lookup indexes.
+- [x] Store source evidence before AI processing, and record model/prompt versions for generated items.
+- [x] Add transactions for atomic publication and per-race/source reconciliation. Do not hold a database transaction open while waiting for network or AI calls.
+- [x] Keep failed refreshes separate from last-successful data. Successful empty/removed content needs an explicit reconciliation result.
+- [x] Add shared queries for imports, snapshot saving, publication, matching-race reads, and owned responses.
+- [x] Use the current Clerk-to-user mapping, ownership checks, parameterized SQL, and role-appropriate grants/RLS. Do not assume Supabase `auth.uid()` maps to the current integer user ID or that direct database roles obey browser policies.
+- [x] Preserve all legislative tables and queries. Election responses do not enter bill interactions.
+
+Local implementation and evidence: [storage functions, access model, commands and test results](elections-storage.md). DB-8 is verified against disposable local roles; deployed connection-role/default-privilege verification remains a rollout requirement. The full suite has four unrelated live Senate XML failures (HTTP 403). No production migration was applied.
 
 ### Acceptance criteria — DB
 
-- [ ] DB-1: An additive migration creates separate records for candidates, races, candidacies, campaign-site verification, source snapshots, position versions, user interactions, and ingestion runs without deleting or rewriting legislative data.
-- [ ] DB-2: Race identity distinguishes office (House or Senate), state, House district or Senate seat, election date, and election stage. A person can have multiple candidacies; source identifiers are unique within their source system, and name alone never establishes identity.
-- [ ] DB-3: Each source snapshot stores its candidacy, requested and final URL, retrieval time, extracted source text, content fingerprint, and verification provenance. Each position version stores its candidacy, topic, summary, exact supporting excerpt, snapshot reference, publication state, and model/prompt version.
-- [ ] DB-4: Reprocessing unchanged source content does not duplicate published items. Changed claim text or meaning creates a new position version; old source records and user responses remain attached to the text originally answered.
-- [ ] DB-5: Source/position publication is atomic: failures cannot expose a partially written publication. Failed refreshes retain the last successful data with its original retrieval time and a recorded failure status.
-- [ ] DB-6: Query functions return only eligible published positions for matching races, including candidate, race, summary, topic, supporting excerpt, source URL, retrieval time, position version ID, and the requesting user's own response when supplied by authenticated server code. Unverified and failed extraction records are excluded.
-- [ ] DB-7: Persistence supports one response per authenticated user and position version with approve, disapprove, or cleared stance, plus an optional private comment. Saving twice updates the same response; clearing stance preserves the comment; deleting the interaction removes that user's response/comment only.
+- [x] DB-1: An additive migration creates separate records for candidates, races, candidacies, campaign-site verification, source snapshots, position versions, user interactions, and ingestion runs without deleting or rewriting legislative data.
+- [x] DB-2: Race identity distinguishes office (House or Senate), state, House district or Senate seat, election date, and election stage. A person can have multiple candidacies; source identifiers are unique within their source system, and name alone never establishes identity.
+- [x] DB-3: Each source snapshot stores its candidacy, requested and final URL, retrieval time, extracted source text, content fingerprint, and verification provenance. Each position version stores its candidacy, topic, summary, exact supporting excerpt, snapshot reference, publication state, and model/prompt version.
+- [x] DB-4: Reprocessing unchanged source content does not duplicate published items. Changed claim text or meaning creates a new position version; old source records and user responses remain attached to the text originally answered.
+- [x] DB-5: Source/position publication is atomic: failures cannot expose a partially written publication. Failed refreshes retain the last successful data with its original retrieval time and a recorded failure status.
+- [x] DB-6: Query functions return only eligible published positions for matching races, including candidate, race, summary, topic, supporting excerpt, source URL, retrieval time, position version ID, and the requesting user's own response when supplied by authenticated server code. Unverified and failed extraction records are excluded.
+- [x] DB-7: Persistence supports one response per authenticated user and position version with approve, disapprove, or cleared stance, plus an optional private comment. Saving twice updates the same response; clearing stance preserves the comment; deleting the interaction removes that user's response/comment only.
 - [ ] DB-8: Interaction access uses the existing Clerk-to-VoteFeed user mapping. Guests cannot write; users cannot read or change another user's private responses; supplied user IDs cannot override authenticated ownership. Database permissions and RLS for exposed tables are verified against the actual connection roles.
-- [ ] DB-9: Foreign keys, required fields, allowed values, unique constraints, and lookup indexes reject invalid links and duplicate identities. Unknown ballot/site status is distinct from verified/confirmed status. Ingestion jobs record scope, completeness, counts, timestamps, and failures without storing secrets.
-- [ ] DB-10: Disposable-database tests verify migration application, round-trip reads, duplicate prevention, atomic publication, position history, private-comment ownership, stance clearing, and continued operation of existing legislative queries.
+- [x] DB-9: Foreign keys, required fields, allowed values, unique constraints, and lookup indexes reject invalid links and duplicate identities. Unknown ballot/site status is distinct from verified/confirmed status. Ingestion jobs record scope, completeness, counts, timestamps, and failures without storing secrets.
+- [x] DB-10: Disposable-database tests verify migration application, round-trip reads, duplicate prevention, atomic publication, position history, private-comment ownership, stance clearing, and continued operation of existing legislative queries.
 
 ## 3. Discover candidates and verify campaign sites — DISC ticket
 

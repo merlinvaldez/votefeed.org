@@ -1,3 +1,5 @@
+param([string]$TestFile = '*.test.mjs')
+
 $ErrorActionPreference = 'Stop'
 
 $postgresBin = 'C:\Program Files\PostgreSQL\18\bin'
@@ -10,7 +12,7 @@ $psqlExe = Join-Path $postgresBin 'psql.exe'
 $nodeExe = 'C:\Program Files\nodejs\node.exe'
 $startedHere = $false
 $serverProcess = $null
-$flags = @('BATCH_STANCES_TEST_POSTGRES', 'ALIGNMENT_TEST_POSTGRES', 'DELEGATION_TEST_POSTGRES')
+$flags = @('BATCH_STANCES_TEST_POSTGRES', 'ALIGNMENT_TEST_POSTGRES', 'DELEGATION_TEST_POSTGRES', 'ELECTIONS_TEST_POSTGRES')
 $previousFlags = @{}
 
 foreach ($flag in $flags) {
@@ -83,7 +85,8 @@ try {
         [Environment]::SetEnvironmentVariable($flag, '1', 'Process')
     }
 
-    $testFiles = @(Get-ChildItem -Path .\tests -Filter '*.test.mjs' | Sort-Object Name | ForEach-Object FullName)
+    if ($TestFile -match '[/\\]' -or $TestFile -notlike '*.test.mjs') { throw 'TestFile must be a test filename or pattern within tests.' }
+    $testFiles = @(Get-ChildItem -Path .\tests -Filter $TestFile | Sort-Object Name | ForEach-Object FullName)
     if ($testFiles.Count -eq 0) { throw 'No Node test files were found under tests.' }
 
     Write-Host "Running $($testFiles.Count) test files with PostgreSQL at 127.0.0.1:55439."
