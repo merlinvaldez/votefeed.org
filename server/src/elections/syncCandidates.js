@@ -3,20 +3,16 @@ import * as storage from '../db/queries/electionDiscovery.js';
 import { startElectionRun, finishElectionRun, saveCampaignSite } from '../db/queries/elections.js';
 import { fetchPublic } from './publicHttp.js';
 import { discoveryScope, DISCOVERY_VERSION, discoveryError, safeCode } from './discoveryUtils.js';
-import { validateSource, documentText, extractWyoming, extractMappedCsv, validateBallotRows } from './ballotExtraction.js';
 import { fecPages, committeeWebsiteProposals } from './sources/fec.js';
 import { verifyCampaignDestination } from './verifyCampaignSite.js';
 
-export async function syncCandidates({scope:inputScope,sources=[],provider=null,fecApiKey=null,includeFec=true,
+export async function syncCandidates({scope:inputScope,fecApiKey=null,
   verifySites=false,maxPages=100,maxCommittees=100,fetcher=fetchPublic,pool=db} = {}) {
   const scope = discoveryScope(inputScope);
   if (!Number.isInteger(maxCommittees) || maxCommittees<0 || maxCommittees>1000) throw discoveryError('discovery-invalid-committee-limit');
-  const selected = sources.filter(s=>scope.states.includes(s.state));
-  for (const source of selected) validateSource(source,scope);
   const run = await startElectionRun({stage:'discovery',scope,adapter:'public-evidence',adapterVersion:DISCOVERY_VERSION},pool);
   const counts = {documents:0,observations:0,promoted:0,unresolved:0,sitesVerified:0};
-  const coverage = scope.states.flatMap(state=>scope.offices.map(office=>({state,office,status:'unsupported',fecStatus:includeFec ? 'pending' : 'skipped',raceResults:[],sourceResults:[],errorCodes:[]})));
-  const entryFor = (state,office) => coverage.find(e=>e.state === state && e.office === office);
+  const coverage = scope.states.flatMap(state=>scope.offices.map(office=>({state,office,status:'unsupported',fecStatus:'pending',raceResults:[],sourceResults:[],errorCodes:[]})));
   const errorCodes = new Set();
   const document = async (response,input) => {
     const saved = await storage.saveElectionDocument({...input,bytes:response.bytes,requestedUrl:response.requestedUrl,
@@ -51,7 +47,7 @@ export async function syncCandidates({scope:inputScope,sources=[],provider=null,
     }
   };
   try {
-    if (includeFec) for (const entry of coverage) {
+    for (const entry of coverage) {
       let candidateCount = 0, committeeCount = 0;
       const capture = async (response,{kind,page,text},candidateId=null) => document(response,{
         sourceKey:`fec:${entry.state}:${entry.office}:${kind}:${candidateId ?? 'all'}:${page}`,system:'fec:discovery',text,
@@ -82,67 +78,12 @@ export async function syncCandidates({scope:inputScope,sources=[],provider=null,
       } catch (error) { entry.fecStatus = candidateCount ? 'partial' : 'failed'; entry.errorCodes.push(safeCode(error)); }
       entry.fecCandidates = candidateCount;
     }
-    for (const source of selected) {
-      const offices = [...new Set([...source.races.map(r=>r.race.office),...(source.noRaces ?? []).map(r=>r.office)])].filter(o=>scope.offices.includes(o));
-      if (!offices.length) continue;
-      let doc;
-      try {
-        const response = await fetcher(source.url,{allowedOrigins:source.allowedOrigins});
-        // Persist the original bytes first, even if PDF/HTML parsing later fails.
-        doc = await document(response,{sourceKey:source.id,system:`state:${source.state}:ballot`,text:'',effectiveAt:source.effectiveAt,
-          context:{scope,source,authoritative:true,representation:'raw'}});
-        const text = await documentText(response.bytes,response.headers['content-type'] ?? '',source.format);
-        if (!text.trim() || text.length>300000) throw discoveryError('discovery-document-text-limit');
-        doc = await document(response,{sourceKey:source.id,system:`state:${source.state}:ballot`,text,effectiveAt:source.effectiveAt,
-          context:{scope,source,authoritative:true,representation:'extracted-text'}});
-        let rows, semantic = null;
-        if (!source.races.some(r=>scope.offices.includes(r.race.office))) rows = [];
-        else if (source.format === 'wy-csv') rows = extractWyoming(text,source,scope);
-        else if (source.format === 'mapped-csv') rows = extractMappedCsv(text,source,scope);
-        else {
-          if (!provider) throw discoveryError('discovery-ai-provider-required');
-          rows = await provider.extract({text,source});
-          semantic = await provider.verify({text,source,rows});
-        }
-        const records = validateBallotRows(rows,text,source,scope,semantic);
-        const valid = records.filter(r=>r.validation.outcome === 'valid').length;
-        const promotedBefore = counts.promoted;
-        await persist(doc,records,{extractor:['wy-csv','mapped-csv'].includes(source.format) ? `${source.format}-v1` : !rows.length && source.noRaces?.length ? 'official-no-race-proof' : 'ai-ballot-v1',
-          model:['wy-csv','mapped-csv'].includes(source.format) ? null : provider?.model ?? null,
-          promptVersion:['wy-csv','mapped-csv'].includes(source.format) ? 'none' : provider?.promptVersion ?? 'none',outcome:records.length && valid === records.length ? 'valid' : 'partial'});
-        for (const office of offices) {
-          const entry = entryFor(source.state,office);
-          const rowCount = records.filter(r=>r.data.race?.office === office).length;
-          const noRace = (source.noRaces ?? []).some(proof=>proof.office === office && text.includes(proof.excerpt));
-          const complete = source.completeness === 'complete' && source.coverageAccepted === true
-            && source.correctionsAudited === true && valid === records.length
-            && (rowCount>0 || noRace) && counts.promoted-promotedBefore === valid;
-          const status = complete ? 'complete' : 'partial';
-          entry.sourceResults.push({sourceId:source.id,status,records:rowCount});
-          // Empty AI output never proves no race. Completeness requires reviewed
-          // race coverage and corrections, not the model's self-assessment.
-          entry.status = entry.sourceResults.every(s=>s.status === 'complete') ? 'complete' : 'partial';
-          if (noRace && complete) entry.noRaces = true;
-          entry.raceResults.push(...source.races.filter(r=>r.race.office === office).map(r=>({race:r.race,status})));
-        }
-      } catch (error) {
-        const code = safeCode(error); errorCodes.add(code);
-        if (doc) await storage.saveElectionExtraction({documentId:doc.id,runId:run.id,extractor:source.format,promptVersion:provider?.promptVersion ?? 'none',outcome:'failed',errorCode:code},pool);
-        for (const office of offices) {
-          const entry = entryFor(source.state,office);
-          entry.sourceResults.push({sourceId:source.id,status:'failed',records:0});
-          entry.status = entry.sourceResults.some(s=>s.status === 'partial') ? 'partial' : 'failed'; entry.errorCodes.push(code);
-        }
-      }
-    }
     for (const entry of coverage) {
       entry.errorCodes = [...new Set(entry.errorCodes)];
       for (const code of entry.errorCodes) errorCodes.add(code);
     }
-    const status = includeFec && coverage.every(e=>e.fecStatus === 'complete') ? 'complete'
-      : includeFec && coverage.some(e=>['complete','partial'].includes(e.fecStatus)) ? 'partial'
-      : coverage.every(e=>e.status === 'complete' && ['complete','skipped'].includes(e.fecStatus)) ? 'complete'
-      : coverage.some(e=>['partial','complete'].includes(e.status)) ? 'partial' : coverage.some(e=>e.status === 'failed') ? 'failed' : 'unsupported';
+    const status = coverage.every(e=>e.fecStatus === 'complete') ? 'complete'
+      : coverage.some(e=>['complete','partial'].includes(e.fecStatus)) ? 'partial' : 'failed';
     await finishElectionRun(run.id,{status,counts,coverage,errorCodes:[...errorCodes]},pool);
     return {runId:run.id,status,counts,coverage,errorCodes:[...errorCodes]};
   } catch (error) {

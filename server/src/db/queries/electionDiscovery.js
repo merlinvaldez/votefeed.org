@@ -43,20 +43,17 @@ export async function readDiscoveryObservation(id, runner = db) {
     FROM election_discovery_observations o JOIN election_source_documents d ON d.id=o.document_id WHERE o.id=$1`,[id]);
 }
 
-// State-only people receive internal IDs. Evidence record keys never enter the
-// official person-identity table. Changed rows need an explicit resolution.
+// FEC identities are resolved by source ID; name collisions require review.
 export async function promoteElectionObservation(id, {actor='discovery-v1',candidateId=null,newPerson=false,review=null} = {}, pool = db) {
   return transaction(pool, async c => {
     const observation = await readDiscoveryObservation(id,c);
     if (!observation) throw discoveryError('discovery-observation-missing');
     const o = observation.data;
-    if (observation.validation.outcome !== 'valid' || !['fec','ballot'].includes(o.kind)) throw discoveryError('discovery-unvalidated-observation');
+    if (observation.validation.outcome !== 'valid' || o.kind !== 'fec') throw discoveryError('discovery-unvalidated-observation');
     if (!actor || (candidateId || newPerson) && (!review?.url || !review?.reason)
       || candidateId && newPerson) throw discoveryError('discovery-resolution-evidence-required');
     if (review?.url) publicUrl(review.url);
-    const identity = o.kind === 'fec' ? {system:'fec:candidate',id:o.fecId}
-      : o.officialId ? {system:`state:${o.race.state}:2026:candidate`,id:o.officialId}
-        : o.fecId ? {system:'fec:candidate',id:o.fecId} : null;
+    const identity = {system:'fec:candidate',id:o.fecId};
     const lock = identity ? stableJson(identity) : stableJson([observation.system,observation.source_key,observation.record_key]);
     await c.query('SELECT pg_advisory_xact_lock(hashtextextended($1,0))',[lock]);
     // Serialize same-race name collisions; a name is a review trigger, never a merge key.
@@ -94,24 +91,6 @@ export async function promoteElectionObservation(id, {actor='discovery-v1',candi
       if (observation.system !== 'fec:discovery' || !isReleaseRace(o.race)) throw discoveryError('discovery-untrusted-fec');
       const result = await upsertElectionCandidacy({race:o.race,raceEvidence:{...evidence,basis:'fec-registration',ballotConfirmed:false},
         party:o.party,eligibility:'unknown',eligibilityEvidence:{...evidence,system:'fec:discovery'}},person,c);
-      candidacy = result.candidacy.id;
-    }
-    if (o.kind === 'ballot') {
-      if (!observation.context.authoritative || !isReleaseRace(o.race)) throw discoveryError('discovery-untrusted-ballot');
-      const eligibilityEvidence = {...evidence,system:observation.system,effectiveAt:observation.effective_at,
-        eligibility:o.eligibility,excerpt:o.excerpt,reinstated:o.reinstated === true};
-      const existing = await one(c, `SELECT co.* FROM election_candidacies co JOIN election_races r ON r.id=co.race_id
-        WHERE co.candidate_id=$1 AND r.office=$2 AND r.state=$3 AND r.district IS NOT DISTINCT FROM $4
-        AND r.senate_seat IS NOT DISTINCT FROM $5 AND r.election_date=$6 AND r.stage=$7 AND r.contest_type=$8 FOR UPDATE OF co`,
-      [person,o.race.office,o.race.state,o.race.district,o.race.senateSeat,o.race.electionDate,o.race.stage,o.race.contestType]);
-      const oldDate = existing?.eligibility_evidence?.effectiveAt ?? existing?.eligibility_evidence?.checkedAt;
-      const newDate = observation.effective_at ?? observation.retrieved_at;
-      const terminal = ['withdrawn','disqualified'].includes(existing?.eligibility);
-      const older = oldDate && new Date(newDate) <= new Date(oldDate);
-      const eligibility = older || terminal && o.eligibility === 'ballot-confirmed' && !o.reinstated
-        ? existing.eligibility : o.eligibility;
-      const result = await upsertElectionCandidacy({race:o.race,raceEvidence:evidence,party:o.party,eligibility,
-        eligibilityEvidence:eligibility === o.eligibility && !older ? eligibilityEvidence : existing.eligibility_evidence},person,c);
       candidacy = result.candidacy.id;
     }
     return one(c, `INSERT INTO election_observation_resolutions(observation_id,candidate_id,candidacy_id,method,evidence)
