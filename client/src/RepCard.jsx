@@ -99,6 +99,7 @@ function MemberSummary({ member, showChamber }) {
 export default function RepCard({
   rep, location = null, alignment: alignmentData,
   alignmentPolicyArea = null, alignmentError = "", chamber, onChamberChange,
+  hideChamberTabs = false,
 }) {
   const [localTab, setLocalTab] = useState("All Reps");
   const setSelectedTab = value => { setLocalTab(value); onChamberChange?.(value); };
@@ -111,6 +112,7 @@ export default function RepCard({
   const selectedTab = selectAvailableCardChamber(available, requestedTab);
   const emptyDelegation = available.length === 0;
   const showTabs = available.length > 1;
+  const renderChamberTabs = showTabs && !hideChamberTabs;
   if (chamber === undefined && localTab !== selectedTab) setLocalTab(selectedTab);
   // Keep the parent feed filter in sync if a location change removes its tab.
   useEffect(() => {
@@ -137,7 +139,7 @@ export default function RepCard({
 
   return (
     <section className="member-card" data-chamber={selectedTab} aria-label="Your congressional delegation">
-      {showTabs && <div className="member-card-tabs" role="tablist" aria-label="Delegation chamber">
+      {renderChamberTabs && <div className="member-card-tabs" role="tablist" aria-label="Delegation chamber">
         {tabs.map(({ value, label, icon }, index) => (
           <button key={value} type="button" role="tab" id={`${cardId}-tab-${value}`}
             aria-controls={`${cardId}-panel`} aria-selected={selectedTab === value}
@@ -148,8 +150,8 @@ export default function RepCard({
           </button>
         ))}
       </div>}
-      <div className={`member-card-body${members.length === 1 ? " member-card-single" : ""}`} role={showTabs ? "tabpanel" : undefined} id={`${cardId}-panel`}
-        aria-labelledby={showTabs ? `${cardId}-tab-${selectedTab}` : undefined} tabIndex={showTabs ? 0 : undefined}>
+      <div className={`member-card-body${members.length === 1 ? " member-card-single" : ""}`} role={renderChamberTabs ? "tabpanel" : undefined} id={`${cardId}-panel`}
+        aria-labelledby={renderChamberTabs ? `${cardId}-tab-${selectedTab}` : undefined} tabIndex={renderChamberTabs ? 0 : undefined}>
         <div className="member-delegation">
           <div className="member-list">
             {members.map(member => <MemberSummary key={member.bioguideId} member={member} showChamber={!showTabs || selectedTab === "All Reps"} />)}

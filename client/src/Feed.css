@@ -223,6 +223,78 @@
   gap: 18px;
 }
 
+.feed-view-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 3px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--shadow-compact);
+}
+
+.feed-view-tabs button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 60px;
+  padding: 10px 8px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: clamp(12px, 1.45vw, 18px);
+  font-weight: 750;
+  line-height: 1.3;
+  cursor: pointer;
+}
+
+.feed-view-tabs button[aria-selected="true"] {
+  border-bottom-color: #0755ff;
+  background: linear-gradient(180deg, #e3edff, #eff5ff);
+  color: #0755ff;
+}
+
+.feed-view-tabs button:focus-visible {
+  z-index: 1;
+  outline: 3px solid #0755ff;
+  outline-offset: 2px;
+}
+
+.feed-view-tabs button svg {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+}
+
+.feed-tab-short { display: none; }
+
+.feed-view-panel {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.elections-panel {
+  padding: 22px 24px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.elections-panel p {
+  margin: 12px 0 0;
+  color: var(--text-subtle);
+  line-height: 1.5;
+}
+
 .guest-bar {
   background: var(--warning-bg);
   border: 1px solid var(--warning-border);
@@ -598,6 +670,7 @@
   .feed-main {
     padding-top: 12px;
   }
+  .feed-view-tabs { padding: 0 6px; }
   .policy-sidebar {
     display: none;
   }
@@ -695,6 +768,15 @@
   .mobile-policy-results .policy-list {
     gap: 6px;
   }
+}
+
+@media (max-width: 640px) {
+  .feed-view-tabs { padding: 0 4px; }
+  .feed-view-tabs button { flex-direction: column; gap: 5px; padding: 8px 3px; font-size: 12px; }
+  .feed-view-tabs button svg { width: 20px; height: 20px; }
+  .feed-tab-full { display: none; }
+  .feed-tab-short { display: inline; }
+  .elections-panel { padding: 18px; }
 }
 
 @keyframes mobile-policy-panel-in {

@@ -1,6 +1,6 @@
 {
-  "checkedAt": "2026-10-27T21:49:46Z",
-  "revisionNote": "The original bounded live samples below are historical. On 2026-10-27, post-change search tests, disposable-PostgreSQL crawler/feed checks, a live domain-restricted page search, and a bounded live crawl of an ambiguous site passed. The live crawl wrote only to a temporary local database that was dropped after the run; no production database was used.",
+  "checkedAt": "2026-10-28T16:53:47Z",
+  "revisionNote": "The original bounded live samples below are historical. On 2026-10-28, the gated acceptance test repeated the isolated Yvette Clarke crawler/feed run and directly exercised live inaccessible-domain and no-policy-page cases. The successful crawl wrote only to a temporary local database that was dropped after the run. The edge cases used crawler-only fixtures and wrote no database rows; no production database was used.",
   "sitemapFirstDomainSearchRevision": {
     "implemented": true,
     "automatedChecksRun": true,
@@ -65,7 +65,7 @@
     "note": "A fresh domain-restricted API search still returned no usable detail-page URLs, although the known Key Issues page is fetchable. The site has no usable sitemap endpoint, so this candidate remains without crawler positions until page discovery succeeds."
   },
   "latestLiveAcceptance": {
-    "checkedDate": "2026-10-27",
+    "checkedDate": "2026-10-28",
     "testFile": "tests/elections-campaign-live-acceptance.test.mjs",
     "database": "temporary isolated PostgreSQL database on 127.0.0.1:55439; dropped after run",
     "candidate": "CLARKE, YVETTE D",
@@ -75,15 +75,74 @@
     "maxPages": 2,
     "crawledCandidates": 1,
     "snapshotsSaved": 2,
-    "positionsPublished": 16,
-    "feedItems": 16,
-    "exactExcerptChecks": 16,
+    "positionsPublished": 15,
+    "feedItems": 15,
+    "exactExcerptChecks": 15,
     "feedBallotStatus": "unknown",
     "savedSourceUrls": [
       "https://voteyvette.com/lgbtq-issues/",
       "https://voteyvette.com/about-yvette/"
     ],
     "productionDatabaseUsed": false
+  },
+  "latestLiveCrawlSample": {
+    "checkedAt": "2026-10-28T16:53:47Z",
+    "testFile": "tests/elections-campaign-live-acceptance.test.mjs",
+    "maxPages": 2,
+    "productionDatabaseUsed": false,
+    "rerunPowerShell": [
+      "$env:ELECTIONS_CAMPAIGN_LIVE_ACCEPTANCE = '1'",
+      ".\\tests\\run-postgres-tests.ps1 -TestFile 'elections-campaign-live-acceptance.test.mjs'"
+    ],
+    "requiredEnvironment": [
+      "OPENAI_API_KEY"
+    ],
+    "samples": [
+      {
+        "candidate": "CLARKE, YVETTE D",
+        "siteUrl": "https://voteyvette.com/",
+        "siteStatus": "ambiguous",
+        "exercise": "isolated database-backed crawl, extraction, publication, and feed read",
+        "snapshotsSaved": 2,
+        "positionsPublished": 15,
+        "feedItems": 15,
+        "exactExcerptChecks": 15,
+        "feedBallotStatus": "unknown",
+        "savedSourceUrls": [
+          "https://voteyvette.com/about-yvette/",
+          "https://voteyvette.com/lgbtq-issues/"
+        ]
+      },
+      {
+        "candidate": "WATKINS, VINSON L",
+        "siteUrl": "https://vincewatkins.org/",
+        "recordedDiscoveryStatus": "error",
+        "recordedErrorCode": "discovery-dns-failed",
+        "crawlerFixtureStatus": "ambiguous",
+        "exercise": "direct live crawler call against the candidate-site domain previously returned by site search",
+        "crawlerOutcome": "discovery-dns-failed",
+        "pagesReturned": 0,
+        "databaseWritten": false
+      },
+      {
+        "candidate": "BALOW, JILLIAN",
+        "siteUrl": "https://www.jillianbalowforwyoming.com/",
+        "homepageHttpStatus": 200,
+        "knownIssuePageUrl": "https://www.jillianbalowforwyoming.com/key-issues",
+        "knownIssuePageHttpStatus": 200,
+        "policyPageDiscoverySource": "domain-search",
+        "usablePolicyPageUrls": [],
+        "crawlerFixtureStatus": "ambiguous",
+        "crawlerOutcome": "crawl-policy-pages-not-found",
+        "pagesReturned": 0,
+        "databaseWritten": false,
+        "note": "The known detail URL was reachable but was not discovered from the sitemap or domain search, so it was not crawled."
+      }
+    ],
+    "notes": [
+      "The edge-case checks called the crawler directly with temporary ambiguous-site fixtures; they did not verify database site selection or alter stored campaign-site review statuses.",
+      "The successful Yvette Clarke case used the disposable local PostgreSQL runner and dropped its temporary database after completion."
+    ]
   },
   "ambiguousEligibilityPostgresChecks": {
     "testFile": "tests/elections-crawl-postgres.test.mjs",

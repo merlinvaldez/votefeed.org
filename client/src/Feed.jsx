@@ -13,11 +13,57 @@ import "./Feed.css";
 import {
   Info,
   Search,
+  Users,
+  Building2,
+  Landmark,
+  Vote,
 } from "lucide-react";
+
+const FEED_VIEW_TABS = [
+  { value: "All Reps", label: "All Reps", icon: <Users size={22} aria-hidden="true" /> },
+  { value: "House", label: "House of Representatives", shortLabel: "House", icon: <Building2 size={22} aria-hidden="true" /> },
+  { value: "Senate", label: "Senate", icon: <Landmark size={22} aria-hidden="true" /> },
+  { value: "Elections", label: "Elections", icon: <Vote size={22} aria-hidden="true" /> },
+];
+
+function FeedViewTabs({ activePanel, selectedChamber, onSelect }) {
+  const selectedValue = activePanel === "elections" ? "Elections" : selectedChamber;
+
+  function handleKeyDown(event, index) {
+    let next;
+    if (event.key === "ArrowRight") next = (index + 1) % FEED_VIEW_TABS.length;
+    if (event.key === "ArrowLeft") next = (index + FEED_VIEW_TABS.length - 1) % FEED_VIEW_TABS.length;
+    if (event.key === "Home") next = 0;
+    if (event.key === "End") next = FEED_VIEW_TABS.length - 1;
+    if (next === undefined) return;
+    event.preventDefault();
+    onSelect(FEED_VIEW_TABS[next].value);
+    event.currentTarget.parentElement.children[next].focus();
+  }
+
+  return (
+    <div className="feed-view-tabs" role="tablist" aria-label="Feed sections">
+      {FEED_VIEW_TABS.map(({ value, label, shortLabel, icon }, index) => {
+        const isSelected = selectedValue === value;
+        const id = `feed-view-tab-${value.toLowerCase().replace(/\s+/g, "-")}`;
+        return (
+          <button key={value} type="button" role="tab" id={id}
+            aria-controls={value === "Elections" ? "elections-feed-panel" : "legislative-feed-panel"}
+            aria-selected={isSelected} tabIndex={isSelected ? 0 : -1}
+            onClick={() => onSelect(value)} onKeyDown={event => handleKeyDown(event, index)}>
+            {icon}<span className={shortLabel ? "feed-tab-full" : undefined}>{label}</span>
+            {shortLabel && <span className="feed-tab-short">{shortLabel}</span>}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 function Feed(props) {
   const PAGE_SIZE = 5;
   const [selectedChamber, setSelectedChamber] = useState("All Reps");
+  const [activePanel, setActivePanel] = useState("legislative");
   const { token, authFetch } = useAuth();
   const isAuthed = Boolean(token);
   const location = useLocation();
@@ -35,6 +81,15 @@ function Feed(props) {
   const [stancePending, setStancePending] = useState({});
   const [alignmentError, setAlignmentError] = useState("");
   const [stanceError, setStanceError] = useState("");
+
+  const handleFeedViewSelect = (value) => {
+    if (value === "Elections") {
+      setActivePanel("elections");
+      return;
+    }
+    setSelectedChamber(value);
+    setActivePanel("legislative");
+  };
 
   const [feedState, setFeedState] = useState(token ? null : location.state || props.state);
   const [loading, setLoading] = useState(false);
@@ -382,12 +437,6 @@ function Feed(props) {
 
   const sameDelegation = feedState?.delegationScope === delegationScope;
   const feedPending = loading || (!isCurrentFeed && !error);
-  if (feedPending && !sameDelegation) return <div className="feed-loading">Loading feed...</div>;
-  if (error && !sameDelegation) return <div className="error">{error}</div>;
-
-  if (!feedState?.votes) {
-    return <div>Missing feed data</div>;
-  }
   const goToBill = (vote, discussion = false) => {
     navigate(billNavigation(vote, selectedChamber, token ? null : feedLocation) + (discussion ? "#public-comments" : ""), {
       state: { district: feedLocation, sourceCardId: vote.id, sourceChamber: selectedChamber },
@@ -415,28 +464,67 @@ function Feed(props) {
     });
   };
 
+  const guestBar = !isAuthed && (
+    <div
+      ref={guestBarRef}
+      className={`guest-bar ${isGuestBarHighlighted ? "guest-bar-highlighted" : ""}`}
+    >
+      <div className="guest-left">
+        <Info className="guest-icon" strokeWidth={1.75}></Info>
+        <div>
+          <div className="guest-title">Viewing as Guest</div>
+          <div className="guest-sub">Your interactions won&apos;t be saved.</div>
+        </div>
+      </div>
+      <button className="guest-cta" onClick={() => navigate("/signup")}>
+        Sign Up / Sign In
+      </button>
+    </div>
+  );
+
+  const feedViewTabs = (
+    <FeedViewTabs activePanel={activePanel} selectedChamber={selectedChamber}
+      onSelect={handleFeedViewSelect} />
+  );
+
+  if (activePanel === "elections") {
+    return <>
+      {feedViewTabs}
+      {guestBar}
+      <section id="elections-feed-panel" className="elections-panel" role="tabpanel"
+        aria-labelledby="feed-view-tab-elections" tabIndex={0}>
+        <h2 className="section-title">Elections</h2>
+        <p role="status">Campaign positions are not available yet.</p>
+      </section>
+    </>;
+  }
+
+  const legislativeTabId = `feed-view-tab-${selectedChamber.toLowerCase().replace(/\s+/g, "-")}`;
+  if (feedPending && !sameDelegation) return <>
+    {feedViewTabs}{guestBar}
+    <div id="legislative-feed-panel" className="feed-view-panel" role="tabpanel" aria-labelledby={legislativeTabId}>
+      <div className="feed-loading">Loading feed...</div>
+    </div>
+  </>;
+  if (error && !sameDelegation) return <>
+    {feedViewTabs}{guestBar}
+    <div id="legislative-feed-panel" className="feed-view-panel" role="tabpanel" aria-labelledby={legislativeTabId}>
+      <div className="error">{error}</div>
+    </div>
+  </>;
+  if (!feedState?.votes) return <>
+    {feedViewTabs}{guestBar}
+    <div id="legislative-feed-panel" className="feed-view-panel" role="tabpanel" aria-labelledby={legislativeTabId}>
+      <div>Missing feed data</div>
+    </div>
+  </>;
+
   return (
     <>
-      {!isAuthed && (
-        <div
-          ref={guestBarRef}
-          className={`guest-bar ${
-            isGuestBarHighlighted ? "guest-bar-highlighted" : ""
-          }`}
-        >
-          <div className="guest-left">
-            <Info className="guest-icon" strokeWidth={1.75}></Info>
-            <div>
-              <div className="guest-title">Viewing as Guest</div>
-              <div className="guest-sub">Your interactions won&apos;t be saved.</div>
-            </div>
-          </div>
-          <button className="guest-cta" onClick={() => navigate("/signup")}>
-            Sign Up / Sign In
-          </button>
-        </div>
-      )}
-
+      {feedViewTabs}
+      {guestBar}
+      <div id="legislative-feed-panel" className="feed-view-panel" role="tabpanel"
+        aria-labelledby={legislativeTabId}>
       <RepCard
         chamber={selectedChamber}
         onChamberChange={setSelectedChamber}
@@ -445,6 +533,7 @@ function Feed(props) {
         alignment={isCurrentFeed ? alignmentForCard : null}
         alignmentPolicyArea={feedState?.selectedPolicyArea ?? null}
         alignmentError={alignmentError}
+        hideChamberTabs
       ></RepCard>
 
       <section className="feed-section">
@@ -551,6 +640,7 @@ function Feed(props) {
           </div>
         )}
       </section>
+      </div>
     </>
   );
 }

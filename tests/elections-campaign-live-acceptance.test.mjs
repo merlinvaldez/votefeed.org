@@ -4,6 +4,7 @@ import { randomUUID } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import pg from '../server/node_modules/pg/lib/index.js';
 import { importElectionCandidate, readElectionPositions, saveCampaignSite } from '../server/src/db/queries/elections.js';
+import { crawlCampaignSite } from '../server/src/elections/crawlCampaign.js';
 import { syncCampaignPositions } from '../server/src/elections/syncCampaignPositions.js';
 
 const enabled=process.env.ELECTIONS_CAMPAIGN_LIVE_ACCEPTANCE==='1'
@@ -103,4 +104,56 @@ test('bounded live ambiguous-site crawl saves exact-source positions to the feed
     await admin.query(`DROP DATABASE IF EXISTS ${database}`);
     await admin.end();
   }
+});
+
+test('bounded live crawl sample returns no pages for inaccessible and no-policy-page campaign sites', {
+  skip:enabled ? false : 'Run the isolated PostgreSQL test runner with ELECTIONS_CAMPAIGN_LIVE_ACCEPTANCE=1 and OPENAI_API_KEY.',
+}, async () => {
+  const checkedAt=new Date().toISOString();
+  const cases=[
+    {
+      candidate:'WATKINS, VINSON L',
+      siteUrl:'https://vincewatkins.org/',
+      expectedCode:'discovery-dns-failed',
+      approvedDestinations:[{origin:'https://vincewatkins.org',pathPrefix:'/'}],
+      context:{name:'WATKINS, VINSON L',office:'senate',state:'GA',district:null,senateSeat:2,electionDate:'2026-11-03'},
+    },
+    {
+      candidate:'BALOW, JILLIAN',
+      siteUrl:'https://www.jillianbalowforwyoming.com/',
+      expectedCode:'crawl-policy-pages-not-found',
+      approvedDestinations:[{origin:'https://www.jillianbalowforwyoming.com',pathPrefix:'/'}],
+      context:{name:'BALOW, JILLIAN',office:'house',state:'WY',district:0,senateSeat:null,electionDate:'2026-11-03'},
+    },
+  ];
+
+  const outcomes=[];
+  for (const sample of cases) {
+    const site={
+      proposed_url:sample.siteUrl,
+      status:'ambiguous',
+      approved_destinations:sample.approvedDestinations,
+      review_after:new Date(Date.now()+7*86400000).toISOString(),
+      evidence:{candidate:sample.context,checkedAt},
+    };
+    let errorCode=null;
+    try {
+      await crawlCampaignSite({site,maxPages:2,checkDns:true});
+    } catch (error) {
+      errorCode=error.code ?? 'crawl-failed';
+    }
+    assert.equal(errorCode,sample.expectedCode,`${sample.siteUrl} should return no pages for this live edge case`);
+    outcomes.push({
+      candidate:sample.candidate,
+      siteUrl:sample.siteUrl,
+      outcome:errorCode,
+      pagesReturned:0,
+    });
+  }
+
+  console.log('LIVE_CRAWL_EDGE_SUMMARY '+JSON.stringify({
+    checkedAt,
+    outcomes,
+    productionDatabaseUsed:false,
+  }));
 });
