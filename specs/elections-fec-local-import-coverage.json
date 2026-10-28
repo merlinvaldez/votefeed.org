@@ -1,0 +1,250 @@
+{
+  "cycle": 2026,
+  "database": "votefeed_fec_nationwide_2026_local",
+  "entries": [
+    {
+      "runId": "afed1551-16ff-4e86-8f48-c6c2088c1138",
+      "state": "AK",
+      "counts": {
+        "promoted": 20,
+        "documents": 13,
+        "unresolved": 0,
+        "observations": 20,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "AK",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 12,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T16:57:20.339Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "30772e7e-25cb-498f-848f-c823837e8e4d",
+      "state": "AK",
+      "counts": {
+        "promoted": 21,
+        "documents": 14,
+        "unresolved": 0,
+        "observations": 21,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "AK",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 13,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T16:57:48.003Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "d27582b7-ee05-44fc-ac18-f8c0093f2003",
+      "state": "AL",
+      "counts": {
+        "promoted": 78,
+        "documents": 41,
+        "unresolved": 0,
+        "observations": 78,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "AL",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 41,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T16:25:15.366Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "3d1632b3-832c-40c2-b047-0b328a7c5849",
+      "state": "AL",
+      "counts": {
+        "promoted": 30,
+        "documents": 17,
+        "unresolved": 1,
+        "observations": 31,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "partial",
+      "coverage": {
+        "state": "AL",
+        "office": "senate",
+        "status": "partial",
+        "fecStatus": "partial",
+        "errorCodes": [
+          "discovery-unresolved-records"
+        ],
+        "raceResults": [],
+        "fecCandidates": 17,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T16:25:34.799Z",
+      "errorCodes": [
+        "discovery-match-review-required",
+        "discovery-unresolved-records"
+      ]
+    },
+    {
+      "runId": "550956c0-fa11-44ee-8f95-39fa103f7573",
+      "state": "AR",
+      "counts": {
+        "promoted": 30,
+        "documents": 17,
+        "unresolved": 0,
+        "observations": 30,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "AR",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 16,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T17:00:13.487Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "416a9132-1e70-433f-b8f8-d7e04111383c",
+      "state": "AR",
+      "counts": {
+        "promoted": 17,
+        "documents": 10,
+        "unresolved": 0,
+        "observations": 17,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "AR",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 9,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T17:00:24.509Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "991dd742-55bd-4f3a-a21e-b28fdbbb989a",
+      "state": "AZ",
+      "counts": {
+        "promoted": 159,
+        "documents": 85,
+        "unresolved": 8,
+        "observations": 167,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "partial",
+      "coverage": {
+        "state": "AZ",
+        "office": "house",
+        "status": "partial",
+        "fecStatus": "partial",
+        "errorCodes": [
+          "discovery-fec-invalid-record",
+          "discovery-unresolved-records"
+        ],
+        "raceResults": [],
+        "fecCandidates": 87,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T16:59:53.724Z",
+      "errorCodes": [
+        "discovery-match-review-required",
+        "discovery-fec-invalid-record",
+        "discovery-unresolved-records"
+      ]
+    },
+    {
+      "runId": "f8245630-e7c9-4ded-913d-2bd83cbdcc6e",
+      "state": "AZ",
+      "counts": {
+        "promoted": 3,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 3,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "AZ",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 3,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T16:59:53.894Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "94a2ef4b-ddb3-4c1d-9c06-e5db5b395ff4",
+      "state": "CA",
+      "counts": {
+        "promoted": 667,
+        "documents": 314,
+        "unresolved": 14,
+        "observations": 681,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "partial",
+      "coverage": {
+        "state": "CA",
+        "office": "house",
+        "status": "partial",
+        "fecStatus": "partial",
+        "errorCodes": [
+          "discovery-retry-deferred",
+          "discovery-unresolved-records"
+        ],
+        "raceResults": [],
+        "fecCandidates": 400,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T17:15:18.327Z",
+      "errorCodes": [
+        "discovery-match-review-required",
+        "discovery-retry-deferred",
+        "discovery-unresolved-records"
+      ]
+    }
+  ]
+}

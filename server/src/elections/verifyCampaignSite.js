@@ -1,4 +1,5 @@
 import { cleanCampaignHtml } from './cleanCampaignHtml.js';
+import { load } from 'cheerio';
 import { fetchPublic, resolvePublic } from './publicHttp.js';
 import { campaignUrl, publicUrl, safeCode } from './discoveryUtils.js';
 
@@ -22,10 +23,15 @@ export async function verifyCampaignDestination({observation,resolution,fetcher=
     const page = await fetcher(url,{allowedOrigins:[target.origin],maxBytes:1_000_000});
     const type = page.headers['content-type'] ?? '';
     if (!type.includes('text/html')) return {...base,invalidationReason:'unsupported-site-content'};
-    const text = normalize(cleanCampaignHtml(page.bytes.toString('utf8')));
+    const html = page.bytes.toString('utf8');
+    // The document title can identify a campaign even when its body is client rendered.
+    const title = load(html)('head title').first().text();
+    const text = normalize(`${title} ${cleanCampaignHtml(html)}`);
     const name = normalize(row.name);
+    const parts = row.name.split(',').map(part => part.trim());
+    const reorderedName = parts.length === 2 ? normalize(`${parts[1]} ${parts[0]}`) : name;
     const office = row.race.office === 'senate' ? /\bsenat(?:e|or)\b/ : /\bcongress(?:ional)?\b|\bu s house\b|\bunited states house\b/;
-    if (!text.includes(name) || !office.test(text)) return {...base,status:'ambiguous',invalidationReason:'candidate-race-not-supported'};
+    if (!(text.includes(name) || text.includes(reorderedName)) || !office.test(text)) return {...base,status:'ambiguous',invalidationReason:'candidate-race-not-supported'};
     return {...base,status:'verified',approvedDestinations:[{origin:target.origin,pathPrefix:target.pathname.endsWith('/') ? target.pathname : target.pathname || '/'}],
       reviewAfter:new Date(new Date(checkedAt).getTime()+reviewDays*86400000).toISOString()};
   } catch (error) { return {...base,invalidationReason:safeCode(error)}; }

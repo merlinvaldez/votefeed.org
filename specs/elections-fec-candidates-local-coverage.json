@@ -1,0 +1,2648 @@
+{
+  "cycle": 2026,
+  "source": "OpenFEC candidate search only",
+  "database": "votefeed_fec_candidates_2026_local",
+  "identityPolicy": "Each valid candidate-search record is keyed by its FEC candidate ID. Same-name records are kept separate unless explicitly linked; invalid records remain quarantined.",
+  "summary": {
+    "scopes": 100,
+    "completeScopes": 100,
+    "committeeRequests": 0,
+    "campaignSiteWrites": 0,
+    "candidateSearchRecords": 4372,
+    "invalidRecords": 1,
+    "validCandidateRecords": 4371,
+    "unresolved": 0,
+    "validCandidateSearchObservations": 7424,
+    "invalidCandidateSearchObservations": 2
+  },
+  "entries": [
+    {
+      "runId": "26949e29-26b0-49c9-8f6b-a0ae860c3876",
+      "state": "AK",
+      "counts": {
+        "promoted": 12,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 12,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "AK",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 12,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:18.764Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "80cc2ef4-4b89-4380-b2e5-4191e7c35499",
+      "state": "AK",
+      "counts": {
+        "promoted": 13,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 13,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "AK",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 13,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:19.050Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "1a4b7a24-8409-409a-9bda-92aa013b82e8",
+      "state": "AL",
+      "counts": {
+        "promoted": 41,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 41,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "AL",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 41,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:12.617Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "7af576d9-5b14-4620-89c7-d52995c39330",
+      "state": "AL",
+      "counts": {
+        "promoted": 17,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 17,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "AL",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 17,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:31:35.723Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "d4d61761-f071-4dd5-a570-63ad0d83d32e",
+      "state": "AR",
+      "counts": {
+        "promoted": 16,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 16,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "AR",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 16,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:20.842Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "e9d16632-c644-487b-a56e-492d0fbecb72",
+      "state": "AR",
+      "counts": {
+        "promoted": 9,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 9,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "AR",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 9,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:21.121Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "368cc55d-e3cc-4342-b8ca-b99e2c2ad7db",
+      "state": "AZ",
+      "counts": {
+        "promoted": 86,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 87,
+        "sitesVerified": 0,
+        "invalidRecords": 1
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "AZ",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [
+          "discovery-fec-invalid-record"
+        ],
+        "fecCandidates": 87,
+        "sourceResults": [],
+        "invalidFecCandidates": 1
+      },
+      "checkedAt": "2026-10-28T16:31:36.761Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "c70826ca-d4c5-44e2-99ef-140ce040c72b",
+      "state": "AZ",
+      "counts": {
+        "promoted": 3,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 3,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "AZ",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 3,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:20.547Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "ef2b00f2-f671-4841-b21a-11b12d8584c1",
+      "state": "CA",
+      "counts": {
+        "promoted": 403,
+        "documents": 5,
+        "unresolved": 0,
+        "observations": 403,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "CA",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 403,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:31:41.796Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "a04fde08-b6c1-4770-ac54-0493b7739671",
+      "state": "CA",
+      "counts": {
+        "promoted": 11,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 11,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "CA",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 11,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:27.399Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "0890ea9b-f85f-4f00-91a1-5cc6dd2a0356",
+      "state": "CO",
+      "counts": {
+        "promoted": 80,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 80,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "CO",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 80,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:30.405Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "a735596e-0d61-40ae-b44f-ed1aad1104ae",
+      "state": "CO",
+      "counts": {
+        "promoted": 23,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 23,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "CO",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 23,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:31:54.232Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "3569d27a-0253-4f50-9ed3-4d42e384d44d",
+      "state": "CT",
+      "counts": {
+        "promoted": 38,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 38,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "CT",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 38,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:31:54.683Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "a7ffbdc8-2904-43e3-afc5-fa30f7db396c",
+      "state": "CT",
+      "counts": {
+        "promoted": 1,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 1,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "CT",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 1,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:31.423Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "76b2e1d0-666b-4d79-9a25-6223dec0e8d0",
+      "state": "DE",
+      "counts": {
+        "promoted": 6,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 6,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "DE",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 6,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:31.648Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "bcaef607-df38-4370-af2c-0601e8e39fdd",
+      "state": "DE",
+      "counts": {
+        "promoted": 13,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 13,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "DE",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 13,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:31:54.951Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "6695a933-92ad-466c-8f79-a2f52e47b62f",
+      "state": "FL",
+      "counts": {
+        "promoted": 306,
+        "documents": 4,
+        "unresolved": 0,
+        "observations": 306,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "FL",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 306,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:31:58.796Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "2d57b1bb-9db1-40a6-842c-ff119decd670",
+      "state": "FL",
+      "counts": {
+        "promoted": 38,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 38,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "FL",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 38,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:36.399Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "07b4359d-2fa1-4160-b374-4ff72da5d441",
+      "state": "GA",
+      "counts": {
+        "promoted": 152,
+        "documents": 2,
+        "unresolved": 0,
+        "observations": 152,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "GA",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 152,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:00.692Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "b565de8d-cd40-437a-8dce-05d60c362851",
+      "state": "GA",
+      "counts": {
+        "promoted": 21,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 21,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "GA",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 21,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:01.027Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "3a94db03-71df-4166-ba2e-eeb82e852e14",
+      "state": "HI",
+      "counts": {
+        "promoted": 11,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 11,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "HI",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 11,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:40.059Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "5d762a94-30d0-4585-9555-a2a7ef239068",
+      "state": "HI",
+      "counts": {
+        "promoted": 1,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 1,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "HI",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 1,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:40.219Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "ee3ca226-bd07-4526-aa93-b357f6a65892",
+      "state": "IA",
+      "counts": {
+        "promoted": 39,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 39,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "IA",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 39,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:00.081Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "c3a67ea4-dba7-4f43-85a4-e201704bdbe0",
+      "state": "IA",
+      "counts": {
+        "promoted": 12,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 12,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "IA",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 12,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:00.340Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "624ec260-770a-4ae0-a0ea-83f66e151506",
+      "state": "ID",
+      "counts": {
+        "promoted": 17,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 17,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "ID",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 17,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:40.513Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "c4d49288-7639-4fca-9426-6104938bf7db",
+      "state": "ID",
+      "counts": {
+        "promoted": 9,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 9,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "ID",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 9,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:42.276Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "9e5d8351-556b-4c0b-8d38-cec31032e6c1",
+      "state": "IL",
+      "counts": {
+        "promoted": 160,
+        "documents": 2,
+        "unresolved": 0,
+        "observations": 160,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "IL",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 160,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:03.723Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "82203fb9-a872-4779-8d05-530f9054dcfc",
+      "state": "IL",
+      "counts": {
+        "promoted": 38,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 38,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "IL",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 38,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:04.170Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "b6c3cfab-4491-42c6-85a0-930c8e2ae1cf",
+      "state": "IN",
+      "counts": {
+        "promoted": 67,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 67,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "IN",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 67,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:45.392Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "72402b2f-5a28-4cae-a725-8f36d1eb2135",
+      "state": "IN",
+      "counts": {
+        "promoted": 6,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 6,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "IN",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 6,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:02:45.565Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "88f9a5ba-8256-487a-8f7f-39a4b2eca615",
+      "state": "KS",
+      "counts": {
+        "promoted": 27,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 27,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "KS",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 27,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:04.430Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "24f7b866-e5d0-4060-9999-0acfbf5e7291",
+      "state": "KS",
+      "counts": {
+        "promoted": 13,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 13,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "KS",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 13,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:00.927Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "90ce86a8-b3f8-4fd3-9964-0b6bb6dc465d",
+      "state": "KY",
+      "counts": {
+        "promoted": 54,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 54,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "KY",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 54,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:05.099Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "09ff10bf-0130-4a09-8070-c53f6a62f64a",
+      "state": "KY",
+      "counts": {
+        "promoted": 22,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 22,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "KY",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 22,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:01.886Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "534575a0-42df-4298-a060-8f70d5f5c9a5",
+      "state": "LA",
+      "counts": {
+        "promoted": 49,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 49,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "LA",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 49,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:05.561Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "f46ea140-8e66-4713-9f1d-331eac308c89",
+      "state": "LA",
+      "counts": {
+        "promoted": 24,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 24,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "LA",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 24,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:06.061Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "81f84fb1-cbaf-4bdf-9452-9ef0c70d6b66",
+      "state": "MA",
+      "counts": {
+        "promoted": 48,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 48,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "MA",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 48,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:05.084Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "4084f82c-1b00-4438-837f-2ea8460f351b",
+      "state": "MA",
+      "counts": {
+        "promoted": 11,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 11,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "MA",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 11,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:17.757Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "b2804b7b-56d9-4d7c-a03d-8207933a3d27",
+      "state": "MD",
+      "counts": {
+        "promoted": 76,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 76,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "MD",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 76,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:06.751Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "65fe4ff6-522a-4242-85f0-cbe06dbd11fa",
+      "state": "MD",
+      "counts": {
+        "promoted": 2,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 2,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "MD",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 2,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:04.431Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "5ecfe884-8c10-4b4f-a3d8-93c43188764f",
+      "state": "ME",
+      "counts": {
+        "promoted": 15,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 15,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "ME",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 15,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:03.098Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "47b3ce2d-9309-49c1-a752-b3faadf44fd4",
+      "state": "ME",
+      "counts": {
+        "promoted": 24,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 24,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "ME",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 24,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:03.438Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "49e3a838-db53-4fe4-b1d0-1992eba17ed2",
+      "state": "MI",
+      "counts": {
+        "promoted": 131,
+        "documents": 2,
+        "unresolved": 0,
+        "observations": 131,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "MI",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 131,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:19.362Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "ea40f72d-b64f-40ec-9536-f5d9502f7ad2",
+      "state": "MI",
+      "counts": {
+        "promoted": 25,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 25,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "MI",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 25,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:19.612Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "7f925cae-8d69-4446-a0c2-2e3aa661929a",
+      "state": "MN",
+      "counts": {
+        "promoted": 54,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 54,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "MN",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 54,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:20.078Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "4020b941-cc53-487a-9dbd-21d378d93062",
+      "state": "MN",
+      "counts": {
+        "promoted": 19,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 19,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "MN",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 19,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:20.806Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "45e1ba75-e818-42d3-a302-80df3af906c3",
+      "state": "MO",
+      "counts": {
+        "promoted": 78,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 78,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "MO",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 78,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:21.301Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "e870254f-626e-436d-b465-3e1bde3a5521",
+      "state": "MO",
+      "counts": {
+        "promoted": 1,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 1,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "MO",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 1,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:22.413Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "c0697bed-d90c-4012-bea3-fe8133e15f10",
+      "state": "MS",
+      "counts": {
+        "promoted": 25,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 25,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "MS",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 25,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:21.173Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "65a2e77e-0dab-43bd-af40-926ea1c0b579",
+      "state": "MS",
+      "counts": {
+        "promoted": 9,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 9,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "MS",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 9,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:20.284Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "9aa69aaf-ab45-438c-997e-0e6c725b408f",
+      "state": "MT",
+      "counts": {
+        "promoted": 15,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 15,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "MT",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 15,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:22.660Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "9cb09d8b-9734-45a2-957c-2d43bf5199bd",
+      "state": "MT",
+      "counts": {
+        "promoted": 14,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 14,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "MT",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 14,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:22.908Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "51b9178d-78b7-4434-8a5a-0dfc96e8b85f",
+      "state": "NC",
+      "counts": {
+        "promoted": 104,
+        "documents": 2,
+        "unresolved": 0,
+        "observations": 104,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "NC",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 104,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:29.541Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "a50acb22-6ea6-496d-a3b0-8f8df1b03c99",
+      "state": "NC",
+      "counts": {
+        "promoted": 31,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 31,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "NC",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 31,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:29.920Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "bebf7e5f-aa21-42fd-81c7-83ed3b1e3455",
+      "state": "ND",
+      "counts": {
+        "promoted": 8,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 8,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "ND",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 8,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:04:01.503Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "8e2fd56b-c7d4-449a-81d0-43c78b464d9c",
+      "state": "ND",
+      "counts": {
+        "promoted": 1,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 1,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "ND",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 1,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:04:01.663Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "8ebc670a-78e6-400d-9857-b594e43ce608",
+      "state": "NE",
+      "counts": {
+        "promoted": 22,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 22,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "NE",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 22,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:23.233Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "4a85a2eb-5b40-445d-8011-933e0c3eb258",
+      "state": "NE",
+      "counts": {
+        "promoted": 12,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 12,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "NE",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 12,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:23.507Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "e605f585-d82f-4ed8-a26e-f1ef3ecb3fa6",
+      "state": "NH",
+      "counts": {
+        "promoted": 23,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 23,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "NH",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 23,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:38.483Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "af56bee6-38ce-49a9-8916-736ffcac3492",
+      "state": "NH",
+      "counts": {
+        "promoted": 15,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 15,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "NH",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 15,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:38.784Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "d9aaf996-dd0e-4519-9d24-52283007e2ab",
+      "state": "NJ",
+      "counts": {
+        "promoted": 109,
+        "documents": 2,
+        "unresolved": 0,
+        "observations": 109,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "NJ",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 109,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:25.034Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "1f354eab-b49e-43ee-8926-a271e1c0208e",
+      "state": "NJ",
+      "counts": {
+        "promoted": 20,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 20,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "NJ",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 20,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:25.459Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "7b2519d5-0327-4681-9287-0d46bb127348",
+      "state": "NM",
+      "counts": {
+        "promoted": 11,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 11,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "NM",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 11,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:40.904Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "8f28e42a-1c0b-4ed6-b6be-67bddc0bf8e6",
+      "state": "NM",
+      "counts": {
+        "promoted": 10,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 10,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "NM",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 10,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:41.149Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "77fb843f-8e54-4550-8942-a6e5000cdbb5",
+      "state": "NV",
+      "counts": {
+        "promoted": 63,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 63,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "NV",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 63,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:23.569Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "51213552-9d30-4b70-8c6a-096bc5dd3214",
+      "state": "NV",
+      "counts": {
+        "promoted": 1,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 1,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "NV",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 1,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:35.534Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "d80cc4f9-0ff9-409b-80b1-64bc0e5f52ea",
+      "state": "NY",
+      "counts": {
+        "promoted": 209,
+        "documents": 3,
+        "unresolved": 0,
+        "observations": 209,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "NY",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 209,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:28.124Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "beead5f2-7e1f-4a91-9854-f8ff0d9ffc81",
+      "state": "NY",
+      "counts": {
+        "promoted": 12,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 12,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "NY",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 12,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:03:59.524Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "2424ac3f-33f4-4fd5-8ec2-b390dadf0613",
+      "state": "OH",
+      "counts": {
+        "promoted": 99,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 99,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "OH",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 99,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:31.124Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "ab16e34a-8f4c-40ac-8041-37a6937e1562",
+      "state": "OH",
+      "counts": {
+        "promoted": 16,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 16,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "OH",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 16,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:04:02.848Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "1d815a7a-2ddb-42ee-ba10-edf0e7cce166",
+      "state": "OK",
+      "counts": {
+        "promoted": 37,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 37,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "OK",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 37,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:04:03.306Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "e49f7350-497d-480e-bed0-20dcede8aa54",
+      "state": "OK",
+      "counts": {
+        "promoted": 19,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 19,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "OK",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 19,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:33.883Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "c181cb87-d4e2-4397-886a-dca08cd3ad07",
+      "state": "OR",
+      "counts": {
+        "promoted": 36,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 36,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "OR",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 36,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:04:04.638Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "5ffb8a56-e913-4281-8a97-26974d58bd10",
+      "state": "OR",
+      "counts": {
+        "promoted": 10,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 10,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "OR",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 10,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:34.137Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "4fa5313f-d7f1-4fbf-947b-21900847aef2",
+      "state": "PA",
+      "counts": {
+        "promoted": 107,
+        "documents": 2,
+        "unresolved": 0,
+        "observations": 107,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "PA",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 107,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:51.337Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "b74bcaa7-2bbe-4aff-984b-33b3e6bcb257",
+      "state": "PA",
+      "counts": {
+        "promoted": 6,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 6,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "PA",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 6,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:04:06.546Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "1732c795-ad1e-4efc-93d7-b11e6da31659",
+      "state": "RI",
+      "counts": {
+        "promoted": 9,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 9,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "RI",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 9,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:04:06.790Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "d6b3b6a6-e16e-4c28-a1b4-55b791ba5bcc",
+      "state": "RI",
+      "counts": {
+        "promoted": 9,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 9,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "RI",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 9,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:51.582Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "7026d1fe-f33b-40b2-95a6-cf11f57e9bcb",
+      "state": "SC",
+      "counts": {
+        "promoted": 60,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 60,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "SC",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 60,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:52.030Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "4c0de90e-7fa8-4207-ad47-0020fbe6b4d0",
+      "state": "SC",
+      "counts": {
+        "promoted": 33,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 33,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "SC",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 33,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:52.386Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "d0d201e3-f009-490b-be83-57ab4c2cb0fe",
+      "state": "SD",
+      "counts": {
+        "promoted": 8,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 8,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "SD",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 8,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:04:08.549Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "1e6d2db6-ee06-4976-9db5-1434979615f1",
+      "state": "SD",
+      "counts": {
+        "promoted": 4,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 4,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "SD",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 4,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:04:08.742Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "22870f93-90a6-40d3-97f9-e4420e57e87a",
+      "state": "TN",
+      "counts": {
+        "promoted": 88,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 88,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "TN",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 88,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:04:09.835Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "367c4237-4ad5-49e0-99b9-0e8a16e13e28",
+      "state": "TN",
+      "counts": {
+        "promoted": 14,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 14,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "TN",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 14,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:52.615Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "a3f1af54-68f3-4e91-884f-6db6516d9841",
+      "state": "TX",
+      "counts": {
+        "promoted": 355,
+        "documents": 4,
+        "unresolved": 0,
+        "observations": 355,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "TX",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 355,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:56.744Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "b13b53ff-d900-402d-9987-046f218efa12",
+      "state": "TX",
+      "counts": {
+        "promoted": 41,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 41,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "TX",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 41,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:57.164Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "06f9f836-aa06-497c-9fe0-4bb57f50f34e",
+      "state": "UT",
+      "counts": {
+        "promoted": 52,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 52,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "UT",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 52,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:57.631Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "502e3460-7044-46f8-a701-f77d157c546b",
+      "state": "UT",
+      "counts": {
+        "promoted": 2,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 2,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "UT",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 2,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:04:16.921Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "cfdba4c8-3b12-4f28-ae00-a11e94bd71b9",
+      "state": "VA",
+      "counts": {
+        "promoted": 121,
+        "documents": 2,
+        "unresolved": 0,
+        "observations": 121,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "VA",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 121,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:04:19.000Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "a65c1c36-1df1-412f-ab6d-49369c51c665",
+      "state": "VA",
+      "counts": {
+        "promoted": 14,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 14,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "VA",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 14,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:57.888Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "c2107373-6686-4a13-ab07-fec48301730f",
+      "state": "VT",
+      "counts": {
+        "promoted": 7,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 7,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "VT",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 7,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:04:17.169Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "abedbc71-d9e8-48ba-af93-64784a4f12fb",
+      "state": "VT",
+      "counts": {
+        "promoted": 0,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 0,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "VT",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 0,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:04:17.304Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "65adc2ff-8620-4e73-b782-bb05a3b53fa2",
+      "state": "WA",
+      "counts": {
+        "promoted": 70,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 70,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "WA",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 70,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:58.447Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "b596876b-e8db-4037-b4f4-a28aad705689",
+      "state": "WA",
+      "counts": {
+        "promoted": 4,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 4,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "WA",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 4,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:05:23.838Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "2f38798c-db27-4b2e-b7bd-7355651389ab",
+      "state": "WI",
+      "counts": {
+        "promoted": 62,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 62,
+        "sitesVerified": 0,
+        "invalidRecords": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "WI",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "warningCodes": [],
+        "fecCandidates": 62,
+        "sourceResults": [],
+        "invalidFecCandidates": 0
+      },
+      "checkedAt": "2026-10-28T16:32:58.970Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "4b1dfe28-cc08-47c8-a0e5-0fdf66eecb7e",
+      "state": "WI",
+      "counts": {
+        "promoted": 1,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 1,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "WI",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 1,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:05:26.356Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "bafa0050-66fa-4a73-a0fe-6f1a14bfb576",
+      "state": "WV",
+      "counts": {
+        "promoted": 16,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 16,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "WV",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 16,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:05:24.524Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "16abbbf1-99f7-4f56-a701-ffda182ef319",
+      "state": "WV",
+      "counts": {
+        "promoted": 12,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 12,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "WV",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 12,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:05:25.053Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "ea56ad9b-e8f3-4cfa-8e8c-ef0cd8c3bd34",
+      "state": "WY",
+      "counts": {
+        "promoted": 14,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 14,
+        "sitesVerified": 0
+      },
+      "office": "house",
+      "status": "complete",
+      "coverage": {
+        "state": "WY",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 14,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:05:26.867Z",
+      "errorCodes": []
+    },
+    {
+      "runId": "27c3e648-0ac3-4ea1-9943-9904da47cc66",
+      "state": "WY",
+      "counts": {
+        "promoted": 9,
+        "documents": 1,
+        "unresolved": 0,
+        "observations": 9,
+        "sitesVerified": 0
+      },
+      "office": "senate",
+      "status": "complete",
+      "coverage": {
+        "state": "WY",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "errorCodes": [],
+        "raceResults": [],
+        "fecCandidates": 9,
+        "sourceResults": []
+      },
+      "checkedAt": "2026-10-27T18:05:27.383Z",
+      "errorCodes": []
+    }
+  ]
+}

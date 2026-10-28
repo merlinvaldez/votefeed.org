@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { discoveryScope, publicUrl, campaignUrl } from '../server/src/elections/discoveryUtils.js';
-import { fecPages, parseFecPage } from '../server/src/elections/sources/fec.js';
+import { fecPages, parseFecPage, fecRace } from '../server/src/elections/sources/fec.js';
 import { fetchPublic, isPublicAddress, resolvePublic } from '../server/src/elections/publicHttp.js';
 import { verifyCampaignDestination } from '../server/src/elections/verifyCampaignSite.js';
 
@@ -30,6 +30,11 @@ test('all FEC pages are read; partial failures and duplicates do not become succ
   const duplicate = {...b,results:a.results};
   await assert.rejects(async()=>{for await (const ignored of fecPages({...params,fetcher:async url=>response(JSON.stringify(new URL(url).searchParams.get('page')==='1' ? a : duplicate))})) void ignored;},/pagination-duplicate/);
   assert.throws(()=>parseFecPage(JSON.stringify(a),{state:'AK',office:'house'}),/malformed-fec/);
+  const missingName = structuredClone(a); missingName.results[0].name=null;
+  const parsed = parseFecPage(JSON.stringify(missingName),{state:'WY',office:'house'});
+  assert.equal(parsed.records.length,1); assert.equal(parsed.invalidRecords[0].reason,'missing-name');
+  const incomplete=[]; for await (const page of fecPages({...params,fetcher:async url=>response(JSON.stringify(new URL(url).searchParams.get('page')==='1' ? missingName : b))})) incomplete.push(page);
+  assert.equal(incomplete.flatMap(page=>page.invalidRecords).length,1);
 });
 test('public requests pin DNS and bound retries, redirects, and rate-limit waits',async()=>{
   for (const ip of ['127.0.0.1','10.0.0.1','169.254.169.254','::1','::ffff:127.0.0.1','fc00::1']) assert.equal(isPublicAddress(ip),false,ip);
@@ -65,6 +70,8 @@ test('campaign approval requires a supported official link, name/race consistenc
     fetcher:async()=>response(text),checkedAt:'2026-10-26T20:00:00Z'});
   const site=await run(); assert.equal(site.status,'verified');assert.ok(site.reviewAfter);assert.equal(site.approvedDestinations[0].origin,'https://alex.example');
   assert.equal((await run({},'Someone Else for Senate')).status,'ambiguous');
+  assert.equal((await run({},'<html><head><title>Alex Example for Senate</title></head><body><script>Ignored</script></body></html>')).status,'verified');
+  assert.equal((await run({},'<html><head><title>Someone Else</title></head><body><script>Alex Example for Senate</script></body></html>')).status,'ambiguous');
   assert.equal((await run({data:{...data,siteUrl:null}})).status,'missing');
   assert.equal((await run({data:{...data,siteUrl:'https://secure.actblue.com/donate'}})).status,'rejected');
   assert.equal((await run({validation:{outcome:'needs-review'}})).status,'proposed');
@@ -77,4 +84,14 @@ test('FEC-only race mapping supports regular scope without state ballot adapters
   assert.equal(fecRace({}, {state:'FL',office:'senate'}),null);
   assert.equal(fecRace({district:null}, {state:'NY',office:'house'}),null);
   assert.equal(fecRace({candidate_inactive:true}, {state:'WY',office:'senate'}),null);
+});
+
+
+test('2026 regular Senate race scope matches the official Senate class II snapshot',async()=>{
+  const { STATES } = await import('../server/src/elections/contracts.js');
+  const html=(await fixture('senate-class-ii.html')).toString();
+  const official=new Set([...html.matchAll(/\([DRI]-([A-Z]{2})\)/g)].map(match=>match[1]));
+  assert.equal(official.size,33);
+  const actual=new Set(STATES.filter(state=>fecRace({}, {state,office:'senate'})?.senateSeat===2));
+  assert.deepEqual([...actual].sort(),[...official].sort());
 });

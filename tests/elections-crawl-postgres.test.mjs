@@ -52,6 +52,8 @@ test('campaign crawl, extraction, and atomic publication on disposable PostgreSQ
 
     let imported1, candidacy1, site1;
     let imported2, candidacy2, site2;
+    let ambiguousCandidacy;
+    let ineligibleSites = {};
 
     await t.test('setup FEC-registered candidacies with verified campaign sites', async () => {
       const checkedAt = new Date().toISOString();
@@ -112,10 +114,48 @@ test('campaign crawl, extraction, and atomic publication on disposable PostgreSQ
         reviewAfter: new Date(Date.now() + 86400000).toISOString()
       }, pool);
 
+      const createCandidateWithSite = async ({fecId,name,status,url,approvedDestinations=[],reviewAfter=null,invalidationReason=null}) => {
+        const imported=await importElectionCandidate({
+          identity:{system:'fec:candidate',id:fecId,evidence:identityEvidence},name,race,raceEvidence,party:'IND',
+          eligibility:'unknown',eligibilityEvidence:{system:'fec:candidate',id:fecId}
+        },pool);
+        const candidate={name,fecId,office:'house',state:'WY',district:0,senateSeat:null,electionDate:'2026-11-03'};
+        await saveCampaignSite({
+          candidacyId:imported.candidacy.id,url,status,approvedDestinations,evidence:{
+            url:url ?? 'https://api.open.fec.gov/v1/candidates',excerpt:`${name} campaign website evidence`,method:'ai-campaign-site-discovery',
+            verifierVersion:'ai-campaign-site-discovery-v7',candidate
+          },checkedAt,reviewAfter,invalidationReason
+        },pool);
+        return imported.candidacy;
+      };
+
+      ambiguousCandidacy=await createCandidateWithSite({
+        fecId:'H6WY00770',name:'Dana Ambiguous',status:'ambiguous',url:'https://danaexample.org/2026/',
+        approvedDestinations:[{origin:'https://danaexample.org',pathPrefix:'/2026/'}],
+        reviewAfter:new Date(Date.now()+86400000).toISOString(),invalidationReason:'candidate-race-match-unclear'
+      });
+      ineligibleSites.missing=await createCandidateWithSite({fecId:'H6WY00771',name:'Mia Missing',status:'missing',url:null});
+      ineligibleSites.rejected=await createCandidateWithSite({fecId:'H6WY00772',name:'Reese Rejected',status:'rejected',url:'https://reese-rejected.example/'});
+      ineligibleSites.proposed=await createCandidateWithSite({
+        fecId:'H6WY00773',name:'Pat Proposed',status:'proposed',url:'https://pat-proposed.example/',
+        invalidationReason:'discovery-dns-failed'
+      });
+      ineligibleSites.unapproved=await createCandidateWithSite({
+        fecId:'H6WY00774',name:'Lee Unapproved',status:'ambiguous',url:'https://lee-unapproved.example/campaign/',
+        approvedDestinations:[{origin:'https://other-origin.example',pathPrefix:'/'}],
+        reviewAfter:new Date(Date.now()+86400000).toISOString()
+      });
+      ineligibleSites.expired=await createCandidateWithSite({
+        fecId:'H6WY00775',name:'Sam Expired',status:'ambiguous',url:'https://sam-expired.example/',
+        approvedDestinations:[{origin:'https://sam-expired.example',pathPrefix:'/'}],
+        reviewAfter:new Date(Date.now()-86400000).toISOString()
+      });
+
       assert.ok(candidacy1.id);
       assert.ok(site1.id);
       assert.ok(candidacy2.id);
       assert.ok(site2.id);
+      assert.ok(ambiguousCandidacy.id);
     });
 
     const HOME_PAGE_TEXT = 'Lowering Prescription Drug Costs\n\nEvery family deserves affordable medication.\nI will fight to cap insulin at $35 a month for all working families.';
@@ -218,7 +258,7 @@ We must invest in conservation and protect our public lands for future generatio
       // Mock geography evidence
       const geo = (await pool.query(
         `INSERT INTO election_geography_evidence(state, cycle, boundary_version, source_url, checked_at, status)
-         VALUES('WY', 2026, 'v1', 'https://sos.wyo.gov', now(), 'verified') RETURNING *`
+         VALUES('WY', 2026, 'ACS2026_Current:120th', 'https://www.census.gov/programs-surveys/decennial-census/about/rdo/congressional-districts.html', now(), 'verified') RETURNING *`
       )).rows[0];
 
       const feed = await readElectionPositions({
@@ -240,6 +280,84 @@ We must invest in conservation and protect our public lands for future generatio
       assert.equal(item.ballotStatus, 'unknown');
       assert.equal(item.summary, 'Caps monthly insulin costs at $35.');
       assert.ok(item.excerpt.includes('cap insulin at $35 a month'));
+    });
+
+    await t.test('active ambiguous campaign site is crawled and its exact-source claim appears in the feed', async () => {
+      const excerpt='I will protect Wyoming public lands by opposing the sale of public lands and funding conservation projects.';
+      const pageText=`Dana Ambiguous for Congress. ${excerpt}`;
+      const fetched=[];
+      const provider={
+        model:'mock-gpt-5.4',
+        promptVersion:'campaign-position-prompt-1.0',
+        extractPositions:async snapshot=>{
+          assert.ok(snapshot.text.includes(excerpt));
+          return [{topic:'environment',claimText:'Supports protecting Wyoming public lands and funding conservation projects.',
+            summary:'Protects public lands and supports conservation funding.',excerpt}];
+        }
+      };
+      const result=await syncCampaignPositions({
+        scope:{states:['WY'],offices:['house']},candidacyId:ambiguousCandidacy.id,provider,db:pool,
+        customFetcher:async ({initialUrl,site,approvedDestinations})=>{
+          fetched.push(initialUrl);
+          assert.equal(site.status,'ambiguous');
+          assert.deepEqual(approvedDestinations,[{origin:'https://danaexample.org',pathPrefix:'/2026/'}]);
+          return {status:'success',pages:[{
+            requestedUrl:'https://danaexample.org/2026/issues',finalUrl:'https://danaexample.org/2026/issues',
+            retrievedAt:new Date().toISOString(),text:pageText
+          }]};
+        }
+      });
+      assert.equal(result.status,'complete');
+      assert.equal(result.counts.candidaciesFound,1);
+      assert.equal(result.counts.crawledSuccess,1);
+      assert.equal(result.counts.snapshotsSaved,1);
+      assert.equal(result.counts.positionsPublished,1);
+      assert.deepEqual(fetched,['https://danaexample.org/2026/']);
+
+      const savedSource=(await pool.query(
+        'SELECT id,source_text FROM campaign_sources WHERE candidacy_id=$1',[ambiguousCandidacy.id]
+      )).rows[0];
+      assert.ok(savedSource.source_text.includes(excerpt));
+      const savedPosition=(await pool.query(
+        `SELECT p.excerpt,p.state FROM campaign_position_versions p WHERE p.candidacy_id=$1 AND p.state='published'`,
+        [ambiguousCandidacy.id]
+      )).rows[0];
+      assert.equal(savedPosition.excerpt,excerpt);
+
+      const geo=(await pool.query(
+        `INSERT INTO election_geography_evidence(state,cycle,boundary_version,source_url,checked_at,status)
+         VALUES('WY',2026,'ACS2026_Current:120th','https://www.census.gov/programs-surveys/decennial-census/about/rdo/congressional-districts.html',now(),'verified') RETURNING id`
+      )).rows[0];
+      const feed=await readElectionPositions({state:'WY',district:0,geographyEvidenceId:geo.id},null,pool);
+      const item=feed.items.find(entry=>entry.candidate.name==='Dana Ambiguous');
+      assert.ok(item);
+      assert.equal(item.ballotStatus,'unknown');
+      assert.equal(item.excerpt,excerpt);
+      assert.equal(item.source.url,'https://danaexample.org/2026/issues');
+    });
+
+    await t.test('missing, rejected, proposed, expired, and unapproved sites cannot fetch or publish claims', async () => {
+      const fetchCalls=[];
+      const provider={model:'mock-gpt-5.4',promptVersion:'campaign-position-prompt-1.0',extractPositions:async()=>[]};
+      for (const status of ['missing','rejected','proposed','expired']) {
+        const result=await syncCampaignPositions({
+          scope:{states:['WY'],offices:['house']},candidacyId:ineligibleSites[status].id,provider,db:pool,
+          customFetcher:async()=>{fetchCalls.push(status);throw new Error('Excluded site must not fetch.');}
+        });
+        assert.equal(result.counts.candidaciesFound,0,`${status} site should be excluded from crawler selection`);
+      }
+
+      const unapproved=await syncCampaignPositions({
+        scope:{states:['WY'],offices:['house']},candidacyId:ineligibleSites.unapproved.id,provider,db:pool,
+        customFetcher:async()=>{fetchCalls.push('unapproved');throw new Error('Unapproved site must not fetch.');}
+      });
+      assert.equal(unapproved.counts.candidaciesFound,1);
+      assert.equal(unapproved.counts.crawlFailed,1);
+      assert.deepEqual(fetchCalls,[]);
+      const sources=(await pool.query('SELECT count(*)::int n FROM campaign_sources WHERE candidacy_id=$1',[ineligibleSites.unapproved.id])).rows[0].n;
+      const positions=(await pool.query('SELECT count(*)::int n FROM campaign_position_versions WHERE candidacy_id=$1',[ineligibleSites.unapproved.id])).rows[0].n;
+      assert.equal(sources,0);
+      assert.equal(positions,0);
     });
 
     await t.test('re-crawling identical content is idempotent and does not duplicate cards', async () => {

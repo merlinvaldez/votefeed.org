@@ -19,17 +19,21 @@ export function parseFecPage(text, {state,office,kind='candidates',page=1}) {
     || !Number.isInteger(p.count) || p.count < 0 || !Number.isInteger(p.per_page) || p.per_page < 1
     || data.results.length > p.per_page || p.pages && page > p.pages
     || p.count && !data.results.length) throw discoveryError('discovery-malformed-fec');
+  const invalidRecords = [];
   const records = data.results.map(raw => {
     if (kind === 'committees') {
       if (!/^C\d{8}$/.test(raw.committee_id) || !Array.isArray(raw.candidate_ids)) throw discoveryError('discovery-malformed-fec');
       return raw;
     }
-    if (!/^[HS]\d[A-Z]{2}\d{5}$/.test(raw.candidate_id) || !raw.name || raw.state !== state
+    if (!/^[HS]\d[A-Z]{2}\d{5}$/.test(raw.candidate_id) || raw.state !== state
       || raw.office !== (office === 'house' ? 'H' : 'S') || !raw.election_years?.includes(2026)) throw discoveryError('discovery-malformed-fec');
+    if (typeof raw.name !== 'string' || !raw.name.trim()) {
+      invalidRecords.push({kind:'fec',fecId:raw.candidate_id,name:null,race:fecRace(raw,{state,office}),raw,reason:'missing-name'}); return null;
+    }
     return {kind:'fec',name:raw.name,party:raw.party ?? null,fecId:raw.candidate_id,officialId:null,race:fecRace(raw,{state,office}),
       eligibility:'unknown',siteUrl:null,excerpt:JSON.stringify(raw),locator:raw.candidate_id,raw};
-  });
-  return {records,pagination:p};
+  }).filter(Boolean);
+  return {records,invalidRecords,pagination:p};
 }
 export async function* fecPages({state,office,apiKey,kind='candidates',candidateId,maxPages=100,fetcher=fetchPublic,capture}) {
   if (!apiKey) throw discoveryError('discovery-fec-key-missing');
@@ -46,7 +50,7 @@ export async function* fecPages({state,office,apiKey,kind='candidates',candidate
     const result = parseFecPage(text,{state,office,kind,page});
     if (expected && (result.pagination.count !== expected.count || result.pagination.pages !== expected.pages)) throw discoveryError('discovery-fec-pagination-changed');
     expected ??= result.pagination;
-    for (const row of result.records) {
+    for (const row of [...result.records,...result.invalidRecords]) {
       const id = kind === 'committees' ? row.committee_id : row.fecId;
       if (seen.has(id)) throw discoveryError('discovery-fec-pagination-duplicate');
       seen.add(id); read++;

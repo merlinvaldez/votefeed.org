@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import pg from '../server/node_modules/pg/lib/index.js';
 import * as elections from '../server/src/db/queries/elections.js';
+import { readElectionPositionsForAddress } from '../server/src/elections/electionGeography.js';
 
 test('elections additive migration and server persistence on disposable PostgreSQL', {skip:process.env.ELECTIONS_TEST_POSTGRES!=='1'}, async t => {
   // A separate database runs the EXACT migration, including public schema, roles,
@@ -101,7 +102,9 @@ test('elections additive migration and server persistence on disposable PostgreS
     });
     await t.test('matching geography, eligibility, sources and requesting-user-only reads',async()=>{
       assert.equal((await read()).items.length,0);
-      geography=await elections.saveElectionGeography({state:'AK',cycle:2026,boundaryVersion:'fixture-only',sourceUrl:evidence.url,checkedAt,status:'verified'},pool);
+      const stale=await elections.saveElectionGeography({state:'AK',cycle:2026,boundaryVersion:'119th',sourceUrl:evidence.url,checkedAt,status:'verified'},pool);
+      assert.equal((await read({geographyEvidenceId:stale.id})).houseAvailability,'geography-unverified');
+      geography=await elections.saveElectionGeography({state:'AK',cycle:2026,boundaryVersion:'ACS2026_Current:120th',sourceUrl:'https://www.census.gov/programs-surveys/decennial-census/about/rdo/congressional-districts.html',checkedAt,status:'verified'},pool);
       const result=await read({},auth);
       assert.equal(result.items.length,1); assert.equal(result.items[0].summary,'Build more housing.');
       assert.equal(result.items[0].response.privateComment,'private A');
@@ -118,6 +121,14 @@ test('elections additive migration and server persistence on disposable PostgreS
         checkedAt:new Date(Date.parse(checkedAt)+2000).toISOString()}},pool);
       await assert.rejects(read({scope:{cycle:2028}}),/Scope/);
       await assert.rejects(elections.readElectionPositions({state:'AK'},null,{connect:async()=>{throw new Error('storage unavailable');}}),/storage unavailable/);
+    });
+    await t.test('address lookup binds election district and verified geography to the read',async()=>{
+      const geographies={States:[{STUSAB:'AK',GEOID:'02'}],'120th Congressional Districts':[{STATE:'02',GEOID:'0200',CD120:'00',CDSESSN:'120'}]};
+      const fetcher=async()=>({ok:true,json:async()=>({result:{addressMatches:[{geographies}]}})});
+      const result=await readElectionPositionsForAddress('fixture address',{state:'CA',district:99},null,pool,{fetcher});
+      assert.equal(result.houseAvailability,null); assert.ok(result.races.some(row=>row.office==='house'&&row.state==='AK'&&row.district===0));
+      const failed=async()=>({ok:true,json:async()=>({result:{addressMatches:[]}})});
+      await assert.rejects(readElectionPositionsForAddress('fixture',{},null,pool,{fetcher:failed}),/could not be verified/);
     });
     await t.test('failed/partial refresh retains successful data, changes preserve history',async()=>{
       await elections.recordCampaignFailure({candidacyId:imported.candidacy.id,snapshotId:snapshot.id,status:'extraction-failed'},pool);

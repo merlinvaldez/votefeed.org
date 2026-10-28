@@ -5,7 +5,7 @@ import { TOPICS, validateExtractionItem } from './contracts.js';
 import { discoveryError } from './discoveryUtils.js';
 
 export const VALIDATOR_VERSION = 'campaign-validator-1.0';
-export const PROMPT_VERSION = 'campaign-position-prompt-1.0';
+export const PROMPT_VERSION = 'campaign-position-prompt-1.1';
 
 /**
  * Deterministically hash candidacy and claimText into a standard UUID v4 format.
@@ -122,7 +122,7 @@ export function createCampaignExtractionProvider({
   return {
     model,
     promptVersion: PROMPT_VERSION,
-    async extractPositions(snapshot) {
+    async extractPositions(snapshot, candidate = null) {
       if (typeof snapshot.text !== 'string' || !snapshot.text.trim()) {
         return [];
       }
@@ -139,6 +139,7 @@ export function createCampaignExtractionProvider({
             store: false,
             instructions: promptText,
             input: JSON.stringify({
+              candidate,
               candidacyId: snapshot.candidacyId,
               text: snapshot.text
             }),

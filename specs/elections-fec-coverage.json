@@ -1,0 +1,808 @@
+{
+  "cycle": 2026,
+  "source": "OpenFEC candidate search",
+  "entries": [
+    {
+      "state": "AL",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 41,
+      "checkedAt": "2026-10-27T15:42:58.400Z"
+    },
+    {
+      "state": "AL",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 17,
+      "checkedAt": "2026-10-27T15:42:58.574Z"
+    },
+    {
+      "state": "AK",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 12,
+      "checkedAt": "2026-10-27T15:42:58.795Z"
+    },
+    {
+      "state": "AK",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 13,
+      "checkedAt": "2026-10-27T15:42:58.976Z"
+    },
+    {
+      "state": "AZ",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 3,
+      "checkedAt": "2026-10-27T15:42:59.571Z"
+    },
+    {
+      "state": "AR",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 16,
+      "checkedAt": "2026-10-27T15:42:59.745Z"
+    },
+    {
+      "state": "AR",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 9,
+      "checkedAt": "2026-10-27T15:42:59.922Z"
+    },
+    {
+      "state": "CA",
+      "office": "house",
+      "status": "complete",
+      "pages": 5,
+      "candidates": 403,
+      "checkedAt": "2026-10-27T15:43:01.550Z"
+    },
+    {
+      "state": "CA",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 11,
+      "checkedAt": "2026-10-27T15:43:01.727Z"
+    },
+    {
+      "state": "CO",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 80,
+      "checkedAt": "2026-10-27T15:43:01.960Z"
+    },
+    {
+      "state": "CO",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 23,
+      "checkedAt": "2026-10-27T15:43:02.142Z"
+    },
+    {
+      "state": "CT",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 38,
+      "checkedAt": "2026-10-27T15:43:02.348Z"
+    },
+    {
+      "state": "CT",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 1,
+      "checkedAt": "2026-10-27T15:43:02.492Z"
+    },
+    {
+      "state": "DE",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 6,
+      "checkedAt": "2026-10-27T15:43:02.695Z"
+    },
+    {
+      "state": "DE",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 13,
+      "checkedAt": "2026-10-27T15:43:02.869Z"
+    },
+    {
+      "state": "FL",
+      "office": "house",
+      "status": "complete",
+      "pages": 4,
+      "candidates": 306,
+      "checkedAt": "2026-10-27T15:43:04.070Z"
+    },
+    {
+      "state": "FL",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 38,
+      "checkedAt": "2026-10-27T15:45:04.736Z"
+    },
+    {
+      "state": "GA",
+      "office": "house",
+      "status": "complete",
+      "pages": 2,
+      "candidates": 152,
+      "checkedAt": "2026-10-27T15:45:08.143Z"
+    },
+    {
+      "state": "GA",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 21,
+      "checkedAt": "2026-10-27T15:45:09.674Z"
+    },
+    {
+      "state": "HI",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 11,
+      "checkedAt": "2026-10-27T15:45:11.173Z"
+    },
+    {
+      "state": "HI",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 1,
+      "checkedAt": "2026-10-27T15:45:12.644Z"
+    },
+    {
+      "state": "ID",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 17,
+      "checkedAt": "2026-10-27T15:45:14.166Z"
+    },
+    {
+      "state": "ID",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 9,
+      "checkedAt": "2026-10-27T15:45:15.679Z"
+    },
+    {
+      "state": "IL",
+      "office": "house",
+      "status": "complete",
+      "pages": 2,
+      "candidates": 160,
+      "checkedAt": "2026-10-27T15:45:18.884Z"
+    },
+    {
+      "state": "IL",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 38,
+      "checkedAt": "2026-10-27T15:45:20.568Z"
+    },
+    {
+      "state": "IN",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 67,
+      "checkedAt": "2026-10-27T15:45:22.156Z"
+    },
+    {
+      "state": "IN",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 6,
+      "checkedAt": "2026-10-27T15:45:23.615Z"
+    },
+    {
+      "state": "IA",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 39,
+      "checkedAt": "2026-10-27T15:45:25.202Z"
+    },
+    {
+      "state": "IA",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 12,
+      "checkedAt": "2026-10-27T15:45:26.685Z"
+    },
+    {
+      "state": "KS",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 27,
+      "checkedAt": "2026-10-27T15:45:28.231Z"
+    },
+    {
+      "state": "KS",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 13,
+      "checkedAt": "2026-10-27T15:45:29.702Z"
+    },
+    {
+      "state": "KY",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 54,
+      "checkedAt": "2026-10-27T15:45:31.331Z"
+    },
+    {
+      "state": "KY",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 22,
+      "checkedAt": "2026-10-27T15:45:32.851Z"
+    },
+    {
+      "state": "LA",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 49,
+      "checkedAt": "2026-10-27T15:45:34.605Z"
+    },
+    {
+      "state": "LA",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 24,
+      "checkedAt": "2026-10-27T15:45:36.119Z"
+    },
+    {
+      "state": "ME",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 15,
+      "checkedAt": "2026-10-27T15:45:37.746Z"
+    },
+    {
+      "state": "ME",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 24,
+      "checkedAt": "2026-10-27T15:45:39.272Z"
+    },
+    {
+      "state": "MD",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 76,
+      "checkedAt": "2026-10-27T15:45:40.826Z"
+    },
+    {
+      "state": "MD",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 2,
+      "checkedAt": "2026-10-27T15:45:42.286Z"
+    },
+    {
+      "state": "MA",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 48,
+      "checkedAt": "2026-10-27T15:45:43.996Z"
+    },
+    {
+      "state": "MA",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 11,
+      "checkedAt": "2026-10-27T15:45:45.514Z"
+    },
+    {
+      "state": "MI",
+      "office": "house",
+      "status": "complete",
+      "pages": 2,
+      "candidates": 131,
+      "checkedAt": "2026-10-27T15:45:48.661Z"
+    },
+    {
+      "state": "MI",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 25,
+      "checkedAt": "2026-10-27T15:45:50.163Z"
+    },
+    {
+      "state": "MN",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 54,
+      "checkedAt": "2026-10-27T15:45:51.713Z"
+    },
+    {
+      "state": "MN",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 19,
+      "checkedAt": "2026-10-27T15:45:53.217Z"
+    },
+    {
+      "state": "MS",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 25,
+      "checkedAt": "2026-10-27T15:45:54.721Z"
+    },
+    {
+      "state": "MS",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 9,
+      "checkedAt": "2026-10-27T15:45:56.213Z"
+    },
+    {
+      "state": "MO",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 78,
+      "checkedAt": "2026-10-27T15:45:57.766Z"
+    },
+    {
+      "state": "MO",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 1,
+      "checkedAt": "2026-10-27T15:45:59.206Z"
+    },
+    {
+      "state": "MT",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 15,
+      "checkedAt": "2026-10-27T15:46:00.776Z"
+    },
+    {
+      "state": "MT",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 14,
+      "checkedAt": "2026-10-27T15:46:02.272Z"
+    },
+    {
+      "state": "NE",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 22,
+      "checkedAt": "2026-10-27T15:46:03.779Z"
+    },
+    {
+      "state": "NE",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 12,
+      "checkedAt": "2026-10-27T15:46:05.480Z"
+    },
+    {
+      "state": "NV",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 63,
+      "checkedAt": "2026-10-27T15:46:07.134Z"
+    },
+    {
+      "state": "NV",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 1,
+      "checkedAt": "2026-10-27T15:46:08.584Z"
+    },
+    {
+      "state": "NH",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 23,
+      "checkedAt": "2026-10-27T15:46:10.097Z"
+    },
+    {
+      "state": "NH",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 15,
+      "checkedAt": "2026-10-27T15:46:11.632Z"
+    },
+    {
+      "state": "NJ",
+      "office": "house",
+      "status": "complete",
+      "pages": 2,
+      "candidates": 109,
+      "checkedAt": "2026-10-27T15:46:14.675Z"
+    },
+    {
+      "state": "NJ",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 20,
+      "checkedAt": "2026-10-27T15:46:16.177Z"
+    },
+    {
+      "state": "NM",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 11,
+      "checkedAt": "2026-10-27T15:46:17.681Z"
+    },
+    {
+      "state": "NM",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 10,
+      "checkedAt": "2026-10-27T15:46:19.198Z"
+    },
+    {
+      "state": "NY",
+      "office": "house",
+      "status": "complete",
+      "pages": 3,
+      "candidates": 209,
+      "checkedAt": "2026-10-27T15:46:24.475Z"
+    },
+    {
+      "state": "NY",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 12,
+      "checkedAt": "2026-10-27T15:46:26.011Z"
+    },
+    {
+      "state": "NC",
+      "office": "house",
+      "status": "complete",
+      "pages": 2,
+      "candidates": 104,
+      "checkedAt": "2026-10-27T15:46:29.095Z"
+    },
+    {
+      "state": "NC",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 31,
+      "checkedAt": "2026-10-27T15:46:30.607Z"
+    },
+    {
+      "state": "ND",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 8,
+      "checkedAt": "2026-10-27T15:46:32.105Z"
+    },
+    {
+      "state": "ND",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 1,
+      "checkedAt": "2026-10-27T15:46:33.644Z"
+    },
+    {
+      "state": "OH",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 99,
+      "checkedAt": "2026-10-27T15:46:35.244Z"
+    },
+    {
+      "state": "OH",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 16,
+      "checkedAt": "2026-10-27T15:46:36.747Z"
+    },
+    {
+      "state": "OK",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 37,
+      "checkedAt": "2026-10-27T15:46:38.290Z"
+    },
+    {
+      "state": "OK",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 19,
+      "checkedAt": "2026-10-27T15:46:39.780Z"
+    },
+    {
+      "state": "OR",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 36,
+      "checkedAt": "2026-10-27T15:46:41.298Z"
+    },
+    {
+      "state": "OR",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 10,
+      "checkedAt": "2026-10-27T15:46:42.796Z"
+    },
+    {
+      "state": "PA",
+      "office": "house",
+      "status": "complete",
+      "pages": 2,
+      "candidates": 107,
+      "checkedAt": "2026-10-27T15:46:46.138Z"
+    },
+    {
+      "state": "PA",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 6,
+      "checkedAt": "2026-10-27T15:46:47.672Z"
+    },
+    {
+      "state": "RI",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 9,
+      "checkedAt": "2026-10-27T15:46:49.163Z"
+    },
+    {
+      "state": "RI",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 9,
+      "checkedAt": "2026-10-27T15:46:50.665Z"
+    },
+    {
+      "state": "SC",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 60,
+      "checkedAt": "2026-10-27T15:46:52.287Z"
+    },
+    {
+      "state": "SC",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 33,
+      "checkedAt": "2026-10-27T15:46:53.798Z"
+    },
+    {
+      "state": "SD",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 8,
+      "checkedAt": "2026-10-27T15:46:55.289Z"
+    },
+    {
+      "state": "SD",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 4,
+      "checkedAt": "2026-10-27T15:46:56.769Z"
+    },
+    {
+      "state": "TN",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 88,
+      "checkedAt": "2026-10-27T15:46:58.331Z"
+    },
+    {
+      "state": "TN",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 14,
+      "checkedAt": "2026-10-27T15:47:00.928Z"
+    },
+    {
+      "state": "TX",
+      "office": "house",
+      "status": "complete",
+      "pages": 4,
+      "candidates": 355,
+      "checkedAt": "2026-10-27T15:47:17.658Z"
+    },
+    {
+      "state": "TX",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 41,
+      "checkedAt": "2026-10-27T15:47:19.205Z"
+    },
+    {
+      "state": "UT",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 52,
+      "checkedAt": "2026-10-27T15:47:20.734Z"
+    },
+    {
+      "state": "UT",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 2,
+      "checkedAt": "2026-10-27T15:47:22.197Z"
+    },
+    {
+      "state": "VT",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 7,
+      "checkedAt": "2026-10-27T15:47:23.718Z"
+    },
+    {
+      "state": "VT",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 0,
+      "checkedAt": "2026-10-27T15:47:25.165Z"
+    },
+    {
+      "state": "VA",
+      "office": "house",
+      "status": "complete",
+      "pages": 2,
+      "candidates": 121,
+      "checkedAt": "2026-10-27T15:47:28.225Z"
+    },
+    {
+      "state": "VA",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 14,
+      "checkedAt": "2026-10-27T15:47:29.715Z"
+    },
+    {
+      "state": "WA",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 70,
+      "checkedAt": "2026-10-27T15:47:31.264Z"
+    },
+    {
+      "state": "WA",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 4,
+      "checkedAt": "2026-10-27T15:47:32.707Z"
+    },
+    {
+      "state": "WV",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 16,
+      "checkedAt": "2026-10-27T15:47:34.190Z"
+    },
+    {
+      "state": "WV",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 12,
+      "checkedAt": "2026-10-27T15:47:35.708Z"
+    },
+    {
+      "state": "WI",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 62,
+      "checkedAt": "2026-10-27T15:47:37.275Z"
+    },
+    {
+      "state": "WI",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 1,
+      "checkedAt": "2026-10-27T15:47:38.721Z"
+    },
+    {
+      "state": "WY",
+      "office": "house",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 14,
+      "checkedAt": "2026-10-27T15:47:40.124Z"
+    },
+    {
+      "state": "WY",
+      "office": "senate",
+      "status": "complete",
+      "pages": 1,
+      "candidates": 9,
+      "checkedAt": "2026-10-27T15:47:50.389Z"
+    },
+    {
+      "state": "AZ",
+      "office": "house",
+      "status": "partial",
+      "pages": 1,
+      "candidates": 87,
+      "invalidRecords": 1,
+      "error": "discovery-fec-invalid-record",
+      "checkedAt": "2026-10-27T15:48:08.133Z"
+    }
+  ]
+}

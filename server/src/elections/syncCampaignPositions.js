@@ -31,12 +31,15 @@ export async function syncCampaignPositions({
   }, db);
 
   const query = `
-    SELECT c.id AS candidacy_id, c.candidate_id, r.office, r.state, r.district, r.senate_seat,
-           s.id AS site_id, s.proposed_url, s.approved_destinations, s.review_after, s.evidence
+    SELECT c.id AS candidacy_id, c.candidate_id, ca.name AS candidate_name, c.party AS candidate_party,
+           r.office, r.state, r.district, r.senate_seat, r.election_date,
+           s.id AS site_id, s.proposed_url, s.status AS site_status, s.approved_destinations, s.review_after, s.evidence
     FROM election_candidacies c
+    JOIN election_candidates ca ON ca.id = c.candidate_id
     JOIN election_races r ON r.id = c.race_id
     JOIN campaign_sites s ON s.candidacy_id = c.id AND s.is_current
-    WHERE s.status = 'verified' AND s.review_after > now()
+    WHERE s.status IN ('verified','ambiguous') AND s.review_after > now()
+      AND jsonb_array_length(s.approved_destinations) > 0
       AND c.eligibility NOT IN ('withdrawn', 'disqualified')
       AND ($1::text[] IS NULL OR r.state = ANY($1::text[]))
       AND ($2::text[] IS NULL OR r.office = ANY($2::text[]))
@@ -72,7 +75,7 @@ export async function syncCampaignPositions({
       id: row.site_id,
       candidacy_id: row.candidacy_id,
       proposed_url: row.proposed_url,
-      status: 'verified',
+      status: row.site_status,
       approved_destinations: row.approved_destinations,
       review_after: row.review_after,
       evidence: row.evidence
@@ -128,9 +131,19 @@ export async function syncCampaignPositions({
         retrievedAt: snapshot.retrieved_at
       };
 
+      const candidateContext = {
+        name: row.candidate_name,
+        party: row.candidate_party,
+        office: row.office,
+        state: row.state,
+        district: row.district,
+        senateSeat: row.senate_seat,
+        electionDate: row.election_date
+      };
+
       let rawPositions = [];
       try {
-        rawPositions = await provider.extractPositions(normSnapshot);
+        rawPositions = await provider.extractPositions(normSnapshot, candidateContext);
       } catch (err) {
         await recordCampaignFailure({
           candidacyId: row.candidacy_id,

@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import db from '../client.js';
-import { RELEASE_SCOPE, normalizeRace, normalizeState, normalizeDistrict, validateExtractionItem, positionVersionKey } from '../../elections/contracts.js';
+import { RELEASE_SCOPE, normalizeRace, normalizeState, normalizeDistrict, validateExtractionItem, positionVersionKey, ELECTION_GEOGRAPHY_SOURCE, ELECTION_GEOGRAPHY_VERSION } from '../../elections/contracts.js';
 
 const hash = value => createHash('sha256').update(value).digest('hex');
 const one = async (runner, sql, values = []) => (await runner.query(sql, values)).rows[0];
@@ -111,7 +111,7 @@ export async function saveCampaignSite(input, pool = db) {
       const current = await one(c, 'SELECT * FROM campaign_sites WHERE candidacy_id=$1 AND is_current',[input.candidacyId]);
       if (current && current.proposed_url === (input.url ?? null) && current.status === input.status
         && current.evidence.recordKey === input.evidence?.recordKey
-        && (current.status !== 'verified' || new Date(current.review_after)>new Date())) return current;
+        && (!['verified','ambiguous'].includes(current.status) || new Date(current.review_after)>new Date())) return current;
     }
     const prior = await one(c, 'SELECT COALESCE(max(revision),0)+1 AS revision FROM campaign_sites WHERE candidacy_id=$1', [input.candidacyId]);
     await c.query('UPDATE campaign_sites SET is_current=false WHERE candidacy_id=$1 AND is_current', [input.candidacyId]);
@@ -129,8 +129,8 @@ function approved(url, destinations) {
 export async function saveCampaignSnapshot(input, pool = db) {
   return transaction(pool, async c => {
     const site = await one(c, `SELECT * FROM campaign_sites WHERE id=$1 AND candidacy_id=$2 AND is_current
-      AND status='verified' AND review_after>now() FOR SHARE`, [input.siteId,input.candidacyId]);
-    if (!site || !approved(input.requestedUrl,site.approved_destinations) || !approved(input.finalUrl,site.approved_destinations)) throw new Error('Verified approved campaign destination required');
+      AND status IN ('verified','ambiguous') AND review_after>now() FOR SHARE`, [input.siteId,input.candidacyId]);
+    if (!site || !approved(input.requestedUrl,site.approved_destinations) || !approved(input.finalUrl,site.approved_destinations)) throw new Error('Eligible approved campaign destination required');
     if (typeof input.text !== 'string') throw new TypeError('Snapshot text required');
     const values = [input.candidacyId,site.id,input.requestedUrl,input.finalUrl,input.retrievedAt,input.text,hash(input.text),site.evidence];
     // A retry must not rewrite the original retrieval date or captured evidence.
@@ -174,8 +174,8 @@ export async function publishCampaignPositions(input, pool = db) {
   return transaction(pool, async c => {
     await c.query('SELECT id FROM election_candidacies WHERE id=$1 FOR UPDATE', [input.candidacyId]);
     const source = await one(c, `SELECT s.* FROM campaign_sources s JOIN campaign_sites w ON w.id=s.site_id
-      WHERE s.id=$1 AND s.candidacy_id=$2 AND w.is_current AND w.status='verified' AND w.review_after>now() FOR SHARE OF w`, [input.snapshotId,input.candidacyId]);
-    if (!source) throw new Error('Current verified snapshot required');
+      WHERE s.id=$1 AND s.candidacy_id=$2 AND w.is_current AND w.status IN ('verified','ambiguous') AND w.review_after>now() FOR SHARE OF w`, [input.snapshotId,input.candidacyId]);
+    if (!source) throw new Error('Current verified or ambiguous snapshot required');
     const seen = new Set();
     const seenText = new Set();
     for (const item of input.items) {
@@ -251,7 +251,8 @@ export async function readElectionPositions(input, auth = null, pool = db) {
     await c.query('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY');
     const userId = await owner(auth,c,true);
     const geography = input.geographyEvidenceId ? await one(c, `SELECT id FROM election_geography_evidence
-      WHERE id=$1 AND state=$2 AND cycle=$3 AND status='verified'`,[input.geographyEvidenceId,state,scope.cycle]) : null;
+      WHERE id=$1 AND state=$2 AND cycle=$3 AND status='verified' AND boundary_version=$4 AND source_url=$5`,
+      [input.geographyEvidenceId,state,scope.cycle,ELECTION_GEOGRAPHY_VERSION,ELECTION_GEOGRAPHY_SOURCE]) : null;
     const races = (await c.query(`SELECT r.*,co.id AS candidacy_id,co.availability,co.last_attempt_at,co.last_success_at,co.failure_code,
       co.eligibility,w.status AS site_status,w.review_after,w.id AS site_id
       FROM election_races r LEFT JOIN election_candidacies co ON co.race_id=r.id
@@ -272,7 +273,7 @@ export async function readElectionPositions(input, auth = null, pool = db) {
       JOIN campaign_sources s ON s.id=p.snapshot_id JOIN campaign_sites w ON w.candidacy_id=co.id AND w.is_current
       LEFT JOIN election_interactions i ON i.position_version_id=p.id AND i.user_id=$1
       WHERE r.id=ANY($2::uuid[]) AND (co.eligibility='ballot-confirmed' OR (co.eligibility NOT IN ('withdrawn','disqualified')
-        AND EXISTS(SELECT 1 FROM election_candidate_identities fi WHERE fi.candidate_id=co.candidate_id AND fi.system='fec:candidate'))) AND w.status='verified' AND w.review_after>now()
+        AND EXISTS(SELECT 1 FROM election_candidate_identities fi WHERE fi.candidate_id=co.candidate_id AND fi.system='fec:candidate'))) AND w.status IN ('verified','ambiguous') AND w.review_after>now()
       AND p.state='published' AND p.validation->>'outcome'='valid'
       AND EXISTS(SELECT 1 FROM campaign_position_evidence pe JOIN campaign_sources es ON es.id=pe.snapshot_id
         WHERE pe.position_version_id=p.id AND es.site_id=w.id AND es.candidacy_id=p.candidacy_id)
@@ -292,7 +293,7 @@ export async function readElectionPositions(input, auth = null, pool = db) {
     const knownEmpty = coverage?.status==='complete' && scope.offices.every(office=>
       (office!=='house' || geography) && coverage.coverage.some(entry => entry.state===state && entry.office===office && entry.status==='complete' && entry.noRaces===true));
     const raceResults = races.map(r => ({...r,availability: !r.candidacy_id ? 'pending' : !r.site_id || r.site_status==='missing' ? 'site-missing'
-      : r.site_status!=='verified' || new Date(r.review_after)<=new Date() ? 'site-unverified' : r.availability}));
+      : !['verified','ambiguous'].includes(r.site_status) || !r.review_after || new Date(r.review_after)<=new Date() ? 'site-unverified' : r.availability}));
     return {scope,coverage:coverage ?? {status:'coverage-unknown'},houseAvailability:geography ? null : 'geography-unverified',
       availability:races.length ? null : knownEmpty ? 'no-race' : 'coverage-unknown',races:raceResults,items:items.slice(offset,offset+limit),
       nextCursor:offset+limit<items.length ? Buffer.from(JSON.stringify({binding,offset:offset+limit})).toString('base64url') : null};

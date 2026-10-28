@@ -3,6 +3,8 @@ import { createHash } from "node:crypto";
 // Versioned release scope, never inferred from today's date.
 export const STATES = Object.freeze("AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY".split(" "));
 export const RELEASE_SCOPE = Object.freeze({ cycle: 2026, stage: "general", contestType: "regular", offices: Object.freeze(["house", "senate"]), states: STATES, geography: "2026-election" });
+export const ELECTION_GEOGRAPHY_SOURCE = 'https://www.census.gov/programs-surveys/decennial-census/about/rdo/congressional-districts.html';
+export const ELECTION_GEOGRAPHY_VERSION = 'ACS2026_Current:120th';
 export const TOPICS = Object.freeze(["economy", "healthcare", "housing", "education", "environment", "immigration", "civil-rights", "public-safety", "foreign-policy", "government", "other"]);
 export const AVAILABILITY = Object.freeze(["available", "no-race", "coverage-unknown", "geography-unverified", "site-missing", "site-unverified", "pending", "no-positions", "crawl-failed", "extraction-failed"]);
 

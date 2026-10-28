@@ -1,0 +1,344 @@
+{
+  "checkedAt": "2026-10-27T21:49:46Z",
+  "revisionNote": "The original bounded live samples below are historical. On 2026-10-27, post-change search tests, disposable-PostgreSQL crawler/feed checks, a live domain-restricted page search, and a bounded live crawl of an ambiguous site passed. The live crawl wrote only to a temporary local database that was dropped after the run; no production database was used.",
+  "sitemapFirstDomainSearchRevision": {
+    "implemented": true,
+    "automatedChecksRun": true,
+    "liveAcceptanceRun": true,
+    "liveSmokeCheckRun": true,
+    "domainRestrictedSearchFallback": true,
+    "siteQualifiedPolicyQuery": true,
+    "homepageFetched": false,
+    "navigationFallbackEnabled": false,
+    "crawlerStartsFromSitemapPolicyPages": true,
+    "crawlerUsesDomainSearchWhenNoRelevantSitemapPages": true
+  },
+  "ambiguousSiteCrawlAndFeedPolicy": {
+    "implementedLocally": true,
+    "automatedChecksRunAfterChange": true,
+    "eligibleStatuses": [
+      "verified",
+      "ambiguous"
+    ],
+    "requirements": [
+      "valid discovered site URL",
+      "approved same-site destinations",
+      "active seven-day review window"
+    ],
+    "claimChecksRetained": [
+      "allowed topic",
+      "source and candidacy association",
+      "exact excerpt present in captured source"
+    ],
+    "excludedStatuses": [
+      "missing",
+      "proposed",
+      "rejected",
+      "outdated"
+    ]
+  },
+  "latestLiveDomainSearchCheck": {
+    "checkedDate": "2026-10-27",
+    "candidate": "CLARKE, YVETTE D",
+    "siteUrl": "https://voteyvette.com/",
+    "discoverySource": "domain-search",
+    "domainFilterDomains": [
+      "voteyvette.com"
+    ],
+    "usableDetailPageUrls": [
+      "https://voteyvette.com/issues/",
+      "https://voteyvette.com/about-yvette/"
+    ],
+    "fetchCheck": {
+      "url": "https://voteyvette.com/issues/",
+      "httpStatus": 200,
+      "title": "Clarke for Congress Issues"
+    }
+  },
+  "jillianBalowFallbackRecheck": {
+    "checkedDate": "2026-10-27",
+    "siteUrl": "https://www.jillianbalowforwyoming.com/",
+    "domainSearchSourceUrls": 0,
+    "knownDetailPageUrl": "https://www.jillianbalowforwyoming.com/key-issues",
+    "knownDetailPageFetchSucceeded": true,
+    "knownDetailPageTitle": "Key Issues | Jillian Balow for Wyoming",
+    "note": "A fresh domain-restricted API search still returned no usable detail-page URLs, although the known Key Issues page is fetchable. The site has no usable sitemap endpoint, so this candidate remains without crawler positions until page discovery succeeds."
+  },
+  "latestLiveAcceptance": {
+    "checkedDate": "2026-10-27",
+    "testFile": "tests/elections-campaign-live-acceptance.test.mjs",
+    "database": "temporary isolated PostgreSQL database on 127.0.0.1:55439; dropped after run",
+    "candidate": "CLARKE, YVETTE D",
+    "race": "NY-9 House, 2026 general",
+    "siteUrl": "https://voteyvette.com/",
+    "siteStatus": "ambiguous",
+    "maxPages": 2,
+    "crawledCandidates": 1,
+    "snapshotsSaved": 2,
+    "positionsPublished": 16,
+    "feedItems": 16,
+    "exactExcerptChecks": 16,
+    "feedBallotStatus": "unknown",
+    "savedSourceUrls": [
+      "https://voteyvette.com/lgbtq-issues/",
+      "https://voteyvette.com/about-yvette/"
+    ],
+    "productionDatabaseUsed": false
+  },
+  "ambiguousEligibilityPostgresChecks": {
+    "testFile": "tests/elections-crawl-postgres.test.mjs",
+    "passed": 10,
+    "failed": 0,
+    "checks": [
+      "active ambiguous site with approved same-site destination is crawled",
+      "positions publish only with excerpts found in saved source text",
+      "published ambiguous-site positions appear in the feed with ballotStatus unknown",
+      "missing, rejected, proposed, and expired sites are excluded",
+      "unapproved destination is not fetched or published"
+    ]
+  },
+  "latestReadOnlySmokeCheck": {
+    "checkedDate": "2026-10-27",
+    "databaseWritten": false,
+    "candidate": "BALOW, JILLIAN",
+    "searchFoundSite": true,
+    "siteUrl": "https://jillianbalowforwyoming.com/",
+    "robotsSitemapUrl": "https://www.jillianbalowforwyoming.com/sitemap.xml",
+    "robotsStatus": 200,
+    "declaredSitemapStatus": 404,
+    "domainSearchCompleted": true,
+    "domainSearchUsablePagesReturned": 0,
+    "pagesInspected": 0,
+    "inspectionStatus": "ambiguous",
+    "homepageFetched": false,
+    "domainFilterDomains": [
+      "jillianbalowforwyoming.com"
+    ],
+    "policySearchQueryIncludesSiteOperator": true,
+    "searchApiSourceCount": 0,
+    "note": "The search API found the site. The sitemap URL declared by robots.txt returned 404. The latest site-qualified, domain-restricted policy search returned zero sources and no usable detail-page URLs, so no page-match request was sent through the search path."
+  },
+  "directKnownPageMatcherCheck": {
+    "databaseWritten": false,
+    "url": "https://www.jillianbalowforwyoming.com/key-issues",
+    "testMethod": "Supplied the known URL as a temporary sitemap entry, then fetched and inspected the real page.",
+    "pageFetchSucceeded": true,
+    "pageTitle": "Key Issues | Jillian Balow for Wyoming",
+    "inspectionStatus": "ambiguous",
+    "supportedEvidence": [
+      "candidate name",
+      "Wyoming"
+    ],
+    "missingEvidence": [
+      "specific U.S. House race",
+      "Wyoming at-large district"
+    ],
+    "note": "This isolates page matching with the known page; it does not show that the site's sitemap is available or that search discovered the URL."
+  },
+  "widerReadOnlyCandidateSample": {
+    "checkedDate": "2026-10-27",
+    "databaseWritten": false,
+    "campaignCrawlerExecuted": false,
+    "candidateSource": "Read-only sample from the isolated local FEC candidate import.",
+    "candidateScope": {
+      "cycle": 2026,
+      "electionDate": "2026-11-03",
+      "stage": "general",
+      "contestType": "regular",
+      "states": 10,
+      "houseCandidates": 6,
+      "senateCandidates": 4,
+      "eligibility": "unknown"
+    },
+    "counts": {
+      "candidatesConsidered": 10,
+      "sitesFound": 8,
+      "verified": 2,
+      "ambiguous": 4,
+      "missing": 2,
+      "rejected": 0,
+      "errors": 2
+    },
+    "candidateResults": [
+      {
+        "candidate": "HOUSE DARDEN, DUSTIN THOMAS",
+        "fecId": "S6AK00268",
+        "race": "AK Senate",
+        "status": "error",
+        "proposedSite": "https://www.lawhelpak.com/",
+        "errorCode": "discovery-network-failed"
+      },
+      {
+        "candidate": "MCCLINTOCK, THOMAS",
+        "fecId": "H8CA04152",
+        "race": "CA-5 House",
+        "status": "ambiguous",
+        "site": "https://www.tommcclintock.com/",
+        "pageDiscoverySource": "sitemap",
+        "note": "Fetched sitemap pages supported the candidate name and California, but not the specific House race or district."
+      },
+      {
+        "candidate": "WIDMANN, NOAH",
+        "fecId": "H6FL07173",
+        "race": "FL-7 House",
+        "status": "missing",
+        "note": "Search returned no campaign site."
+      },
+      {
+        "candidate": "WATKINS, VINSON L",
+        "fecId": "S6GA00283",
+        "race": "GA Senate",
+        "status": "error",
+        "proposedSite": "https://vincewatkins.org/",
+        "errorCode": "discovery-dns-failed"
+      },
+      {
+        "candidate": "CALABRESE, CARMEN VINCENT MR.",
+        "fecId": "S6ME00324",
+        "race": "ME Senate",
+        "status": "verified",
+        "site": "https://carmen4senate.com/",
+        "pageDiscoverySource": "sitemap",
+        "evidence": "Campaign page title identifies Carmen Calabrese for U.S. Senate; platform page references Maine."
+      },
+      {
+        "candidate": "CLAYTON, DAVID",
+        "fecId": "H6NC05133",
+        "race": "NC-5 House",
+        "status": "verified",
+        "site": "https://www.clayton4nc.com/",
+        "pageDiscoverySource": "sitemap",
+        "evidence": "About page identifies David Clayton, U.S. House, North Carolina, and NC District 5."
+      },
+      {
+        "candidate": "CLARKE, YVETTE D",
+        "fecId": "H4NY11138",
+        "race": "NY-9 House",
+        "status": "ambiguous",
+        "site": "https://voteyvette.com/",
+        "pageDiscoverySource": "sitemap",
+        "note": "Pages showed Representative Yvette Clarke and NY-9, but the returned office excerpt used 'Congresswoman', which the local House-office keyword check does not currently recognize."
+      },
+      {
+        "candidate": "COGNETTI, PAIGE",
+        "fecId": "H6PA08293",
+        "race": "PA-8 House",
+        "status": "ambiguous",
+        "site": "https://paigeforpa.com/",
+        "pageDiscoverySource": "domain-search",
+        "note": "Neither the campaign sitemap nor domain-restricted search returned usable pages."
+      },
+      {
+        "candidate": "HAWBAKER, BRANDON",
+        "fecId": "H6TX10163",
+        "race": "TX-27 House",
+        "status": "ambiguous",
+        "site": "https://brandonhawbaker.com/",
+        "pageDiscoverySource": "sitemap",
+        "note": "Pages supported the candidate, Congress, and Texas, but not TX-27."
+      },
+      {
+        "candidate": "SOLOMON, GAVIN",
+        "fecId": "S6WY00233",
+        "race": "WY Senate",
+        "status": "missing",
+        "note": "Search returned no campaign site."
+      }
+    ],
+    "note": "This is a bounded exploratory FEC candidate-site check, not ballot confirmation or nationwide coverage."
+  },
+  "database": "votefeed_fec_candidates_2026_local",
+  "scope": {
+    "cycle": 2026,
+    "stage": "general",
+    "contestType": "regular",
+    "state": "WY",
+    "office": "house"
+  },
+  "sample": {
+    "candidatesConsidered": 5,
+    "websitesFound": 5,
+    "websitesMatched": 3,
+    "websitesMissing": 0,
+    "websitesAmbiguous": 0,
+    "websitesRejected": 0,
+    "failures": 2,
+    "crawlerEligible": 3,
+    "crawlerExecuted": false
+  },
+  "candidateResults": [
+    {
+      "candidate": "BALOW, JILLIAN",
+      "siteUrl": "https://jillianbalowforwyoming.com/",
+      "status": "proposed",
+      "errorCode": "discovery-response-too-large",
+      "verifierVersion": "ai-campaign-site-discovery-v2",
+      "runId": "03c89198-d202-4357-917a-1e9ad0d43c86"
+    },
+    {
+      "candidate": "BITEMAN, DENNIS BO DEAN II",
+      "siteUrl": "https://www.bobiteman.com/",
+      "status": "verified",
+      "verifierVersion": "ai-campaign-site-discovery-v3",
+      "runId": "0cd100db-f8fc-43f4-a035-05de79ea99c7",
+      "evidence": {
+        "candidateName": "BO BITEMAN",
+        "office": "Bo Biteman for Congress",
+        "state": "WYOMING'S PROVEN CONSERVATIVE LEADER",
+        "district": "represent Wyoming in Congress"
+      }
+    },
+    {
+      "candidate": "CHAPMAN, FRANK",
+      "siteUrl": "https://chapmanforcongress.com/",
+      "status": "proposed",
+      "errorCode": "discovery-dns-failed",
+      "verifierVersion": "ai-campaign-site-discovery-v2",
+      "runId": "b4261c94-9717-4c7c-bf30-1e1da71d25a4"
+    },
+    {
+      "candidate": "CHRISTENSEN, KEVIN",
+      "siteUrl": "https://www.christensen2026.org/",
+      "status": "verified",
+      "verifierVersion": "ai-campaign-site-discovery-v3",
+      "runId": "4f9da0e7-3faf-486d-8154-049bce3454e2",
+      "evidence": {
+        "candidateName": "Kevin Christensen for US House",
+        "office": "Kevin Christensen for US House",
+        "state": "A Republican for all Wyoming",
+        "district": "Wyoming only gets one voice in the US House of Representatives."
+      }
+    },
+    {
+      "candidate": "DODSON, RICHARD",
+      "siteUrl": "https://www.dodson4america.com/",
+      "status": "verified",
+      "verifierVersion": "ai-campaign-site-discovery-v3",
+      "runId": "954af722-cfb5-40c9-986a-aaff3b11f076",
+      "evidence": {
+        "candidateName": "Richard Dodson-Candidate for US House of Representatives for Wyoming",
+        "office": "Candidate for US House of Representatives",
+        "state": "for Wyoming",
+        "district": "Richard Dodson-Candidate for US House of Representatives for Wyoming"
+      }
+    }
+  ],
+  "automatedChecks": {
+    "testFile": "tests/elections-campaign-site-search.test.mjs",
+    "passed": 9,
+    "failed": 0,
+    "validForSitemapFirstDomainSearchRevision": true,
+    "scenarios": [
+      "search sources need not share the campaign-site domain",
+      "sitemap page inspection and at-large evidence without the literal phrase",
+      "campaign name using an FEC middle name and evidence in a page title",
+      "domain-restricted search finds same-site evidence pages when no relevant sitemap pages exist",
+      "policy-page fallback returns only relevant pages on the approved site domain",
+      "sitemap indexes are followed and oversized homepages are never fetched",
+      "no usable sitemap or domain-search pages leaves site unverified without homepage or navigation fetches",
+      "similar name with a conflicting state/race is rejected",
+      "no-site search and DNS failure remain distinct"
+    ]
+  },
+  "crawlerGate": "Current, unexpired verified and eligible ambiguous campaign sites with approved destinations can be selected by the campaign-position worker. Missing, proposed, rejected, expired, and unapproved sites remain excluded. A post-change bounded live ambiguous-site crawl saved two pages and published 16 source-validated positions to the isolated local feed; this does not establish nationwide site coverage."
+}

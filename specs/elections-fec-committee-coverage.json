@@ -1,0 +1,245 @@
+{
+  "cycle": 2026,
+  "source": "OpenFEC candidate and authorized committee discovery",
+  "entries": [
+    {
+      "state": "AL",
+      "office": "house",
+      "status": "complete",
+      "counts": {
+        "documents": 41,
+        "observations": 78,
+        "promoted": 78,
+        "unresolved": 0,
+        "sitesVerified": 0
+      },
+      "coverage": {
+        "state": "AL",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "raceResults": [],
+        "sourceResults": [],
+        "errorCodes": [],
+        "fecCandidates": 41
+      },
+      "errorCodes": [],
+      "checkedAt": "2026-10-27T15:58:32.667Z"
+    },
+    {
+      "state": "AL",
+      "office": "senate",
+      "status": "partial",
+      "counts": {
+        "documents": 17,
+        "observations": 31,
+        "promoted": 30,
+        "unresolved": 1,
+        "sitesVerified": 0
+      },
+      "coverage": {
+        "state": "AL",
+        "office": "senate",
+        "status": "partial",
+        "fecStatus": "partial",
+        "raceResults": [],
+        "sourceResults": [],
+        "errorCodes": [
+          "discovery-unresolved-records"
+        ],
+        "fecCandidates": 17
+      },
+      "errorCodes": [
+        "discovery-match-review-required",
+        "discovery-unresolved-records"
+      ],
+      "checkedAt": "2026-10-27T15:58:54.063Z"
+    },
+    {
+      "state": "AK",
+      "office": "house",
+      "status": "complete",
+      "counts": {
+        "documents": 13,
+        "observations": 20,
+        "promoted": 20,
+        "unresolved": 0,
+        "sitesVerified": 0
+      },
+      "coverage": {
+        "state": "AK",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "raceResults": [],
+        "sourceResults": [],
+        "errorCodes": [],
+        "fecCandidates": 12
+      },
+      "errorCodes": [],
+      "checkedAt": "2026-10-27T15:59:11.592Z"
+    },
+    {
+      "state": "AK",
+      "office": "senate",
+      "status": "complete",
+      "counts": {
+        "documents": 14,
+        "observations": 21,
+        "promoted": 21,
+        "unresolved": 0,
+        "sitesVerified": 0
+      },
+      "coverage": {
+        "state": "AK",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "raceResults": [],
+        "sourceResults": [],
+        "errorCodes": [],
+        "fecCandidates": 13
+      },
+      "errorCodes": [],
+      "checkedAt": "2026-10-27T15:59:27.401Z"
+    },
+    {
+      "state": "AZ",
+      "office": "senate",
+      "status": "complete",
+      "counts": {
+        "documents": 1,
+        "observations": 3,
+        "promoted": 3,
+        "unresolved": 0,
+        "sitesVerified": 0
+      },
+      "coverage": {
+        "state": "AZ",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "raceResults": [],
+        "sourceResults": [],
+        "errorCodes": [],
+        "fecCandidates": 3
+      },
+      "errorCodes": [],
+      "checkedAt": "2026-10-27T16:01:21.936Z"
+    },
+    {
+      "state": "AR",
+      "office": "house",
+      "status": "complete",
+      "counts": {
+        "documents": 17,
+        "observations": 30,
+        "promoted": 30,
+        "unresolved": 0,
+        "sitesVerified": 0
+      },
+      "coverage": {
+        "state": "AR",
+        "office": "house",
+        "status": "complete",
+        "fecStatus": "complete",
+        "raceResults": [],
+        "sourceResults": [],
+        "errorCodes": [],
+        "fecCandidates": 16
+      },
+      "errorCodes": [],
+      "checkedAt": "2026-10-27T16:01:42.880Z"
+    },
+    {
+      "state": "AR",
+      "office": "senate",
+      "status": "complete",
+      "counts": {
+        "documents": 10,
+        "observations": 17,
+        "promoted": 17,
+        "unresolved": 0,
+        "sitesVerified": 0
+      },
+      "coverage": {
+        "state": "AR",
+        "office": "senate",
+        "status": "complete",
+        "fecStatus": "complete",
+        "raceResults": [],
+        "sourceResults": [],
+        "errorCodes": [],
+        "fecCandidates": 9
+      },
+      "errorCodes": [],
+      "checkedAt": "2026-10-27T16:01:54.190Z"
+    },
+    {
+      "state": "AZ",
+      "office": "house",
+      "status": "partial",
+      "counts": {
+        "documents": 85,
+        "observations": 167,
+        "promoted": 159,
+        "unresolved": 8,
+        "sitesVerified": 0
+      },
+      "coverage": {
+        "state": "AZ",
+        "office": "house",
+        "status": "partial",
+        "fecStatus": "partial",
+        "raceResults": [],
+        "sourceResults": [],
+        "errorCodes": [
+          "discovery-fec-invalid-record",
+          "discovery-unresolved-records"
+        ],
+        "fecCandidates": 87
+      },
+      "errorCodes": [
+        "discovery-match-review-required",
+        "discovery-fec-invalid-record",
+        "discovery-unresolved-records"
+      ],
+      "unresolvedProposedSites": 1,
+      "workerVersion": "missing-name-sites-v2",
+      "checkedAt": "2026-10-27T16:13:42.196Z"
+    },
+    {
+      "state": "CA",
+      "office": "house",
+      "status": "partial",
+      "counts": {
+        "documents": 203,
+        "observations": 485,
+        "promoted": 474,
+        "unresolved": 11,
+        "sitesVerified": 0
+      },
+      "coverage": {
+        "state": "CA",
+        "office": "house",
+        "status": "partial",
+        "fecStatus": "partial",
+        "raceResults": [],
+        "sourceResults": [],
+        "errorCodes": [
+          "discovery-retry-deferred",
+          "discovery-unresolved-records"
+        ],
+        "fecCandidates": 300
+      },
+      "errorCodes": [
+        "discovery-match-review-required",
+        "discovery-retry-deferred",
+        "discovery-unresolved-records"
+      ],
+      "unresolvedProposedSites": 0,
+      "workerVersion": "missing-name-sites-v2",
+      "checkedAt": "2026-10-27T16:18:37.135Z"
+    }
+  ]
+}

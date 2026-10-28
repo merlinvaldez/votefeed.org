@@ -43,7 +43,8 @@ export async function readDiscoveryObservation(id, runner = db) {
     FROM election_discovery_observations o JOIN election_source_documents d ON d.id=o.document_id WHERE o.id=$1`,[id]);
 }
 
-// FEC identities are resolved by source ID; name collisions require review.
+// Each FEC candidate-search record is keyed by its candidate ID. Different IDs
+// stay separate unless an explicit reviewed cross-reference links them.
 export async function promoteElectionObservation(id, {actor='discovery-v1',candidateId=null,newPerson=false,review=null} = {}, pool = db) {
   return transaction(pool, async c => {
     const observation = await readDiscoveryObservation(id,c);
@@ -53,11 +54,11 @@ export async function promoteElectionObservation(id, {actor='discovery-v1',candi
     if (!actor || (candidateId || newPerson) && (!review?.url || !review?.reason)
       || candidateId && newPerson) throw discoveryError('discovery-resolution-evidence-required');
     if (review?.url) publicUrl(review.url);
-    const identity = {system:'fec:candidate',id:o.fecId};
+    const identity = o.kind === 'fec' && o.fecId ? {system:'fec:candidate',id:o.fecId} : null;
     const lock = identity ? stableJson(identity) : stableJson([observation.system,observation.source_key,observation.record_key]);
     await c.query('SELECT pg_advisory_xact_lock(hashtextextended($1,0))',[lock]);
-    // Serialize same-race name collisions; a name is a review trigger, never a merge key.
-    if (o.race) await c.query('SELECT pg_advisory_xact_lock(hashtextextended($1,0))',[stableJson([o.race,o.name.toLowerCase()])]);
+    // Serialize same-race materialization without treating a name as identity.
+    if (o.race && o.name) await c.query('SELECT pg_advisory_xact_lock(hashtextextended($1,0))',[stableJson([o.race,o.name.toLowerCase()])]);
     const prior = await one(c,'SELECT * FROM election_observation_resolutions WHERE observation_id=$1',[id]);
     if (prior) {
       if (candidateId && candidateId !== prior.candidate_id) throw discoveryError('discovery-resolution-conflict');
@@ -72,7 +73,10 @@ export async function promoteElectionObservation(id, {actor='discovery-v1',candi
     if (same.length > 1) throw discoveryError('discovery-ambiguous-match');
     let person = known?.candidate_id ?? same[0]?.candidate_id ?? candidateId;
     if (candidateId && person !== candidateId) throw discoveryError('discovery-resolution-conflict');
-    if (!person && o.race && !newPerson) {
+    // A name/race collision is not enough to merge two distinct FEC candidate
+    // IDs or to block candidate-search import. Non-FEC identities still need
+    // explicit review when they collide with an existing candidate.
+    if (!person && !identity && o.race && !newPerson) {
       const collision = await one(c, `SELECT ca.id FROM election_candidates ca JOIN election_candidacies co ON co.candidate_id=ca.id
         JOIN election_races r ON r.id=co.race_id WHERE lower(ca.name)=lower($1) AND r.office=$2 AND r.state=$3
         AND r.district IS NOT DISTINCT FROM $4 AND r.senate_seat IS NOT DISTINCT FROM $5
