@@ -173,7 +173,7 @@ BEGIN
     'campaign_position_versions','campaign_position_evidence','election_interactions','election_geography_evidence','campaign_fetch_attempts']
   LOOP
     EXECUTE format('ALTER TABLE public.%I ENABLE ROW LEVEL SECURITY',table_name);
-    EXECUTE format('REVOKE ALL ON public.%I FROM PUBLIC, anon, authenticated',table_name);
+    EXECUTE format('REVOKE ALL ON public.%I FROM PUBLIC, anon, authenticated, service_role',table_name);
     EXECUTE format('GRANT SELECT, INSERT, UPDATE, DELETE ON public.%I TO service_role',table_name);
   END LOOP;
 END $$;

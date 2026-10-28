@@ -19,6 +19,9 @@ test('elections additive migration and server persistence on disposable PostgreS
     for (const role of ['anon','authenticated','service_role']) {
       await admin.query(`DO $$ BEGIN IF NOT EXISTS(SELECT FROM pg_roles WHERE rolname='${role}') THEN CREATE ROLE ${role} NOLOGIN; END IF; END $$`);
     }
+    // Mirror Supabase's public-schema defaults so table migrations must revoke
+    // browser and service-role privileges explicitly before granting their contract.
+    await pool.query(`ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO PUBLIC, anon, authenticated, service_role`);
     await pool.query(`CREATE TABLE users(id serial PRIMARY KEY,clerk_user_id text UNIQUE);
       CREATE TABLE reps(bioguideid text PRIMARY KEY);
       CREATE TABLE bills(id serial PRIMARY KEY,number integer,bill_type text);
@@ -26,6 +29,7 @@ test('elections additive migration and server persistence on disposable PostgreS
       INSERT INTO users VALUES(1,'clerk-a'),(2,'clerk-b'); INSERT INTO reps VALUES('H');
       INSERT INTO bills VALUES(7,7,'hr'); INSERT INTO interactions VALUES(1,1,7,'approve');`);
     await pool.query(await readFile(new URL('../supabase/migrations/20261026194547_elections_storage.sql',import.meta.url),'utf8'));
+    await pool.query(await readFile(new URL('../supabase/migrations/20261026203305_election_discovery_observations.sql',import.meta.url),'utf8'));
     const checkedAt=new Date().toISOString(), reviewAfter=new Date(Date.now()+86400000).toISOString();
     const evidence={url:'https://elections.example.test/list',checkedAt};
     const race={office:'house',state:'AK',district:0,electionDate:'2026-11-03',stage:'general',contestType:'regular'};
@@ -169,14 +173,54 @@ test('elections additive migration and server persistence on disposable PostgreS
       await elections.finishElectionRun(run.id,{status:'partial',coverage:[{state:'AK',status:'partial'}],counts:{read:4},errorCodes:['source-timeout']},pool);
       assert.equal((await read()).coverage.status,'partial');
       const tables=(await pool.query(`SELECT tablename,rowsecurity FROM pg_tables WHERE schemaname='public' AND (tablename LIKE 'election_%' OR tablename LIKE 'campaign_%')`)).rows;
-      assert.equal(tables.length,14);
+      assert.equal(tables.length,18);
+      const tablePrivileges=(await pool.query(`
+        SELECT c.relname AS name,c.relrowsecurity,
+          (has_table_privilege('anon',c.oid,'SELECT') OR has_table_privilege('anon',c.oid,'INSERT')
+            OR has_table_privilege('anon',c.oid,'UPDATE') OR has_table_privilege('anon',c.oid,'DELETE')
+            OR has_table_privilege('anon',c.oid,'TRUNCATE') OR has_table_privilege('anon',c.oid,'REFERENCES')
+            OR has_table_privilege('anon',c.oid,'TRIGGER') OR has_table_privilege('anon',c.oid,'MAINTAIN')) AS anon_any_table_privilege,
+          (has_table_privilege('authenticated',c.oid,'SELECT') OR has_table_privilege('authenticated',c.oid,'INSERT')
+            OR has_table_privilege('authenticated',c.oid,'UPDATE') OR has_table_privilege('authenticated',c.oid,'DELETE')
+            OR has_table_privilege('authenticated',c.oid,'TRUNCATE') OR has_table_privilege('authenticated',c.oid,'REFERENCES')
+            OR has_table_privilege('authenticated',c.oid,'TRIGGER') OR has_table_privilege('authenticated',c.oid,'MAINTAIN')) AS authenticated_any_table_privilege,
+          has_table_privilege('service_role',c.oid,'SELECT') AS service_select,
+          has_table_privilege('service_role',c.oid,'INSERT') AS service_insert,
+          has_table_privilege('service_role',c.oid,'UPDATE') AS service_update,
+          has_table_privilege('service_role',c.oid,'DELETE') AS service_delete,
+          has_table_privilege('service_role',c.oid,'TRUNCATE') AS service_truncate,
+          has_table_privilege('service_role',c.oid,'REFERENCES') AS service_references,
+          has_table_privilege('service_role',c.oid,'TRIGGER') AS service_trigger,
+          has_table_privilege('service_role',c.oid,'MAINTAIN') AS service_maintain
+        FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
+        WHERE n.nspname='public' AND c.relkind IN ('r','p')
+          AND (c.relname LIKE 'election_%' OR c.relname LIKE 'campaign_%')
+      `)).rows;
+      assert.equal(tablePrivileges.length,18);
+      for (const table of tablePrivileges) {
+        assert.equal(table.relrowsecurity,true,`${table.name} RLS`);
+        assert.equal(table.anon_any_table_privilege,false,`${table.name} anon privileges`);
+        assert.equal(table.authenticated_any_table_privilege,false,`${table.name} authenticated privileges`);
+        assert.equal(table.service_select,true,`${table.name} service SELECT`);
+        assert.equal(table.service_insert,true,`${table.name} service INSERT`);
+        const discoveryTable=table.name.startsWith('election_discovery_')
+          || table.name==='election_source_documents'
+          || table.name==='election_observation_resolutions';
+        assert.equal(table.service_update,!discoveryTable,`${table.name} service UPDATE`);
+        assert.equal(table.service_delete,!discoveryTable,`${table.name} service DELETE`);
+        for (const privilege of ['truncate','references','trigger','maintain']) {
+          assert.equal(table[`service_${privilege}`],false,`${table.name} service ${privilege.toUpperCase()}`);
+        }
+      }
       const client=await pool.connect();
       try {
         for (const role of ['anon','authenticated']) {
           await client.query(`SET ROLE ${role}`);
           for (const table of tables) {
             assert.equal(table.rowsecurity,true);
-            const column=table.tablename==='election_candidate_identities' ? 'system' : table.tablename==='campaign_position_evidence' ? 'snapshot_id' : 'id';
+            const column=table.tablename==='election_candidate_identities' ? 'system'
+              : table.tablename==='campaign_position_evidence' ? 'snapshot_id'
+              : table.tablename==='election_observation_resolutions' ? 'observation_id' : 'id';
             for (const sql of [`SELECT * FROM ${table.tablename}`,`DELETE FROM ${table.tablename}`,`UPDATE ${table.tablename} SET ${column}=${column}`,`INSERT INTO ${table.tablename} DEFAULT VALUES`]) {
               await assert.rejects(client.query(sql),error=>error.code==='42501');
             }

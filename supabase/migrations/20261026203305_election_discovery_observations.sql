@@ -50,7 +50,7 @@ BEGIN
     'election_discovery_observations','election_observation_resolutions']
   LOOP
     EXECUTE format('ALTER TABLE public.%I ENABLE ROW LEVEL SECURITY',table_name);
-    EXECUTE format('REVOKE ALL ON public.%I FROM PUBLIC, anon, authenticated',table_name);
+    EXECUTE format('REVOKE ALL ON public.%I FROM PUBLIC, anon, authenticated, service_role',table_name);
     EXECUTE format('GRANT SELECT, INSERT ON public.%I TO service_role',table_name);
     EXECUTE format('CREATE TRIGGER %I BEFORE UPDATE OR DELETE ON public.%I FOR EACH ROW EXECUTE FUNCTION public.protect_election_history()',table_name||'_immutable',table_name);
   END LOOP;

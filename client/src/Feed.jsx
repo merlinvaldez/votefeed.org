@@ -4,6 +4,7 @@ import { useAuth } from "./authContext";
 import { API_BASE } from "./constants";
 import RepCard from "./RepCard";
 import LegislativeVoteCard from "./LegislativeVoteCard";
+import ElectionsPanel from "./elections/ElectionsPanel";
 import { summaryIdentity, hasSummaryText, createSummaryRequests } from "./feedSummaries";
 import { buildFeedUrl, adaptDelegationFeed, mergeFeedPage, createFeedRequests } from "./delegationFeedClient";
 import { fetchDelegationAlignment } from "./alignmentRefresh";
@@ -63,16 +64,17 @@ function FeedViewTabs({ activePanel, selectedChamber, onSelect }) {
 function Feed(props) {
   const PAGE_SIZE = 5;
   const [selectedChamber, setSelectedChamber] = useState("All Reps");
-  const [activePanel, setActivePanel] = useState("legislative");
   const { token, authFetch } = useAuth();
   const isAuthed = Boolean(token);
   const location = useLocation();
   const navigate = useNavigate();
   const {
+    activePanel,
+    setActivePanel,
     selectedPolicyArea,
     setSelectedPolicyArea,
-    setSidebarPolicyAreas,
-    setSidebarTotalPolicyCount,
+    setPanelPolicyData,
+    setPanelScopeKey,
   } = useOutletContext();
   const guestBarRef = useRef(null);
   const guestHighlightTimeoutRef = useRef(null);
@@ -101,6 +103,15 @@ function Feed(props) {
   const [savedLocation, setSavedLocation] = useState(null);
   const guestLocation = (location.state || props.state)?.district;
   const feedLocation = token ? savedLocation : guestLocation;
+  // This key invalidates election-view state when the existing viewer/address
+  // context changes. The representative district is only part of this local
+  // reset identity; it is never sent as election geography.
+  const electionContextKey = JSON.stringify([
+    token ? userId ?? "signed-in-pending" : "guest",
+    feedLocation?.state ?? null,
+    feedLocation?.congressionalDistrict ?? feedLocation?.district ?? null,
+    location.key,
+  ]);
   const delegationScope = JSON.stringify([token ? userId : "guest", feedLocation?.state,
     feedLocation?.congressionalDistrict ?? feedLocation?.district, location.key]);
   const scopeKey = JSON.stringify([token ? userId : "guest", feedLocation?.state,
@@ -120,32 +131,34 @@ function Feed(props) {
   const [mobilePolicySearch, setMobilePolicySearch] = useState("");
   const [isMobilePolicySearchOpen, setIsMobilePolicySearchOpen] =
     useState(false);
-  const availablePolicyAreas = feedState?.policyAreas ?? [];
-  const totalPolicyCount = feedState?.totalPolicyCount ?? 0;
+  const availablePolicyAreas = isCurrentFeed ? feedState?.policyAreas ?? [] : [];
+  const totalPolicyCount = isCurrentFeed ? feedState?.totalPolicyCount ?? 0 : 0;
   const normalizedMobilePolicySearch = mobilePolicySearch.trim().toLowerCase();
   const mobileVisiblePolicyAreas = availablePolicyAreas.filter((policyArea) =>
     policyArea.name.toLowerCase().includes(normalizedMobilePolicySearch),
   );
 
   useEffect(() => {
-    setSidebarPolicyAreas(feedState?.policyAreas ?? []);
-    setSidebarTotalPolicyCount(feedState?.totalPolicyCount ?? 0);
-  }, [
-    feedState,
-    setSidebarPolicyAreas,
-    setSidebarTotalPolicyCount,
-    setSelectedPolicyArea,
-  ]);
+    setPanelPolicyData("legislative", {
+      policyAreas: isCurrentFeed ? feedState?.policyAreas ?? [] : [],
+      totalPolicyCount: isCurrentFeed ? feedState?.totalPolicyCount ?? 0 : 0,
+    });
+  }, [feedState, isCurrentFeed, setPanelPolicyData]);
+
+  useEffect(() => {
+    setPanelScopeKey("legislative", electionContextKey);
+    setPanelScopeKey("elections", electionContextKey);
+    setMobilePolicySearch("");
+    setIsMobilePolicySearchOpen(false);
+  }, [electionContextKey, setPanelScopeKey]);
 
   useEffect(() => {
     return () => {
-      setSidebarPolicyAreas([]);
-      setSidebarTotalPolicyCount(0);
+      setPanelPolicyData("legislative", { policyAreas: [], totalPolicyCount: 0 });
       setSelectedPolicyArea(null);
     };
   }, [
-    setSidebarPolicyAreas,
-    setSidebarTotalPolicyCount,
+    setPanelPolicyData,
     setSelectedPolicyArea,
   ]);
 
@@ -486,34 +499,37 @@ function Feed(props) {
     <FeedViewTabs activePanel={activePanel} selectedChamber={selectedChamber}
       onSelect={handleFeedViewSelect} />
   );
+  const electionsPanel = (
+    <ElectionsPanel key={electionContextKey} viewer={isAuthed ? "signed-in" : "guest"}
+      hidden={activePanel !== "elections"} />
+  );
 
   if (activePanel === "elections") {
     return <>
-      {feedViewTabs}
       {guestBar}
-      <section id="elections-feed-panel" className="elections-panel" role="tabpanel"
-        aria-labelledby="feed-view-tab-elections" tabIndex={0}>
-        <h2 className="section-title">Elections</h2>
-        <p role="status">Campaign positions are not available yet.</p>
-      </section>
+      {feedViewTabs}
+      {electionsPanel}
     </>;
   }
 
   const legislativeTabId = `feed-view-tab-${selectedChamber.toLowerCase().replace(/\s+/g, "-")}`;
   if (feedPending && !sameDelegation) return <>
-    {feedViewTabs}{guestBar}
+    {guestBar}{feedViewTabs}
+    {electionsPanel}
     <div id="legislative-feed-panel" className="feed-view-panel" role="tabpanel" aria-labelledby={legislativeTabId}>
       <div className="feed-loading">Loading feed...</div>
     </div>
   </>;
   if (error && !sameDelegation) return <>
-    {feedViewTabs}{guestBar}
+    {guestBar}{feedViewTabs}
+    {electionsPanel}
     <div id="legislative-feed-panel" className="feed-view-panel" role="tabpanel" aria-labelledby={legislativeTabId}>
       <div className="error">{error}</div>
     </div>
   </>;
   if (!feedState?.votes) return <>
-    {feedViewTabs}{guestBar}
+    {guestBar}{feedViewTabs}
+    {electionsPanel}
     <div id="legislative-feed-panel" className="feed-view-panel" role="tabpanel" aria-labelledby={legislativeTabId}>
       <div>Missing feed data</div>
     </div>
@@ -521,8 +537,9 @@ function Feed(props) {
 
   return (
     <>
-      {feedViewTabs}
       {guestBar}
+      {feedViewTabs}
+      {electionsPanel}
       <div id="legislative-feed-panel" className="feed-view-panel" role="tabpanel"
         aria-labelledby={legislativeTabId}>
       <RepCard

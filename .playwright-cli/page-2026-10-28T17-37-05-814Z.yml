@@ -1,0 +1,93 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - link "VoteFeed feed" [ref=e5] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=e7]
+      - generic [ref=e8]: VoteFeed
+    - generic [ref=e9]:
+      - heading "Democracy happens in your feed." [level=1] [ref=e10]
+      - paragraph [ref=e11]: Track every vote. Hold your Representative accountable. Engage with your district.
+    - generic [ref=e12]:
+      - generic [ref=e13]: © 2025 VoteFeed Inc.
+      - generic [ref=e14]:
+        - link "Privacy Policy" [ref=e15] [cursor=pointer]:
+          - /url: /privacy
+        - link "Terms of Use" [ref=e16] [cursor=pointer]:
+          - /url: /terms
+  - generic [ref=e17]:
+    - generic [ref=e18]:
+      - generic [ref=e19]:
+        - heading "Find your District" [level=2] [ref=e20]
+        - paragraph [ref=e21]: Enter your address to see your Rep's voting record.
+      - generic [ref=e22]:
+        - generic [ref=e23]: Street Address
+        - textbox "Street Address" [ref=e24]:
+          - /placeholder: 123 Main St
+        - generic [ref=e25]: City
+        - textbox "City" [ref=e26]:
+          - /placeholder: Queens
+        - generic [ref=e27]: State
+        - combobox "State" [ref=e28]:
+          - option "Select State" [selected]
+          - option "Alabama"
+          - option "Alaska"
+          - option "Arizona"
+          - option "Arkansas"
+          - option "California"
+          - option "Colorado"
+          - option "Connecticut"
+          - option "Delaware"
+          - option "Florida"
+          - option "Georgia"
+          - option "Hawaii"
+          - option "Idaho"
+          - option "Illinois"
+          - option "Indiana"
+          - option "Iowa"
+          - option "Kansas"
+          - option "Kentucky"
+          - option "Louisiana"
+          - option "Maine"
+          - option "Maryland"
+          - option "Massachusetts"
+          - option "Michigan"
+          - option "Minnesota"
+          - option "Mississippi"
+          - option "Missouri"
+          - option "Montana"
+          - option "Nebraska"
+          - option "Nevada"
+          - option "New Hampshire"
+          - option "New Jersey"
+          - option "New Mexico"
+          - option "New York"
+          - option "North Carolina"
+          - option "North Dakota"
+          - option "Ohio"
+          - option "Oklahoma"
+          - option "Oregon"
+          - option "Pennsylvania"
+          - option "Rhode Island"
+          - option "South Carolina"
+          - option "South Dakota"
+          - option "Tennessee"
+          - option "Texas"
+          - option "Utah"
+          - option "Vermont"
+          - option "Virginia"
+          - option "Washington"
+          - option "West Virginia"
+          - option "Wisconsin"
+          - option "Wyoming"
+          - option "District of Columbia"
+        - generic [ref=e29]: ZIP code
+        - textbox "ZIP code" [ref=e30]:
+          - /placeholder: "11101"
+        - button "Check my Rep" [ref=e31] [cursor=pointer]
+    - generic "Account actions" [ref=e32]:
+      - generic [ref=e33]:
+        - heading "Share your voice" [level=3] [ref=e34]
+        - paragraph [ref=e35]: Create an account to interact with your rep's voting record and share your comments with their office.
+      - generic [ref=e36]:
+        - button "Sign up" [ref=e37] [cursor=pointer]
+        - button "Sign in" [ref=e38] [cursor=pointer]

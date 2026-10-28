@@ -1,20 +1,73 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import "./Feed.css";
 import { Home, Search, User } from "lucide-react";
 
+const createPanelPolicyState = (totalPolicyCount = null, scopeKey = null) => ({
+  policyAreas: [],
+  totalPolicyCount,
+  selectedPolicyArea: null,
+  scopeKey,
+});
+
 export default function FeedLayout() {
   const location = useLocation();
   const isFeedRoute = location.pathname === "/feed";
-  const [policyAreas, setPolicyAreas] = useState([]);
-  const [totalPolicyCount, setTotalPolicyCount] = useState(0);
-  const [selectedPolicyArea, setSelectedPolicyArea] = useState(null);
+  const [activePanel, setActivePanel] = useState("legislative");
+  const [panelPolicyState, setPanelPolicyState] = useState(() => ({
+    legislative: createPanelPolicyState(0),
+    elections: createPanelPolicyState(null),
+  }));
+  const [policySearchByPanel, setPolicySearchByPanel] = useState({
+    legislative: "",
+    elections: "",
+  });
   const [isPolicySearchOpen, setIsPolicySearchOpen] = useState(false);
-  const [policySearch, setPolicySearch] = useState("");
+  const activePolicyState = panelPolicyState[activePanel];
+  const policyAreas = activePolicyState.policyAreas;
+  const totalPolicyCount = activePolicyState.totalPolicyCount;
+  const activeSelectedPolicyArea = activePolicyState.selectedPolicyArea;
+  const selectedPolicyArea = panelPolicyState.legislative.selectedPolicyArea;
+  const policySearch = policySearchByPanel[activePanel];
   const normalizedPolicySearch = policySearch.trim().toLowerCase();
   const visiblePolicyAreas = policyAreas.filter((policyArea) =>
     policyArea.name.toLowerCase().includes(normalizedPolicySearch),
   );
+
+  const setPanelPolicyArea = useCallback((panel, value) => {
+    setPanelPolicyState((previous) => ({
+      ...previous,
+      [panel]: { ...previous[panel], selectedPolicyArea: value },
+    }));
+  }, []);
+
+  const setSelectedPolicyArea = useCallback((value) => {
+    setPanelPolicyArea("legislative", value);
+  }, [setPanelPolicyArea]);
+
+  const setPanelPolicyData = useCallback((panel, { policyAreas: nextAreas, totalPolicyCount: nextCount }) => {
+    setPanelPolicyState((previous) => {
+      const current = previous[panel];
+      const policyAreasValue = nextAreas ?? [];
+      const totalPolicyCountValue = nextCount ?? null;
+      if (current.policyAreas === policyAreasValue && current.totalPolicyCount === totalPolicyCountValue) return previous;
+      return {
+        ...previous,
+        [panel]: { ...current, policyAreas: policyAreasValue, totalPolicyCount: totalPolicyCountValue },
+      };
+    });
+  }, []);
+
+  const setPanelScopeKey = useCallback((panel, scopeKey) => {
+    setPanelPolicyState((previous) => {
+      if (previous[panel].scopeKey === scopeKey) return previous;
+      return {
+        ...previous,
+        [panel]: createPanelPolicyState(panel === "legislative" ? 0 : null, scopeKey),
+      };
+    });
+    setPolicySearchByPanel((previous) => ({ ...previous, [panel]: "" }));
+  }, []);
 
   return (
     <div className="feed-layout">
@@ -59,31 +112,34 @@ export default function FeedLayout() {
                 type="search"
                 placeholder="Search policy areas"
                 value={policySearch}
-                onChange={(event) => setPolicySearch(event.target.value)}
+                onChange={(event) => setPolicySearchByPanel((previous) => ({
+                  ...previous,
+                  [activePanel]: event.target.value,
+                }))}
               />
             )}
             <div className="policy-list">
               <button
                 type="button"
                 className={`policy-option ${
-                  selectedPolicyArea === null ? "active" : ""
+                  activeSelectedPolicyArea === null ? "active" : ""
                 }`}
-                onClick={() => setSelectedPolicyArea(null)}
+                onClick={() => setPanelPolicyArea(activePanel, null)}
               >
                 <span>All</span>
-                <span className="policy-count">{totalPolicyCount}</span>
+                {totalPolicyCount != null && <span className="policy-count">{totalPolicyCount}</span>}
               </button>
               {visiblePolicyAreas.map((policyArea) => (
                 <button
                   key={policyArea.name}
                   type="button"
                   className={`policy-option ${
-                    selectedPolicyArea === policyArea.name ? "active" : ""
+                    activeSelectedPolicyArea === policyArea.name ? "active" : ""
                   }`}
-                  onClick={() => setSelectedPolicyArea(policyArea.name)}
+                  onClick={() => setPanelPolicyArea(activePanel, policyArea.name)}
                 >
                   <span>{policyArea.name}</span>
-                  <span className="policy-count">{policyArea.count}</span>
+                  {policyArea.count != null && <span className="policy-count">{policyArea.count}</span>}
                 </button>
               ))}
               {policyAreas.length > 0 && visiblePolicyAreas.length === 0 && (
@@ -96,10 +152,14 @@ export default function FeedLayout() {
       <main className="feed-main">
         <Outlet
           context={{
+            activePanel,
+            setActivePanel,
+            panelPolicyState,
+            setPanelPolicyArea,
+            setPanelPolicyData,
+            setPanelScopeKey,
             selectedPolicyArea,
             setSelectedPolicyArea,
-            setSidebarPolicyAreas: setPolicyAreas,
-            setSidebarTotalPolicyCount: setTotalPolicyCount,
           }}
         />
       </main>

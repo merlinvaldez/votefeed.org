@@ -1,0 +1,158 @@
+{
+    "checkedDate":  "2026-10-28",
+    "candidate":  "CLARKE, YVETTE D",
+    "race":  "NY-9 House, 2026 general",
+    "siteStatus":  "ambiguous",
+    "promptVersion":  "campaign-position-prompt-1.3",
+    "status":  "complete",
+    "snapshotsSaved":  2,
+    "positionsPublished":  19,
+    "feedItems":  19,
+    "exactExcerptChecks":  19,
+    "productionDatabaseUsed":  false,
+    "sourcePages":  [
+                        {
+                            "sourceUrl":  "https://voteyvette.com/about-yvette/",
+                            "sourceText":  "About Yvette\n\nThere is no place like home. I should know — I still reside at my childhood home in Flatbush, experiencing firsthand the issues faced by Brooklynites. Both of my parents immigrated from Jamaica in search of a better life for themselves and their families. As a child, my mother, former New York City Council Member Dr. Una S. T. Clarke, ensured that I understood the importance of community activism and how to affect real change in our society. Her efforts and my passion for our community inspired me to follow in her footsteps, making us the first mother-daughter succession in New York City Council history.\n\nFirst elected to Congress in 2006, I am currently serving as the only Black woman in the New York delegation. I have worked tirelessly to improve the lives and opportunities of constituents in New York’s 9th Congressional District (NY-9) — one of the nation’s most diverse districts. Since being elected, I have served as the chair, co-chair and/or founding member of several committees and caucuses including the Homeland Security Committee, Congressional Caucus on Black Women and Girls, Medicare for All Caucus, Small Business Committee, Congressional Black Caucus Immigration Task Force, Congressional Progressive Caucus, and Vice-Chair of the Energy and Commerce Committee. From housing, to immigration reform, education, and healthcare, I am proud of the work I have accomplished on behalf of the 9th District, having effectively represented my constituents while Democrats controlled the House and when we faced fierce opposition from Republicans at the beginning of my first term.\n\nGiven the current political climate, it is important that the 9th Congressional district is represented by someone who understands how policymaking works on both the local and federal level. During my time in office, I have passed legislation that increased funding for STEM programs. I support a student loan bailout program and free college for all. I am proud to have been instrumental in passing H.R. 4137, which created a discretionary grant program that encourages educational pursuits and job skill acquisition for individuals in state and federal prisons.\n\nHealthcare should be a right, not a privilege. I am a vocal supporter of Medicare for All as the best path to achieving the overarching goal of universal coverage. Alongside my progressive colleagues, I fought against the repeal of the Affordable Care Act — the same act that I worked tirelessly to pass while representing NY-9 in 2010. In response to the opioid crisis our nation is facing, I introduced and passed H.R. 5590, the Opioid Addiction Action Plan, which would require the Centers for Medicare/Medicaid (CMS) to develop an “Opioid Addiction Action Plan” with stakeholder feedback and regular reporting. I’ve also been a vocal advocate against the defunding of Planned Parenthood, which serves many essential needs for women and families in our community.\n\nIt comes as no surprise that our housing crisis has reached a tipping point, especially in NY-9. As such, last year I introduced the Affordable Housing and Area Median Income Fairness Act (H.R.4984) to help renters in Brooklyn and beyond by cutting rent in subsidized developments and calling for the reformulation of area median income on which HUD bases affordable housing costs. Furthermore, I introduced legislation that aims to block the use of facial recognition technology in federally assisted dwelling units. I will continue to introduce, co-sponsor, and support legislation that favors economic opportunity and small businesses while holding corporate America responsible for their actions, both environmental and economic.\n\nI believe that the American dream should be accessible to everyone – including our immigrant and undocumented communities. I took action by introducing the ASPIRE Act, a bipartisan solution that would provide relief to all temporary protected status (TPS) eligible individuals, along with the Protect Our Sanctuary Cities Act to target former President Trump’s executive restrictions on sanctuary cities.\n\nAs a devoted public servant, I will continue pressing forward to ensure that America is a fair and just country for all people, regardless of race, ethnicity, sexuality, gender or religion. Brooklyn is the birthplace of the Resistance and I am a proud member. Join me in the fight.\n\n“I am asking for your continued support in the fight for the soul of our democracy. Brooklyn is the birthplace of the resistance and I am a proud member. Join me in the fight.”\n\n– Representative Yvette Clarke\n\nAccomplishments\n\n- House Committee on Energy and Commerce\n\n- Subcommittee on Oversight and Investigations (Vice Chair)\n\n- Congressional Black Caucus (Chair)\n\n- Smart Cities Caucus (Co-Chair)\n\n- Multicultural Media Caucus (Founder and Co-Chair)\n\n- Congressional Caucus on Black Women and Girls (Co-Chair)\n\n- Medicare for All Caucus (Co-Chair)"
+                        },
+                        {
+                            "sourceUrl":  "https://voteyvette.com/lgbtq-issues/",
+                            "sourceText":  "LGBTQ+ Issues\n\nRegardless of who you love or how you identify, Congresswoman Clarke is a strong supporter of LGBTQ rights. Since her time in office, she has supported legislation that encourages the celebration of the month of June as LGBTQ Pride Month, the EMPOWER Act which aims to  deter, prevent, reduce, and respond to harassment in the workplace, including sexual harassment, sexual assault, and harassment based on protected categories, and the Equality Act which will prohibit discrimination based on sex, sexual orientation, and gender identity across education, housing and employment."
+                        }
+                    ],
+    "positions":  [
+                      {
+                          "topic":  "civil-rights",
+                          "claimText":  "Will continue pressing forward to ensure America is fair and just for all people regardless of race, ethnicity, sexuality, gender, or religion.",
+                          "summary":  "Supports equal fairness and justice across protected identities.",
+                          "excerpt":  "As a devoted public servant, I will continue pressing forward to ensure that America is a fair and just country for all people, regardless of race, ethnicity, sexuality, gender or religion.",
+                          "sourceUrl":  "https://voteyvette.com/about-yvette/"
+                      },
+                      {
+                          "topic":  "civil-rights",
+                          "claimText":  "Has supported the EMPOWER Act to deter, prevent, reduce, and respond to workplace harassment, including sexual harassment, sexual assault, and harassment based on protected categories.",
+                          "summary":  "Supported the EMPOWER Act addressing workplace harassment and assault.",
+                          "excerpt":  "the EMPOWER Act which aims to  deter, prevent, reduce, and respond to harassment in the workplace, including sexual harassment, sexual assault, and harassment based on protected categories",
+                          "sourceUrl":  "https://voteyvette.com/lgbtq-issues/"
+                      },
+                      {
+                          "topic":  "civil-rights",
+                          "claimText":  "Has supported the Equality Act to prohibit discrimination based on sex, sexual orientation, and gender identity across education, housing, and employment.",
+                          "summary":  "Supported the Equality Act banning discrimination based on sex, sexual orientation, and gender identity.",
+                          "excerpt":  "the Equality Act which will prohibit discrimination based on sex, sexual orientation, and gender identity across education, housing and employment",
+                          "sourceUrl":  "https://voteyvette.com/lgbtq-issues/"
+                      },
+                      {
+                          "topic":  "civil-rights",
+                          "claimText":  "Has supported legislation encouraging the celebration of June as LGBTQ Pride Month.",
+                          "summary":  "Supported legislation recognizing June as LGBTQ Pride Month.",
+                          "excerpt":  "Since her time in office, she has supported legislation that encourages the celebration of the month of June as LGBTQ Pride Month",
+                          "sourceUrl":  "https://voteyvette.com/lgbtq-issues/"
+                      },
+                      {
+                          "topic":  "economy",
+                          "claimText":  "Will continue to introduce, co-sponsor, and support legislation favoring economic opportunity and small businesses while holding corporations responsible for environmental and economic actions.",
+                          "summary":  "Plans to support small-business and corporate accountability legislation.",
+                          "excerpt":  "I will continue to introduce, co-sponsor, and support legislation that favors economic opportunity and small businesses while holding corporate America responsible for their actions, both environmental and economic.",
+                          "sourceUrl":  "https://voteyvette.com/about-yvette/"
+                      },
+                      {
+                          "topic":  "education",
+                          "claimText":  "Was instrumental in passing H.R. 4137 to create a discretionary grant program for education and job skills for people in state and federal prisons.",
+                          "summary":  "Helped pass grants for education and job training in prisons.",
+                          "excerpt":  "I am proud to have been instrumental in passing H.R. 4137, which created a discretionary grant program that encourages educational pursuits and job skill acquisition for individuals in state and federal prisons.",
+                          "sourceUrl":  "https://voteyvette.com/about-yvette/"
+                      },
+                      {
+                          "topic":  "education",
+                          "claimText":  "Has passed legislation that increased funding for STEM programs.",
+                          "summary":  "Previously passed legislation to increase STEM funding.",
+                          "excerpt":  "During my time in office, I have passed legislation that increased funding for STEM programs.",
+                          "sourceUrl":  "https://voteyvette.com/about-yvette/"
+                      },
+                      {
+                          "topic":  "education",
+                          "claimText":  "Supports free college for all.",
+                          "summary":  "Supports tuition-free college for everyone.",
+                          "excerpt":  "I support a student loan bailout program and free college for all.",
+                          "sourceUrl":  "https://voteyvette.com/about-yvette/"
+                      },
+                      {
+                          "topic":  "education",
+                          "claimText":  "Supports a student loan bailout program.",
+                          "summary":  "Supports student loan bailout.",
+                          "excerpt":  "I support a student loan bailout program and free college for all.",
+                          "sourceUrl":  "https://voteyvette.com/about-yvette/"
+                      },
+                      {
+                          "topic":  "healthcare",
+                          "claimText":  "States that healthcare should be a right, not a privilege.",
+                          "summary":  "Says healthcare is a right, not a privilege.",
+                          "excerpt":  "Healthcare should be a right, not a privilege.",
+                          "sourceUrl":  "https://voteyvette.com/about-yvette/"
+                      },
+                      {
+                          "topic":  "healthcare",
+                          "claimText":  "Is a vocal supporter of Medicare for All as the best path to universal coverage.",
+                          "summary":  "Supports Medicare for All to achieve universal coverage.",
+                          "excerpt":  "I am a vocal supporter of Medicare for All as the best path to achieving the overarching goal of universal coverage.",
+                          "sourceUrl":  "https://voteyvette.com/about-yvette/"
+                      },
+                      {
+                          "topic":  "healthcare",
+                          "claimText":  "Introduced and passed H.R. 5590, the Opioid Addiction Action Plan, to require CMS to develop an opioid addiction action plan with stakeholder feedback and regular reporting.",
+                          "summary":  "Passed legislation requiring a CMS opioid response plan.",
+                          "excerpt":  "In response to the opioid crisis our nation is facing, I introduced and passed H.R. 5590, the Opioid Addiction Action Plan, which would require the Centers for Medicare/Medicaid (CMS) to develop an “Opioid Addiction Action Plan” with stakeholder feedback and regular reporting.",
+                          "sourceUrl":  "https://voteyvette.com/about-yvette/"
+                      },
+                      {
+                          "topic":  "healthcare",
+                          "claimText":  "Has been a vocal advocate against defunding Planned Parenthood.",
+                          "summary":  "Opposes defunding Planned Parenthood.",
+                          "excerpt":  "I’ve also been a vocal advocate against the defunding of Planned Parenthood, which serves many essential needs for women and families in our community.",
+                          "sourceUrl":  "https://voteyvette.com/about-yvette/"
+                      },
+                      {
+                          "topic":  "healthcare",
+                          "claimText":  "Fought against repeal of the Affordable Care Act and previously worked to pass it in 2010.",
+                          "summary":  "Opposed ACA repeal and helped pass the law.",
+                          "excerpt":  "Alongside my progressive colleagues, I fought against the repeal of the Affordable Care Act — the same act that I worked tirelessly to pass while representing NY-9 in 2010.",
+                          "sourceUrl":  "https://voteyvette.com/about-yvette/"
+                      },
+                      {
+                          "topic":  "housing",
+                          "claimText":  "Introduced the Affordable Housing and Area Median Income Fairness Act to cut rent in subsidized developments and reform the area median income formula used by HUD.",
+                          "summary":  "Introduced a bill to lower subsidized rents and change HUD income calculations.",
+                          "excerpt":  "As such, last year I introduced the Affordable Housing and Area Median Income Fairness Act (H.R.4984) to help renters in Brooklyn and beyond by cutting rent in subsidized developments and calling for the reformulation of area median income on which HUD bases affordable housing costs.",
+                          "sourceUrl":  "https://voteyvette.com/about-yvette/"
+                      },
+                      {
+                          "topic":  "housing",
+                          "claimText":  "Introduced legislation aimed at blocking the use of facial recognition technology in federally assisted dwelling units.",
+                          "summary":  "Introduced a bill to block facial recognition in federally assisted housing.",
+                          "excerpt":  "Furthermore, I introduced legislation that aims to block the use of facial recognition technology in federally assisted dwelling units.",
+                          "sourceUrl":  "https://voteyvette.com/about-yvette/"
+                      },
+                      {
+                          "topic":  "immigration",
+                          "claimText":  "Introduced the bipartisan ASPIRE Act to provide relief to all temporary protected status eligible individuals.",
+                          "summary":  "Introduced TPS relief legislation.",
+                          "excerpt":  "I took action by introducing the ASPIRE Act, a bipartisan solution that would provide relief to all temporary protected status (TPS) eligible individuals",
+                          "sourceUrl":  "https://voteyvette.com/about-yvette/"
+                      },
+                      {
+                          "topic":  "immigration",
+                          "claimText":  "Introduced the Protect Our Sanctuary Cities Act to target former President Trump\u0027s executive restrictions on sanctuary cities.",
+                          "summary":  "Introduced legislation opposing restrictions on sanctuary cities.",
+                          "excerpt":  "along with the Protect Our Sanctuary Cities Act to target former President Trump’s executive restrictions on sanctuary cities.",
+                          "sourceUrl":  "https://voteyvette.com/about-yvette/"
+                      },
+                      {
+                          "topic":  "immigration",
+                          "claimText":  "Believes the American dream should be accessible to immigrant and undocumented communities.",
+                          "summary":  "Says immigrant and undocumented communities should have access to the American dream.",
+                          "excerpt":  "I believe that the American dream should be accessible to everyone – including our immigrant and undocumented communities.",
+                          "sourceUrl":  "https://voteyvette.com/about-yvette/"
+                      }
+                  ]
+}

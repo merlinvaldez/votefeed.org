@@ -74,7 +74,7 @@ test('bounded live ambiguous-site crawl saves exact-source positions to the feed
     assert.ok(result.counts.positionsPublished>0,'Expected the live extractor to publish at least one validated position.');
 
     const published=(await pool.query(`
-      SELECT p.topic,p.summary,p.excerpt,s.final_url,s.source_text
+      SELECT p.topic,p.claim_text,p.summary,p.excerpt,s.final_url,s.source_text
       FROM campaign_position_versions p JOIN campaign_sources s ON s.id=p.snapshot_id
       WHERE p.candidacy_id=$1 AND p.state='published'
       ORDER BY p.topic,p.id
@@ -92,12 +92,20 @@ test('bounded live ambiguous-site crawl saves exact-source positions to the feed
     assert.equal(feedItems.length,published.length);
     assert.ok(feedItems.every(item=>item.ballotStatus==='unknown' && item.registrationStatus==='fec-registered'));
 
+    const reviewCapture=process.env.ELECTIONS_POSITION_REVIEW_CAPTURE==='1' ? {
+      pages:[...new Map(published.map(item=>[item.final_url,{sourceUrl:item.final_url,sourceText:item.source_text}])).values()],
+      positions:published.map(({topic,claim_text,summary,excerpt,final_url})=>({
+        topic,claimText:claim_text,summary,excerpt,sourceUrl:final_url,
+      })),
+    } : undefined;
+
     console.log('LIVE_ACCEPTANCE_SUMMARY '+JSON.stringify({
       site:'https://voteyvette.com/',siteStatus:'ambiguous',status:result.status,
       crawled:result.counts.crawledSuccess,snapshots:result.counts.snapshotsSaved,
       published:published.map(({topic,summary,excerpt,final_url})=>({topic,summary,excerpt,sourceUrl:final_url})),
       feedItems:feedItems.length,feedBallotStatus:feedItems[0]?.ballotStatus,
       exactExcerptChecks:published.length,
+      ...(reviewCapture ? {semanticReview:reviewCapture} : {}),
     }));
   } finally {
     if (pool) await pool.end();

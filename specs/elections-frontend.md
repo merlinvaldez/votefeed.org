@@ -112,8 +112,8 @@ Outcome: the implementing developer has the exact visual target and knows which 
 Outcome: people can switch between legislative feeds and Elections using the reference's top navigation.
 
 - [x] Make the minimum necessary changes around `Feed.jsx`, `RepCard.jsx`, and `FeedLayout.jsx` to host the shared top tabs and a separate Elections panel. Keep legislative roster-tab rules within the legislative view.
-- [ ] Preserve the guest banner/sign-in prompt and existing account/address context. Keep election data, filters, counts, responses, and cursors separate from legislative state.
-- [ ] Pass the active panel's policy selection and full-scope counts to the existing sidebar, including cleanup on view/account/address changes.
+- [x] Preserve the guest banner/sign-in prompt and existing account/address context. Keep election data, filters, counts, responses, and cursors separate from legislative state.
+- [x] Pass the active panel's policy selection and full-scope counts to the existing sidebar, including cleanup on view/account/address changes.
 
 ## 3. Build candidate navigation and single-candidate filtering
 
