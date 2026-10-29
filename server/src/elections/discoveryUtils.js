@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { RELEASE_SCOPE, normalizeState } from './contracts.js';
+import { RELEASE_SCOPE, normalizeDistrict, normalizeState } from './contracts.js';
 
 export const DISCOVERY_VERSION = 'discovery-v1';
 export const sha256 = value => createHash('sha256').update(value).digest('hex');
@@ -19,7 +19,11 @@ export function discoveryScope(input = {}) {
     || !Array.isArray(scope.offices) || !scope.offices.length
     || scope.states.some(s => !RELEASE_SCOPE.states.includes(s))
     || scope.offices.some(o => !RELEASE_SCOPE.offices.includes(o))) throw discoveryError('discovery-invalid-scope');
-  return { ...scope, states: [...new Set(scope.states)].map(normalizeState).sort(), offices: [...new Set(scope.offices)].sort() };
+  const states=[...new Set(scope.states)].map(normalizeState).sort(), offices=[...new Set(scope.offices)].sort();
+  if (scope.district !== undefined && (offices.length!==1 || offices[0]!=='house' || states.length!==1)) {
+    throw discoveryError('discovery-invalid-district-scope');
+  }
+  return { ...scope, ...(scope.district!==undefined ? {district:normalizeDistrict(scope.district)} : {}), states, offices };
 }
 export function publicUrl(value) {
   let url;

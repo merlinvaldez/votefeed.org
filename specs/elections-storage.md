@@ -4,7 +4,7 @@ Implemented locally on 2026-10-26. No remote migrations, production deployment, 
 
 ## Migration and access
 
-`supabase/migrations/20261026194547_elections_storage.sql` is additive and requires existing `public.users(id, clerk_user_id)` and `public.reps(bioguideid)`. It uses PostgreSQL 15+ null-aware uniqueness. Apply it through the normal migration upgrade workflow; `db:reset` is not an upgrade path.
+`supabase/migrations/20261028202229_elections_storage.sql` is additive and requires existing `public.users(id, clerk_user_id)` and `public.reps(bioguideid)`. It uses PostgreSQL 15+ null-aware uniqueness. Apply it through the normal migration upgrade workflow; `db:reset` is not an upgrade path.
 
 All 14 new tables enable RLS and revoke every table privilege from PUBLIC, anon and authenticated. There are deliberately no browser policies. The server pool uses the existing DATABASE_URL connection; its trusted owner/BYPASSRLS role can access these tables. service_role receives DML grants, but grants alone do not bypass RLS. The disposable tests exercise postgres, service_role, anon and authenticated; the deployed DATABASE_URL role and deployed default privileges still require rollout verification. A privileged direct SQL connection can bypass ownership checks, so routes must call the owned query functions, never expose arbitrary SQL or the pool to clients. This follows the [Supabase distinction between grants and RLS](https://supabase.com/docs/guides/database/postgres/row-level-security).
 

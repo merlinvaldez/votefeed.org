@@ -22,7 +22,7 @@ const getAlignmentColor = (percent) => {
   return "#dc2626";
 };
 
-function AlignmentGauge({ percent, hasData }) {
+export function AlignmentGauge({ percent, hasData, emptyLabel = null }) {
   const angle = Math.PI * percent / 100;
   const targetX = 120 - 84 * Math.cos(angle);
   const targetY = 110 - 84 * Math.sin(angle);
@@ -35,7 +35,7 @@ function AlignmentGauge({ percent, hasData }) {
         <line x1="120" y1="100" x2={targetX} y2={targetY - 10} className="member-gauge-needle" />
         <circle cx="120" cy="100" r="7" className="member-gauge-pivot" />
       </svg>
-      <div className="member-alignment-percent" aria-hidden="true">{percent}%</div>
+      <div className="member-alignment-percent" aria-hidden="true">{hasData ? `${percent}%` : emptyLabel ?? `${percent}%`}</div>
     </div>
   );
 }

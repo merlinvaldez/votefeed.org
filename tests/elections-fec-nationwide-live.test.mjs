@@ -16,7 +16,7 @@ test('nationwide FEC candidate and committee import on disposable PostgreSQL', {
   await admin.query(`CREATE DATABASE ${database}`);pool=new pg.Pool({...config,database});
   for(const role of ['anon','authenticated','service_role']) await admin.query(`DO $$ BEGIN IF NOT EXISTS(SELECT FROM pg_roles WHERE rolname='${role}') THEN CREATE ROLE ${role} NOLOGIN; END IF; END $$`);
   await pool.query('CREATE TABLE users(id serial PRIMARY KEY,clerk_user_id text UNIQUE); CREATE TABLE reps(bioguideid text PRIMARY KEY); CREATE TABLE bills(id serial PRIMARY KEY,title text)');
-  for(const name of ['20261026194547_elections_storage.sql','20261026203305_election_discovery_observations.sql']) await pool.query(await readFile(new URL(`../supabase/migrations/${name}`,import.meta.url),'utf8'));
+  for(const name of ['20261028202229_elections_storage.sql','20261028202239_election_discovery_observations.sql']) await pool.query(await readFile(new URL(`../supabase/migrations/${name}`,import.meta.url),'utf8'));
   assert.ok(process.env.FEC_API_KEY,'FEC_API_KEY required');
   outer:for(const state of RELEASE_SCOPE.states) for(const office of RELEASE_SCOPE.offices){
    const prior=report.entries.find(e=>e.state===state&&e.office===office);

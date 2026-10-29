@@ -266,6 +266,22 @@ function basePositionsForScope(scope) {
   return POSITIONS.filter((position) => candidacyIds.has(position.candidacyId));
 }
 
+function policyCountsForScope(scope) {
+  const completeSet = basePositionsForScope(scope);
+  const byPolicyArea = Object.fromEntries(POLICY_KEYS.map((key) => [key, 0]));
+  let uncategorized = 0;
+  for (const position of completeSet) {
+    if (position.topic === null) uncategorized += 1;
+    else byPolicyArea[position.topic] = (byPolicyArea[position.topic] ?? 0) + 1;
+  }
+  return {
+    dataMode: "development-fixture",
+    all: completeSet.length,
+    uncategorized,
+    byPolicyArea,
+  };
+}
+
 function coverageForScope(scope) {
   const geography = normalizeScope(scope).geography;
   const house = geography.status === "verified" ? "partial" : "geography-unverified";
@@ -394,6 +410,10 @@ export function createElectionFixtureClient({
       };
     },
 
+    async readBuildStatus() {
+      return { builds: [] };
+    },
+
     async readPositions(scope, { limit = pageSize, cursor = null, signal, viewer = "signed-in" } = {}) {
       if (!Number.isInteger(limit) || limit < 1 || limit > 50) {
         throw new TypeError("Fixture page limit must be between 1 and 50.");
@@ -435,6 +455,7 @@ export function createElectionFixtureClient({
         nextCursor: nextOffset < filtered.length
           ? makeCursor(key, snapshotId, nextOffset)
           : null,
+        policyCounts: policyCountsForScope(normalized),
         availability,
         coverage: coverageForScope(normalized),
       };
@@ -442,19 +463,7 @@ export function createElectionFixtureClient({
 
     async readPolicyCounts(scope, { signal } = {}) {
       await wait("policy-counts", signal);
-      const completeSet = basePositionsForScope(scope);
-      const byPolicyArea = Object.fromEntries(POLICY_KEYS.map((key) => [key, 0]));
-      let uncategorized = 0;
-      for (const position of completeSet) {
-        if (position.topic === null) uncategorized += 1;
-        else byPolicyArea[position.topic] = (byPolicyArea[position.topic] ?? 0) + 1;
-      }
-      return {
-        dataMode: "development-fixture",
-        all: completeSet.length,
-        uncategorized,
-        byPolicyArea,
-      };
+      return policyCountsForScope(scope);
     },
 
     async readAlignment(scope, { signal, viewer = "signed-in" } = {}) {

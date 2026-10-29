@@ -16,11 +16,13 @@ export async function syncCampaignPositions({
   candidacyId = null,
   provider = null,
   maxPages = 5,
+  skipPublished = false,
   checkDns = true,
   customFetcher = null,
   db = defaultDb
 } = {}) {
   const normScope = discoveryScope(scope);
+  if (typeof skipPublished!=='boolean') throw new TypeError('skipPublished must be a boolean');
   provider ??= createCampaignExtractionProvider();
 
   const run = await startElectionRun({
@@ -43,11 +45,18 @@ export async function syncCampaignPositions({
       AND c.eligibility NOT IN ('withdrawn', 'disqualified')
       AND ($1::text[] IS NULL OR r.state = ANY($1::text[]))
       AND ($2::text[] IS NULL OR r.office = ANY($2::text[]))
+      AND ($4::integer IS NULL OR r.office='house' AND r.district=$4)
       AND ($3::uuid IS NULL OR c.id = $3::uuid)
+      AND (NOT $5::boolean OR NOT EXISTS (
+        SELECT 1 FROM campaign_position_versions p
+        JOIN campaign_position_evidence pe ON pe.position_version_id=p.id
+        JOIN campaign_sources previous_source ON previous_source.id=pe.snapshot_id
+        WHERE p.candidacy_id=c.id AND p.state='published' AND previous_source.site_id=s.id
+      ))
     ORDER BY r.state, r.office, c.id
   `;
 
-  const { rows } = await db.query(query, [normScope.states, normScope.offices, candidacyId]);
+  const { rows } = await db.query(query, [normScope.states, normScope.offices, candidacyId, normScope.district ?? null,skipPublished]);
 
   const counts = {
     candidaciesFound: rows.length,
@@ -62,7 +71,7 @@ export async function syncCampaignPositions({
   const coverageMap = new Map();
   for (const state of normScope.states) {
     for (const office of normScope.offices) {
-      coverageMap.set(`${state}:${office}`, { state, office, status: 'complete', candidates: 0 });
+      coverageMap.set(`${state}:${office}`, { state, office, ...(normScope.district!==undefined?{district:normScope.district}:{}), status: 'complete', candidates: 0 });
     }
   }
 

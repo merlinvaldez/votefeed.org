@@ -31,7 +31,7 @@ export default function FeedLayout() {
   const policySearch = policySearchByPanel[activePanel];
   const normalizedPolicySearch = policySearch.trim().toLowerCase();
   const visiblePolicyAreas = policyAreas.filter((policyArea) =>
-    policyArea.name.toLowerCase().includes(normalizedPolicySearch),
+    (policyArea.label ?? policyArea.name).toLowerCase().includes(normalizedPolicySearch),
   );
 
   const setPanelPolicyArea = useCallback((panel, value) => {
@@ -131,14 +131,14 @@ export default function FeedLayout() {
               </button>
               {visiblePolicyAreas.map((policyArea) => (
                 <button
-                  key={policyArea.name}
+                  key={policyArea.value ?? policyArea.name}
                   type="button"
                   className={`policy-option ${
-                    activeSelectedPolicyArea === policyArea.name ? "active" : ""
+                    activeSelectedPolicyArea === (policyArea.value ?? policyArea.name) ? "active" : ""
                   }`}
-                  onClick={() => setPanelPolicyArea(activePanel, policyArea.name)}
+                  onClick={() => setPanelPolicyArea(activePanel, policyArea.value ?? policyArea.name)}
                 >
-                  <span>{policyArea.name}</span>
+                  <span>{policyArea.label ?? policyArea.name}</span>
                   {policyArea.count != null && <span className="policy-count">{policyArea.count}</span>}
                 </button>
               ))}

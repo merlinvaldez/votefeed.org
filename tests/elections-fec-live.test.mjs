@@ -12,7 +12,7 @@ test('bounded live FEC import into disposable PostgreSQL', {skip:process.env.ELE
   await admin.query(`CREATE DATABASE ${database}`); pool=new pg.Pool({...config,database});
   for (const role of ['anon','authenticated','service_role']) await admin.query(`DO $$ BEGIN IF NOT EXISTS(SELECT FROM pg_roles WHERE rolname='${role}') THEN CREATE ROLE ${role} NOLOGIN; END IF; END $$`);
   await pool.query('CREATE TABLE users(id serial PRIMARY KEY,clerk_user_id text UNIQUE); CREATE TABLE reps(bioguideid text PRIMARY KEY); CREATE TABLE bills(id serial PRIMARY KEY,title text)');
-  for (const name of ['20261026194547_elections_storage.sql','20261026203305_election_discovery_observations.sql']) await pool.query(await readFile(new URL(`../supabase/migrations/${name}`,import.meta.url),'utf8'));
+  for (const name of ['20261028202229_elections_storage.sql','20261028202239_election_discovery_observations.sql']) await pool.query(await readFile(new URL(`../supabase/migrations/${name}`,import.meta.url),'utf8'));
   const args={scope:{states:['WY'],offices:['house']},fecApiKey:process.env.FEC_API_KEY,verifySites:true,maxCommittees:100,pool};
   const first=await syncCandidates(args); const count=(await pool.query('SELECT count(*)::int n FROM election_candidates')).rows[0].n; const second=await syncCandidates(args);
   const sites=(await pool.query("SELECT ca.name,s.proposed_url,s.status,s.invalidation_reason FROM campaign_sites s JOIN election_candidacies c ON c.id=s.candidacy_id JOIN election_candidates ca ON ca.id=c.candidate_id WHERE s.is_current AND s.proposed_url IS NOT NULL")).rows;

@@ -133,9 +133,13 @@ CREATE TABLE public.election_interactions (
 CREATE INDEX election_interaction_version ON public.election_interactions(position_version_id);
 CREATE TABLE public.election_geography_evidence (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(), state text NOT NULL CHECK (state ~ '^[A-Z]{2}$'),
+  district integer CHECK (district BETWEEN 0 AND 99),
   cycle integer NOT NULL, boundary_version text NOT NULL, source_url text NOT NULL,
-  checked_at timestamptz NOT NULL, status text NOT NULL CHECK (status IN ('verified','unresolved'))
+  checked_at timestamptz NOT NULL, status text NOT NULL CHECK (status IN ('verified','unresolved')),
+  CHECK (status <> 'verified' OR district IS NOT NULL)
 );
+ALTER TABLE public.users ADD COLUMN election_geography_evidence_id uuid
+  REFERENCES public.election_geography_evidence(id) ON DELETE SET NULL;
 
 -- Prevent accidental rewriting of evidence or wording already answered by a user.
 CREATE FUNCTION public.protect_election_history() RETURNS trigger LANGUAGE plpgsql SET search_path = public AS $$

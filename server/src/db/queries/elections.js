@@ -29,7 +29,11 @@ function scopeOf(input = RELEASE_SCOPE) {
     || !Array.isArray(scope.offices) || !scope.offices.length || scope.offices.some(o => !RELEASE_SCOPE.offices.includes(o))) {
     throw new TypeError('Scope must narrow RELEASE_SCOPE');
   }
-  return { ...scope, states: [...new Set(scope.states)].sort(), offices: [...new Set(scope.offices)].sort() };
+  const states=[...new Set(scope.states)].sort(), offices=[...new Set(scope.offices)].sort();
+  if (scope.district !== undefined && (offices.length!==1 || offices[0]!=='house' || states.length!==1)) {
+    throw new TypeError('District-scoped election work must target one state House race');
+  }
+  return { ...scope, ...(scope.district!==undefined ? {district:normalizeDistrict(scope.district)} : {}), states, offices };
 }
 
 // Identity must be an official person identifier, never a committee ID or a name.
@@ -152,11 +156,131 @@ export async function finishElectionRun(id, input, runner = db) {
   if (input.status==='complete') {
     const run=await one(runner,'SELECT scope FROM election_ingestion_runs WHERE id=$1',[id]);
     if (!run || run.scope.states.some(state=>run.scope.offices.some(office=>
-      !(input.coverage ?? []).some(entry=>entry.state===state && entry.office===office && entry.status==='complete')))) throw new Error('Complete coverage evidence required for every requested state/office');
+      !(input.coverage ?? []).some(entry=>entry.state===state && entry.office===office
+        && (run.scope.district == null || entry.district===run.scope.district) && entry.status==='complete')))) throw new Error('Complete coverage evidence required for every requested state/office');
   }
   return one(runner, `UPDATE election_ingestion_runs SET status=$2,counts=$3,coverage=$4,error_codes=$5,finished_at=now()
     WHERE id=$1 AND status='pending' RETURNING *`, [id,input.status,input.counts ?? {},JSON.stringify(input.coverage ?? []),JSON.stringify(input.errorCodes ?? [])]);
 }
+
+const BUILD_STAGES = Object.freeze(['candidates','websites','positions']);
+const BUILD_RETRY_MS = 15 * 60 * 1000;
+function electionBuildProgress(input = {}) {
+  const stages = input.stages ?? {};
+  const normalized = Object.fromEntries(BUILD_STAGES.map(stage => {
+    const status = stages[stage] ?? 'pending';
+    if (!['pending','running','complete','partial','failed'].includes(status)) throw new TypeError('Invalid election build stage status');
+    return [stage,status];
+  }));
+  return { stages: normalized };
+}
+function electionBuildJob(row) {
+  if (!row) return null;
+  return {
+    id: row.id,
+    cycle: row.cycle,
+    state: row.state,
+    office: row.office,
+    district: row.district,
+    status: row.status,
+    attempts: row.attempts,
+    progress: electionBuildProgress(row.progress),
+    errorCodes: row.error_codes ?? [],
+    requestedAt: row.requested_at,
+    startedAt: row.started_at,
+    finishedAt: row.finished_at,
+    leaseExpiresAt: row.lease_expires_at ?? null,
+    retryAfter: row.retry_after,
+    updatedAt: row.updated_at,
+  };
+}
+
+export async function ensureElectionFeedBuildJobs({state:inputState,district:inputDistrict=null,offices=['house','senate']},runner=db) {
+  const state=normalizeState(inputState);
+  const district=inputDistrict == null ? null : normalizeDistrict(inputDistrict);
+  if (!Array.isArray(offices) || !offices.length || offices.some(office=>!['house','senate'].includes(office))) {
+    throw new TypeError('Invalid election build offices');
+  }
+  return transaction(runner,async c=>{
+    const jobs=[];
+    for (const office of [...new Set(offices)]) {
+      if (office==='house' && district===null) continue;
+      const jobDistrict=office==='house'?district:null;
+      await c.query(`INSERT INTO election_feed_build_jobs(cycle,stage,contest_type,state,office,district)
+        VALUES($1,$2,$3,$4,$5,$6)
+        ON CONFLICT (cycle,state,office,(COALESCE(district,-1))) DO NOTHING`,
+      [RELEASE_SCOPE.cycle,RELEASE_SCOPE.stage,RELEASE_SCOPE.contestType,state,office,jobDistrict]);
+      await c.query(`UPDATE election_feed_build_jobs SET status='queued',lease_expires_at=NULL,finished_at=NULL,
+          retry_after=NULL,error_codes='[]'::jsonb,requested_at=now(),updated_at=now()
+        WHERE cycle=$1 AND stage=$2 AND contest_type=$3 AND state=$4 AND office=$5
+          AND district IS NOT DISTINCT FROM $6::integer AND status IN ('partial','failed') AND retry_after<=now()`,
+      [RELEASE_SCOPE.cycle,RELEASE_SCOPE.stage,RELEASE_SCOPE.contestType,state,office,jobDistrict]);
+      const row=await one(c,`SELECT * FROM election_feed_build_jobs
+        WHERE cycle=$1 AND stage=$2 AND contest_type=$3 AND state=$4 AND office=$5
+          AND district IS NOT DISTINCT FROM $6::integer`,
+      [RELEASE_SCOPE.cycle,RELEASE_SCOPE.stage,RELEASE_SCOPE.contestType,state,office,jobDistrict]);
+      jobs.push(electionBuildJob(row));
+    }
+    return jobs;
+  });
+}
+
+export async function readElectionFeedBuildJobs({state:inputState,district:inputDistrict=null,offices=['house','senate']},runner=db) {
+  const state=normalizeState(inputState);
+  const district=inputDistrict == null ? null : normalizeDistrict(inputDistrict);
+  const normalizedOffices=[...new Set(offices)];
+  if (normalizedOffices.some(office=>!['house','senate'].includes(office))) throw new TypeError('Invalid election build offices');
+  const {rows}=await runner.query(`SELECT * FROM election_feed_build_jobs
+    WHERE cycle=$1 AND stage=$2 AND contest_type=$3 AND state=$4
+      AND ((office='house' AND district=$5) OR (office='senate' AND district IS NULL AND 'senate'=ANY($6::text[])))
+      AND office=ANY($6::text[])
+    ORDER BY office`,[RELEASE_SCOPE.cycle,RELEASE_SCOPE.stage,RELEASE_SCOPE.contestType,state,district,normalizedOffices]);
+  return rows.map(electionBuildJob);
+}
+
+export async function claimElectionFeedBuildJob({jobId=null,leaseMs=120000}={},runner=db) {
+  if (jobId!==null && (typeof jobId!=='string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(jobId))) {
+    throw new TypeError('Invalid election build job ID');
+  }
+  if (!Number.isInteger(leaseMs) || leaseMs<30000 || leaseMs>600000) throw new TypeError('Invalid election build lease');
+  return transaction(runner,async c=>{
+    const row=await one(c,`WITH candidate AS (
+        SELECT id FROM election_feed_build_jobs
+        WHERE (status='queued' OR (status='running' AND lease_expires_at<=now()))
+          AND ($2::uuid IS NULL OR id=$2::uuid)
+        ORDER BY requested_at,created_at
+        LIMIT 1 FOR UPDATE SKIP LOCKED
+      )
+      UPDATE election_feed_build_jobs j SET status='running',attempts=j.attempts+1,
+        started_at=COALESCE(j.started_at,now()),finished_at=NULL,retry_after=NULL,
+        lease_expires_at=now()+($1::integer*interval '1 millisecond'),updated_at=now()
+      FROM candidate WHERE j.id=candidate.id RETURNING j.*`,[leaseMs,jobId]);
+    return electionBuildJob(row);
+  });
+}
+
+export async function renewElectionFeedBuildLease(id,{leaseMs=120000}={},runner=db) {
+  const row=await one(runner,`UPDATE election_feed_build_jobs SET lease_expires_at=now()+($2::integer*interval '1 millisecond'),updated_at=now()
+    WHERE id=$1 AND status='running' RETURNING id`,[id,leaseMs]);
+  return Boolean(row);
+}
+
+export async function updateElectionFeedBuildProgress(id,progress,runner=db) {
+  const normalized=electionBuildProgress(progress);
+  const row=await one(runner,`UPDATE election_feed_build_jobs SET progress=$2,updated_at=now()
+    WHERE id=$1 AND status='running' RETURNING id`,[id,JSON.stringify(normalized)]);
+  return Boolean(row);
+}
+
+export async function finishElectionFeedBuildJob(id,{status,progress,errorCodes=[]},runner=db) {
+  if (!['complete','partial','failed'].includes(status) || !Array.isArray(errorCodes)
+    || errorCodes.some(code=>typeof code!=='string'||!/^[a-z0-9-]{1,80}$/.test(code))) throw new TypeError('Invalid election build outcome');
+  const normalized=electionBuildProgress(progress);
+  return one(runner,`UPDATE election_feed_build_jobs SET status=$2,progress=$3,error_codes=$4,
+    lease_expires_at=NULL,finished_at=now(),retry_after=CASE WHEN $2 IN ('partial','failed') THEN now()+($5::integer*interval '1 millisecond') ELSE NULL END,
+    updated_at=now() WHERE id=$1 AND status='running' RETURNING *`,[id,status,JSON.stringify(normalized),JSON.stringify([...new Set(errorCodes)]),BUILD_RETRY_MS]).then(electionBuildJob);
+}
+
 export async function recordCampaignFailure(input, pool = db) {
   if (!['crawl-failed','extraction-failed'].includes(input.status)) throw new TypeError('Invalid failure status');
   return transaction(pool, async c => {
@@ -213,8 +337,16 @@ export async function publishCampaignPositions(input, pool = db) {
 }
 
 export async function saveElectionGeography(input, runner = db) {
-  return one(runner, `INSERT INTO election_geography_evidence(state,cycle,boundary_version,source_url,checked_at,status)
-    VALUES($1,$2,$3,$4,$5,$6) RETURNING *`, [normalizeState(input.state),input.cycle,input.boundaryVersion,input.sourceUrl,input.checkedAt,input.status]);
+  const state = normalizeState(input.state);
+  const status = input.status;
+  if (!['verified','unresolved'].includes(status)) throw new TypeError('Invalid election geography status');
+  const district = status === 'verified' ? normalizeDistrict(input.district) : null;
+  if (!Number.isInteger(input.cycle) || typeof input.boundaryVersion !== 'string' ||
+      typeof input.sourceUrl !== 'string' || !input.sourceUrl.startsWith('https://') ||
+      !Number.isFinite(Date.parse(input.checkedAt))) throw new TypeError('Invalid election geography evidence');
+  return one(runner, `INSERT INTO election_geography_evidence(state,district,cycle,boundary_version,source_url,checked_at,status)
+    VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
+  [state,district,input.cycle,input.boundaryVersion,input.sourceUrl,input.checkedAt,status]);
 }
 
 // Only trusted server code supplies auth.clerkUserId (req.auth().userId).
@@ -225,10 +357,19 @@ async function owner(auth, runner, optional = false) {
   if (!user || auth.userId != null && auth.userId !== user.id) throw new Error('Authenticated user mapping mismatch');
   return user.id;
 }
+export async function readElectionGeographyForUser(auth, runner = db) {
+  const userId = await owner(auth,runner);
+  return await one(runner, `SELECT e.id AS "evidenceId",e.state,e.district,e.cycle,
+      e.boundary_version AS "boundaryVersion",e.source_url AS "sourceUrl",e.checked_at AS "checkedAt",e.status
+    FROM users u LEFT JOIN election_geography_evidence e ON e.id=u.election_geography_evidence_id
+    WHERE u.id=$1`, [userId]) ?? null;
+}
 export async function saveElectionResponse(auth, input, runner = db) {
   const userId = await owner(auth,runner);
   if ('userId' in input || 'user_id' in input) throw new Error('Client ownership override forbidden');
-  return one(runner, `INSERT INTO election_interactions(user_id,position_version_id,stance,private_comment) VALUES($1,$2,$3,$4)
+  return one(runner, `INSERT INTO election_interactions(user_id,position_version_id,stance,private_comment)
+    SELECT $1,p.id,$3,$4 FROM campaign_position_versions p
+    WHERE p.id=$2 AND p.state='published' AND p.validation->>'outcome'='valid'
     ON CONFLICT(user_id,position_version_id) DO UPDATE SET stance=EXCLUDED.stance,
     private_comment=CASE WHEN $5 THEN EXCLUDED.private_comment ELSE election_interactions.private_comment END,updated_at=now() RETURNING *`,
   [userId,input.positionVersionId,input.stance,input.privateComment ?? null,Object.hasOwn(input,'privateComment')]);
@@ -241,6 +382,112 @@ export async function deleteElectionResponse(auth, positionVersionId, runner = d
   const userId = await owner(auth,runner);
   return await one(runner,'DELETE FROM election_interactions WHERE user_id=$1 AND position_version_id=$2 RETURNING id',[userId,positionVersionId]) ?? null;
 }
+// Clearing a public stance must retain any private service data on the row.
+export async function clearElectionResponse(auth, positionVersionId, runner = db) {
+  const userId = await owner(auth,runner);
+  return await one(runner, `UPDATE election_interactions SET stance=NULL,updated_at=now()
+    WHERE user_id=$1 AND position_version_id=$2 AND EXISTS(SELECT 1 FROM campaign_position_versions p
+      WHERE p.id=position_version_id AND p.state='published' AND p.validation->>'outcome'='valid')
+    RETURNING id,position_version_id AS "positionVersionId"`,
+  [userId,positionVersionId]) ?? null;
+}
+
+function trustedGeography(input, state, scope) {
+  return input?.status === 'verified' && input.state === state && input.cycle === scope.cycle &&
+    input.boundaryVersion === ELECTION_GEOGRAPHY_VERSION && input.sourceUrl === ELECTION_GEOGRAPHY_SOURCE &&
+    Number.isInteger(input.district) && input.district >= 0 && input.district <= 99;
+}
+
+function coverageSummary(runs, state, offices, geographyVerified, district=null) {
+  const byOffice = Object.fromEntries(['house','senate'].map(office => {
+    if (office === 'house' && !geographyVerified) return [office,'geography-unverified'];
+    if (!offices.includes(office)) return [office,'not-requested'];
+    const entries = Array.isArray(runs?.[office]?.coverage) ? runs[office].coverage : [];
+    const entry = entries.find(value => value.state === state && value.office === office
+      && (office==='senate' || value.district == null || value.district===district));
+    if (entry?.status === 'complete' && entry.noRaces === true) return [office,'no-race'];
+    return [office,entry?.status ?? 'unknown'];
+  }));
+  const selected = offices.map(office => byOffice[office]);
+  const status = selected.length && selected.every(value => ['complete','no-race'].includes(value)) ? 'complete'
+    : selected.some(value => ['complete','no-race','partial'].includes(value)) ? 'partial' : 'unknown';
+  return {
+    status,
+    byOffice,
+    message: status === 'complete' ? null : status === 'partial'
+      ? 'Candidate coverage is incomplete for one or more matching races.'
+      : 'Candidate coverage has not been confirmed for these matching races.',
+    runStatus: runs?.house?.status ?? runs?.senate?.status ?? null,
+  };
+}
+
+export async function readElectionRoster(input, pool = db) {
+  const state = normalizeState(input.state);
+  const scope = scopeOf(input.scope);
+  const chamber = input.chamber ?? 'all';
+  if (!['all','house','senate'].includes(chamber)) throw new TypeError('Invalid election chamber');
+  const offices = chamber === 'all' ? scope.offices : [chamber];
+  const geographyVerified = trustedGeography(input.geography,state,scope);
+  const district = geographyVerified ? normalizeDistrict(input.geography.district) : null;
+  return transaction(pool, async c => {
+    await c.query('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY');
+    const candidates = (await c.query(`SELECT co.id AS "candidacyId",ca.id AS "candidateId",ca.name,
+        jsonb_build_object('office',r.office,'state',r.state,'district',r.district,'senateSeat',r.senate_seat,
+          'electionDate',r.election_date,'stage',r.stage,'contestType',r.contest_type) AS race,
+        co.party,
+        CASE WHEN ca.match_status='matched' AND ca.member_id IS NOT NULL AND rep.is_current_member THEN 'incumbent'
+          WHEN ca.match_status='matched' AND ca.member_id IS NOT NULL AND NOT rep.is_current_member THEN 'not-incumbent' ELSE 'unknown' END AS incumbency,
+        CASE WHEN ca.match_status='matched' THEN rep.image_url ELSE NULL END AS "portraitUrl",
+        co.eligibility AS "ballotStatus",
+        CASE WHEN EXISTS(SELECT 1 FROM election_candidate_identities fi WHERE fi.candidate_id=ca.id AND fi.system='fec:candidate')
+          THEN 'fec-registered' ELSE 'state-listed' END AS "registrationStatus",
+        CASE WHEN w.id IS NULL OR w.status='missing' THEN 'site-missing'
+          WHEN w.status NOT IN ('verified','ambiguous') OR w.review_after IS NULL OR w.review_after<=now() THEN 'site-unverified'
+          WHEN co.availability IN ('crawl-failed','extraction-failed') THEN co.availability
+          WHEN EXISTS(SELECT 1 FROM campaign_position_versions p
+            JOIN campaign_position_evidence pe ON pe.position_version_id=p.id
+            JOIN campaign_sources s ON s.id=pe.snapshot_id
+            WHERE p.candidacy_id=co.id AND p.state='published' AND p.validation->>'outcome'='valid'
+              AND s.site_id=w.id AND s.candidacy_id=co.id) THEN 'available'
+          ELSE co.availability END AS availability
+      FROM election_races r JOIN election_candidacies co ON co.race_id=r.id
+      JOIN election_candidates ca ON ca.id=co.candidate_id
+      LEFT JOIN reps rep ON rep.bioguideid=ca.member_id AND ca.match_status='matched'
+      LEFT JOIN campaign_sites w ON w.candidacy_id=co.id AND w.is_current
+      WHERE r.state=$1 AND r.office=ANY($2::text[]) AND extract(year FROM r.election_date)=$3
+        AND r.stage=$4 AND r.contest_type=$5 AND (r.office='senate' OR ($6::boolean AND r.district=$7))
+        AND co.eligibility NOT IN ('withdrawn','disqualified')
+      ORDER BY r.election_date,r.state,r.office,COALESCE(r.district,r.senate_seat),r.id,ca.id,co.id`,
+    [state,offices,scope.cycle,scope.stage,scope.contestType,geographyVerified,district])).rows;
+    const runs={};
+    for (const office of offices) {
+      if (office==='house' && !geographyVerified) continue;
+      runs[office]=await one(c, `SELECT status,coverage,finished_at FROM election_ingestion_runs
+        WHERE stage='discovery' AND adapter='public-evidence' AND status<>'pending'
+          AND scope @> $1::jsonb AND (scope->>'district' IS NULL OR (scope->>'district')::integer=$2)
+        ORDER BY COALESCE(scope->>'district'=$2::text,false) DESC,finished_at DESC,id DESC LIMIT 1`,
+      [JSON.stringify({cycle:scope.cycle,stage:scope.stage,contestType:scope.contestType,states:[state],offices:[office]}),
+        office==='house' ? district : null]);
+    }
+    const coverage = coverageSummary(runs,state,offices,geographyVerified,district);
+    const availability = {
+      overall: candidates.length ? 'available' : coverage.status === 'complete' &&
+        offices.every(office => coverage.byOffice[office] === 'no-race') ? 'no-race' : 'coverage-unknown',
+      house: !geographyVerified ? 'geography-unverified' : coverage.byOffice.house,
+      senate: state ? coverage.byOffice.senate : 'geography-unavailable',
+    };
+    return {
+      geography: {
+        status: geographyVerified ? 'verified' : state ? 'state-only' : 'unavailable',
+        state,
+        houseDistrict: district,
+      },
+      candidates,
+      coverage,
+      availability,
+    };
+  });
+}
 
 export async function readElectionPositions(input, auth = null, pool = db) {
   const scope = scopeOf(input.scope), state = normalizeState(input.state);
@@ -250,9 +497,14 @@ export async function readElectionPositions(input, auth = null, pool = db) {
   return transaction(pool, async c => {
     await c.query('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY');
     const userId = await owner(auth,c,true);
-    const geography = input.geographyEvidenceId ? await one(c, `SELECT id FROM election_geography_evidence
+    const storedGeography = input.geographyEvidenceId ? await one(c, `SELECT id,district FROM election_geography_evidence
       WHERE id=$1 AND state=$2 AND cycle=$3 AND status='verified' AND boundary_version=$4 AND source_url=$5`,
       [input.geographyEvidenceId,state,scope.cycle,ELECTION_GEOGRAPHY_VERSION,ELECTION_GEOGRAPHY_SOURCE]) : null;
+    // `geography` is only supplied by trusted server callers after resolving the
+    // submitted address. Browser-supplied state/district never reaches this API.
+    const resolvedGeography = trustedGeography(input.geography,state,scope) && input.geography.district === district
+      ? input.geography : null;
+    const geography = storedGeography?.district === district ? storedGeography : resolvedGeography;
     const races = (await c.query(`SELECT r.*,co.id AS candidacy_id,co.availability,co.last_attempt_at,co.last_success_at,co.failure_code,
       co.eligibility,w.status AS site_status,w.review_after,w.id AS site_id
       FROM election_races r LEFT JOIN election_candidacies co ON co.race_id=r.id
@@ -261,16 +513,22 @@ export async function readElectionPositions(input, auth = null, pool = db) {
       AND r.stage=$5 AND r.contest_type=$6 AND (r.office='senate' OR ($7::boolean AND r.district=$8))
       ORDER BY r.election_date,r.state,r.office,COALESCE(r.district,r.senate_seat),r.id,co.candidate_id`,
     [state,scope.states,scope.offices,scope.cycle,scope.stage,scope.contestType,Boolean(geography),district])).rows;
-    const items = (await c.query(`SELECT p.id AS "positionVersionId",p.claim_id AS "claimId",p.candidacy_id AS "candidacyId",p.topic,p.summary,p.excerpt,
-      jsonb_build_object('id',ca.id,'name',ca.name,'party',co.party) AS candidate,
-      to_jsonb(r) AS race,jsonb_build_object('snapshotId',s.id,'url',s.final_url,'retrievedAt',s.retrieved_at) AS source,
+    const allItems = (await c.query(`SELECT p.id AS "positionVersionId",p.claim_id AS "claimId",p.candidacy_id AS "candidacyId",p.topic,p.summary,p.excerpt,
+      jsonb_build_object('id',ca.id,'candidateId',ca.id,'name',ca.name,'party',co.party,
+        'incumbency',CASE WHEN ca.match_status='matched' AND ca.member_id IS NOT NULL AND rep.is_current_member THEN 'incumbent'
+          WHEN ca.match_status='matched' AND ca.member_id IS NOT NULL AND NOT rep.is_current_member THEN 'not-incumbent' ELSE 'unknown' END,
+        'portraitUrl',CASE WHEN ca.match_status='matched' THEN rep.image_url ELSE NULL END) AS candidate,
+      jsonb_build_object('office',r.office,'state',r.state,'district',r.district,'senateSeat',r.senate_seat,
+        'electionDate',r.election_date,'stage',r.stage,'contestType',r.contest_type) AS race,
+      jsonb_build_object('snapshotId',s.id,'url',s.final_url,'retrievedAt',s.retrieved_at) AS source,
       co.eligibility AS "ballotStatus",
       CASE WHEN EXISTS(SELECT 1 FROM election_candidate_identities fi WHERE fi.candidate_id=ca.id AND fi.system='fec:candidate')
         THEN 'fec-registered' ELSE 'state-listed' END AS "registrationStatus",
-      co.availability,CASE WHEN i.id IS NULL THEN NULL ELSE jsonb_build_object('stance',i.stance,'privateComment',i.private_comment) END AS response
+      co.availability,CASE WHEN i.id IS NULL OR i.stance IS NULL THEN NULL ELSE jsonb_build_object('stance',i.stance) END AS response
       FROM campaign_position_versions p JOIN election_candidacies co ON co.id=p.candidacy_id
       JOIN election_candidates ca ON ca.id=co.candidate_id JOIN election_races r ON r.id=co.race_id
       JOIN campaign_sources s ON s.id=p.snapshot_id JOIN campaign_sites w ON w.candidacy_id=co.id AND w.is_current
+      LEFT JOIN reps rep ON rep.bioguideid=ca.member_id
       LEFT JOIN election_interactions i ON i.position_version_id=p.id AND i.user_id=$1
       WHERE r.id=ANY($2::uuid[]) AND (co.eligibility='ballot-confirmed' OR (co.eligibility NOT IN ('withdrawn','disqualified')
         AND EXISTS(SELECT 1 FROM election_candidate_identities fi WHERE fi.candidate_id=co.candidate_id AND fi.system='fec:candidate'))) AND w.status IN ('verified','ambiguous') AND w.review_after>now()
@@ -279,23 +537,56 @@ export async function readElectionPositions(input, auth = null, pool = db) {
         WHERE pe.position_version_id=p.id AND es.site_id=w.id AND es.candidacy_id=p.candidacy_id)
       ORDER BY r.election_date,r.state,r.office,COALESCE(r.district,r.senate_seat),r.id,ca.id,p.claim_id,p.id`,
     [userId,[...new Set(races.map(r=>r.id))]])).rows;
+    const candidacyId = input.candidacyId ?? null;
+    const policyArea = input.policyArea ?? null;
+    const scopedItems = candidacyId == null ? allItems : allItems.filter(item => item.candidacyId === candidacyId);
+    const policyCounts = {all:scopedItems.length,uncategorized:0,byPolicyArea:{}};
+    for (const item of scopedItems) {
+      if (item.topic == null) policyCounts.uncategorized += 1;
+      else policyCounts.byPolicyArea[item.topic]=(policyCounts.byPolicyArea[item.topic] ?? 0)+1;
+    }
+    const visibleItems = policyArea == null ? scopedItems : scopedItems.filter(item => item.topic === policyArea);
     const coverage = (await c.query(`SELECT status,coverage,finished_at FROM election_ingestion_runs WHERE stage='discovery' AND status<>'pending'
       AND scope @> $1::jsonb ORDER BY finished_at DESC,id DESC LIMIT 1`,[JSON.stringify({cycle:scope.cycle,stage:scope.stage,contestType:scope.contestType,states:[state],offices:scope.offices})])).rows[0] ?? null;
     // Cursor binds the complete visible publication set and filter; mutation forces restart.
-    const binding = hash(JSON.stringify({scope,state,district,geography:geography?.id,userId,races,items}));
+    const geographyBinding = geography?.id ?? (geography ? {state,district,boundaryVersion:geography.boundaryVersion} : null);
+    const binding = hash(JSON.stringify({scope,state,district,geography:geographyBinding,candidacyId,policyArea,userId,races,items:visibleItems}));
     let offset = 0;
     if (input.cursor) {
       let cursor;
       try { cursor=JSON.parse(Buffer.from(input.cursor,'base64url').toString()); } catch { throw new TypeError('Invalid cursor'); }
-      if (cursor.binding!==binding || !Number.isInteger(cursor.offset) || cursor.offset<0 || cursor.offset>items.length) throw new Error('Publication changed or cursor invalid; restart read');
+      if (cursor.binding!==binding || !Number.isInteger(cursor.offset) || cursor.offset<0 || cursor.offset>visibleItems.length) {
+        const error = new Error('Publication changed or cursor invalid; restart read');
+        error.code = 'ELECTION_FEED_RESTART_REQUIRED'; error.status = 409; throw error;
+      }
       offset=cursor.offset;
     }
     const knownEmpty = coverage?.status==='complete' && scope.offices.every(office=>
       (office!=='house' || geography) && coverage.coverage.some(entry => entry.state===state && entry.office===office && entry.status==='complete' && entry.noRaces===true));
     const raceResults = races.map(r => ({...r,availability: !r.candidacy_id ? 'pending' : !r.site_id || r.site_status==='missing' ? 'site-missing'
       : !['verified','ambiguous'].includes(r.site_status) || !r.review_after || new Date(r.review_after)<=new Date() ? 'site-unverified' : r.availability}));
-    return {scope,coverage:coverage ?? {status:'coverage-unknown'},houseAvailability:geography ? null : 'geography-unverified',
-      availability:races.length ? null : knownEmpty ? 'no-race' : 'coverage-unknown',races:raceResults,items:items.slice(offset,offset+limit),
-      nextCursor:offset+limit<items.length ? Buffer.from(JSON.stringify({binding,offset:offset+limit})).toString('base64url') : null};
+    const selectedRace = candidacyId == null ? null : raceResults.find(r => r.candidacy_id === candidacyId);
+    let availability = visibleItems.length ? 'available' : null;
+    if (!availability && scope.offices.length===1 && scope.offices[0]==='house' && !geography) availability='geography-unverified';
+    else if (!availability && knownEmpty) availability='no-race';
+    else if (!availability && races.length===0) availability='coverage-unknown';
+    else if (!availability && selectedRace && !['available','no-positions'].includes(selectedRace.availability)) availability=selectedRace.availability;
+    else if (!availability && selectedRace?.availability==='no-positions') availability='no-positions';
+    else if (!availability && policyArea != null && scopedItems.length>0) availability='no-topic-match';
+    else if (!availability) availability='coverage-unknown';
+    const alignment = userId == null || candidacyId == null ? null : scopedItems.reduce((counts,item) => {
+      if (item.response?.stance==='approve') counts.agreementCount += 1;
+      if (item.response?.stance==='disapprove') counts.disagreementCount += 1;
+      return counts;
+    },{agreementCount:0,disagreementCount:0});
+    if (alignment) {
+      alignment.answeredCount=alignment.agreementCount+alignment.disagreementCount;
+      alignment.percentage=alignment.answeredCount ? Math.round(alignment.agreementCount/alignment.answeredCount*100) : null;
+      alignment.status=alignment.answeredCount ? 'ready' : 'no-answers';
+    }
+    return {scope,coverage:coverageSummary(coverage,state,scope.offices,Boolean(geography)),houseAvailability:geography ? null : 'geography-unverified',
+      availability,races:raceResults,items:visibleItems.slice(offset,offset+limit),policyCounts,alignment,
+      snapshotId:binding,
+      nextCursor:offset+limit<visibleItems.length ? Buffer.from(JSON.stringify({binding,offset:offset+limit})).toString('base64url') : null};
   });
 }

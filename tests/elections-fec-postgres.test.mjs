@@ -13,7 +13,7 @@ test('FEC discovery persists verified sites and is repeatable', {skip:process.en
     await admin.query(`CREATE DATABASE ${database}`); pool=new pg.Pool({...config,database});
     for (const role of ['anon','authenticated','service_role']) await admin.query(`DO $$ BEGIN IF NOT EXISTS(SELECT FROM pg_roles WHERE rolname='${role}') THEN CREATE ROLE ${role} NOLOGIN; END IF; END $$`);
     await pool.query('CREATE TABLE users(id serial PRIMARY KEY,clerk_user_id text UNIQUE); CREATE TABLE reps(bioguideid text PRIMARY KEY); CREATE TABLE bills(id serial PRIMARY KEY,title text)');
-    for (const name of ['20261026194547_elections_storage.sql','20261026203305_election_discovery_observations.sql']) await pool.query(await readFile(new URL(`../supabase/migrations/${name}`,import.meta.url),'utf8'));
+    for (const name of ['20261028202229_elections_storage.sql','20261028202239_election_discovery_observations.sql']) await pool.query(await readFile(new URL(`../supabase/migrations/${name}`,import.meta.url),'utf8'));
     const candidate={candidate_id:'H6WY00001',name:'EXAMPLE, ALEX',state:'WY',office:'H',district:'00',election_years:[2026],candidate_inactive:false};
     const committee={committee_id:'C00000001',candidate_ids:[candidate.candidate_id],designation:'P',website:'https://alex.example/'};
     const fetcher=async url=>{const site=url.startsWith('https://alex.example'); const data=site?'Alex Example for Congress':JSON.stringify({pagination:{page:1,pages:1,count:1,per_page:100},results:[url.includes('/committees/')?committee:candidate]}); return {bytes:Buffer.from(data),requestedUrl:url,finalUrl:url,retrievedAt:'2026-10-26T20:00:00Z',headers:{'content-type':site?'text/html':'application/json'}};};

@@ -33,7 +33,7 @@ test('bounded live ambiguous-site crawl saves exact-source positions to the feed
       CREATE TABLE reps(bioguideid text PRIMARY KEY);
       CREATE TABLE bills(id serial PRIMARY KEY, title text);
     `);
-    for (const name of ['20261026194547_elections_storage.sql','20261026203305_election_discovery_observations.sql']) {
+    for (const name of ['20261028202229_elections_storage.sql','20261028202239_election_discovery_observations.sql']) {
       await pool.query(await readFile(new URL(`../supabase/migrations/${name}`,import.meta.url),'utf8'));
     }
 

@@ -22,7 +22,7 @@ export async function syncCandidates({scope:inputScope,fecApiKey=null,
   const markRateLimit = error => { if (['discovery-rate-limited','discovery-retry-deferred'].includes(error.code)) quotaExceeded = true; };
   const run = await startElectionRun({stage:'discovery',scope,adapter:'public-evidence',adapterVersion:DISCOVERY_VERSION},pool);
   const counts = {documents:0,observations:0,promoted:0,unresolved:0,invalidRecords:0,sitesVerified:0};
-  const coverage = scope.states.flatMap(state=>scope.offices.map(office=>({state,office,status:'unsupported',fecStatus:'pending',raceResults:[],sourceResults:[],errorCodes:[],warningCodes:[]})));
+  const coverage = scope.states.flatMap(state=>scope.offices.map(office=>({state,office,...(scope.district!==undefined?{district:scope.district}:{}),status:'unsupported',fecStatus:'pending',raceResults:[],sourceResults:[],errorCodes:[],warningCodes:[]})));
   const errorCodes = new Set();
   const document = async (response,input) => {
     const saved = await storage.saveElectionDocument({...input,bytes:response.bytes,requestedUrl:response.requestedUrl,
@@ -68,8 +68,8 @@ export async function syncCandidates({scope:inputScope,fecApiKey=null,
       let candidateCount = 0, invalidCandidateCount = 0, committeeCount = 0;
       const unresolvedBefore = counts.unresolved;
       const capture = async (response,{kind,page,text},candidateId=null) => document(response,{
-        sourceKey:`fec:${entry.state}:${entry.office}:${kind}:${candidateId ?? 'all'}:${page}`,system:'fec:discovery',text,
-        context:{scope,state:entry.state,office:entry.office,kind,authoritative:false},
+        sourceKey:`fec:${entry.state}:${entry.office}:${scope.district==null?'':`district-${scope.district}:`}${kind}:${candidateId ?? 'all'}:${page}`,system:'fec:discovery',text,
+        context:{scope,state:entry.state,office:entry.office,...(scope.district!==undefined?{district:scope.district}:{}),kind,authoritative:false},
       });
       try {
         for await (const page of fecPages({...entry,apiKey:fecApiKey,maxPages,fetcher:fecFetcher,capture})) {

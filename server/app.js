@@ -10,6 +10,7 @@ import houseVotesRouter, { getMemberVotes } from "./src/api/houseVotes.js";
 import usersRouter from "./src/api/users.js";
 import interactionsRouter from "./src/api/interactions.js";
 import commentsRouter from "./src/api/comments.js";
+import electionsRouter from "./src/api/elections.js";
 import getUserFromToken from "./src/middleware/getUserFromToken.js";
 import { clerkMiddleware } from "@clerk/express";
 
@@ -33,6 +34,7 @@ app.get("/membervotes/:bioguideId", getMemberVotes);
 app.use("/users", usersRouter);
 app.use("/interactions", interactionsRouter);
 app.use("/comments", commentsRouter);
+app.use("/elections", electionsRouter);
 
 app.use((err, req, res, next) => {
   switch (err.code) {

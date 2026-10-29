@@ -14,7 +14,8 @@
     "db:sync-bills": "node src/db/syncMissingBills.js",
     "db:backfill-roll-call-summaries": "node src/db/backfillRollCallSummaries.js",
     "elections:discover": "node src/elections/cli.js",
-    "elections:crawl": "node src/elections/cli.js --crawl-campaigns"
+    "elections:crawl": "node src/elections/cli.js --crawl-campaigns",
+    "elections:worker": "node src/elections/worker.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,7 @@
   "dependencies": {
     "@clerk/express": "^1.7.74",
     "@openai/agents": "^0.4.10",
+    "@vercel/functions": "^3.10.4",
     "cheerio": "1.2.0",
     "cors": "^2.8.5",
     "crawlee": "^3.18.2",

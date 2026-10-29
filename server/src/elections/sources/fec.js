@@ -11,7 +11,7 @@ export function fecRace(raw, {state,office}) {
     senateSeat:office === 'senate' ? 2 : null,electionDate:'2026-11-03',stage:'general',contestType:'regular'};
 }
 
-export function parseFecPage(text, {state,office,kind='candidates',page=1}) {
+export function parseFecPage(text, {state,office,kind='candidates',page=1,district=null}) {
   let data;
   try { data = JSON.parse(text); } catch { throw discoveryError('discovery-malformed-fec'); }
   const p = data.pagination;
@@ -26,7 +26,8 @@ export function parseFecPage(text, {state,office,kind='candidates',page=1}) {
       return raw;
     }
     if (!/^[HS]\d[A-Z]{2}\d{5}$/.test(raw.candidate_id) || raw.state !== state
-      || raw.office !== (office === 'house' ? 'H' : 'S') || !raw.election_years?.includes(2026)) throw discoveryError('discovery-malformed-fec');
+      || raw.office !== (office === 'house' ? 'H' : 'S') || !raw.election_years?.includes(2026)
+      || district != null && office==='house' && Number(raw.district)!==Number(district)) throw discoveryError('discovery-malformed-fec');
     if (typeof raw.name !== 'string' || !raw.name.trim()) {
       invalidRecords.push({kind:'fec',fecId:raw.candidate_id,name:null,race:fecRace(raw,{state,office}),raw,reason:'missing-name'}); return null;
     }
@@ -35,19 +36,19 @@ export function parseFecPage(text, {state,office,kind='candidates',page=1}) {
   }).filter(Boolean);
   return {records,invalidRecords,pagination:p};
 }
-export async function* fecPages({state,office,apiKey,kind='candidates',candidateId,maxPages=100,fetcher=fetchPublic,capture}) {
+export async function* fecPages({state,office,district=null,apiKey,kind='candidates',candidateId,maxPages=100,fetcher=fetchPublic,capture}) {
   if (!apiKey) throw discoveryError('discovery-fec-key-missing');
   if (!Number.isInteger(maxPages) || maxPages<1 || maxPages>1000) throw discoveryError('discovery-invalid-page-limit');
   const seen = new Set(); let expected = null, read = 0;
   for (let page=1;page<=maxPages;page++) {
     const url = new URL(kind === 'committees' ? `https://api.open.fec.gov/v1/candidate/${candidateId}/committees/` : 'https://api.open.fec.gov/v1/candidates/search/');
     for (const [key,value] of Object.entries(kind === 'committees'
-      ? {cycle:2026,per_page:100,page} : {election_year:2026,state,office:office === 'house' ? 'H' : 'S',per_page:100,page,sort:'candidate_id'})) url.searchParams.set(key,value);
+      ? {cycle:2026,per_page:100,page} : {election_year:2026,state,office:office === 'house' ? 'H' : 'S',...(district!=null&&office==='house'?{district}:{}),per_page:100,page,sort:'candidate_id'})) url.searchParams.set(key,value);
     const response = await fetcher(url.href,{allowedOrigins:['https://api.open.fec.gov'],headers:{'X-Api-Key':apiKey}});
     const text = response.bytes.toString('utf8');
     // Capture even malformed/provider-error bodies before attempting extraction.
     const document = await capture(response,{kind,page,text});
-    const result = parseFecPage(text,{state,office,kind,page});
+    const result = parseFecPage(text,{state,office,kind,page,district});
     if (expected && (result.pagination.count !== expected.count || result.pagination.pages !== expected.pages)) throw discoveryError('discovery-fec-pagination-changed');
     expected ??= result.pagination;
     for (const row of [...result.records,...result.invalidRecords]) {

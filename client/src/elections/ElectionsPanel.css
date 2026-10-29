@@ -1,0 +1,402 @@
+.election-geography-notice,
+.election-coverage-notice,
+.election-build-notice,
+.election-feed-status,
+.election-feed-empty,
+.election-feed-end {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--text-subtle);
+  line-height: 1.5;
+}
+
+.election-geography-notice,
+.election-coverage-notice {
+  border-color: var(--warning-border);
+  background: var(--warning-bg);
+  color: var(--warning-text);
+}
+
+.election-build-notice {
+  border-color: var(--primary-soft-border);
+  background: var(--primary-soft);
+  color: var(--primary-text);
+}
+
+.election-campaign-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 4px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.election-campaign-heading h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.election-campaign-heading p {
+  margin: 5px 0 0;
+  color: var(--text-subtle);
+  font-size: 15px;
+}
+
+.election-policy-select-label {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  min-width: min(260px, 42%);
+}
+
+.election-policy-select-label select {
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 38px 9px 12px;
+  border: 1px solid var(--input-border);
+  border-radius: 9px;
+  background: var(--input-bg);
+  color: var(--text);
+  font: inherit;
+  font-weight: 650;
+}
+
+.election-policy-select-label select:focus-visible,
+.election-response-button:focus-visible,
+.election-feed-error button:focus-visible,
+.election-next-page-error button:focus-visible,
+.election-alignment-error button:focus-visible,
+.election-all-candidates-reset:focus-visible,
+.election-response-error button:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.election-selected-candidate-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--primary-soft-border);
+  border-radius: 12px;
+  background: var(--primary-soft);
+}
+
+.election-selected-candidate-label {
+  margin: 0 !important;
+  color: var(--primary-text) !important;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.election-all-candidates-reset {
+  min-height: 38px;
+  padding: 7px 12px;
+  border: 1px solid var(--primary-soft-border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--primary-text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.election-all-candidates-reset:hover {
+  background: var(--surface-2);
+}
+
+.election-alignment {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.election-alignment .member-alignment-chart {
+  max-width: 250px;
+  margin: 4px auto 0;
+}
+
+.election-alignment-error {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.election-alignment-error p {
+  flex: 1 1 240px;
+  margin: 0 !important;
+}
+
+.election-alignment-error a,
+.election-response-error a,
+.election-feed-error a {
+  color: var(--link);
+  font-weight: 700;
+}
+
+.election-alignment-error button,
+.election-feed-error button,
+.election-next-page-error button,
+.election-response-error button {
+  min-height: 38px;
+  padding: 7px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.election-position-card {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--shadow-compact);
+}
+
+.election-position-portrait-wrap {
+  display: flex;
+  width: 76px;
+  height: 76px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 3px solid #0755ff;
+  border-radius: 50%;
+  background: #e8efff;
+  color: #1646a8;
+}
+
+.election-position-portrait {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+.election-position-initials {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.election-position-content {
+  min-width: 0;
+}
+
+.election-position-candidate {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  color: var(--text);
+  font-size: 17px;
+}
+
+.election-position-summary {
+  margin: 8px 0 0 !important;
+  color: var(--text) !important;
+  font-size: 16px;
+  line-height: 1.55 !important;
+}
+
+.election-ballot-notice {
+  margin: 8px 0 0 !important;
+  color: var(--text-muted) !important;
+  font-size: 13px;
+}
+
+.election-position-source-row {
+  display: flex;
+  align-items: center;
+  gap: 8px 18px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.election-position-source-row a {
+  color: var(--link);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.election-position-source-row a:hover {
+  text-decoration: underline;
+}
+
+.election-position-source-row time {
+  color: var(--text-muted);
+}
+
+.election-position-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.election-response-button {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 13px;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease, transform 150ms ease;
+}
+
+.election-response-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: var(--surface-2);
+}
+
+.election-response-agree.is-selected {
+  border-color: var(--success-border);
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.election-response-disagree.is-selected {
+  border-color: var(--danger-border);
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.election-response-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.election-response-pending,
+.election-response-error {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.election-response-error {
+  color: var(--danger);
+}
+
+.election-response-error button {
+  min-height: 30px;
+  padding: 3px 8px;
+  color: var(--danger);
+}
+
+.election-feed-error,
+.election-next-page-error {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 12px 14px;
+  border: 1px solid var(--danger-border);
+  border-radius: 10px;
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.election-feed-error p,
+.election-next-page-error p {
+  flex: 1 1 250px;
+  margin: 0 !important;
+  color: inherit !important;
+}
+
+.election-feed-empty {
+  border-style: dashed;
+  text-align: center;
+}
+
+.election-feed-end {
+  padding: 7px 12px;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.election-feed-sentinel {
+  height: 1px;
+}
+
+@media (max-width: 850px) {
+  .election-campaign-heading {
+    align-items: flex-start;
+  }
+
+  .election-policy-select-label {
+    min-width: 230px;
+  }
+}
+
+@media (max-width: 640px) {
+  .election-campaign-heading {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .election-campaign-heading h2 {
+    font-size: 21px;
+  }
+
+  .election-policy-select-label {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .election-selected-candidate-summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .election-all-candidates-reset {
+    justify-self: start;
+  }
+
+  .election-position-card {
+    grid-template-columns: 54px minmax(0, 1fr);
+    gap: 12px;
+    padding: 13px;
+  }
+
+  .election-position-portrait-wrap {
+    width: 54px;
+    height: 54px;
+  }
+
+  .election-position-initials {
+    font-size: 16px;
+  }
+
+  .election-position-summary {
+    font-size: 15px;
+  }
+}

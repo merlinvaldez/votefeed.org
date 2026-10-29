@@ -86,6 +86,7 @@ export const ELECTION_INCUMBENCY_STATES = Object.freeze([
  * @property {ElectionCandidacy[]} candidates Complete roster for the geography and chamber, independent of policy.
  * @property {ElectionCoverage} coverage
  * @property {{overall: string, house: string, senate: string}} availability
+ * @property {ElectionGeography} geography
  */
 
 /**
@@ -95,6 +96,8 @@ export const ELECTION_INCUMBENCY_STATES = Object.freeze([
  * @property {string | null} nextCursor
  * @property {string} availability
  * @property {ElectionCoverage} coverage
+ * @property {ElectionPolicyCounts} policyCounts
+ * @property {string} availability
  */
 
 /**
@@ -113,7 +116,7 @@ export const ELECTION_INCUMBENCY_STATES = Object.freeze([
  * @property {number | null} percentage Null when there are no answers.
  */
 
-/** @typedef {{viewer?: ElectionViewer, signal?: AbortSignal}} ElectionRequestOptions */
+/** @typedef {{viewer?: ElectionViewer, signal?: AbortSignal, limit?: number, cursor?: string | null}} ElectionRequestOptions */
 
 /**
  * Create the UI-facing Elections client from a provider. Provider operations
@@ -140,6 +143,11 @@ export function createElectionFeedClient(operations) {
   return Object.freeze({
     readRoster(scope, options = {}) {
       return operations.readRoster(scope, options);
+    },
+    readBuildStatus(scope, options = {}) {
+      return typeof operations.readBuildStatus === "function"
+        ? operations.readBuildStatus(scope, options)
+        : Promise.resolve({ builds: [] });
     },
     readPositions(scope, options = {}) {
       return operations.readPositions(scope, options);

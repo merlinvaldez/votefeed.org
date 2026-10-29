@@ -37,7 +37,7 @@ test('campaign crawl, extraction, and atomic publication on disposable PostgreSQ
       INSERT INTO bills VALUES(1, 'Existing legislation');
     `);
 
-    for (const name of ['20261026194547_elections_storage.sql', '20261026203305_election_discovery_observations.sql']) {
+    for (const name of ['20261028202229_elections_storage.sql', '20261028202239_election_discovery_observations.sql']) {
       await pool.query(await readFile(new URL(`../supabase/migrations/${name}`, import.meta.url), 'utf8'));
     }
 

@@ -110,6 +110,7 @@ function Feed(props) {
     token ? userId ?? "signed-in-pending" : "guest",
     feedLocation?.state ?? null,
     feedLocation?.congressionalDistrict ?? feedLocation?.district ?? null,
+    token ? feedLocation?.electionGeographyEvidenceId ?? null : null,
     location.key,
   ]);
   const delegationScope = JSON.stringify([token ? userId : "guest", feedLocation?.state,
@@ -302,7 +303,11 @@ function Feed(props) {
         const me = await meResp.json();
         if (!cancelled) {
           setUserId(me.id);
-          setSavedLocation({ state: me.state, district: me.district ?? null });
+          setSavedLocation({
+            state: me.state,
+            district: me.district ?? null,
+            electionGeographyEvidenceId: me.election_geography_evidence_id ?? null,
+          });
         }
 
         const interactionsResp = await authFetch(
@@ -501,6 +506,9 @@ function Feed(props) {
   );
   const electionsPanel = (
     <ElectionsPanel key={electionContextKey} viewer={isAuthed ? "signed-in" : "guest"}
+      location={feedLocation}
+      authFetch={authFetch}
+      onGuestResponseAttempt={promptGuestInteraction}
       hidden={activePanel !== "elections"} />
   );
 

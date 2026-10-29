@@ -25,7 +25,7 @@ try {
  if (!exists) {
   for(const role of ['anon','authenticated','service_role']) await admin.query(`DO $$ BEGIN IF NOT EXISTS(SELECT FROM pg_roles WHERE rolname='${role}') THEN CREATE ROLE ${role} NOLOGIN; END IF; END $$`);
   await pool.query('CREATE TABLE users(id serial PRIMARY KEY,clerk_user_id text UNIQUE); CREATE TABLE reps(bioguideid text PRIMARY KEY); CREATE TABLE bills(id serial PRIMARY KEY,title text)');
-  for(const migration of ['20261026194547_elections_storage.sql','20261026203305_election_discovery_observations.sql']) await pool.query(await readFile(new URL(`../supabase/migrations/${migration}`,import.meta.url),'utf8'));
+  for(const migration of ['20261028202229_elections_storage.sql','20261028202239_election_discovery_observations.sql']) await pool.query(await readFile(new URL(`../supabase/migrations/${migration}`,import.meta.url),'utf8'));
   await pool.query('CREATE TABLE local_fec_candidate_import_scope (state text NOT NULL, office text NOT NULL, entry jsonb NOT NULL, PRIMARY KEY(state,office))');
  } else {
   const marker=await pool.query("SELECT to_regclass('public.local_fec_candidate_import_scope') AS name");

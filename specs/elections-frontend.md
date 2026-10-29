@@ -1,6 +1,6 @@
 # Desired user behavior
 
-Add an **Elections** tab to VoteFeed so people can read campaign positions from candidates in their matching 2026 regular House and Senate races, filter those positions, explore one candidate at a time, and save agreement or disagreement. This spec covers frontend work only. It does not authorize app implementation, backend changes, deployments, or ticket updates.
+Add an **Elections** tab to VoteFeed so people can read campaign positions from candidates in their matching 2026 regular House and Senate races, filter those positions, explore one candidate at a time, and save agreement or disagreement. This spec defines frontend behavior and acceptance. The local Elections API needed to connect the panel is implemented under [the backend plan](elections-backend.md); this document records the client-facing contract and does not describe production rollout.
 
 ## Design authority and ticket scope
 
@@ -26,7 +26,7 @@ Names, photos, party affiliations, example positions, candidate counts, and poli
 - Default Elections to **All Candidates**, showing positions from all eligible candidates returned for the user's matching races, across parties and both chambers. “All” means these matching races, not a nationwide feed.
 - Use the existing signed-in saved-address context and guest address-entry experience. Consume server-resolved election geography; the current representative district must not be reused as proof of the 2026 election district.
 - Switching between legislative and election views must not mix their cards, sidebar totals, loading states, responses, or pagination cursors. Retain each view's filters during the current visit; an address/account change clears incompatible candidate selection and old results.
-- Opening Elections only reads prepared data. It does not trigger candidate discovery, crawling, or AI generation.
+- On app entry, keep the representative feed selected and let it render as soon as its own data is ready. Start the election build independently in the background; election requests and processing must never gate or replace the representative feed. The Elections tab remains available while its data loads, and its saved campaign positions appear as soon as the feed read returns, without waiting for the build to finish. The feed response includes its full-scope policy counts, so do not block position cards on a separate counts request. Keep same-scope saved positions visible during a background refresh and retain them if refresh fails. The mounted Elections panel initializes the build for server-resolved geography; the API deduplicates House work by state and verified district and Senate work by state. If House geography is state-only, no House job is created; state Senate work can still run. Candidate discovery, site search, crawling, and AI extraction run in a separate worker, never in the browser request. When Elections is selected, show a preparation notice and poll the build-status endpoint while work is active; after it finishes, refresh the roster and feed from saved database rows. A completed geography build is reused on later visits.
 
 ## Candidate cards and selecting one candidate
 
@@ -71,7 +71,7 @@ Names, photos, party affiliations, example positions, candidate counts, and poli
 
 ## Loading, empty, error, and responsive states
 
-- Preserve the shell and selected controls while loading. Keep roster and position loading/error states separate so a position failure does not erase a loaded candidate row. Never show old-scope cards under newly selected filters.
+- Preserve the shell and selected controls while loading. Keep the representative feed independent from election loading. Keep roster and position loading/error states separate so a position failure does not erase a loaded candidate row. Show saved same-scope positions while refreshing and retain them after a refresh failure; never show old-scope cards under newly selected filters.
 - Distinguish: no matching race confirmed by the service; candidate coverage unknown/incomplete; election geography unavailable; candidates present but no published positions; no positions matching the selected topic; and a failed read. Missing/unverified campaign sites, pending processing, and failed processing must not be described as a candidate having no policy views.
 - Show available Senate content when House geography cannot be verified, with a specific House message. Retain readable published content if a refresh failed and the service returns last-successful data, with its original source date and a status message.
 - Provide retry for failed roster/feed reads. A failed next page preserves already loaded cards. A publication/cursor invalidation offers a restart from the first page instead of merging incompatible pages. Expired authentication follows the existing sign-in handling.
@@ -80,23 +80,15 @@ Names, photos, party affiliations, example positions, candidate counts, and poli
 
 ## Current frontend and backend dependencies
 
-Inspected on October 28, 2026:
+Updated October 28, 2026:
 
-- **Elections HTTP contract audit (2026-10-28):** The checked-in Express API in `server/app.js` mounts no Elections route, and `client/src` has no Elections adapter. `readElectionPositionsForAddress` and the read/response helpers in `server/src/db/queries/elections.js` are internal server functions, not an HTTP contract. The backend spec places the feed API under “Later delivery” with no target date, so real-service confirmation is deferred to Step 7; fixture-based frontend work can proceed first.
-- **Observed storage helper shape, not an HTTP promise:** `readElectionPositions` accepts state, district, scope, limit, and cursor, and returns scope, coverage, House-geography/availability states, races, a page of items, and `nextCursor`. Items include position-version/candidacy IDs, topic, summary, excerpt, candidate name/party, race, source URL/retrieval time, ballot and registration status, availability, and the requesting user's response. The current schema/query does not expose explicit incumbency or a portrait, and the item list omits candidates without published positions.
-- **Unresolved HTTP contract fields and operations:**
-  - Geography and roster: define the address request and server-resolved geography response, including Senate availability when House geography is unverified. Return the complete matching candidacy roster, including candidates with no positions, with race/candidacy IDs, office and geography, party, explicit incumbency, optional portrait, ballot/registration status, availability, and coverage.
-  - Feed reads: define the serialized position item and error shapes; map chamber selection to the current `scope.offices` restriction; add candidacy/topic filtering before pagination; define stable cursor invalidation/restart; return policy options and full-scope counts. The storage read has no candidacy/topic filters or topic totals.
-  - Responses: define authenticated save/change/clear routes, payloads, return values, and auth-expiry/error behavior, all bound to the exact position-version ID. The internal helpers support save/get/delete, but deleting the row also deletes its `privateComment`; the required clear operation must preserve service-held private data. Do not expose private comments in the Elections client payload.
-  - Alignment: define a full-scope read scoped to user, candidacy, current published versions, and policy topic, including agreement/disagreement/answered counts or a percentage and refresh behavior. No Elections alignment read is currently exposed in the server code.
+- **Local API contract:** `server/app.js` mounts `server/src/api/elections.js` at `/elections`. It exposes `POST /roster`, `/feed`, `/policy-counts`, and `/alignment`, plus authenticated `PUT` and `DELETE /responses/:positionVersionId`. `client/src/elections/electionFeedApi.js` adapts these endpoints to the Elections client interface.
+- **Geography and roster:** guest read bodies carry an address for server resolution; signed-in reads use the user's saved 2026 geography evidence. The API rejects browser-supplied state, district, or geography IDs. The roster includes candidates without published positions, explicit race incumbency, optional portraits, and coverage/availability. Missouri House geography remains fail-closed while the 2026 Census TIGER products are regenerated; statewide Senate reads remain possible when state data exists.
+- **Feed and totals:** chamber, candidacy, and topic filters are applied in the server query. Responses include position-version IDs, source URL/retrieval time, registration and ballot status, coverage, full-scope policy counts, availability, snapshot ID, and cursor. Invalidated cursors request a first-page restart. Never infer ballot confirmation from FEC registration.
+- **Responses and alignment:** authenticated response routes bind to the exact current position-version ID and accept only `agree`/`disagree`; clear removes the stance while preserving private comments in storage. The API payload exposes only the public stance. Alignment is scoped to the user, candidacy, current positions, chamber, and policy area. Guests can read and filter but must sign in to save a response or view personal alignment.
+- **Local acceptance boundary:** the focused PostgreSQL route test covers guest and signed-in API requests, geography, roster/feed filters, counts, save/change/clear, alignment, and private-comment retention. The browser checked the development fixture flow and exercised the HTTP adapter with controlled API replies. This is local implementation evidence; deployed databases, role grants, complete election data, and production browser acceptance remain open.
 
-- `client/src/Feed.jsx` owns legislative chamber selection, feed reads, infinite scrolling, response handling, and guest prompts. `RepCard.jsx` currently owns the three legislative tabs. `FeedLayout.jsx` owns sidebar policy selection and counts. `App.jsx` owns routes. These are the likely integration points; preserve their legislative behavior when sharing the outer navigation.
-- `client/src/delegationFeedClient.js` has cancellation/stale-response and page-merge patterns worth reusing. Its legislative URL builder, payload adapter, grouping, and identities are not an election contract. `LegislativeVoteCard.jsx` supplies response UX examples; Elections needs its own visual card to match the attached image.
-- [Elections backend plan](elections-backend.md), [shared contracts](elections-contracts.md), and `server/src/db/queries/elections.js` document/implement server-only storage reads and version-bound responses. They do **not** establish a ready HTTP API. Existing reads expose campaign summaries, evidence, identities, coverage, availability, cursors, and the requesting user's response. The currently inspected item payload does not supply portraits or an explicit incumbency field, and does not provide the complete candidate roster and filtered totals needed by this UI.
-- Frontend integration requires a separately delivered API that supplies the complete matching roster (including candidates with no positions), explicit candidacy incumbency, optional portraits, election geography/coverage states, full-scope policy counts, chamber/candidacy/topic filtering before pagination, and authenticated save/change/clear of the exact position-version response. Endpoint URLs and exact HTTP shapes remain an integration dependency; do not invent existing endpoints or access election tables directly from the browser.
-- The storage read currently sorts by election date, state, office, seat, race, candidate, claim, and version, in ascending order. Treat the mixed feed as one list using the API's stable order. A new chronological or alternating-candidate ranking algorithm is outside this frontend plan.
-- API gaps may be represented with clearly labeled development fixtures for UI work. Missing incumbent data must not be guessed; unavailable counts must not be shown as zero. Fixture acceptance is distinct from real API acceptance, and these dependencies must be satisfied before claiming the feature works end to end.
-- The single-candidate gauge requires separately delivered full-scope alignment data for the requesting user, candidacy, current published versions, and selected policy area: agreement/disagreement counts, answered count, and percentage (or sufficient counts to derive it). This is an additional API dependency, not a backend implementation task in this frontend spec. Never derive alignment from one loaded page or call the legislative alignment endpoint for a candidate.
+The storage read orders the mixed feed by election date, state, office, seat, race, candidate, claim, and version. Preserve the API's stable order; a new chronological or alternating-candidate ranking algorithm is outside this frontend work. Continue to use the fixture adapter only when `DEV` and `VITE_ELECTION_FIXTURES=true`; do not access election tables directly from the browser.
 
 # Implementation steps
 
@@ -119,54 +111,55 @@ Outcome: people can switch between legislative feeds and Elections using the ref
 
 Outcome: the reference's candidate row supports All Candidates, House, Senate, and one candidate at a time.
 
-- [ ] Add the inner chamber tabs and candidate-card row, matching the supplied desktop design and preserving access to the full roster on smaller screens.
-- [ ] Render portraits/fallbacks, office sought, geography, party, and explicit incumbent badges. Use candidacy IDs for selection, never names or current-member IDs.
-- [ ] Add in-place candidate selection, selected styling, the candidate-specific heading/label, and the All candidates reset. Apply the chamber/policy selection rules above.
-- [ ] Keep roster retrieval independent from policy-filtered positions and render meaningful roster loading/error/empty states.
-- [ ] Extend only the selected candidate's summary card with the existing feed's alignment gauge UI. Reuse or extract its presentational component and styles from `RepCard.jsx` with election-specific labels, preserving the legislative graph's behavior and appearance. Drive the gauge from development fixtures until Step 7.
+- [x] Add the inner chamber tabs and candidate-card row, matching the supplied desktop design and preserving access to the full roster on smaller screens.
+- [x] Render portraits/fallbacks, office sought, geography, party, and explicit incumbent badges. Use candidacy IDs for selection, never names or current-member IDs.
+- [x] Add in-place candidate selection, selected styling, the candidate-specific heading/label, and the All candidates reset. Apply the chamber/policy selection rules above.
+- [x] Keep roster retrieval independent from policy-filtered positions and render meaningful roster loading/error/empty states.
+- [x] Extend only the selected candidate's summary card with the existing feed's alignment gauge UI. Reuse the presentational component from `RepCard.jsx` with election-specific labels, preserving the legislative graph's behavior and appearance. The gauge reads full-scope API or development-fixture alignment.
 
 ## 4. Render campaign positions and connect filters/pagination
 
 Outcome: a reference-matching campaign feed supports the combined filter scope and reliable continuation.
 
-- [ ] Add dedicated Elections feed/card components and scoped styles for the heading, subtitle, policy dropdown, portraits, position copy, source control, and response placement. Omit all comments elements.
-- [ ] Connect sidebar and dropdown to one policy state. Display full-scope counts supplied by the active data interface and preserve unknown totals truthfully; use fixture counts until Step 7.
-- [ ] Build reads from the complete view/account/location/chamber/candidacy/policy scope through the frontend data interface. Reuse request cancellation patterns, replace the first page on a scope change, and deduplicate continuation by position-version ID. Exercise these behaviors with fixtures before Step 7 supplies the real transport.
-- [ ] Add infinite-scroll feedback, continuation retry, cursor restart, coverage notices, and the distinct empty/error states above. Do not call legislative summary-generation or response APIs.
+- [x] Add dedicated Elections feed/card components and scoped styles for the heading, subtitle, policy dropdown, portraits, position copy, source control, and response placement. Omit all comments elements.
+- [x] Connect sidebar and dropdown to one policy state. Display full-scope counts supplied by the active data interface and preserve unknown totals truthfully.
+- [x] Build reads from the complete view/account/location/chamber/candidacy/policy scope through the frontend data interface. Reuse request cancellation patterns, replace the first page on a scope change, and deduplicate continuation by position-version ID.
+- [x] Add infinite-scroll feedback, continuation retry, cursor restart, coverage notices, and the distinct empty/error states above. Do not call legislative summary-generation or response APIs.
 
 ## 5. Build response and alignment states against the frontend data interface
 
-Outcome: response and alignment interactions are complete and fixture-testable before the real Elections API is delivered.
+Outcome: response and alignment interactions use exact-version Elections API operations with an isolated development-fixture implementation.
 
-- [ ] Define interface operations for authenticated save/change/clear using exact position-version IDs; implement their development-fixture behavior without inventing HTTP routes.
-- [ ] Render neutral, pending, confirmed agree/disagree, and failed-save states; reconcile only confirmed results and keep selection consistent across filtered views and fixture reloads.
-- [ ] Reuse the guest prompt behavior for response attempts and existing authentication-expiry handling. Model stance clearing while preserving service-held private data; verify the actual service behavior in Step 7.
-- [ ] Drive the selected-candidate graph from full-scope fixture alignment data scoped by user/candidacy/policy. Refresh after confirmed response changes; handle stale reads, no answers, guests, loading, and refresh failure independently of response saving.
+- [x] Define interface operations for authenticated save/change/clear using exact position-version IDs; implement their development-fixture behavior and the local HTTP adapter.
+- [x] Render neutral, pending, confirmed agree/disagree, and failed-save states; reconcile only confirmed results and keep selection consistent across filtered views and fixture reloads.
+- [x] Reuse the guest prompt behavior for response attempts and existing authentication-expiry handling. Stance clearing preserves service-held private data; local API integration verifies the behavior.
+- [x] Drive the selected-candidate graph from full-scope alignment data scoped by user/candidacy/policy. Refresh after confirmed response changes; handle stale reads, no answers, guests, loading, and refresh failure independently of response saving.
 
 ## 6. Verify visual fidelity and fixture-backed behavior
 
-Outcome: the frontend matches the original reference and passes UI/state acceptance with clearly identified development fixtures. This does not establish real-service acceptance.
+Outcome: record visual fidelity and fixture-backed UI acceptance. The local API acceptance in Step 7 is separate; neither alone establishes production acceptance.
 
 - [ ] Compare rendered desktop screenshots at the reference's 1672 × 941 viewport with the original image, then check smaller desktop, tablet, and phone widths. Review typography, card sizing, spacing, portrait rings, tabs, source links, and selected states; exclude comments from comparison intentionally.
 - [ ] Check keyboard/touch operation, focus, readable fallback portraits, long names/position text, other parties, and every loading/empty/error state.
 - [ ] Run focused client checks for combined filters, stale requests, continuation deduplication/restart, and response selection/change/clear/failure. Run `npm.cmd --prefix client run lint` and `npm.cmd --prefix client run build`.
 - [ ] Recheck existing All Reps/House/Senate feed filtering, sidebar counts, stance controls, and comments navigation for regressions. Record fixture-only results separately from real-service results.
 
-## 7. Integrate with the later-delivered Elections API
+## 7. Integrate with the Elections API
 
-The backend spec places “Implement the feed API and Elections tab” under **Later delivery**, after candidate discovery, campaign crawling, and position extraction. It gives no delivery date. Complete this step only when that API is available; Steps 1–6 can proceed with the development fixture adapter.
+The API and HTTP adapter are implemented locally. The checked-in implementation is not deployed, and the remote migration/role state remains unverified.
 
-Outcome: the frontend uses the confirmed service contract, and fixture-only results remain distinct from real-service acceptance.
+Outcome: the frontend uses the local service contract, while local API, fixture, mocked-browser, and production acceptance remain distinct.
 
-- [ ] Confirm the actual HTTP contract against the dependency list and the unresolved fields above. Record anything the delivered service still lacks; do not infer endpoints from internal storage helpers.
-- [ ] Implement the real network adapter using confirmed routes, request/response shapes, authentication, and error behavior. Map it to the frontend data interface without querying election tables directly from the browser.
-- [ ] Connect real roster and feed reads, geography and coverage states, server-side filters, full-scope counts, stable pagination, and cursor restart. Do not claim end-to-end behavior while a required field or operation is missing.
-- [ ] Connect authenticated version-specific save/change/clear and full-scope alignment. Confirm that clearing preserves private service data without exposing private comments in the Elections client payload.
-- [ ] Exercise real guest and signed-in flows against the delivered API. Record these results separately from fixture acceptance.
+- [x] Confirm the HTTP contract and record the endpoints: `POST /elections/roster`, `/feed`, `/build-status`, `/policy-counts`, `/alignment`; authenticated `PUT`/`DELETE /elections/responses/:positionVersionId`. Roster/feed/status requests ensure the matching on-demand build job exists and return its state.
+- [x] Implement the real network adapter using the local routes, request/response shapes, authentication, and error behavior. Map it to the frontend data interface without querying election tables directly from the browser.
+- [x] Connect roster and feed reads, geography and coverage states, server-side filters, full-scope counts, stable pagination, and cursor restart.
+- [x] Connect authenticated version-specific save/change/clear and full-scope alignment. Local route integration verifies that clearing preserves private service data and that private comments are not included in the Elections client payload.
+- [x] Exercise local guest and signed-in API flows against a disposable PostgreSQL database. Browser coverage exercised fixtures and the HTTP adapter with controlled mocked API replies; no production service acceptance is claimed.
+- [x] Connect build-status polling and preparation/partial-build messages to the Elections panel. The separate worker and queue migration are local implementation only; live Development behavior still requires the migration and worker deployment.
 
 # How to check it works
 
-Run the fixture-backed checks in Steps 1–6 first; these validate frontend behavior only. Run real-service checks after Step 7 and delivery of the backend feed API.
+Local Step 7 API integration passed against a disposable PostgreSQL database. The browser checked fixture behavior and the HTTP adapter against controlled mock replies. Production acceptance remains open until migration rollout, role verification, data coverage, and a browser run against the deployed service.
 
 ## Fixture-backed UI acceptance (Steps 1–6)
 
@@ -180,7 +173,7 @@ Run the fixture-backed checks in Steps 1–6 first; these validate frontend beha
 - [ ] Exercise fixture no-position, no-topic-match, partial-coverage, missing-site, processing-failure, unavailable-House-geography with available Senate data, read-error, expired-auth, invalid-cursor, no-answer, guest, 0% alignment, and alignment-retry states.
 - [ ] Compare desktop screenshots at 1672 × 941 and phone layouts with the original. Complete keyboard/touch navigation through tabs, candidates, policy controls, sources, and response buttons. Check focus visibility and page overflow.
 
-## Real-service acceptance (Step 7; after backend feed API delivery)
+## Production-service acceptance (after rollout)
 
 - [ ] Enter through the existing guest address flow and a signed-in saved address. Confirm the delivered API returns the matching candidates and positions, with accurate geography, coverage, and no-race states.
 - [ ] Confirm actual source URLs and retrieval dates open/display correctly; FEC registration is never shown as ballot confirmation or complete ballot coverage.
@@ -189,4 +182,6 @@ Run the fixture-backed checks in Steps 1–6 first; these validate frontend beha
 - [ ] As a signed-in user, agree, reload, change to disagree, reload, then clear the selected response. The exact version retains the confirmed state in mixed and candidate views; unrelated positions and legislative alignment remain unchanged. A failed save preserves the last confirmed state and clearing preserves private service data.
 - [ ] As a guest, read/filter/select candidates/open campaign sources, then attempt a response. The existing guest sign-in prompt appears and no response is saved.
 - [ ] Recheck real missing-position, coverage, geography, failed-read, expired-auth, and invalidated-cursor behavior and recovery. Ensure the delivered API supports Senate content when House geography is unverified.
+- [ ] Enter Elections for one verified House district and confirm one district-scoped job plus one shared state Senate job are created, the panel reports progress, the feed appears after completion, and a later visit reuses the completed jobs.
+- [ ] With existing campaign positions saved, enter the app and confirm the representative feed renders independently; open Elections during a build and confirm cached positions appear as soon as the feed read returns, without waiting for processing or a separate policy-count request. Confirm same-scope cards remain visible during refresh and after a refresh failure.
 - [ ] Recheck existing All Reps/House/Senate feed filtering, sidebar counts, stance controls, and comments navigation for regressions. Record real-service results separately from fixture acceptance.

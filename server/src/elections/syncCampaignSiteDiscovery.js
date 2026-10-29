@@ -42,7 +42,7 @@ export async function syncCampaignSiteDiscovery({
   provider ??= createCampaignSiteSearchProvider({maxPages});
   const run=await startElectionRun({stage:'discovery',scope:normScope,adapter:'openai-web-search',adapterVersion:VERSION},db);
   const counts={candidatesConsidered:0,websitesFound:0,websitesMatched:0,websitesMissing:0,websitesAmbiguous:0,websitesRejected:0,failures:0};
-  const coverage=normScope.states.flatMap(state=>normScope.offices.map(office=>({state,office,status:'complete',candidates:0,matched:0,missing:0,ambiguous:0,rejected:0,errorCodes:[]})));
+  const coverage=normScope.states.flatMap(state=>normScope.offices.map(office=>({state,office,...(normScope.district!==undefined?{district:normScope.district}:{}),status:'complete',candidates:0,matched:0,missing:0,ambiguous:0,rejected:0,errorCodes:[]})));
   const codes=new Set();
   let candidates=[];
   try {
@@ -55,6 +55,7 @@ export async function syncCampaignSiteDiscovery({
       JOIN election_races r ON r.id=co.race_id
       LEFT JOIN campaign_sites current_site ON current_site.candidacy_id=co.id AND current_site.is_current
       WHERE r.state=ANY($1::text[]) AND r.office=ANY($2::text[])
+        AND ($5::integer IS NULL OR r.office='house' AND r.district=$5)
         AND co.eligibility NOT IN ('withdrawn','disqualified')
         AND ($3::uuid IS NULL OR co.id=$3::uuid)
         AND ($4::boolean OR current_site.id IS NULL
@@ -66,8 +67,8 @@ export async function syncCampaignSiteDiscovery({
           AND current_site.checked_at<=now()-interval '7 days'
           OR current_site.status='proposed' AND current_site.invalidation_reason LIKE 'discovery-%'
         OR current_site.status NOT IN ('verified','ambiguous') AND current_site.checked_at<=now()-interval '7 days')
-      ORDER BY r.state,r.office,ca.name,co.id LIMIT $5`,
-    [normScope.states,normScope.offices,candidacyId,refresh,maxCandidates+1]);
+      ORDER BY r.state,r.office,ca.name,co.id LIMIT $6`,
+    [normScope.states,normScope.offices,candidacyId,refresh,normScope.district ?? null,maxCandidates+1]);
     const hasMore=result.rows.length>maxCandidates;
     candidates=result.rows.slice(0,maxCandidates).map(row=>({...row,office:row.office,state:row.state,district:row.district,
       senateSeat:row.senate_seat,electionDate:row.election_date,fecId:row.fec_id}));

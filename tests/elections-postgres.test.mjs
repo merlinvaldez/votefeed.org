@@ -2,9 +2,13 @@ import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
+import express from '../server/node_modules/express/index.js';
 import pg from '../server/node_modules/pg/lib/index.js';
+import db from '../server/src/db/client.js';
 import * as elections from '../server/src/db/queries/elections.js';
+import electionsRouter from '../server/src/api/elections.js';
 import { readElectionPositionsForAddress } from '../server/src/elections/electionGeography.js';
+import { ELECTION_GEOGRAPHY_SOURCE, ELECTION_GEOGRAPHY_VERSION, RELEASE_SCOPE } from '../server/src/elections/contracts.js';
 
 test('elections additive migration and server persistence on disposable PostgreSQL', {skip:process.env.ELECTIONS_TEST_POSTGRES!=='1'}, async t => {
   // A separate database runs the EXACT migration, including public schema, roles,
@@ -23,13 +27,14 @@ test('elections additive migration and server persistence on disposable PostgreS
     // browser and service-role privileges explicitly before granting their contract.
     await pool.query(`ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO PUBLIC, anon, authenticated, service_role`);
     await pool.query(`CREATE TABLE users(id serial PRIMARY KEY,clerk_user_id text UNIQUE);
-      CREATE TABLE reps(bioguideid text PRIMARY KEY);
+      CREATE TABLE reps(bioguideid text PRIMARY KEY,image_url text,is_current_member boolean NOT NULL DEFAULT true);
       CREATE TABLE bills(id serial PRIMARY KEY,number integer,bill_type text);
       CREATE TABLE interactions(id serial PRIMARY KEY,user_id integer,bill_id integer,stance text);
       INSERT INTO users VALUES(1,'clerk-a'),(2,'clerk-b'); INSERT INTO reps VALUES('H');
       INSERT INTO bills VALUES(7,7,'hr'); INSERT INTO interactions VALUES(1,1,7,'approve');`);
-    await pool.query(await readFile(new URL('../supabase/migrations/20261026194547_elections_storage.sql',import.meta.url),'utf8'));
-    await pool.query(await readFile(new URL('../supabase/migrations/20261026203305_election_discovery_observations.sql',import.meta.url),'utf8'));
+    await pool.query(await readFile(new URL('../supabase/migrations/20261028202229_elections_storage.sql',import.meta.url),'utf8'));
+    await pool.query(await readFile(new URL('../supabase/migrations/20261028202239_election_discovery_observations.sql',import.meta.url),'utf8'));
+    await pool.query(await readFile(new URL('../supabase/migrations/20261028202247_election_feed_build_jobs.sql',import.meta.url),'utf8'));
     const checkedAt=new Date().toISOString(), reviewAfter=new Date(Date.now()+86400000).toISOString();
     const evidence={url:'https://elections.example.test/list',checkedAt};
     const race={office:'house',state:'AK',district:0,electionDate:'2026-11-03',stage:'general',contestType:'regular'};
@@ -106,15 +111,25 @@ test('elections additive migration and server persistence on disposable PostgreS
     });
     await t.test('matching geography, eligibility, sources and requesting-user-only reads',async()=>{
       assert.equal((await read()).items.length,0);
-      const stale=await elections.saveElectionGeography({state:'AK',cycle:2026,boundaryVersion:'119th',sourceUrl:evidence.url,checkedAt,status:'verified'},pool);
+      const roster=await elections.readElectionRoster({state:'AK',chamber:'all',scope:{...RELEASE_SCOPE,states:['AK']},geography:{
+        state:'AK',district:0,status:'verified',cycle:RELEASE_SCOPE.cycle,boundaryVersion:ELECTION_GEOGRAPHY_VERSION,sourceUrl:ELECTION_GEOGRAPHY_SOURCE,
+      }},pool);
+      assert.equal(roster.candidates.length,5);
+      assert.equal(roster.candidates.filter(candidate=>candidate.race.office==='house').length,3);
+      assert.ok(roster.candidates.every(candidate=>candidate.incumbency==='unknown'));
+      const stale=await elections.saveElectionGeography({state:'AK',district:0,cycle:2026,boundaryVersion:'119th',sourceUrl:evidence.url,checkedAt,status:'verified'},pool);
       assert.equal((await read({geographyEvidenceId:stale.id})).houseAvailability,'geography-unverified');
-      geography=await elections.saveElectionGeography({state:'AK',cycle:2026,boundaryVersion:'ACS2026_Current:120th',sourceUrl:'https://www.census.gov/programs-surveys/decennial-census/about/rdo/congressional-districts.html',checkedAt,status:'verified'},pool);
+      geography=await elections.saveElectionGeography({state:'AK',district:0,cycle:2026,boundaryVersion:ELECTION_GEOGRAPHY_VERSION,sourceUrl:ELECTION_GEOGRAPHY_SOURCE,checkedAt,status:'verified'},pool);
       const result=await read({},auth);
       assert.equal(result.items.length,1); assert.equal(result.items[0].summary,'Build more housing.');
-      assert.equal(result.items[0].response.privateComment,'private A');
+      assert.equal(result.items[0].response,null);
       assert.equal(result.items[0].source.snapshotId,snapshot.id);
       assert.equal((await read()).items[0].response,null);
-      assert.equal((await read({},other)).items[0].response.privateComment,'private B');
+      const otherResponse=(await read({},other)).items[0].response;
+      assert.deepEqual(otherResponse,{stance:'approve'});
+      assert.equal(Object.hasOwn(otherResponse,'privateComment'),false);
+      await elections.clearElectionResponse(auth,version.id,pool);
+      assert.equal((await elections.getElectionResponse(auth,version.id,pool)).private_comment,'private A');
       assert.equal((await read({district:1})).items.length,0);
       await elections.importElectionCandidate({...fixture,eligibility:'withdrawn',eligibilityEvidence:{...fixture.eligibilityEvidence,
         checkedAt:new Date(Date.parse(checkedAt)+1000).toISOString()}},pool);
@@ -125,6 +140,92 @@ test('elections additive migration and server persistence on disposable PostgreS
         checkedAt:new Date(Date.parse(checkedAt)+2000).toISOString()}},pool);
       await assert.rejects(read({scope:{cycle:2028}}),/Scope/);
       await assert.rejects(elections.readElectionPositions({state:'AK'},null,{connect:async()=>{throw new Error('storage unavailable');}}),/storage unavailable/);
+    });
+    await t.test('HTTP feed, roster and response routes resolve trusted geography and hide private comments',async()=>{
+      const secondCandidate=await elections.importElectionCandidate({...fixture,name:'Second Fixture Candidate',
+        identity:{...fixture.identity,id:'api-house-two'}} ,pool);
+      const secondSite=await elections.saveCampaignSite(siteInput(secondCandidate.candidacy.id),pool);
+      const secondSnapshot=await elections.saveCampaignSnapshot({candidacyId:secondCandidate.candidacy.id,siteId:secondSite.id,
+        requestedUrl:secondSite.proposed_url,finalUrl:secondSite.proposed_url,retrievedAt:checkedAt,text:'Support small businesses.'},pool);
+      await elections.publishCampaignPositions({candidacyId:secondCandidate.candidacy.id,snapshotId:secondSnapshot.id,
+        model:'fixture-model',promptVersion:'fixture-prompt-v1',completeness:'complete',items:[{
+          claimId:randomUUID(),candidacyId:secondCandidate.candidacy.id,snapshotId:secondSnapshot.id,
+          claimText:'Support small businesses.',topic:'economy',summary:'Support small businesses.',excerpt:'Support small businesses.',validation,
+        }]},pool);
+      await pool.query('UPDATE users SET election_geography_evidence_id=$1 WHERE id=2',[geography.id]);
+      const app=express(); app.use(express.json());
+      app.use((req,_res,next)=>{
+        const signedIn=req.get('x-test-user')==='clerk-b';
+        req.auth=()=>({userId:signedIn?'clerk-b':null});
+        req.user=signedIn?{id:2,state:'AK'}:null;
+        next();
+      });
+      app.use('/elections',electionsRouter);
+      const server=app.listen(0,'127.0.0.1');
+      await new Promise(resolve=>server.once('listening',resolve));
+      const originalFetch=globalThis.fetch, originalDbQuery=db.query, originalDbConnect=db.connect;
+      db.query=pool.query.bind(pool); db.connect=pool.connect.bind(pool);
+      globalThis.fetch=async(url,options)=>{
+        if(String(url).startsWith('https://geocoding.geo.census.gov/')) return {ok:true,json:async()=>({result:{addressMatches:[{geographies:{
+          States:[{STUSAB:'AK',STATE:'02'}],
+          '120th Congressional Districts':[{STATE:'02',GEOID:'0200',CD120:'00',CDSESSN:'120'}],
+        }}]}})};
+        return originalFetch(url,options);
+      };
+      const base=`http://127.0.0.1:${server.address().port}/elections`;
+      const post=(path,body,headers={})=>originalFetch(`${base}/${path}`,{method:'POST',headers:{'Content-Type':'application/json',...headers},body:JSON.stringify(body)});
+      try {
+        const guestRosterResponse=await post('roster',{address:'1 Example Ave, Anchorage, AK 99501',chamber:'house'});
+        assert.equal(guestRosterResponse.status,200);
+        const guestRoster=await guestRosterResponse.json();
+        assert.equal(guestRoster.geography.houseDistrict,0);
+        assert.equal(guestRoster.candidates.length,4);
+        const guestFeedResponse=await post('feed',{address:'1 Example Ave, Anchorage, AK 99501',chamber:'house',limit:10});
+        assert.equal(guestFeedResponse.status,200);
+        const guestFeed=await guestFeedResponse.json();
+        assert.equal(guestFeed.items.length,2);
+        assert.equal(guestFeed.policyCounts.all,2);
+        assert.equal(guestFeed.policyCounts.byPolicyArea.housing,1);
+        assert.equal(guestFeed.items[0].response,null);
+        assert.equal(Object.hasOwn(guestFeed.items[0].response??{},'privateComment'),false);
+        const filtered=await post('feed',{address:'1 Example Ave, Anchorage, AK 99501',chamber:'house',candidacyId:secondCandidate.candidacy.id,policyArea:'economy',limit:10});
+        const filteredFeed=await filtered.json();
+        assert.equal(filtered.status,200);
+        assert.equal(filteredFeed.items.length,1);
+        assert.equal(filteredFeed.items[0].candidacyId,secondCandidate.candidacy.id);
+        assert.equal(filteredFeed.policyCounts.all,1);
+        assert.equal(filteredFeed.policyCounts.byPolicyArea.economy,1);
+        const spoofedGeography=await post('feed',{state:'AK',district:0});
+        assert.equal(spoofedGeography.status,400);
+
+        const authHeaders={'x-test-user':'clerk-b'};
+        const signedFeedResponse=await post('feed',{chamber:'house',limit:10},authHeaders);
+        assert.equal(signedFeedResponse.status,200);
+        const signedFeed=await signedFeedResponse.json();
+        const signedVersion=signedFeed.items.find(item=>item.positionVersionId===version.id);
+        assert.deepEqual(signedVersion.response,{stance:'agree'});
+        const changed=await originalFetch(`${base}/responses/${version.id}`,{method:'PUT',headers:{...authHeaders,'Content-Type':'application/json'},body:JSON.stringify({stance:'disagree'})});
+        assert.equal(changed.status,200);
+        assert.deepEqual((await changed.json()).response,{positionVersionId:version.id,stance:'disagree'});
+        assert.equal((await elections.getElectionResponse(other,version.id,pool)).private_comment,'private B');
+        const alignmentResponse=await post('alignment',{chamber:'house',candidacyId:imported.candidacy.id},authHeaders);
+        assert.equal(alignmentResponse.status,200);
+        assert.deepEqual(await alignmentResponse.json(),{agreementCount:0,disagreementCount:1,answeredCount:1,percentage:0,status:'ready'});
+        const cleared=await originalFetch(`${base}/responses/${version.id}`,{method:'DELETE',headers:authHeaders});
+        assert.equal(cleared.status,200);
+        assert.deepEqual((await cleared.json()).response,{positionVersionId:version.id,stance:null});
+        assert.equal((await elections.getElectionResponse(other,version.id,pool)).private_comment,'private B');
+        const unauthorized=await originalFetch(`${base}/responses/${version.id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({stance:'agree'})});
+        assert.equal(unauthorized.status,401);
+        assert.equal((await unauthorized.json()).code,'AUTHENTICATION_REQUIRED');
+      } finally {
+        await elections.importElectionCandidate({...fixture,name:'Second Fixture Candidate',
+          identity:{...fixture.identity,id:'api-house-two'},eligibility:'withdrawn',
+          eligibilityEvidence:{...fixture.eligibilityEvidence,checkedAt:new Date(Date.parse(checkedAt)+5000).toISOString()},
+        },pool);
+        globalThis.fetch=originalFetch; db.query=originalDbQuery; db.connect=originalDbConnect;
+        await new Promise(resolve=>server.close(resolve));
+      }
     });
     await t.test('address lookup binds election district and verified geography to the read',async()=>{
       const geographies={States:[{STUSAB:'AK',GEOID:'02'}],'120th Congressional Districts':[{STATE:'02',GEOID:'0200',CD120:'00',CDSESSN:'120'}]};
@@ -150,13 +251,15 @@ test('elections additive migration and server persistence on disposable PostgreS
       assert.equal((await elections.getElectionResponse(auth,version.id,pool)).private_comment,'private A');
       await publish(revised,[item(revised,'Build affordable housing.'),item(revised,'Expand healthcare.',randomUUID())]);
       const page=await read({limit:1}); assert.ok(page.nextCursor);
+      assert.equal(page.policyCounts.all,2);
+      assert.equal(page.policyCounts.byPolicyArea.housing,2);
       assert.equal((await read({limit:1,cursor:page.nextCursor})).items.length,1);
       await elections.recordCampaignFailure({candidacyId:imported.candidacy.id,status:'crawl-failed'},pool);
       await assert.rejects(read({limit:1,cursor:page.nextCursor}),/restart/);
       await elections.saveCampaignSite({...siteInput(imported.candidacy.id),status:'proposed'},pool);
       assert.equal((await read()).items.length,0);
       await assert.rejects(publish(revised,[item(revised,'Build affordable housing.')]),/verified/);
-      assert.equal((await pool.query('SELECT count(*)::int n FROM campaign_sources')).rows[0].n,2);
+      assert.equal((await pool.query('SELECT count(*)::int n FROM campaign_sources')).rows[0].n,3);
       site=await elections.saveCampaignSite(siteInput(imported.candidacy.id),pool);
       assert.equal((await read()).items.length,0);
       const reverified=await capture('Build affordable housing.');
@@ -170,10 +273,10 @@ test('elections additive migration and server persistence on disposable PostgreS
     await t.test('ingestion completeness and browser role permission enforcement',async()=>{
       const run=await elections.startElectionRun({stage:'discovery',adapter:'fixture',adapterVersion:'1'},pool);
       await assert.rejects(elections.finishElectionRun(run.id,{status:'complete',coverage:[]},pool),/coverage/);
-      await elections.finishElectionRun(run.id,{status:'partial',coverage:[{state:'AK',status:'partial'}],counts:{read:4},errorCodes:['source-timeout']},pool);
+      await elections.finishElectionRun(run.id,{status:'partial',coverage:[{state:'AK',office:'house',status:'partial'},{state:'AK',office:'senate',status:'partial'}],counts:{read:4},errorCodes:['source-timeout']},pool);
       assert.equal((await read()).coverage.status,'partial');
       const tables=(await pool.query(`SELECT tablename,rowsecurity FROM pg_tables WHERE schemaname='public' AND (tablename LIKE 'election_%' OR tablename LIKE 'campaign_%')`)).rows;
-      assert.equal(tables.length,18);
+      assert.equal(tables.length,19);
       const tablePrivileges=(await pool.query(`
         SELECT c.relname AS name,c.relrowsecurity,
           (has_table_privilege('anon',c.oid,'SELECT') OR has_table_privilege('anon',c.oid,'INSERT')
@@ -196,7 +299,7 @@ test('elections additive migration and server persistence on disposable PostgreS
         WHERE n.nspname='public' AND c.relkind IN ('r','p')
           AND (c.relname LIKE 'election_%' OR c.relname LIKE 'campaign_%')
       `)).rows;
-      assert.equal(tablePrivileges.length,18);
+      assert.equal(tablePrivileges.length,19);
       for (const table of tablePrivileges) {
         assert.equal(table.relrowsecurity,true,`${table.name} RLS`);
         assert.equal(table.anon_any_table_privilege,false,`${table.name} anon privileges`);

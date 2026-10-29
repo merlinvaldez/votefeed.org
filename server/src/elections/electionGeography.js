@@ -1,5 +1,5 @@
 import { readElectionPositions, saveElectionGeography } from '../db/queries/elections.js';
-import { normalizeState, ELECTION_GEOGRAPHY_SOURCE, ELECTION_GEOGRAPHY_VERSION } from './contracts.js';
+import { normalizeState, ELECTION_GEOGRAPHY_SOURCE, ELECTION_GEOGRAPHY_VERSION, ELECTION_GEOGRAPHY_UNVERIFIED_STATES } from './contracts.js';
 
 // A separate, fixed vintage keeps election geography independent of the sitting House lookup.
 const ENDPOINT = 'https://geocoding.geo.census.gov/geocoder/geographies/onelineaddress';
@@ -28,23 +28,57 @@ export function extractElectionDistrict(match) {
   return {state:abbreviation,district:Number(code)};
 }
 
-export async function resolveElectionDistrict(address, {fetcher=fetch, timeoutMs=15000}={}) {
+export function extractElectionGeography(match) {
+  const states = match?.geographies?.States;
+  if (!Array.isArray(states) || states.length !== 1) return null;
+  const state = states[0];
+  let abbreviation;
+  try { abbreviation = normalizeState(state.STUSAB); } catch { return null; }
+  const fips = String(state.STATE ?? state.GEOID ?? '');
+  if (STATE_FIPS[abbreviation] !== fips) return null;
+  const district = extractElectionDistrict(match);
+  const canUseDistrict = district?.state === abbreviation && !ELECTION_GEOGRAPHY_UNVERIFIED_STATES.includes(abbreviation);
+  return {
+    state: abbreviation,
+    district: canUseDistrict ? district.district : null,
+    status: canUseDistrict ? 'verified' : 'unresolved',
+  };
+}
+
+export async function resolveElectionGeography(address, {fetcher=fetch, timeoutMs=15000}={}) {
   const response = await fetcher(buildElectionGeographyUrl(address),{signal:AbortSignal.timeout(timeoutMs)});
   if (!response.ok) throw new Error('Election geography service unavailable');
   const data = await response.json();
   const matches = data?.result?.addressMatches;
   if (!Array.isArray(matches) || matches.length !== 1) return null;
-  const district = extractElectionDistrict(matches[0]);
-  if (!district) return null;
-  return {...district,geographyEvidence:{state:district.state,cycle:2026,boundaryVersion:ELECTION_GEOGRAPHY_VERSION,sourceUrl:ELECTION_GEOGRAPHY_SOURCE,checkedAt:new Date().toISOString(),status:'verified'}};
+  const geography = extractElectionGeography(matches[0]);
+  if (!geography) return null;
+  return {
+    ...geography,
+    geographyEvidence: {
+      ...geography,
+      cycle: 2026,
+      boundaryVersion: ELECTION_GEOGRAPHY_VERSION,
+      sourceUrl: ELECTION_GEOGRAPHY_SOURCE,
+      checkedAt: new Date().toISOString(),
+    },
+  };
+}
+
+export async function resolveElectionDistrict(address, options = {}) {
+  const geography = await resolveElectionGeography(address, options);
+  return geography?.status === 'verified'
+    ? { state: geography.state, district: geography.district, geographyEvidence: geography.geographyEvidence }
+    : null;
 }
 
 // Trusted server path: derive the district and its evidence together from one lookup.
 // Do not accept a district or geography evidence ID from the caller here.
 export async function readElectionPositionsForAddress(address, options = {}, auth = null, pool, lookupOptions = {}) {
-  const location = await resolveElectionDistrict(address, lookupOptions);
+  const location = await resolveElectionGeography(address, lookupOptions);
   if (!location) throw new Error('Election geography could not be verified');
   const evidence = await saveElectionGeography(location.geographyEvidence, pool);
-  return readElectionPositions({state:location.state,district:location.district,geographyEvidenceId:evidence.id,
+  return readElectionPositions({state:location.state,district:location.district,
+    geographyEvidenceId:location.status === 'verified' ? evidence.id : null,
     scope:options.scope,limit:options.limit,cursor:options.cursor},auth,pool);
 }
