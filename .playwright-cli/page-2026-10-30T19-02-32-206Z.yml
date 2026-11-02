@@ -1,0 +1,46 @@
+- generic [ref=f3e4]:
+  - complementary [ref=f3e5]:
+    - link "VoteFeed feed" [ref=f3e6] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f3e8]
+      - generic [ref=f3e9]: VoteFeed
+    - navigation [ref=f3e10]:
+      - link "Feed" [ref=f3e11] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=f3e16] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=f3e21]:
+      - generic [ref=f3e22]:
+        - generic [ref=f3e23]: Policy Areas
+        - button "Search policy areas" [ref=f3e24] [cursor=pointer]
+      - button "All" [ref=f3e208] [cursor=pointer]
+  - main [ref=f3e65]:
+    - generic [ref=f3e66]:
+      - generic [ref=f3e70]:
+        - generic [ref=f3e71]: Viewing as Guest
+        - generic [ref=f3e72]: Your interactions won't be saved.
+      - button "Sign Up / Sign In" [ref=f3e73] [cursor=pointer]
+    - tablist "Feed sections" [ref=f3e74]:
+      - tab "All Reps" [ref=f3e75] [cursor=pointer]
+      - tab "House of Representatives" [ref=f3e82] [cursor=pointer]
+      - tab "Senate" [ref=f3e88] [cursor=pointer]
+      - tab "Elections" [selected] [ref=f3e92] [cursor=pointer]
+    - tabpanel "Elections" [ref=f3e97]:
+      - region "Election candidates" [ref=f3e98]:
+        - tablist "Filter candidates by chamber" [ref=f3e99]:
+          - tab "All Candidates" [ref=f3e100] [cursor=pointer]
+          - tab "House" [active] [selected] [ref=f3e101] [cursor=pointer]
+          - tab "Senate" [ref=f3e102] [cursor=pointer]
+        - tabpanel "House" [ref=f3e209]:
+          - status [ref=f3e210]: Loading candidates…
+      - generic [ref=f3e173]:
+        - generic [ref=f3e174]:
+          - heading "Campaign Positions" [level=2] [ref=f3e175]
+          - paragraph [ref=f3e176]:
+            - text: Policy positions from candidates’ official campaign websites.
+            - note [ref=f3e177]: ·Visual-only 5-candidate fixture; fictional candidates, no eligibility, coverage, or results claims.
+        - generic [ref=f3e178]:
+          - generic [ref=f3e179]: Filter by policy area
+          - combobox "Filter by policy area" [ref=f3e180]:
+            - option "All Policy Areas" [selected]
+      - status [ref=f3e211]: Loading campaign positions…

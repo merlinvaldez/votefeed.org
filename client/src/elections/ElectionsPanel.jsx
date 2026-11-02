@@ -1,13 +1,18 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
-import { ThumbsDown, ThumbsUp } from "lucide-react";
+import { Link as LinkIcon, ThumbsDown, ThumbsUp } from "lucide-react";
 import { AlignmentGauge } from "../RepCard.jsx";
-import ElectionCandidateNavigation from "./ElectionCandidateNavigation";
+import ElectionCandidateNavigation, { CandidatePortrait } from "./ElectionCandidateNavigation";
 import { createElectionHttpClient } from "./electionFeedApi.js";
+import { parseElectionFixturePreviewLocation } from "./electionFixturePreview.js";
 import "./ElectionsPanel.css";
 
 const FIXTURE_DATA_ENABLED = import.meta.env.DEV &&
   import.meta.env.VITE_ELECTION_FIXTURES === "true";
+function fixturePreviewOptions() {
+  if (!FIXTURE_DATA_ENABLED || typeof window === "undefined") return null;
+  return parseElectionFixturePreviewLocation(window.location.pathname, window.location.search);
+}
 const PAGE_SIZE = 10;
 const FIXTURE_GEOGRAPHY = Object.freeze({ status: "verified", state: "NY", houseDistrict: 13 });
 const UNAVAILABLE_GEOGRAPHY = Object.freeze({ status: "unavailable", state: null, houseDistrict: null });
@@ -24,6 +29,12 @@ const POLICY_AREA_LABELS = Object.freeze({
   government: "Government",
   other: "Other",
 });
+
+function readErrorMessage(error, authenticationMessage, fallbackMessage) {
+  if (error?.code === "AUTHENTICATION_REQUIRED") return authenticationMessage;
+  if (error?.code === "INVALID_ELECTION_REQUEST") return error.message;
+  return fallbackMessage;
+}
 
 function initialState() {
   return {
@@ -86,6 +97,11 @@ function retrievedDate(value) {
   const date = new Date(value);
   if (!Number.isFinite(date.getTime())) return "retrieval date unavailable";
   return `retrieved ${new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(date)}`;
+}
+
+function responseDisplayName(candidate) {
+  const supportedName = candidate?.responseDisplayName;
+  return typeof supportedName === "string" && supportedName.trim() ? supportedName.trim() : null;
 }
 
 function alignmentColor(percent) {
@@ -158,9 +174,7 @@ function ElectionAlignment({ candidate, client, scope, viewer, revision, onRetry
   return (
     <section className="member-alignment election-alignment" aria-label={`Alignment with ${candidate.name}`}
       style={{ "--alignment-accent": alignmentColor(percent) }}>
-      <div className="member-alignment-text">
-        <div className="member-alignment-label">Your alignment with {candidate.name}</div>
-      </div>
+      <h3 className="election-alignment-heading">Your alignment</h3>
       {viewState.status === "loading" ? (
         <p className="member-alignment-empty" role="status">Loading your campaign-position alignment…</p>
       ) : viewState.status === "error" ? (
@@ -170,20 +184,20 @@ function ElectionAlignment({ candidate, client, scope, viewer, revision, onRetry
           <button type="button" onClick={onRetry}>Retry alignment</button>
         </div>
       ) : viewState.status === "sign-in-required" ? (
-        <p className="member-alignment-empty">Sign in to respond to campaign positions and see your alignment.</p>
+        <p className="member-alignment-empty">Sign in to respond and see your alignment.</p>
+      ) : !hasData ? (
+        <p className="member-alignment-empty">Agree or disagree with a campaign position to see your alignment.</p>
       ) : (
-        <>
+        <div className="election-alignment-result">
           <AlignmentGauge percent={percent} hasData={hasData} emptyLabel="—" />
           <div className="member-alignment-text">
             <p className="member-alignment-copy">
-              {hasData ? <>
-                You agree with <span className="member-alignment-emphasis">{viewState.data.agreementCount}</span>
-                {" "}out of <span className="member-alignment-emphasis">{viewState.data.answeredCount}</span> answered campaign positions
-                {scope.policyArea ? ` in ${policyLabel(scope.policyArea)}` : ""}.
-              </> : <>Agree or disagree with a campaign position to see your alignment.</>}
+              You agree with <span className="member-alignment-emphasis">{viewState.data.agreementCount}</span>
+              {" "}out of <span className="member-alignment-emphasis">{viewState.data.answeredCount}</span> answered campaign positions
+              {scope.policyArea ? ` in ${policyLabel(scope.policyArea)}` : " across all policy areas"}.
             </p>
           </div>
-        </>
+        </div>
       )}
     </section>
   );
@@ -191,6 +205,7 @@ function ElectionAlignment({ candidate, client, scope, viewer, revision, onRetry
 
 function PositionCard({ item, pending, failure, viewer, onResponse }) {
   const candidateName = item.candidate?.name ?? "Candidate";
+  const compactName = responseDisplayName(item.candidate);
   const stance = item.response?.stance ?? null;
   const sourceUrl = safeSourceUrl(item.source?.url);
   const [portraitFailed, setPortraitFailed] = useState(false);
@@ -200,12 +215,18 @@ function PositionCard({ item, pending, failure, viewer, onResponse }) {
 
   function responseButton(value, label, icon) {
     const selected = stance === value;
+    const buttonText = !selected
+      ? label
+      : value === "agree"
+        ? `I agree${compactName ? ` with ${compactName}` : ""}`
+        : "I disagree";
     return (
       <button type="button" className={`election-response-button election-response-${value} ${selected ? "is-selected" : ""}`}
-        aria-pressed={selected} aria-label={`${selected ? "Clear" : label} ${selected ? "response for" : "with"} ${candidateName}`}
+        aria-pressed={selected}
+        aria-label={selected ? `Clear ${value} response for ${candidateName}` : `${label} with ${candidateName}`}
         disabled={pending} onClick={() => onResponse(item, selected ? null : value)}>
         {icon}
-        <span>{selected ? value === "agree" ? `I agree with ${candidateName}` : "I disagree" : label}</span>
+        <span>{buttonText}</span>
       </button>
     );
   }
@@ -228,15 +249,18 @@ function PositionCard({ item, pending, failure, viewer, onResponse }) {
           {item.candidate?.incumbency === "incumbent" && <span className="election-incumbent-badge">Incumbent</span>}
         </div>
         <p className="election-position-summary">{item.summary}</p>
-        {ballotNotice && <p className="election-ballot-notice">{ballotNotice}</p>}
         <div className="election-position-source-row">
           {sourceUrl ? (
             <a href={sourceUrl} target="_blank" rel="noreferrer"
               aria-label={`Open ${candidateName}'s campaign source in a new tab, ${retrievedDate(item.source?.retrievedAt)}`}>
-              <span aria-hidden="true">↗</span> Campaign source
+              <LinkIcon size={17} aria-hidden="true" />
             </a>
           ) : <span>Campaign source unavailable</span>}
-          <time dateTime={item.source?.retrievedAt}>{retrievedDate(item.source?.retrievedAt)}</time>
+          <details className="election-source-details">
+            <summary>Source details</summary>
+            <time dateTime={item.source?.retrievedAt}>{retrievedDate(item.source?.retrievedAt)}</time>
+            {ballotNotice && <p className="election-ballot-notice">{ballotNotice}</p>}
+          </details>
         </div>
         <div className="election-position-actions" aria-label={`Respond to ${candidateName}'s campaign position`}>
           {responseButton("agree", "Agree", <ThumbsUp size={18} aria-hidden="true" />)}
@@ -264,6 +288,7 @@ export default function ElectionsPanel({
   hidden = false,
 }) {
   const { panelPolicyState, setPanelPolicyArea, setPanelPolicyData } = useOutletContext();
+  const fixtureOptions = useMemo(() => fixturePreviewOptions(), []);
   const [electionState, setElectionState] = useState(initialState);
   const [client, setClient] = useState(null);
   const [rosterRetry, setRosterRetry] = useState(0);
@@ -301,7 +326,7 @@ export default function ElectionsPanel({
     let active = true;
     if (FIXTURE_DATA_ENABLED) {
       import("./electionFeedFixtures.js").then(({ createElectionFixtureClient }) => {
-        if (active) setClient(createElectionFixtureClient());
+        if (active) setClient(createElectionFixtureClient(fixtureOptions ?? undefined));
       });
     } else {
       setClient(createElectionHttpClient({ viewer, address: guestAddress, authFetch }));
@@ -310,7 +335,7 @@ export default function ElectionsPanel({
       active = false;
       pageControllerRef.current?.abort();
     };
-  }, [viewer, guestAddress, authFetch]);
+  }, [viewer, guestAddress, authFetch, fixtureOptions]);
 
   const geography = useMemo(() => electionState.roster.geography ?? (FIXTURE_DATA_ENABLED
     ? FIXTURE_GEOGRAPHY : UNAVAILABLE_GEOGRAPHY), [electionState.roster.geography]);
@@ -369,9 +394,9 @@ export default function ElectionsPanel({
       setElectionState(current => ({ ...current, roster: {
         ...current.roster,
         status: "error",
-        error: error.code === "AUTHENTICATION_REQUIRED"
-          ? "Your session expired. Sign in again to load candidates."
-          : "We couldn’t load candidates. Try again.",
+        error: readErrorMessage(error,
+          "Your session expired. Sign in again to load candidates.",
+          "We couldn’t load candidates. Try again."),
       } }));
     });
     return () => { active = false; controller.abort(); };
@@ -398,7 +423,7 @@ export default function ElectionsPanel({
   },[applyBuildJobs,client,electionState.chamber,geography.state,viewer]);
 
   const selectChamber = useCallback(chamber => {
-    setElectionState(current => ({
+    setElectionState(current => current.chamber === chamber ? current : ({
       ...current,
       chamber,
       selectedCandidacyId: null,
@@ -469,18 +494,18 @@ export default function ElectionsPanel({
           return { ...current, positions: {
             ...current.positions,
             refreshing: false,
-            refreshError: error.code === "AUTHENTICATION_REQUIRED"
-              ? "Your session expired. Sign in again to refresh campaign positions."
-              : "We couldn't refresh campaign positions.",
+            refreshError: readErrorMessage(error,
+              "Your session expired. Sign in again to refresh campaign positions.",
+              "We couldn't refresh campaign positions."),
           } };
         }
         return { ...current, positions: {
           ...current.positions,
           status: "error",
           refreshing: false,
-          error: error.code === "AUTHENTICATION_REQUIRED"
-            ? "Your session expired. Sign in again to load campaign positions."
-            : "We couldn’t load campaign positions. Try again.",
+          error: readErrorMessage(error,
+            "Your session expired. Sign in again to load campaign positions.",
+            "We couldn’t load campaign positions. Try again."),
         } };
       });
     });
@@ -527,13 +552,15 @@ export default function ElectionsPanel({
 
   useEffect(() => {
     const node = sentinelRef.current;
-    if (!node || !electionState.positions.page.hasMore || electionState.positions.status !== "ready" || loadingMore) return undefined;
+    if (!node || !electionState.positions.page.hasMore || electionState.positions.status !== "ready" ||
+        loadingMore || electionState.positions.nextError) return undefined;
     const observer = new IntersectionObserver(entries => {
       if (entries[0]?.isIntersecting) loadMore();
     }, { rootMargin: "260px" });
     observer.observe(node);
     return () => observer.disconnect();
-  }, [electionState.positions.page.hasMore, electionState.positions.status, loadingMore, loadMore]);
+  }, [electionState.positions.nextError, electionState.positions.page.hasMore,
+    electionState.positions.status, loadingMore, loadMore]);
 
   const selectedCandidate = electionState.roster.items.find(candidate =>
     candidate.candidacyId === electionState.selectedCandidacyId) ?? null;
@@ -585,29 +612,6 @@ export default function ElectionsPanel({
     <section id="elections-feed-panel" className="elections-panel" role="tabpanel"
       data-viewer={viewer} aria-labelledby="feed-view-tab-elections" tabIndex={0}
       aria-busy={electionState.positions.refreshing} hidden={hidden}>
-      {FIXTURE_DATA_ENABLED && (
-        <p className="elections-fixture-notice" role="note">
-          Development fixture data — fictional candidates, not live election results.
-        </p>
-      )}
-      {showHouseWarning && (
-        <p className="election-geography-notice" role="status">
-          Senate candidates can still appear. Your 2026 House district has not been verified.
-        </p>
-      )}
-      {coverage?.status !== "complete" && coverage?.message && (
-        <p className="election-coverage-notice" role="status">{coverage.message}</p>
-      )}
-      {activeBuildCount>0 && (
-        <p className="election-build-notice" role="status">
-          We’re preparing the election feed for your location. This can take a few minutes.
-        </p>
-      )}
-      {buildNeedsRetry && activeBuildCount===0 && (
-        <p className="election-build-notice" role="status">
-          Some candidate or campaign information could not be prepared. Any saved positions remain available, and incomplete work can retry on a later request.
-        </p>
-      )}
       <ElectionCandidateNavigation
         chamber={electionState.chamber}
         onChamberChange={selectChamber}
@@ -617,49 +621,88 @@ export default function ElectionsPanel({
         onRetry={() => setRosterRetry(value => value + 1)}
         emptyMessage={emptyRosterMessage(electionState.chamber, electionState.roster.availability)}
         selectedCandidacyId={electionState.selectedCandidacyId}
+        selectedSummary={selectedCandidate && client && (
+          <aside className="election-selected-candidate-summary" aria-label={`Selected candidate: ${selectedCandidate.name}`}>
+            <div className="election-selected-candidate-profile">
+              <CandidatePortrait key={selectedCandidate.candidacyId} candidate={selectedCandidate} />
+              <div className="election-selected-candidate-copy">
+                <p className="election-selected-candidate-label">Positions from</p>
+                <div className="election-selected-candidate-name-row">
+                  <h3>{selectedCandidate.name}</h3>
+                  {selectedCandidate.incumbency === "incumbent" && <span className="election-incumbent-badge">Incumbent</span>}
+                </div>
+              </div>
+              <button type="button" className="election-all-candidates-reset"
+                onClick={() => setElectionState(current => ({ ...current, selectedCandidacyId: null }))}>
+                All candidates
+              </button>
+            </div>
+            <ElectionAlignment candidate={selectedCandidate} client={client} scope={feedScope}
+              viewer={viewer} revision={alignmentRetry + alignmentRevision}
+              onRetry={() => setAlignmentRetry(value => value + 1)} />
+          </aside>
+        )}
         onSelectCandidate={candidacyId => setElectionState(current => ({
           ...current,
           selectedCandidacyId: candidacyId,
         }))}
       />
 
-      {selectedCandidate && (
-        <div className="election-selected-candidate-summary">
-          <p className="election-selected-candidate-label">Positions from {selectedCandidate.name}</p>
-          <button type="button" className="election-all-candidates-reset"
-            onClick={() => setElectionState(current => ({ ...current, selectedCandidacyId: null }))}>
-            All candidates
-          </button>
-          {client && <ElectionAlignment candidate={selectedCandidate} client={client} scope={feedScope}
-            viewer={viewer} revision={alignmentRetry + alignmentRevision}
-            onRetry={() => setAlignmentRetry(value => value + 1)} />}
-        </div>
-      )}
-
       <div className="election-campaign-heading">
         <div>
           <h2>Campaign Positions</h2>
-          <p>Policy positions from candidates’ official campaign websites.</p>
-          {selectedCandidate && <span className="election-selected-scope">
-            {selectedPolicyArea ? policyLabel(selectedPolicyArea) : "All policy areas"}
-          </span>}
+          <p>Policy positions from candidates’ official campaign websites.
+            {FIXTURE_DATA_ENABLED && <span className="elections-fixture-note" role="note">
+              {client?.fixtureScenario?.raceStatus === "confirmed-none"
+                ? "SYNTHETIC no-race fixture; not a live election result."
+                : client?.fixtureScenario?.candidateAvailabilityScenario
+                  ? `Synthetic ${client.fixtureScenario.candidateAvailabilityScenario} fixture; fictional candidate and site-processing status.`
+                  : fixtureOptions?.simulatedViewer
+                ? "SIMULATED signed-in view. Fixture responses stay in this page's memory and are not sent to the service."
+                : client?.visualScenario
+                  ? client.visualScenario.candidateCount === 0
+                    ? "Empty visual fixture; no candidates or ballot-result claims."
+                    : `Visual-only ${client.visualScenario.candidateCount}-candidate fixture; fictional candidates, no eligibility, coverage, or results claims.`
+                  : "Development fixture data: fictional candidates; coverage is illustrative, not a ballot-completeness claim."}
+            </span>}
+          </p>
         </div>
         <label className="election-policy-select-label">
           <span className="sr-only">Filter by policy area</span>
           <select value={selectedPolicyArea ?? ""}
             onChange={event => setPanelPolicyArea("elections", event.target.value || null)}>
-            <option value="">All Policy Areas{policyCounts?.all != null ? ` (${policyCounts.all})` : ""}</option>
+            <option value="">All Policy Areas</option>
             {policyAreas.map(area => (
               <option key={area.value} value={area.value}>
-                {area.label}{area.count != null ? ` (${area.count})` : ""}
+                {area.label}
               </option>
             ))}
             {policyCounts?.uncategorized > 0 && <option value="uncategorized">
-              Uncategorized ({policyCounts.uncategorized})
+              Uncategorized
             </option>}
           </select>
         </label>
       </div>
+
+      {showHouseWarning && (
+        <p className="election-geography-notice" role="status">
+          Senate candidates can still appear. Your 2026 House district has not been verified.
+        </p>
+      )}
+      {(!FIXTURE_DATA_ENABLED || fixtureOptions?.showCoverageNotice) &&
+        coverage?.status !== "complete" && coverage?.message && (
+        <p className="election-coverage-notice" role="status">{coverage.message}</p>
+      )}
+      {activeBuildCount > 0 && (
+        <p className="election-build-notice" role="status">
+          We’re preparing the election feed for your location. This can take a few minutes.
+        </p>
+      )}
+      {buildNeedsRetry && activeBuildCount === 0 && (
+        <p className="election-build-notice" role="status">
+          Some candidate or campaign information could not be prepared. Any saved positions remain available, and incomplete work can retry on a later request.
+        </p>
+      )}
 
       {electionState.positions.status === "loading" && (
         <p className="election-feed-status" role="status">Loading campaign positions…</p>

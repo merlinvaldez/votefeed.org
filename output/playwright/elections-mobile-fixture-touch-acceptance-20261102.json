@@ -1,0 +1,51 @@
+{
+  "date": "2026-11-02",
+  "scope": "Local Dev fixture preview only",
+  "browser": "Microsoft Edge via Playwright CLI, headless mobile emulation",
+  "viewer": "Guest",
+  "device": {
+    "viewportCss": {
+      "width": 360,
+      "height": 732
+    },
+    "deviceScaleFactor": 3,
+    "maxTouchPoints": 1,
+    "coarsePointer": true
+  },
+  "touchTargets": [
+    { "name": "outer Elections tab", "pointerType": "touch", "target": "button", "boxCss": [267, 172, 81, 61] },
+    { "name": "House chamber tab", "pointerType": "touch", "target": "button", "boxCss": [128, 243, 105, 59] },
+    { "name": "Senate chamber tab", "pointerType": "touch", "target": "button", "boxCss": [232, 243, 105, 59] },
+    { "name": "All Candidates chamber tab", "pointerType": "touch", "target": "button", "boxCss": [23, 243, 105, 59] },
+    { "name": "Avery candidate card", "pointerType": "touch", "target": "span", "boxCss": [20, 318, 153, 225], "selected": true },
+    { "name": "policy-area combobox", "pointerType": "touch", "target": "select", "boxCss": [23, 345, 314, 42], "selectedValue": "housing", "selectionMethod": "Playwright selectOption after touch opened the native combobox" },
+    { "name": "Source details summary", "pointerType": "touch", "target": "summary", "boxCss": [161, 608, 95, 40], "expanded": true },
+    { "name": "guest Agree button", "pointerType": "touch", "target": "span", "boxCss": [103, 534, 220, 40], "ariaPressedAfterTap": "false" }
+  ],
+  "chamberRosterCounts": {
+    "house": 3,
+    "senate": 2,
+    "allCandidates": 5
+  },
+  "filteredHousingPositionCount": 1,
+  "guestResponseGuidanceVisible": true,
+  "responsePersisted": false,
+  "documentClientWidthCssPx": 360,
+  "documentScrollWidthCssPx": 360,
+  "stateOnlyGeography": {
+    "allCandidatesRosterOffices": ["senate", "senate"],
+    "senatePositionCount": 2,
+    "houseRosterCount": 0,
+    "housePositionCount": 0,
+    "houseNotice": "House candidates are unavailable until your 2026 House district is verified. Update your saved address to refresh election geography.",
+    "senateNotice": "Your 2026 House district could not be verified. Senate positions remain available when the service has matching state data.",
+    "documentClientWidthCssPx": 360,
+    "documentScrollWidthCssPx": 360
+  },
+  "pageRuntimeErrors": 0,
+  "browserWarnings": [
+    "Expected Clerk development-key warning from the local development instance"
+  ],
+  "authenticatedRequests": 0,
+  "databaseWrites": 0
+}

@@ -1,0 +1,230 @@
+- generic [ref=f2e40]:
+  - complementary [ref=f2e41]:
+    - link "VoteFeed feed" [ref=f2e42] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f2e44]
+      - generic [ref=f2e45]: VoteFeed
+    - navigation [ref=f2e46]:
+      - link "Feed" [ref=f2e47] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=f2e52] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=f2e57]:
+      - generic [ref=f2e58]:
+        - generic [ref=f2e59]: Policy Areas
+        - button "Search policy areas" [ref=f2e60] [cursor=pointer]
+      - generic [ref=f2e64]:
+        - button "All 353" [ref=f2e522] [cursor=pointer]:
+          - generic [ref=f2e66]: All
+          - generic [ref=f2e817]: "353"
+        - button "Agriculture and Food 4" [ref=f2e818] [cursor=pointer]:
+          - generic [ref=f2e819]: Agriculture and Food
+          - generic [ref=f2e820]: "4"
+        - button "Animals 3" [ref=f2e821] [cursor=pointer]:
+          - generic [ref=f2e822]: Animals
+          - generic [ref=f2e823]: "3"
+        - button "Armed Forces and National Security 17" [ref=f2e824] [cursor=pointer]:
+          - generic [ref=f2e825]: Armed Forces and National Security
+          - generic [ref=f2e826]: "17"
+        - button "Civil Rights and Liberties, Minority Issues 3" [ref=f2e827] [cursor=pointer]:
+          - generic [ref=f2e828]: Civil Rights and Liberties, Minority Issues
+          - generic [ref=f2e829]: "3"
+        - button "Commerce 21" [ref=f2e830] [cursor=pointer]:
+          - generic [ref=f2e831]: Commerce
+          - generic [ref=f2e832]: "21"
+        - button "Congress 30" [ref=f2e833] [cursor=pointer]:
+          - generic [ref=f2e834]: Congress
+          - generic [ref=f2e835]: "30"
+        - button "Crime and Law Enforcement 20" [ref=f2e836] [cursor=pointer]:
+          - generic [ref=f2e837]: Crime and Law Enforcement
+          - generic [ref=f2e838]: "20"
+        - button "Economics and Public Finance 26" [ref=f2e839] [cursor=pointer]:
+          - generic [ref=f2e840]: Economics and Public Finance
+          - generic [ref=f2e841]: "26"
+        - button "Education 8" [ref=f2e842] [cursor=pointer]:
+          - generic [ref=f2e843]: Education
+          - generic [ref=f2e844]: "8"
+        - button "Emergency Management 4" [ref=f2e845] [cursor=pointer]:
+          - generic [ref=f2e846]: Emergency Management
+          - generic [ref=f2e847]: "4"
+        - button "Energy 29" [ref=f2e848] [cursor=pointer]:
+          - generic [ref=f2e849]: Energy
+          - generic [ref=f2e850]: "29"
+        - button "Environmental Protection 21" [ref=f2e851] [cursor=pointer]:
+          - generic [ref=f2e852]: Environmental Protection
+          - generic [ref=f2e853]: "21"
+        - button "Families 1" [ref=f2e854] [cursor=pointer]:
+          - generic [ref=f2e855]: Families
+          - generic [ref=f2e856]: "1"
+        - button "Finance and Financial Sector 21" [ref=f2e857] [cursor=pointer]:
+          - generic [ref=f2e858]: Finance and Financial Sector
+          - generic [ref=f2e859]: "21"
+        - button "Foreign Trade and International Finance 10" [ref=f2e860] [cursor=pointer]:
+          - generic [ref=f2e861]: Foreign Trade and International Finance
+          - generic [ref=f2e862]: "10"
+        - button "Government Operations and Politics 19" [ref=f2e863] [cursor=pointer]:
+          - generic [ref=f2e864]: Government Operations and Politics
+          - generic [ref=f2e865]: "19"
+        - button "Health 4" [ref=f2e866] [cursor=pointer]:
+          - generic [ref=f2e867]: Health
+          - generic [ref=f2e868]: "4"
+        - button "Housing and Community Development 2" [ref=f2e869] [cursor=pointer]:
+          - generic [ref=f2e870]: Housing and Community Development
+          - generic [ref=f2e871]: "2"
+        - button "Immigration 11" [ref=f2e872] [cursor=pointer]:
+          - generic [ref=f2e873]: Immigration
+          - generic [ref=f2e874]: "11"
+        - button "International Affairs 29" [ref=f2e875] [cursor=pointer]:
+          - generic [ref=f2e876]: International Affairs
+          - generic [ref=f2e877]: "29"
+        - button "Labor and Employment 6" [ref=f2e878] [cursor=pointer]:
+          - generic [ref=f2e879]: Labor and Employment
+          - generic [ref=f2e880]: "6"
+        - button "Law 3" [ref=f2e881] [cursor=pointer]:
+          - generic [ref=f2e882]: Law
+          - generic [ref=f2e883]: "3"
+        - button "Native Americans 5" [ref=f2e884] [cursor=pointer]:
+          - generic [ref=f2e885]: Native Americans
+          - generic [ref=f2e886]: "5"
+        - button "Public Lands and Natural Resources 28" [ref=f2e887] [cursor=pointer]:
+          - generic [ref=f2e888]: Public Lands and Natural Resources
+          - generic [ref=f2e889]: "28"
+        - button "Science, Technology, Communications 10" [ref=f2e890] [cursor=pointer]:
+          - generic [ref=f2e891]: Science, Technology, Communications
+          - generic [ref=f2e892]: "10"
+        - button "Social Welfare 2" [ref=f2e893] [cursor=pointer]:
+          - generic [ref=f2e894]: Social Welfare
+          - generic [ref=f2e895]: "2"
+        - button "Sports and Recreation 1" [ref=f2e896] [cursor=pointer]:
+          - generic [ref=f2e897]: Sports and Recreation
+          - generic [ref=f2e898]: "1"
+        - button "Taxation 9" [ref=f2e899] [cursor=pointer]:
+          - generic [ref=f2e900]: Taxation
+          - generic [ref=f2e901]: "9"
+        - button "Transportation and Public Works 5" [ref=f2e902] [cursor=pointer]:
+          - generic [ref=f2e903]: Transportation and Public Works
+          - generic [ref=f2e904]: "5"
+        - button "Water Resources Development 1" [ref=f2e905] [cursor=pointer]:
+          - generic [ref=f2e906]: Water Resources Development
+          - generic [ref=f2e907]: "1"
+  - main [ref=f2e158]:
+    - generic [ref=f2e159]:
+      - generic [ref=f2e163]:
+        - generic [ref=f2e164]: Viewing as Guest
+        - generic [ref=f2e165]: Your interactions won't be saved.
+      - button "Sign Up / Sign In" [ref=f2e166] [cursor=pointer]
+    - tablist "Feed sections" [ref=f2e167]:
+      - tab "All Reps" [selected] [ref=f2e168] [cursor=pointer]
+      - tab "House of Representatives" [ref=f2e175] [cursor=pointer]
+      - tab "Senate" [ref=f2e181] [cursor=pointer]
+      - tab "Elections" [ref=f2e185] [cursor=pointer]
+    - text: ·
+    - tabpanel "All Reps" [ref=f2e613]:
+      - region "Your congressional delegation" [ref=f2e614]:
+        - generic [ref=f2e615]:
+          - generic [ref=f2e616]:
+            - generic [ref=f2e617]:
+              - article "Wittman, Robert J." [ref=f2e618]:
+                - img "Wittman, Robert J. official portrait" [ref=f2e620]
+                - generic [ref=f2e621]:
+                  - heading "Wittman, Robert J." [level=3] [ref=f2e622]
+                  - generic [ref=f2e623]:
+                    - generic [ref=f2e624]: U.S. Representative
+                    - generic [ref=f2e629]: Republican Party
+              - article "Kaine, Tim" [ref=f2e631]:
+                - img "Kaine, Tim official portrait" [ref=f2e633]
+                - generic [ref=f2e634]:
+                  - heading "Kaine, Tim" [level=3] [ref=f2e635]
+                  - generic [ref=f2e636]:
+                    - generic [ref=f2e637]: U.S. Senator
+                    - generic [ref=f2e642]: Democratic Party
+              - article "Warner, Mark R." [ref=f2e644]:
+                - img "Warner, Mark R. official portrait" [ref=f2e646]
+                - generic [ref=f2e647]:
+                  - heading "Warner, Mark R." [level=3] [ref=f2e648]
+                  - generic [ref=f2e649]:
+                    - generic [ref=f2e650]: U.S. Senator
+                    - generic [ref=f2e655]: Democratic Party
+            - status
+          - generic [ref=f2e657]:
+            - generic [ref=f2e658]:
+              - img "No alignment data yet" [ref=f2e659]
+              - generic [aria-hidden] [ref=f2e663]: 0%
+            - generic [ref=f2e664]:
+              - generic [ref=f2e665]: Policy Alignment
+              - paragraph [ref=f2e666]:
+                - text: Select
+                - img "like" [ref=f2e667]
+                - text: or
+                - img "dislike" [ref=f2e669]
+                - text: on a vote to show alignment.
+      - generic [ref=f2e671]:
+        - heading "Legislative Feed" [level=2] [ref=f2e672]
+        - 'article "Rep. Wittman, Robert J.: S. 629" [ref=f2e908]':
+          - generic [ref=f2e909]:
+            - generic [ref=f2e910]:
+              - generic [ref=f2e911]:
+                - group "Rep. Wittman, Robert J." [ref=f2e912]:
+                  - img "Wittman, Robert J. official portrait" [ref=f2e914]
+                - button "S. 629" [ref=f2e915] [cursor=pointer]
+                - generic [ref=f2e916]: Jun 23, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f2e920] [cursor=pointer]
+            - generic [ref=f2e924]:
+              - text: Rep. Wittman voted
+              - generic [ref=f2e925]: Yea
+              - text: on S. 629, a bill to give farmers and private forest landowners more upfront disaster money and cover more wildfire damage.
+            - generic [ref=f2e926]:
+              - button "Agree with Rep. Wittman, Robert J." [ref=f2e927] [cursor=pointer]
+              - button "Disagree with Rep. Wittman, Robert J." [ref=f2e930] [cursor=pointer]
+              - button "Open comments on S. 629 for Wittman, Robert J." [ref=f2e933] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Wittman, Robert J.: H.R. 7567" [ref=f2e936]':
+          - generic [ref=f2e937]:
+            - generic [ref=f2e938]:
+              - generic [ref=f2e939]:
+                - group "Rep. Wittman, Robert J." [ref=f2e940]:
+                  - img "Wittman, Robert J. official portrait" [ref=f2e942]
+                - button "H.R. 7567" [ref=f2e943] [cursor=pointer]
+                - generic [ref=f2e944]: Apr 30, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f2e948] [cursor=pointer]
+            - generic [ref=f2e952]:
+              - text: Rep. Wittman voted
+              - generic [ref=f2e953]: Yea
+              - text: on H.R. 7567, a bill to continue and change farm, food, and rural programs through 2031.
+            - generic [ref=f2e954]:
+              - button "Agree with Rep. Wittman, Robert J." [ref=f2e955] [cursor=pointer]
+              - button "Disagree with Rep. Wittman, Robert J." [ref=f2e958] [cursor=pointer]
+              - button "Open comments on H.R. 7567 for Wittman, Robert J." [ref=f2e961] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Wittman, Robert J.: H.R. 1011" [ref=f2e964]':
+          - generic [ref=f2e965]:
+            - generic [ref=f2e966]:
+              - generic [ref=f2e967]:
+                - group "Rep. Wittman, Robert J." [ref=f2e968]:
+                  - img "Wittman, Robert J. official portrait" [ref=f2e970]
+                - button "H.R. 1011" [ref=f2e971] [cursor=pointer]
+                - generic [ref=f2e972]: Apr 14, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f2e976] [cursor=pointer]
+            - generic [ref=f2e980]:
+              - text: Rep. Wittman voted
+              - generic [ref=f2e981]: Yea
+              - text: on H.R. 1011, a bill to allow farmers and private forest owners hit by disasters to get more money up front for cleanup and repairs.
+            - generic [ref=f2e982]:
+              - button "Agree with Rep. Wittman, Robert J." [ref=f2e983] [cursor=pointer]
+              - button "Disagree with Rep. Wittman, Robert J." [ref=f2e986] [cursor=pointer]
+              - button "Open comments on H.R. 1011 for Wittman, Robert J." [ref=f2e989] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Wittman, Robert J.: H.R. 1326" [ref=f2e992]':
+          - generic [ref=f2e993]:
+            - generic [ref=f2e994]:
+              - generic [ref=f2e995]:
+                - group "Rep. Wittman, Robert J." [ref=f2e996]:
+                  - img "Wittman, Robert J. official portrait" [ref=f2e998]
+                - button "H.R. 1326" [ref=f2e999] [cursor=pointer]
+                - generic [ref=f2e1000]: Mar 24, 2025
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f2e1004] [cursor=pointer]
+            - generic [ref=f2e1008]:
+              - text: Rep. Wittman voted
+              - generic [ref=f2e1009]: Yea
+              - text: on H.R. 1326, a bill to require the Energy and Agriculture Departments to work together on research and choose projects through open competition.
+            - generic [ref=f2e1010]:
+              - button "Agree with Rep. Wittman, Robert J." [ref=f2e1011] [cursor=pointer]
+              - button "Disagree with Rep. Wittman, Robert J." [ref=f2e1014] [cursor=pointer]
+              - button "Open comments on H.R. 1326 for Wittman, Robert J." [ref=f2e1017] [cursor=pointer]: 0 Comments

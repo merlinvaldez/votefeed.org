@@ -1,0 +1,208 @@
+- generic [ref=f2e40]:
+  - complementary [ref=f2e41]:
+    - link "VoteFeed feed" [ref=f2e42] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f2e44]
+      - generic [ref=f2e45]: VoteFeed
+    - navigation [ref=f2e46]:
+      - link "Feed" [ref=f2e47] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=f2e52] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=f2e57]:
+      - generic [ref=f2e58]:
+        - generic [ref=f2e59]: Policy Areas
+        - button "Search policy areas" [ref=f2e60] [cursor=pointer]
+      - generic [ref=f2e64]:
+        - button "All 77" [ref=f2e1496] [cursor=pointer]:
+          - generic [ref=f2e66]: All
+          - generic [ref=f2e1497]: "77"
+        - button "Armed Forces and National Security 3" [ref=f2e1498] [cursor=pointer]:
+          - generic [ref=f2e1499]: Armed Forces and National Security
+          - generic [ref=f2e1500]: "3"
+        - button "Crime and Law Enforcement 2" [ref=f2e1501] [cursor=pointer]:
+          - generic [ref=f2e1502]: Crime and Law Enforcement
+          - generic [ref=f2e1503]: "2"
+        - button "Economics and Public Finance 12" [ref=f2e1504] [cursor=pointer]:
+          - generic [ref=f2e1505]: Economics and Public Finance
+          - generic [ref=f2e1506]: "12"
+        - button "Education 1" [ref=f2e1507] [cursor=pointer]:
+          - generic [ref=f2e1508]: Education
+          - generic [ref=f2e1509]: "1"
+        - button "Energy 6" [ref=f2e1510] [cursor=pointer]:
+          - generic [ref=f2e1511]: Energy
+          - generic [ref=f2e1512]: "6"
+        - button "Environmental Protection 8" [ref=f2e1513] [cursor=pointer]:
+          - generic [ref=f2e1514]: Environmental Protection
+          - generic [ref=f2e1515]: "8"
+        - button "Finance and Financial Sector 6" [ref=f2e1516] [cursor=pointer]:
+          - generic [ref=f2e1517]: Finance and Financial Sector
+          - generic [ref=f2e1518]: "6"
+        - button "Foreign Trade and International Finance 6" [ref=f2e1519] [cursor=pointer]:
+          - generic [ref=f2e1520]: Foreign Trade and International Finance
+          - generic [ref=f2e1521]: "6"
+        - button "Government Operations and Politics 3" [ref=f2e1522] [cursor=pointer]:
+          - generic [ref=f2e1523]: Government Operations and Politics
+          - generic [ref=f2e1524]: "3"
+        - button "Health 2" [ref=f2e1525] [cursor=pointer]:
+          - generic [ref=f2e1526]: Health
+          - generic [ref=f2e1527]: "2"
+        - button "Housing and Community Development 1" [ref=f2e1528] [cursor=pointer]:
+          - generic [ref=f2e1529]: Housing and Community Development
+          - generic [ref=f2e1530]: "1"
+        - button "International Affairs 13" [ref=f2e1531] [cursor=pointer]:
+          - generic [ref=f2e1532]: International Affairs
+          - generic [ref=f2e1533]: "13"
+        - button "Public Lands and Natural Resources 7" [ref=f2e1534] [cursor=pointer]:
+          - generic [ref=f2e1535]: Public Lands and Natural Resources
+          - generic [ref=f2e1536]: "7"
+        - button "Sports and Recreation 1" [ref=f2e1537] [cursor=pointer]:
+          - generic [ref=f2e1538]: Sports and Recreation
+          - generic [ref=f2e1539]: "1"
+        - button "Taxation 5" [ref=f2e1540] [cursor=pointer]:
+          - generic [ref=f2e1541]: Taxation
+          - generic [ref=f2e1542]: "5"
+        - button "Transportation and Public Works 1" [ref=f2e1543] [cursor=pointer]:
+          - generic [ref=f2e1544]: Transportation and Public Works
+          - generic [ref=f2e1545]: "1"
+  - main [ref=f2e158]:
+    - generic [ref=f2e159]:
+      - generic [ref=f2e163]:
+        - generic [ref=f2e164]: Viewing as Guest
+        - generic [ref=f2e165]: Your interactions won't be saved.
+      - button "Sign Up / Sign In" [ref=f2e166] [cursor=pointer]
+    - tablist "Feed sections" [ref=f2e167]:
+      - tab "All Reps" [ref=f2e168] [cursor=pointer]
+      - tab "House of Representatives" [ref=f2e175] [cursor=pointer]
+      - tab "Senate" [active] [selected] [ref=f2e181] [cursor=pointer]
+      - tab "Elections" [ref=f2e185] [cursor=pointer]
+    - text: ·
+    - tabpanel "Senate" [ref=f2e1546]:
+      - region "Your congressional delegation" [ref=f2e614]:
+        - generic [ref=f2e615]:
+          - generic [ref=f2e616]:
+            - generic [ref=f2e617]:
+              - article "Kaine, Tim" [ref=f2e1547]:
+                - img "Kaine, Tim official portrait" [ref=f2e1549]
+                - generic [ref=f2e1550]:
+                  - heading "Kaine, Tim" [level=3] [ref=f2e1551]
+                  - generic [ref=f2e1552]:
+                    - generic [ref=f2e1553]: Democratic Party
+                    - generic [ref=f2e1555]: Virginia
+                    - link "Kaine, Tim official website (opens in a new tab)" [ref=f2e1559] [cursor=pointer]:
+                      - /url: https://www.kaine.senate.gov/
+                      - generic [ref=f2e1563]: Website
+              - article "Warner, Mark R." [ref=f2e1564]:
+                - img "Warner, Mark R. official portrait" [ref=f2e1566]
+                - generic [ref=f2e1567]:
+                  - heading "Warner, Mark R." [level=3] [ref=f2e1568]
+                  - generic [ref=f2e1569]:
+                    - generic [ref=f2e1570]: Democratic Party
+                    - generic [ref=f2e1572]: Virginia
+                    - link "Warner, Mark R. official website (opens in a new tab)" [ref=f2e1576] [cursor=pointer]:
+                      - /url: https://www.warner.senate.gov
+                      - generic [ref=f2e1580]: Website
+            - status
+          - generic [ref=f2e657]:
+            - generic [ref=f2e658]:
+              - img "No alignment data yet" [ref=f2e659]
+              - generic [aria-hidden] [ref=f2e663]: 0%
+            - generic [ref=f2e664]:
+              - generic [ref=f2e665]: Policy Alignment
+              - paragraph [ref=f2e666]:
+                - text: Select
+                - img "like" [ref=f2e667]
+                - text: or
+                - img "dislike" [ref=f2e669]
+                - text: on a vote to show alignment.
+      - generic [ref=f2e671]:
+        - heading "Legislative Feed" [level=2] [ref=f2e672]
+        - 'article "Sens. Kaine, Tim and Warner, Mark R.: H.R. 3633" [ref=f2e1581]':
+          - generic [ref=f2e1582]:
+            - generic [ref=f2e1583]:
+              - generic [ref=f2e1584]:
+                - group "Sens. Kaine, Tim and Warner, Mark R." [ref=f2e1585]:
+                  - img "Kaine, Tim official portrait" [ref=f2e1587]
+                  - img "Warner, Mark R. official portrait" [ref=f2e1589]
+                - button "H.R. 3633" [ref=f2e1590] [cursor=pointer]
+                - generic [ref=f2e1591]: Sep 15, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f2e1595] [cursor=pointer]
+            - generic [ref=f2e1599]:
+              - text: Sens. Kaine and Warner voted
+              - generic [ref=f2e1600]: Nay
+              - text: on H.R. 3633, a bill to set rules for digital assets, with federal trade oversight and some trades still subject to securities agency rules.
+            - generic [ref=f2e1601]:
+              - button "Agree with Sens. Kaine, Tim and Warner, Mark R." [ref=f2e1602] [cursor=pointer]
+              - button "Disagree with Sens. Kaine, Tim and Warner, Mark R." [ref=f2e1605] [cursor=pointer]
+              - button "Open comments on H.R. 3633 for Kaine, Tim and Warner, Mark R." [ref=f2e1608] [cursor=pointer]: 1 Comment
+        - 'article "Sen. Kaine, Tim: H.R. 6500" [ref=f2e1611]':
+          - generic [ref=f2e1612]:
+            - generic [ref=f2e1613]:
+              - generic [ref=f2e1614]:
+                - group "Sen. Kaine, Tim" [ref=f2e1615]:
+                  - img "Kaine, Tim official portrait" [ref=f2e1617]
+                - button "H.R. 6500" [ref=f2e1618] [cursor=pointer]
+                - generic [ref=f2e1619]: Aug 8, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f2e1623] [cursor=pointer]
+            - generic [ref=f2e1627]:
+              - text: Sen. Kaine voted
+              - generic [ref=f2e1628]: Nay
+              - text: on H.R. 6500, a bill to keep the federal government running with short-term funding and extend programs set to expire.
+            - generic [ref=f2e1629]:
+              - button "Agree with Sen. Kaine, Tim" [ref=f2e1630] [cursor=pointer]
+              - button "Disagree with Sen. Kaine, Tim" [ref=f2e1633] [cursor=pointer]
+              - button "Open comments on H.R. 6500 for Kaine, Tim" [ref=f2e1636] [cursor=pointer]: 0 Comments
+        - 'article "Sen. Warner, Mark R.: H.R. 6500" [ref=f2e1639]':
+          - generic [ref=f2e1640]:
+            - generic [ref=f2e1641]:
+              - generic [ref=f2e1642]:
+                - group "Sen. Warner, Mark R." [ref=f2e1643]:
+                  - img "Warner, Mark R. official portrait" [ref=f2e1645]
+                - button "H.R. 6500" [ref=f2e1646] [cursor=pointer]
+                - generic [ref=f2e1647]: Aug 8, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f2e1651] [cursor=pointer]
+            - generic [ref=f2e1655]:
+              - text: Sen. Warner voted
+              - generic [ref=f2e1656]: Yea
+              - text: on H.R. 6500, a bill to keep the federal government running with short-term funding and extend programs set to expire.
+            - generic [ref=f2e1657]:
+              - button "Agree with Sen. Warner, Mark R." [ref=f2e1658] [cursor=pointer]
+              - button "Disagree with Sen. Warner, Mark R." [ref=f2e1661] [cursor=pointer]
+              - button "Open comments on H.R. 6500 for Warner, Mark R." [ref=f2e1664] [cursor=pointer]: 0 Comments
+        - 'article "Sens. Kaine, Tim and Warner, Mark R.: H.R. 6644" [ref=f2e1667]':
+          - generic [ref=f2e1668]:
+            - generic [ref=f2e1669]:
+              - generic [ref=f2e1670]:
+                - group "Sens. Kaine, Tim and Warner, Mark R." [ref=f2e1671]:
+                  - img "Kaine, Tim official portrait" [ref=f2e1673]
+                  - img "Warner, Mark R. official portrait" [ref=f2e1675]
+                - button "H.R. 6644" [ref=f2e1676] [cursor=pointer]
+                - generic [ref=f2e1677]: Jun 22, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f2e1681] [cursor=pointer]
+            - generic [ref=f2e1685]:
+              - text: Sens. Kaine and Warner voted
+              - generic [ref=f2e1686]: Yea
+              - text: on H.R. 6644, a bill to make it easier to build, repair, and finance more homes by changing federal housing programs.
+            - generic [ref=f2e1687]:
+              - button "Agree with Sens. Kaine, Tim and Warner, Mark R." [ref=f2e1688] [cursor=pointer]
+              - button "Disagree with Sens. Kaine, Tim and Warner, Mark R." [ref=f2e1691] [cursor=pointer]
+              - button "Open comments on H.R. 6644 for Kaine, Tim and Warner, Mark R." [ref=f2e1694] [cursor=pointer]: 0 Comments
+        - 'article "Sens. Kaine, Tim and Warner, Mark R.: S. 1318" [ref=f2e1697]':
+          - generic [ref=f2e1698]:
+            - generic [ref=f2e1699]:
+              - generic [ref=f2e1700]:
+                - group "Sens. Kaine, Tim and Warner, Mark R." [ref=f2e1701]:
+                  - img "Kaine, Tim official portrait" [ref=f2e1703]
+                  - img "Warner, Mark R. official portrait" [ref=f2e1705]
+                - button "S. 1318" [ref=f2e1706] [cursor=pointer]
+                - generic [ref=f2e1707]: Jun 5, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f2e1711] [cursor=pointer]
+            - generic [ref=f2e1715]:
+              - text: Sens. Kaine and Warner voted
+              - generic [ref=f2e1716]: Nay
+              - text: on S. 1318, a bill to require a program to find Jewish service members buried overseas with the wrong faith marker and contact their families.
+            - generic [ref=f2e1717]:
+              - button "Agree with Sens. Kaine, Tim and Warner, Mark R." [ref=f2e1718] [cursor=pointer]
+              - button "Disagree with Sens. Kaine, Tim and Warner, Mark R." [ref=f2e1721] [cursor=pointer]
+              - button "Open comments on S. 1318 for Kaine, Tim and Warner, Mark R." [ref=f2e1724] [cursor=pointer]: 0 Comments
+        - generic [ref=f2e1727]: Scroll for more

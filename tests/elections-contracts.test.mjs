@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { normalizeState, normalizeDistrict, normalizeRace, raceKey, isReleaseRace, sourceIdentityKey, positionVersionKey, validateExtractionItem, RELEASE_SCOPE } from "../server/src/elections/contracts.js";
+import { normalizeState, normalizeDistrict, normalizeRace, raceKey, isReleaseRace, sourceIdentityKey, positionVersionKey, validateExtractionItem, RELEASE_SCOPE, matchesPolicyArea, ELECTION_GEOGRAPHY_SOURCE, ELECTION_GEOGRAPHY_VERSION, isCurrentElectionGeographyEvidence, isVerifiedCurrentElectionGeography } from "../server/src/elections/contracts.js";
 
 const house = { office: "house", state: "ny", district: "01", electionDate: "2026-11-03", stage: "general", contestType: "regular" };
 test("release scope is explicit and excludes other cycles, stages and special races", () => {
@@ -22,6 +22,35 @@ test("race identity preserves Senate seats, dates, stages and special contests",
   const keys = [senate, { ...senate, senateSeat: 3 }, { ...senate, contestType: "special" }, { ...senate, stage: "runoff" }, { ...senate, electionDate: "2026-12-01" }, house].map(raceKey);
   assert.equal(new Set(keys).size, keys.length);
   assert.throws(() => normalizeRace({ ...senate, senateSeat: "senior" }));
+});
+test("uncategorized Elections filtering matches only null topics", () => {
+  assert.equal(matchesPolicyArea(null, "uncategorized"), true);
+  assert.equal(matchesPolicyArea(undefined, "uncategorized"), true);
+  assert.equal(matchesPolicyArea("housing", "uncategorized"), false);
+  assert.equal(matchesPolicyArea("housing", "housing"), true);
+  assert.equal(matchesPolicyArea(null, "housing"), false);
+  assert.equal(matchesPolicyArea(null, null), true);
+});
+test("saved election geography must match the current map and account state", () => {
+  const evidence = {
+    state: "NY",
+    district: 13,
+    cycle: 2026,
+    boundaryVersion: ELECTION_GEOGRAPHY_VERSION,
+    sourceUrl: ELECTION_GEOGRAPHY_SOURCE,
+    status: "verified",
+  };
+  assert.equal(isCurrentElectionGeographyEvidence(evidence, "New York"), true);
+  assert.equal(isVerifiedCurrentElectionGeography(evidence, "New York"), true);
+  assert.equal(isCurrentElectionGeographyEvidence(evidence, null), true);
+  assert.equal(isVerifiedCurrentElectionGeography(evidence, null), true);
+  assert.equal(isCurrentElectionGeographyEvidence(evidence, ""), true);
+  assert.equal(isCurrentElectionGeographyEvidence({ ...evidence, state: "PA" }, "New York"), false);
+  assert.equal(isCurrentElectionGeographyEvidence(evidence, "Pennsylvania"), false);
+  assert.equal(isCurrentElectionGeographyEvidence({ ...evidence, cycle: 2024 }, "New York"), false);
+  assert.equal(isCurrentElectionGeographyEvidence({ ...evidence, boundaryVersion: "legacy" }, "New York"), false);
+  assert.equal(isVerifiedCurrentElectionGeography({ ...evidence, status: "unresolved" }, "New York"), false);
+  assert.equal(isVerifiedCurrentElectionGeography({ ...evidence, district: null }, "New York"), false);
 });
 test("source IDs and accepted claim versions are collision safe and repeatable", () => {
   assert.notEqual(sourceIdentityKey({ system: "fec:candidate", id: "1" }), sourceIdentityKey({ system: "state:NY:candidate", id: "1" }));

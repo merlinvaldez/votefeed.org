@@ -2,6 +2,15 @@ import { createHash } from "node:crypto";
 
 // Versioned release scope, never inferred from today's date.
 export const STATES = Object.freeze("AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY".split(" "));
+export const STATE_NAMES = Object.freeze({
+  AL:"Alabama",AK:"Alaska",AZ:"Arizona",AR:"Arkansas",CA:"California",CO:"Colorado",CT:"Connecticut",DE:"Delaware",FL:"Florida",
+  GA:"Georgia",HI:"Hawaii",ID:"Idaho",IL:"Illinois",IN:"Indiana",IA:"Iowa",KS:"Kansas",KY:"Kentucky",LA:"Louisiana",ME:"Maine",
+  MD:"Maryland",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",MS:"Mississippi",MO:"Missouri",MT:"Montana",NE:"Nebraska",NV:"Nevada",
+  NH:"New Hampshire",NJ:"New Jersey",NM:"New Mexico",NY:"New York",NC:"North Carolina",ND:"North Dakota",OH:"Ohio",OK:"Oklahoma",
+  OR:"Oregon",PA:"Pennsylvania",RI:"Rhode Island",SC:"South Carolina",SD:"South Dakota",TN:"Tennessee",TX:"Texas",UT:"Utah",
+  VT:"Vermont",VA:"Virginia",WA:"Washington",WV:"West Virginia",WI:"Wisconsin",WY:"Wyoming",
+});
+const STATE_CODES_BY_NAME = new Map(Object.entries(STATE_NAMES).map(([code,name]) => [name.toLowerCase(),code]));
 export const RELEASE_SCOPE = Object.freeze({ cycle: 2026, stage: "general", contestType: "regular", offices: Object.freeze(["house", "senate"]), states: STATES, geography: "2026-election" });
 export const ELECTION_GEOGRAPHY_SOURCE = 'https://www.census.gov/programs-surveys/decennial-census/about/rdo/congressional-districts.120th_Congress.html';
 export const ELECTION_GEOGRAPHY_VERSION = 'ACS2026_Current:120th';
@@ -10,13 +19,46 @@ export const ELECTION_GEOGRAPHY_VERSION = 'ACS2026_Current:120th';
 // but do not treat that House district as verified.
 export const ELECTION_GEOGRAPHY_UNVERIFIED_STATES = Object.freeze(['MO']);
 export const TOPICS = Object.freeze(["economy", "healthcare", "housing", "education", "environment", "immigration", "civil-rights", "public-safety", "foreign-policy", "government", "other"]);
+export const UNCATEGORIZED_POLICY_AREA = "uncategorized";
 export const AVAILABILITY = Object.freeze(["available", "no-race", "coverage-unknown", "geography-unverified", "site-missing", "site-unverified", "pending", "no-positions", "crawl-failed", "extraction-failed"]);
+
+export function matchesPolicyArea(topic, policyArea) {
+  if (policyArea == null) return true;
+  if (policyArea === UNCATEGORIZED_POLICY_AREA) return topic == null;
+  return topic === policyArea;
+}
 
 const fail = message => { throw new TypeError(message); };
 const required = (value, name) => typeof value === "string" && value.trim() ? value : fail(`Invalid ${name}`);
 export function normalizeState(value) {
   const state = required(value, "state").trim().toUpperCase();
   return STATES.includes(state) ? state : fail("Expected a two-letter US state code");
+}
+// Existing users.state values come from Census BASENAME (for example, "New York").
+// Elections storage and public geography use USPS codes, so normalize at this legacy boundary.
+export function normalizeStateNameOrCode(value) {
+  const state = required(value, "state").trim();
+  return STATE_CODES_BY_NAME.get(state.toLowerCase()) ?? normalizeState(state);
+}
+export function isCurrentElectionGeographyEvidence(evidence, legacyState) {
+  if (!evidence) return false;
+  try {
+    const evidenceState = normalizeStateNameOrCode(evidence.state);
+    const savedState = typeof legacyState === "string" && legacyState.trim()
+      ? normalizeStateNameOrCode(legacyState)
+      : null;
+    return (!savedState || evidenceState === savedState)
+      && evidence.cycle === RELEASE_SCOPE.cycle
+      && evidence.boundaryVersion === ELECTION_GEOGRAPHY_VERSION
+      && evidence.sourceUrl === ELECTION_GEOGRAPHY_SOURCE;
+  } catch {
+    return false;
+  }
+}
+export function isVerifiedCurrentElectionGeography(evidence, legacyState) {
+  return isCurrentElectionGeographyEvidence(evidence, legacyState)
+    && evidence.status === "verified"
+    && Number.isInteger(evidence.district);
 }
 export function normalizeDistrict(value) {
   if (typeof value === "string" && ["AL", "AT-LARGE"].includes(value.trim().toUpperCase())) return 0;

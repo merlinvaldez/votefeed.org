@@ -1,0 +1,18 @@
+- generic [ref=f1e3]:
+  - generic [ref=f1e4]:
+    - link "VoteFeed feed" [ref=f1e5] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f1e7]
+      - generic [ref=f1e8]: VoteFeed
+    - generic [ref=f1e9]:
+      - heading "Democracy happens in your feed." [level=1] [ref=f1e10]
+      - paragraph [ref=f1e11]: Track every vote. Hold your Representative accountable. Engage with your district.
+    - generic [ref=f1e12]:
+      - generic [ref=f1e13]: © 2025 VoteFeed Inc.
+      - generic [ref=f1e14]:
+        - link "Privacy Policy" [ref=f1e15] [cursor=pointer]:
+          - /url: /privacy
+        - link "Terms of Use" [ref=f1e16] [cursor=pointer]:
+          - /url: /terms
+  - button "Back to Search" [ref=f1e19] [cursor=pointer]:
+    - generic [aria-hidden] [ref=f1e20]: ←

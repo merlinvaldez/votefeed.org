@@ -1,0 +1,267 @@
+- generic [ref=e39]:
+  - complementary [ref=e40]:
+    - link "VoteFeed feed" [ref=e41] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=e43]
+      - generic [ref=e44]: VoteFeed
+    - navigation [ref=e45]:
+      - link "Feed" [ref=e46] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=e51] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=e56]:
+      - generic [ref=e57]:
+        - generic [ref=e58]: Policy Areas
+        - button "Search policy areas" [ref=e59] [cursor=pointer]
+      - generic [ref=e63]:
+        - button "All 9" [ref=e108] [cursor=pointer]:
+          - generic [ref=e65]: All
+          - generic [ref=e66]: "9"
+        - button "Economy 1" [ref=e109] [cursor=pointer]:
+          - generic [ref=e110]: Economy
+          - generic [ref=e111]: "1"
+        - button "Health Care 1" [ref=e112] [cursor=pointer]:
+          - generic [ref=e113]: Health Care
+          - generic [ref=e114]: "1"
+        - button "Housing 1" [ref=e115] [cursor=pointer]:
+          - generic [ref=e116]: Housing
+          - generic [ref=e117]: "1"
+        - button "Education 1" [ref=e118] [cursor=pointer]:
+          - generic [ref=e119]: Education
+          - generic [ref=e120]: "1"
+        - button "Energy & Environment 1" [ref=e121] [cursor=pointer]:
+          - generic [ref=e122]: Energy & Environment
+          - generic [ref=e123]: "1"
+        - button "Immigration 1" [ref=e124] [cursor=pointer]:
+          - generic [ref=e125]: Immigration
+          - generic [ref=e126]: "1"
+        - button "Civil Rights 0" [ref=e127] [cursor=pointer]:
+          - generic [ref=e128]: Civil Rights
+          - generic [ref=e129]: "0"
+        - button "Public Safety 1" [ref=e130] [cursor=pointer]:
+          - generic [ref=e131]: Public Safety
+          - generic [ref=e132]: "1"
+        - button "Foreign Policy 1" [ref=e133] [cursor=pointer]:
+          - generic [ref=e134]: Foreign Policy
+          - generic [ref=e135]: "1"
+        - button "Government 0" [ref=e136] [cursor=pointer]:
+          - generic [ref=e137]: Government
+          - generic [ref=e138]: "0"
+        - button "Other 0" [ref=e139] [cursor=pointer]:
+          - generic [ref=e140]: Other
+          - generic [ref=e141]: "0"
+  - main [ref=e67]:
+    - generic [ref=e68]:
+      - generic [ref=e72]:
+        - generic [ref=e73]: Viewing as Guest
+        - generic [ref=e74]: Your interactions won't be saved.
+      - button "Sign Up / Sign In" [ref=e75] [cursor=pointer]
+    - tablist "Feed sections" [ref=e76]:
+      - tab "All Reps" [ref=e77] [cursor=pointer]
+      - tab "House of Representatives" [ref=e84] [cursor=pointer]
+      - tab "Senate" [ref=e90] [cursor=pointer]
+      - tab "Elections" [active] [selected] [ref=e94] [cursor=pointer]
+    - tabpanel "Elections" [ref=e142]:
+      - region "Election candidates" [ref=e143]:
+        - tablist "Filter candidates by chamber" [ref=e144]:
+          - tab "All Candidates" [selected] [ref=e145] [cursor=pointer]
+          - tab "House" [ref=e146] [cursor=pointer]
+          - tab "Senate" [ref=e147] [cursor=pointer]
+        - tabpanel "All Candidates" [ref=e148]:
+          - generic "Candidate roster" [ref=e149]:
+            - button "Cameron De La Example-Washington, U.S. Representative, NY-13" [ref=e150] [cursor=pointer]:
+              - img "Cameron De La Example-Washington portrait unavailable" [ref=e152]: CE
+              - heading "Cameron De La Example-Washington" [level=3] [ref=e153]
+              - generic [ref=e154]: U.S. Representative
+              - paragraph [ref=e160]: NY-13
+              - paragraph [ref=e161]:
+                - generic [ref=e163]: Independent
+            - button "Dakota Example, U.S. Senator, New York, incumbent" [ref=e164] [cursor=pointer]:
+              - img "Dakota Example portrait" [ref=e166]
+              - heading "Dakota Example" [level=3] [ref=e167]
+              - generic [ref=e168]: Incumbent
+              - generic [ref=e169]: U.S. Senator
+              - paragraph [ref=e173]: New York
+              - paragraph [ref=e174]:
+                - generic [ref=e176]: Democratic Party
+      - generic [ref=e177]:
+        - generic [ref=e178]:
+          - heading "Campaign Positions" [level=2] [ref=e179]
+          - paragraph [ref=e180]:
+            - text: Policy positions from candidates’ official campaign websites.
+            - note [ref=e181]: ·Visual layout scenario (5 candidates) — fictional samples do not represent ballot eligibility, race coverage, or election results.
+        - generic [ref=e182]:
+          - generic [ref=e183]: Filter by policy area
+          - combobox "Filter by policy area" [ref=e184]:
+            - option "All Policy Areas" [selected]
+            - option "Economy"
+            - option "Health Care"
+            - option "Housing"
+            - option "Education"
+            - option "Energy & Environment"
+            - option "Immigration"
+            - option "Civil Rights"
+            - option "Public Safety"
+            - option "Foreign Policy"
+            - option "Government"
+            - option "Other"
+            - option "Uncategorized"
+      - article [ref=e185]:
+        - img "Avery Example portrait" [ref=e187]
+        - generic [ref=e188]:
+          - generic [ref=e189]:
+            - strong [ref=e190]: Avery Example
+            - generic [ref=e191]: Incumbent
+          - paragraph [ref=e192]: Expand affordable housing by rehabilitating vacant homes, preserving rent-stabilized apartments, and supporting first-time buyers with down-payment assistance.
+          - generic [ref=e193]:
+            - link "Open Avery Example's campaign source in a new tab, retrieved Oct 27, 2026" [ref=e194] [cursor=pointer]:
+              - /url: https://example.invalid/elections/fixture/house-a-housing
+            - group [ref=e198]:
+              - generic "Source details" [ref=e199] [cursor=pointer]
+          - generic "Respond to Avery Example's campaign position" [ref=e200]:
+            - button "Agree with Avery Example" [ref=e201] [cursor=pointer]:
+              - generic [ref=e204]: Agree
+            - button "Disagree with Avery Example" [ref=e205] [cursor=pointer]:
+              - generic [ref=e208]: Disagree
+            - generic [ref=e209]: Sign in to save a response.
+      - article [ref=e210]:
+        - img "Blake L. Example-Watson portrait unavailable" [ref=e212]: BL
+        - generic [ref=e213]:
+          - strong [ref=e215]: Blake L. Example-Watson
+          - paragraph [ref=e216]: Support faster work-permit processing while expanding immigration court capacity and preserving access to legal counsel for families awaiting a hearing.
+          - generic [ref=e217]:
+            - link "Open Blake L. Example-Watson's campaign source in a new tab, retrieved Oct 27, 2026" [ref=e218] [cursor=pointer]:
+              - /url: https://example.invalid/elections/fixture/house-b-immigration
+            - group [ref=e222]:
+              - generic "Source details" [ref=e223] [cursor=pointer]
+          - generic "Respond to Blake L. Example-Watson's campaign position" [ref=e224]:
+            - button "Agree with Blake L. Example-Watson" [ref=e225] [cursor=pointer]:
+              - generic [ref=e228]: Agree
+            - button "Disagree with Blake L. Example-Watson" [ref=e229] [cursor=pointer]:
+              - generic [ref=e232]: Disagree
+            - generic [ref=e233]: Sign in to save a response.
+      - article [ref=e234]:
+        - img "Avery Example portrait" [ref=e236]
+        - generic [ref=e237]:
+          - generic [ref=e238]:
+            - strong [ref=e239]: Avery Example
+            - generic [ref=e240]: Incumbent
+          - paragraph [ref=e241]: Support small-business lending and paid apprenticeships in high-demand trades.
+          - generic [ref=e242]:
+            - link "Open Avery Example's campaign source in a new tab, retrieved Oct 27, 2026" [ref=e243] [cursor=pointer]:
+              - /url: https://example.invalid/elections/fixture/house-a-economy
+            - group [ref=e247]:
+              - generic "Source details" [ref=e248] [cursor=pointer]
+          - generic "Respond to Avery Example's campaign position" [ref=e249]:
+            - button "Agree with Avery Example" [ref=e250] [cursor=pointer]:
+              - generic [ref=e253]: Agree
+            - button "Disagree with Avery Example" [ref=e254] [cursor=pointer]:
+              - generic [ref=e257]: Disagree
+            - generic [ref=e258]: Sign in to save a response.
+      - article [ref=e259]:
+        - img "Dakota Example portrait" [ref=e261]
+        - generic [ref=e262]:
+          - generic [ref=e263]:
+            - strong [ref=e264]: Dakota Example
+            - generic [ref=e265]: Incumbent
+          - paragraph [ref=e266]: Invest in grid upgrades and clean-energy manufacturing.
+          - generic [ref=e267]:
+            - link "Open Dakota Example's campaign source in a new tab, retrieved Oct 27, 2026" [ref=e268] [cursor=pointer]:
+              - /url: https://example.invalid/elections/fixture/senate-a-environment
+            - group [ref=e272]:
+              - generic "Source details" [ref=e273] [cursor=pointer]
+          - generic "Respond to Dakota Example's campaign position" [ref=e274]:
+            - button "Agree with Dakota Example" [ref=e275] [cursor=pointer]:
+              - generic [ref=e278]: Agree
+            - button "Disagree with Dakota Example" [ref=e279] [cursor=pointer]:
+              - generic [ref=e282]: Disagree
+            - generic [ref=e283]: Sign in to save a response.
+      - article [ref=e284]:
+        - img "Avery Example portrait" [ref=e286]
+        - generic [ref=e287]:
+          - generic [ref=e288]:
+            - strong [ref=e289]: Avery Example
+            - generic [ref=e290]: Incumbent
+          - paragraph [ref=e291]: Expand community health clinics and protect access to preventive care.
+          - generic [ref=e292]:
+            - link "Open Avery Example's campaign source in a new tab, retrieved Oct 27, 2026" [ref=e293] [cursor=pointer]:
+              - /url: https://example.invalid/elections/fixture/house-a-healthcare
+            - group [ref=e297]:
+              - generic "Source details" [ref=e298] [cursor=pointer]
+          - generic "Respond to Avery Example's campaign position" [ref=e299]:
+            - button "Agree with Avery Example" [ref=e300] [cursor=pointer]:
+              - generic [ref=e303]: Agree
+            - button "Disagree with Avery Example" [ref=e304] [cursor=pointer]:
+              - generic [ref=e307]: Disagree
+            - generic [ref=e308]: Sign in to save a response.
+      - article [ref=e309]:
+        - img "Blake L. Example-Watson portrait unavailable" [ref=e311]: BL
+        - generic [ref=e312]:
+          - strong [ref=e314]: Blake L. Example-Watson
+          - paragraph [ref=e315]: Fund local violence-prevention programs with public outcome reporting.
+          - generic [ref=e316]:
+            - link "Open Blake L. Example-Watson's campaign source in a new tab, retrieved Oct 27, 2026" [ref=e317] [cursor=pointer]:
+              - /url: https://example.invalid/elections/fixture/house-b-safety
+            - group [ref=e321]:
+              - generic "Source details" [ref=e322] [cursor=pointer]
+          - generic "Respond to Blake L. Example-Watson's campaign position" [ref=e323]:
+            - button "Agree with Blake L. Example-Watson" [ref=e324] [cursor=pointer]:
+              - generic [ref=e327]: Agree
+            - button "Disagree with Blake L. Example-Watson" [ref=e328] [cursor=pointer]:
+              - generic [ref=e331]: Disagree
+            - generic [ref=e332]: Sign in to save a response.
+      - article [ref=e333]:
+        - img "Avery Example portrait" [ref=e335]
+        - generic [ref=e336]:
+          - generic [ref=e337]:
+            - strong [ref=e338]: Avery Example
+            - generic [ref=e339]: Incumbent
+          - paragraph [ref=e340]: Increase federal support for school buildings and after-school programs.
+          - generic [ref=e341]:
+            - link "Open Avery Example's campaign source in a new tab, retrieved Oct 27, 2026" [ref=e342] [cursor=pointer]:
+              - /url: https://example.invalid/elections/fixture/house-a-education
+            - group [ref=e346]:
+              - generic "Source details" [ref=e347] [cursor=pointer]
+          - generic "Respond to Avery Example's campaign position" [ref=e348]:
+            - button "Agree with Avery Example" [ref=e349] [cursor=pointer]:
+              - generic [ref=e352]: Agree
+            - button "Disagree with Avery Example" [ref=e353] [cursor=pointer]:
+              - generic [ref=e356]: Disagree
+            - generic [ref=e357]: Sign in to save a response.
+      - article [ref=e358]:
+        - img "Dakota Example portrait" [ref=e360]
+        - generic [ref=e361]:
+          - generic [ref=e362]:
+            - strong [ref=e363]: Dakota Example
+            - generic [ref=e364]: Incumbent
+          - paragraph [ref=e365]: Require public reporting before major changes to overseas security assistance.
+          - generic [ref=e366]:
+            - link "Open Dakota Example's campaign source in a new tab, retrieved Oct 27, 2026" [ref=e367] [cursor=pointer]:
+              - /url: https://example.invalid/elections/fixture/senate-a-foreign-policy
+            - group [ref=e371]:
+              - generic "Source details" [ref=e372] [cursor=pointer]
+          - generic "Respond to Dakota Example's campaign position" [ref=e373]:
+            - button "Agree with Dakota Example" [ref=e374] [cursor=pointer]:
+              - generic [ref=e377]: Agree
+            - button "Disagree with Dakota Example" [ref=e378] [cursor=pointer]:
+              - generic [ref=e381]: Disagree
+            - generic [ref=e382]: Sign in to save a response.
+      - article [ref=e383]:
+        - img "Avery Example portrait" [ref=e385]
+        - generic [ref=e386]:
+          - generic [ref=e387]:
+            - strong [ref=e388]: Avery Example
+            - generic [ref=e389]: Incumbent
+          - paragraph [ref=e390]: Publish plain-language reports on district infrastructure grant spending.
+          - generic [ref=e391]:
+            - link "Open Avery Example's campaign source in a new tab, retrieved Oct 27, 2026" [ref=e392] [cursor=pointer]:
+              - /url: https://example.invalid/elections/fixture/house-a-uncategorized
+            - group [ref=e396]:
+              - generic "Source details" [ref=e397] [cursor=pointer]
+          - generic "Respond to Avery Example's campaign position" [ref=e398]:
+            - button "Agree with Avery Example" [ref=e399] [cursor=pointer]:
+              - generic [ref=e402]: Agree
+            - button "Disagree with Avery Example" [ref=e403] [cursor=pointer]:
+              - generic [ref=e406]: Disagree
+            - generic [ref=e407]: Sign in to save a response.
+      - status [ref=e408]: End of campaign positions.

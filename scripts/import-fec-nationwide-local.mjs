@@ -6,7 +6,9 @@ import { syncCandidates } from '../server/src/elections/syncCandidates.js';
 import { promoteElectionObservation } from '../server/src/db/queries/electionDiscovery.js';
 dotenv.config({path:'server/.env',quiet:true});
 if (!process.env.FEC_API_KEY) throw new Error('FEC_API_KEY required');
-const config={host:'127.0.0.1',port:55439,user:'postgres',database:'postgres',ssl:false};
+const localPort=Number(process.env.VOTEFEED_LOCAL_PG_PORT ?? 55439);
+if(!Number.isInteger(localPort)||localPort<1||localPort>65535) throw new Error('VOTEFEED_LOCAL_PG_PORT must be a valid TCP port');
+const config={host:'127.0.0.1',port:localPort,user:'postgres',database:'postgres',ssl:false};
 const name='votefeed_fec_candidates_2026_local';
 const coverageOf=entry=>typeof entry.coverage==='string'?JSON.parse(entry.coverage):entry.coverage ?? {};
 const normalizeEntry=entry=>({...entry,coverage:coverageOf(entry)});
@@ -24,13 +26,42 @@ try {
  pool=new pg.Pool({...config,database:name});
  if (!exists) {
   for(const role of ['anon','authenticated','service_role']) await admin.query(`DO $$ BEGIN IF NOT EXISTS(SELECT FROM pg_roles WHERE rolname='${role}') THEN CREATE ROLE ${role} NOLOGIN; END IF; END $$`);
-  await pool.query('CREATE TABLE users(id serial PRIMARY KEY,clerk_user_id text UNIQUE); CREATE TABLE reps(bioguideid text PRIMARY KEY); CREATE TABLE bills(id serial PRIMARY KEY,title text)');
-  for(const migration of ['20261028202229_elections_storage.sql','20261028202239_election_discovery_observations.sql']) await pool.query(await readFile(new URL(`../supabase/migrations/${migration}`,import.meta.url),'utf8'));
+  await pool.query(await readFile(new URL('../server/src/db/schema.sql',import.meta.url),'utf8'));
+  for(const migration of ['20261014192544_legislative_feed_snapshots.sql','20261028202229_elections_storage.sql','20261028202239_election_discovery_observations.sql','20261028202247_election_feed_build_jobs.sql']) await pool.query(await readFile(new URL(`../supabase/migrations/${migration}`,import.meta.url),'utf8'));
   await pool.query('CREATE TABLE local_fec_candidate_import_scope (state text NOT NULL, office text NOT NULL, entry jsonb NOT NULL, PRIMARY KEY(state,office))');
  } else {
   const marker=await pool.query("SELECT to_regclass('public.local_fec_candidate_import_scope') AS name");
   if (!marker.rows[0].name) throw new Error('Existing database lacks audit marker; refusing to use it');
  }
+ const snapshots=await pool.query("SELECT to_regclass('public.legislative_feed_snapshots') AS name");
+ if(!snapshots.rows[0].name) await pool.query(await readFile(new URL('../supabase/migrations/20261014192544_legislative_feed_snapshots.sql',import.meta.url),'utf8'));
+ await pool.query(`ALTER TABLE users
+  ADD COLUMN IF NOT EXISTS email text UNIQUE,
+  ADD COLUMN IF NOT EXISTS first_name text,
+  ADD COLUMN IF NOT EXISTS last_name text,
+  ADD COLUMN IF NOT EXISTS state text,
+  ADD COLUMN IF NOT EXISTS district integer,
+  ADD COLUMN IF NOT EXISTS notifications_enabled boolean NOT NULL DEFAULT true,
+  ADD COLUMN IF NOT EXISTS last_notified_session_number integer,
+  ADD COLUMN IF NOT EXISTS last_notified_roll_call_number integer;
+  ALTER TABLE reps
+  ADD COLUMN IF NOT EXISTS full_name text,
+  ADD COLUMN IF NOT EXISTS party text,
+  ADD COLUMN IF NOT EXISTS chamber text,
+  ADD COLUMN IF NOT EXISTS state text,
+  ADD COLUMN IF NOT EXISTS congressionaldistrict integer,
+  ADD COLUMN IF NOT EXISTS image_url text,
+  ADD COLUMN IF NOT EXISTS official_website_url text,
+  ADD COLUMN IF NOT EXISTS office_phone text,
+  ADD COLUMN IF NOT EXISTS is_current_member boolean NOT NULL DEFAULT true,
+  ADD COLUMN IF NOT EXISTS last_seen_at timestamptz;
+  ALTER TABLE bills
+  ADD COLUMN IF NOT EXISTS number integer,
+  ADD COLUMN IF NOT EXISTS bill_type text,
+  ADD COLUMN IF NOT EXISTS summary text NOT NULL DEFAULT '',
+  ADD COLUMN IF NOT EXISTS aisummary text,
+  ADD COLUMN IF NOT EXISTS policy_area text,
+  ADD COLUMN IF NOT EXISTS legislation_url text;`);
  outer: for(const state of RELEASE_SCOPE.states) for(const office of RELEASE_SCOPE.offices) {
   const prior=(await pool.query('SELECT entry FROM local_fec_candidate_import_scope WHERE state=$1 AND office=$2',[state,office])).rows[0]?.entry;
   if(prior?.status==='complete') continue;

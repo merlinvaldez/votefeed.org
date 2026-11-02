@@ -83,6 +83,7 @@ router.get("/me", requireUser, (req, res) => {
     district,
     state,
     notifications_enabled,
+    election_geography_evidence_id,
   } = req.user;
   res.json({
     id,
@@ -92,6 +93,7 @@ router.get("/me", requireUser, (req, res) => {
     district,
     state,
     notifications_enabled,
+    election_geography_evidence_id: election_geography_evidence_id ?? null,
   });
 });
 

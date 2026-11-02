@@ -1,0 +1,217 @@
+- generic [ref=f13e1444]:
+  - complementary [ref=f13e1445]:
+    - link "VoteFeed feed" [ref=f13e1446] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f13e1448]
+      - generic [ref=f13e1449]: VoteFeed
+    - navigation [ref=f13e1450]:
+      - link "Feed" [ref=f13e1451] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=f13e1456] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=f13e1461]:
+      - generic [ref=f13e1462]:
+        - generic [ref=f13e1463]: Policy Areas
+        - button "Search policy areas" [ref=f13e1464] [cursor=pointer]
+      - generic [ref=f13e1468]:
+        - button "All 347" [ref=f13e1469] [cursor=pointer]:
+          - generic [ref=f13e1470]: All
+          - generic [ref=f13e1791]: "347"
+        - button "Agriculture and Food 4" [ref=f13e1792] [cursor=pointer]:
+          - generic [ref=f13e1793]: Agriculture and Food
+          - generic [ref=f13e1794]: "4"
+        - button "Animals 3" [ref=f13e1795] [cursor=pointer]:
+          - generic [ref=f13e1796]: Animals
+          - generic [ref=f13e1797]: "3"
+        - button "Armed Forces and National Security 17" [ref=f13e1798] [cursor=pointer]:
+          - generic [ref=f13e1799]: Armed Forces and National Security
+          - generic [ref=f13e1800]: "17"
+        - button "Civil Rights and Liberties, Minority Issues 3" [ref=f13e1801] [cursor=pointer]:
+          - generic [ref=f13e1802]: Civil Rights and Liberties, Minority Issues
+          - generic [ref=f13e1803]: "3"
+        - button "Commerce 21" [ref=f13e1804] [cursor=pointer]:
+          - generic [ref=f13e1805]: Commerce
+          - generic [ref=f13e1806]: "21"
+        - button "Congress 30" [ref=f13e1807] [cursor=pointer]:
+          - generic [ref=f13e1808]: Congress
+          - generic [ref=f13e1809]: "30"
+        - button "Crime and Law Enforcement 20" [ref=f13e1810] [cursor=pointer]:
+          - generic [ref=f13e1811]: Crime and Law Enforcement
+          - generic [ref=f13e1812]: "20"
+        - button "Economics and Public Finance 25" [ref=f13e1813] [cursor=pointer]:
+          - generic [ref=f13e1814]: Economics and Public Finance
+          - generic [ref=f13e1815]: "25"
+        - button "Education 8" [ref=f13e1816] [cursor=pointer]:
+          - generic [ref=f13e1817]: Education
+          - generic [ref=f13e1818]: "8"
+        - button "Emergency Management 4" [ref=f13e1819] [cursor=pointer]:
+          - generic [ref=f13e1820]: Emergency Management
+          - generic [ref=f13e1821]: "4"
+        - button "Energy 29" [ref=f13e1822] [cursor=pointer]:
+          - generic [ref=f13e1823]: Energy
+          - generic [ref=f13e1824]: "29"
+        - button "Environmental Protection 22" [ref=f13e1825] [cursor=pointer]:
+          - generic [ref=f13e1826]: Environmental Protection
+          - generic [ref=f13e1827]: "22"
+        - button "Families 1" [ref=f13e1828] [cursor=pointer]:
+          - generic [ref=f13e1829]: Families
+          - generic [ref=f13e1830]: "1"
+        - button "Finance and Financial Sector 21" [ref=f13e1831] [cursor=pointer]:
+          - generic [ref=f13e1832]: Finance and Financial Sector
+          - generic [ref=f13e1833]: "21"
+        - button "Foreign Trade and International Finance 9" [ref=f13e1834] [cursor=pointer]:
+          - generic [ref=f13e1835]: Foreign Trade and International Finance
+          - generic [ref=f13e1836]: "9"
+        - button "Government Operations and Politics 19" [ref=f13e1837] [cursor=pointer]:
+          - generic [ref=f13e1838]: Government Operations and Politics
+          - generic [ref=f13e1839]: "19"
+        - button "Health 4" [ref=f13e1840] [cursor=pointer]:
+          - generic [ref=f13e1841]: Health
+          - generic [ref=f13e1842]: "4"
+        - button "Housing and Community Development 2" [ref=f13e1843] [cursor=pointer]:
+          - generic [ref=f13e1844]: Housing and Community Development
+          - generic [ref=f13e1845]: "2"
+        - button "Immigration 11" [ref=f13e1846] [cursor=pointer]:
+          - generic [ref=f13e1847]: Immigration
+          - generic [ref=f13e1848]: "11"
+        - button "International Affairs 26" [ref=f13e1849] [cursor=pointer]:
+          - generic [ref=f13e1850]: International Affairs
+          - generic [ref=f13e1851]: "26"
+        - button "Labor and Employment 6" [ref=f13e1852] [cursor=pointer]:
+          - generic [ref=f13e1853]: Labor and Employment
+          - generic [ref=f13e1854]: "6"
+        - button "Law 3" [ref=f13e1855] [cursor=pointer]:
+          - generic [ref=f13e1856]: Law
+          - generic [ref=f13e1857]: "3"
+        - button "Native Americans 5" [ref=f13e1858] [cursor=pointer]:
+          - generic [ref=f13e1859]: Native Americans
+          - generic [ref=f13e1860]: "5"
+        - button "Public Lands and Natural Resources 28" [ref=f13e1861] [cursor=pointer]:
+          - generic [ref=f13e1862]: Public Lands and Natural Resources
+          - generic [ref=f13e1863]: "28"
+        - button "Science, Technology, Communications 10" [ref=f13e1864] [cursor=pointer]:
+          - generic [ref=f13e1865]: Science, Technology, Communications
+          - generic [ref=f13e1866]: "10"
+        - button "Social Welfare 2" [ref=f13e1867] [cursor=pointer]:
+          - generic [ref=f13e1868]: Social Welfare
+          - generic [ref=f13e1869]: "2"
+        - button "Sports and Recreation 1" [ref=f13e1870] [cursor=pointer]:
+          - generic [ref=f13e1871]: Sports and Recreation
+          - generic [ref=f13e1872]: "1"
+        - button "Taxation 7" [ref=f13e1873] [cursor=pointer]:
+          - generic [ref=f13e1874]: Taxation
+          - generic [ref=f13e1875]: "7"
+        - button "Transportation and Public Works 5" [ref=f13e1876] [cursor=pointer]:
+          - generic [ref=f13e1877]: Transportation and Public Works
+          - generic [ref=f13e1878]: "5"
+        - button "Water Resources Development 1" [ref=f13e1879] [cursor=pointer]:
+          - generic [ref=f13e1880]: Water Resources Development
+          - generic [ref=f13e1881]: "1"
+  - main [ref=f13e1562]:
+    - tablist "Feed sections" [ref=f13e1563]:
+      - tab "All Reps" [selected] [ref=f13e1564] [cursor=pointer]
+      - tab "House of Representatives" [ref=f13e1571] [cursor=pointer]
+      - tab "Senate" [ref=f13e1577] [cursor=pointer]
+      - tab "Elections" [ref=f13e1581] [cursor=pointer]
+    - tabpanel "All Reps" [ref=f13e1586]:
+      - region "Your congressional delegation" [ref=f13e1587]:
+        - generic [ref=f13e1588]:
+          - generic [ref=f13e1589]:
+            - generic [ref=f13e1590]:
+              - article "Espaillat, Adriano" [ref=f13e1591]:
+                - img "Espaillat, Adriano official portrait" [ref=f13e1593]
+                - generic [ref=f13e1594]:
+                  - heading "Espaillat, Adriano" [level=3] [ref=f13e1595]
+                  - generic [ref=f13e1596]:
+                    - generic [ref=f13e1597]: U.S. Representative
+                    - generic [ref=f13e1602]: Democratic Party
+              - article "Gillibrand, Kirsten E." [ref=f13e1604]:
+                - img "Gillibrand, Kirsten E. official portrait" [ref=f13e1606]
+                - generic [ref=f13e1607]:
+                  - heading "Gillibrand, Kirsten E." [level=3] [ref=f13e1608]
+                  - generic [ref=f13e1609]:
+                    - generic [ref=f13e1610]: U.S. Senator
+                    - generic [ref=f13e1615]: Democratic Party
+              - article "Schumer, Charles E." [ref=f13e1617]:
+                - img "Schumer, Charles E. official portrait" [ref=f13e1619]
+                - generic [ref=f13e1620]:
+                  - heading "Schumer, Charles E." [level=3] [ref=f13e1621]
+                  - generic [ref=f13e1622]:
+                    - generic [ref=f13e1623]: U.S. Senator
+                    - generic [ref=f13e1628]: Democratic Party
+            - status
+          - generic [ref=f13e1630]:
+            - generic [ref=f13e1631]:
+              - 'img "Policy alignment: 0%" [ref=f13e1882]'
+              - generic [aria-hidden] [ref=f13e1637]: 0%
+            - generic [ref=f13e1638]:
+              - generic [ref=f13e1639]: Policy Alignment
+    - [signed-in response summary redacted]
+      - generic [ref=f13e1641]:
+        - heading "Legislative Feed" [level=2] [ref=f13e1642]
+        - 'article "Rep. Espaillat, Adriano: S. 629" [ref=f13e1883]':
+          - generic [ref=f13e1884]:
+            - generic [ref=f13e1885]:
+              - generic [ref=f13e1886]:
+                - group "Rep. Espaillat, Adriano" [ref=f13e1887]:
+                  - img "Espaillat, Adriano official portrait" [ref=f13e1889]
+                - button "S. 629" [ref=f13e1890] [cursor=pointer]
+                - generic [ref=f13e1891]: Jun 23, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e1895] [cursor=pointer]
+            - generic [ref=f13e1899]: Rep. Espaillat did not vote on S. 629, a bill to give farmers and private forest landowners more upfront disaster money and cover more wildfire damage.
+            - generic [ref=f13e1900]:
+              - button "Agree with Rep. Espaillat, Adriano" [ref=f13e1901] [cursor=pointer]
+    - [signed-in stance state redacted]
+                - generic [ref=f13e1907]: I disagree with Rep. Espaillat
+              - button "Open comments on S. 629 for Espaillat, Adriano" [ref=f13e1908] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Espaillat, Adriano: H.R. 7567" [ref=f13e1911]':
+          - generic [ref=f13e1912]:
+            - generic [ref=f13e1913]:
+              - generic [ref=f13e1914]:
+                - group "Rep. Espaillat, Adriano" [ref=f13e1915]:
+                  - img "Espaillat, Adriano official portrait" [ref=f13e1917]
+                - button "H.R. 7567" [ref=f13e1918] [cursor=pointer]
+                - generic [ref=f13e1919]: Apr 30, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e1923] [cursor=pointer]
+            - generic [ref=f13e1927]:
+              - text: Rep. Espaillat voted
+              - generic [ref=f13e1928]: Nay
+              - text: on H.R. 7567, a bill to continue and change farm, food, and rural programs through 2031.
+            - generic [ref=f13e1929]:
+              - button "Agree with Rep. Espaillat, Adriano" [ref=f13e1930] [cursor=pointer]
+              - button "Disagree with Rep. Espaillat, Adriano" [ref=f13e1933] [cursor=pointer]
+              - button "Open comments on H.R. 7567 for Espaillat, Adriano" [ref=f13e1936] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Espaillat, Adriano: H.R. 1011" [ref=f13e1939]':
+          - generic [ref=f13e1940]:
+            - generic [ref=f13e1941]:
+              - generic [ref=f13e1942]:
+                - group "Rep. Espaillat, Adriano" [ref=f13e1943]:
+                  - img "Espaillat, Adriano official portrait" [ref=f13e1945]
+                - button "H.R. 1011" [ref=f13e1946] [cursor=pointer]
+                - generic [ref=f13e1947]: Apr 14, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e1951] [cursor=pointer]
+            - generic [ref=f13e1955]:
+              - text: Rep. Espaillat voted
+              - generic [ref=f13e1956]: Yea
+              - text: on H.R. 1011, a bill to allow farmers and private forest owners hit by disasters to get more money up front for cleanup and repairs.
+            - generic [ref=f13e1957]:
+              - button "Agree with Rep. Espaillat, Adriano" [ref=f13e1958] [cursor=pointer]
+              - button "Disagree with Rep. Espaillat, Adriano" [ref=f13e1961] [cursor=pointer]
+              - button "Open comments on H.R. 1011 for Espaillat, Adriano" [ref=f13e1964] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Espaillat, Adriano: H.R. 1326" [ref=f13e1967]':
+          - generic [ref=f13e1968]:
+            - generic [ref=f13e1969]:
+              - generic [ref=f13e1970]:
+                - group "Rep. Espaillat, Adriano" [ref=f13e1971]:
+                  - img "Espaillat, Adriano official portrait" [ref=f13e1973]
+                - button "H.R. 1326" [ref=f13e1974] [cursor=pointer]
+                - generic [ref=f13e1975]: Mar 24, 2025
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e1979] [cursor=pointer]
+            - generic [ref=f13e1983]:
+              - text: Rep. Espaillat voted
+              - generic [ref=f13e1984]: Yea
+              - text: on H.R. 1326, a bill to require the Energy and Agriculture Departments to work together on research and choose projects through open competition.
+            - generic [ref=f13e1985]:
+              - button "Agree with Rep. Espaillat, Adriano" [ref=f13e1986] [cursor=pointer]
+              - button "Disagree with Rep. Espaillat, Adriano" [ref=f13e1989] [cursor=pointer]
+              - button "Open comments on H.R. 1326 for Espaillat, Adriano" [ref=f13e1992] [cursor=pointer]: 0 Comments

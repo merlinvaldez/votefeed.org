@@ -795,3 +795,144 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+
+/* Keep the Elections reference treatment scoped away from legislative cards. */
+.feed-layout-elections {
+  font-family: "Elections Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --primary: #0a5afe;
+  --primary-strong: #0643d4;
+  --primary-soft: #e6f0fe;
+  --primary-soft-border: #b8ceff;
+  --primary-text: #0a5afe;
+  --link: #0a5afe;
+  --card-blue: #0a5afe;
+}
+
+:root[data-theme="dark"] .feed-layout-elections {
+  --primary: #8fb2ff;
+  --primary-strong: #b2c8ff;
+  --primary-soft: #172747;
+  --primary-soft-border: #31528a;
+  --primary-text: #aac3ff;
+  --link: #9bb8ff;
+  --card-blue: #8fb2ff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .feed-layout-elections {
+    --primary: #8fb2ff;
+    --primary-strong: #b2c8ff;
+    --primary-soft: #172747;
+    --primary-soft-border: #31528a;
+    --primary-text: #aac3ff;
+    --link: #9bb8ff;
+    --card-blue: #8fb2ff;
+  }
+}
+
+.feed-layout-elections .feed-main {
+  min-width: 0;
+  gap: 0;
+  padding: 16px 36px 40px 28px;
+}
+
+.feed-layout-elections .feed-sidebar {
+  flex: 0 0 260px;
+  padding: 20px 16px 20px 40px;
+  gap: 17px;
+}
+
+.feed-layout-elections .brand { font-size: 25px; line-height: 1.32; }
+.feed-layout-elections .nav { gap: 6px; }
+.feed-layout-elections .nav-item { min-height: 41px; padding: 8px 14px; }
+.feed-layout-elections .policy-sidebar { gap: 0; margin-top: 12px; }
+.feed-layout-elections .policy-sidebar-header { height: 32px; }
+.feed-layout-elections .policy-sidebar-label { font-size: 14px; letter-spacing: 0.02em; }
+.feed-layout-elections .policy-search-toggle { width: 32px; height: 32px; }
+.feed-layout-elections .policy-sidebar > .policy-list { gap: 6px; }
+.feed-layout-elections .policy-sidebar > .policy-search-input { margin-top: 8px; }
+.feed-layout-elections .policy-option {
+  min-height: 40px;
+  padding: 7px 10px;
+  border-radius: 9px;
+  font-size: 14px;
+  line-height: 24px;
+}
+.feed-layout-elections .policy-count {
+  min-width: 30px;
+  padding: 1px 7px;
+  font-size: 13px;
+  line-height: 20px;
+}
+.feed-layout-elections .guest-bar { margin-bottom: 16px; padding: 8px 14px; }
+.feed-layout-elections .feed-view-tabs {
+  padding: 0 3px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  gap: 4px;
+}
+.feed-layout-elections .feed-view-tabs button {
+  min-height: 52px;
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  background: var(--surface);
+  font-size: 17px;
+}
+.feed-layout-elections .feed-view-tabs button[aria-selected="true"] {
+  border-color: #cbdcff;
+  border-bottom: 3px solid var(--primary);
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+.feed-layout-elections .elections-panel {
+  min-width: 0;
+  padding: 1px 22px 24px;
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+@media (max-width: 1200px) and (min-width: 901px) {
+  .feed-layout-elections .feed-sidebar { flex-basis: 220px; padding-left: 24px; }
+  .feed-layout-elections .feed-main { padding-right: 24px; padding-left: 16px; }
+  .feed-layout-elections .feed-view-tabs button { font-size: 14px; }
+}
+@media (max-width: 900px) {
+  .feed-layout-elections .feed-sidebar { flex: none; padding: 16px; gap: 8px; }
+  .feed-layout-elections .brand { font-size: 24px; line-height: 1.25; }
+  .feed-layout-elections .brand-mark { width: 40px; height: 40px; padding: 7px; }
+  .feed-layout-elections .nav { gap: 8px; }
+  .feed-layout-elections .nav-item { min-height: 36px; padding: 6px 10px; }
+  .feed-layout-elections .policy-sidebar { margin-top: 0; }
+  .feed-layout-elections .feed-main { padding: 12px 16px 28px; }
+  .feed-layout-elections .guest-bar { margin-bottom: 12px; }
+  .feed-layout-elections .feed-view-tabs button { min-height: 48px; font-size: 13px; }
+}
+@media (max-width: 640px) {
+  .feed-layout-elections .feed-sidebar { gap: 6px; padding: 6px 10px; }
+  .feed-layout-elections .brand { gap: 8px; font-size: 22px; }
+  .feed-layout-elections .brand-mark { width: 34px; height: 34px; padding: 6px; }
+  .feed-layout-elections .nav-item { min-height: 36px; }
+  .feed-layout-elections .feed-main { padding: 8px 10px 24px; }
+  .feed-layout-elections .guest-bar {
+    gap: 8px;
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    border-radius: 10px;
+  }
+  .feed-layout-elections .guest-left { min-width: 0; gap: 8px; }
+  .feed-layout-elections .guest-title { font-size: 14px; line-height: 1.25; }
+  .feed-layout-elections .guest-sub { font-size: 12px; line-height: 1.25; }
+  .feed-layout-elections .guest-cta {
+    flex: 0 0 auto;
+    min-height: 34px;
+    padding: 7px 9px;
+    border-radius: 8px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  .feed-layout-elections .elections-panel { padding: 10px 12px 18px; }
+  .feed-layout-elections .feed-view-tabs button { min-height: 46px; font-size: 12px; }
+}

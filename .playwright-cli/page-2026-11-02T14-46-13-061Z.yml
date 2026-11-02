@@ -1,0 +1,223 @@
+- generic [ref=f13e4]:
+  - complementary [ref=f13e5]:
+    - link "VoteFeed feed" [ref=f13e6] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f13e8]
+      - generic [ref=f13e9]: VoteFeed
+    - navigation [ref=f13e10]:
+      - link "Feed" [ref=f13e11] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=f13e16] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=f13e21]:
+      - generic [ref=f13e22]:
+        - generic [ref=f13e23]: Policy Areas
+        - button "Search policy areas" [ref=f13e24] [cursor=pointer]
+      - generic [ref=f13e28]:
+        - button "All 276" [ref=f13e673] [cursor=pointer]:
+          - generic [ref=f13e30]: All
+          - generic [ref=f13e674]: "276"
+        - button "Agriculture and Food 4" [ref=f13e675] [cursor=pointer]:
+          - generic [ref=f13e676]: Agriculture and Food
+          - generic [ref=f13e677]: "4"
+        - button "Animals 3" [ref=f13e678] [cursor=pointer]:
+          - generic [ref=f13e679]: Animals
+          - generic [ref=f13e680]: "3"
+        - button "Armed Forces and National Security 14" [ref=f13e681] [cursor=pointer]:
+          - generic [ref=f13e682]: Armed Forces and National Security
+          - generic [ref=f13e683]: "14"
+        - button "Civil Rights and Liberties, Minority Issues 3" [ref=f13e684] [cursor=pointer]:
+          - generic [ref=f13e685]: Civil Rights and Liberties, Minority Issues
+          - generic [ref=f13e686]: "3"
+        - button "Commerce 21" [ref=f13e687] [cursor=pointer]:
+          - generic [ref=f13e688]: Commerce
+          - generic [ref=f13e689]: "21"
+        - button "Congress 30" [ref=f13e690] [cursor=pointer]:
+          - generic [ref=f13e691]: Congress
+          - generic [ref=f13e692]: "30"
+        - button "Crime and Law Enforcement 18" [ref=f13e693] [cursor=pointer]:
+          - generic [ref=f13e694]: Crime and Law Enforcement
+          - generic [ref=f13e695]: "18"
+        - button "Economics and Public Finance 14" [ref=f13e696] [cursor=pointer]:
+          - generic [ref=f13e697]: Economics and Public Finance
+          - generic [ref=f13e698]: "14"
+        - button "Education 7" [ref=f13e699] [cursor=pointer]:
+          - generic [ref=f13e700]: Education
+          - generic [ref=f13e701]: "7"
+        - button "Emergency Management 4" [ref=f13e702] [cursor=pointer]:
+          - generic [ref=f13e703]: Emergency Management
+          - generic [ref=f13e704]: "4"
+        - button "Energy 23" [ref=f13e705] [cursor=pointer]:
+          - generic [ref=f13e706]: Energy
+          - generic [ref=f13e707]: "23"
+        - button "Environmental Protection 13" [ref=f13e708] [cursor=pointer]:
+          - generic [ref=f13e709]: Environmental Protection
+          - generic [ref=f13e710]: "13"
+        - button "Families 1" [ref=f13e711] [cursor=pointer]:
+          - generic [ref=f13e712]: Families
+          - generic [ref=f13e713]: "1"
+        - button "Finance and Financial Sector 15" [ref=f13e714] [cursor=pointer]:
+          - generic [ref=f13e715]: Finance and Financial Sector
+          - generic [ref=f13e716]: "15"
+        - button "Foreign Trade and International Finance 4" [ref=f13e717] [cursor=pointer]:
+          - generic [ref=f13e718]: Foreign Trade and International Finance
+          - generic [ref=f13e719]: "4"
+        - button "Government Operations and Politics 16" [ref=f13e720] [cursor=pointer]:
+          - generic [ref=f13e721]: Government Operations and Politics
+          - generic [ref=f13e722]: "16"
+        - button "Health 2" [ref=f13e723] [cursor=pointer]:
+          - generic [ref=f13e724]: Health
+          - generic [ref=f13e725]: "2"
+        - button "Housing and Community Development 1" [ref=f13e726] [cursor=pointer]:
+          - generic [ref=f13e727]: Housing and Community Development
+          - generic [ref=f13e728]: "1"
+        - button "Immigration 11" [ref=f13e729] [cursor=pointer]:
+          - generic [ref=f13e730]: Immigration
+          - generic [ref=f13e731]: "11"
+        - button "International Affairs 16" [ref=f13e732] [cursor=pointer]:
+          - generic [ref=f13e733]: International Affairs
+          - generic [ref=f13e734]: "16"
+        - button "Labor and Employment 6" [ref=f13e735] [cursor=pointer]:
+          - generic [ref=f13e736]: Labor and Employment
+          - generic [ref=f13e737]: "6"
+        - button "Law 3" [ref=f13e738] [cursor=pointer]:
+          - generic [ref=f13e739]: Law
+          - generic [ref=f13e740]: "3"
+        - button "Native Americans 5" [ref=f13e741] [cursor=pointer]:
+          - generic [ref=f13e742]: Native Americans
+          - generic [ref=f13e743]: "5"
+        - button "Public Lands and Natural Resources 21" [ref=f13e744] [cursor=pointer]:
+          - generic [ref=f13e745]: Public Lands and Natural Resources
+          - generic [ref=f13e746]: "21"
+        - button "Science, Technology, Communications 10" [ref=f13e747] [cursor=pointer]:
+          - generic [ref=f13e748]: Science, Technology, Communications
+          - generic [ref=f13e749]: "10"
+        - button "Social Welfare 2" [ref=f13e750] [cursor=pointer]:
+          - generic [ref=f13e751]: Social Welfare
+          - generic [ref=f13e752]: "2"
+        - button "Taxation 4" [ref=f13e753] [cursor=pointer]:
+          - generic [ref=f13e754]: Taxation
+          - generic [ref=f13e755]: "4"
+        - button "Transportation and Public Works 4" [ref=f13e756] [cursor=pointer]:
+          - generic [ref=f13e757]: Transportation and Public Works
+          - generic [ref=f13e758]: "4"
+        - button "Water Resources Development 1" [ref=f13e759] [cursor=pointer]:
+          - generic [ref=f13e760]: Water Resources Development
+          - generic [ref=f13e761]: "1"
+  - main [ref=f13e122]:
+    - tablist "Feed sections" [ref=f13e123]:
+      - tab "All Reps" [ref=f13e124] [cursor=pointer]
+      - tab "House of Representatives" [active] [selected] [ref=f13e131] [cursor=pointer]
+      - tab "Senate" [ref=f13e137] [cursor=pointer]
+      - tab "Elections" [ref=f13e141] [cursor=pointer]
+    - tabpanel "House of Representatives" [ref=f13e762]:
+      - region "Your congressional delegation" [ref=f13e469]:
+        - generic [ref=f13e470]:
+          - generic [ref=f13e471]:
+            - article "Espaillat, Adriano" [ref=f13e473]:
+              - img "Espaillat, Adriano official portrait" [ref=f13e475]
+              - generic [ref=f13e476]:
+                - heading "Espaillat, Adriano" [level=3] [ref=f13e477]
+                - generic [ref=f13e478]:
+                  - generic [ref=f13e484]: Democratic Party
+                  - generic [ref=f13e763]: New York District 13
+                  - link "Espaillat, Adriano official website (opens in a new tab)" [ref=f13e767] [cursor=pointer]:
+                    - /url: https://espaillat.house.gov
+                    - generic [ref=f13e771]: Website
+            - status
+          - generic [ref=f13e512]:
+            - generic [ref=f13e513]:
+              - 'img "Policy alignment: 86%" [ref=f13e772]'
+              - generic [aria-hidden] [ref=f13e519]: 86%
+            - generic [ref=f13e520]:
+              - generic [ref=f13e521]: Policy Alignment
+    - [signed-in response summary redacted]
+      - generic [ref=f13e523]:
+        - heading "Legislative Feed" [level=2] [ref=f13e524]
+        - 'article "Rep. Espaillat, Adriano: H.R. 6500" [ref=f13e773]':
+          - generic [ref=f13e774]:
+            - generic [ref=f13e775]:
+              - generic [ref=f13e776]:
+                - group "Rep. Espaillat, Adriano" [ref=f13e777]:
+                  - img "Espaillat, Adriano official portrait" [ref=f13e779]
+                - button "H.R. 6500" [ref=f13e780] [cursor=pointer]
+                - generic [ref=f13e781]: Sep 1, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e785] [cursor=pointer]
+            - generic [ref=f13e789]:
+              - text: Rep. Espaillat voted
+              - generic [ref=f13e790]: Nay
+              - text: on H.R. 6500, a bill to keep the federal government running with short-term funding and extend programs set to expire.
+            - generic [ref=f13e791]:
+    - [signed-in stance state redacted]
+                - generic [ref=f13e795]: I agree with Rep. Espaillat
+              - button "Disagree with Rep. Espaillat, Adriano" [ref=f13e796] [cursor=pointer]
+              - button "Open comments on H.R. 6500 for Espaillat, Adriano" [ref=f13e799] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Espaillat, Adriano: S. 32" [ref=f13e802]':
+          - generic [ref=f13e803]:
+            - generic [ref=f13e804]:
+              - generic [ref=f13e805]:
+                - group "Rep. Espaillat, Adriano" [ref=f13e806]:
+                  - img "Espaillat, Adriano official portrait" [ref=f13e808]
+                - button "S. 32" [ref=f13e809] [cursor=pointer]
+                - generic [ref=f13e810]: Aug 31, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e814] [cursor=pointer]
+            - generic [ref=f13e818]:
+              - text: Rep. Espaillat voted
+              - generic [ref=f13e819]: Yea
+              - text: on S. 32, a bill to allow federal court sessions in College Station and El Centro.
+            - generic [ref=f13e820]:
+              - button "Agree with Rep. Espaillat, Adriano" [ref=f13e821] [cursor=pointer]
+              - button "Disagree with Rep. Espaillat, Adriano" [ref=f13e824] [cursor=pointer]
+              - button "Open comments on S. 32 for Espaillat, Adriano" [ref=f13e827] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Espaillat, Adriano: S. 307" [ref=f13e830]':
+          - generic [ref=f13e831]:
+            - generic [ref=f13e832]:
+              - generic [ref=f13e833]:
+                - group "Rep. Espaillat, Adriano" [ref=f13e834]:
+                  - img "Espaillat, Adriano official portrait" [ref=f13e836]
+                - button "S. 307" [ref=f13e837] [cursor=pointer]
+                - generic [ref=f13e838]: Aug 31, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e842] [cursor=pointer]
+            - generic [ref=f13e846]:
+              - text: Rep. Espaillat voted
+              - generic [ref=f13e847]: Yea
+              - text: on S. 307, a bill to require national rules and prison safety steps to stop sexual harassment and assault by prisoners against prison staff.
+            - generic [ref=f13e848]:
+              - button "Agree with Rep. Espaillat, Adriano" [ref=f13e849] [cursor=pointer]
+              - button "Disagree with Rep. Espaillat, Adriano" [ref=f13e852] [cursor=pointer]
+              - button "Open comments on S. 307 for Espaillat, Adriano" [ref=f13e855] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Espaillat, Adriano: H.R. 1181" [ref=f13e858]':
+          - generic [ref=f13e859]:
+            - generic [ref=f13e860]:
+              - generic [ref=f13e861]:
+                - group "Rep. Espaillat, Adriano" [ref=f13e862]:
+                  - img "Espaillat, Adriano official portrait" [ref=f13e864]
+                - button "H.R. 1181" [ref=f13e865] [cursor=pointer]
+                - generic [ref=f13e866]: Jul 14, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e870] [cursor=pointer]
+            - generic [ref=f13e874]:
+              - text: Rep. Espaillat voted
+              - generic [ref=f13e875]: Nay
+              - text: on H.R. 1181, a bill to stop payment card networks from using special store codes that single out gun stores.
+            - generic [ref=f13e876]:
+              - button "Agree with Rep. Espaillat, Adriano" [ref=f13e877] [cursor=pointer]
+              - button "Disagree with Rep. Espaillat, Adriano" [ref=f13e880] [cursor=pointer]
+              - button "Open comments on H.R. 1181 for Espaillat, Adriano" [ref=f13e883] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Espaillat, Adriano: H.R. 139" [ref=f13e886]':
+          - generic [ref=f13e887]:
+            - generic [ref=f13e888]:
+              - generic [ref=f13e889]:
+                - group "Rep. Espaillat, Adriano" [ref=f13e890]:
+                  - img "Espaillat, Adriano official portrait" [ref=f13e892]
+                - button "H.R. 139" [ref=f13e893] [cursor=pointer]
+                - generic [ref=f13e894]: Jul 14, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e898] [cursor=pointer]
+            - generic [ref=f13e902]:
+              - text: Rep. Espaillat voted
+              - generic [ref=f13e903]: Nay
+              - text: on H.R. 139, a bill to keep daylight saving time year-round and end seasonal clock changes.
+            - generic [ref=f13e904]:
+              - button "Agree with Rep. Espaillat, Adriano" [ref=f13e905] [cursor=pointer]
+              - button "Disagree with Rep. Espaillat, Adriano" [ref=f13e908] [cursor=pointer]
+              - button "Open comments on H.R. 139 for Espaillat, Adriano" [ref=f13e911] [cursor=pointer]: 0 Comments
+        - generic [ref=f13e914]: Loading more...

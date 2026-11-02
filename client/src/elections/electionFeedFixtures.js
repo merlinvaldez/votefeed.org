@@ -21,6 +21,10 @@ const FIXTURE_FAILURES = new Set([
   "alignment",
   "save-response",
   "clear-response",
+  "build-status",
+]);
+const CANDIDATE_AVAILABILITY_STATES = new Set([
+  "site-missing", "site-unverified", "crawl-failed", "extraction-failed",
 ]);
 
 function portraitSvg(background, shirt, hair) {
@@ -109,6 +113,50 @@ const CANDIDACIES = Object.freeze([
     availability: "no-positions",
   },
 ]);
+
+const VISUAL_CANDIDATE_COPY = Object.freeze({
+  "fixture-candidacy-house-a": { name: "Avery Example", responseDisplayName: "Avery" },
+  "fixture-candidacy-house-b": { name: "Blake L. Example-Watson", responseDisplayName: "Blake" },
+  "fixture-candidacy-house-c": { name: "Cameron De La Example-Washington", responseDisplayName: "Cameron" },
+  "fixture-candidacy-senate-a": { name: "Dakota Example", responseDisplayName: "Dakota" },
+  "fixture-candidacy-senate-b": { name: "Ellis Montgomery Example Jr.", responseDisplayName: "Ellis" },
+});
+
+const VISUAL_ONLY_CANDIDACIES = Object.freeze([
+  {
+    candidacyId: "visual-layout-candidacy-house-six",
+    candidateId: "visual-layout-person-house-six",
+    name: "Florence B. Northwood",
+    responseDisplayName: "Florence",
+    race: HOUSE_RACE,
+    party: "Working Families Party",
+    incumbency: "unknown",
+    portraitUrl: null,
+    ballotStatus: "unknown",
+    registrationStatus: "not-evaluated",
+    availability: "no-positions",
+  },
+  {
+    candidacyId: "visual-layout-candidacy-senate-seven",
+    candidateId: "visual-layout-person-senate-seven",
+    name: "Gabriel De La Cruz-Example",
+    responseDisplayName: "Gabriel",
+    race: SENATE_RACE,
+    party: "Green Party",
+    incumbency: "unknown",
+    portraitUrl: null,
+    ballotStatus: "unknown",
+    registrationStatus: "not-evaluated",
+    availability: "no-positions",
+  },
+]);
+
+const VISUAL_POSITION_SUMMARIES = Object.freeze({
+  "fixture-position-version-house-a-housing":
+    "Expand affordable housing by rehabilitating vacant homes, preserving rent-stabilized apartments, and supporting first-time buyers with down-payment assistance.",
+  "fixture-position-version-house-b-immigration":
+    "Support faster work-permit processing while expanding immigration court capacity and preserving access to legal counsel for families awaiting a hearing.",
+});
 
 const CANDIDACY_BY_ID = new Map(
   CANDIDACIES.map((candidate) => [candidate.candidacyId, candidate]),
@@ -250,9 +298,11 @@ function isInChamber(candidate, chamber) {
   return chamber === "all" || candidate.race.office === chamber;
 }
 
-function candidatesForScope(scope, { keepRoster = false } = {}) {
+function candidatesForScope(scope, { keepRoster = false, visualCandidates = null } = {}) {
   const normalized = normalizeScope(scope);
-  return CANDIDACIES.filter((candidate) =>
+  const candidates = visualCandidates ?? CANDIDACIES;
+  return candidates.filter((candidate) =>
+    (visualCandidates !== null || candidate.ballotStatus === "ballot-confirmed") &&
     matchesGeography(candidate, normalized.geography) &&
     isInChamber(candidate, normalized.chamber) &&
     (keepRoster || normalized.candidacyId === null ||
@@ -260,14 +310,25 @@ function candidatesForScope(scope, { keepRoster = false } = {}) {
   );
 }
 
-function basePositionsForScope(scope) {
+function basePositionsForScope(scope, visualCandidates = null) {
   const normalized = normalizeScope(scope);
-  const candidacyIds = new Set(candidatesForScope(normalized).map(({ candidacyId }) => candidacyId));
-  return POSITIONS.filter((position) => candidacyIds.has(position.candidacyId));
+  const candidates = candidatesForScope(normalized, { visualCandidates });
+  const candidatesById = new Map(candidates.map((candidate) => [candidate.candidacyId, candidate]));
+  return POSITIONS.filter((position) => candidatesById.has(position.candidacyId))
+    .map((position) => {
+      const summary = visualCandidates
+        ? VISUAL_POSITION_SUMMARIES[position.positionVersionId]
+        : null;
+      return {
+        ...position,
+        candidate: candidatesById.get(position.candidacyId),
+        ...(summary ? { summary, excerpt: summary } : {}),
+      };
+    });
 }
 
-function policyCountsForScope(scope) {
-  const completeSet = basePositionsForScope(scope);
+function policyCountsForScope(scope, visualCandidates = null) {
+  const completeSet = basePositionsForScope(scope, visualCandidates);
   const byPolicyArea = Object.fromEntries(POLICY_KEYS.map((key) => [key, 0]));
   let uncategorized = 0;
   for (const position of completeSet) {
@@ -282,9 +343,28 @@ function policyCountsForScope(scope) {
   };
 }
 
-function coverageForScope(scope) {
+function coverageForScope(scope, status = "partial", raceStatus = null) {
   const geography = normalizeScope(scope).geography;
   const house = geography.status === "verified" ? "partial" : "geography-unverified";
+  if (raceStatus === "confirmed-none") {
+    const byOffice = {
+      house: geography.status === "verified" ? "no-race" : "geography-unverified",
+      senate: geography.state ? "no-race" : "geography-unavailable",
+    };
+    const complete = Object.values(byOffice).every(value => value === "no-race");
+    return {
+      status: complete ? "complete" : "partial",
+      byOffice,
+      message: "Synthetic development fixture: no-race status is not a live election result.",
+    };
+  }
+  if (status === "unknown") {
+    return {
+      status: "unknown",
+      byOffice: { house: "unknown", senate: "unknown" },
+      message: "Development fixture coverage is intentionally unverified; this preview makes no ballot-completeness claim.",
+    };
+  }
   return {
     status: "partial",
     byOffice: { house, senate: geography.state ? "complete" : "unknown" },
@@ -292,8 +372,17 @@ function coverageForScope(scope) {
   };
 }
 
-function availabilityForScope(scope, candidates) {
+function availabilityForScope(scope, candidates, raceStatus = null) {
   const geography = normalizeScope(scope).geography;
+  if (raceStatus === "confirmed-none") {
+    const house = geography.status === "verified" ? "no-race" : "geography-unverified";
+    const senate = geography.state ? "no-race" : "geography-unavailable";
+    return {
+      overall: house === "no-race" && senate === "no-race" ? "no-race" : "coverage-unknown",
+      house,
+      senate,
+    };
+  }
   const house = geography.status !== "verified"
     ? "geography-unverified"
     : candidates.some(({ race }) => race.office === "house") ? "available" : "coverage-unknown";
@@ -331,8 +420,8 @@ function waitForFixture(latencyMs, signal) {
   });
 }
 
-function throwFixtureFailure(operation, failures) {
-  if (!failures.has(operation)) return;
+function throwFixtureFailure(operation, failures, failAt, callNumber) {
+  if (!failures.has(operation) && failAt[operation] !== callNumber) return;
   const error = new Error(`Configured Elections fixture failure: ${operation}`);
   error.code = "ELECTION_FIXTURE_FAILURE";
   error.operation = operation;
@@ -364,12 +453,23 @@ function readCursor(cursor, key, snapshotId) {
  * Create a deterministic, development-only implementation of the Elections
  * data interface. No application route imports this module by default.
  *
- * @param {{pageSize?: number, latencyMs?: number, failures?: string[]}} [options]
+ * @param {{pageSize?: number, latencyMs?: number, failures?: string[], failAt?: Record<string, number>, responseState?: string, visualCandidateCount?: number, brokenVisualPortrait?: boolean, invalidateCursorOnce?: boolean, sourceUnavailable?: boolean, geographyStatus?: string, raceStatus?: string|null, candidateAvailabilityScenario?: string|null, coverageStatus?: string, buildScenario?: string}} [options]
  */
 export function createElectionFixtureClient({
   pageSize = FIXTURE_PAGE_SIZE,
   latencyMs = 0,
   failures = [],
+  failAt = {},
+  responseState = null,
+  visualCandidateCount = null,
+  brokenVisualPortrait = false,
+  invalidateCursorOnce = false,
+  sourceUnavailable = false,
+  geographyStatus = "verified",
+  raceStatus = null,
+  candidateAvailabilityScenario = null,
+  coverageStatus = "partial",
+  buildScenario = "none",
 } = {}) {
   if (import.meta.env?.DEV !== true) {
     throw new Error("Elections fixture data can only be used in a Vite development build.");
@@ -380,67 +480,194 @@ export function createElectionFixtureClient({
   if (!Number.isFinite(latencyMs) || latencyMs < 0) {
     throw new TypeError("Fixture latency must be a non-negative number.");
   }
+  if (visualCandidateCount !== null && ![0, 1, 2, 3, 5, 7].includes(visualCandidateCount)) {
+    throw new TypeError("Visual fixture candidate count must be 0, 1, 2, 3, 5, or 7.");
+  }
   const invalidFailures = failures.filter((failure) => !FIXTURE_FAILURES.has(failure));
   if (invalidFailures.length > 0) {
     throw new TypeError(`Unsupported Elections fixture failures: ${invalidFailures.join(", ")}`);
   }
+  const configuredFailAt = { ...failAt };
+  if (buildScenario === "refresh-failure" && configuredFailAt["positions:first-page"] === undefined) {
+    configuredFailAt["positions:first-page"] = 2;
+  }
+  const invalidFailAt = Object.entries(configuredFailAt).filter(([operation, call]) =>
+    !FIXTURE_FAILURES.has(operation) || !Number.isInteger(call) || call < 1 || call > 100);
+  if (invalidFailAt.length > 0) {
+    throw new TypeError("Fixture failAt entries require a supported operation and call number from 1 to 100.");
+  }
+  if (!new Set(["neutral", "agreement", "disagreement", "mixed", "zero", "seventy-five", null]).has(responseState)) {
+    throw new TypeError("Unsupported fixture response state.");
+  }
+  if (!new Set(["verified", "state-only", "unavailable"]).has(geographyStatus)) {
+    throw new TypeError("Unsupported fixture geography status.");
+  }
+  if (!new Set([null, "confirmed-none"]).has(raceStatus)) {
+    throw new TypeError("Unsupported fixture race status.");
+  }
+  if (!new Set([null, ...CANDIDATE_AVAILABILITY_STATES]).has(candidateAvailabilityScenario)) {
+    throw new TypeError("Unsupported fixture candidate availability status.");
+  }
+  if (!new Set(["partial", "unknown"]).has(coverageStatus)) {
+    throw new TypeError("Unsupported fixture coverage status.");
+  }
+  if (!new Set(["none", "running", "failed", "partial", "refresh-failure"]).has(buildScenario)) {
+    throw new TypeError("Unsupported fixture build scenario.");
+  }
 
   const configuredFailures = new Set(failures);
-  const responses = new Map(INITIAL_RESPONSES);
+  const responses = new Map(responseState === null || responseState === "mixed" || responseState === "seventy-five"
+    ? INITIAL_RESPONSES
+    : []);
+  if (responseState === "agreement") responses.set(POSITIONS[0].positionVersionId, "agree");
+  if (responseState === "disagreement") responses.set(POSITIONS[0].positionVersionId, "disagree");
+  if (responseState === "zero") {
+    for (const position of POSITIONS) responses.set(position.positionVersionId, "disagree");
+  }
+  if (responseState === "neutral") responses.clear();
+  const visualCandidates = visualCandidateCount === null
+    ? null
+    : [
+      ...CANDIDACIES.map((candidate) => ({
+        ...candidate,
+        ...VISUAL_CANDIDATE_COPY[candidate.candidacyId],
+        ...(brokenVisualPortrait && candidate.candidacyId === "fixture-candidacy-house-a"
+          ? { portraitUrl: "/visual-fixture-missing-portrait.png" }
+          : {}),
+      })),
+      ...VISUAL_ONLY_CANDIDACIES,
+    ].slice(0, visualCandidateCount);
+  const defaultGeography = geographyStatus === "unavailable"
+    ? { status: "unavailable", state: null, houseDistrict: null }
+    : geographyStatus === "state-only"
+      ? { status: "state-only", state: DEFAULT_GEOGRAPHY.state, houseDistrict: null }
+      : { ...DEFAULT_GEOGRAPHY };
+  function fixtureCandidatesForScope(scope, { keepRoster = false } = {}) {
+    return candidatesForScope(scope, { keepRoster, visualCandidates }).map(candidate =>
+      candidateAvailabilityScenario && candidate.availability === "no-positions"
+        ? { ...candidate, availability: candidateAvailabilityScenario }
+        : candidate,
+    );
+  }
+  function fixturePolicyCounts(scope) {
+    if (raceStatus === "confirmed-none") {
+      return {
+        dataMode: "development-fixture",
+        all: 0,
+        uncategorized: 0,
+        byPolicyArea: Object.fromEntries(POLICY_KEYS.map(key => [key, 0])),
+      };
+    }
+    return policyCountsForScope(scope, visualCandidates);
+  }
+  const operationCalls = new Map();
+  let buildStatusReads = 0;
   let publicationRevision = 1;
+  let cursorInvalidated = false;
+
+  function buildJobs() {
+    if (buildScenario === "none") return [];
+    if (buildScenario === "failed" || buildScenario === "partial") {
+      return [{
+        id: `fixture-build-${buildScenario}`,
+        status: buildScenario,
+        updatedAt: new Date().toISOString(),
+      }];
+    }
+    const completed = buildStatusReads >= 2;
+    return completed ? [] : [{
+      id: `fixture-build-${buildScenario}`,
+      status: "running",
+      updatedAt: new Date().toISOString(),
+    }];
+  }
 
   async function wait(operation, signal, continuation = false) {
     const failureKey = operation === "positions"
       ? `positions:${continuation ? "next-page" : "first-page"}`
       : operation;
     await waitForFixture(latencyMs, signal);
-    throwFixtureFailure(failureKey, configuredFailures);
+    if (signal?.aborted) {
+      const error = new Error("Fixture request aborted.");
+      error.name = "AbortError";
+      throw error;
+    }
+    const callNumber = (operationCalls.get(failureKey) ?? 0) + 1;
+    operationCalls.set(failureKey, callNumber);
+    throwFixtureFailure(failureKey, configuredFailures, configuredFailAt, callNumber);
   }
 
   const client = createElectionFeedClient({
     async readRoster(scope, { signal } = {}) {
       await wait("roster", signal);
-      const normalized = normalizeScope(scope);
-      const candidates = candidatesForScope(normalized, { keepRoster: true });
+      const normalized = normalizeScope({ ...scope, geography: scope?.geography ?? defaultGeography });
+      const candidates = raceStatus === "confirmed-none"
+        ? []
+        : fixtureCandidatesForScope(normalized, { keepRoster: true });
       return {
         dataMode: "development-fixture",
         candidates: copy(candidates),
-        coverage: copy(coverageForScope(normalized)),
-        availability: copy(availabilityForScope(normalized, candidates)),
+        geography: copy(normalized.geography),
+        visualLayoutOnly: visualCandidates !== null,
+        coverage: copy(coverageForScope(normalized, coverageStatus, raceStatus)),
+        availability: copy(availabilityForScope(normalized, candidates, raceStatus)),
+        builds: copy(buildJobs()),
       };
     },
 
-    async readBuildStatus() {
-      return { builds: [] };
+    async readBuildStatus(_scope, { signal } = {}) {
+      await wait("build-status", signal);
+      buildStatusReads += 1;
+      return { builds: copy(buildJobs()) };
     },
 
     async readPositions(scope, { limit = pageSize, cursor = null, signal, viewer = "signed-in" } = {}) {
       if (!Number.isInteger(limit) || limit < 1 || limit > 50) {
         throw new TypeError("Fixture page limit must be between 1 and 50.");
       }
-      const normalized = normalizeScope(scope);
+      const normalized = normalizeScope({ ...scope, geography: scope?.geography ?? defaultGeography });
       const key = scopeKey(normalized);
+      if (invalidateCursorOnce && cursor !== null && !cursorInvalidated) {
+        publicationRevision += 1;
+        cursorInvalidated = true;
+      }
       const snapshotId = `fixture-publication-${publicationRevision}`;
       const offset = cursor === null ? 0 : readCursor(cursor, key, snapshotId);
       await wait("positions", signal, cursor !== null);
 
-      const completeSet = basePositionsForScope(normalized);
+      const completeSet = raceStatus === "confirmed-none"
+        ? []
+        : basePositionsForScope(normalized, visualCandidates);
       const filtered = normalized.policyArea === null
         ? completeSet
-        : completeSet.filter(({ topic }) => topic === normalized.policyArea);
-      const items = filtered.slice(offset, offset + limit).map((position) => ({
-        ...copy(position),
-        response: viewer === "guest" ? null : responses.has(position.positionVersionId)
-          ? { stance: responses.get(position.positionVersionId) }
-          : null,
-      }));
+        : completeSet.filter(({ topic }) => normalized.policyArea === "uncategorized"
+          ? topic == null
+          : topic === normalized.policyArea);
+      const items = filtered.slice(offset, offset + Math.min(limit, pageSize)).map((position, index) => {
+        const item = copy(position);
+        if (sourceUnavailable && offset + index === 0 && item.source) {
+          item.source.url = null;
+        }
+        return {
+          ...item,
+          response: viewer === "guest" ? null : responses.has(position.positionVersionId)
+            ? { stance: responses.get(position.positionVersionId) }
+            : null,
+        };
+      });
       const nextOffset = offset + items.length;
       const selectedCandidate = normalized.candidacyId === null
         ? null
-        : candidatesForScope(normalized)[0];
-      const candidateWithNoPositions = selectedCandidate?.availability === "no-positions";
+        : fixtureCandidatesForScope(normalized)[0];
+      const candidateAvailability = selectedCandidate?.availability;
+      const candidateWithNoPositions = candidateAvailability === "no-positions" ||
+        CANDIDATE_AVAILABILITY_STATES.has(candidateAvailability);
       let availability = items.length > 0 ? "available" : "coverage-unknown";
-      if (candidateWithNoPositions) availability = "no-positions";
+      if (raceStatus === "confirmed-none") {
+        availability = normalized.chamber === "house" && normalized.geography.status !== "verified"
+          ? "geography-unverified"
+          : normalized.geography.status === "unavailable" ? "geography-unavailable" : "no-race";
+      } else if (selectedCandidate && candidateWithNoPositions) availability = candidateAvailability;
       else if (completeSet.length > 0 && filtered.length === 0) availability = "no-topic-match";
       else if (normalized.chamber === "house" && normalized.geography.status !== "verified") {
         availability = "geography-unverified";
@@ -455,15 +682,16 @@ export function createElectionFixtureClient({
         nextCursor: nextOffset < filtered.length
           ? makeCursor(key, snapshotId, nextOffset)
           : null,
-        policyCounts: policyCountsForScope(normalized),
+        policyCounts: fixturePolicyCounts(normalized),
         availability,
-        coverage: coverageForScope(normalized),
+        coverage: coverageForScope(normalized, coverageStatus, raceStatus),
+        builds: copy(buildJobs()),
       };
     },
 
     async readPolicyCounts(scope, { signal } = {}) {
       await wait("policy-counts", signal);
-      return policyCountsForScope(scope);
+      return fixturePolicyCounts(scope);
     },
 
     async readAlignment(scope, { signal, viewer = "signed-in" } = {}) {
@@ -482,8 +710,10 @@ export function createElectionFixtureClient({
           percentage: null,
         };
       }
-      const positions = basePositionsForScope(normalized).filter((position) =>
-        normalized.policyArea === null || position.topic === normalized.policyArea,
+      const positions = basePositionsForScope(normalized, visualCandidates).filter((position) =>
+        normalized.policyArea === null || (normalized.policyArea === "uncategorized"
+          ? position.topic == null
+          : position.topic === normalized.policyArea),
       );
       let agreementCount = 0;
       let disagreementCount = 0;
@@ -539,6 +769,14 @@ export function createElectionFixtureClient({
     ...client,
     dataMode: "development-fixture",
     label: ELECTION_FIXTURE_LABEL,
+    fixtureScenario: Object.freeze({
+      responseState, geographyStatus, raceStatus, candidateAvailabilityScenario,
+      coverageStatus, buildScenario,
+    }),
+    visualScenario: visualCandidateCount === null ? null : Object.freeze({
+      candidateCount: visualCandidateCount,
+      brokenPortrait: brokenVisualPortrait,
+    }),
     fixtureControls: Object.freeze({
       invalidatePublication() {
         publicationRevision += 1;

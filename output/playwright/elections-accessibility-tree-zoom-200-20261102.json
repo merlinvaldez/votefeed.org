@@ -1,0 +1,282 @@
+{
+  "tested": "local development fixture only; unauthenticated",
+  "browserZoom": 2,
+  "cssViewport": {
+    "innerWidth": 375,
+    "innerHeight": 796,
+    "devicePixelRatio": 2,
+    "electionsSelected": true,
+    "candidateCards": 5,
+    "selectedCards": 1,
+    "fixtureNote": "Visual-only 5-candidate fixture; fictional candidates, no eligibility, coverage, or results claims.",
+    "sourceDetails": 3,
+    "responseActions": 6,
+    "electionsCommentUi": 0,
+    "documentWidth": 367,
+    "documentScrollWidth": 367
+  },
+  "accessibilityNodes": [
+    {
+      "role": "link",
+      "name": "VoteFeed feed",
+      "properties": []
+    },
+    {
+      "role": "button",
+      "name": "Sign Up / Sign In",
+      "properties": []
+    },
+    {
+      "role": "tablist",
+      "name": "Feed sections",
+      "properties": []
+    },
+    {
+      "role": "link",
+      "name": "Feed",
+      "properties": []
+    },
+    {
+      "role": "link",
+      "name": "Profile",
+      "properties": []
+    },
+    {
+      "role": "tab",
+      "name": "All Reps",
+      "properties": [
+        {
+          "name": "selected",
+          "value": false
+        }
+      ]
+    },
+    {
+      "role": "tab",
+      "name": "House",
+      "properties": [
+        {
+          "name": "selected",
+          "value": false
+        }
+      ]
+    },
+    {
+      "role": "tab",
+      "name": "Senate",
+      "properties": [
+        {
+          "name": "selected",
+          "value": false
+        }
+      ]
+    },
+    {
+      "role": "tab",
+      "name": "Elections",
+      "properties": [
+        {
+          "name": "selected",
+          "value": true
+        }
+      ]
+    },
+    {
+      "role": "heading",
+      "name": "Campaign Positions",
+      "properties": [
+        {
+          "name": "level",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "role": "tablist",
+      "name": "Filter candidates by chamber",
+      "properties": []
+    },
+    {
+      "role": "combobox",
+      "name": "Filter by policy area",
+      "properties": [
+        {
+          "name": "expanded",
+          "value": false
+        }
+      ]
+    },
+    {
+      "role": "link",
+      "name": "Open Avery Example's campaign source in a new tab, retrieved Oct 27, 2026",
+      "properties": []
+    },
+    {
+      "role": "link",
+      "name": "Open Avery Example's campaign source in a new tab, retrieved Oct 27, 2026",
+      "properties": []
+    },
+    {
+      "role": "link",
+      "name": "Open Avery Example's campaign source in a new tab, retrieved Oct 27, 2026",
+      "properties": []
+    },
+    {
+      "role": "tab",
+      "name": "All Candidates",
+      "properties": [
+        {
+          "name": "selected",
+          "value": true
+        }
+      ]
+    },
+    {
+      "role": "tab",
+      "name": "House",
+      "properties": [
+        {
+          "name": "selected",
+          "value": false
+        }
+      ]
+    },
+    {
+      "role": "tab",
+      "name": "Senate",
+      "properties": [
+        {
+          "name": "selected",
+          "value": false
+        }
+      ]
+    },
+    {
+      "role": "heading",
+      "name": "Avery Example",
+      "properties": [
+        {
+          "name": "level",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "All candidates",
+      "properties": []
+    },
+    {
+      "role": "button",
+      "name": "Agree with Avery Example",
+      "properties": [
+        {
+          "name": "pressed",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "Disagree with Avery Example",
+      "properties": [
+        {
+          "name": "pressed",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "Agree with Avery Example",
+      "properties": [
+        {
+          "name": "pressed",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "Disagree with Avery Example",
+      "properties": [
+        {
+          "name": "pressed",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "Agree with Avery Example",
+      "properties": [
+        {
+          "name": "pressed",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "Disagree with Avery Example",
+      "properties": [
+        {
+          "name": "pressed",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "Avery Example, U.S. Representative, NY-13, Democratic Party, incumbent",
+      "properties": [
+        {
+          "name": "pressed",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "Blake L. Example-Watson, U.S. Representative, NY-13, Republican Party",
+      "properties": [
+        {
+          "name": "pressed",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "Cameron De La Example-Washington, U.S. Representative, NY-13, Independent",
+      "properties": [
+        {
+          "name": "pressed",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "Dakota Example, U.S. Senator, New York, Democratic Party, incumbent",
+      "properties": [
+        {
+          "name": "pressed",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "Ellis Montgomery Example Jr., U.S. Senator, New York, Party unavailable",
+      "properties": [
+        {
+          "name": "pressed",
+          "value": "false"
+        }
+      ]
+    }
+  ],
+  "axNodeCount": 343,
+  "consoleErrors": []
+}

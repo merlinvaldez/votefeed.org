@@ -2,7 +2,7 @@ import db from "../client.js";
 
 import { getDistrictFromAddress } from "./districts.js";
 import { resolveElectionGeography } from "../../elections/electionGeography.js";
-import { ELECTION_GEOGRAPHY_SOURCE, ELECTION_GEOGRAPHY_VERSION } from "../../elections/contracts.js";
+import { ELECTION_GEOGRAPHY_SOURCE, ELECTION_GEOGRAPHY_VERSION, normalizeStateNameOrCode } from "../../elections/contracts.js";
 import { saveElectionGeography } from "./elections.js";
 
 async function saveAddressGeography(address, state, runner) {
@@ -13,7 +13,7 @@ async function saveAddressGeography(address, state, runner) {
     // A 2026-boundary lookup outage must not block the existing district save.
   }
   const evidence = resolved?.geographyEvidence ?? {
-    state,
+    state: normalizeStateNameOrCode(state),
     district: null,
     cycle: 2026,
     boundaryVersion: ELECTION_GEOGRAPHY_VERSION,

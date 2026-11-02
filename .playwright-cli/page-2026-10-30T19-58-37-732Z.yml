@@ -1,0 +1,233 @@
+- generic [ref=f1e40]:
+  - complementary [ref=f1e41]:
+    - link "VoteFeed feed" [ref=f1e42] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f1e44]
+      - generic [ref=f1e45]: VoteFeed
+    - navigation [ref=f1e46]:
+      - link "Feed" [ref=f1e47] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=f1e52] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=f1e57]:
+      - generic [ref=f1e58]:
+        - generic [ref=f1e59]: Policy Areas
+        - button "Search policy areas" [ref=f1e60] [cursor=pointer]
+      - generic [ref=f1e64]:
+        - button "All 276" [ref=f1e394] [cursor=pointer]:
+          - generic [ref=f1e66]: All
+          - generic [ref=f1e395]: "276"
+        - button "Agriculture and Food 4" [ref=f1e396] [cursor=pointer]:
+          - generic [ref=f1e397]: Agriculture and Food
+          - generic [ref=f1e398]: "4"
+        - button "Animals 3" [ref=f1e399] [cursor=pointer]:
+          - generic [ref=f1e400]: Animals
+          - generic [ref=f1e401]: "3"
+        - button "Armed Forces and National Security 14" [ref=f1e402] [cursor=pointer]:
+          - generic [ref=f1e403]: Armed Forces and National Security
+          - generic [ref=f1e404]: "14"
+        - button "Civil Rights and Liberties, Minority Issues 3" [ref=f1e405] [cursor=pointer]:
+          - generic [ref=f1e406]: Civil Rights and Liberties, Minority Issues
+          - generic [ref=f1e407]: "3"
+        - button "Commerce 21" [ref=f1e408] [cursor=pointer]:
+          - generic [ref=f1e409]: Commerce
+          - generic [ref=f1e410]: "21"
+        - button "Congress 30" [ref=f1e411] [cursor=pointer]:
+          - generic [ref=f1e412]: Congress
+          - generic [ref=f1e413]: "30"
+        - button "Crime and Law Enforcement 18" [ref=f1e414] [cursor=pointer]:
+          - generic [ref=f1e415]: Crime and Law Enforcement
+          - generic [ref=f1e416]: "18"
+        - button "Economics and Public Finance 14" [ref=f1e417] [cursor=pointer]:
+          - generic [ref=f1e418]: Economics and Public Finance
+          - generic [ref=f1e419]: "14"
+        - button "Education 7" [ref=f1e420] [cursor=pointer]:
+          - generic [ref=f1e421]: Education
+          - generic [ref=f1e422]: "7"
+        - button "Emergency Management 4" [ref=f1e423] [cursor=pointer]:
+          - generic [ref=f1e424]: Emergency Management
+          - generic [ref=f1e425]: "4"
+        - button "Energy 23" [ref=f1e426] [cursor=pointer]:
+          - generic [ref=f1e427]: Energy
+          - generic [ref=f1e428]: "23"
+        - button "Environmental Protection 13" [ref=f1e429] [cursor=pointer]:
+          - generic [ref=f1e430]: Environmental Protection
+          - generic [ref=f1e431]: "13"
+        - button "Families 1" [ref=f1e432] [cursor=pointer]:
+          - generic [ref=f1e433]: Families
+          - generic [ref=f1e434]: "1"
+        - button "Finance and Financial Sector 15" [ref=f1e435] [cursor=pointer]:
+          - generic [ref=f1e436]: Finance and Financial Sector
+          - generic [ref=f1e437]: "15"
+        - button "Foreign Trade and International Finance 4" [ref=f1e438] [cursor=pointer]:
+          - generic [ref=f1e439]: Foreign Trade and International Finance
+          - generic [ref=f1e440]: "4"
+        - button "Government Operations and Politics 16" [ref=f1e441] [cursor=pointer]:
+          - generic [ref=f1e442]: Government Operations and Politics
+          - generic [ref=f1e443]: "16"
+        - button "Health 2" [ref=f1e444] [cursor=pointer]:
+          - generic [ref=f1e445]: Health
+          - generic [ref=f1e446]: "2"
+        - button "Housing and Community Development 1" [ref=f1e447] [cursor=pointer]:
+          - generic [ref=f1e448]: Housing and Community Development
+          - generic [ref=f1e449]: "1"
+        - button "Immigration 11" [ref=f1e450] [cursor=pointer]:
+          - generic [ref=f1e451]: Immigration
+          - generic [ref=f1e452]: "11"
+        - button "International Affairs 16" [ref=f1e453] [cursor=pointer]:
+          - generic [ref=f1e454]: International Affairs
+          - generic [ref=f1e455]: "16"
+        - button "Labor and Employment 6" [ref=f1e456] [cursor=pointer]:
+          - generic [ref=f1e457]: Labor and Employment
+          - generic [ref=f1e458]: "6"
+        - button "Law 3" [ref=f1e459] [cursor=pointer]:
+          - generic [ref=f1e460]: Law
+          - generic [ref=f1e461]: "3"
+        - button "Native Americans 5" [ref=f1e462] [cursor=pointer]:
+          - generic [ref=f1e463]: Native Americans
+          - generic [ref=f1e464]: "5"
+        - button "Public Lands and Natural Resources 21" [ref=f1e465] [cursor=pointer]:
+          - generic [ref=f1e466]: Public Lands and Natural Resources
+          - generic [ref=f1e467]: "21"
+        - button "Science, Technology, Communications 10" [ref=f1e468] [cursor=pointer]:
+          - generic [ref=f1e469]: Science, Technology, Communications
+          - generic [ref=f1e470]: "10"
+        - button "Social Welfare 2" [ref=f1e471] [cursor=pointer]:
+          - generic [ref=f1e472]: Social Welfare
+          - generic [ref=f1e473]: "2"
+        - button "Taxation 4" [ref=f1e474] [cursor=pointer]:
+          - generic [ref=f1e475]: Taxation
+          - generic [ref=f1e476]: "4"
+        - button "Transportation and Public Works 4" [ref=f1e477] [cursor=pointer]:
+          - generic [ref=f1e478]: Transportation and Public Works
+          - generic [ref=f1e479]: "4"
+        - button "Water Resources Development 1" [ref=f1e480] [cursor=pointer]:
+          - generic [ref=f1e481]: Water Resources Development
+          - generic [ref=f1e482]: "1"
+  - main [ref=f1e158]:
+    - generic [ref=f1e159]:
+      - generic [ref=f1e163]:
+        - generic [ref=f1e164]: Viewing as Guest
+        - generic [ref=f1e165]: Your interactions won't be saved.
+      - button "Sign Up / Sign In" [ref=f1e166] [cursor=pointer]
+    - tablist "Feed sections" [ref=f1e167]:
+      - tab "All Reps" [ref=f1e168] [cursor=pointer]
+      - tab "House of Representatives" [active] [selected] [ref=f1e175] [cursor=pointer]
+      - tab "Senate" [ref=f1e181] [cursor=pointer]
+      - tab "Elections" [ref=f1e185] [cursor=pointer]
+    - text: ·
+    - tabpanel "House of Representatives" [ref=f1e483]:
+      - region "Your congressional delegation" [ref=f1e191]:
+        - generic [ref=f1e192]:
+          - generic [ref=f1e193]:
+            - article "McClellan, Jennifer L." [ref=f1e195]:
+              - img "McClellan, Jennifer L. official portrait" [ref=f1e197]
+              - generic [ref=f1e198]:
+                - heading "McClellan, Jennifer L." [level=3] [ref=f1e199]
+                - generic [ref=f1e200]:
+                  - generic [ref=f1e206]: Democratic Party
+                  - generic [ref=f1e484]: Virginia District 4
+                  - link "McClellan, Jennifer L. official website (opens in a new tab)" [ref=f1e488] [cursor=pointer]:
+                    - /url: https://mcclellan.house.gov/
+                    - generic [ref=f1e492]: Website
+            - status
+          - generic [ref=f1e234]:
+            - generic [ref=f1e235]:
+              - img "No alignment data yet" [ref=f1e236]
+              - generic [aria-hidden] [ref=f1e240]: 0%
+            - generic [ref=f1e241]:
+              - generic [ref=f1e242]: Policy Alignment
+              - paragraph [ref=f1e243]:
+                - text: Select
+                - img "like" [ref=f1e244]
+                - text: or
+                - img "dislike" [ref=f1e246]
+                - text: on a vote to show alignment.
+      - generic [ref=f1e248]:
+        - heading "Legislative Feed" [level=2] [ref=f1e249]
+        - 'article "Rep. McClellan, Jennifer L.: H.R. 6500" [ref=f1e493]':
+          - generic [ref=f1e494]:
+            - generic [ref=f1e495]:
+              - generic [ref=f1e496]:
+                - group "Rep. McClellan, Jennifer L." [ref=f1e497]:
+                  - img "McClellan, Jennifer L. official portrait" [ref=f1e499]
+                - button "H.R. 6500" [ref=f1e500] [cursor=pointer]
+                - generic [ref=f1e501]: Sep 1, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f1e505] [cursor=pointer]
+            - generic [ref=f1e509]:
+              - text: Rep. McClellan voted
+              - generic [ref=f1e510]: Yea
+              - text: on H.R. 6500, a bill to keep the federal government running with short-term funding and extend programs set to expire.
+            - generic [ref=f1e511]:
+              - button "Agree with Rep. McClellan, Jennifer L." [ref=f1e512] [cursor=pointer]
+              - button "Disagree with Rep. McClellan, Jennifer L." [ref=f1e515] [cursor=pointer]
+              - button "Open comments on H.R. 6500 for McClellan, Jennifer L." [ref=f1e518] [cursor=pointer]: 0 Comments
+        - 'article "Rep. McClellan, Jennifer L.: S. 32" [ref=f1e521]':
+          - generic [ref=f1e522]:
+            - generic [ref=f1e523]:
+              - generic [ref=f1e524]:
+                - group "Rep. McClellan, Jennifer L." [ref=f1e525]:
+                  - img "McClellan, Jennifer L. official portrait" [ref=f1e527]
+                - button "S. 32" [ref=f1e528] [cursor=pointer]
+                - generic [ref=f1e529]: Aug 31, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f1e533] [cursor=pointer]
+            - generic [ref=f1e537]:
+              - text: Rep. McClellan voted
+              - generic [ref=f1e538]: Yea
+              - text: on S. 32, a bill to allow federal court sessions in College Station and El Centro.
+            - generic [ref=f1e539]:
+              - button "Agree with Rep. McClellan, Jennifer L." [ref=f1e540] [cursor=pointer]
+              - button "Disagree with Rep. McClellan, Jennifer L." [ref=f1e543] [cursor=pointer]
+              - button "Open comments on S. 32 for McClellan, Jennifer L." [ref=f1e546] [cursor=pointer]: 0 Comments
+        - 'article "Rep. McClellan, Jennifer L.: S. 307" [ref=f1e549]':
+          - generic [ref=f1e550]:
+            - generic [ref=f1e551]:
+              - generic [ref=f1e552]:
+                - group "Rep. McClellan, Jennifer L." [ref=f1e553]:
+                  - img "McClellan, Jennifer L. official portrait" [ref=f1e555]
+                - button "S. 307" [ref=f1e556] [cursor=pointer]
+                - generic [ref=f1e557]: Aug 31, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f1e561] [cursor=pointer]
+            - generic [ref=f1e565]:
+              - text: Rep. McClellan voted
+              - generic [ref=f1e566]: Yea
+              - text: on S. 307, a bill to require national rules and prison safety steps to stop sexual harassment and assault by prisoners against prison staff.
+            - generic [ref=f1e567]:
+              - button "Agree with Rep. McClellan, Jennifer L." [ref=f1e568] [cursor=pointer]
+              - button "Disagree with Rep. McClellan, Jennifer L." [ref=f1e571] [cursor=pointer]
+              - button "Open comments on S. 307 for McClellan, Jennifer L." [ref=f1e574] [cursor=pointer]: 0 Comments
+        - 'article "Rep. McClellan, Jennifer L.: H.R. 1181" [ref=f1e577]':
+          - generic [ref=f1e578]:
+            - generic [ref=f1e579]:
+              - generic [ref=f1e580]:
+                - group "Rep. McClellan, Jennifer L." [ref=f1e581]:
+                  - img "McClellan, Jennifer L. official portrait" [ref=f1e583]
+                - button "H.R. 1181" [ref=f1e584] [cursor=pointer]
+                - generic [ref=f1e585]: Jul 14, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f1e589] [cursor=pointer]
+            - generic [ref=f1e593]:
+              - text: Rep. McClellan voted
+              - generic [ref=f1e594]: Nay
+              - text: on H.R. 1181, a bill to stop payment card networks from using special store codes that single out gun stores.
+            - generic [ref=f1e595]:
+              - button "Agree with Rep. McClellan, Jennifer L." [ref=f1e596] [cursor=pointer]
+              - button "Disagree with Rep. McClellan, Jennifer L." [ref=f1e599] [cursor=pointer]
+              - button "Open comments on H.R. 1181 for McClellan, Jennifer L." [ref=f1e602] [cursor=pointer]: 0 Comments
+        - 'article "Rep. McClellan, Jennifer L.: H.R. 139" [ref=f1e605]':
+          - generic [ref=f1e606]:
+            - generic [ref=f1e607]:
+              - generic [ref=f1e608]:
+                - group "Rep. McClellan, Jennifer L." [ref=f1e609]:
+                  - img "McClellan, Jennifer L. official portrait" [ref=f1e611]
+                - button "H.R. 139" [ref=f1e612] [cursor=pointer]
+                - generic [ref=f1e613]: Jul 14, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f1e617] [cursor=pointer]
+            - generic [ref=f1e621]:
+              - text: Rep. McClellan voted
+              - generic [ref=f1e622]: Nay
+              - text: on H.R. 139, a bill to keep daylight saving time year-round and end seasonal clock changes.
+            - generic [ref=f1e623]:
+              - button "Agree with Rep. McClellan, Jennifer L." [ref=f1e624] [cursor=pointer]
+              - button "Disagree with Rep. McClellan, Jennifer L." [ref=f1e627] [cursor=pointer]
+              - button "Open comments on H.R. 139 for McClellan, Jennifer L." [ref=f1e630] [cursor=pointer]: 0 Comments
+        - generic [ref=f1e633]: Scroll for more

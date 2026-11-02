@@ -1,0 +1,65 @@
+{
+  "capturedAt": "2026-11-02",
+  "environment": "Local Vite development build with VITE_ELECTION_FIXTURES=true",
+  "browser": "Playwright CLI, isolated guest context",
+  "viewportCss": {
+    "width": 1672,
+    "height": 941
+  },
+  "console": {
+    "errors": 0,
+    "warnings": [
+      "Clerk development-key usage warning; expected for this local development instance."
+    ]
+  },
+  "cases": [
+    {
+      "scenario": "confirmed-no-race",
+      "url": "/feed?electionsRaceStatus=confirmed-none",
+      "fixtureDisclosure": "SYNTHETIC no-race fixture; not a live election result.",
+      "rosterCandidates": 0,
+      "allPolicyCount": 0,
+      "visibleMessage": "The service confirmed no matching House or Senate race for this location.",
+      "screenshot": "elections-confirmed-no-race-fixture-20261102.png"
+    },
+    {
+      "scenario": "coverage-unknown",
+      "url": "/feed?electionsCoverage=unknown",
+      "fixtureDisclosure": "Development fixture data: fictional candidates; coverage is illustrative, not a ballot-completeness claim.",
+      "rosterCandidates": 2,
+      "visiblePositions": 2,
+      "allPolicyCount": 2,
+      "coverageMessage": "Development fixture coverage is intentionally unverified; this preview makes no ballot-completeness claim.",
+      "screenshot": "elections-incomplete-coverage-unknown-fixture-20261102.png"
+    },
+    {
+      "scenario": "site-missing",
+      "url": "/feed?electionsCandidateAvailability=site-missing",
+      "selectedCandidate": "Cameron Example",
+      "visibleMessage": "No current campaign website has been confirmed for this candidate.",
+      "screenshot": "elections-candidate-site-missing-20261102.png"
+    },
+    {
+      "scenario": "site-unverified",
+      "url": "/feed?electionsCandidateAvailability=site-unverified",
+      "selectedCandidate": "Cameron Example",
+      "visibleMessage": "This campaign website needs verification before positions can appear.",
+      "screenshot": "elections-candidate-site-unverified-20261102.png"
+    },
+    {
+      "scenario": "crawl-failed",
+      "url": "/feed?electionsCandidateAvailability=crawl-failed",
+      "selectedCandidate": "Cameron Example",
+      "visibleMessage": "The campaign website could not be read. Previously published positions remain available when present.",
+      "screenshot": "elections-candidate-crawl-failed-20261102.png"
+    },
+    {
+      "scenario": "extraction-failed",
+      "url": "/feed?electionsCandidateAvailability=extraction-failed",
+      "selectedCandidate": "Cameron Example",
+      "visibleMessage": "Campaign position processing failed. Previously published positions remain available when present.",
+      "screenshot": "elections-candidate-extraction-failed-20261102.png"
+    }
+  ],
+  "boundary": "These are synthetic development fixtures. No live service response or database row was changed."
+}

@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import { cleanCampaignHtml } from './cleanCampaignHtml.js';
 import { fetchPublic } from './publicHttp.js';
 import { campaignUrl, discoveryError, publicUrl } from './discoveryUtils.js';
+import { STATE_NAMES } from './contracts.js';
 
 const SEARCH_PROMPT_VERSION = 'campaign-site-search-v3';
 const MATCH_PROMPT_VERSION = 'campaign-site-match-v5-sitemap-domain-search';
@@ -29,14 +30,6 @@ const POLICY_PAGE_HINTS = /key[-_]?issues|issue|position|platform|priorit|agenda
 const MAX_SITEMAPS = 4;
 const MAX_SITEMAP_BYTES = 700_000;
 const MAX_SITEMAP_PAGE_URLS = 5_000;
-const STATE_NAMES = Object.freeze({
-  AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',FL:'Florida',
-  GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',
-  MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',
-  NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',
-  OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',
-  VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming',
-});
 const escapeRegExp = value => value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 const cleanText = value => String(value ?? '').replace(/\s+/g,' ').trim();
 

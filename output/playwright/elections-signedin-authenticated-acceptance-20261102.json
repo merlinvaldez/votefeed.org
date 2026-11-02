@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-02",
+  "environment": "Local VoteFeed client and API connected to Supabase Dev",
+  "browser": "Playwright CLI headed session",
+  "identity": "omitted",
+  "geography": {
+    "usersMeStatus": 200,
+    "electionGeographyEvidencePointerPresent": true,
+    "district": "NY-13",
+    "ui": {
+      "guestBannerVisible": false,
+      "houseCandidates": 2,
+      "publishedPositions": 10
+    },
+    "savedLocationChanged": false
+  },
+  "responsePersistence": {
+    "exactPositionVersion": true,
+    "sequence": [
+      "agree",
+      "agree persisted after reload",
+      "disagree",
+      "disagree persisted after reload",
+      "clear",
+      "neutral persisted after reload"
+    ],
+    "finalResponse": "none"
+  },
+  "liveAlignment": {
+    "loadingText": "Loading your campaign-position alignment…",
+    "disagree": {
+      "percent": 0,
+      "answeredPositions": 1
+    },
+    "agree": {
+      "percent": 100,
+      "answeredPositions": 1
+    },
+    "clearedState": "Agree or disagree with a campaign position to see your alignment."
+  },
+  "browserConsoleErrors": 0,
+  "productionWrites": false
+}

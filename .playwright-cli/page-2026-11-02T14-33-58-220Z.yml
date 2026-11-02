@@ -1,0 +1,52 @@
+- generic [ref=f1e3]:
+  - generic [ref=f1e4]:
+    - link "VoteFeed feed" [ref=f1e5] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f1e7]
+      - generic [ref=f1e8]: VoteFeed
+    - generic [ref=f1e9]:
+      - heading "Democracy happens in your feed." [level=1] [ref=f1e10]
+      - paragraph [ref=f1e11]: Track every vote. Hold your Representative accountable. Engage with your district.
+    - generic [ref=f1e12]:
+      - generic [ref=f1e13]: Â© 2025 VoteFeed Inc.
+      - generic [ref=f1e14]:
+        - link "Privacy Policy" [ref=f1e15] [cursor=pointer]:
+          - /url: /privacy
+        - link "Terms of Use" [ref=f1e16] [cursor=pointer]:
+          - /url: /terms
+  - generic [ref=f1e18]:
+    - button "Back to Search" [ref=f1e19] [cursor=pointer]:
+      - generic [aria-hidden] [ref=f1e20]: â†
+    - generic [ref=f1e24]:
+      - generic [ref=f1e25]:
+        - heading "Continue to VoteFeed" [level=1] [ref=f1e28]
+        - generic [ref=f1e29]:
+          - generic [ref=f1e31]:
+            - button [ref=f1e32] [cursor=pointer]:
+              - img "Sign in with Facebook" [ref=f1e33]
+            - button [ref=f1e34] [cursor=pointer]:
+              - img "Sign in with Google" [ref=f1e35]
+            - button [ref=f1e36] [cursor=pointer]:
+              - img "Sign in with LinkedIn" [ref=f1e37]
+          - paragraph [ref=f1e40]: or
+          - generic [ref=f1e42]:
+            - generic [ref=f1e43]:
+              - generic [ref=f1e46]:
+                - generic [ref=f1e47]: Email address
+                - textbox "Email address" [ref=f1e49]:
+                  - /placeholder: Enter your email address
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Password
+                    - generic:
+                      - textbox "Password":
+                        - /placeholder: Enter your password
+                      - button "Show password"
+            - button "Continue" [ref=f1e52] [cursor=pointer]
+      - generic [ref=f1e58]:
+        - generic [ref=f1e60]:
+          - paragraph [ref=f1e61]: Secured by
+          - link "Clerk logo" [ref=f1e62] [cursor=pointer]:
+            - /url: https://go.clerk.com/components
+        - paragraph [ref=f1e68]: Development mode

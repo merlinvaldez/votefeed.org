@@ -1,0 +1,64 @@
+- generic [ref=e479]:
+  - generic [ref=e480]:
+    - link "VoteFeed feed" [ref=e481] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=e483]
+      - generic [ref=e484]: VoteFeed
+    - generic [ref=e485]:
+      - heading "Democracy happens in your feed." [level=1] [ref=e486]
+      - paragraph [ref=e487]: Track every vote. Hold your Representative accountable. Engage with your district.
+    - generic [ref=e488]:
+      - generic [ref=e489]: Â© 2025 VoteFeed Inc.
+      - generic [ref=e490]:
+        - link "Privacy Policy" [ref=e491] [cursor=pointer]:
+          - /url: /privacy
+        - link "Terms of Use" [ref=e492] [cursor=pointer]:
+          - /url: /terms
+  - generic [ref=e494]:
+    - button "Back to Search" [ref=e495] [cursor=pointer]:
+      - generic [aria-hidden] [ref=e496]: â†
+    - generic [ref=e500]:
+      - generic [ref=e501]:
+        - generic [ref=e503]:
+          - heading "Create your account" [level=1] [ref=e504]
+          - paragraph [ref=e505]: Welcome! Please fill in the details to get started.
+        - generic [ref=e506]:
+          - generic [ref=e508]:
+            - button [ref=e509] [cursor=pointer]:
+              - img "Sign in with Facebook" [ref=e510]
+            - button [ref=e511] [cursor=pointer]:
+              - img "Sign in with Google" [ref=e512]
+            - button [ref=e513] [cursor=pointer]:
+              - img "Sign in with LinkedIn" [ref=e514]
+          - paragraph [ref=e517]: or
+          - generic [ref=e519]:
+            - generic [ref=e520]:
+              - generic [ref=e521]:
+                - generic [ref=e523]:
+                  - generic [ref=e524]: First name
+                  - textbox "First name" [ref=e526]
+                - generic [ref=e529]:
+                  - generic [ref=e530]: Last name
+                  - textbox "Last name" [ref=e532]
+              - generic [ref=e536]:
+                - generic [ref=e537]: Email address
+                - textbox "Email address" [ref=e539]:
+                  - /placeholder: Enter your email address
+              - generic [ref=e543]:
+                - generic [ref=e544]: Password
+                - generic [ref=e546]:
+                  - textbox "Password" [ref=e547]:
+                    - /placeholder: Enter your password
+                  - button "Show password" [ref=e548] [cursor=pointer]
+            - button "Continue" [ref=e555] [cursor=pointer]
+      - generic [ref=e559]:
+        - generic [ref=e560]:
+          - generic [ref=e561]: Already have an account?
+          - link "Sign in" [ref=e562] [cursor=pointer]:
+            - /url: http://127.0.0.1:5173/login
+        - generic [ref=e564]:
+          - generic [ref=e566]:
+            - paragraph [ref=e567]: Secured by
+            - link "Clerk logo" [ref=e568] [cursor=pointer]:
+              - /url: https://go.clerk.com/components
+          - paragraph [ref=e574]: Development mode

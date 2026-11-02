@@ -16,6 +16,8 @@ Snapshots are immutable: ID, candidacyId, site verification revision, requested/
 
 ## Extraction, validation and versions
 
+Display summaries use a short, action-first phrase beginning with the direct policy action or stance (for example, "Supports term limits", "Lower out-of-pocket costs", "Expand early-intervention services", or "Extend Medicare drug-price negotiations"). Do not narrate the campaign page or add wrappers such as "is working to". Keep the policy scope and historical timing supported by the claim and excerpt.
+
 Extraction envelope: `{snapshotId, candidacyId, model, promptVersion, items}`. Each item is `{snapshotId, candidacyId, topic, claimText, summary, excerpt}`: exactly one distinct supported policy claim, one allowed topic from `TOPICS`, summary 1–500 characters, nonempty exact contiguous excerpt from captured text. `claimText` is the explicit supported proposition, not the summary. Unsupported/ambiguous assertions are withheld; missing policy text means no positions, never opposition. Model output is untrusted and cannot approve itself.
 
 `validateExtractionItem` checks basic structure and evidence association, returning invalid or requires-semantic-validation. Worker validation adds single-claim, semantic faithfulness, duplicate and candidate checks, with outcome valid/invalid/needs-review, reason codes and validator version. Only valid items can publish. Prompt/model revisions and validation evidence are stored even for rejected attempts. Website instructions cannot authorize tools or alter rules.

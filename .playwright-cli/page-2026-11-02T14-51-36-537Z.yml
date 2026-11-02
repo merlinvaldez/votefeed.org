@@ -1,0 +1,212 @@
+- generic [ref=e39]:
+  - complementary [ref=e40]:
+    - link "VoteFeed feed" [ref=e41] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=e43]
+      - generic [ref=e44]: VoteFeed
+    - navigation [ref=e45]:
+      - link "Feed" [ref=e46] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=e51] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=e56]:
+      - generic [ref=e57]:
+        - generic [ref=e58]: Policy Areas
+        - button "Search policy areas" [ref=e59] [cursor=pointer]
+      - generic [ref=e63]:
+        - button "All 8" [ref=e397] [cursor=pointer]:
+          - generic [ref=e65]: All
+          - generic [ref=e101]: "8"
+        - button "Public Safety 2" [ref=e398] [cursor=pointer]:
+          - generic [ref=e399]: Public Safety
+          - generic [ref=e400]: "2"
+        - button "Housing 2" [ref=e401] [cursor=pointer]:
+          - generic [ref=e402]: Housing
+          - generic [ref=e403]: "2"
+        - button "Health Care 1" [ref=e404] [cursor=pointer]:
+          - generic [ref=e405]: Health Care
+          - generic [ref=e406]: "1"
+        - button "Energy & Environment 1" [ref=e407] [cursor=pointer]:
+          - generic [ref=e408]: Energy & Environment
+          - generic [ref=e409]: "1"
+        - button "Education 1" [ref=e410] [cursor=pointer]:
+          - generic [ref=e411]: Education
+          - generic [ref=e412]: "1"
+        - button "Immigration 1" [ref=e413] [cursor=pointer]:
+          - generic [ref=e414]: Immigration
+          - generic [ref=e415]: "1"
+  - main [ref=e66]:
+    - generic [ref=e67]:
+      - generic [ref=e71]:
+        - generic [ref=e72]: Viewing as Guest
+        - generic [ref=e73]: Your interactions won't be saved.
+      - button "Sign Up / Sign In" [ref=e74] [cursor=pointer]
+    - tablist "Feed sections" [ref=e75]:
+      - tab "All Reps" [ref=e76] [cursor=pointer]
+      - tab "House of Representatives" [ref=e83] [cursor=pointer]
+      - tab "Senate" [ref=e89] [cursor=pointer]
+      - tab "Elections" [active] [selected] [ref=e93] [cursor=pointer]
+    - tabpanel "Elections" [ref=e416]:
+      - region "Election candidates" [ref=e417]:
+        - tablist "Filter candidates by chamber" [ref=e418]:
+          - tab "All Candidates" [selected] [ref=e419] [cursor=pointer]
+          - tab "House" [ref=e420] [cursor=pointer]
+          - tab "Senate" [ref=e421] [cursor=pointer]
+        - tabpanel "All Candidates" [ref=e422]:
+          - generic "Candidate roster" [ref=e423]:
+            - button "SOLIS, HILDA, U.S. Representative, CA-38, DEM" [ref=e424] [cursor=pointer]:
+              - img "SOLIS, HILDA portrait unavailable" [ref=e426]: SH
+              - generic [ref=e427]: SOLIS, HILDA
+              - generic [ref=e428]: U.S. Representative
+              - generic [ref=e434]: CA-38
+              - generic [ref=e435]: DEM
+            - button "CASAS, PEDRO ANTONIO, U.S. Representative, CA-38, REP" [ref=e438] [cursor=pointer]:
+              - img "CASAS, PEDRO ANTONIO portrait unavailable" [ref=e440]: CA
+              - generic [ref=e441]: CASAS, PEDRO ANTONIO
+              - generic [ref=e442]: U.S. Representative
+              - generic [ref=e448]: CA-38
+              - generic [ref=e449]: REP
+      - generic [ref=e452]:
+        - generic [ref=e453]:
+          - heading "Campaign Positions" [level=2] [ref=e454]
+          - paragraph [ref=e455]: Policy positions from candidates’ official campaign websites.
+        - generic [ref=e456]:
+          - generic [ref=e457]: Filter by policy area
+          - combobox "Filter by policy area" [ref=e458]:
+            - option "All Policy Areas" [selected]
+            - option "Public Safety"
+            - option "Housing"
+            - option "Health Care"
+            - option "Energy & Environment"
+            - option "Education"
+            - option "Immigration"
+      - status [ref=e459]: We’re preparing the election feed for your location. This can take a few minutes.
+      - article [ref=e460]:
+        - img "SOLIS, HILDA portrait unavailable" [ref=e462]: SH
+        - generic [ref=e463]:
+          - strong [ref=e465]: SOLIS, HILDA
+          - paragraph [ref=e466]: Shift the justice system’s focus from punishment and incarceration toward support and resources
+          - generic [ref=e467]:
+            - link "Open SOLIS, HILDA's campaign source in a new tab, retrieved Oct 29, 2026" [ref=e468] [cursor=pointer]:
+              - /url: https://www.hildasolis.com/
+            - group [ref=e472]:
+              - generic "Source details" [ref=e473] [cursor=pointer]
+          - generic "Respond to SOLIS, HILDA's campaign position" [ref=e474]:
+            - button "Agree with SOLIS, HILDA" [ref=e475] [cursor=pointer]:
+              - generic [ref=e478]: Agree
+            - button "Disagree with SOLIS, HILDA" [ref=e479] [cursor=pointer]:
+              - generic [ref=e482]: Disagree
+            - generic [ref=e483]: Sign in to save a response.
+      - article [ref=e484]:
+        - img "SOLIS, HILDA portrait unavailable" [ref=e486]: SH
+        - generic [ref=e487]:
+          - strong [ref=e489]: SOLIS, HILDA
+          - paragraph [ref=e490]: Helped pass Measure H in 2017 to fund Los Angeles County homelessness services
+          - generic [ref=e491]:
+            - link "Open SOLIS, HILDA's campaign source in a new tab, retrieved Oct 29, 2026" [ref=e492] [cursor=pointer]:
+              - /url: https://www.hildasolis.com/
+            - group [ref=e496]:
+              - generic "Source details" [ref=e497] [cursor=pointer]
+          - generic "Respond to SOLIS, HILDA's campaign position" [ref=e498]:
+            - button "Agree with SOLIS, HILDA" [ref=e499] [cursor=pointer]:
+              - generic [ref=e502]: Agree
+            - button "Disagree with SOLIS, HILDA" [ref=e503] [cursor=pointer]:
+              - generic [ref=e506]: Disagree
+            - generic [ref=e507]: Sign in to save a response.
+      - article [ref=e508]:
+        - img "SOLIS, HILDA portrait unavailable" [ref=e510]: SH
+        - generic [ref=e511]:
+          - strong [ref=e513]: SOLIS, HILDA
+          - paragraph [ref=e514]: Ensure all residents have access to quality healthcare and medical facilities regardless of ZIP code
+          - generic [ref=e515]:
+            - link "Open SOLIS, HILDA's campaign source in a new tab, retrieved Oct 29, 2026" [ref=e516] [cursor=pointer]:
+              - /url: https://www.hildasolis.com/
+            - group [ref=e520]:
+              - generic "Source details" [ref=e521] [cursor=pointer]
+          - generic "Respond to SOLIS, HILDA's campaign position" [ref=e522]:
+            - button "Agree with SOLIS, HILDA" [ref=e523] [cursor=pointer]:
+              - generic [ref=e526]: Agree
+            - button "Disagree with SOLIS, HILDA" [ref=e527] [cursor=pointer]:
+              - generic [ref=e530]: Disagree
+            - generic [ref=e531]: Sign in to save a response.
+      - article [ref=e532]:
+        - img "SOLIS, HILDA portrait unavailable" [ref=e534]: SH
+        - generic [ref=e535]:
+          - strong [ref=e537]: SOLIS, HILDA
+          - paragraph [ref=e538]: Prioritize clean air, clean water, and open green space
+          - generic [ref=e539]:
+            - link "Open SOLIS, HILDA's campaign source in a new tab, retrieved Oct 29, 2026" [ref=e540] [cursor=pointer]:
+              - /url: https://www.hildasolis.com/
+            - group [ref=e544]:
+              - generic "Source details" [ref=e545] [cursor=pointer]
+          - generic "Respond to SOLIS, HILDA's campaign position" [ref=e546]:
+            - button "Agree with SOLIS, HILDA" [ref=e547] [cursor=pointer]:
+              - generic [ref=e550]: Agree
+            - button "Disagree with SOLIS, HILDA" [ref=e551] [cursor=pointer]:
+              - generic [ref=e554]: Disagree
+            - generic [ref=e555]: Sign in to save a response.
+      - article [ref=e556]:
+        - img "CASAS, PEDRO ANTONIO portrait unavailable" [ref=e558]: CP
+        - generic [ref=e559]:
+          - strong [ref=e561]: CASAS, PEDRO ANTONIO
+          - paragraph [ref=e562]: Direct homelessness funds toward mental-health and substance-use treatment facilities and job reentry training
+          - generic [ref=e563]:
+            - link "Open CASAS, PEDRO ANTONIO's campaign source in a new tab, retrieved Oct 29, 2026" [ref=e564] [cursor=pointer]:
+              - /url: https://casasforcongress.com/priorities/
+            - group [ref=e568]:
+              - generic "Source details" [ref=e569] [cursor=pointer]
+          - generic "Respond to CASAS, PEDRO ANTONIO's campaign position" [ref=e570]:
+            - button "Agree with CASAS, PEDRO ANTONIO" [ref=e571] [cursor=pointer]:
+              - generic [ref=e574]: Agree
+            - button "Disagree with CASAS, PEDRO ANTONIO" [ref=e575] [cursor=pointer]:
+              - generic [ref=e578]: Disagree
+            - generic [ref=e579]: Sign in to save a response.
+      - article [ref=e580]:
+        - img "CASAS, PEDRO ANTONIO portrait unavailable" [ref=e582]: CP
+        - generic [ref=e583]:
+          - strong [ref=e585]: CASAS, PEDRO ANTONIO
+          - paragraph [ref=e586]: Support private-school vouchers and JROTC programs in every high school
+          - generic [ref=e587]:
+            - link "Open CASAS, PEDRO ANTONIO's campaign source in a new tab, retrieved Oct 29, 2026" [ref=e588] [cursor=pointer]:
+              - /url: https://casasforcongress.com/priorities/
+            - group [ref=e592]:
+              - generic "Source details" [ref=e593] [cursor=pointer]
+          - generic "Respond to CASAS, PEDRO ANTONIO's campaign position" [ref=e594]:
+            - button "Agree with CASAS, PEDRO ANTONIO" [ref=e595] [cursor=pointer]:
+              - generic [ref=e598]: Agree
+            - button "Disagree with CASAS, PEDRO ANTONIO" [ref=e599] [cursor=pointer]:
+              - generic [ref=e602]: Disagree
+            - generic [ref=e603]: Sign in to save a response.
+      - article [ref=e604]:
+        - img "CASAS, PEDRO ANTONIO portrait unavailable" [ref=e606]: CP
+        - generic [ref=e607]:
+          - strong [ref=e609]: CASAS, PEDRO ANTONIO
+          - paragraph [ref=e610]: Support law enforcement and oppose defunding measures
+          - generic [ref=e611]:
+            - link "Open CASAS, PEDRO ANTONIO's campaign source in a new tab, retrieved Oct 29, 2026" [ref=e612] [cursor=pointer]:
+              - /url: https://casasforcongress.com/priorities/
+            - group [ref=e616]:
+              - generic "Source details" [ref=e617] [cursor=pointer]
+          - generic "Respond to CASAS, PEDRO ANTONIO's campaign position" [ref=e618]:
+            - button "Agree with CASAS, PEDRO ANTONIO" [ref=e619] [cursor=pointer]:
+              - generic [ref=e622]: Agree
+            - button "Disagree with CASAS, PEDRO ANTONIO" [ref=e623] [cursor=pointer]:
+              - generic [ref=e626]: Disagree
+            - generic [ref=e627]: Sign in to save a response.
+      - article [ref=e628]:
+        - img "CASAS, PEDRO ANTONIO portrait unavailable" [ref=e630]: CP
+        - generic [ref=e631]:
+          - strong [ref=e633]: CASAS, PEDRO ANTONIO
+          - paragraph [ref=e634]: Support immigration reform that includes securing the southern border
+          - generic [ref=e635]:
+            - link "Open CASAS, PEDRO ANTONIO's campaign source in a new tab, retrieved Oct 29, 2026" [ref=e636] [cursor=pointer]:
+              - /url: https://casasforcongress.com/priorities/
+            - group [ref=e640]:
+              - generic "Source details" [ref=e641] [cursor=pointer]
+          - generic "Respond to CASAS, PEDRO ANTONIO's campaign position" [ref=e642]:
+            - button "Agree with CASAS, PEDRO ANTONIO" [ref=e643] [cursor=pointer]:
+              - generic [ref=e646]: Agree
+            - button "Disagree with CASAS, PEDRO ANTONIO" [ref=e647] [cursor=pointer]:
+              - generic [ref=e650]: Disagree
+            - generic [ref=e651]: Sign in to save a response.
+      - status [ref=e652]: End of campaign positions.

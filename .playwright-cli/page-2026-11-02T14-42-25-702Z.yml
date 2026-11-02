@@ -1,0 +1,45 @@
+- generic [ref=f12e4]:
+  - complementary [ref=f12e5]:
+    - link "VoteFeed feed" [ref=f12e6] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f12e8]
+      - generic [ref=f12e9]: VoteFeed
+    - navigation [ref=f12e10]:
+      - link "Feed" [ref=f12e11] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=f12e16] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=f12e21]:
+      - generic [ref=f12e22]:
+        - generic [ref=f12e23]: Policy Areas
+        - button "Search policy areas" [ref=f12e24] [cursor=pointer]
+      - button "All 0" [ref=f12e351] [cursor=pointer]:
+        - generic [ref=f12e30]: All
+        - generic [ref=f12e31]: "0"
+  - main [ref=f12e122]:
+    - tablist "Feed sections" [ref=f12e123]:
+      - tab "All Reps" [ref=f12e124] [cursor=pointer]
+      - tab "House of Representatives" [ref=f12e131] [cursor=pointer]
+      - tab "Senate" [ref=f12e137] [cursor=pointer]
+      - tab "Elections" [active] [selected] [ref=f12e141] [cursor=pointer]
+    - tabpanel "Elections" [ref=f12e352]:
+      - region "Election candidates" [ref=f12e353]:
+        - tablist "Filter candidates by chamber" [ref=f12e354]:
+          - tab "All Candidates" [selected] [ref=f12e355] [cursor=pointer]
+          - tab "House" [ref=f12e356] [cursor=pointer]
+          - tab "Senate" [ref=f12e357] [cursor=pointer]
+        - tabpanel "All Candidates" [ref=f12e358]:
+          - alert [ref=f12e359]:
+            - paragraph [ref=f12e360]: We couldnâ€™t load candidates. Try again.
+            - button "Retry" [ref=f12e361] [cursor=pointer]
+      - generic [ref=f12e362]:
+        - generic [ref=f12e363]:
+          - heading "Campaign Positions" [level=2] [ref=f12e364]
+          - paragraph [ref=f12e365]: Policy positions from candidatesâ€™ official campaign websites.
+        - generic [ref=f12e366]:
+          - generic [ref=f12e367]: Filter by policy area
+          - combobox "Filter by policy area" [ref=f12e368]:
+            - option "All Policy Areas" [selected]
+      - status [ref=f12e369]: Candidate coverage is incomplete for one or more matching races.
+      - status [ref=f12e370]: Weâ€™re preparing the election feed for your location. This can take a few minutes.
+      - status [ref=f12e371]: Candidate or position coverage has not been confirmed for this location yet.

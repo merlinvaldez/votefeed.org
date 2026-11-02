@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-02",
+  "environment": "local VoteFeed UI with Dev API",
+  "viewer": "signed-in",
+  "legislative": {
+    "scopeCounts": {
+      "allReps": 347,
+      "house": 276,
+      "senate": 71
+    },
+    "policyFilter": {
+      "name": "Agriculture and Food",
+      "displayedCount": 4,
+      "visiblePositionCards": 4
+    },
+    "visibleControls": {
+      "agreeAndDisagreeButtons": 8,
+      "commentButtons": 4
+    },
+    "commentsRouteOpened": "H.R. 3633",
+    "returnedToFeed": true,
+    "responseOrCommentWrites": 0
+  },
+  "expiredAuth": {
+    "method": "controlled 401 with AUTHENTICATION_REQUIRED during signed-in roster read",
+    "messageObserved": "Your session expired. Sign in again to load candidates.",
+    "capture": "elections-expired-auth-signedin-20261102.png",
+    "interceptorRemovedAfterCapture": true
+  },
+  "elections": {
+    "liveCandidatesAvailable": false,
+    "reason": "saved profile has no server-verified 2026 House district",
+    "savedLocationChanged": false
+  }
+}

@@ -1,0 +1,241 @@
+- generic [ref=f11e4]:
+  - complementary [ref=f11e5]:
+    - link "VoteFeed feed" [ref=f11e6] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f11e8]
+      - generic [ref=f11e9]: VoteFeed
+    - navigation [ref=f11e10]:
+      - link "Feed" [ref=f11e11] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=f11e16] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=f11e21]:
+      - generic [ref=f11e22]:
+        - generic [ref=f11e23]: Policy Areas
+        - button "Search policy areas" [ref=f11e24] [cursor=pointer]
+      - generic [ref=f11e28]:
+        - button "All 10" [ref=f11e351] [cursor=pointer]:
+          - generic [ref=f11e30]: All
+          - generic [ref=f11e31]: "10"
+        - button "Government 1" [ref=f11e352] [cursor=pointer]:
+          - generic [ref=f11e353]: Government
+          - generic [ref=f11e354]: "1"
+        - button "Public Safety 1" [ref=f11e355] [cursor=pointer]:
+          - generic [ref=f11e356]: Public Safety
+          - generic [ref=f11e357]: "1"
+        - button "Other 1" [ref=f11e358] [cursor=pointer]:
+          - generic [ref=f11e359]: Other
+          - generic [ref=f11e360]: "1"
+        - button "Foreign Policy 1" [ref=f11e361] [cursor=pointer]:
+          - generic [ref=f11e362]: Foreign Policy
+          - generic [ref=f11e363]: "1"
+        - button "Immigration 2" [ref=f11e364] [cursor=pointer]:
+          - generic [ref=f11e365]: Immigration
+          - generic [ref=f11e366]: "2"
+        - button "Housing 1" [ref=f11e367] [cursor=pointer]:
+          - generic [ref=f11e368]: Housing
+          - generic [ref=f11e369]: "1"
+        - button "Education 1" [ref=f11e370] [cursor=pointer]:
+          - generic [ref=f11e371]: Education
+          - generic [ref=f11e372]: "1"
+        - button "Health Care 1" [ref=f11e373] [cursor=pointer]:
+          - generic [ref=f11e374]: Health Care
+          - generic [ref=f11e375]: "1"
+        - button "Economy 1" [ref=f11e376] [cursor=pointer]:
+          - generic [ref=f11e377]: Economy
+          - generic [ref=f11e378]: "1"
+  - main [ref=f11e122]:
+    - tablist "Feed sections" [ref=f11e123]:
+      - tab "All Reps" [ref=f11e124] [cursor=pointer]
+      - tab "House of Representatives" [ref=f11e131] [cursor=pointer]
+      - tab "Senate" [ref=f11e137] [cursor=pointer]
+      - tab "Elections" [active] [selected] [ref=f11e141] [cursor=pointer]
+    - tabpanel "Elections" [ref=f11e379]:
+      - region "Election candidates" [ref=f11e380]:
+        - tablist "Filter candidates by chamber" [ref=f11e381]:
+          - tab "All Candidates" [selected] [ref=f11e382] [cursor=pointer]
+          - tab "House" [ref=f11e383] [cursor=pointer]
+          - tab "Senate" [ref=f11e384] [cursor=pointer]
+        - tabpanel "All Candidates" [ref=f11e385]:
+          - generic "Candidate roster" [ref=f11e386]:
+            - button "WILLIAMS, JOMO, U.S. Representative, NY-13, REP" [ref=f11e387] [cursor=pointer]:
+              - img "WILLIAMS, JOMO portrait" [ref=f11e389]
+              - generic [ref=f11e390]: WILLIAMS, JOMO
+              - generic [ref=f11e391]: U.S. Representative
+              - generic [ref=f11e397]: NY-13
+              - generic [ref=f11e398]: REP
+            - button "AVILA CHEVALIER, DARIALIZA, U.S. Representative, NY-13, DEM" [ref=f11e401] [cursor=pointer]:
+              - img "AVILA CHEVALIER, DARIALIZA portrait unavailable" [ref=f11e403]: AD
+              - generic [ref=f11e404]: AVILA CHEVALIER, DARIALIZA
+              - generic [ref=f11e405]: U.S. Representative
+              - generic [ref=f11e411]: NY-13
+              - generic [ref=f11e412]: DEM
+      - generic [ref=f11e415]:
+        - generic [ref=f11e416]:
+          - heading "Campaign Positions" [level=2] [ref=f11e417]
+          - paragraph [ref=f11e418]: Policy positions from candidates’ official campaign websites.
+        - generic [ref=f11e419]:
+          - generic [ref=f11e420]: Filter by policy area
+          - combobox "Filter by policy area" [ref=f11e421]:
+            - option "All Policy Areas" [selected]
+            - option "Government"
+            - option "Public Safety"
+            - option "Other"
+            - option "Foreign Policy"
+            - option "Immigration"
+            - option "Housing"
+            - option "Education"
+            - option "Health Care"
+            - option "Economy"
+      - status [ref=f11e422]: We’re preparing the election feed for your location. This can take a few minutes.
+      - article [ref=f11e423]:
+        - img "WILLIAMS, JOMO portrait" [ref=f11e425]
+        - generic [ref=f11e426]:
+          - strong [ref=f11e428]: WILLIAMS, JOMO
+          - paragraph [ref=f11e429]: Advocate universal attorney access in civil matters
+          - generic [ref=f11e430]:
+            - link "Open WILLIAMS, JOMO's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f11e431] [cursor=pointer]:
+              - /url: https://jmw4congress.com/page/2/
+            - group [ref=f11e435]:
+              - generic "Source details" [ref=f11e436] [cursor=pointer]
+          - generic "Respond to WILLIAMS, JOMO's campaign position" [ref=f11e437]:
+            - button "Agree with WILLIAMS, JOMO" [ref=f11e438] [cursor=pointer]:
+              - generic [ref=f11e441]: Agree
+            - button "Clear disagree response for WILLIAMS, JOMO" [pressed] [ref=f11e442] [cursor=pointer]:
+              - generic [ref=f11e445]: I disagree
+      - article [ref=f11e446]:
+        - img "WILLIAMS, JOMO portrait" [ref=f11e448]
+        - generic [ref=f11e449]:
+          - strong [ref=f11e451]: WILLIAMS, JOMO
+          - paragraph [ref=f11e452]: Support fully funding public safety and oppose defunding police
+          - generic [ref=f11e453]:
+            - link "Open WILLIAMS, JOMO's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f11e454] [cursor=pointer]:
+              - /url: https://jmw4congress.com/page/2/
+            - group [ref=f11e458]:
+              - generic "Source details" [ref=f11e459] [cursor=pointer]
+          - generic "Respond to WILLIAMS, JOMO's campaign position" [ref=f11e460]:
+            - button "Agree with WILLIAMS, JOMO" [ref=f11e461] [cursor=pointer]:
+              - generic [ref=f11e464]: Agree
+            - button "Disagree with WILLIAMS, JOMO" [ref=f11e465] [cursor=pointer]:
+              - generic [ref=f11e468]: Disagree
+      - article [ref=f11e469]:
+        - img "WILLIAMS, JOMO portrait" [ref=f11e471]
+        - generic [ref=f11e472]:
+          - strong [ref=f11e474]: WILLIAMS, JOMO
+          - paragraph [ref=f11e475]: Support Puerto Rico statehood and equal U.S. rights
+          - generic [ref=f11e476]:
+            - link "Open WILLIAMS, JOMO's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f11e477] [cursor=pointer]:
+              - /url: https://jmw4congress.com/page/2/
+            - group [ref=f11e481]:
+              - generic "Source details" [ref=f11e482] [cursor=pointer]
+          - generic "Respond to WILLIAMS, JOMO's campaign position" [ref=f11e483]:
+            - button "Agree with WILLIAMS, JOMO" [ref=f11e484] [cursor=pointer]:
+              - generic [ref=f11e487]: Agree
+            - button "Disagree with WILLIAMS, JOMO" [ref=f11e488] [cursor=pointer]:
+              - generic [ref=f11e491]: Disagree
+      - article [ref=f11e492]:
+        - img "WILLIAMS, JOMO portrait" [ref=f11e494]
+        - generic [ref=f11e495]:
+          - strong [ref=f11e497]: WILLIAMS, JOMO
+          - paragraph [ref=f11e498]: Support a two-state model and protection of civilians
+          - generic [ref=f11e499]:
+            - link "Open WILLIAMS, JOMO's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f11e500] [cursor=pointer]:
+              - /url: https://jmw4congress.com/page/2/
+            - group [ref=f11e504]:
+              - generic "Source details" [ref=f11e505] [cursor=pointer]
+          - generic "Respond to WILLIAMS, JOMO's campaign position" [ref=f11e506]:
+            - button "Agree with WILLIAMS, JOMO" [ref=f11e507] [cursor=pointer]:
+              - generic [ref=f11e510]: Agree
+            - button "Disagree with WILLIAMS, JOMO" [ref=f11e511] [cursor=pointer]:
+              - generic [ref=f11e514]: Disagree
+      - article [ref=f11e515]:
+        - img "WILLIAMS, JOMO portrait" [ref=f11e517]
+        - generic [ref=f11e518]:
+          - strong [ref=f11e520]: WILLIAMS, JOMO
+          - paragraph [ref=f11e521]: Support closing and securing U.S. borders
+          - generic [ref=f11e522]:
+            - link "Open WILLIAMS, JOMO's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f11e523] [cursor=pointer]:
+              - /url: https://jmw4congress.com/page/2/
+            - group [ref=f11e527]:
+              - generic "Source details" [ref=f11e528] [cursor=pointer]
+          - generic "Respond to WILLIAMS, JOMO's campaign position" [ref=f11e529]:
+            - button "Agree with WILLIAMS, JOMO" [ref=f11e530] [cursor=pointer]:
+              - generic [ref=f11e533]: Agree
+            - button "Disagree with WILLIAMS, JOMO" [ref=f11e534] [cursor=pointer]:
+              - generic [ref=f11e537]: Disagree
+      - article [ref=f11e538]:
+        - img "AVILA CHEVALIER, DARIALIZA portrait unavailable" [ref=f11e540]: AC
+        - generic [ref=f11e541]:
+          - strong [ref=f11e543]: AVILA CHEVALIER, DARIALIZA
+          - paragraph [ref=f11e544]: Support tenant protections and more affordable housing
+          - generic [ref=f11e545]:
+            - link "Open AVILA CHEVALIER, DARIALIZA's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f11e546] [cursor=pointer]:
+              - /url: https://www.darializaforcongress.com/issues
+            - group [ref=f11e550]:
+              - generic "Source details" [ref=f11e551] [cursor=pointer]
+          - generic "Respond to AVILA CHEVALIER, DARIALIZA's campaign position" [ref=f11e552]:
+            - button "Agree with AVILA CHEVALIER, DARIALIZA" [ref=f11e553] [cursor=pointer]:
+              - generic [ref=f11e556]: Agree
+            - button "Disagree with AVILA CHEVALIER, DARIALIZA" [ref=f11e557] [cursor=pointer]:
+              - generic [ref=f11e560]: Disagree
+      - article [ref=f11e561]:
+        - img "AVILA CHEVALIER, DARIALIZA portrait unavailable" [ref=f11e563]: AC
+        - generic [ref=f11e564]:
+          - strong [ref=f11e566]: AVILA CHEVALIER, DARIALIZA
+          - paragraph [ref=f11e567]: Support free public education from childcare through college
+          - generic [ref=f11e568]:
+            - link "Open AVILA CHEVALIER, DARIALIZA's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f11e569] [cursor=pointer]:
+              - /url: https://www.darializaforcongress.com/issues
+            - group [ref=f11e573]:
+              - generic "Source details" [ref=f11e574] [cursor=pointer]
+          - generic "Respond to AVILA CHEVALIER, DARIALIZA's campaign position" [ref=f11e575]:
+            - button "Agree with AVILA CHEVALIER, DARIALIZA" [ref=f11e576] [cursor=pointer]:
+              - generic [ref=f11e579]: Agree
+            - button "Disagree with AVILA CHEVALIER, DARIALIZA" [ref=f11e580] [cursor=pointer]:
+              - generic [ref=f11e583]: Disagree
+      - article [ref=f11e584]:
+        - img "AVILA CHEVALIER, DARIALIZA portrait unavailable" [ref=f11e586]: AC
+        - generic [ref=f11e587]:
+          - strong [ref=f11e589]: AVILA CHEVALIER, DARIALIZA
+          - paragraph [ref=f11e590]: Support a universal Medicare for All system
+          - generic [ref=f11e591]:
+            - link "Open AVILA CHEVALIER, DARIALIZA's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f11e592] [cursor=pointer]:
+              - /url: https://www.darializaforcongress.com/issues
+            - group [ref=f11e596]:
+              - generic "Source details" [ref=f11e597] [cursor=pointer]
+          - generic "Respond to AVILA CHEVALIER, DARIALIZA's campaign position" [ref=f11e598]:
+            - button "Agree with AVILA CHEVALIER, DARIALIZA" [ref=f11e599] [cursor=pointer]:
+              - generic [ref=f11e602]: Agree
+            - button "Disagree with AVILA CHEVALIER, DARIALIZA" [ref=f11e603] [cursor=pointer]:
+              - generic [ref=f11e606]: Disagree
+      - article [ref=f11e607]:
+        - img "AVILA CHEVALIER, DARIALIZA portrait unavailable" [ref=f11e609]: AC
+        - generic [ref=f11e610]:
+          - strong [ref=f11e612]: AVILA CHEVALIER, DARIALIZA
+          - paragraph [ref=f11e613]: Support worker protections, stronger unions, and higher wages
+          - generic [ref=f11e614]:
+            - link "Open AVILA CHEVALIER, DARIALIZA's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f11e615] [cursor=pointer]:
+              - /url: https://www.darializaforcongress.com/issues
+            - group [ref=f11e619]:
+              - generic "Source details" [ref=f11e620] [cursor=pointer]
+          - generic "Respond to AVILA CHEVALIER, DARIALIZA's campaign position" [ref=f11e621]:
+            - button "Agree with AVILA CHEVALIER, DARIALIZA" [ref=f11e622] [cursor=pointer]:
+              - generic [ref=f11e625]: Agree
+            - button "Disagree with AVILA CHEVALIER, DARIALIZA" [ref=f11e626] [cursor=pointer]:
+              - generic [ref=f11e629]: Disagree
+      - article [ref=f11e630]:
+        - img "AVILA CHEVALIER, DARIALIZA portrait unavailable" [ref=f11e632]: AC
+        - generic [ref=f11e633]:
+          - strong [ref=f11e635]: AVILA CHEVALIER, DARIALIZA
+          - paragraph [ref=f11e636]: Expand legal pathways and end the deportation system
+          - generic [ref=f11e637]:
+            - link "Open AVILA CHEVALIER, DARIALIZA's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f11e638] [cursor=pointer]:
+              - /url: https://www.darializaforcongress.com/issues
+            - group [ref=f11e642]:
+              - generic "Source details" [ref=f11e643] [cursor=pointer]
+          - generic "Respond to AVILA CHEVALIER, DARIALIZA's campaign position" [ref=f11e644]:
+            - button "Agree with AVILA CHEVALIER, DARIALIZA" [ref=f11e645] [cursor=pointer]:
+              - generic [ref=f11e648]: Agree
+            - button "Disagree with AVILA CHEVALIER, DARIALIZA" [ref=f11e649] [cursor=pointer]:
+              - generic [ref=f11e652]: Disagree
+      - status [ref=f11e653]: End of campaign positions.

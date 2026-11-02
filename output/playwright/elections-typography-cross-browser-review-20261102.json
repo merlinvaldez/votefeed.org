@@ -1,0 +1,53 @@
+{
+  "reviewedAt": "2026-11-02",
+  "scenario": {
+    "authentication": "guest",
+    "service": "local app connected to VoteFeed Dev",
+    "address": "1 City Hall Square, Boston, MA 02201",
+    "electionView": "MA-8 House and Massachusetts Senate",
+    "viewportCssPixels": "1672x941",
+    "deviceScaleFactor": 1,
+    "zoom": "100%",
+    "fontFace": "Elections Inter",
+    "fontStatus": "loaded in all three browsers"
+  },
+  "browsers": {
+    "Chrome 156": {
+      "platform": "Windows",
+      "engine": "Chromium",
+      "screenshot": "elections-typography-chrome-20261102.png",
+      "measurements": {
+        "campaignHeading": { "font": "700 24px", "textWidthPx": 226.78, "lines": 1 },
+        "candidateName": { "font": "700 19px", "textWidthPx": 292.79, "lineWidthsPx": [188.95, 98.89], "lines": 2 },
+        "positionSummary": { "font": "400 17px", "textWidthPx": 426.95, "lines": 1 },
+        "agreeLabel": { "font": "600 16px", "textWidthPx": 46.03, "lines": 1 }
+      }
+    },
+    "Edge 156": {
+      "platform": "Windows",
+      "engine": "Chromium",
+      "screenshot": "elections-typography-edge-20261102.png",
+      "screenshotMatchesChromePixelForPixel": true,
+      "measurementsMatchChrome": true
+    },
+    "Firefox 158": {
+      "platform": "Windows",
+      "engine": "Gecko",
+      "screenshot": "elections-typography-firefox-20261102.png",
+      "measurements": {
+        "campaignHeading": { "font": "700 24px", "textWidthPx": 226.8, "lines": 1 },
+        "candidateName": { "font": "700 19px", "textWidthPx": 292.18, "lineWidthsPx": [188.92, 98.88], "lines": 2 },
+        "positionSummary": { "font": "400 17px", "textWidthPx": 426.93, "lines": 1 },
+        "agreeLabel": { "font": "600 16px", "textWidthPx": 46.03, "lines": 1 }
+      }
+    }
+  },
+  "comparison": {
+    "result": "Same content and line wrapping in all three browsers. Firefox differed from Chromium by at most 0.61px in the measured text widths; no material layout or wrapping change was visible.",
+    "console": "Chrome and Edge reported the configured Clerk development-key warning. Firefox reported that an external Clerk development-domain _cfuvid cookie had an invalid domain; the guest Elections view and local Inter font still loaded. No local application runtime error was observed.",
+    "limits": [
+      "The comparison covers a second rendering engine on Windows; it does not compare a second operating system.",
+      "The guest live sample uses MA-8 and Massachusetts Senate content; it does not establish signed-in behavior."
+    ]
+  }
+}

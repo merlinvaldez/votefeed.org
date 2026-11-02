@@ -11,11 +11,12 @@ import {
 import { resolveElectionGeography } from "../elections/electionGeography.js";
 import { dispatchElectionFeedBuilds } from "../elections/dispatchElectionFeedBuilds.js";
 import {
-  ELECTION_GEOGRAPHY_SOURCE,
-  ELECTION_GEOGRAPHY_VERSION,
+  isCurrentElectionGeographyEvidence,
+  isVerifiedCurrentElectionGeography,
   RELEASE_SCOPE,
   TOPICS,
-  normalizeState,
+  UNCATEGORIZED_POLICY_AREA,
+  normalizeStateNameOrCode,
 } from "../elections/contracts.js";
 
 const router = express.Router();
@@ -49,7 +50,8 @@ function parseReadOptions(body) {
   const candidacyId = body.candidacyId ?? null;
   if (candidacyId !== null && (typeof candidacyId !== "string" || !UUID.test(candidacyId))) throw invalid("Invalid candidacy ID.");
   const policyArea = body.policyArea ?? null;
-  if (policyArea !== null && (typeof policyArea !== "string" || !TOPICS.includes(policyArea))) throw invalid("Invalid policy area.");
+  if (policyArea !== null && (typeof policyArea !== "string" ||
+      policyArea !== UNCATEGORIZED_POLICY_AREA && !TOPICS.includes(policyArea))) throw invalid("Invalid policy area.");
   const limit = body.limit === undefined ? 20 : body.limit;
   if (!Number.isInteger(limit) || limit < 1 || limit > 50) throw invalid("Limit must be an integer from 1 to 50.");
   const cursor = body.cursor ?? null;
@@ -70,10 +72,9 @@ function publicGeography(input) {
 async function resolveRequestGeography(req, body, auth) {
   if (auth) {
     const saved = await readElectionGeographyForUser(auth);
-    const currentState = req.user?.state ? normalizeState(req.user.state) : null;
-    if (saved?.state && saved.state === currentState && saved.cycle === RELEASE_SCOPE.cycle &&
-        saved.boundaryVersion === ELECTION_GEOGRAPHY_VERSION && saved.sourceUrl === ELECTION_GEOGRAPHY_SOURCE) {
-      const verified = saved.status === "verified" && Number.isInteger(saved.district);
+    const currentState = req.user?.state ? normalizeStateNameOrCode(req.user.state) : null;
+    if (saved?.state && isCurrentElectionGeographyEvidence(saved, currentState)) {
+      const verified = isVerifiedCurrentElectionGeography(saved, currentState);
       return {
         state: saved.state,
         district: verified ? saved.district : null,
@@ -115,7 +116,7 @@ async function resolveRequestGeography(req, body, auth) {
   }
   try {
     const legacy = await getDistrictFromAddress(address);
-    return { state: legacy.state, district: null, status: "state-only", evidenceId: null, geography: null };
+    return { state: normalizeStateNameOrCode(legacy.state), district: null, status: "state-only", evidenceId: null, geography: null };
   } catch {
     return { state: null, district: null, status: "unavailable", evidenceId: null, geography: null };
   }

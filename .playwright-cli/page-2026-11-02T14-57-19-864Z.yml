@@ -1,0 +1,237 @@
+- generic [ref=e39]:
+  - complementary [ref=e40]:
+    - link "VoteFeed feed" [ref=e41] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=e43]
+      - generic [ref=e44]: VoteFeed
+    - navigation [ref=e45]:
+      - link "Feed" [ref=e46] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=e51] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=e56]:
+      - generic [ref=e57]:
+        - generic [ref=e58]: Policy Areas
+        - button "Search policy areas" [ref=e59] [cursor=pointer]
+      - generic [ref=e63]:
+        - button "All 347" [ref=e100] [cursor=pointer]:
+          - generic [ref=e65]: All
+          - generic [ref=e394]: "347"
+        - button "Agriculture and Food 4" [ref=e395] [cursor=pointer]:
+          - generic [ref=e396]: Agriculture and Food
+          - generic [ref=e397]: "4"
+        - button "Animals 3" [ref=e398] [cursor=pointer]:
+          - generic [ref=e399]: Animals
+          - generic [ref=e400]: "3"
+        - button "Armed Forces and National Security 17" [ref=e401] [cursor=pointer]:
+          - generic [ref=e402]: Armed Forces and National Security
+          - generic [ref=e403]: "17"
+        - button "Civil Rights and Liberties, Minority Issues 3" [ref=e404] [cursor=pointer]:
+          - generic [ref=e405]: Civil Rights and Liberties, Minority Issues
+          - generic [ref=e406]: "3"
+        - button "Commerce 21" [ref=e407] [cursor=pointer]:
+          - generic [ref=e408]: Commerce
+          - generic [ref=e409]: "21"
+        - button "Congress 30" [ref=e410] [cursor=pointer]:
+          - generic [ref=e411]: Congress
+          - generic [ref=e412]: "30"
+        - button "Crime and Law Enforcement 20" [ref=e413] [cursor=pointer]:
+          - generic [ref=e414]: Crime and Law Enforcement
+          - generic [ref=e415]: "20"
+        - button "Economics and Public Finance 25" [ref=e416] [cursor=pointer]:
+          - generic [ref=e417]: Economics and Public Finance
+          - generic [ref=e418]: "25"
+        - button "Education 8" [ref=e419] [cursor=pointer]:
+          - generic [ref=e420]: Education
+          - generic [ref=e421]: "8"
+        - button "Emergency Management 4" [ref=e422] [cursor=pointer]:
+          - generic [ref=e423]: Emergency Management
+          - generic [ref=e424]: "4"
+        - button "Energy 29" [ref=e425] [cursor=pointer]:
+          - generic [ref=e426]: Energy
+          - generic [ref=e427]: "29"
+        - button "Environmental Protection 22" [ref=e428] [cursor=pointer]:
+          - generic [ref=e429]: Environmental Protection
+          - generic [ref=e430]: "22"
+        - button "Families 1" [ref=e431] [cursor=pointer]:
+          - generic [ref=e432]: Families
+          - generic [ref=e433]: "1"
+        - button "Finance and Financial Sector 20" [ref=e434] [cursor=pointer]:
+          - generic [ref=e435]: Finance and Financial Sector
+          - generic [ref=e436]: "20"
+        - button "Foreign Trade and International Finance 9" [ref=e437] [cursor=pointer]:
+          - generic [ref=e438]: Foreign Trade and International Finance
+          - generic [ref=e439]: "9"
+        - button "Government Operations and Politics 19" [ref=e440] [cursor=pointer]:
+          - generic [ref=e441]: Government Operations and Politics
+          - generic [ref=e442]: "19"
+        - button "Health 4" [ref=e443] [cursor=pointer]:
+          - generic [ref=e444]: Health
+          - generic [ref=e445]: "4"
+        - button "Housing and Community Development 2" [ref=e446] [cursor=pointer]:
+          - generic [ref=e447]: Housing and Community Development
+          - generic [ref=e448]: "2"
+        - button "Immigration 11" [ref=e449] [cursor=pointer]:
+          - generic [ref=e450]: Immigration
+          - generic [ref=e451]: "11"
+        - button "International Affairs 26" [ref=e452] [cursor=pointer]:
+          - generic [ref=e453]: International Affairs
+          - generic [ref=e454]: "26"
+        - button "Labor and Employment 6" [ref=e455] [cursor=pointer]:
+          - generic [ref=e456]: Labor and Employment
+          - generic [ref=e457]: "6"
+        - button "Law 3" [ref=e458] [cursor=pointer]:
+          - generic [ref=e459]: Law
+          - generic [ref=e460]: "3"
+        - button "Native Americans 5" [ref=e461] [cursor=pointer]:
+          - generic [ref=e462]: Native Americans
+          - generic [ref=e463]: "5"
+        - button "Public Lands and Natural Resources 29" [ref=e464] [cursor=pointer]:
+          - generic [ref=e465]: Public Lands and Natural Resources
+          - generic [ref=e466]: "29"
+        - button "Science, Technology, Communications 10" [ref=e467] [cursor=pointer]:
+          - generic [ref=e468]: Science, Technology, Communications
+          - generic [ref=e469]: "10"
+        - button "Social Welfare 2" [ref=e470] [cursor=pointer]:
+          - generic [ref=e471]: Social Welfare
+          - generic [ref=e472]: "2"
+        - button "Sports and Recreation 1" [ref=e473] [cursor=pointer]:
+          - generic [ref=e474]: Sports and Recreation
+          - generic [ref=e475]: "1"
+        - button "Taxation 7" [ref=e476] [cursor=pointer]:
+          - generic [ref=e477]: Taxation
+          - generic [ref=e478]: "7"
+        - button "Transportation and Public Works 5" [ref=e479] [cursor=pointer]:
+          - generic [ref=e480]: Transportation and Public Works
+          - generic [ref=e481]: "5"
+        - button "Water Resources Development 1" [ref=e482] [cursor=pointer]:
+          - generic [ref=e483]: Water Resources Development
+          - generic [ref=e484]: "1"
+  - main [ref=e66]:
+    - generic [ref=e67]:
+      - generic [ref=e71]:
+        - generic [ref=e72]: Viewing as Guest
+        - generic [ref=e73]: Your interactions won't be saved.
+      - button "Sign Up / Sign In" [ref=e74] [cursor=pointer]
+    - tablist "Feed sections" [ref=e75]:
+      - tab "All Reps" [selected] [ref=e76] [cursor=pointer]
+      - tab "House of Representatives" [ref=e83] [cursor=pointer]
+      - tab "Senate" [ref=e89] [cursor=pointer]
+      - tab "Elections" [ref=e93] [cursor=pointer]
+    - tabpanel "All Reps" [ref=e98]:
+      - region "Your congressional delegation" [ref=e192]:
+        - generic [ref=e193]:
+          - generic [ref=e194]:
+            - generic [ref=e195]:
+              - article "Lynch, Stephen F." [ref=e196]:
+                - img "Lynch, Stephen F. official portrait" [ref=e198]
+                - generic [ref=e199]:
+                  - heading "Lynch, Stephen F." [level=3] [ref=e200]
+                  - generic [ref=e201]:
+                    - generic [ref=e202]: U.S. Representative
+                    - generic [ref=e207]: Democratic Party
+              - article "Markey, Edward J." [ref=e209]:
+                - img "Markey, Edward J. official portrait" [ref=e211]
+                - generic [ref=e212]:
+                  - heading "Markey, Edward J." [level=3] [ref=e213]
+                  - generic [ref=e214]:
+                    - generic [ref=e215]: U.S. Senator
+                    - generic [ref=e220]: Democratic Party
+              - article "Warren, Elizabeth" [ref=e222]:
+                - img "Warren, Elizabeth official portrait" [ref=e224]
+                - generic [ref=e225]:
+                  - heading "Warren, Elizabeth" [level=3] [ref=e226]
+                  - generic [ref=e227]:
+                    - generic [ref=e228]: U.S. Senator
+                    - generic [ref=e233]: Democratic Party
+            - status
+          - generic [ref=e235]:
+            - generic [ref=e236]:
+              - img "No alignment data yet" [ref=e237]
+              - generic [aria-hidden] [ref=e241]: 0%
+            - generic [ref=e242]:
+              - generic [ref=e243]: Policy Alignment
+              - paragraph [ref=e244]:
+                - text: Select
+                - img "like" [ref=e245]
+                - text: or
+                - img "dislike" [ref=e247]
+                - text: on a vote to show alignment.
+      - generic [ref=e249]:
+        - heading "Legislative Feed" [level=2] [ref=e250]
+        - 'article "Rep. Lynch, Stephen F.: S. 2503" [ref=e485]':
+          - generic [ref=e486]:
+            - generic [ref=e487]:
+              - generic [ref=e488]:
+                - group "Rep. Lynch, Stephen F." [ref=e489]:
+                  - img "Lynch, Stephen F. official portrait" [ref=e491]
+                - button "S. 2503" [ref=e492] [cursor=pointer]
+                - generic [ref=e493]: Feb 24, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=e497] [cursor=pointer]
+            - status [ref=e501]: Creating summary.
+            - paragraph [ref=e502]: Rep. Lynch did not vote on S. 2503.
+            - generic [ref=e503]:
+              - button "Agree with Rep. Lynch, Stephen F." [ref=e504] [cursor=pointer]
+              - button "Disagree with Rep. Lynch, Stephen F." [ref=e507] [cursor=pointer]
+              - button "Open comments on S. 2503 for Lynch, Stephen F." [ref=e510] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Lynch, Stephen F.: H.R. 1608" [ref=e513]':
+          - generic [ref=e514]:
+            - generic [ref=e515]:
+              - generic [ref=e516]:
+                - group "Rep. Lynch, Stephen F." [ref=e517]:
+                  - img "Lynch, Stephen F. official portrait" [ref=e519]
+                - button "H.R. 1608" [ref=e520] [cursor=pointer]
+                - generic [ref=e521]: Nov 17, 2025
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=e525] [cursor=pointer]
+            - status [ref=e529]: Creating summary.
+            - paragraph [ref=e530]: Rep. Lynch voted Yea on H.R. 1608.
+            - generic [ref=e531]:
+              - button "Agree with Rep. Lynch, Stephen F." [ref=e532] [cursor=pointer]
+              - button "Disagree with Rep. Lynch, Stephen F." [ref=e535] [cursor=pointer]
+              - button "Open comments on H.R. 1608 for Lynch, Stephen F." [ref=e538] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Lynch, Stephen F.: H.R. 2035" [ref=e541]':
+          - generic [ref=e542]:
+            - generic [ref=e543]:
+              - generic [ref=e544]:
+                - group "Rep. Lynch, Stephen F." [ref=e545]:
+                  - img "Lynch, Stephen F. official portrait" [ref=e547]
+                - button "H.R. 2035" [ref=e548] [cursor=pointer]
+                - generic [ref=e549]: Jun 9, 2025
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=e553] [cursor=pointer]
+            - status [ref=e557]: Creating summary.
+            - paragraph [ref=e558]: Rep. Lynch voted Yea on H.R. 2035.
+            - generic [ref=e559]:
+              - button "Agree with Rep. Lynch, Stephen F." [ref=e560] [cursor=pointer]
+              - button "Disagree with Rep. Lynch, Stephen F." [ref=e563] [cursor=pointer]
+              - button "Open comments on H.R. 2035 for Lynch, Stephen F." [ref=e566] [cursor=pointer]: 0 Comments
+        - 'article "Sens. Markey, Edward J. and Warren, Elizabeth: S.J.Res. 55" [ref=e569]':
+          - generic [ref=e570]:
+            - generic [ref=e571]:
+              - generic [ref=e572]:
+                - group "Sens. Markey, Edward J. and Warren, Elizabeth" [ref=e573]:
+                  - img "Markey, Edward J. official portrait" [ref=e575]
+                  - img "Warren, Elizabeth official portrait" [ref=e577]
+                - button "S.J.Res. 55" [ref=e578] [cursor=pointer]
+                - generic [ref=e579]: May 21, 2025
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=e583] [cursor=pointer]
+            - status [ref=e587]: Creating summary.
+            - paragraph [ref=e588]: Sens. Markey and Warren voted Nay on S.J.Res. 55.
+            - generic [ref=e589]:
+              - button "Agree with Sens. Markey, Edward J. and Warren, Elizabeth" [ref=e590] [cursor=pointer]
+              - button "Disagree with Sens. Markey, Edward J. and Warren, Elizabeth" [ref=e593] [cursor=pointer]
+              - button "Open comments on S.J.Res. 55 for Markey, Edward J. and Warren, Elizabeth" [ref=e596] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Lynch, Stephen F.: H.R. 192" [ref=e599]':
+          - generic [ref=e600]:
+            - generic [ref=e601]:
+              - generic [ref=e602]:
+                - group "Rep. Lynch, Stephen F." [ref=e603]:
+                  - img "Lynch, Stephen F. official portrait" [ref=e605]
+                - button "H.R. 192" [ref=e606] [cursor=pointer]
+                - generic [ref=e607]: Jan 13, 2025
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=e611] [cursor=pointer]
+            - status [ref=e615]: Creating summary.
+            - paragraph [ref=e616]: Rep. Lynch voted Yea on H.R. 192.
+            - generic [ref=e617]:
+              - button "Agree with Rep. Lynch, Stephen F." [ref=e618] [cursor=pointer]
+              - button "Disagree with Rep. Lynch, Stephen F." [ref=e621] [cursor=pointer]
+              - button "Open comments on H.R. 192 for Lynch, Stephen F." [ref=e624] [cursor=pointer]: 0 Comments

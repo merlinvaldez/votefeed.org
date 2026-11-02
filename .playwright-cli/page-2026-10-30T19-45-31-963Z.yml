@@ -1,0 +1,34 @@
+- generic [ref=e39]:
+  - complementary [ref=e40]:
+    - link "VoteFeed feed" [ref=e41] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=e43]
+      - generic [ref=e44]: VoteFeed
+    - navigation [ref=e45]:
+      - link "Feed" [ref=e46] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=e51] [cursor=pointer]:
+        - /url: /profile
+  - main [ref=e56]:
+    - generic [ref=e57]:
+      - generic [ref=e61]:
+        - generic [ref=e62]: Viewing as Guest
+        - generic [ref=e63]: Your interactions won't be saved.
+      - button "Sign Up / Sign In" [ref=e64] [cursor=pointer]
+    - tablist "Feed sections" [ref=e65]:
+      - tab "All Reps" [selected] [ref=e66] [cursor=pointer]
+      - tab "House" [ref=e73] [cursor=pointer]
+      - tab "Senate" [ref=e79] [cursor=pointer]
+      - tab "Elections" [ref=e83] [cursor=pointer]
+    - tabpanel "All Reps" [ref=e88]:
+      - region "Your congressional delegation" [ref=e89]:
+        - status [ref=e92]:
+          - paragraph [ref=e93]: No current congressional members found for this location.
+      - generic [ref=e94]:
+        - heading "Legislative Feed" [level=2] [ref=e95]
+        - generic [ref=e97]:
+          - generic [ref=e98]:
+            - generic [ref=e99]: Policy Areas
+            - generic [ref=e100]: All
+          - button "Search policy areas" [ref=e101] [cursor=pointer]
+        - paragraph [ref=e105]: No eligible votes found for this delegation.

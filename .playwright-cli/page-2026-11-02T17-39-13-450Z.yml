@@ -1,0 +1,116 @@
+- generic [ref=e4]:
+  - complementary [ref=e5]:
+    - link "VoteFeed feed" [ref=e6] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=e8]
+      - generic [ref=e9]: VoteFeed
+    - navigation [ref=e10]:
+      - link "Feed" [ref=e11] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=e16] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - generic [ref=e23]: Policy Areas
+        - button "Search policy areas" [ref=e24] [cursor=pointer]
+      - generic [ref=e28]:
+        - button "All 0" [ref=e191] [cursor=pointer]:
+          - generic [ref=e30]: All
+          - generic [ref=e31]: "0"
+        - button "Economy 0" [ref=e32] [cursor=pointer]:
+          - generic [ref=e33]: Economy
+          - generic [ref=e34]: "0"
+        - button "Health Care 0" [ref=e35] [cursor=pointer]:
+          - generic [ref=e36]: Health Care
+          - generic [ref=e37]: "0"
+        - button "Housing 0" [ref=e38] [cursor=pointer]:
+          - generic [ref=e39]: Housing
+          - generic [ref=e40]: "0"
+        - button "Education 0" [ref=e41] [cursor=pointer]:
+          - generic [ref=e42]: Education
+          - generic [ref=e43]: "0"
+        - button "Energy & Environment 0" [ref=e192] [cursor=pointer]:
+          - generic [ref=e45]: Energy & Environment
+          - generic [ref=e46]: "0"
+        - button "Immigration 0" [ref=e47] [cursor=pointer]:
+          - generic [ref=e48]: Immigration
+          - generic [ref=e49]: "0"
+        - button "Civil Rights 0" [ref=e50] [cursor=pointer]:
+          - generic [ref=e51]: Civil Rights
+          - generic [ref=e52]: "0"
+        - button "Public Safety 0" [ref=e53] [cursor=pointer]:
+          - generic [ref=e54]: Public Safety
+          - generic [ref=e55]: "0"
+        - button "Foreign Policy 0" [ref=e193] [cursor=pointer]:
+          - generic [ref=e57]: Foreign Policy
+          - generic [ref=e58]: "0"
+        - button "Government 0" [ref=e59] [cursor=pointer]:
+          - generic [ref=e60]: Government
+          - generic [ref=e61]: "0"
+        - button "Other 0" [ref=e62] [cursor=pointer]:
+          - generic [ref=e63]: Other
+          - generic [ref=e64]: "0"
+  - main [ref=e65]:
+    - generic [ref=e66]:
+      - generic [ref=e70]:
+        - generic [ref=e71]: Viewing as Guest
+        - generic [ref=e72]: Your interactions won't be saved.
+      - button "Sign Up / Sign In" [ref=e73] [cursor=pointer]
+    - tablist "Feed sections" [ref=e74]:
+      - tab "All Reps" [ref=e75] [cursor=pointer]
+      - tab "House of Representatives" [ref=e82] [cursor=pointer]
+      - tab "Senate" [ref=e88] [cursor=pointer]
+      - tab "Elections" [selected] [ref=e92] [cursor=pointer]
+    - tabpanel "Elections" [ref=e97]:
+      - region "Election candidates" [ref=e98]:
+        - tablist "Filter candidates by chamber" [ref=e99]:
+          - tab "All Candidates" [selected] [ref=e100] [cursor=pointer]
+          - tab "House" [ref=e101] [cursor=pointer]
+          - tab "Senate" [ref=e102] [cursor=pointer]
+        - tabpanel "All Candidates" [ref=e103]:
+          - generic "Candidate roster" [ref=e104]:
+            - button "Cameron Example, U.S. Representative, NY-13, Independent" [active] [pressed] [ref=e105] [cursor=pointer]:
+              - img "Cameron Example portrait unavailable" [ref=e107]: CE
+              - generic [ref=e108]: Cameron Example
+              - generic [ref=e109]: U.S. Representative
+              - generic [ref=e115]: NY-13
+              - generic [ref=e116]: Independent
+            - button "Dakota Example, U.S. Senator, New York, Democratic Party, incumbent" [ref=e119] [cursor=pointer]:
+              - img "Dakota Example portrait" [ref=e121]
+              - generic [ref=e122]: Dakota Example
+              - generic [ref=e123]: Incumbent
+              - generic [ref=e124]: U.S. Senator
+              - generic [ref=e128]: New York
+              - generic [ref=e129]: Democratic Party
+        - 'complementary "Selected candidate: Cameron Example" [ref=e194]':
+          - generic [ref=e195]:
+            - img "Cameron Example portrait unavailable" [ref=e197]: CE
+            - generic [ref=e198]:
+              - paragraph [ref=e199]: Positions from
+              - heading "Cameron Example" [level=3] [ref=e201]
+            - button "All candidates" [ref=e202] [cursor=pointer]
+          - region "Alignment with Cameron Example" [ref=e203]:
+            - heading "Your alignment" [level=3] [ref=e204]
+            - paragraph [ref=e205]: Sign in to respond and see your alignment.
+      - generic [ref=e132]:
+        - generic [ref=e133]:
+          - heading "Campaign Positions" [level=2] [ref=e134]
+          - paragraph [ref=e135]:
+            - text: Policy positions from candidates’ official campaign websites.
+            - note [ref=e136]: ·Synthetic site-unverified fixture; fictional candidate and site-processing status.
+        - generic [ref=e137]:
+          - generic [ref=e138]: Filter by policy area
+          - combobox "Filter by policy area" [ref=e139]:
+            - option "All Policy Areas" [selected]
+            - option "Economy"
+            - option "Health Care"
+            - option "Housing"
+            - option "Education"
+            - option "Energy & Environment"
+            - option "Immigration"
+            - option "Civil Rights"
+            - option "Public Safety"
+            - option "Foreign Policy"
+            - option "Government"
+            - option "Other"
+      - status [ref=e206]: This campaign website needs verification before positions can appear.

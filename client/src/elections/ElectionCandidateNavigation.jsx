@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Building2, Landmark } from "lucide-react";
 import { STATES } from "../constants";
+import { revealCandidateFocus } from "./candidateFocusVisibility.js";
 import "./ElectionCandidateNavigation.css";
 
 const CHAMBER_TABS = [
@@ -31,7 +32,7 @@ function partyColor(party) {
   return "other";
 }
 
-function CandidatePortrait({ candidate }) {
+export function CandidatePortrait({ candidate }) {
   const [imageAvailable, setImageAvailable] = useState(Boolean(candidate.portraitUrl));
 
   return (
@@ -56,14 +57,16 @@ function CandidateCard({ candidate, selected, onSelect }) {
   const officeLabel = candidate.race.office === "house"
     ? "U.S. Representative"
     : "U.S. Senator";
+  const partyLabel = candidate.party || "Party unavailable";
 
   return (
     <button type="button" className={`election-candidate-card ${selected ? "is-selected" : ""}`}
       data-candidacy-id={candidate.candidacyId} aria-pressed={selected}
-      aria-label={`${candidate.name}, ${officeLabel}, ${locationFor(candidate)}${candidate.incumbency === "incumbent" ? ", incumbent" : ""}`}
+      aria-label={`${candidate.name}, ${officeLabel}, ${locationFor(candidate)}, ${partyLabel}${candidate.incumbency === "incumbent" ? ", incumbent" : ""}`}
+      onFocus={revealCandidateFocus}
       onClick={() => onSelect(candidate.candidacyId)}>
       <CandidatePortrait candidate={candidate} />
-      <h3 className="election-candidate-name">{candidate.name}</h3>
+      <span className="election-candidate-name">{candidate.name}</span>
       {candidate.incumbency === "incumbent" && (
         <span className="election-incumbent-badge">Incumbent</span>
       )}
@@ -73,12 +76,12 @@ function CandidateCard({ candidate, selected, onSelect }) {
           : <Landmark size={16} aria-hidden="true" />}
         <span>{officeLabel}</span>
       </div>
-      <p className="election-candidate-location">{locationFor(candidate)}</p>
-      <p className="election-candidate-party">
+      <span className="election-candidate-location">{locationFor(candidate)}</span>
+      <span className="election-candidate-party">
         <span className={`election-party-dot election-party-dot-${partyColor(candidate.party)}`}
           aria-hidden="true" />
-        <span>{candidate.party || "Party unavailable"}</span>
-      </p>
+        <span>{partyLabel}</span>
+      </span>
     </button>
   );
 }
@@ -92,6 +95,7 @@ export default function ElectionCandidateNavigation({
   onRetry,
   emptyMessage,
   selectedCandidacyId = null,
+  selectedSummary = null,
   onSelectCandidate = () => {},
 }) {
   function handleTabKeyDown(event, index) {
@@ -158,7 +162,8 @@ export default function ElectionCandidateNavigation({
           <p className="election-roster-status" role="status">{emptyMessage}</p>
         )}
         {rosterStatus === "ready" && roster.length > 0 && (
-          <div className="election-candidate-grid">
+          <div className={`election-candidate-grid${roster.length > 3 ? " has-overflow" : ""}${roster.length > 5 ? " has-many" : ""}`}
+            aria-label="Candidate roster">
             {roster.map((candidate) => (
               <CandidateCard key={candidate.candidacyId} candidate={candidate}
                 selected={candidate.candidacyId === selectedCandidacyId}
@@ -166,7 +171,11 @@ export default function ElectionCandidateNavigation({
             ))}
           </div>
         )}
+        {rosterStatus === "ready" && roster.length > 2 && (
+          <p className="election-roster-scroll-hint">Swipe or scroll to browse all candidates</p>
+        )}
       </div>
+      {selectedSummary}
     </section>
   );
 }

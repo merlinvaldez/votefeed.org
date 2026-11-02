@@ -1,0 +1,2325 @@
+{
+  "method": "targeted parallel web search; direct homepage review where available; no Crawlee Targeted follow-up on 2026-10-29 searched all NY House and Senate records that remained not_found in parallel query batches. Three additional sites were matched; candidate-related mismatched, legacy, placeholder, and hijacked URLs were rejected.",
+  "sites": [
+    {
+      "id": "H4NY10130",
+      "url": "https://votehutch.nyc/",
+      "evidence_url": "https://hub.politivett.com/candidate/ny-congress-house-7-evan-hale-hutchison",
+      "title": "Evan Hale Hutchison | PolitiVett",
+      "excerpt": "FEC Candidate H4NY10130; Website https://votehutch.nyc/.",
+      "fetch": "tool-inaccessible",
+      "signals": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "review": {
+        "site_evidence_url": "https://hub.politivett.com/candidate/ny-congress-house-7-evan-hale-hutchison",
+        "candidate_site_evidence": "Exact FEC ID H4NY10130 profile lists votehutch.nyc.",
+        "direct_fetch_status": "tool-inaccessible",
+        "note": "Direct open redirected to suspended hosting page."
+      },
+      "notes": "Exact candidate profile supports the URL; direct page redirected to suspended hosting, so completeness could not be measured.",
+      "query": "\"Evan Hale Hutchison\" \"H4NY10130\" \"votehutch.nyc\"",
+      "sources": [
+        {
+          "title": "Evan Hale Hutchison | PolitiVett",
+          "url": "https://hub.politivett.com/candidate/ny-congress-house-7-evan-hale-hutchison"
+        },
+        {
+          "title": "votehutch.nyc",
+          "url": "https://votehutch.nyc/"
+        },
+        {
+          "title": "FEC candidate overview H4NY10130",
+          "url": "https://www.fec.gov/data/candidate/H4NY10130/"
+        }
+      ]
+    },
+    {
+      "id": "H2NY14128",
+      "url": "https://www.tinaforteforcongress.org/",
+      "evidence_url": "https://www.tinaforteforcongress.org/",
+      "title": "Tina Forte for Congress",
+      "excerpt": "Homepage names Tina Forte, describes her campaign for Congress, invites supporters to join the team, and lists a campaign email.",
+      "fetch": "readable-text",
+      "signals": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "review": {
+        "title": "Tina Forte for Congress",
+        "race": "Elect Tina Forte to Congress; Bronx location, district number not shown.",
+        "issues": "Unemployment, inflation, crime, taxes, education, veterans, and law enforcement.",
+        "support": "Join The Team; volunteer or spread the message.",
+        "contact": "contact@tinaforteforcongress.org; Bronx mailing address.",
+        "disclaimer": "No paid-for notice observed in extracted homepage text."
+      },
+      "notes": "Candidate-specific site found. No numbered district or paid-for notice is visible in extracted homepage text.",
+      "query": "\"Tina Forte\" \"tinaforteforcongress.org\" NY-14 2026 FEC",
+      "sources": [
+        {
+          "title": "Tina Forte for Congress",
+          "url": "https://www.tinaforteforcongress.org/"
+        },
+        {
+          "title": "PolitiVett Print - New York Candidates",
+          "url": "https://hub.politivett.com/print/catalog?state=NY"
+        },
+        {
+          "title": "FEC candidate overview H2NY14128",
+          "url": "https://www.fec.gov/data/candidate/H2NY14128/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY04146",
+      "url": "https://www.njs4congress.com/",
+      "evidence_url": "https://linktr.ee/njs4congress",
+      "title": "Nick J Sciretta for Congress Official | Linktree",
+      "excerpt": "Campaign Linktree identifies Nick J Sciretta for Congress and labels njs4congress.com OFFICIAL CAMPAIGN WEBSITE; FEC ID H6NY04146 is NY-04.",
+      "fetch": "readable-text",
+      "signals": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "review": {
+        "title": "NJS4CONGRESS",
+        "race": "",
+        "issues": "The page discusses the ultra-wealthy and pro-labor legislation.",
+        "support": "",
+        "contact": "",
+        "disclaimer": "PAID FOR BY NJS4CONGRESS - PRESS."
+      },
+      "notes": "Official campaign Linktree links this domain. Destination homepage does not show Sciretta's name or NY-04 and appears to carry older campaign language; indicators describe the destination homepage only.",
+      "query": "\"Nicholas Jude Sciretta\" campaign Linktree NJS4Congress H6NY04146",
+      "sources": [
+        {
+          "title": "Nick J Sciretta for Congress Official | Linktree",
+          "url": "https://linktr.ee/njs4congress"
+        },
+        {
+          "title": "NJS4CONGRESS",
+          "url": "https://www.njs4congress.com/"
+        },
+        {
+          "title": "FEC candidate overview H6NY04146",
+          "url": "https://www.fec.gov/data/candidate/H6NY04146/?cycle=2026"
+        }
+      ]
+    },
+    {
+      "id": "H6NY04179",
+      "url": "https://mcgrathforcongress.com/",
+      "evidence_url": "https://hub.politivett.com/candidate/ny-congress-house-4-dennis-joseph-mr-mcgrath",
+      "title": "Dennis Joseph Mcgrath | PolitiVett",
+      "excerpt": "Profile states FEC Candidate H6NY04179 and lists mcgrathforcongress.com.",
+      "fetch": "tool-timeout",
+      "signals": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "review": {
+        "site_evidence_url": "https://hub.politivett.com/candidate/ny-congress-house-4-dennis-joseph-mr-mcgrath",
+        "candidate_site_evidence": "Exact FEC ID H6NY04179 profile lists the campaign domain.",
+        "direct_fetch_status": "tool-timeout",
+        "note": "Direct homepage open timed out."
+      },
+      "notes": "Candidate domain is tied to exact FEC ID by the profile; homepage fetch timed out, so completeness is unknown.",
+      "query": "\"Dennis McGrath\" \"H6NY04179\" campaign website Congress New York 2026",
+      "sources": [
+        {
+          "title": "Dennis Joseph Mcgrath | PolitiVett",
+          "url": "https://hub.politivett.com/candidate/ny-congress-house-4-dennis-joseph-mr-mcgrath"
+        },
+        {
+          "title": "FEC candidate overview H6NY04179",
+          "url": "https://www.fec.gov/data/candidate/H6NY04179/"
+        },
+        {
+          "title": "mcgrathforcongress.com",
+          "url": "https://mcgrathforcongress.com/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY21223",
+      "url": "https://www.amoriell.com/",
+      "evidence_url": "https://www.amoriell.com/",
+      "title": "Amoriell For New York",
+      "excerpt": "Homepage has Issues, Volunteer, Donate, and Contact paths, policy topics, and paid-by-committee footer.",
+      "fetch": "readable-text",
+      "signals": [
+        1,
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "review": {
+        "title": "Amoriell For New York",
+        "race": "",
+        "issues": "Community, healthcare, housing, jobs, and cost of living topics.",
+        "support": "Volunteer and Donate links.",
+        "contact": "Contact form and info@AMORIELL.com.",
+        "disclaimer": "Paid for By The Committee to Elect Stuart Amoriell."
+      },
+      "notes": "Readable homepage has campaign policy, volunteer, donation, contact, and disclaimer signals; extracted homepage does not identify office or district.",
+      "query": "\"Stuart Jameson Amoriell\" \"H6NY21223\" campaign website",
+      "sources": [
+        {
+          "title": "Amoriell For New York",
+          "url": "https://www.amoriell.com/"
+        },
+        {
+          "title": "Stuart Jameson Amoriell for NY-21 | AllCiv",
+          "url": "https://allciv.com/candidates/2026/ny/house/stuart-jameson-amoriell-H6NY21223"
+        },
+        {
+          "title": "FEC candidate overview H6NY21223",
+          "url": "https://www.fec.gov/data/candidate/H6NY21223/"
+        }
+      ]
+    },
+    {
+      "id": "H4NY16079",
+      "url": "https://martydolan.org/",
+      "evidence_url": "https://hub.politivett.com/print/catalog?state=NY",
+      "title": "PolitiVett Print - New York Candidates",
+      "excerpt": "New York CD 14 candidate listing for Martin William Dolan includes Website https://martydolan.org/.",
+      "fetch": "tool-inaccessible",
+      "signals": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "review": {
+        "site_evidence_url": "https://hub.politivett.com/print/catalog?state=NY",
+        "candidate_site_evidence": "New York candidate catalog lists Martin William Dolan in CD 14 with martydolan.org.",
+        "direct_fetch_status": "tool-inaccessible",
+        "note": "Direct homepage was inaccessible to the review tool."
+      },
+      "notes": "Candidate and district are listed beside the domain; direct homepage was inaccessible, so completeness is unknown.",
+      "query": "\"Martin William Dolan\" \"martydolan.org\" NY-14 2026 campaign",
+      "sources": [
+        {
+          "title": "PolitiVett Print - New York Candidates",
+          "url": "https://hub.politivett.com/print/catalog?state=NY"
+        },
+        {
+          "title": "FEC candidate overview H4NY16079",
+          "url": "https://www.fec.gov/data/candidate/H4NY16079/?cycle=2026"
+        },
+        {
+          "title": "martydolan.org",
+          "url": "https://martydolan.org/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY13287",
+      "url": "https://www.candaceandfriends4congress.com/",
+      "evidence_url": "https://onyourballot.vote411.org/candidate-detail.do?id=73188949",
+      "title": "New York Congressional District 13 | VOTE411 Voter Guide",
+      "excerpt": "NY-13 guide names Candace Niles and lists candaceandfriends4congress.com; FEC Form 2 identifies H6NY13287 and committee Candaceandfriends4congress.",
+      "fetch": "tool-inaccessible",
+      "signals": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "review": {
+        "site_evidence_url": "https://onyourballot.vote411.org/candidate-detail.do?id=73188949",
+        "candidate_site_evidence": "VOTE411 NY-13 guide lists the URL; FEC Form 2 names the matching candidate and committee.",
+        "direct_fetch_status": "tool-inaccessible",
+        "note": "Direct site open was inaccessible to the review tool."
+      },
+      "notes": "Candidate and campaign URL are paired in VOTE411's District 13 guide; direct homepage was inaccessible.",
+      "query": "\"Candace Martina Niles\" \"Campaign Website\" 2026 NY-13",
+      "sources": [
+        {
+          "title": "New York Congressional District 13 | VOTE411 Voter Guide",
+          "url": "https://onyourballot.vote411.org/candidate-detail.do?id=73188949"
+        },
+        {
+          "title": "FEC Form 2 - Candace Niles H6NY13287",
+          "url": "https://docquery.fec.gov/pdf/442/202512299793858442/202512299793858442.pdf"
+        },
+        {
+          "title": "candaceandfriends4congress.com",
+          "url": "https://www.candaceandfriends4congress.com/"
+        }
+      ]
+    },
+    {
+      "id": "H2NY10134",
+      "url": "https://beninehamdan.com/",
+      "evidence_url": "https://electedconnect.com/races/ny-house-10-2026",
+      "title": "New York District 10 U.S. House Race 2026 | ElectedConnect",
+      "excerpt": "2026 NY-10 candidate listing names Benine Hamdan and links beninehamdan.com.",
+      "fetch": "tool-inaccessible",
+      "signals": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "review": {
+        "site_evidence_url": "https://electedconnect.com/races/ny-house-10-2026",
+        "candidate_site_evidence": "2026 NY-10 listing links beninehamdan.com for Hamdan; older campaign sources also link the domain.",
+        "direct_fetch_status": "tool-inaccessible",
+        "note": "Direct fetch was inaccessible; current-cycle page content could not be confirmed."
+      },
+      "notes": "Current 2026 race directory links the candidate-named domain; older campaign material links it as well. Direct fetch failed, so current-cycle freshness is unconfirmed.",
+      "query": "\"Benine Hamdan\" \"beninehamdan.com\" NY-10 2026 candidate campaign",
+      "sources": [
+        {
+          "title": "New York District 10 U.S. House Race 2026 | ElectedConnect",
+          "url": "https://electedconnect.com/races/ny-house-10-2026"
+        },
+        {
+          "title": "Benine Hamdan | Ballotpedia",
+          "url": "https://ballotpedia.org/Benine_Hamdan"
+        },
+        {
+          "title": "beninehamdan.com",
+          "url": "https://beninehamdan.com/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY12198",
+      "url": "https://lauradunnforcongress.com/",
+      "evidence_url": "https://lauradunnforcongress.com/",
+      "title": "Laura L. Dunn for Congress | NY-12",
+      "excerpt": "Indexed homepage identifies U.S. Congress NY-12, Laura Dunn, policy priorities, and 2025-2026 campaign coverage; direct homepage returned no extracted lines.",
+      "fetch": "tool-inaccessible",
+      "signals": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "review": {
+        "site_evidence_url": "https://lauradunnforcongress.com/",
+        "candidate_site_evidence": "Indexed page identifies Laura L. Dunn and the NY-12 campaign; direct open returned 0 lines.",
+        "direct_fetch_status": "tool-inaccessible",
+        "note": "Indicators left NULL because direct homepage text was unavailable."
+      },
+      "notes": "Indexed page content identifies the 2026 NY-12 campaign and policy content. Direct homepage completeness could not be measured.",
+      "query": "\"Laura L. Dunn\" lauradunnforcongress.com NY-12 2026",
+      "sources": [
+        {
+          "title": "Laura L. Dunn for Congress | NY-12",
+          "url": "https://lauradunnforcongress.com/"
+        },
+        {
+          "title": "FEC candidate overview H6NY12198",
+          "url": "https://www.fec.gov/data/candidate/H6NY12198/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY12248",
+      "url": "https://kaleyaldrichforcongress.org/",
+      "evidence_url": "https://kaleyaldrichforcongress.org/",
+      "title": "Kaley Aldrich for Congress",
+      "excerpt": "Homepage reads: Supporting the Election of Kaley Aldrich to New York's 12th Congressional District.",
+      "fetch": "readable-text",
+      "signals": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "review": {
+        "title": "Kaley Aldrich for Congress",
+        "race": "Supporting Kaley Aldrich's election to New York's 12th Congressional District.",
+        "issues": "",
+        "support": "",
+        "contact": "",
+        "disclaimer": ""
+      },
+      "notes": "Direct homepage is readable but sparse; candidate and NY-12 are visible, while issue, support, contact, and disclaimer elements were not observed.",
+      "query": "\"Kaley Aldrich\" \"kaleyaldrichforcongress.org\" 2026 NY-12",
+      "sources": [
+        {
+          "title": "Kaley Aldrich for Congress",
+          "url": "https://kaleyaldrichforcongress.org/"
+        },
+        {
+          "title": "FEC candidate overview H6NY12248",
+          "url": "https://www.fec.gov/data/candidate/H6NY12248/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY12396",
+      "url": "https://timminsforcongress.com/",
+      "evidence_url": "https://timminsforcongress.com/home-x/",
+      "title": "Home - Patrick Timmins For Congress",
+      "excerpt": "Campaign pages identify Timmins for CD-12, with issue pages, contact, volunteer and donate paths, and paid-for footer; root timed out.",
+      "fetch": "tool-timeout",
+      "signals": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "review": {
+        "site_evidence_url": "https://timminsforcongress.com/home-x/",
+        "candidate_site_evidence": "Official campaign pages identify Timmins for NY-12 and show policy/contact/support content.",
+        "direct_fetch_status": "tool-timeout",
+        "note": "Domain root timed out; indicators left NULL rather than inferred from other pages."
+      },
+      "notes": "Campaign pages and 2026 coverage identify Timmins for NY-12. Root homepage timed out; completeness indicators remain NULL.",
+      "query": "\"Patrick Timmins\" \"timminsforcongress.com\" NY-12 2026",
+      "sources": [
+        {
+          "title": "Home - Patrick Timmins For Congress",
+          "url": "https://timminsforcongress.com/home-x/"
+        },
+        {
+          "title": "Policies - Patrick Timmins For Congress",
+          "url": "https://timminsforcongress.com/policies/"
+        },
+        {
+          "title": "The Race for NY-12 with Jami Floyd",
+          "url": "https://timminsforcongress.com/the-race-for-ny-12-with-jami-floyd/"
+        },
+        {
+          "title": "FEC candidate overview H6NY12396",
+          "url": "https://www.fec.gov/data/candidate/H6NY12396/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY15167",
+      "url": "https://andreforthebronx.nyc/",
+      "evidence_url": "https://hudsonvalley.news12.com/vote-2026-bronx-election-voting-guide",
+      "title": "News 12 | Vote 2026: Bronx election voting guide",
+      "excerpt": "2026 guide lists Andre Easton in District 15 and links andreforthebronx.nyc; candidate catalog also pairs the domain with Andre Clement Easton, CD 15.",
+      "fetch": "tool-inaccessible",
+      "signals": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "review": {
+        "site_evidence_url": "https://hudsonvalley.news12.com/vote-2026-bronx-election-voting-guide",
+        "candidate_site_evidence": "2026 guide lists Andre Easton and the URL; candidate catalog explicitly pairs the domain with Andre Clement Easton, CD 15.",
+        "direct_fetch_status": "tool-inaccessible",
+        "note": "Direct website fetch was inaccessible to the review tool."
+      },
+      "notes": "Two candidate-specific sources pair the domain with Andre Easton and NY-15; direct homepage was inaccessible.",
+      "query": "\"Andre Clement Easton\" \"andreforthebronx.nyc\" NY-15 Congress",
+      "sources": [
+        {
+          "title": "News 12 | Vote 2026: Bronx election voting guide",
+          "url": "https://hudsonvalley.news12.com/vote-2026-bronx-election-voting-guide"
+        },
+        {
+          "title": "PolitiVett Print - New York Candidates",
+          "url": "https://hub.politivett.com/print/catalog?state=NY"
+        },
+        {
+          "title": "andreforthebronx.nyc",
+          "url": "https://andreforthebronx.nyc/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY15217",
+      "url": "https://www.committeetoelectjohnmaynardharristocongress.org/",
+      "evidence_url": "https://www.committeetoelectjohnmaynardharristocongress.org/",
+      "title": "John Maynard Harris for Congress",
+      "excerpt": "Homepage names Harris, shows Bronx policy priorities, Take Action, and a paid-for footer.",
+      "fetch": "readable-text",
+      "signals": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "review": {
+        "title": "John Maynard Harris for Congress",
+        "race": "Campaign for Congress; Bronx neighborhoods listed.",
+        "issues": "Healthcare, education, mental health, and crime prevention.",
+        "support": "Take Action link.",
+        "contact": "No direct contact method visible in extracted text.",
+        "disclaimer": "Paid for by the Committee to Elect John Maynard Harris."
+      },
+      "notes": "Direct homepage shows candidate, congressional race, priorities, Take Action, and disclaimer; no direct contact method was exposed.",
+      "query": "\"John Maynard Harris\" \"committeetoelectjohnmaynardharristocongress.org\"",
+      "sources": [
+        {
+          "title": "John Maynard Harris for Congress",
+          "url": "https://www.committeetoelectjohnmaynardharristocongress.org/"
+        },
+        {
+          "title": "News 12 | Vote 2026: Bronx election voting guide",
+          "url": "https://hudsonvalley.news12.com/vote-2026-bronx-election-voting-guide"
+        },
+        {
+          "title": "FEC candidate overview H6NY15217",
+          "url": "https://www.fec.gov/data/candidate/H6NY15217/"
+        }
+      ]
+    },
+    {
+      "id": "H4NY21145",
+      "url": "https://paulacollinsforcongress.com/",
+      "evidence_url": "https://allciv.com/candidates/2026/ny/house/paula-collins-H4NY21145",
+      "title": "Paula Collins for NY-21 | AllCiv",
+      "excerpt": "2026 candidate profile explicitly lists FEC H4NY21145 and links paulacollinsforcongress.com.",
+      "fetch": "tool-inaccessible",
+      "signals": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "review": {
+        "site_evidence_url": "https://allciv.com/candidates/2026/ny/house/paula-collins-H4NY21145",
+        "candidate_site_evidence": "2026 candidate profile matches FEC H4NY21145 to paulacollinsforcongress.com.",
+        "direct_fetch_status": "tool-inaccessible",
+        "note": "Direct homepage returned no extracted text."
+      },
+      "notes": "Domain is explicitly paired with FEC H4NY21145 in a 2026 race profile; direct homepage returned zero lines.",
+      "query": "\"Paula Collins\" \"paulacollinsforcongress.com\" H4NY21145 2026",
+      "sources": [
+        {
+          "title": "Paula Collins for NY-21 | AllCiv",
+          "url": "https://allciv.com/candidates/2026/ny/house/paula-collins-H4NY21145"
+        },
+        {
+          "title": "FEC Form 1 - Paula Collins for Congress",
+          "url": "https://docquery.fec.gov/pdf/795/202511059792574795/202511059792574795.pdf"
+        },
+        {
+          "title": "paulacollinsforcongress.com",
+          "url": "https://paulacollinsforcongress.com/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY18245",
+      "url": "https://thindforcongress.com/",
+      "evidence_url": "https://thindforcongress.com/",
+      "title": "Home - Thind for Congress",
+      "excerpt": "Homepage identifies Thind as Congressional Candidate CD-18, shows issues, contribute/volunteer links, contact email, paid-for footer, and withdrawal announcement.",
+      "fetch": "readable-text",
+      "signals": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "review": {
+        "title": "Home - Thind for Congress",
+        "race": "Congressional Candidate, CD-18.",
+        "issues": "Economy, AI, violence, and quality of life sections.",
+        "support": "Contribute and Volunteer links.",
+        "contact": "info@thindforcongress.com; press@thindforcongress.com.",
+        "disclaimer": "Paid for by Thind for Congress."
+      },
+      "notes": "Readable and complete campaign site. Homepage also states that Thind withdrew and endorsed Jackie Mary Auringer; retained as campaign-site evidence.",
+      "query": "\"Sharanjit Singh Thind\" \"thindforcongress.com\" NY-18",
+      "sources": [
+        {
+          "title": "Home - Thind for Congress",
+          "url": "https://thindforcongress.com/"
+        },
+        {
+          "title": "Sharanjit Thind announces run for Congress in NY-18",
+          "url": "https://thesouthasiantimes.info/do-not-miss/news/sharanjit-thind-r-announces-run-for-congress-in-new-york-s-18th-district/6562"
+        },
+        {
+          "title": "FEC candidate overview H6NY18245",
+          "url": "https://www.fec.gov/data/candidate/H6NY18245/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY07172",
+      "url": "https://www.stevencarbajal.com/",
+      "evidence_url": "https://ballotpedia.org/Steven_Carbajal",
+      "title": "Steven Carbajal - Ballotpedia",
+      "excerpt": "Ballotpedia identifies his 2026 NY-07 congressional campaign and links Campaign website www.stevencarbajal.com.",
+      "fetch": "tool-inaccessible",
+      "signals": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "review": {
+        "site_evidence_url": "https://ballotpedia.org/Steven_Carbajal",
+        "candidate_site_evidence": "Ballotpedia links this candidate's campaign website and identifies the 2026 NY-07 campaign.",
+        "direct_fetch_status": "tool-inaccessible",
+        "note": "Direct website fetch returned 401 Unauthorized."
+      },
+      "notes": "Candidate and domain are linked on a 2026 profile; direct homepage returned 401, so completeness is unavailable.",
+      "query": "\"Steven William Carbajal\" \"stevencarbajal.com\" NY-07 campaign website 2026",
+      "sources": [
+        {
+          "title": "Steven Carbajal - Ballotpedia",
+          "url": "https://ballotpedia.org/Steven_Carbajal"
+        },
+        {
+          "title": "FEC candidate overview H6NY07172",
+          "url": "https://www.fec.gov/data/candidate/H6NY07172/?cycle=2026"
+        },
+        {
+          "title": "stevencarbajal.com",
+          "url": "https://www.stevencarbajal.com/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY12230",
+      "url": "https://www.kaskyforcongress.com/",
+      "evidence_url": "https://www.kaskyforcongress.com/",
+      "title": "Cameron Kasky for New York | Join the Movement Today | NY-12 Congress",
+      "excerpt": "Homepage names NY-12 campaign, lists issues and donation links, contact emails, and paid-for notice.",
+      "fetch": "readable-text",
+      "signals": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "review": {
+        "title": "Cameron Kasky for New York | Join the Movement Today | NY-12 Congress",
+        "race": "Support Cam's Campaign for NY-12.",
+        "issues": "Stop funding genocide, Medicare For All, Abolish ICE.",
+        "support": "Donate links.",
+        "contact": "info@kaskyforcongress.com and press@kaskyforcongress.com.",
+        "disclaimer": "Paid for by Cameron Kasky for New York."
+      },
+      "notes": "Direct homepage shows identity, NY-12, policy priorities, donate, contact, and paid-for notice.",
+      "query": "\"Cameron Kasky\" \"kaskyforcongress.com\" NY-12 campaign site 2026",
+      "sources": [
+        {
+          "title": "Cameron Kasky for New York | Join the Movement Today | NY-12 Congress",
+          "url": "https://www.kaskyforcongress.com/"
+        },
+        {
+          "title": "Cameron Kasky for NY-12 | AllCiv",
+          "url": "https://allciv.com/candidates/2026/ny/house/cameron-kasky-H6NY12230"
+        },
+        {
+          "title": "FEC candidate overview H6NY12230",
+          "url": "https://www.fec.gov/data/candidate/H6NY12230/"
+        }
+      ]
+    },
+    {
+      "id": "H0NY15194",
+      "url": "https://www.michaelblakeforcongress.com/",
+      "evidence_url": "https://docquery.fec.gov/pdf/795/202511059792574795/202511059792574795.pdf",
+      "title": "FEC Form 1 - Michael Blake for Congress NY",
+      "excerpt": "Official committee Form 1 lists michaelblakeforcongress.com; 2026 candidate profile matches it to FEC H0NY15194.",
+      "fetch": "tool-fetch-error",
+      "signals": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "review": {
+        "site_evidence_url": "https://docquery.fec.gov/pdf/795/202511059792574795/202511059792574795.pdf",
+        "candidate_site_evidence": "Official FEC Form 1 lists michaelblakeforcongress.com for Michael Blake for Congress NY.",
+        "direct_fetch_status": "tool-fetch-error",
+        "note": "Direct homepage returned 404; indexed candidate campaign pages and the 2026 candidate profile support the historical campaign-site match."
+      },
+      "notes": "Official committee filing lists the domain and a 2026 candidate profile matches FEC H0NY15194. Direct homepage returned 404; completeness is unavailable.",
+      "query": "\"Michael Blake\" \"michaelblakeforcongress.com\" H0NY15194",
+      "sources": [
+        {
+          "title": "FEC Form 1 - Michael Blake for Congress NY",
+          "url": "https://docquery.fec.gov/pdf/795/202511059792574795/202511059792574795.pdf"
+        },
+        {
+          "title": "Michael Blake for NY-15 | AllCiv",
+          "url": "https://allciv.com/candidates/2026/ny/house/michael-blake-H0NY15194"
+        },
+        {
+          "title": "michaelblakeforcongress.com",
+          "url": "https://www.michaelblakeforcongress.com/"
+        },
+        {
+          "title": "About Michael Blake | Support Bronx Progress Today",
+          "url": "https://www.michaelblakeforcongress.com/aboutblake"
+        }
+      ]
+    },
+    {
+      "id": "H6NY21215",
+      "url": "https://www.robertsmullenforcongress.com/",
+      "evidence_url": "https://allciv.com/candidates/2026/ny/house/robert-smullen-H6NY21215",
+      "title": "Robert Smullen for NY-21 | AllCiv",
+      "excerpt": "2026 candidate profile matches FEC H6NY21215 and links robertsmullenforcongress.com.",
+      "fetch": "tool-fetch-error",
+      "signals": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "review": {
+        "site_evidence_url": "https://allciv.com/candidates/2026/ny/house/robert-smullen-H6NY21215",
+        "candidate_site_evidence": "2026 profile explicitly matches robertsmullenforcongress.com to FEC H6NY21215.",
+        "direct_fetch_status": "tool-fetch-error",
+        "note": "Direct homepage returned 404."
+      },
+      "notes": "2026 candidate profile links this site to the exact FEC ID; direct homepage currently returns 404, so completeness is unknown.",
+      "query": "\"Robert Smullen\" \"robertsmullenforcongress.com\" 2026 NY-21",
+      "sources": [
+        {
+          "title": "Robert Smullen for NY-21 | AllCiv",
+          "url": "https://allciv.com/candidates/2026/ny/house/robert-smullen-H6NY21215"
+        },
+        {
+          "title": "FEC candidate overview H6NY21215",
+          "url": "https://www.fec.gov/data/candidate/H6NY21215/"
+        },
+        {
+          "title": "robertsmullenforcongress.com",
+          "url": "https://www.robertsmullenforcongress.com/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY21157",
+      "url": "https://www.constantino.com/",
+      "evidence_url": "https://www.constantino.com/",
+      "title": "Early Voting in NY-21 | Constantino for Congress",
+      "excerpt": "Campaign root redirects to NY-21 voting information; footer says Paid by Constantino for Congress, and Agenda/About pages identify the campaign.",
+      "fetch": "readable-text",
+      "signals": [
+        1,
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "review": {
+        "title": "Early Voting in NY-21 | Constantino for Congress",
+        "race": "NY-21 page title and election information.",
+        "issues": "Agenda navigation; agenda page contains policy positions.",
+        "support": "",
+        "contact": "Contact navigation link.",
+        "disclaimer": "Paid by Constantino for Congress."
+      },
+      "notes": "Official campaign site is constantino.com. The lookalike constantinocongress.com is parody and was rejected; a news report says it is fake and unaffiliated. The campaign has a separate current site.",
+      "query": "\"Anthony Constantino\" official campaign website NY-21 2026 FEC website",
+      "sources": [
+        {
+          "title": "Early Voting in NY-21 | Constantino for Congress",
+          "url": "https://www.constantino.com/"
+        },
+        {
+          "title": "Agenda - Anthony Constantino",
+          "url": "https://www.constantino.com/agenda/"
+        },
+        {
+          "title": "FEC candidate overview H6NY21157",
+          "url": "https://www.fec.gov/data/candidate/H6NY21157/?cycle=2026"
+        },
+        {
+          "title": "Cutting satire: Pro-circumcision Constantino campaign flyers are fake",
+          "url": "https://www.cityandstateny.com/politics/2026/07/cutting-satire-pro-circumcision-constantino-campaign-flyers-are-fake/414691/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY04187",
+      "url": "https://www.kiana4congress.com/",
+      "evidence_url": "https://www.kiana4congress.com/",
+      "title": "HOME | Kiana 4 Congress",
+      "excerpt": "Homepage branding identifies Kiana for Congress; page refers to CD 4, has Issues/Events/Contact navigation, Donate and Volunteer links, Key Policies, and a contact email.",
+      "fetch": "readable-text",
+      "signals": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "review": {
+        "candidate_identity": "Kiana for Congress homepage branding and first-person campaign text.",
+        "race": "Homepage refers to CD 4.",
+        "issues": "Issues navigation and Key Policies section, including affordability, housing, and employment.",
+        "support": "Donate and Volunteer links visible.",
+        "contact": "Contact navigation and Kiana4NassauNY@proton.me visible.",
+        "paid_for_disclaimer": "Not observed in extracted homepage text."
+      },
+      "notes": "Direct homepage text was readable. Paid-for disclaimer was not observed in extracted text.",
+      "query": "\"H6NY04187\" \"Kiana Bierria-Anderson\" official campaign website NY-04 2026",
+      "sources": [
+        {
+          "title": "HOME | Kiana 4 Congress",
+          "url": "https://www.kiana4congress.com/"
+        },
+        {
+          "title": "Kiana Bierria-Anderson FEC profile",
+          "url": "https://www.fec.gov/data/candidate/H6NY04187/"
+        }
+      ]
+    },
+    {
+      "id": "H0NY07092",
+      "url": "https://paperboyprince.com/",
+      "evidence_url": "https://www.newkingsdemocrats.com/ny07",
+      "title": "Congressional District NY-07 - New Kings Democrats",
+      "excerpt": "The NY-07 guide names PAPERBOY LOVE PRINCE and says ?Where you can learn more: paperboyprince.com.? Indexed homepage content labels the site Paperboy Prince 2026 and shows volunteer/donate and policy sections.",
+      "fetch": "tool-inaccessible",
+      "signals": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "review": {
+        "candidate_identity": "NY-07 guide names PAPERBOY LOVE PRINCE and links paperboyprince.com; indexed homepage title says Paperboy Prince 2026.",
+        "race": "Independent NY-07 guide links the site under its NY-07 candidate section.",
+        "issues": "Indexed site content describes a policy platform; direct homepage text unavailable.",
+        "support": "Indexed homepage shows volunteer and donate links; direct fetch unavailable.",
+        "contact": "Not assessable from direct fetch.",
+        "paid_for_disclaimer": "Not assessable from direct fetch.",
+        "direct_fetch": "Research tool returned only ?You need to enable JavaScript to run this app.?"
+      },
+      "notes": "Campaign-site identity is supported by the NY-07 guide link and indexed 2026 site content. Direct fetch exposed no homepage text; completeness signals remain NULL.",
+      "query": "\"H0NY07092\" \"paperboyprince.com\" 2026 campaign",
+      "sources": [
+        {
+          "title": "Congressional District NY-07 - New Kings Democrats",
+          "url": "https://www.newkingsdemocrats.com/ny07"
+        },
+        {
+          "title": "Paperboy Prince 2026",
+          "url": "https://paperboyprince.com/"
+        },
+        {
+          "title": "Paperboy Love Prince FEC profile",
+          "url": "https://www.fec.gov/data/candidate/H0NY07092/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY13204",
+      "url": "https://www.mattdaviesmiller.com/",
+      "evidence_url": "https://docquery.fec.gov/pdf/766/202503289754573766/202503289754573766.pdf",
+      "title": "FEC Form 1 - Matt Davies Miller for Congress",
+      "excerpt": "Official FEC Form 1 names MATT DAVIES MILLER FOR CONGRESS, lists committee C00900811, identifies Matt Davies Miller as a Democratic House candidate for NY-13, and gives www.mattdaviesmiller.com as the committee web page.",
+      "fetch": "tool-inaccessible",
+      "signals": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "review": {
+        "candidate_identity": "Official FEC Form 1 names Matt Davies Miller for Congress.",
+        "race": "Form 1 lists House, New York, District 13; official candidate ID is H6NY13204.",
+        "website_source": "FEC Form 1 lists www.mattdaviesmiller.com as committee web page address.",
+        "direct_fetch": "Research tool could not retrieve the homepage."
+      },
+      "notes": "Official FEC filing ties this site to Matt Davies Miller for Congress (C00900811), NY-13. Homepage completeness signals remain NULL because direct fetch failed.",
+      "query": "\"H6NY13204\" \"mattdaviesmiller.com\"",
+      "sources": [
+        {
+          "title": "FEC Form 1 - Matt Davies Miller for Congress",
+          "url": "https://docquery.fec.gov/pdf/766/202503289754573766/202503289754573766.pdf"
+        },
+        {
+          "title": "Matt Davies Miller FEC profile",
+          "url": "https://www.fec.gov/data/candidate/H6NY13204/"
+        }
+      ]
+    }
+  ],
+  "rejected": [
+    {
+      "id": "H6NY21157",
+      "url": "https://www.constantinocongress.com/",
+      "relationship": "third-party parody site impersonating campaign",
+      "evidence_url": "https://www.cityandstateny.com/politics/2026/07/cutting-satire-pro-circumcision-constantino-campaign-flyers-are-fake/414691/",
+      "title": "Cutting satire: Pro-circumcision Constantino campaign flyers are fake",
+      "excerpt": "City & State reports the domain and flyers are fake and not affiliated with a political campaign.",
+      "notes": "Rejected as a candidate campaign website; actual candidate campaign site is constantino.com."
+    },
+    {
+      "id": "H2NY00010",
+      "url": "https://www.reelectnydiavelazquez.com/",
+      "relationship": "past-cycle campaign website",
+      "evidence_url": "https://velazquez.house.gov/media-center/press-releases/velazquez-decision-not-seek-re-election-2026",
+      "title": "Velázquez on Decision to Not Seek Re-election in 2026",
+      "excerpt": "Official statement says Velazquez will not seek reelection in 2026; the re-elect website contains legacy campaign content.",
+      "notes": "Do not count this past-cycle re-elect site as a 2026 campaign site."
+    },
+    {
+      "id": "H6NY02132",
+      "url": "https://joshtaverasforcongress.com/",
+      "relationship": "formerly associated federal campaign domain now hijacked or unrelated content",
+      "evidence_url": "https://m.thegreenpapers.com/G25/NY",
+      "title": "New York 2025 General Election",
+      "excerpt": "Older NY-02 listing associates this domain with Joshua Taveras; current domain content is Indonesian gambling/retail spam, not campaign content.",
+      "notes": "Do not count current hijacked domain as a campaign site."
+    },
+    {
+      "id": "H6NY02132",
+      "url": "https://www.joshtaveras.com/",
+      "relationship": "campaign site for a different office",
+      "evidence_url": "https://www.joshtaveras.com/",
+      "title": "Josh Taveras for NY State Senate",
+      "excerpt": "Current site identifies Joshua Taveras for New York State Senate District 8, not U.S. House NY-02.",
+      "notes": "Office mismatch; not a federal House site."
+    },
+    {
+      "id": "H6NY12206",
+      "url": "https://www.erikbottcher.com/",
+      "relationship": "campaign site for a different office",
+      "evidence_url": "https://www.erikbottcher.com/about",
+      "title": "Bottcher 2026",
+      "excerpt": "Indexed campaign profile is for Erik Bottcher?s New York State Senate race; the FEC row is House NY-12.",
+      "notes": "Office mismatch; do not assign state Senate site to H6NY12206."
+    },
+    {
+      "id": "H2NY24127",
+      "url": "https://nystevenholden.com/",
+      "relationship": "formerly associated federal campaign domain now hijacked or unrelated content",
+      "evidence_url": "https://www.abcnys.org/new-york-state-election-briefing/",
+      "title": "New York State Election Briefing - ABCNYS",
+      "excerpt": "ABCNYS lists nystevenholden.com as Holden?s NY-24 site; direct current homepage displays casino spam rather than campaign content.",
+      "notes": "Historical URL association recorded; current homepage is not a usable campaign site."
+    },
+    {
+      "id": "H6NY22171",
+      "url": "https://johnlemondes.com/",
+      "relationship": "campaign site for a different office",
+      "evidence_url": "https://johnlemondes.com/",
+      "title": "John Lemondes for NY State Assembly",
+      "excerpt": "Current site identifies John Lemondes for NY State Assembly District 126, not U.S. House NY-22.",
+      "notes": "Office mismatch; not a federal House site."
+    },
+    {
+      "id": "H6NY21256",
+      "url": "https://carusoforassembly.com/",
+      "relationship": "campaign site for a different office",
+      "evidence_url": "https://carusoforassembly.com/",
+      "title": "Allen Caruso for NY State Assembly",
+      "excerpt": "Current site identifies Allen Caruso for NY State Assembly District 113, not U.S. House NY-21.",
+      "notes": "Office mismatch; not a federal House site."
+    },
+    {
+      "id": "H6NY21264",
+      "url": "https://carusoforassembly.com/",
+      "relationship": "campaign site for a different office",
+      "evidence_url": "https://carusoforassembly.com/",
+      "title": "Allen Caruso for NY State Assembly",
+      "excerpt": "Current site identifies Allen Caruso for NY State Assembly District 113, not U.S. House NY-21.",
+      "notes": "Office mismatch; not a federal House site."
+    },
+    {
+      "id": "H6NY15191",
+      "url": "https://amanda-septimo.squarespace.com/contact",
+      "relationship": "campaign template with placeholder content; House campaign suspended",
+      "evidence_url": "https://www.norwoodnews.org/update-am-amanda-septimo-suspends-congressional-campaign-against-torres-in-ny-15-amid-health-diagnosis/",
+      "title": "Amanda Septimo suspends congressional campaign",
+      "excerpt": "Squarespace contact page shows template placeholders; news report says Septimo suspended the NY-15 House campaign.",
+      "notes": "Do not count placeholder template as a complete campaign site."
+    },
+    {
+      "id": "H0NY22091",
+      "url": "https://desiraforcongress.com/",
+      "relationship": "legacy prior-cycle campaign website",
+      "evidence_url": "https://projectcuria.com/elections/candidate/H-NY-19/H0NY22091",
+      "title": "James Desira candidate record",
+      "excerpt": "Domain is identified with James Desira, but indexed campaign content is for NY-19 in 2024 and says campaign is suspended.",
+      "notes": "Legacy prior-cycle content; not a verified 2026 campaign site."
+    }
+  ],
+  "no_site_searches": [
+    {
+      "id": "H2NY00010",
+      "query": "\"Nydia Velazquez\" 2026 campaign website reelectnydiavelazquez",
+      "outcome": "no-site-found",
+      "notes": "Legacy campaign URL found, but official retirement statement means it is not a 2026 campaign site.",
+      "sources": [
+        {
+          "title": "Committee to Re-Elect Nydia M. Velázquez to Congress",
+          "url": "https://www.reelectnydiavelazquez.com/"
+        },
+        {
+          "title": "Velázquez on Decision to Not Seek Re-election in 2026",
+          "url": "https://velazquez.house.gov/media-center/press-releases/velazquez-decision-not-seek-re-election-2026"
+        },
+        {
+          "title": "VELAZQUEZ, NYDIA M. - Candidate overview | FEC",
+          "url": "https://www.fec.gov/data/candidate/H2NY00010/"
+        }
+      ]
+    },
+    {
+      "id": "H0NY00071",
+      "candidate_name": "NASCIMBENE, LUCA",
+      "query": "\"Martin Smithmyer\" OR \"Jordan Maggio\" OR \"Luca Nascimbene\" OR \"Jonathan Schneider\" OR \"Thomas Sorensen\" NY-01 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: NASCIMBENE, LUCA",
+          "url": "https://www.fec.gov/data/candidate/H0NY00071/"
+        }
+      ]
+    },
+    {
+      "id": "H0NY22091",
+      "candidate_name": "DESIRA, JAMES",
+      "query": "\"James Desira\" NY-19 campaign website 2026 House",
+      "outcome": "ambiguous",
+      "notes": "Candidate-related URL was reviewed and rejected; no usable federal campaign homepage was verified.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: DESIRA, JAMES",
+          "url": "https://www.fec.gov/data/candidate/H0NY22091/"
+        },
+        {
+          "title": "James Desira campaign site",
+          "url": "https://desiraforcongress.com/"
+        },
+        {
+          "title": "Project Curia candidate record",
+          "url": "https://projectcuria.com/elections/candidate/H-NY-19/H0NY22091"
+        }
+      ]
+    },
+    {
+      "id": "H2NY00010",
+      "candidate_name": "VELAZQUEZ, NYDIA M.",
+      "query": "\"Alexander Campagna\" OR \"Dane-Brandon Noble\" OR \"Miles Shore\" NY-07 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: VELAZQUEZ, NYDIA M.",
+          "url": "https://www.fec.gov/data/candidate/H2NY00010/"
+        },
+        {
+          "title": "CBS New York NY-07 primary guide",
+          "url": "https://www.cbsnews.com/newyork/news/mamdani-endorsement-ny-7-primary-retiring-rep-nydia-velazquez/"
+        },
+        {
+          "title": "New Kings Democrats NY-07 guide",
+          "url": "https://www.newkingsdemocrats.com/ny07"
+        }
+      ]
+    },
+    {
+      "id": "H2NY05142",
+      "candidate_name": "LOZADA, FRANK",
+      "query": "\"Frank Lozada\" OR \"Brian Miller\" NY-04 New York 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: LOZADA, FRANK",
+          "url": "https://www.fec.gov/data/candidate/H2NY05142/"
+        }
+      ]
+    },
+    {
+      "id": "H2NY24127",
+      "candidate_name": "HOLDEN, STEVEN WESLEY SR.",
+      "query": "\"Steven Holden\" NY-24 2026 campaign website FEC New York House",
+      "outcome": "ambiguous",
+      "notes": "Candidate-related URL was reviewed and rejected; no usable federal campaign homepage was verified.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: HOLDEN, STEVEN WESLEY SR.",
+          "url": "https://www.fec.gov/data/candidate/H2NY24127/"
+        },
+        {
+          "title": "ABCNYS NY-24 campaign listing",
+          "url": "https://www.abcnys.org/new-york-state-election-briefing/"
+        },
+        {
+          "title": "Current Holden domain",
+          "url": "https://nystevenholden.com/"
+        }
+      ]
+    },
+    {
+      "id": "H4NY21137",
+      "candidate_name": "ROULEAU, BRIAN R MR.",
+      "query": "\"Allen Caruso\" OR \"Maylon Haller\" OR \"Andrew Henson\" OR \"Robert Huhn\" OR \"Michael Metzgier\" OR \"Brian Rouleau\" NY-21 campaign website 2026",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: ROULEAU, BRIAN R MR.",
+          "url": "https://www.fec.gov/data/candidate/H4NY21137/"
+        },
+        {
+          "title": "The Candidate NY-21 race",
+          "url": "https://thecandidate.com/races/ny-house-21-2026"
+        },
+        {
+          "title": "NY-21 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-21"
+        }
+      ]
+    },
+    {
+      "id": "H6NY01142",
+      "candidate_name": "SORENSEN, THOMAS",
+      "query": "\"Martin Smithmyer\" OR \"Jordan Maggio\" OR \"Luca Nascimbene\" OR \"Jonathan Schneider\" OR \"Thomas Sorensen\" NY-01 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SORENSEN, THOMAS",
+          "url": "https://www.fec.gov/data/candidate/H6NY01142/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY01167",
+      "candidate_name": "MAGGIO, JORDAN SMITH",
+      "query": "\"Martin Smithmyer\" OR \"Jordan Maggio\" OR \"Luca Nascimbene\" OR \"Jonathan Schneider\" OR \"Thomas Sorensen\" NY-01 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: MAGGIO, JORDAN SMITH",
+          "url": "https://www.fec.gov/data/candidate/H6NY01167/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY01175",
+      "candidate_name": "SCHNEIDER, JONATHAN",
+      "query": "\"Martin Smithmyer\" OR \"Jordan Maggio\" OR \"Luca Nascimbene\" OR \"Jonathan Schneider\" OR \"Thomas Sorensen\" NY-01 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SCHNEIDER, JONATHAN",
+          "url": "https://www.fec.gov/data/candidate/H6NY01175/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY02132",
+      "candidate_name": "TAVERAS, JOSHUA J",
+      "query": "\"Joshua Taveras\" NY-02 2026 campaign website",
+      "outcome": "ambiguous",
+      "notes": "Candidate-related URL was reviewed and rejected; no usable federal campaign homepage was verified.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: TAVERAS, JOSHUA J",
+          "url": "https://www.fec.gov/data/candidate/H6NY02132/"
+        },
+        {
+          "title": "Older NY-02 listing",
+          "url": "https://m.thegreenpapers.com/G25/NY"
+        },
+        {
+          "title": "Josh Taveras NY Senate site",
+          "url": "https://www.joshtaveras.com/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY03296",
+      "candidate_name": "LAVERY, MICHAEL JOSEPH MR",
+      "query": "\"Michael Joseph Lavery\" NY-03 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: LAVERY, MICHAEL JOSEPH MR",
+          "url": "https://www.fec.gov/data/candidate/H6NY03296/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY04138",
+      "candidate_name": "SMITHMYER, MARTIN PAUL",
+      "query": "\"Martin Smithmyer\" OR \"Jordan Maggio\" OR \"Luca Nascimbene\" OR \"Jonathan Schneider\" OR \"Thomas Sorensen\" NY-01 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SMITHMYER, MARTIN PAUL",
+          "url": "https://www.fec.gov/data/candidate/H6NY04138/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY04153",
+      "candidate_name": "MILLER, BRIAN",
+      "query": "\"Frank Lozada\" OR \"Brian Miller\" NY-04 New York 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: MILLER, BRIAN",
+          "url": "https://www.fec.gov/data/candidate/H6NY04153/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY05093",
+      "candidate_name": "CHERRY, AARON LEE",
+      "query": "\"Aaron Lee Cherry\" OR \"Alexandria Foxworth\" NY-05 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: CHERRY, AARON LEE",
+          "url": "https://www.fec.gov/data/candidate/H6NY05093/"
+        },
+        {
+          "title": "Big New York NY-05 race guide",
+          "url": "https://bigny.com/elections-2026/race/new-york-congressional-district-5-election-2026/"
+        },
+        {
+          "title": "Alexandria Foxworth Ballotpedia",
+          "url": "https://ballotpedia.org/Alexandria_Foxworth"
+        }
+      ]
+    },
+    {
+      "id": "H6NY05119",
+      "candidate_name": "FOXWORTH, ALEXANDRIA",
+      "query": "\"Aaron Lee Cherry\" OR \"Alexandria Foxworth\" NY-05 2026 campaign website",
+      "outcome": "ambiguous",
+      "notes": "Possible campaign-site references did not expose a verifiable URL.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: FOXWORTH, ALEXANDRIA",
+          "url": "https://www.fec.gov/data/candidate/H6NY05119/"
+        },
+        {
+          "title": "Big New York NY-05 race guide",
+          "url": "https://bigny.com/elections-2026/race/new-york-congressional-district-5-election-2026/"
+        },
+        {
+          "title": "Alexandria Foxworth Ballotpedia",
+          "url": "https://ballotpedia.org/Alexandria_Foxworth"
+        }
+      ]
+    },
+    {
+      "id": "H6NY06158",
+      "candidate_name": "XIONG, YAN",
+      "query": "\"Juan Pagan\" OR \"Charles Park\" OR \"Yan Xiong\" NY-06 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: XIONG, YAN",
+          "url": "https://www.fec.gov/data/candidate/H6NY06158/"
+        },
+        {
+          "title": "NY-06 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-6"
+        }
+      ]
+    },
+    {
+      "id": "H6NY06166",
+      "candidate_name": "PARK, CHARLES",
+      "query": "\"Juan Pagan\" OR \"Charles Park\" OR \"Yan Xiong\" NY-06 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: PARK, CHARLES",
+          "url": "https://www.fec.gov/data/candidate/H6NY06166/"
+        },
+        {
+          "title": "NY-06 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-6"
+        }
+      ]
+    },
+    {
+      "id": "H6NY06174",
+      "candidate_name": "PAGAN, JUAN",
+      "query": "\"Juan Pagan\" OR \"Charles Park\" OR \"Yan Xiong\" NY-06 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: PAGAN, JUAN",
+          "url": "https://www.fec.gov/data/candidate/H6NY06174/"
+        },
+        {
+          "title": "NY-06 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-6"
+        }
+      ]
+    },
+    {
+      "id": "H6NY07198",
+      "candidate_name": "SHORE, MILES",
+      "query": "\"Alexander Campagna\" OR \"Dane-Brandon Noble\" OR \"Miles Shore\" NY-07 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SHORE, MILES",
+          "url": "https://www.fec.gov/data/candidate/H6NY07198/"
+        },
+        {
+          "title": "CBS New York NY-07 primary guide",
+          "url": "https://www.cbsnews.com/newyork/news/mamdani-endorsement-ny-7-primary-retiring-rep-nydia-velazquez/"
+        },
+        {
+          "title": "New Kings Democrats NY-07 guide",
+          "url": "https://www.newkingsdemocrats.com/ny07"
+        }
+      ]
+    },
+    {
+      "id": "H6NY07206",
+      "candidate_name": "CAMPAGNA, ALEXANDER",
+      "query": "\"Alexander Campagna\" OR \"Dane-Brandon Noble\" OR \"Miles Shore\" NY-07 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: CAMPAGNA, ALEXANDER",
+          "url": "https://www.fec.gov/data/candidate/H6NY07206/"
+        },
+        {
+          "title": "CBS New York NY-07 primary guide",
+          "url": "https://www.cbsnews.com/newyork/news/mamdani-endorsement-ny-7-primary-retiring-rep-nydia-velazquez/"
+        },
+        {
+          "title": "New Kings Democrats NY-07 guide",
+          "url": "https://www.newkingsdemocrats.com/ny07"
+        }
+      ]
+    },
+    {
+      "id": "H6NY07222",
+      "candidate_name": "NOBLE, DANE-BRANDON CAMERON",
+      "query": "\"Alexander Campagna\" OR \"Dane-Brandon Noble\" OR \"Miles Shore\" NY-07 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: NOBLE, DANE-BRANDON CAMERON",
+          "url": "https://www.fec.gov/data/candidate/H6NY07222/"
+        },
+        {
+          "title": "CBS New York NY-07 primary guide",
+          "url": "https://www.cbsnews.com/newyork/news/mamdani-endorsement-ny-7-primary-retiring-rep-nydia-velazquez/"
+        },
+        {
+          "title": "New Kings Democrats NY-07 guide",
+          "url": "https://www.newkingsdemocrats.com/ny07"
+        }
+      ]
+    },
+    {
+      "id": "H6NY08147",
+      "candidate_name": "OSSE, CHI",
+      "query": "\"Sahir Ahsan\" OR \"Darayan Hamlin\" OR \"Lewis Mizrahi\" OR \"Chi Osse\" NY-08 campaign website 2026",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: OSSE, CHI",
+          "url": "https://www.fec.gov/data/candidate/H6NY08147/"
+        },
+        {
+          "title": "NY-08 candidate list",
+          "url": "https://terracivic.com/races/2026/ny-house-08/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY08154",
+      "candidate_name": "SIMMONS, RICHARD",
+      "query": "\"Sahir Ahsan\" OR \"Darayan Hamlin\" OR \"Lewis Mizrahi\" OR \"Chi Osse\" NY-08 campaign website 2026",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SIMMONS, RICHARD",
+          "url": "https://www.fec.gov/data/candidate/H6NY08154/"
+        },
+        {
+          "title": "NY-08 candidate list",
+          "url": "https://terracivic.com/races/2026/ny-house-08/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY08162",
+      "candidate_name": "HAMLIN, DARAYAN J",
+      "query": "\"Sahir Ahsan\" OR \"Darayan Hamlin\" OR \"Lewis Mizrahi\" OR \"Chi Osse\" NY-08 campaign website 2026",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: HAMLIN, DARAYAN J",
+          "url": "https://www.fec.gov/data/candidate/H6NY08162/"
+        },
+        {
+          "title": "NY-08 candidate list",
+          "url": "https://terracivic.com/races/2026/ny-house-08/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY08170",
+      "candidate_name": "AHSAN, SAHIR DR.",
+      "query": "\"Sahir Ahsan\" OR \"Darayan Hamlin\" OR \"Lewis Mizrahi\" OR \"Chi Osse\" NY-08 campaign website 2026",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: AHSAN, SAHIR DR.",
+          "url": "https://www.fec.gov/data/candidate/H6NY08170/"
+        },
+        {
+          "title": "NY-08 candidate list",
+          "url": "https://terracivic.com/races/2026/ny-house-08/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY08188",
+      "candidate_name": "MIZRAHI, LEWIS",
+      "query": "\"Sahir Ahsan\" OR \"Darayan Hamlin\" OR \"Lewis Mizrahi\" OR \"Chi Osse\" NY-08 campaign website 2026",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: MIZRAHI, LEWIS",
+          "url": "https://www.fec.gov/data/candidate/H6NY08188/"
+        },
+        {
+          "title": "NY-08 candidate list",
+          "url": "https://terracivic.com/races/2026/ny-house-08/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY09178",
+      "candidate_name": "LUCAS, JOSHUA KAITAN",
+      "query": "\"Joshua Kaitan Lucas\" NY-09 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: LUCAS, JOSHUA KAITAN",
+          "url": "https://www.fec.gov/data/candidate/H6NY09178/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY11257",
+      "candidate_name": "USMAN, UMAR",
+      "query": "\"Umar Usman\" NY-11 2026 campaign website FEC",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: USMAN, UMAR",
+          "url": "https://www.fec.gov/data/candidate/H6NY11257/"
+        },
+        {
+          "title": "Umar Usman Ballotpedia",
+          "url": "https://ballotpedia.org/Umar_Usman"
+        },
+        {
+          "title": "Umar Usman FEC Form 2",
+          "url": "https://docquery.fec.gov/pdf/662/202601079793918662/202601079793918662.pdf"
+        }
+      ]
+    },
+    {
+      "id": "H6NY12156",
+      "candidate_name": "SOLOMON, GAVIN",
+      "query": "\"Erik Bottcher\" OR \"Mike Munoz\" OR \"Gavin Solomon\" NY-12 campaign website 2026 House",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SOLOMON, GAVIN",
+          "url": "https://www.fec.gov/data/candidate/H6NY12156/"
+        },
+        {
+          "title": "The Candidate NY-12 race",
+          "url": "https://thecandidate.com/races/ny-house-12-2026"
+        }
+      ]
+    },
+    {
+      "id": "H6NY12206",
+      "candidate_name": "BOTTCHER, ERIK",
+      "query": "\"Erik Bottcher\" OR \"Mike Munoz\" OR \"Gavin Solomon\" NY-12 campaign website 2026 House",
+      "outcome": "ambiguous",
+      "notes": "Candidate-related URL was reviewed and rejected; no usable federal campaign homepage was verified.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: BOTTCHER, ERIK",
+          "url": "https://www.fec.gov/data/candidate/H6NY12206/"
+        },
+        {
+          "title": "The Candidate NY-12 race",
+          "url": "https://thecandidate.com/races/ny-house-12-2026"
+        },
+        {
+          "title": "Bottcher 2026 profile",
+          "url": "https://www.erikbottcher.com/about"
+        }
+      ]
+    },
+    {
+      "id": "H6NY12370",
+      "candidate_name": "HUHN, ROBERT DILLON MR",
+      "query": "\"Allen Caruso\" OR \"Maylon Haller\" OR \"Andrew Henson\" OR \"Robert Huhn\" OR \"Michael Metzgier\" OR \"Brian Rouleau\" NY-21 campaign website 2026",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: HUHN, ROBERT DILLON MR",
+          "url": "https://www.fec.gov/data/candidate/H6NY12370/"
+        },
+        {
+          "title": "The Candidate NY-21 race",
+          "url": "https://thecandidate.com/races/ny-house-21-2026"
+        },
+        {
+          "title": "NY-21 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-21"
+        }
+      ]
+    },
+    {
+      "id": "H6NY12412",
+      "candidate_name": "MUNOZ, CHARLES MICHAEL (MIKE MUNOZ)",
+      "query": "\"Erik Bottcher\" OR \"Mike Munoz\" OR \"Gavin Solomon\" NY-12 campaign website 2026 House",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: MUNOZ, CHARLES MICHAEL (MIKE MUNOZ)",
+          "url": "https://www.fec.gov/data/candidate/H6NY12412/"
+        },
+        {
+          "title": "The Candidate NY-12 race",
+          "url": "https://thecandidate.com/races/ny-house-12-2026"
+        }
+      ]
+    },
+    {
+      "id": "H6NY12420",
+      "candidate_name": "SOLOMON, GAVIN",
+      "query": "\"Erik Bottcher\" OR \"Mike Munoz\" OR \"Gavin Solomon\" NY-12 campaign website 2026 House",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SOLOMON, GAVIN",
+          "url": "https://www.fec.gov/data/candidate/H6NY12420/"
+        },
+        {
+          "title": "The Candidate NY-12 race",
+          "url": "https://thecandidate.com/races/ny-house-12-2026"
+        }
+      ]
+    },
+    {
+      "id": "H6NY12438",
+      "candidate_name": "SOLOMON, GAVIN",
+      "query": "\"Erik Bottcher\" OR \"Mike Munoz\" OR \"Gavin Solomon\" NY-12 campaign website 2026 House",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SOLOMON, GAVIN",
+          "url": "https://www.fec.gov/data/candidate/H6NY12438/"
+        },
+        {
+          "title": "The Candidate NY-12 race",
+          "url": "https://thecandidate.com/races/ny-house-12-2026"
+        }
+      ]
+    },
+    {
+      "id": "H6NY12446",
+      "candidate_name": "SOLOMON, GAVIN",
+      "query": "\"Erik Bottcher\" OR \"Mike Munoz\" OR \"Gavin Solomon\" NY-12 campaign website 2026 House",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SOLOMON, GAVIN",
+          "url": "https://www.fec.gov/data/candidate/H6NY12446/"
+        },
+        {
+          "title": "The Candidate NY-12 race",
+          "url": "https://thecandidate.com/races/ny-house-12-2026"
+        }
+      ]
+    },
+    {
+      "id": "H6NY13261",
+      "candidate_name": "RODRIGUEZ, MEGAN CATHERINE",
+      "query": "\"Michael Hano\" OR \"Megan Catherine Rodriguez\" OR \"Gavin Solomon\" NY-13 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: RODRIGUEZ, MEGAN CATHERINE",
+          "url": "https://www.fec.gov/data/candidate/H6NY13261/"
+        },
+        {
+          "title": "NY-13 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-13"
+        }
+      ]
+    },
+    {
+      "id": "H6NY13295",
+      "candidate_name": "HANO, MICHAEL",
+      "query": "\"Michael Hano\" OR \"Megan Catherine Rodriguez\" OR \"Gavin Solomon\" NY-13 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: HANO, MICHAEL",
+          "url": "https://www.fec.gov/data/candidate/H6NY13295/"
+        },
+        {
+          "title": "NY-13 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-13"
+        }
+      ]
+    },
+    {
+      "id": "H6NY13311",
+      "candidate_name": "SOLOMON, GAVIN",
+      "query": "\"Michael Hano\" OR \"Megan Catherine Rodriguez\" OR \"Gavin Solomon\" NY-13 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SOLOMON, GAVIN",
+          "url": "https://www.fec.gov/data/candidate/H6NY13311/"
+        },
+        {
+          "title": "NY-13 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-13"
+        }
+      ]
+    },
+    {
+      "id": "H6NY14269",
+      "candidate_name": "RIVERA-DIAZ, ARIEL",
+      "query": "\"Aurelio Arcabascio\" OR \"Ariel Rivera-Diaz\" NY-14 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: RIVERA-DIAZ, ARIEL",
+          "url": "https://www.fec.gov/data/candidate/H6NY14269/"
+        },
+        {
+          "title": "NY-14 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-14"
+        }
+      ]
+    },
+    {
+      "id": "H6NY14277",
+      "candidate_name": "ARCABASCIO, AURELIO MR",
+      "query": "\"Aurelio Arcabascio\" OR \"Ariel Rivera-Diaz\" NY-14 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: ARCABASCIO, AURELIO MR",
+          "url": "https://www.fec.gov/data/candidate/H6NY14277/"
+        },
+        {
+          "title": "NY-14 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-14"
+        }
+      ]
+    },
+    {
+      "id": "H6NY15159",
+      "candidate_name": "LATONA, JON",
+      "query": "\"Indara Star Davis\" OR \"Jon Latona\" OR \"Stylo Sapaskis\" OR \"Amanda Septimo\" NY-15 campaign website 2026",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: LATONA, JON",
+          "url": "https://www.fec.gov/data/candidate/H6NY15159/"
+        },
+        {
+          "title": "NY-15 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-15"
+        }
+      ]
+    },
+    {
+      "id": "H6NY15191",
+      "candidate_name": "SEPTIMO, AMANDA N",
+      "query": "\"Indara Star Davis\" OR \"Jon Latona\" OR \"Stylo Sapaskis\" OR \"Amanda Septimo\" NY-15 campaign website 2026",
+      "outcome": "ambiguous",
+      "notes": "Candidate-related URL was reviewed and rejected; no usable federal campaign homepage was verified.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SEPTIMO, AMANDA N",
+          "url": "https://www.fec.gov/data/candidate/H6NY15191/"
+        },
+        {
+          "title": "NY-15 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-15"
+        },
+        {
+          "title": "Amanda Septimo Squarespace contact page",
+          "url": "https://amanda-septimo.squarespace.com/contact"
+        },
+        {
+          "title": "Norwood News suspension report",
+          "url": "https://www.norwoodnews.org/update-am-amanda-septimo-suspends-congressional-campaign-against-torres-in-ny-15-amid-health-diagnosis/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY15225",
+      "candidate_name": "DAVIS, INDARA STAR MS.",
+      "query": "\"Indara Star Davis\" OR \"Jon Latona\" OR \"Stylo Sapaskis\" OR \"Amanda Septimo\" NY-15 campaign website 2026",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: DAVIS, INDARA STAR MS.",
+          "url": "https://www.fec.gov/data/candidate/H6NY15225/"
+        },
+        {
+          "title": "NY-15 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-15"
+        }
+      ]
+    },
+    {
+      "id": "H6NY16140",
+      "candidate_name": "SAPASKIS, STYLO ADONIS",
+      "query": "\"Indara Star Davis\" OR \"Jon Latona\" OR \"Stylo Sapaskis\" OR \"Amanda Septimo\" NY-15 campaign website 2026",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SAPASKIS, STYLO ADONIS",
+          "url": "https://www.fec.gov/data/candidate/H6NY16140/"
+        },
+        {
+          "title": "NY-15 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-15"
+        }
+      ]
+    },
+    {
+      "id": "H6NY16157",
+      "candidate_name": "WILSON, JOHN FRANKLIN MR IV",
+      "query": "\"John Franklin Wilson\" NY-16 campaign website 2026",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: WILSON, JOHN FRANKLIN MR IV",
+          "url": "https://www.fec.gov/data/candidate/H6NY16157/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY18260",
+      "candidate_name": "SOLOMON, GAVIN",
+      "query": "\"Gavin Solomon\" NY-18 campaign website 2026 House",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SOLOMON, GAVIN",
+          "url": "https://www.fec.gov/data/candidate/H6NY18260/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY18278",
+      "candidate_name": "SOLOMON, GAVIN",
+      "query": "\"Gavin Solomon\" NY-18 campaign website 2026 House",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SOLOMON, GAVIN",
+          "url": "https://www.fec.gov/data/candidate/H6NY18278/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY20233",
+      "candidate_name": "FU, JACK",
+      "query": "\"Jack Fu\" NY-20 2026 campaign website House New York FEC",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: FU, JACK",
+          "url": "https://www.fec.gov/data/candidate/H6NY20233/"
+        },
+        {
+          "title": "Jack Fu profile",
+          "url": "https://otrecord.news/politicians/jack-fu-ny/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY21140",
+      "candidate_name": "HENSON, ANDREW",
+      "query": "\"Allen Caruso\" OR \"Maylon Haller\" OR \"Andrew Henson\" OR \"Robert Huhn\" OR \"Michael Metzgier\" OR \"Brian Rouleau\" NY-21 campaign website 2026",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: HENSON, ANDREW",
+          "url": "https://www.fec.gov/data/candidate/H6NY21140/"
+        },
+        {
+          "title": "The Candidate NY-21 race",
+          "url": "https://thecandidate.com/races/ny-house-21-2026"
+        },
+        {
+          "title": "NY-21 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-21"
+        }
+      ]
+    },
+    {
+      "id": "H6NY21249",
+      "candidate_name": "METZGIER, MICHAEL JOHN",
+      "query": "\"Allen Caruso\" OR \"Maylon Haller\" OR \"Andrew Henson\" OR \"Robert Huhn\" OR \"Michael Metzgier\" OR \"Brian Rouleau\" NY-21 campaign website 2026",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: METZGIER, MICHAEL JOHN",
+          "url": "https://www.fec.gov/data/candidate/H6NY21249/"
+        },
+        {
+          "title": "The Candidate NY-21 race",
+          "url": "https://thecandidate.com/races/ny-house-21-2026"
+        },
+        {
+          "title": "NY-21 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-21"
+        }
+      ]
+    },
+    {
+      "id": "H6NY21256",
+      "candidate_name": "CARUSO, ALLEN",
+      "query": "\"Allen Caruso\" OR \"Maylon Haller\" OR \"Andrew Henson\" OR \"Robert Huhn\" OR \"Michael Metzgier\" OR \"Brian Rouleau\" NY-21 campaign website 2026",
+      "outcome": "ambiguous",
+      "notes": "Candidate-related URL was reviewed and rejected; no usable federal campaign homepage was verified.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: CARUSO, ALLEN",
+          "url": "https://www.fec.gov/data/candidate/H6NY21256/"
+        },
+        {
+          "title": "The Candidate NY-21 race",
+          "url": "https://thecandidate.com/races/ny-house-21-2026"
+        },
+        {
+          "title": "NY-21 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-21"
+        },
+        {
+          "title": "Allen Caruso NY Assembly site",
+          "url": "https://carusoforassembly.com/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY21264",
+      "candidate_name": "CARUSO, ALLEN",
+      "query": "\"Allen Caruso\" OR \"Maylon Haller\" OR \"Andrew Henson\" OR \"Robert Huhn\" OR \"Michael Metzgier\" OR \"Brian Rouleau\" NY-21 campaign website 2026",
+      "outcome": "ambiguous",
+      "notes": "Candidate-related URL was reviewed and rejected; no usable federal campaign homepage was verified.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: CARUSO, ALLEN",
+          "url": "https://www.fec.gov/data/candidate/H6NY21264/"
+        },
+        {
+          "title": "The Candidate NY-21 race",
+          "url": "https://thecandidate.com/races/ny-house-21-2026"
+        },
+        {
+          "title": "NY-21 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-21"
+        },
+        {
+          "title": "Allen Caruso NY Assembly site",
+          "url": "https://carusoforassembly.com/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY22163",
+      "candidate_name": "SALKA, JOHN JOSEPH MR.",
+      "query": "\"David Hollenbeck\" OR \"John Lemondes\" OR \"John Salka\" OR \"William Staton\" NY-22 campaign website 2026",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SALKA, JOHN JOSEPH MR.",
+          "url": "https://www.fec.gov/data/candidate/H6NY22163/"
+        },
+        {
+          "title": "David Hollenbeck FEC profile",
+          "url": "https://www.fec.gov/data/candidate/H6NY22205/"
+        },
+        {
+          "title": "David Hollenbeck Ballotpedia",
+          "url": "https://ballotpedia.org/David_Hollenbeck"
+        }
+      ]
+    },
+    {
+      "id": "H6NY22171",
+      "candidate_name": "LEMONDES, JOHN",
+      "query": "\"David Hollenbeck\" OR \"John Lemondes\" OR \"John Salka\" OR \"William Staton\" NY-22 campaign website 2026",
+      "outcome": "ambiguous",
+      "notes": "Candidate-related URL was reviewed and rejected; no usable federal campaign homepage was verified.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: LEMONDES, JOHN",
+          "url": "https://www.fec.gov/data/candidate/H6NY22171/"
+        },
+        {
+          "title": "David Hollenbeck FEC profile",
+          "url": "https://www.fec.gov/data/candidate/H6NY22205/"
+        },
+        {
+          "title": "David Hollenbeck Ballotpedia",
+          "url": "https://ballotpedia.org/David_Hollenbeck"
+        },
+        {
+          "title": "John Lemondes official site",
+          "url": "https://johnlemondes.com/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY22197",
+      "candidate_name": "STATON, WILLIAM A IV",
+      "query": "\"David Hollenbeck\" OR \"John Lemondes\" OR \"John Salka\" OR \"William Staton\" NY-22 campaign website 2026",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: STATON, WILLIAM A IV",
+          "url": "https://www.fec.gov/data/candidate/H6NY22197/"
+        },
+        {
+          "title": "David Hollenbeck FEC profile",
+          "url": "https://www.fec.gov/data/candidate/H6NY22205/"
+        },
+        {
+          "title": "David Hollenbeck Ballotpedia",
+          "url": "https://ballotpedia.org/David_Hollenbeck"
+        }
+      ]
+    },
+    {
+      "id": "H6NY22205",
+      "candidate_name": "HOLLENBECK, DAVID",
+      "query": "\"David Hollenbeck\" OR \"John Lemondes\" OR \"John Salka\" OR \"William Staton\" NY-22 campaign website 2026",
+      "outcome": "ambiguous",
+      "notes": "Possible campaign-site references did not expose a verifiable URL.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: HOLLENBECK, DAVID",
+          "url": "https://www.fec.gov/data/candidate/H6NY22205/"
+        },
+        {
+          "title": "David Hollenbeck Ballotpedia",
+          "url": "https://ballotpedia.org/David_Hollenbeck"
+        }
+      ]
+    },
+    {
+      "id": "H6NY23526",
+      "candidate_name": "HALLER, MAYLON JUSTIN",
+      "query": "\"Allen Caruso\" OR \"Maylon Haller\" OR \"Andrew Henson\" OR \"Robert Huhn\" OR \"Michael Metzgier\" OR \"Brian Rouleau\" NY-21 campaign website 2026",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: HALLER, MAYLON JUSTIN",
+          "url": "https://www.fec.gov/data/candidate/H6NY23526/"
+        },
+        {
+          "title": "The Candidate NY-21 race",
+          "url": "https://thecandidate.com/races/ny-house-21-2026"
+        },
+        {
+          "title": "NY-21 2026 race page",
+          "url": "https://election.org/election/2026/us-house/new-york/district-21"
+        }
+      ]
+    },
+    {
+      "id": "H6NY23542",
+      "candidate_name": "COLLINS, STEPHEN",
+      "query": "\"Stephen Collins\" OR \"Jeffrey Rayner\" NY-23 2026 campaign website House",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: COLLINS, STEPHEN",
+          "url": "https://www.fec.gov/data/candidate/H6NY23542/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY23567",
+      "candidate_name": "RAYNER, JEFFREY",
+      "query": "\"Stephen Collins\" OR \"Jeffrey Rayner\" NY-23 2026 campaign website House",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: RAYNER, JEFFREY",
+          "url": "https://www.fec.gov/data/candidate/H6NY23567/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY25190",
+      "candidate_name": "LEACH, CASSANDRA LIN",
+      "query": "\"Cassandra Leach\" OR \"Erik Stehlar\" NY-25 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: LEACH, CASSANDRA LIN",
+          "url": "https://www.fec.gov/data/candidate/H6NY25190/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY25224",
+      "candidate_name": "STEHLAR, ERIK",
+      "query": "\"Cassandra Leach\" OR \"Erik Stehlar\" NY-25 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: STEHLAR, ERIK",
+          "url": "https://www.fec.gov/data/candidate/H6NY25224/"
+        }
+      ]
+    },
+    {
+      "id": "H6NY28061",
+      "candidate_name": "JOHNSON, ANDREW",
+      "query": "\"Andrew Johnson\" NY-28 2026 campaign website FEC New York House",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: JOHNSON, ANDREW",
+          "url": "https://www.fec.gov/data/candidate/H6NY28061/"
+        },
+        {
+          "title": "Andrew Johnson profile",
+          "url": "https://otrecord.news/politicians/andrew-johnson-ny/"
+        }
+      ]
+    },
+    {
+      "id": "S6NY00441",
+      "candidate_name": "KOHLER, JOSEPH ANTHONY",
+      "query": "\"S6NY00441\" OR \"S6NY00458\" \"Joseph Kohler\" NY Senate campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: KOHLER, JOSEPH ANTHONY",
+          "url": "https://www.fec.gov/data/candidate/S6NY00441/"
+        },
+        {
+          "title": "Who is running for U.S. Senate in New York in 2026?",
+          "url": "https://theballot.news/news/who-is-running-for-u-s-senate-in-new-york-in-2026-ny"
+        }
+      ]
+    },
+    {
+      "id": "S6NY00458",
+      "candidate_name": "KOHLER, JOSEPH ANTHONY",
+      "query": "\"S6NY00441\" OR \"S6NY00458\" \"Joseph Kohler\" NY Senate campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: KOHLER, JOSEPH ANTHONY",
+          "url": "https://www.fec.gov/data/candidate/S6NY00458/"
+        },
+        {
+          "title": "Who is running for U.S. Senate in New York in 2026?",
+          "url": "https://theballot.news/news/who-is-running-for-u-s-senate-in-new-york-in-2026-ny"
+        }
+      ]
+    },
+    {
+      "id": "S6NY00466",
+      "candidate_name": "MANCE, PATRICIA ANNETTE MISS",
+      "query": "\"S6NY00466\" \"Patricia Mance\" New York Senate 2026 website campaign",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: MANCE, PATRICIA ANNETTE MISS",
+          "url": "https://www.fec.gov/data/candidate/S6NY00466/"
+        },
+        {
+          "title": "Who is running for U.S. Senate in New York in 2026?",
+          "url": "https://theballot.news/news/who-is-running-for-u-s-senate-in-new-york-in-2026-ny"
+        },
+        {
+          "title": "Patricia Mance profile",
+          "url": "https://otrecord.news/politicians/patricia-annette-miss-mance-ny/"
+        }
+      ]
+    },
+    {
+      "id": "S6NY00474",
+      "candidate_name": "JOHNSON, RACHEAL ALISA",
+      "query": "\"S6NY00474\" \"Racheal Johnson\" Senate 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: JOHNSON, RACHEAL ALISA",
+          "url": "https://www.fec.gov/data/candidate/S6NY00474/"
+        },
+        {
+          "title": "Who is running for U.S. Senate in New York in 2026?",
+          "url": "https://theballot.news/news/who-is-running-for-u-s-senate-in-new-york-in-2026-ny"
+        },
+        {
+          "title": "Racheal Johnson profile",
+          "url": "https://otrecord.news/politicians/racheal-alisa-johnson-ny/"
+        }
+      ]
+    },
+    {
+      "id": "S6NY00490",
+      "candidate_name": "SOLOMON, GAVIN",
+      "query": "\"Gavin Solomon\" \"S6NY00490\" OR \"S6NY00508\" OR \"S6NY00516\" OR \"S6NY00524\" OR \"S6NY00565\" OR \"S6NY00607\" OR \"S6NY00615\" OR \"S6NY00623\" Senate 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SOLOMON, GAVIN",
+          "url": "https://www.fec.gov/data/candidate/S6NY00490/"
+        },
+        {
+          "title": "Who is running for U.S. Senate in New York in 2026?",
+          "url": "https://theballot.news/news/who-is-running-for-u-s-senate-in-new-york-in-2026-ny"
+        }
+      ]
+    },
+    {
+      "id": "S6NY00508",
+      "candidate_name": "SOLOMON, GAVIN",
+      "query": "\"Gavin Solomon\" \"S6NY00490\" OR \"S6NY00508\" OR \"S6NY00516\" OR \"S6NY00524\" OR \"S6NY00565\" OR \"S6NY00607\" OR \"S6NY00615\" OR \"S6NY00623\" Senate 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SOLOMON, GAVIN",
+          "url": "https://www.fec.gov/data/candidate/S6NY00508/"
+        },
+        {
+          "title": "Who is running for U.S. Senate in New York in 2026?",
+          "url": "https://theballot.news/news/who-is-running-for-u-s-senate-in-new-york-in-2026-ny"
+        }
+      ]
+    },
+    {
+      "id": "S6NY00516",
+      "candidate_name": "SOLOMON, GAVIN",
+      "query": "\"Gavin Solomon\" \"S6NY00490\" OR \"S6NY00508\" OR \"S6NY00516\" OR \"S6NY00524\" OR \"S6NY00565\" OR \"S6NY00607\" OR \"S6NY00615\" OR \"S6NY00623\" Senate 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SOLOMON, GAVIN",
+          "url": "https://www.fec.gov/data/candidate/S6NY00516/"
+        },
+        {
+          "title": "Who is running for U.S. Senate in New York in 2026?",
+          "url": "https://theballot.news/news/who-is-running-for-u-s-senate-in-new-york-in-2026-ny"
+        }
+      ]
+    },
+    {
+      "id": "S6NY00524",
+      "candidate_name": "SOLOMON, GAVIN",
+      "query": "\"Gavin Solomon\" \"S6NY00490\" OR \"S6NY00508\" OR \"S6NY00516\" OR \"S6NY00524\" OR \"S6NY00565\" OR \"S6NY00607\" OR \"S6NY00615\" OR \"S6NY00623\" Senate 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SOLOMON, GAVIN",
+          "url": "https://www.fec.gov/data/candidate/S6NY00524/"
+        },
+        {
+          "title": "Who is running for U.S. Senate in New York in 2026?",
+          "url": "https://theballot.news/news/who-is-running-for-u-s-senate-in-new-york-in-2026-ny"
+        }
+      ]
+    },
+    {
+      "id": "S6NY00565",
+      "candidate_name": "SOLOMON, GAVIN",
+      "query": "\"Gavin Solomon\" \"S6NY00490\" OR \"S6NY00508\" OR \"S6NY00516\" OR \"S6NY00524\" OR \"S6NY00565\" OR \"S6NY00607\" OR \"S6NY00615\" OR \"S6NY00623\" Senate 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SOLOMON, GAVIN",
+          "url": "https://www.fec.gov/data/candidate/S6NY00565/"
+        },
+        {
+          "title": "Who is running for U.S. Senate in New York in 2026?",
+          "url": "https://theballot.news/news/who-is-running-for-u-s-senate-in-new-york-in-2026-ny"
+        }
+      ]
+    },
+    {
+      "id": "S6NY00607",
+      "candidate_name": "SOLOMON, GAVIN",
+      "query": "\"Gavin Solomon\" \"S6NY00490\" OR \"S6NY00508\" OR \"S6NY00516\" OR \"S6NY00524\" OR \"S6NY00565\" OR \"S6NY00607\" OR \"S6NY00615\" OR \"S6NY00623\" Senate 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SOLOMON, GAVIN",
+          "url": "https://www.fec.gov/data/candidate/S6NY00607/"
+        },
+        {
+          "title": "Who is running for U.S. Senate in New York in 2026?",
+          "url": "https://theballot.news/news/who-is-running-for-u-s-senate-in-new-york-in-2026-ny"
+        }
+      ]
+    },
+    {
+      "id": "S6NY00615",
+      "candidate_name": "SOLOMON, GAVIN",
+      "query": "\"Gavin Solomon\" \"S6NY00490\" OR \"S6NY00508\" OR \"S6NY00516\" OR \"S6NY00524\" OR \"S6NY00565\" OR \"S6NY00607\" OR \"S6NY00615\" OR \"S6NY00623\" Senate 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SOLOMON, GAVIN",
+          "url": "https://www.fec.gov/data/candidate/S6NY00615/"
+        },
+        {
+          "title": "Who is running for U.S. Senate in New York in 2026?",
+          "url": "https://theballot.news/news/who-is-running-for-u-s-senate-in-new-york-in-2026-ny"
+        }
+      ]
+    },
+    {
+      "id": "S6NY00623",
+      "candidate_name": "SOLOMON, GAVIN",
+      "query": "\"Gavin Solomon\" \"S6NY00490\" OR \"S6NY00508\" OR \"S6NY00516\" OR \"S6NY00524\" OR \"S6NY00565\" OR \"S6NY00607\" OR \"S6NY00615\" OR \"S6NY00623\" Senate 2026 campaign website",
+      "outcome": "no-site-found",
+      "notes": "Targeted search returned no verifiable campaign homepage; this does not prove no site exists.",
+      "sources": [
+        {
+          "title": "FEC candidate overview: SOLOMON, GAVIN",
+          "url": "https://www.fec.gov/data/candidate/S6NY00623/"
+        },
+        {
+          "title": "Who is running for U.S. Senate in New York in 2026?",
+          "url": "https://theballot.news/news/who-is-running-for-u-s-senate-in-new-york-in-2026-ny"
+        }
+      ]
+    }
+  ]
+}

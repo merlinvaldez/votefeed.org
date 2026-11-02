@@ -1,0 +1,160 @@
+- generic [ref=f13e4]:
+  - complementary [ref=f13e5]:
+    - link "VoteFeed feed" [ref=f13e6] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f13e8]
+      - generic [ref=f13e9]: VoteFeed
+    - navigation [ref=f13e10]:
+      - link "Feed" [ref=f13e11] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=f13e16] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=f13e21]:
+      - generic [ref=f13e22]:
+        - generic [ref=f13e23]: Policy Areas
+        - button "Search policy areas" [ref=f13e24] [cursor=pointer]
+      - generic [ref=f13e28]:
+        - button "All 5" [ref=f13e361] [cursor=pointer]:
+          - generic [ref=f13e30]: All
+          - generic [ref=f13e362]: "5"
+        - button "Government 1" [ref=f13e363] [cursor=pointer]:
+          - generic [ref=f13e364]: Government
+          - generic [ref=f13e365]: "1"
+        - button "Public Safety 1" [ref=f13e366] [cursor=pointer]:
+          - generic [ref=f13e367]: Public Safety
+          - generic [ref=f13e368]: "1"
+        - button "Other 1" [ref=f13e369] [cursor=pointer]:
+          - generic [ref=f13e370]: Other
+          - generic [ref=f13e371]: "1"
+        - button "Foreign Policy 1" [ref=f13e372] [cursor=pointer]:
+          - generic [ref=f13e373]: Foreign Policy
+          - generic [ref=f13e374]: "1"
+        - button "Immigration 1" [ref=f13e375] [cursor=pointer]:
+          - generic [ref=f13e376]: Immigration
+          - generic [ref=f13e377]: "1"
+  - main [ref=f13e31]:
+    - tablist "Feed sections" [ref=f13e32]:
+      - tab "All Reps" [ref=f13e33] [cursor=pointer]
+      - tab "House of Representatives" [ref=f13e40] [cursor=pointer]
+      - tab "Senate" [ref=f13e46] [cursor=pointer]
+      - tab "Elections" [selected] [ref=f13e50] [cursor=pointer]
+    - tabpanel "Elections" [ref=f13e86]:
+      - region "Election candidates" [ref=f13e87]:
+        - tablist "Filter candidates by chamber" [ref=f13e88]:
+          - tab "All Candidates" [selected] [ref=f13e89] [cursor=pointer]
+          - tab "House" [ref=f13e90] [cursor=pointer]
+          - tab "Senate" [ref=f13e91] [cursor=pointer]
+        - tabpanel "All Candidates" [ref=f13e92]:
+          - generic "Candidate roster" [ref=f13e93]:
+            - button "WILLIAMS, JOMO, U.S. Representative, NY-13, REP" [active] [pressed] [ref=f13e94] [cursor=pointer]:
+              - img "WILLIAMS, JOMO portrait" [ref=f13e96]
+              - generic [ref=f13e97]: WILLIAMS, JOMO
+              - generic [ref=f13e98]: U.S. Representative
+              - generic [ref=f13e104]: NY-13
+              - generic [ref=f13e105]: REP
+            - button "AVILA CHEVALIER, DARIALIZA, U.S. Representative, NY-13, DEM" [ref=f13e108] [cursor=pointer]:
+              - img "AVILA CHEVALIER, DARIALIZA portrait unavailable" [ref=f13e110]: AD
+              - generic [ref=f13e111]: AVILA CHEVALIER, DARIALIZA
+              - generic [ref=f13e112]: U.S. Representative
+              - generic [ref=f13e118]: NY-13
+              - generic [ref=f13e119]: DEM
+        - 'complementary "Selected candidate: WILLIAMS, JOMO" [ref=f13e378]':
+          - generic [ref=f13e379]:
+            - img "WILLIAMS, JOMO portrait" [ref=f13e381]
+            - generic [ref=f13e382]:
+              - paragraph [ref=f13e383]: Positions from
+              - heading "WILLIAMS, JOMO" [level=3] [ref=f13e385]
+            - button "All candidates" [ref=f13e386] [cursor=pointer]
+          - region "Alignment with WILLIAMS, JOMO" [ref=f13e387]:
+            - heading "Your alignment" [level=3] [ref=f13e388]
+            - paragraph [ref=f13e389]: Agree or disagree with a campaign position to see your alignment.
+      - generic [ref=f13e122]:
+        - generic [ref=f13e123]:
+          - heading "Campaign Positions" [level=2] [ref=f13e124]
+          - paragraph [ref=f13e125]: Policy positions from candidates’ official campaign websites.
+        - generic [ref=f13e126]:
+          - generic [ref=f13e127]: Filter by policy area
+          - combobox "Filter by policy area" [ref=f13e128]:
+            - option "All Policy Areas" [selected]
+            - option "Government"
+            - option "Public Safety"
+            - option "Other"
+            - option "Foreign Policy"
+            - option "Immigration"
+      - status [ref=f13e129]: We’re preparing the election feed for your location. This can take a few minutes.
+      - article [ref=f13e390]:
+        - img "WILLIAMS, JOMO portrait" [ref=f13e392]
+        - generic [ref=f13e393]:
+          - strong [ref=f13e395]: WILLIAMS, JOMO
+          - paragraph [ref=f13e396]: Advocate universal attorney access in civil matters
+          - generic [ref=f13e397]:
+            - link "Open WILLIAMS, JOMO's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f13e398] [cursor=pointer]:
+              - /url: https://jmw4congress.com/page/2/
+            - group [ref=f13e402]:
+              - generic "Source details" [ref=f13e403] [cursor=pointer]
+          - generic "Respond to WILLIAMS, JOMO's campaign position" [ref=f13e404]:
+            - button "Agree with WILLIAMS, JOMO" [ref=f13e405] [cursor=pointer]:
+              - generic [ref=f13e408]: Agree
+            - button "Disagree with WILLIAMS, JOMO" [ref=f13e409] [cursor=pointer]:
+              - generic [ref=f13e412]: Disagree
+      - article [ref=f13e413]:
+        - img "WILLIAMS, JOMO portrait" [ref=f13e415]
+        - generic [ref=f13e416]:
+          - strong [ref=f13e418]: WILLIAMS, JOMO
+          - paragraph [ref=f13e419]: Support fully funding public safety and oppose defunding police
+          - generic [ref=f13e420]:
+            - link "Open WILLIAMS, JOMO's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f13e421] [cursor=pointer]:
+              - /url: https://jmw4congress.com/page/2/
+            - group [ref=f13e425]:
+              - generic "Source details" [ref=f13e426] [cursor=pointer]
+          - generic "Respond to WILLIAMS, JOMO's campaign position" [ref=f13e427]:
+            - button "Agree with WILLIAMS, JOMO" [ref=f13e428] [cursor=pointer]:
+              - generic [ref=f13e431]: Agree
+            - button "Disagree with WILLIAMS, JOMO" [ref=f13e432] [cursor=pointer]:
+              - generic [ref=f13e435]: Disagree
+      - article [ref=f13e436]:
+        - img "WILLIAMS, JOMO portrait" [ref=f13e438]
+        - generic [ref=f13e439]:
+          - strong [ref=f13e441]: WILLIAMS, JOMO
+          - paragraph [ref=f13e442]: Support Puerto Rico statehood and equal U.S. rights
+          - generic [ref=f13e443]:
+            - link "Open WILLIAMS, JOMO's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f13e444] [cursor=pointer]:
+              - /url: https://jmw4congress.com/page/2/
+            - group [ref=f13e448]:
+              - generic "Source details" [ref=f13e449] [cursor=pointer]
+          - generic "Respond to WILLIAMS, JOMO's campaign position" [ref=f13e450]:
+            - button "Agree with WILLIAMS, JOMO" [ref=f13e451] [cursor=pointer]:
+              - generic [ref=f13e454]: Agree
+            - button "Disagree with WILLIAMS, JOMO" [ref=f13e455] [cursor=pointer]:
+              - generic [ref=f13e458]: Disagree
+      - article [ref=f13e459]:
+        - img "WILLIAMS, JOMO portrait" [ref=f13e461]
+        - generic [ref=f13e462]:
+          - strong [ref=f13e464]: WILLIAMS, JOMO
+          - paragraph [ref=f13e465]: Support a two-state model and protection of civilians
+          - generic [ref=f13e466]:
+            - link "Open WILLIAMS, JOMO's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f13e467] [cursor=pointer]:
+              - /url: https://jmw4congress.com/page/2/
+            - group [ref=f13e471]:
+              - generic "Source details" [ref=f13e472] [cursor=pointer]
+          - generic "Respond to WILLIAMS, JOMO's campaign position" [ref=f13e473]:
+            - button "Agree with WILLIAMS, JOMO" [ref=f13e474] [cursor=pointer]:
+              - generic [ref=f13e477]: Agree
+            - button "Disagree with WILLIAMS, JOMO" [ref=f13e478] [cursor=pointer]:
+              - generic [ref=f13e481]: Disagree
+      - article [ref=f13e482]:
+        - img "WILLIAMS, JOMO portrait" [ref=f13e484]
+        - generic [ref=f13e485]:
+          - strong [ref=f13e487]: WILLIAMS, JOMO
+          - paragraph [ref=f13e488]: Support closing and securing U.S. borders
+          - generic [ref=f13e489]:
+            - link "Open WILLIAMS, JOMO's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f13e490] [cursor=pointer]:
+              - /url: https://jmw4congress.com/page/2/
+            - group [ref=f13e494]:
+              - generic "Source details" [ref=f13e495] [cursor=pointer]
+          - generic "Respond to WILLIAMS, JOMO's campaign position" [ref=f13e496]:
+            - button "Agree with WILLIAMS, JOMO" [ref=f13e497] [cursor=pointer]:
+              - generic [ref=f13e500]: Agree
+            - button "Disagree with WILLIAMS, JOMO" [ref=f13e501] [cursor=pointer]:
+              - generic [ref=f13e504]: Disagree
+      - status [ref=f13e505]: End of campaign positions.

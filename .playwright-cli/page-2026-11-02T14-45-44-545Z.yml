@@ -1,0 +1,241 @@
+- generic [ref=f13e4]:
+  - complementary [ref=f13e5]:
+    - link "VoteFeed feed" [ref=f13e6] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f13e8]
+      - generic [ref=f13e9]: VoteFeed
+    - navigation [ref=f13e10]:
+      - link "Feed" [ref=f13e11] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=f13e16] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=f13e21]:
+      - generic [ref=f13e22]:
+        - generic [ref=f13e23]: Policy Areas
+        - button "Search policy areas" [ref=f13e24] [cursor=pointer]
+      - generic [ref=f13e28]:
+        - button "All 347" [ref=f13e376] [cursor=pointer]:
+          - generic [ref=f13e30]: All
+          - generic [ref=f13e377]: "347"
+        - button "Agriculture and Food 4" [ref=f13e378] [cursor=pointer]:
+          - generic [ref=f13e379]: Agriculture and Food
+          - generic [ref=f13e380]: "4"
+        - button "Animals 3" [ref=f13e381] [cursor=pointer]:
+          - generic [ref=f13e382]: Animals
+          - generic [ref=f13e383]: "3"
+        - button "Armed Forces and National Security 17" [ref=f13e384] [cursor=pointer]:
+          - generic [ref=f13e385]: Armed Forces and National Security
+          - generic [ref=f13e386]: "17"
+        - button "Civil Rights and Liberties, Minority Issues 3" [ref=f13e387] [cursor=pointer]:
+          - generic [ref=f13e388]: Civil Rights and Liberties, Minority Issues
+          - generic [ref=f13e389]: "3"
+        - button "Commerce 21" [ref=f13e390] [cursor=pointer]:
+          - generic [ref=f13e391]: Commerce
+          - generic [ref=f13e392]: "21"
+        - button "Congress 30" [ref=f13e393] [cursor=pointer]:
+          - generic [ref=f13e394]: Congress
+          - generic [ref=f13e395]: "30"
+        - button "Crime and Law Enforcement 20" [ref=f13e396] [cursor=pointer]:
+          - generic [ref=f13e397]: Crime and Law Enforcement
+          - generic [ref=f13e398]: "20"
+        - button "Economics and Public Finance 25" [ref=f13e399] [cursor=pointer]:
+          - generic [ref=f13e400]: Economics and Public Finance
+          - generic [ref=f13e401]: "25"
+        - button "Education 8" [ref=f13e402] [cursor=pointer]:
+          - generic [ref=f13e403]: Education
+          - generic [ref=f13e404]: "8"
+        - button "Emergency Management 4" [ref=f13e405] [cursor=pointer]:
+          - generic [ref=f13e406]: Emergency Management
+          - generic [ref=f13e407]: "4"
+        - button "Energy 29" [ref=f13e408] [cursor=pointer]:
+          - generic [ref=f13e409]: Energy
+          - generic [ref=f13e410]: "29"
+        - button "Environmental Protection 22" [ref=f13e411] [cursor=pointer]:
+          - generic [ref=f13e412]: Environmental Protection
+          - generic [ref=f13e413]: "22"
+        - button "Families 1" [ref=f13e414] [cursor=pointer]:
+          - generic [ref=f13e415]: Families
+          - generic [ref=f13e416]: "1"
+        - button "Finance and Financial Sector 21" [ref=f13e417] [cursor=pointer]:
+          - generic [ref=f13e418]: Finance and Financial Sector
+          - generic [ref=f13e419]: "21"
+        - button "Foreign Trade and International Finance 9" [ref=f13e420] [cursor=pointer]:
+          - generic [ref=f13e421]: Foreign Trade and International Finance
+          - generic [ref=f13e422]: "9"
+        - button "Government Operations and Politics 19" [ref=f13e423] [cursor=pointer]:
+          - generic [ref=f13e424]: Government Operations and Politics
+          - generic [ref=f13e425]: "19"
+        - button "Health 4" [ref=f13e426] [cursor=pointer]:
+          - generic [ref=f13e427]: Health
+          - generic [ref=f13e428]: "4"
+        - button "Housing and Community Development 2" [ref=f13e429] [cursor=pointer]:
+          - generic [ref=f13e430]: Housing and Community Development
+          - generic [ref=f13e431]: "2"
+        - button "Immigration 11" [ref=f13e432] [cursor=pointer]:
+          - generic [ref=f13e433]: Immigration
+          - generic [ref=f13e434]: "11"
+        - button "International Affairs 26" [ref=f13e435] [cursor=pointer]:
+          - generic [ref=f13e436]: International Affairs
+          - generic [ref=f13e437]: "26"
+        - button "Labor and Employment 6" [ref=f13e438] [cursor=pointer]:
+          - generic [ref=f13e439]: Labor and Employment
+          - generic [ref=f13e440]: "6"
+        - button "Law 3" [ref=f13e441] [cursor=pointer]:
+          - generic [ref=f13e442]: Law
+          - generic [ref=f13e443]: "3"
+        - button "Native Americans 5" [ref=f13e444] [cursor=pointer]:
+          - generic [ref=f13e445]: Native Americans
+          - generic [ref=f13e446]: "5"
+        - button "Public Lands and Natural Resources 28" [ref=f13e447] [cursor=pointer]:
+          - generic [ref=f13e448]: Public Lands and Natural Resources
+          - generic [ref=f13e449]: "28"
+        - button "Science, Technology, Communications 10" [ref=f13e450] [cursor=pointer]:
+          - generic [ref=f13e451]: Science, Technology, Communications
+          - generic [ref=f13e452]: "10"
+        - button "Social Welfare 2" [ref=f13e453] [cursor=pointer]:
+          - generic [ref=f13e454]: Social Welfare
+          - generic [ref=f13e455]: "2"
+        - button "Sports and Recreation 1" [ref=f13e456] [cursor=pointer]:
+          - generic [ref=f13e457]: Sports and Recreation
+          - generic [ref=f13e458]: "1"
+        - button "Taxation 7" [ref=f13e459] [cursor=pointer]:
+          - generic [ref=f13e460]: Taxation
+          - generic [ref=f13e461]: "7"
+        - button "Transportation and Public Works 5" [ref=f13e462] [cursor=pointer]:
+          - generic [ref=f13e463]: Transportation and Public Works
+          - generic [ref=f13e464]: "5"
+        - button "Water Resources Development 1" [ref=f13e465] [cursor=pointer]:
+          - generic [ref=f13e466]: Water Resources Development
+          - generic [ref=f13e467]: "1"
+  - main [ref=f13e122]:
+    - tablist "Feed sections" [ref=f13e123]:
+      - tab "All Reps" [active] [selected] [ref=f13e124] [cursor=pointer]
+      - tab "House of Representatives" [ref=f13e131] [cursor=pointer]
+      - tab "Senate" [ref=f13e137] [cursor=pointer]
+      - tab "Elections" [ref=f13e141] [cursor=pointer]
+    - tabpanel "All Reps" [ref=f13e468]:
+      - region "Your congressional delegation" [ref=f13e469]:
+        - generic [ref=f13e470]:
+          - generic [ref=f13e471]:
+            - generic [ref=f13e472]:
+              - article "Espaillat, Adriano" [ref=f13e473]:
+                - img "Espaillat, Adriano official portrait" [ref=f13e475]
+                - generic [ref=f13e476]:
+                  - heading "Espaillat, Adriano" [level=3] [ref=f13e477]
+                  - generic [ref=f13e478]:
+                    - generic [ref=f13e479]: U.S. Representative
+                    - generic [ref=f13e484]: Democratic Party
+              - article "Gillibrand, Kirsten E." [ref=f13e486]:
+                - img "Gillibrand, Kirsten E. official portrait" [ref=f13e488]
+                - generic [ref=f13e489]:
+                  - heading "Gillibrand, Kirsten E." [level=3] [ref=f13e490]
+                  - generic [ref=f13e491]:
+                    - generic [ref=f13e492]: U.S. Senator
+                    - generic [ref=f13e497]: Democratic Party
+              - article "Schumer, Charles E." [ref=f13e499]:
+                - img "Schumer, Charles E. official portrait" [ref=f13e501]
+                - generic [ref=f13e502]:
+                  - heading "Schumer, Charles E." [level=3] [ref=f13e503]
+                  - generic [ref=f13e504]:
+                    - generic [ref=f13e505]: U.S. Senator
+                    - generic [ref=f13e510]: Democratic Party
+            - status
+          - generic [ref=f13e512]:
+            - generic [ref=f13e513]:
+              - 'img "Policy alignment: 95%" [ref=f13e514]'
+              - generic [aria-hidden] [ref=f13e519]: 95%
+            - generic [ref=f13e520]:
+              - generic [ref=f13e521]: Policy Alignment
+    - [signed-in response summary redacted]
+      - generic [ref=f13e523]:
+        - heading "Legislative Feed" [level=2] [ref=f13e524]
+        - 'article "Sens. Gillibrand, Kirsten E. and Schumer, Charles E.: H.R. 3633" [ref=f13e525]':
+          - generic [ref=f13e526]:
+            - generic [ref=f13e527]:
+              - generic [ref=f13e528]:
+                - group "Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e529]:
+                  - img "Gillibrand, Kirsten E. official portrait" [ref=f13e531]
+                  - img "Schumer, Charles E. official portrait" [ref=f13e533]
+                - button "H.R. 3633" [ref=f13e534] [cursor=pointer]
+                - generic [ref=f13e535]: Sep 15, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e539] [cursor=pointer]
+            - generic [ref=f13e543]:
+              - text: Sens. Gillibrand and Schumer voted
+              - generic [ref=f13e544]: Nay
+              - text: on H.R. 3633, a bill to set rules for digital assets, with federal trade oversight and some trades still subject to securities agency rules.
+            - generic [ref=f13e545]:
+    - [signed-in stance state redacted]
+                - generic [ref=f13e549]: I agree with Sens. Gillibrand and Schumer
+              - button "Disagree with Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e550] [cursor=pointer]
+              - button "Open comments on H.R. 3633 for Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e553] [cursor=pointer]: 1 Comment
+        - 'article "Rep. Espaillat, Adriano: H.R. 6500" [ref=f13e556]':
+          - generic [ref=f13e557]:
+            - generic [ref=f13e558]:
+              - generic [ref=f13e559]:
+                - group "Rep. Espaillat, Adriano" [ref=f13e560]:
+                  - img "Espaillat, Adriano official portrait" [ref=f13e562]
+                - button "H.R. 6500" [ref=f13e563] [cursor=pointer]
+                - generic [ref=f13e564]: Sep 1, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e568] [cursor=pointer]
+            - generic [ref=f13e572]:
+              - text: Rep. Espaillat voted
+              - generic [ref=f13e573]: Nay
+              - text: on H.R. 6500, a bill to keep the federal government running with short-term funding and extend programs set to expire.
+            - generic [ref=f13e574]:
+    - [signed-in stance state redacted]
+                - generic [ref=f13e578]: I agree with Rep. Espaillat
+              - button "Disagree with Rep. Espaillat, Adriano" [ref=f13e579] [cursor=pointer]
+              - button "Open comments on H.R. 6500 for Espaillat, Adriano" [ref=f13e582] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Espaillat, Adriano: S. 32" [ref=f13e585]':
+          - generic [ref=f13e586]:
+            - generic [ref=f13e587]:
+              - generic [ref=f13e588]:
+                - group "Rep. Espaillat, Adriano" [ref=f13e589]:
+                  - img "Espaillat, Adriano official portrait" [ref=f13e591]
+                - button "S. 32" [ref=f13e592] [cursor=pointer]
+                - generic [ref=f13e593]: Aug 31, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e597] [cursor=pointer]
+            - generic [ref=f13e601]:
+              - text: Rep. Espaillat voted
+              - generic [ref=f13e602]: Yea
+              - text: on S. 32, a bill to allow federal court sessions in College Station and El Centro.
+            - generic [ref=f13e603]:
+              - button "Agree with Rep. Espaillat, Adriano" [ref=f13e604] [cursor=pointer]
+              - button "Disagree with Rep. Espaillat, Adriano" [ref=f13e607] [cursor=pointer]
+              - button "Open comments on S. 32 for Espaillat, Adriano" [ref=f13e610] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Espaillat, Adriano: S. 307" [ref=f13e613]':
+          - generic [ref=f13e614]:
+            - generic [ref=f13e615]:
+              - generic [ref=f13e616]:
+                - group "Rep. Espaillat, Adriano" [ref=f13e617]:
+                  - img "Espaillat, Adriano official portrait" [ref=f13e619]
+                - button "S. 307" [ref=f13e620] [cursor=pointer]
+                - generic [ref=f13e621]: Aug 31, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e625] [cursor=pointer]
+            - generic [ref=f13e629]:
+              - text: Rep. Espaillat voted
+              - generic [ref=f13e630]: Yea
+              - text: on S. 307, a bill to require national rules and prison safety steps to stop sexual harassment and assault by prisoners against prison staff.
+            - generic [ref=f13e631]:
+              - button "Agree with Rep. Espaillat, Adriano" [ref=f13e632] [cursor=pointer]
+              - button "Disagree with Rep. Espaillat, Adriano" [ref=f13e635] [cursor=pointer]
+              - button "Open comments on S. 307 for Espaillat, Adriano" [ref=f13e638] [cursor=pointer]: 0 Comments
+        - 'article "Sens. Gillibrand, Kirsten E. and Schumer, Charles E.: H.R. 6500" [ref=f13e641]':
+          - generic [ref=f13e642]:
+            - generic [ref=f13e643]:
+              - generic [ref=f13e644]:
+                - group "Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e645]:
+                  - img "Gillibrand, Kirsten E. official portrait" [ref=f13e647]
+                  - img "Schumer, Charles E. official portrait" [ref=f13e649]
+                - button "H.R. 6500" [ref=f13e650] [cursor=pointer]
+                - generic [ref=f13e651]: Aug 8, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e655] [cursor=pointer]
+            - generic [ref=f13e659]:
+              - text: Sens. Gillibrand and Schumer voted
+              - generic [ref=f13e660]: Yea
+              - text: on H.R. 6500, a bill to keep the federal government running with short-term funding and extend programs set to expire.
+            - generic [ref=f13e661]:
+              - button "Agree with Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e662] [cursor=pointer]
+              - button "Disagree with Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e665] [cursor=pointer]
+              - button "Open comments on H.R. 6500 for Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e668] [cursor=pointer]: 0 Comments
+        - generic [ref=f13e671]: Scroll for more

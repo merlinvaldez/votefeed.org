@@ -5,7 +5,7 @@ import { TOPICS, validateExtractionItem } from './contracts.js';
 import { discoveryError } from './discoveryUtils.js';
 
 export const VALIDATOR_VERSION = 'campaign-validator-1.0';
-export const PROMPT_VERSION = 'campaign-position-prompt-1.3';
+export const PROMPT_VERSION = 'campaign-position-prompt-1.4-action-first';
 
 /**
  * Deterministically hash candidacy and claimText into a standard UUID v4 format.

@@ -1,0 +1,286 @@
+- generic [ref=e40]:
+  - complementary [ref=e41]:
+    - link "VoteFeed feed" [ref=e42] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=e44]
+      - generic [ref=e45]: VoteFeed
+    - navigation [ref=e46]:
+      - link "Feed" [ref=e47] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=e52] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=e57]:
+      - generic [ref=e58]:
+        - generic [ref=e59]: Policy Areas
+        - button "Search policy areas" [ref=e60] [cursor=pointer]
+      - generic [ref=e64]:
+        - button "All 35" [ref=e393] [cursor=pointer]:
+          - generic [ref=e66]: All
+          - generic [ref=e67]: "35"
+        - button "Health Care 9" [ref=e394] [cursor=pointer]:
+          - generic [ref=e395]: Health Care
+          - generic [ref=e396]: "9"
+        - button "Housing 4" [ref=e397] [cursor=pointer]:
+          - generic [ref=e398]: Housing
+          - generic [ref=e399]: "4"
+        - button "Immigration 4" [ref=e400] [cursor=pointer]:
+          - generic [ref=e401]: Immigration
+          - generic [ref=e402]: "4"
+        - button "Economy 7" [ref=e403] [cursor=pointer]:
+          - generic [ref=e404]: Economy
+          - generic [ref=e405]: "7"
+        - button "Government 2" [ref=e406] [cursor=pointer]:
+          - generic [ref=e407]: Government
+          - generic [ref=e408]: "2"
+        - button "Energy & Environment 4" [ref=e409] [cursor=pointer]:
+          - generic [ref=e410]: Energy & Environment
+          - generic [ref=e411]: "4"
+        - button "Foreign Policy 2" [ref=e412] [cursor=pointer]:
+          - generic [ref=e413]: Foreign Policy
+          - generic [ref=e414]: "2"
+        - button "Civil Rights 2" [ref=e415] [cursor=pointer]:
+          - generic [ref=e416]: Civil Rights
+          - generic [ref=e417]: "2"
+        - button "Education 1" [ref=e418] [cursor=pointer]:
+          - generic [ref=e419]: Education
+          - generic [ref=e420]: "1"
+  - main [ref=e158]:
+    - generic [ref=e159]:
+      - generic [ref=e163]:
+        - generic [ref=e164]: Viewing as Guest
+        - generic [ref=e165]: Your interactions won't be saved.
+      - button "Sign Up / Sign In" [ref=e166] [cursor=pointer]
+    - tablist "Feed sections" [ref=e167]:
+      - tab "All Reps" [ref=e168] [cursor=pointer]
+      - tab "House of Representatives" [ref=e175] [cursor=pointer]
+      - tab "Senate" [ref=e181] [cursor=pointer]
+      - tab "Elections" [active] [selected] [ref=e185] [cursor=pointer]
+    - tabpanel "Elections" [ref=e421]:
+      - region "Election candidates" [ref=e422]:
+        - tablist "Filter candidates by chamber" [ref=e423]:
+          - tab "All Candidates" [selected] [ref=e424] [cursor=pointer]
+          - tab "House" [ref=e425] [cursor=pointer]
+          - tab "Senate" [ref=e426] [cursor=pointer]
+        - tabpanel "All Candidates" [ref=e427]:
+          - generic "Candidate roster" [ref=e428]:
+            - button "WALTERS, RASHEED NICHOLAS, U.S. Representative, MA-8, IND" [ref=e429] [cursor=pointer]:
+              - img "WALTERS, RASHEED NICHOLAS portrait unavailable" [ref=e431]: WN
+              - generic [ref=e432]: WALTERS, RASHEED NICHOLAS
+              - generic [ref=e433]: U.S. Representative
+              - generic [ref=e439]: MA-8
+              - generic [ref=e440]: IND
+            - button "BURKE, ROBERT G., U.S. Representative, MA-8, 08" [ref=e443] [cursor=pointer]:
+              - img "BURKE, ROBERT G. portrait unavailable" [ref=e445]: BG
+              - generic [ref=e446]: BURKE, ROBERT G.
+              - generic [ref=e447]: U.S. Representative
+              - generic [ref=e453]: MA-8
+              - generic [ref=e454]: "08"
+            - button "LYNCH, STEPHEN, U.S. Representative, MA-8, DEM" [ref=e457] [cursor=pointer]:
+              - img "LYNCH, STEPHEN portrait" [ref=e459]
+              - generic [ref=e460]: LYNCH, STEPHEN
+              - generic [ref=e461]: U.S. Representative
+              - generic [ref=e467]: MA-8
+              - generic [ref=e468]: DEM
+            - button "DEATON, JOHN, U.S. Senator, Massachusetts, REP" [ref=e471] [cursor=pointer]:
+              - img "DEATON, JOHN portrait unavailable" [ref=e473]: DJ
+              - generic [ref=e474]: DEATON, JOHN
+              - generic [ref=e475]: U.S. Senator
+              - generic [ref=e479]: Massachusetts
+              - generic [ref=e480]: REP
+            - button "TACHE, JOSEPH, U.S. Senator, Massachusetts, OTH" [ref=e483] [cursor=pointer]:
+              - img "TACHE, JOSEPH portrait unavailable" [ref=e485]: TJ
+              - generic [ref=e486]: TACHE, JOSEPH
+              - generic [ref=e487]: U.S. Senator
+              - generic [ref=e491]: Massachusetts
+              - generic [ref=e492]: OTH
+            - button "MARKEY, EDWARD SEN., U.S. Senator, Massachusetts, DEM" [ref=e495] [cursor=pointer]:
+              - img "MARKEY, EDWARD SEN. portrait" [ref=e497]
+              - generic [ref=e498]: MARKEY, EDWARD SEN.
+              - generic [ref=e499]: U.S. Senator
+              - generic [ref=e503]: Massachusetts
+              - generic [ref=e504]: DEM
+            - button "AYYADURAI, SHIVA DR, U.S. Senator, Massachusetts, IND" [ref=e507] [cursor=pointer]:
+              - img "AYYADURAI, SHIVA DR portrait unavailable" [ref=e509]: AD
+              - generic [ref=e510]: AYYADURAI, SHIVA DR
+              - generic [ref=e511]: U.S. Senator
+              - generic [ref=e515]: Massachusetts
+              - generic [ref=e516]: IND
+          - paragraph [ref=e519]: Swipe or scroll to browse all candidates
+      - generic [ref=e520]:
+        - generic [ref=e521]:
+          - heading "Campaign Positions" [level=2] [ref=e522]
+          - paragraph [ref=e523]: Policy positions from candidates’ official campaign websites.
+        - generic [ref=e524]:
+          - generic [ref=e525]: Filter by policy area
+          - combobox "Filter by policy area" [ref=e526]:
+            - option "All Policy Areas" [selected]
+            - option "Health Care"
+            - option "Housing"
+            - option "Immigration"
+            - option "Economy"
+            - option "Government"
+            - option "Energy & Environment"
+            - option "Foreign Policy"
+            - option "Civil Rights"
+            - option "Education"
+      - status [ref=e527]: We’re preparing the election feed for your location. This can take a few minutes.
+      - article [ref=e528]:
+        - img "WALTERS, RASHEED NICHOLAS portrait unavailable" [ref=e530]: WR
+        - generic [ref=e531]:
+          - strong [ref=e533]: WALTERS, RASHEED NICHOLAS
+          - paragraph [ref=e534]: Oppose a healthcare system that strips patient choice
+          - generic [ref=e535]:
+            - link "Open WALTERS, RASHEED NICHOLAS's campaign source in a new tab, retrieved Oct 29, 2026" [ref=e536] [cursor=pointer]:
+              - /url: https://www.voterasheed.com/healthcare
+            - group [ref=e540]:
+              - generic "Source details" [ref=e541] [cursor=pointer]
+          - generic "Respond to WALTERS, RASHEED NICHOLAS's campaign position" [ref=e542]:
+            - button "Agree with WALTERS, RASHEED NICHOLAS" [ref=e543] [cursor=pointer]:
+              - generic [ref=e546]: Agree
+            - button "Disagree with WALTERS, RASHEED NICHOLAS" [ref=e547] [cursor=pointer]:
+              - generic [ref=e550]: Disagree
+            - generic [ref=e551]: Sign in to save a response.
+      - article [ref=e552]:
+        - img "WALTERS, RASHEED NICHOLAS portrait unavailable" [ref=e554]: WR
+        - generic [ref=e555]:
+          - strong [ref=e557]: WALTERS, RASHEED NICHOLAS
+          - paragraph [ref=e558]: Introduce legislation to block DOE or HUD requirements that raise housing costs
+          - generic [ref=e559]:
+            - link "Open WALTERS, RASHEED NICHOLAS's campaign source in a new tab, retrieved Oct 29, 2026" [ref=e560] [cursor=pointer]:
+              - /url: https://www.voterasheed.com/affordability
+            - group [ref=e564]:
+              - generic "Source details" [ref=e565] [cursor=pointer]
+          - generic "Respond to WALTERS, RASHEED NICHOLAS's campaign position" [ref=e566]:
+            - button "Agree with WALTERS, RASHEED NICHOLAS" [ref=e567] [cursor=pointer]:
+              - generic [ref=e570]: Agree
+            - button "Disagree with WALTERS, RASHEED NICHOLAS" [ref=e571] [cursor=pointer]:
+              - generic [ref=e574]: Disagree
+            - generic [ref=e575]: Sign in to save a response.
+      - article [ref=e576]:
+        - img "WALTERS, RASHEED NICHOLAS portrait unavailable" [ref=e578]: WR
+        - generic [ref=e579]:
+          - strong [ref=e581]: WALTERS, RASHEED NICHOLAS
+          - paragraph [ref=e582]: Establish federal price transparency and ceilings on essential healthcare services
+          - generic [ref=e583]:
+            - link "Open WALTERS, RASHEED NICHOLAS's campaign source in a new tab, retrieved Oct 29, 2026" [ref=e584] [cursor=pointer]:
+              - /url: https://www.voterasheed.com/healthcare
+            - group [ref=e588]:
+              - generic "Source details" [ref=e589] [cursor=pointer]
+          - generic "Respond to WALTERS, RASHEED NICHOLAS's campaign position" [ref=e590]:
+            - button "Agree with WALTERS, RASHEED NICHOLAS" [ref=e591] [cursor=pointer]:
+              - generic [ref=e594]: Agree
+            - button "Disagree with WALTERS, RASHEED NICHOLAS" [ref=e595] [cursor=pointer]:
+              - generic [ref=e598]: Disagree
+            - generic [ref=e599]: Sign in to save a response.
+      - article [ref=e600]:
+        - img "WALTERS, RASHEED NICHOLAS portrait unavailable" [ref=e602]: WR
+        - generic [ref=e603]:
+          - strong [ref=e605]: WALTERS, RASHEED NICHOLAS
+          - paragraph [ref=e606]: End specified work-visa categories believed to let corporations replace U.S. workers
+          - generic [ref=e607]:
+            - link "Open WALTERS, RASHEED NICHOLAS's campaign source in a new tab, retrieved Oct 29, 2026" [ref=e608] [cursor=pointer]:
+              - /url: https://www.voterasheed.com/immigration
+            - group [ref=e612]:
+              - generic "Source details" [ref=e613] [cursor=pointer]
+          - generic "Respond to WALTERS, RASHEED NICHOLAS's campaign position" [ref=e614]:
+            - button "Agree with WALTERS, RASHEED NICHOLAS" [ref=e615] [cursor=pointer]:
+              - generic [ref=e618]: Agree
+            - button "Disagree with WALTERS, RASHEED NICHOLAS" [ref=e619] [cursor=pointer]:
+              - generic [ref=e622]: Disagree
+            - generic [ref=e623]: Sign in to save a response.
+      - article [ref=e624]:
+        - img "WALTERS, RASHEED NICHOLAS portrait unavailable" [ref=e626]: WR
+        - generic [ref=e627]:
+          - strong [ref=e629]: WALTERS, RASHEED NICHOLAS
+          - paragraph [ref=e630]: Ban corporate firms and investment funds from buying single-family homes
+          - generic [ref=e631]:
+            - link "Open WALTERS, RASHEED NICHOLAS's campaign source in a new tab, retrieved Oct 29, 2026" [ref=e632] [cursor=pointer]:
+              - /url: https://www.voterasheed.com/affordability
+            - group [ref=e636]:
+              - generic "Source details" [ref=e637] [cursor=pointer]
+          - generic "Respond to WALTERS, RASHEED NICHOLAS's campaign position" [ref=e638]:
+            - button "Agree with WALTERS, RASHEED NICHOLAS" [ref=e639] [cursor=pointer]:
+              - generic [ref=e642]: Agree
+            - button "Disagree with WALTERS, RASHEED NICHOLAS" [ref=e643] [cursor=pointer]:
+              - generic [ref=e646]: Disagree
+            - generic [ref=e647]: Sign in to save a response.
+      - article [ref=e648]:
+        - img "BURKE, ROBERT G. portrait unavailable" [ref=e650]: BR
+        - generic [ref=e651]:
+          - strong [ref=e653]: BURKE, ROBERT G.
+          - paragraph [ref=e654]: Use tariffs and the BoxerWorks proposal to promote domestic jobs and manufacturing
+          - generic [ref=e655]:
+            - link "Open BURKE, ROBERT G.'s campaign source in a new tab, retrieved Oct 29, 2026" [ref=e656] [cursor=pointer]:
+              - /url: https://burke4congress.us/meet-rob
+            - group [ref=e660]:
+              - generic "Source details" [ref=e661] [cursor=pointer]
+          - generic "Respond to BURKE, ROBERT G.'s campaign position" [ref=e662]:
+            - button "Agree with BURKE, ROBERT G." [ref=e663] [cursor=pointer]:
+              - generic [ref=e666]: Agree
+            - button "Disagree with BURKE, ROBERT G." [ref=e667] [cursor=pointer]:
+              - generic [ref=e670]: Disagree
+            - generic [ref=e671]: Sign in to save a response.
+      - article [ref=e672]:
+        - img "BURKE, ROBERT G. portrait unavailable" [ref=e674]: BR
+        - generic [ref=e675]:
+          - strong [ref=e677]: BURKE, ROBERT G.
+          - paragraph [ref=e678]: Support broad removal of immigrants from the district and stricter border enforcement
+          - generic [ref=e679]:
+            - link "Open BURKE, ROBERT G.'s campaign source in a new tab, retrieved Oct 29, 2026" [ref=e680] [cursor=pointer]:
+              - /url: https://burke4congress.us/meet-rob
+            - group [ref=e684]:
+              - generic "Source details" [ref=e685] [cursor=pointer]
+          - generic "Respond to BURKE, ROBERT G.'s campaign position" [ref=e686]:
+            - button "Agree with BURKE, ROBERT G." [ref=e687] [cursor=pointer]:
+              - generic [ref=e690]: Agree
+            - button "Disagree with BURKE, ROBERT G." [ref=e691] [cursor=pointer]:
+              - generic [ref=e694]: Disagree
+            - generic [ref=e695]: Sign in to save a response.
+      - article [ref=e696]:
+        - img "BURKE, ROBERT G. portrait unavailable" [ref=e698]: BR
+        - generic [ref=e699]:
+          - strong [ref=e701]: BURKE, ROBERT G.
+          - paragraph [ref=e702]: Create a private manufacturing and training initiative centered in Brockton
+          - generic [ref=e703]:
+            - link "Open BURKE, ROBERT G.'s campaign source in a new tab, retrieved Oct 29, 2026" [ref=e704] [cursor=pointer]:
+              - /url: https://burke4congress.us/boston-forge%2Fboxer-works
+            - group [ref=e708]:
+              - generic "Source details" [ref=e709] [cursor=pointer]
+          - generic "Respond to BURKE, ROBERT G.'s campaign position" [ref=e710]:
+            - button "Agree with BURKE, ROBERT G." [ref=e711] [cursor=pointer]:
+              - generic [ref=e714]: Agree
+            - button "Disagree with BURKE, ROBERT G." [ref=e715] [cursor=pointer]:
+              - generic [ref=e718]: Disagree
+            - generic [ref=e719]: Sign in to save a response.
+      - article [ref=e720]:
+        - img "LYNCH, STEPHEN portrait" [ref=e722]
+        - generic [ref=e723]:
+          - strong [ref=e725]: LYNCH, STEPHEN
+          - paragraph [ref=e726]: Continue housing assistance and support affordable housing
+          - generic [ref=e727]:
+            - link "Open LYNCH, STEPHEN's campaign source in a new tab, retrieved Oct 28, 2026" [ref=e728] [cursor=pointer]:
+              - /url: https://www.stephenflynch.com/
+            - group [ref=e732]:
+              - generic "Source details" [ref=e733] [cursor=pointer]
+          - generic "Respond to LYNCH, STEPHEN's campaign position" [ref=e734]:
+            - button "Agree with LYNCH, STEPHEN" [ref=e735] [cursor=pointer]:
+              - generic [ref=e738]: Agree
+            - button "Disagree with LYNCH, STEPHEN" [ref=e739] [cursor=pointer]:
+              - generic [ref=e742]: Disagree
+            - generic [ref=e743]: Sign in to save a response.
+      - article [ref=e744]:
+        - img "LYNCH, STEPHEN portrait" [ref=e746]
+        - generic [ref=e747]:
+          - strong [ref=e749]: LYNCH, STEPHEN
+          - paragraph [ref=e750]: Preserve Social Security
+          - generic [ref=e751]:
+            - link "Open LYNCH, STEPHEN's campaign source in a new tab, retrieved Oct 28, 2026" [ref=e752] [cursor=pointer]:
+              - /url: https://www.stephenflynch.com/
+            - group [ref=e756]:
+              - generic "Source details" [ref=e757] [cursor=pointer]
+          - generic "Respond to LYNCH, STEPHEN's campaign position" [ref=e758]:
+            - button "Agree with LYNCH, STEPHEN" [ref=e759] [cursor=pointer]:
+              - generic [ref=e762]: Agree
+            - button "Disagree with LYNCH, STEPHEN" [ref=e763] [cursor=pointer]:
+              - generic [ref=e766]: Disagree
+            - generic [ref=e767]: Sign in to save a response.

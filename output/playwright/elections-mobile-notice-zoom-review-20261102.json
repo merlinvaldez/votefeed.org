@@ -1,0 +1,64 @@
+{
+  "date": "2026-11-02",
+  "scope": "Local Dev fixture preview only",
+  "browser": "Microsoft Edge via Playwright CLI, headless with disposable profiles",
+  "viewer": "Guest",
+  "viewportCss": {
+    "width": 390,
+    "height": 844
+  },
+  "zoomVerification": {
+    "method": "Page.getLayoutMetrics.cssVisualViewport.zoom",
+    "actualBrowserZoom": 2,
+    "deviceScaleFactor": 2,
+    "browserViewport": {
+      "width": 780,
+      "height": 1688
+    }
+  },
+  "scenarios": [
+    {
+      "name": "incomplete coverage and active build",
+      "query": "electionsCoverage=partial&electionsBuild=running",
+      "noticeHeightsCssPx": [48, 48],
+      "noticeFontSizeCssPx": 13,
+      "firstPositionTopCssPx": 819,
+      "firstPositionBottomCssPx": 1051,
+      "firstPositionIntersectsInitialViewport": true,
+      "documentClientWidthCssPx": 390,
+      "documentScrollWidthCssPx": 390,
+      "screenshot": "elections-mobile-zoom200-partial-running-20261102.png"
+    },
+    {
+      "name": "unknown coverage and failed build",
+      "query": "electionsCoverage=unknown&electionsBuild=failed",
+      "noticeHeightsCssPx": [67, 67],
+      "noticeFontSizeCssPx": 13,
+      "firstPositionTopCssPx": 855,
+      "firstPositionBottomCssPx": 1088,
+      "firstPositionIntersectsInitialViewport": false,
+      "documentClientWidthCssPx": 390,
+      "documentScrollWidthCssPx": 390,
+      "scrollCheckAt100Percent": {
+        "scrollYCssPx": 601,
+        "firstPositionTopInViewportCssPx": 254,
+        "firstPositionIntersectsViewport": true
+      },
+      "scrollCheckAt200Percent": {
+        "actualBrowserZoom": 2,
+        "deviceScaleFactor": 2,
+        "scrollYCssPx": 601,
+        "firstPositionTopInViewportCssPx": 254,
+        "firstPositionIntersectsViewport": true
+      },
+      "screenshot": "elections-mobile-zoom200-unknown-failed-20261102.png"
+    }
+  ],
+  "testedAt100PercentAnd200Percent": true,
+  "pageRuntimeErrors": 0,
+  "browserWarnings": [
+    "Expected Clerk development-key warning from the local development instance"
+  ],
+  "authenticatedRequests": 0,
+  "databaseWrites": 0
+}

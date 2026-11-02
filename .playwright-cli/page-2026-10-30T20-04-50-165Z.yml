@@ -1,0 +1,233 @@
+- generic [ref=f2e40]:
+  - complementary [ref=f2e41]:
+    - link "VoteFeed feed" [ref=f2e42] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f2e44]
+      - generic [ref=f2e45]: VoteFeed
+    - navigation [ref=f2e46]:
+      - link "Feed" [ref=f2e47] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=f2e52] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=f2e57]:
+      - generic [ref=f2e58]:
+        - generic [ref=f2e59]: Policy Areas
+        - button "Search policy areas" [ref=f2e60] [cursor=pointer]
+      - generic [ref=f2e64]:
+        - button "All 276" [ref=f2e1255] [cursor=pointer]:
+          - generic [ref=f2e66]: All
+          - generic [ref=f2e1256]: "276"
+        - button "Agriculture and Food 4" [ref=f2e1257] [cursor=pointer]:
+          - generic [ref=f2e1258]: Agriculture and Food
+          - generic [ref=f2e1259]: "4"
+        - button "Animals 3" [ref=f2e1260] [cursor=pointer]:
+          - generic [ref=f2e1261]: Animals
+          - generic [ref=f2e1262]: "3"
+        - button "Armed Forces and National Security 14" [ref=f2e1263] [cursor=pointer]:
+          - generic [ref=f2e1264]: Armed Forces and National Security
+          - generic [ref=f2e1265]: "14"
+        - button "Civil Rights and Liberties, Minority Issues 3" [ref=f2e1266] [cursor=pointer]:
+          - generic [ref=f2e1267]: Civil Rights and Liberties, Minority Issues
+          - generic [ref=f2e1268]: "3"
+        - button "Commerce 21" [ref=f2e1269] [cursor=pointer]:
+          - generic [ref=f2e1270]: Commerce
+          - generic [ref=f2e1271]: "21"
+        - button "Congress 30" [ref=f2e1272] [cursor=pointer]:
+          - generic [ref=f2e1273]: Congress
+          - generic [ref=f2e1274]: "30"
+        - button "Crime and Law Enforcement 18" [ref=f2e1275] [cursor=pointer]:
+          - generic [ref=f2e1276]: Crime and Law Enforcement
+          - generic [ref=f2e1277]: "18"
+        - button "Economics and Public Finance 14" [ref=f2e1278] [cursor=pointer]:
+          - generic [ref=f2e1279]: Economics and Public Finance
+          - generic [ref=f2e1280]: "14"
+        - button "Education 7" [ref=f2e1281] [cursor=pointer]:
+          - generic [ref=f2e1282]: Education
+          - generic [ref=f2e1283]: "7"
+        - button "Emergency Management 4" [ref=f2e1284] [cursor=pointer]:
+          - generic [ref=f2e1285]: Emergency Management
+          - generic [ref=f2e1286]: "4"
+        - button "Energy 23" [ref=f2e1287] [cursor=pointer]:
+          - generic [ref=f2e1288]: Energy
+          - generic [ref=f2e1289]: "23"
+        - button "Environmental Protection 13" [ref=f2e1290] [cursor=pointer]:
+          - generic [ref=f2e1291]: Environmental Protection
+          - generic [ref=f2e1292]: "13"
+        - button "Families 1" [ref=f2e1293] [cursor=pointer]:
+          - generic [ref=f2e1294]: Families
+          - generic [ref=f2e1295]: "1"
+        - button "Finance and Financial Sector 15" [ref=f2e1296] [cursor=pointer]:
+          - generic [ref=f2e1297]: Finance and Financial Sector
+          - generic [ref=f2e1298]: "15"
+        - button "Foreign Trade and International Finance 4" [ref=f2e1299] [cursor=pointer]:
+          - generic [ref=f2e1300]: Foreign Trade and International Finance
+          - generic [ref=f2e1301]: "4"
+        - button "Government Operations and Politics 16" [ref=f2e1302] [cursor=pointer]:
+          - generic [ref=f2e1303]: Government Operations and Politics
+          - generic [ref=f2e1304]: "16"
+        - button "Health 2" [ref=f2e1305] [cursor=pointer]:
+          - generic [ref=f2e1306]: Health
+          - generic [ref=f2e1307]: "2"
+        - button "Housing and Community Development 1" [ref=f2e1308] [cursor=pointer]:
+          - generic [ref=f2e1309]: Housing and Community Development
+          - generic [ref=f2e1310]: "1"
+        - button "Immigration 11" [ref=f2e1311] [cursor=pointer]:
+          - generic [ref=f2e1312]: Immigration
+          - generic [ref=f2e1313]: "11"
+        - button "International Affairs 16" [ref=f2e1314] [cursor=pointer]:
+          - generic [ref=f2e1315]: International Affairs
+          - generic [ref=f2e1316]: "16"
+        - button "Labor and Employment 6" [ref=f2e1317] [cursor=pointer]:
+          - generic [ref=f2e1318]: Labor and Employment
+          - generic [ref=f2e1319]: "6"
+        - button "Law 3" [ref=f2e1320] [cursor=pointer]:
+          - generic [ref=f2e1321]: Law
+          - generic [ref=f2e1322]: "3"
+        - button "Native Americans 5" [ref=f2e1323] [cursor=pointer]:
+          - generic [ref=f2e1324]: Native Americans
+          - generic [ref=f2e1325]: "5"
+        - button "Public Lands and Natural Resources 21" [ref=f2e1326] [cursor=pointer]:
+          - generic [ref=f2e1327]: Public Lands and Natural Resources
+          - generic [ref=f2e1328]: "21"
+        - button "Science, Technology, Communications 10" [ref=f2e1329] [cursor=pointer]:
+          - generic [ref=f2e1330]: Science, Technology, Communications
+          - generic [ref=f2e1331]: "10"
+        - button "Social Welfare 2" [ref=f2e1332] [cursor=pointer]:
+          - generic [ref=f2e1333]: Social Welfare
+          - generic [ref=f2e1334]: "2"
+        - button "Taxation 4" [ref=f2e1335] [cursor=pointer]:
+          - generic [ref=f2e1336]: Taxation
+          - generic [ref=f2e1337]: "4"
+        - button "Transportation and Public Works 4" [ref=f2e1338] [cursor=pointer]:
+          - generic [ref=f2e1339]: Transportation and Public Works
+          - generic [ref=f2e1340]: "4"
+        - button "Water Resources Development 1" [ref=f2e1341] [cursor=pointer]:
+          - generic [ref=f2e1342]: Water Resources Development
+          - generic [ref=f2e1343]: "1"
+  - main [ref=f2e158]:
+    - generic [ref=f2e159]:
+      - generic [ref=f2e163]:
+        - generic [ref=f2e164]: Viewing as Guest
+        - generic [ref=f2e165]: Your interactions won't be saved.
+      - button "Sign Up / Sign In" [ref=f2e166] [cursor=pointer]
+    - tablist "Feed sections" [ref=f2e167]:
+      - tab "All Reps" [ref=f2e168] [cursor=pointer]
+      - tab "House of Representatives" [active] [selected] [ref=f2e175] [cursor=pointer]
+      - tab "Senate" [ref=f2e181] [cursor=pointer]
+      - tab "Elections" [ref=f2e185] [cursor=pointer]
+    - text: ·
+    - tabpanel "House of Representatives" [ref=f2e1344]:
+      - region "Your congressional delegation" [ref=f2e614]:
+        - generic [ref=f2e615]:
+          - generic [ref=f2e616]:
+            - article "Wittman, Robert J." [ref=f2e618]:
+              - img "Wittman, Robert J. official portrait" [ref=f2e620]
+              - generic [ref=f2e621]:
+                - heading "Wittman, Robert J." [level=3] [ref=f2e622]
+                - generic [ref=f2e623]:
+                  - generic [ref=f2e629]: Republican Party
+                  - generic [ref=f2e1345]: Virginia District 1
+                  - link "Wittman, Robert J. official website (opens in a new tab)" [ref=f2e1349] [cursor=pointer]:
+                    - /url: https://wittman.house.gov/
+                    - generic [ref=f2e1353]: Website
+            - status
+          - generic [ref=f2e657]:
+            - generic [ref=f2e658]:
+              - img "No alignment data yet" [ref=f2e659]
+              - generic [aria-hidden] [ref=f2e663]: 0%
+            - generic [ref=f2e664]:
+              - generic [ref=f2e665]: Policy Alignment
+              - paragraph [ref=f2e666]:
+                - text: Select
+                - img "like" [ref=f2e667]
+                - text: or
+                - img "dislike" [ref=f2e669]
+                - text: on a vote to show alignment.
+      - generic [ref=f2e671]:
+        - heading "Legislative Feed" [level=2] [ref=f2e672]
+        - 'article "Rep. Wittman, Robert J.: H.R. 6500" [ref=f2e1354]':
+          - generic [ref=f2e1355]:
+            - generic [ref=f2e1356]:
+              - generic [ref=f2e1357]:
+                - group "Rep. Wittman, Robert J." [ref=f2e1358]:
+                  - img "Wittman, Robert J. official portrait" [ref=f2e1360]
+                - button "H.R. 6500" [ref=f2e1361] [cursor=pointer]
+                - generic [ref=f2e1362]: Sep 1, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f2e1366] [cursor=pointer]
+            - generic [ref=f2e1370]:
+              - text: Rep. Wittman voted
+              - generic [ref=f2e1371]: Yea
+              - text: on H.R. 6500, a bill to keep the federal government running with short-term funding and extend programs set to expire.
+            - generic [ref=f2e1372]:
+              - button "Agree with Rep. Wittman, Robert J." [ref=f2e1373] [cursor=pointer]
+              - button "Disagree with Rep. Wittman, Robert J." [ref=f2e1376] [cursor=pointer]
+              - button "Open comments on H.R. 6500 for Wittman, Robert J." [ref=f2e1379] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Wittman, Robert J.: S. 32" [ref=f2e1382]':
+          - generic [ref=f2e1383]:
+            - generic [ref=f2e1384]:
+              - generic [ref=f2e1385]:
+                - group "Rep. Wittman, Robert J." [ref=f2e1386]:
+                  - img "Wittman, Robert J. official portrait" [ref=f2e1388]
+                - button "S. 32" [ref=f2e1389] [cursor=pointer]
+                - generic [ref=f2e1390]: Aug 31, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f2e1394] [cursor=pointer]
+            - generic [ref=f2e1398]:
+              - text: Rep. Wittman voted
+              - generic [ref=f2e1399]: Yea
+              - text: on S. 32, a bill to allow federal court sessions in College Station and El Centro.
+            - generic [ref=f2e1400]:
+              - button "Agree with Rep. Wittman, Robert J." [ref=f2e1401] [cursor=pointer]
+              - button "Disagree with Rep. Wittman, Robert J." [ref=f2e1404] [cursor=pointer]
+              - button "Open comments on S. 32 for Wittman, Robert J." [ref=f2e1407] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Wittman, Robert J.: S. 307" [ref=f2e1410]':
+          - generic [ref=f2e1411]:
+            - generic [ref=f2e1412]:
+              - generic [ref=f2e1413]:
+                - group "Rep. Wittman, Robert J." [ref=f2e1414]:
+                  - img "Wittman, Robert J. official portrait" [ref=f2e1416]
+                - button "S. 307" [ref=f2e1417] [cursor=pointer]
+                - generic [ref=f2e1418]: Aug 31, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f2e1422] [cursor=pointer]
+            - generic [ref=f2e1426]:
+              - text: Rep. Wittman voted
+              - generic [ref=f2e1427]: Yea
+              - text: on S. 307, a bill to require national rules and prison safety steps to stop sexual harassment and assault by prisoners against prison staff.
+            - generic [ref=f2e1428]:
+              - button "Agree with Rep. Wittman, Robert J." [ref=f2e1429] [cursor=pointer]
+              - button "Disagree with Rep. Wittman, Robert J." [ref=f2e1432] [cursor=pointer]
+              - button "Open comments on S. 307 for Wittman, Robert J." [ref=f2e1435] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Wittman, Robert J.: H.R. 1181" [ref=f2e1438]':
+          - generic [ref=f2e1439]:
+            - generic [ref=f2e1440]:
+              - generic [ref=f2e1441]:
+                - group "Rep. Wittman, Robert J." [ref=f2e1442]:
+                  - img "Wittman, Robert J. official portrait" [ref=f2e1444]
+                - button "H.R. 1181" [ref=f2e1445] [cursor=pointer]
+                - generic [ref=f2e1446]: Jul 14, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f2e1450] [cursor=pointer]
+            - generic [ref=f2e1454]:
+              - text: Rep. Wittman voted
+              - generic [ref=f2e1455]: Yea
+              - text: on H.R. 1181, a bill to stop payment card networks from using special store codes that single out gun stores.
+            - generic [ref=f2e1456]:
+              - button "Agree with Rep. Wittman, Robert J." [ref=f2e1457] [cursor=pointer]
+              - button "Disagree with Rep. Wittman, Robert J." [ref=f2e1460] [cursor=pointer]
+              - button "Open comments on H.R. 1181 for Wittman, Robert J." [ref=f2e1463] [cursor=pointer]: 0 Comments
+        - 'article "Rep. Wittman, Robert J.: H.R. 139" [ref=f2e1466]':
+          - generic [ref=f2e1467]:
+            - generic [ref=f2e1468]:
+              - generic [ref=f2e1469]:
+                - group "Rep. Wittman, Robert J." [ref=f2e1470]:
+                  - img "Wittman, Robert J. official portrait" [ref=f2e1472]
+                - button "H.R. 139" [ref=f2e1473] [cursor=pointer]
+                - generic [ref=f2e1474]: Jul 14, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f2e1478] [cursor=pointer]
+            - generic [ref=f2e1482]:
+              - text: Rep. Wittman voted
+              - generic [ref=f2e1483]: Yea
+              - text: on H.R. 139, a bill to keep daylight saving time year-round and end seasonal clock changes.
+            - generic [ref=f2e1484]:
+              - button "Agree with Rep. Wittman, Robert J." [ref=f2e1485] [cursor=pointer]
+              - button "Disagree with Rep. Wittman, Robert J." [ref=f2e1488] [cursor=pointer]
+              - button "Open comments on H.R. 139 for Wittman, Robert J." [ref=f2e1491] [cursor=pointer]: 0 Comments
+        - generic [ref=f2e1494]: Scroll for more

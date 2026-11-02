@@ -1,7 +1,11 @@
 import { useCallback, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { isElectionFixturePreviewLocation } from "./elections/electionFixturePreview.js";
 import "./Feed.css";
 import { Home, Search, User } from "lucide-react";
+
+const FIXTURE_PREVIEW_ENABLED = import.meta.env.DEV &&
+  import.meta.env.VITE_ELECTION_FIXTURES === "true";
 
 const createPanelPolicyState = (totalPolicyCount = null, scopeKey = null) => ({
   policyAreas: [],
@@ -13,9 +17,13 @@ const createPanelPolicyState = (totalPolicyCount = null, scopeKey = null) => ({
 export default function FeedLayout() {
   const location = useLocation();
   const isFeedRoute = location.pathname === "/feed";
-  const [activePanel, setActivePanel] = useState("legislative");
+  const [activePanel, setActivePanel] = useState(() =>
+    FIXTURE_PREVIEW_ENABLED && isElectionFixturePreviewLocation(location.pathname, location.search)
+      ? "elections"
+      : "legislative",
+  );
   const [panelPolicyState, setPanelPolicyState] = useState(() => ({
-    legislative: createPanelPolicyState(0),
+    legislative: createPanelPolicyState(null),
     elections: createPanelPolicyState(null),
   }));
   const [policySearchByPanel, setPolicySearchByPanel] = useState({
@@ -63,14 +71,14 @@ export default function FeedLayout() {
       if (previous[panel].scopeKey === scopeKey) return previous;
       return {
         ...previous,
-        [panel]: createPanelPolicyState(panel === "legislative" ? 0 : null, scopeKey),
+        [panel]: createPanelPolicyState(null, scopeKey),
       };
     });
     setPolicySearchByPanel((previous) => ({ ...previous, [panel]: "" }));
   }, []);
 
   return (
-    <div className="feed-layout">
+    <div className={`feed-layout ${activePanel === "elections" && isFeedRoute ? "feed-layout-elections" : ""}`}>
       <aside className="feed-sidebar">
         <Link to="/feed" className="brand" aria-label="VoteFeed feed">
           <span className="brand-mark">
@@ -81,11 +89,11 @@ export default function FeedLayout() {
 
         <nav className="nav">
           <NavLink to="/feed" className="nav-item">
-            <Home className="nav-icion" strokeWidth={1.75}></Home>
+            <Home size={18} className="nav-icon" strokeWidth={1.75} />
             <span>Feed</span>
           </NavLink>
           <NavLink to="/profile" className="nav-item">
-            <User className="nav-icon" strokeWidth={1.75} />
+            <User size={18} className="nav-icon" strokeWidth={1.75} />
             <span>Profile</span>
           </NavLink>
         </nav>

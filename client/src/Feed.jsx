@@ -5,6 +5,10 @@ import { API_BASE } from "./constants";
 import RepCard from "./RepCard";
 import LegislativeVoteCard from "./LegislativeVoteCard";
 import ElectionsPanel from "./elections/ElectionsPanel";
+import {
+  isElectionFixturePreviewLocation,
+  parseElectionFixturePreviewLocation,
+} from "./elections/electionFixturePreview.js";
 import { summaryIdentity, hasSummaryText, createSummaryRequests } from "./feedSummaries";
 import { buildFeedUrl, adaptDelegationFeed, mergeFeedPage, createFeedRequests } from "./delegationFeedClient";
 import { fetchDelegationAlignment } from "./alignmentRefresh";
@@ -19,6 +23,9 @@ import {
   Landmark,
   Vote,
 } from "lucide-react";
+
+const FIXTURE_PREVIEW_ENABLED = import.meta.env.DEV &&
+  import.meta.env.VITE_ELECTION_FIXTURES === "true";
 
 const FEED_VIEW_TABS = [
   { value: "All Reps", label: "All Reps", icon: <Users size={22} aria-hidden="true" /> },
@@ -67,6 +74,10 @@ function Feed(props) {
   const { token, authFetch } = useAuth();
   const isAuthed = Boolean(token);
   const location = useLocation();
+  const fixturePreview = FIXTURE_PREVIEW_ENABLED
+    ? parseElectionFixturePreviewLocation(location.pathname, location.search)
+    : null;
+  const simulatedElectionsViewer = Boolean(fixturePreview?.simulatedViewer && !isAuthed);
   const navigate = useNavigate();
   const {
     activePanel,
@@ -133,7 +144,7 @@ function Feed(props) {
   const [isMobilePolicySearchOpen, setIsMobilePolicySearchOpen] =
     useState(false);
   const availablePolicyAreas = isCurrentFeed ? feedState?.policyAreas ?? [] : [];
-  const totalPolicyCount = isCurrentFeed ? feedState?.totalPolicyCount ?? 0 : 0;
+  const totalPolicyCount = isCurrentFeed ? feedState?.totalPolicyCount ?? null : null;
   const normalizedMobilePolicySearch = mobilePolicySearch.trim().toLowerCase();
   const mobileVisiblePolicyAreas = availablePolicyAreas.filter((policyArea) =>
     policyArea.name.toLowerCase().includes(normalizedMobilePolicySearch),
@@ -142,7 +153,7 @@ function Feed(props) {
   useEffect(() => {
     setPanelPolicyData("legislative", {
       policyAreas: isCurrentFeed ? feedState?.policyAreas ?? [] : [],
-      totalPolicyCount: isCurrentFeed ? feedState?.totalPolicyCount ?? 0 : 0,
+      totalPolicyCount: isCurrentFeed ? feedState?.totalPolicyCount ?? null : null,
     });
   }, [feedState, isCurrentFeed, setPanelPolicyData]);
 
@@ -155,7 +166,7 @@ function Feed(props) {
 
   useEffect(() => {
     return () => {
-      setPanelPolicyData("legislative", { policyAreas: [], totalPolicyCount: 0 });
+      setPanelPolicyData("legislative", { policyAreas: [], totalPolicyCount: null });
       setSelectedPolicyArea(null);
     };
   }, [
@@ -210,8 +221,11 @@ function Feed(props) {
   }, [votes]);
 
   useEffect(() => {
-    if (!token && !guestLocation?.state) navigate("/", { replace: true });
-  }, [token, guestLocation?.state, navigate]);
+    if (!token && !guestLocation?.state &&
+        !(FIXTURE_PREVIEW_ENABLED && isElectionFixturePreviewLocation(location.pathname, location.search))) {
+      navigate("/", { replace: true });
+    }
+  }, [token, guestLocation?.state, location.pathname, location.search, navigate]);
 
   useEffect(() => {
     feedRequests.reset();
@@ -482,7 +496,7 @@ function Feed(props) {
     });
   };
 
-  const guestBar = !isAuthed && (
+  const guestBar = !isAuthed && !(simulatedElectionsViewer && activePanel === "elections") && (
     <div
       ref={guestBarRef}
       className={`guest-bar ${isGuestBarHighlighted ? "guest-bar-highlighted" : ""}`}
@@ -505,7 +519,8 @@ function Feed(props) {
       onSelect={handleFeedViewSelect} />
   );
   const electionsPanel = (
-    <ElectionsPanel key={electionContextKey} viewer={isAuthed ? "signed-in" : "guest"}
+    <ElectionsPanel key={electionContextKey}
+      viewer={isAuthed || simulatedElectionsViewer ? "signed-in" : "guest"}
       location={feedLocation}
       authFetch={authFetch}
       onGuestResponseAttempt={promptGuestInteraction}
@@ -614,7 +629,7 @@ function Feed(props) {
                     onClick={() => handlePolicySelection(null)}
                   >
                     <span>All</span>
-                    <span className="policy-count">{totalPolicyCount}</span>
+                    {totalPolicyCount != null && <span className="policy-count">{totalPolicyCount}</span>}
                   </button>
                   {mobileVisiblePolicyAreas.map((policyArea) => (
                     <button
@@ -626,7 +641,7 @@ function Feed(props) {
                       onClick={() => handlePolicySelection(policyArea.name)}
                     >
                       <span>{policyArea.name}</span>
-                      <span className="policy-count">{policyArea.count}</span>
+                      {policyArea.count != null && <span className="policy-count">{policyArea.count}</span>}
                     </button>
                   ))}
                   {mobileVisiblePolicyAreas.length === 0 && (

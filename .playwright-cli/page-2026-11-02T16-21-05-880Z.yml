@@ -1,0 +1,160 @@
+- generic [ref=f11e4]:
+  - complementary [ref=f11e5]:
+    - link "VoteFeed feed" [ref=f11e6] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f11e8]
+      - generic [ref=f11e9]: VoteFeed
+    - navigation [ref=f11e10]:
+      - link "Feed" [ref=f11e11] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=f11e16] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=f11e21]:
+      - generic [ref=f11e22]:
+        - generic [ref=f11e23]: Policy Areas
+        - button "Search policy areas" [ref=f11e24] [cursor=pointer]
+      - generic [ref=f11e28]:
+        - button "All 5" [ref=f11e654] [cursor=pointer]:
+          - generic [ref=f11e30]: All
+          - generic [ref=f11e807]: "5"
+        - button "Housing 1" [ref=f11e808] [cursor=pointer]:
+          - generic [ref=f11e809]: Housing
+          - generic [ref=f11e810]: "1"
+        - button "Education 1" [ref=f11e811] [cursor=pointer]:
+          - generic [ref=f11e812]: Education
+          - generic [ref=f11e813]: "1"
+        - button "Health Care 1" [ref=f11e814] [cursor=pointer]:
+          - generic [ref=f11e815]: Health Care
+          - generic [ref=f11e816]: "1"
+        - button "Economy 1" [ref=f11e817] [cursor=pointer]:
+          - generic [ref=f11e818]: Economy
+          - generic [ref=f11e819]: "1"
+        - button "Immigration 1" [ref=f11e820] [cursor=pointer]:
+          - generic [ref=f11e821]: Immigration
+          - generic [ref=f11e822]: "1"
+  - main [ref=f11e122]:
+    - tablist "Feed sections" [ref=f11e123]:
+      - tab "All Reps" [ref=f11e124] [cursor=pointer]
+      - tab "House of Representatives" [ref=f11e131] [cursor=pointer]
+      - tab "Senate" [ref=f11e137] [cursor=pointer]
+      - tab "Elections" [selected] [ref=f11e141] [cursor=pointer]
+    - tabpanel "Elections" [ref=f11e379]:
+      - region "Election candidates" [ref=f11e380]:
+        - tablist "Filter candidates by chamber" [ref=f11e381]:
+          - tab "All Candidates" [selected] [ref=f11e382] [cursor=pointer]
+          - tab "House" [ref=f11e383] [cursor=pointer]
+          - tab "Senate" [ref=f11e384] [cursor=pointer]
+        - tabpanel "All Candidates" [ref=f11e385]:
+          - generic "Candidate roster" [ref=f11e386]:
+            - button "WILLIAMS, JOMO, U.S. Representative, NY-13, REP" [ref=f11e387] [cursor=pointer]:
+              - img "WILLIAMS, JOMO portrait" [ref=f11e389]
+              - generic [ref=f11e390]: WILLIAMS, JOMO
+              - generic [ref=f11e391]: U.S. Representative
+              - generic [ref=f11e397]: NY-13
+              - generic [ref=f11e398]: REP
+            - button "AVILA CHEVALIER, DARIALIZA, U.S. Representative, NY-13, DEM" [active] [pressed] [ref=f11e401] [cursor=pointer]:
+              - img "AVILA CHEVALIER, DARIALIZA portrait unavailable" [ref=f11e403]: AD
+              - generic [ref=f11e404]: AVILA CHEVALIER, DARIALIZA
+              - generic [ref=f11e405]: U.S. Representative
+              - generic [ref=f11e411]: NY-13
+              - generic [ref=f11e412]: DEM
+        - 'complementary "Selected candidate: AVILA CHEVALIER, DARIALIZA" [ref=f11e823]':
+          - generic [ref=f11e672]:
+            - img "AVILA CHEVALIER, DARIALIZA portrait unavailable" [ref=f11e825]: AD
+            - generic [ref=f11e675]:
+              - paragraph [ref=f11e676]: Positions from
+              - heading "AVILA CHEVALIER, DARIALIZA" [level=3] [ref=f11e826]
+            - button "All candidates" [ref=f11e679] [cursor=pointer]
+          - region "Alignment with AVILA CHEVALIER, DARIALIZA" [ref=f11e827]:
+            - heading "Your alignment" [level=3] [ref=f11e681]
+            - status [ref=f11e828]: Loading your campaign-position alignment…
+      - generic [ref=f11e415]:
+        - generic [ref=f11e416]:
+          - heading "Campaign Positions" [level=2] [ref=f11e417]
+          - paragraph [ref=f11e418]: Policy positions from candidates’ official campaign websites.
+        - generic [ref=f11e419]:
+          - generic [ref=f11e420]: Filter by policy area
+          - combobox "Filter by policy area" [ref=f11e421]:
+            - option "All Policy Areas" [selected]
+            - option "Housing"
+            - option "Education"
+            - option "Health Care"
+            - option "Economy"
+            - option "Immigration"
+      - status [ref=f11e422]: We’re preparing the election feed for your location. This can take a few minutes.
+      - article [ref=f11e829]:
+        - img "AVILA CHEVALIER, DARIALIZA portrait unavailable" [ref=f11e831]: AC
+        - generic [ref=f11e832]:
+          - strong [ref=f11e834]: AVILA CHEVALIER, DARIALIZA
+          - paragraph [ref=f11e835]: Support tenant protections and more affordable housing
+          - generic [ref=f11e836]:
+            - link "Open AVILA CHEVALIER, DARIALIZA's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f11e837] [cursor=pointer]:
+              - /url: https://www.darializaforcongress.com/issues
+            - group [ref=f11e841]:
+              - generic "Source details" [ref=f11e842] [cursor=pointer]
+          - generic "Respond to AVILA CHEVALIER, DARIALIZA's campaign position" [ref=f11e843]:
+            - button "Agree with AVILA CHEVALIER, DARIALIZA" [ref=f11e844] [cursor=pointer]:
+              - generic [ref=f11e847]: Agree
+            - button "Disagree with AVILA CHEVALIER, DARIALIZA" [ref=f11e848] [cursor=pointer]:
+              - generic [ref=f11e851]: Disagree
+      - article [ref=f11e852]:
+        - img "AVILA CHEVALIER, DARIALIZA portrait unavailable" [ref=f11e854]: AC
+        - generic [ref=f11e855]:
+          - strong [ref=f11e857]: AVILA CHEVALIER, DARIALIZA
+          - paragraph [ref=f11e858]: Support free public education from childcare through college
+          - generic [ref=f11e859]:
+            - link "Open AVILA CHEVALIER, DARIALIZA's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f11e860] [cursor=pointer]:
+              - /url: https://www.darializaforcongress.com/issues
+            - group [ref=f11e864]:
+              - generic "Source details" [ref=f11e865] [cursor=pointer]
+          - generic "Respond to AVILA CHEVALIER, DARIALIZA's campaign position" [ref=f11e866]:
+            - button "Agree with AVILA CHEVALIER, DARIALIZA" [ref=f11e867] [cursor=pointer]:
+              - generic [ref=f11e870]: Agree
+            - button "Disagree with AVILA CHEVALIER, DARIALIZA" [ref=f11e871] [cursor=pointer]:
+              - generic [ref=f11e874]: Disagree
+      - article [ref=f11e875]:
+        - img "AVILA CHEVALIER, DARIALIZA portrait unavailable" [ref=f11e877]: AC
+        - generic [ref=f11e878]:
+          - strong [ref=f11e880]: AVILA CHEVALIER, DARIALIZA
+          - paragraph [ref=f11e881]: Support a universal Medicare for All system
+          - generic [ref=f11e882]:
+            - link "Open AVILA CHEVALIER, DARIALIZA's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f11e883] [cursor=pointer]:
+              - /url: https://www.darializaforcongress.com/issues
+            - group [ref=f11e887]:
+              - generic "Source details" [ref=f11e888] [cursor=pointer]
+          - generic "Respond to AVILA CHEVALIER, DARIALIZA's campaign position" [ref=f11e889]:
+            - button "Agree with AVILA CHEVALIER, DARIALIZA" [ref=f11e890] [cursor=pointer]:
+              - generic [ref=f11e893]: Agree
+            - button "Disagree with AVILA CHEVALIER, DARIALIZA" [ref=f11e894] [cursor=pointer]:
+              - generic [ref=f11e897]: Disagree
+      - article [ref=f11e898]:
+        - img "AVILA CHEVALIER, DARIALIZA portrait unavailable" [ref=f11e900]: AC
+        - generic [ref=f11e901]:
+          - strong [ref=f11e903]: AVILA CHEVALIER, DARIALIZA
+          - paragraph [ref=f11e904]: Support worker protections, stronger unions, and higher wages
+          - generic [ref=f11e905]:
+            - link "Open AVILA CHEVALIER, DARIALIZA's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f11e906] [cursor=pointer]:
+              - /url: https://www.darializaforcongress.com/issues
+            - group [ref=f11e910]:
+              - generic "Source details" [ref=f11e911] [cursor=pointer]
+          - generic "Respond to AVILA CHEVALIER, DARIALIZA's campaign position" [ref=f11e912]:
+            - button "Agree with AVILA CHEVALIER, DARIALIZA" [ref=f11e913] [cursor=pointer]:
+              - generic [ref=f11e916]: Agree
+            - button "Disagree with AVILA CHEVALIER, DARIALIZA" [ref=f11e917] [cursor=pointer]:
+              - generic [ref=f11e920]: Disagree
+      - article [ref=f11e921]:
+        - img "AVILA CHEVALIER, DARIALIZA portrait unavailable" [ref=f11e923]: AC
+        - generic [ref=f11e924]:
+          - strong [ref=f11e926]: AVILA CHEVALIER, DARIALIZA
+          - paragraph [ref=f11e927]: Expand legal pathways and end the deportation system
+          - generic [ref=f11e928]:
+            - link "Open AVILA CHEVALIER, DARIALIZA's campaign source in a new tab, retrieved Oct 29, 2026" [ref=f11e929] [cursor=pointer]:
+              - /url: https://www.darializaforcongress.com/issues
+            - group [ref=f11e933]:
+              - generic "Source details" [ref=f11e934] [cursor=pointer]
+          - generic "Respond to AVILA CHEVALIER, DARIALIZA's campaign position" [ref=f11e935]:
+            - button "Agree with AVILA CHEVALIER, DARIALIZA" [ref=f11e936] [cursor=pointer]:
+              - generic [ref=f11e939]: Agree
+            - button "Disagree with AVILA CHEVALIER, DARIALIZA" [ref=f11e940] [cursor=pointer]:
+              - generic [ref=f11e943]: Disagree
+      - status [ref=f11e944]: End of campaign positions.

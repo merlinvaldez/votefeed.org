@@ -1,0 +1,81 @@
+{
+  "reviewedAt": "2026-11-02",
+  "session": {
+    "authentication": "guest",
+    "service": "local app connected to VoteFeed Dev",
+    "addresses": [
+      "1 City Hall Square, Boston, MA 02201",
+      "4845 Casa Loma Avenue, Yorba Linda, CA 92886"
+    ],
+    "savedProfileChanged": false
+  },
+  "coverage": [
+    {
+      "race": "MA-8 U.S. House and Massachusetts U.S. Senate",
+      "rosterCandidates": 7,
+      "photoCandidates": ["Stephen Lynch", "Edward Markey"],
+      "initialsFallbackCandidates": [
+        "Rasheed Nicholas Walters",
+        "Robert G. Burke",
+        "John Deaton",
+        "Joseph Tache",
+        "Shiva Ayyadurai"
+      ]
+    },
+    {
+      "race": "CA-38 U.S. House",
+      "photoCandidates": [],
+      "initialsFallbackCandidates": ["Hilda Solis", "Pedro Antonio Casas"]
+    }
+  ],
+  "portraits": [
+    {
+      "candidate": "Stephen Lynch",
+      "office": "U.S. Representative, MA-8",
+      "alt": "LYNCH, STEPHEN portrait",
+      "source": "https://www.congress.gov/img/member/6a46604a8b827ec333b929fe_200.jpg",
+      "sourcePixels": "200x300",
+      "renderedCssPixels": {
+        "roster": "104x104",
+        "position": "72x72"
+      },
+      "devicePixelRatiosCompared": [1, 3],
+      "findings": "Candidate identity and circular crop were consistent between roster and position card at both densities. At DPR 3 the source is enlarged to 312 device pixels across.",
+      "screenshots": {
+        "roster1x": "elections-live-guest-lynch-roster-1x-20261102.png",
+        "roster3x": "elections-live-guest-lynch-roster-dpr3-20261102.png",
+        "position1x": "elections-live-guest-lynch-position-1x-20261102.png",
+        "position3x": "elections-live-guest-lynch-position-dpr3-20261102.png"
+      }
+    },
+    {
+      "candidate": "Edward Markey",
+      "office": "U.S. Senator, Massachusetts",
+      "alt": "MARKEY, EDWARD SEN. portrait",
+      "source": "https://www.congress.gov/img/member/m000133_200.jpg",
+      "sourcePixels": "180x225",
+      "renderedCssPixels": {
+        "roster": "104x104",
+        "position": null
+      },
+      "devicePixelRatiosCompared": [1, 3],
+      "findings": "Candidate identity and roster crop were consistent at both densities. No Markey campaign-position cards were present in this live response. At DPR 3 the source is enlarged to 312 device pixels across.",
+      "screenshots": {
+        "roster1x": "elections-live-guest-markey-roster-1x-20261102.png",
+        "roster3x": "elections-live-guest-markey-roster-dpr3-20261102.png"
+      }
+    }
+  ],
+  "captureSettings": {
+    "viewportCssPixels": "1672x941",
+    "highDensityDeviceScaleFactor": 3,
+    "highDensityConfig": "elections-dpr3-cli.config.json",
+    "ma8FullView1x": "elections-live-guest-ma-8-senate-20261102.png",
+    "ma8FullView3x": "elections-live-guest-ma8-dpr3-20261102.png",
+    "ca38FallbackView1x": "elections-live-guest-ca38-fallbacks-20261102.png"
+  },
+  "limits": [
+    "This is a representative sample, not complete live portrait coverage for all election races.",
+    "The live portraits have lower source resolution than a full 3x device-pixel rendering; no higher-resolution candidate-specific variant was present in this response."
+  ]
+}

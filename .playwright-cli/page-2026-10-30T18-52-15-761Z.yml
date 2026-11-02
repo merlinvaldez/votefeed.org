@@ -1,0 +1,24 @@
+- generic [ref=e4]:
+  - complementary [ref=e5]:
+    - link "VoteFeed feed" [ref=e6] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=e8]
+      - generic [ref=e9]: VoteFeed
+    - navigation [ref=e10]:
+      - link "Feed" [ref=e11] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=e16] [cursor=pointer]:
+        - /url: /profile
+  - main [ref=e65]:
+    - generic [ref=e66]:
+      - generic [ref=e70]:
+        - generic [ref=e71]: Viewing as Guest
+        - generic [ref=e72]: Your interactions won't be saved.
+      - button "Sign Up / Sign In" [ref=e73] [cursor=pointer]
+    - tablist "Feed sections" [ref=e74]:
+      - tab "All Reps" [active] [selected] [ref=e75] [cursor=pointer]
+      - tab "House" [ref=e405] [cursor=pointer]
+      - tab "Senate" [ref=e88] [cursor=pointer]
+      - tab "Elections" [ref=e92] [cursor=pointer]
+    - tabpanel "All Reps" [ref=e408]:
+      - generic [ref=e409]: Loading feed...

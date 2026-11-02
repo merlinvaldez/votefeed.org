@@ -1,0 +1,144 @@
+- generic [ref=f1e3]:
+  - complementary [ref=f1e4]:
+    - link "VoteFeed feed" [ref=f1e5] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f1e7]
+      - generic [ref=f1e8]: VoteFeed
+    - navigation [ref=f1e9]:
+      - link "Feed" [ref=f1e10] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=f1e15] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=f1e20]:
+      - generic [ref=f1e21]:
+        - generic [ref=f1e22]: Policy Areas
+        - button "Search policy areas" [ref=f1e23] [cursor=pointer]
+      - generic [ref=f1e27]:
+        - button "All 2" [ref=f1e72] [cursor=pointer]:
+          - generic [ref=f1e29]: All
+          - generic [ref=f1e30]: "2"
+        - button "Economy 0" [ref=f1e73] [cursor=pointer]:
+          - generic [ref=f1e74]: Economy
+          - generic [ref=f1e75]: "0"
+        - button "Health Care 0" [ref=f1e76] [cursor=pointer]:
+          - generic [ref=f1e77]: Health Care
+          - generic [ref=f1e78]: "0"
+        - button "Housing 0" [ref=f1e79] [cursor=pointer]:
+          - generic [ref=f1e80]: Housing
+          - generic [ref=f1e81]: "0"
+        - button "Education 0" [ref=f1e82] [cursor=pointer]:
+          - generic [ref=f1e83]: Education
+          - generic [ref=f1e84]: "0"
+        - button "Energy & Environment 1" [ref=f1e85] [cursor=pointer]:
+          - generic [ref=f1e86]: Energy & Environment
+          - generic [ref=f1e87]: "1"
+        - button "Immigration 0" [ref=f1e88] [cursor=pointer]:
+          - generic [ref=f1e89]: Immigration
+          - generic [ref=f1e90]: "0"
+        - button "Civil Rights 0" [ref=f1e91] [cursor=pointer]:
+          - generic [ref=f1e92]: Civil Rights
+          - generic [ref=f1e93]: "0"
+        - button "Public Safety 0" [ref=f1e94] [cursor=pointer]:
+          - generic [ref=f1e95]: Public Safety
+          - generic [ref=f1e96]: "0"
+        - button "Foreign Policy 1" [ref=f1e97] [cursor=pointer]:
+          - generic [ref=f1e98]: Foreign Policy
+          - generic [ref=f1e99]: "1"
+        - button "Government 0" [ref=f1e100] [cursor=pointer]:
+          - generic [ref=f1e101]: Government
+          - generic [ref=f1e102]: "0"
+        - button "Other 0" [ref=f1e103] [cursor=pointer]:
+          - generic [ref=f1e104]: Other
+          - generic [ref=f1e105]: "0"
+  - main [ref=f1e31]:
+    - generic [ref=f1e32]:
+      - generic [ref=f1e36]:
+        - generic [ref=f1e37]: Viewing as Guest
+        - generic [ref=f1e38]: Your interactions won't be saved.
+      - button "Sign Up / Sign In" [ref=f1e39] [cursor=pointer]
+    - tablist "Feed sections" [ref=f1e40]:
+      - tab "All Reps" [ref=f1e41] [cursor=pointer]
+      - tab "House of Representatives" [ref=f1e48] [cursor=pointer]
+      - tab "Senate" [ref=f1e54] [cursor=pointer]
+      - tab "Elections" [active] [selected] [ref=f1e58] [cursor=pointer]
+    - tabpanel "Elections" [ref=f1e106]:
+      - note [ref=f1e107]: Development fixture data — fictional candidates, not live election results.
+      - status [ref=f1e108]: Development fixture coverage is illustrative, not a ballot-completeness claim.
+      - region "Election candidates" [ref=f1e109]:
+        - tablist "Filter candidates by chamber" [ref=f1e110]:
+          - tab "All Candidates" [selected] [ref=f1e111] [cursor=pointer]
+          - tab "House" [ref=f1e112] [cursor=pointer]
+          - tab "Senate" [ref=f1e113] [cursor=pointer]
+        - tabpanel "All Candidates" [ref=f1e114]:
+          - generic [ref=f1e115]:
+            - button "Cameron Example, U.S. Representative, NY-13" [ref=f1e116] [cursor=pointer]:
+              - img "Cameron Example portrait unavailable" [ref=f1e118]: CE
+              - heading "Cameron Example" [level=3] [ref=f1e119]
+              - generic [ref=f1e120]: U.S. Representative
+              - paragraph [ref=f1e126]: NY-13
+              - paragraph [ref=f1e127]:
+                - generic [ref=f1e129]: Independent
+            - button "Dakota Example, U.S. Senator, New York, incumbent" [ref=f1e130] [cursor=pointer]:
+              - img "Dakota Example portrait" [ref=f1e132]
+              - heading "Dakota Example" [level=3] [ref=f1e133]
+              - generic [ref=f1e134]: Incumbent
+              - generic [ref=f1e135]: U.S. Senator
+              - paragraph [ref=f1e139]: New York
+              - paragraph [ref=f1e140]:
+                - generic [ref=f1e142]: Democratic Party
+      - generic [ref=f1e143]:
+        - generic [ref=f1e144]:
+          - heading "Campaign Positions" [level=2] [ref=f1e145]
+          - paragraph [ref=f1e146]: Policy positions from candidates’ official campaign websites.
+        - generic [ref=f1e147]:
+          - generic [ref=f1e148]: Filter by policy area
+          - combobox "Filter by policy area" [ref=f1e149]:
+            - option "All Policy Areas (2)" [selected]
+            - option "Economy (0)"
+            - option "Health Care (0)"
+            - option "Housing (0)"
+            - option "Education (0)"
+            - option "Energy & Environment (1)"
+            - option "Immigration (0)"
+            - option "Civil Rights (0)"
+            - option "Public Safety (0)"
+            - option "Foreign Policy (1)"
+            - option "Government (0)"
+            - option "Other (0)"
+      - article [ref=f1e150]:
+        - img "Dakota Example portrait" [ref=f1e152]
+        - generic [ref=f1e153]:
+          - generic [ref=f1e154]:
+            - strong [ref=f1e155]: Dakota Example
+            - generic [ref=f1e156]: Incumbent
+          - paragraph [ref=f1e157]: Invest in grid upgrades and clean-energy manufacturing.
+          - generic [ref=f1e158]:
+            - link "Open Dakota Example's campaign source in a new tab, retrieved Oct 27, 2026" [ref=f1e159] [cursor=pointer]:
+              - /url: https://example.invalid/elections/fixture/senate-a-environment
+            - group [ref=f1e163]:
+              - generic "Source details" [ref=f1e164] [cursor=pointer]
+          - generic "Respond to Dakota Example's campaign position" [ref=f1e165]:
+            - button "Agree with Dakota Example" [ref=f1e166] [cursor=pointer]:
+              - generic [ref=f1e169]: I agree with Dakota Example
+            - button "Disagree with Dakota Example" [ref=f1e170] [cursor=pointer]:
+              - generic [ref=f1e173]: I disagree
+            - generic [ref=f1e174]: Sign in to save a response.
+      - article [ref=f1e175]:
+        - img "Dakota Example portrait" [ref=f1e177]
+        - generic [ref=f1e178]:
+          - generic [ref=f1e179]:
+            - strong [ref=f1e180]: Dakota Example
+            - generic [ref=f1e181]: Incumbent
+          - paragraph [ref=f1e182]: Require public reporting before major changes to overseas security assistance.
+          - generic [ref=f1e183]:
+            - link "Open Dakota Example's campaign source in a new tab, retrieved Oct 27, 2026" [ref=f1e184] [cursor=pointer]:
+              - /url: https://example.invalid/elections/fixture/senate-a-foreign-policy
+            - group [ref=f1e188]:
+              - generic "Source details" [ref=f1e189] [cursor=pointer]
+          - generic "Respond to Dakota Example's campaign position" [ref=f1e190]:
+            - button "Agree with Dakota Example" [ref=f1e191] [cursor=pointer]:
+              - generic [ref=f1e194]: I agree with Dakota Example
+            - button "Disagree with Dakota Example" [ref=f1e195] [cursor=pointer]:
+              - generic [ref=f1e198]: I disagree
+            - generic [ref=f1e199]: Sign in to save a response.
+      - status [ref=f1e200]: End of campaign positions.

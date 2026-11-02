@@ -1,0 +1,419 @@
+- generic [ref=e39]:
+  - complementary [ref=e40]:
+    - link "VoteFeed feed" [ref=e41] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=e43]
+      - generic [ref=e44]: VoteFeed
+    - navigation [ref=e45]:
+      - link "Feed" [ref=e46] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=e51] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=e56]:
+      - generic [ref=e57]:
+        - generic [ref=e58]: Policy Areas
+        - button "Search policy areas" [ref=e59] [cursor=pointer]
+      - generic [ref=e63]:
+        - button "All 45" [ref=e107] [cursor=pointer]:
+          - generic [ref=e65]: All
+          - generic [ref=e609]: "45"
+        - button "Civil Rights 5" [ref=e610] [cursor=pointer]:
+          - generic [ref=e611]: Civil Rights
+          - generic [ref=e612]: "5"
+        - button "Health Care 10" [ref=e613] [cursor=pointer]:
+          - generic [ref=e614]: Health Care
+          - generic [ref=e615]: "10"
+        - button "Economy 7" [ref=e616] [cursor=pointer]:
+          - generic [ref=e617]: Economy
+          - generic [ref=e618]: "7"
+        - button "Public Safety 14" [ref=e619] [cursor=pointer]:
+          - generic [ref=e620]: Public Safety
+          - generic [ref=e621]: "14"
+        - button "Government 6" [ref=e622] [cursor=pointer]:
+          - generic [ref=e623]: Government
+          - generic [ref=e624]: "6"
+        - button "Housing 1" [ref=e625] [cursor=pointer]:
+          - generic [ref=e626]: Housing
+          - generic [ref=e627]: "1"
+        - button "Foreign Policy 2" [ref=e628] [cursor=pointer]:
+          - generic [ref=e629]: Foreign Policy
+          - generic [ref=e630]: "2"
+  - main [ref=e66]:
+    - generic [ref=e67]:
+      - generic [ref=e71]:
+        - generic [ref=e72]: Viewing as Guest
+        - generic [ref=e73]: Your interactions won't be saved.
+      - button "Sign Up / Sign In" [ref=e74] [cursor=pointer]
+    - tablist "Feed sections" [ref=e75]:
+      - tab "All Reps" [ref=e76] [cursor=pointer]
+      - tab "House of Representatives" [ref=e83] [cursor=pointer]
+      - tab "Senate" [ref=e89] [cursor=pointer]
+      - tab "Elections" [selected] [ref=e93] [cursor=pointer]
+    - tabpanel "Elections" [ref=e130]:
+      - region "Election candidates" [ref=e131]:
+        - tablist "Filter candidates by chamber" [ref=e132]:
+          - tab "All Candidates" [selected] [ref=e133] [cursor=pointer]
+          - tab "House" [ref=e134] [cursor=pointer]
+          - tab "Senate" [ref=e135] [cursor=pointer]
+        - tabpanel "All Candidates" [ref=e136]:
+          - generic "Candidate roster" [ref=e137]:
+            - button "WITTMAN, ROBERT J. MR., U.S. Representative, VA-1, REP" [ref=e138] [cursor=pointer]:
+              - img "WITTMAN, ROBERT J. MR. portrait unavailable" [ref=e140]: WM
+              - generic [ref=e141]: WITTMAN, ROBERT J. MR.
+              - generic [ref=e142]: U.S. Representative
+              - generic [ref=e148]: VA-1
+              - generic [ref=e149]: REP
+            - button "TAYLOR, SHANNON LEIGH, U.S. Representative, VA-1, DEM" [ref=e152] [cursor=pointer]:
+              - img "TAYLOR, SHANNON LEIGH portrait" [ref=e154]
+              - generic [ref=e155]: TAYLOR, SHANNON LEIGH
+              - generic [ref=e156]: U.S. Representative
+              - generic [ref=e162]: VA-1
+              - generic [ref=e163]: DEM
+            - button "MIZUSAWA, BERT K, U.S. Senator, Virginia, REP" [ref=e166] [cursor=pointer]:
+              - img "MIZUSAWA, BERT K portrait unavailable" [ref=e168]: MK
+              - generic [ref=e169]: MIZUSAWA, BERT K
+              - generic [ref=e170]: U.S. Senator
+              - generic [ref=e174]: Virginia
+              - generic [ref=e175]: REP
+            - button "WARNER, MARK ROBERT, U.S. Senator, Virginia, DEM" [ref=e178] [cursor=pointer]:
+              - img "WARNER, MARK ROBERT portrait" [ref=e180]
+              - generic [ref=e181]: WARNER, MARK ROBERT
+              - generic [ref=e182]: U.S. Senator
+              - generic [ref=e186]: Virginia
+              - generic [ref=e187]: DEM
+      - generic [ref=e191]:
+        - generic [ref=e192]:
+          - heading "Campaign Positions" [level=2] [ref=e193]
+          - paragraph [ref=e194]: Policy positions from candidates’ official campaign websites.
+        - generic [ref=e195]:
+          - generic [ref=e196]: Filter by policy area
+          - combobox "Filter by policy area" [ref=e197]:
+            - option "All Policy Areas" [selected]
+            - option "Civil Rights"
+            - option "Health Care"
+            - option "Economy"
+            - option "Public Safety"
+            - option "Government"
+            - option "Housing"
+            - option "Foreign Policy"
+      - article [ref=e631]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e633]
+        - generic [ref=e634]:
+          - strong [ref=e636]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e637]: Pledged not to criminalize women or doctors for abortion care
+          - generic [ref=e638]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e639] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/prosecutor-shannon-taylor-rolls-out-serve-the-people-first-agenda-to-crack-down-on-the-culture-of-corruption-in-washington/
+            - group [ref=e643]:
+              - generic "Source details" [ref=e644] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e645]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e646] [cursor=pointer]:
+              - generic [ref=e649]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e650] [cursor=pointer]:
+              - generic [ref=e653]: Disagree
+            - generic [ref=e654]: Sign in to save a response.
+      - article [ref=e655]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e657]
+        - generic [ref=e658]:
+          - strong [ref=e660]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e661]: Create a task force to tackle the opioid epidemic
+          - generic [ref=e662]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e663] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/prosecutor-shannon-taylor-issues-statement-on-fourth-anniversary-of-dobbs-decision-vows-to-fight-for-abortion-rights-in-congress/
+            - group [ref=e667]:
+              - generic "Source details" [ref=e668] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e669]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e670] [cursor=pointer]:
+              - generic [ref=e673]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e674] [cursor=pointer]:
+              - generic [ref=e677]: Disagree
+            - generic [ref=e678]: Sign in to save a response.
+      - article [ref=e679]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e681]
+        - generic [ref=e682]:
+          - strong [ref=e684]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e685]: Oppose criminalizing women or doctors for abortion care
+          - generic [ref=e686]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e687] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/prosecutor-shannon-taylor-wins-primary-in-virginias-first-congressional-district-enters-general-election-in-strong-position-to-unseat-career-politician-rob-wittman/
+            - group [ref=e691]:
+              - generic "Source details" [ref=e692] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e693]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e694] [cursor=pointer]:
+              - generic [ref=e697]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e698] [cursor=pointer]:
+              - generic [ref=e701]: Disagree
+            - generic [ref=e702]: Sign in to save a response.
+      - article [ref=e703]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e705]
+        - generic [ref=e706]:
+          - strong [ref=e708]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e709]: Created a task force to tackle the opioid epidemic
+          - generic [ref=e710]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e711] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/new-ad-prosecutor-shannon-taylor-launches-first-tv-ad-highlighting-support-from-law-enforcement-and-record-of-keeping-virginians-safe/
+            - group [ref=e715]:
+              - generic "Source details" [ref=e716] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e717]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e718] [cursor=pointer]:
+              - generic [ref=e721]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e722] [cursor=pointer]:
+              - generic [ref=e725]: Disagree
+            - generic [ref=e726]: Sign in to save a response.
+      - article [ref=e727]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e729]
+        - generic [ref=e730]:
+          - strong [ref=e732]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e733]: Lower costs for families
+          - generic [ref=e734]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e735] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/prosecutor-shannon-taylor-wins-primary-in-virginias-first-congressional-district-enters-general-election-in-strong-position-to-unseat-career-politician-rob-wittman/
+            - group [ref=e739]:
+              - generic "Source details" [ref=e740] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e741]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e742] [cursor=pointer]:
+              - generic [ref=e745]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e746] [cursor=pointer]:
+              - generic [ref=e749]: Disagree
+            - generic [ref=e750]: Sign in to save a response.
+      - article [ref=e751]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e753]
+        - generic [ref=e754]:
+          - strong [ref=e756]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e757]: Take illegal guns off the streets with gun safety advocates
+          - generic [ref=e758]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e759] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/prosecutor-shannon-taylor-issues-statement-on-fourth-anniversary-of-dobbs-decision-vows-to-fight-for-abortion-rights-in-congress/
+            - group [ref=e763]:
+              - generic "Source details" [ref=e764] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e765]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e766] [cursor=pointer]:
+              - generic [ref=e769]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e770] [cursor=pointer]:
+              - generic [ref=e773]: Disagree
+            - generic [ref=e774]: Sign in to save a response.
+      - article [ref=e775]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e777]
+        - generic [ref=e778]:
+          - strong [ref=e780]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e781]: Force dark money into the light, overturn Citizens United, and hold illegal monopolies accountable
+          - generic [ref=e782]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e783] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/prosecutor-shannon-taylor-rolls-out-serve-the-people-first-agenda-to-crack-down-on-the-culture-of-corruption-in-washington/
+            - group [ref=e787]:
+              - generic "Source details" [active] [ref=e788] [cursor=pointer]
+              - time [ref=e872]: retrieved Oct 30, 2026
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e789]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e790] [cursor=pointer]:
+              - generic [ref=e793]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e794] [cursor=pointer]:
+              - generic [ref=e797]: Disagree
+            - generic [ref=e798]: Sign in to save a response.
+      - article [ref=e799]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e801]
+        - generic [ref=e802]:
+          - strong [ref=e804]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e805]: End corporate influence in Washington and create consequences for public-trust abuses
+          - generic [ref=e806]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e807] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/prosecutor-shannon-taylor-rolls-out-serve-the-people-first-agenda-to-crack-down-on-the-culture-of-corruption-in-washington/
+            - group [ref=e811]:
+              - generic "Source details" [ref=e812] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e813]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e814] [cursor=pointer]:
+              - generic [ref=e817]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e818] [cursor=pointer]:
+              - generic [ref=e821]: Disagree
+            - generic [ref=e822]: Sign in to save a response.
+      - article [ref=e823]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e825]
+        - generic [ref=e826]:
+          - strong [ref=e828]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e829]: Take illegal guns off the streets
+          - generic [ref=e830]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e831] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/prosecutor-shannon-taylor-rolls-out-serve-the-people-first-agenda-to-crack-down-on-the-culture-of-corruption-in-washington/
+            - group [ref=e835]:
+              - generic "Source details" [ref=e836] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e837]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e838] [cursor=pointer]:
+              - generic [ref=e841]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e842] [cursor=pointer]:
+              - generic [ref=e845]: Disagree
+            - generic [ref=e846]: Sign in to save a response.
+      - article [ref=e847]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e849]
+        - generic [ref=e850]:
+          - strong [ref=e852]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e853]: Created a task force to tackle the opioid epidemic
+          - generic [ref=e854]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e855] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/shannon-taylor-stands-with-virginia-families-hit-by-rising-health-care-costs-because-of-congressman-rob-wittman/
+            - group [ref=e859]:
+              - generic "Source details" [ref=e860] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e861]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e862] [cursor=pointer]:
+              - generic [ref=e865]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e866] [cursor=pointer]:
+              - generic [ref=e869]: Disagree
+            - generic [ref=e870]: Sign in to save a response.
+      - article [ref=e873]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e875]
+        - generic [ref=e876]:
+          - strong [ref=e878]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e879]: Led prosecutors in pledging not to criminalize abortion patients or doctors
+          - generic [ref=e880]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e881] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/new-ad-prosecutor-shannon-taylor-launches-first-tv-ad-highlighting-support-from-law-enforcement-and-record-of-keeping-virginians-safe/
+            - group [ref=e885]:
+              - generic "Source details" [ref=e886] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e887]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e888] [cursor=pointer]:
+              - generic [ref=e891]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e892] [cursor=pointer]:
+              - generic [ref=e895]: Disagree
+            - generic [ref=e896]: Sign in to save a response.
+      - article [ref=e897]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e899]
+        - generic [ref=e900]:
+          - strong [ref=e902]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e903]: Permanently shut down the revolving door between Congress and lobbying
+          - generic [ref=e904]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e905] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/prosecutor-shannon-taylor-rolls-out-serve-the-people-first-agenda-to-crack-down-on-the-culture-of-corruption-in-washington/
+            - group [ref=e909]:
+              - generic "Source details" [ref=e910] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e911]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e912] [cursor=pointer]:
+              - generic [ref=e915]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e916] [cursor=pointer]:
+              - generic [ref=e919]: Disagree
+            - generic [ref=e920]: Sign in to save a response.
+      - article [ref=e921]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e923]
+        - generic [ref=e924]:
+          - strong [ref=e926]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e927]: Create a task force to tackle the opioid epidemic
+          - generic [ref=e928]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e929] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/prosecutor-shannon-taylor-wins-primary-in-virginias-first-congressional-district-enters-general-election-in-strong-position-to-unseat-career-politician-rob-wittman/
+            - group [ref=e933]:
+              - generic "Source details" [ref=e934] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e935]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e936] [cursor=pointer]:
+              - generic [ref=e939]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e940] [cursor=pointer]:
+              - generic [ref=e943]: Disagree
+            - generic [ref=e944]: Sign in to save a response.
+      - article [ref=e945]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e947]
+        - generic [ref=e948]:
+          - strong [ref=e950]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e951]: Ban members of Congress from trading stocks using nonpublic information
+          - generic [ref=e952]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e953] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/prosecutor-shannon-taylor-rolls-out-serve-the-people-first-agenda-to-crack-down-on-the-culture-of-corruption-in-washington/
+            - group [ref=e957]:
+              - generic "Source details" [ref=e958] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e959]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e960] [cursor=pointer]:
+              - generic [ref=e963]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e964] [cursor=pointer]:
+              - generic [ref=e967]: Disagree
+            - generic [ref=e968]: Sign in to save a response.
+      - article [ref=e969]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e971]
+        - generic [ref=e972]:
+          - strong [ref=e974]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e975]: Pioneered programs to support victims of human trafficking
+          - generic [ref=e976]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e977] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/prosecutor-shannon-taylor-rolls-out-serve-the-people-first-agenda-to-crack-down-on-the-culture-of-corruption-in-washington/
+            - group [ref=e981]:
+              - generic "Source details" [ref=e982] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e983]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e984] [cursor=pointer]:
+              - generic [ref=e987]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e988] [cursor=pointer]:
+              - generic [ref=e991]: Disagree
+            - generic [ref=e992]: Sign in to save a response.
+      - article [ref=e993]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e995]
+        - generic [ref=e996]:
+          - strong [ref=e998]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e999]: Support victims of human trafficking through specialized programs
+          - generic [ref=e1000]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e1001] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/prosecutor-shannon-taylor-wins-primary-in-virginias-first-congressional-district-enters-general-election-in-strong-position-to-unseat-career-politician-rob-wittman/
+            - group [ref=e1005]:
+              - generic "Source details" [ref=e1006] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e1007]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e1008] [cursor=pointer]:
+              - generic [ref=e1011]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e1012] [cursor=pointer]:
+              - generic [ref=e1015]: Disagree
+            - generic [ref=e1016]: Sign in to save a response.
+      - article [ref=e1017]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e1019]
+        - generic [ref=e1020]:
+          - strong [ref=e1022]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e1023]: Prioritize prosecuting online child solicitation to protect children
+          - generic [ref=e1024]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e1025] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/new-ad-prosecutor-shannon-taylor-launches-first-tv-ad-highlighting-support-from-law-enforcement-and-record-of-keeping-virginians-safe/
+            - group [ref=e1029]:
+              - generic "Source details" [ref=e1030] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e1031]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e1032] [cursor=pointer]:
+              - generic [ref=e1035]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e1036] [cursor=pointer]:
+              - generic [ref=e1039]: Disagree
+            - generic [ref=e1040]: Sign in to save a response.
+      - article [ref=e1041]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e1043]
+        - generic [ref=e1044]:
+          - strong [ref=e1046]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e1047]: Support term limits and serve no more than 12 years in office
+          - generic [ref=e1048]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e1049] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/prosecutor-shannon-taylor-rolls-out-serve-the-people-first-agenda-to-crack-down-on-the-culture-of-corruption-in-washington/
+            - group [ref=e1053]:
+              - generic "Source details" [ref=e1054] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e1055]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e1056] [cursor=pointer]:
+              - generic [ref=e1059]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e1060] [cursor=pointer]:
+              - generic [ref=e1063]: Disagree
+            - generic [ref=e1064]: Sign in to save a response.
+      - article [ref=e1065]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e1067]
+        - generic [ref=e1068]:
+          - strong [ref=e1070]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e1071]: Lower health care costs and protect access to care
+          - generic [ref=e1072]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e1073] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/shannon-taylor-stands-with-virginia-families-hit-by-rising-health-care-costs-because-of-congressman-rob-wittman/
+            - group [ref=e1077]:
+              - generic "Source details" [ref=e1078] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e1079]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e1080] [cursor=pointer]:
+              - generic [ref=e1083]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e1084] [cursor=pointer]:
+              - generic [ref=e1087]: Disagree
+            - generic [ref=e1088]: Sign in to save a response.
+      - article [ref=e1089]:
+        - img "TAYLOR, SHANNON LEIGH portrait" [ref=e1091]
+        - generic [ref=e1092]:
+          - strong [ref=e1094]: TAYLOR, SHANNON LEIGH
+          - paragraph [ref=e1095]: Prioritize prosecution of drug distribution and trafficking networks
+          - generic [ref=e1096]:
+            - link "Open TAYLOR, SHANNON LEIGH's campaign source in a new tab, retrieved Oct 30, 2026" [ref=e1097] [cursor=pointer]:
+              - /url: https://shannontaylorva.com/new-ad-prosecutor-shannon-taylor-launches-first-tv-ad-highlighting-support-from-law-enforcement-and-record-of-keeping-virginians-safe/
+            - group [ref=e1101]:
+              - generic "Source details" [ref=e1102] [cursor=pointer]
+          - generic "Respond to TAYLOR, SHANNON LEIGH's campaign position" [ref=e1103]:
+            - button "Agree with TAYLOR, SHANNON LEIGH" [ref=e1104] [cursor=pointer]:
+              - generic [ref=e1107]: Agree
+            - button "Disagree with TAYLOR, SHANNON LEIGH" [ref=e1108] [cursor=pointer]:
+              - generic [ref=e1111]: Disagree
+            - generic [ref=e1112]: Sign in to save a response.

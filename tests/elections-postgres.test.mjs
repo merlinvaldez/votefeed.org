@@ -7,6 +7,8 @@ import pg from '../server/node_modules/pg/lib/index.js';
 import db from '../server/src/db/client.js';
 import * as elections from '../server/src/db/queries/elections.js';
 import electionsRouter from '../server/src/api/elections.js';
+import usersRouter from '../server/src/api/users.js';
+import getUserFromToken from '../server/src/middleware/getUserFromToken.js';
 import { readElectionPositionsForAddress } from '../server/src/elections/electionGeography.js';
 import { ELECTION_GEOGRAPHY_SOURCE, ELECTION_GEOGRAPHY_VERSION, RELEASE_SCOPE } from '../server/src/elections/contracts.js';
 
@@ -26,15 +28,25 @@ test('elections additive migration and server persistence on disposable PostgreS
     // Mirror Supabase's public-schema defaults so table migrations must revoke
     // browser and service-role privileges explicitly before granting their contract.
     await pool.query(`ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO PUBLIC, anon, authenticated, service_role`);
-    await pool.query(`CREATE TABLE users(id serial PRIMARY KEY,clerk_user_id text UNIQUE);
+    await pool.query(`CREATE TABLE users(
+        id serial PRIMARY KEY,clerk_user_id text UNIQUE,email text,first_name text,last_name text,
+        state text,district integer,notifications_enabled boolean NOT NULL DEFAULT true
+      );
       CREATE TABLE reps(bioguideid text PRIMARY KEY,image_url text,is_current_member boolean NOT NULL DEFAULT true);
       CREATE TABLE bills(id serial PRIMARY KEY,number integer,bill_type text);
       CREATE TABLE interactions(id serial PRIMARY KEY,user_id integer,bill_id integer,stance text);
-      INSERT INTO users VALUES(1,'clerk-a'),(2,'clerk-b'); INSERT INTO reps VALUES('H');
+      INSERT INTO users(id,clerk_user_id,email,first_name,last_name,state,district) VALUES
+        (1,'clerk-a','a@example.test','Legacy','User','New York',13),
+        (2,'clerk-b','b@example.test','Verified','User',NULL,NULL);
+      INSERT INTO reps VALUES('H');
       INSERT INTO bills VALUES(7,7,'hr'); INSERT INTO interactions VALUES(1,1,7,'approve');`);
     await pool.query(await readFile(new URL('../supabase/migrations/20261028202229_elections_storage.sql',import.meta.url),'utf8'));
     await pool.query(await readFile(new URL('../supabase/migrations/20261028202239_election_discovery_observations.sql',import.meta.url),'utf8'));
     await pool.query(await readFile(new URL('../supabase/migrations/20261028202247_election_feed_build_jobs.sql',import.meta.url),'utf8'));
+    // Match the later candidate-image columns used by the current read query;
+    // the isolated PostgreSQL cluster does not install Supabase's pg_cron extension.
+    await pool.query(`ALTER TABLE election_candidates ADD COLUMN image_url text, ADD COLUMN image_source text,
+      ADD COLUMN image_expires_at timestamptz, ADD COLUMN image_evidence jsonb NOT NULL DEFAULT '{}'::jsonb`);
     const checkedAt=new Date().toISOString(), reviewAfter=new Date(Date.now()+86400000).toISOString();
     const evidence={url:'https://elections.example.test/list',checkedAt};
     const race={office:'house',state:'AK',district:0,electionDate:'2026-11-03',stage:'general',contestType:'regular'};
@@ -111,17 +123,33 @@ test('elections additive migration and server persistence on disposable PostgreS
     });
     await t.test('matching geography, eligibility, sources and requesting-user-only reads',async()=>{
       assert.equal((await read()).items.length,0);
+      const suppliedImage='https://campaign.example.test/assets/fixture-candidate.jpg';
+      await pool.query(`UPDATE election_candidates SET image_url=$2,image_source='campaign-site',
+        image_evidence=$3::jsonb WHERE id=$1`,[imported.candidateId,suppliedImage,JSON.stringify({assetKind:'og:image'})]);
       const roster=await elections.readElectionRoster({state:'AK',chamber:'all',scope:{...RELEASE_SCOPE,states:['AK']},geography:{
         state:'AK',district:0,status:'verified',cycle:RELEASE_SCOPE.cycle,boundaryVersion:ELECTION_GEOGRAPHY_VERSION,sourceUrl:ELECTION_GEOGRAPHY_SOURCE,
       }},pool);
-      assert.equal(roster.candidates.length,5);
+      assert.equal(roster.candidates.length,6);
       assert.equal(roster.candidates.filter(candidate=>candidate.race.office==='house').length,3);
       assert.ok(roster.candidates.every(candidate=>candidate.incumbency==='unknown'));
+      assert.equal(roster.candidates.find(candidate=>candidate.candidateId===imported.candidateId).portraitUrl,null,
+        'an unclassified campaign og:image must not be cropped into a candidate portrait');
       const stale=await elections.saveElectionGeography({state:'AK',district:0,cycle:2026,boundaryVersion:'119th',sourceUrl:evidence.url,checkedAt,status:'verified'},pool);
       assert.equal((await read({geographyEvidenceId:stale.id})).houseAvailability,'geography-unverified');
       geography=await elections.saveElectionGeography({state:'AK',district:0,cycle:2026,boundaryVersion:ELECTION_GEOGRAPHY_VERSION,sourceUrl:ELECTION_GEOGRAPHY_SOURCE,checkedAt,status:'verified'},pool);
       const result=await read({},auth);
       assert.equal(result.items.length,1); assert.equal(result.items[0].summary,'Build more housing.');
+      assert.equal(result.items[0].candidate.portraitUrl,null,
+        'the position feed must apply the same campaign-image classification as the roster');
+      await pool.query(`UPDATE election_candidates SET image_evidence=$2::jsonb WHERE id=$1`,
+        [imported.candidateId,JSON.stringify({assetKind:'portrait'})]);
+      const verifiedRoster=await elections.readElectionRoster({state:'AK',chamber:'all',scope:{...RELEASE_SCOPE,states:['AK']},geography:{
+        state:'AK',district:0,status:'verified',cycle:RELEASE_SCOPE.cycle,boundaryVersion:ELECTION_GEOGRAPHY_VERSION,sourceUrl:ELECTION_GEOGRAPHY_SOURCE,
+      }},pool);
+      assert.equal(verifiedRoster.candidates.find(candidate=>candidate.candidateId===imported.candidateId).portraitUrl,suppliedImage,
+        'an explicitly classified candidate portrait remains available');
+      const verifiedPortraitFeed=await read({},auth);
+      assert.equal(verifiedPortraitFeed.items[0].candidate.portraitUrl,suppliedImage);
       assert.equal(result.items[0].response,null);
       assert.equal(result.items[0].source.snapshotId,snapshot.id);
       assert.equal((await read()).items[0].response,null);
@@ -155,12 +183,13 @@ test('elections additive migration and server persistence on disposable PostgreS
       await pool.query('UPDATE users SET election_geography_evidence_id=$1 WHERE id=2',[geography.id]);
       const app=express(); app.use(express.json());
       app.use((req,_res,next)=>{
-        const signedIn=req.get('x-test-user')==='clerk-b';
-        req.auth=()=>({userId:signedIn?'clerk-b':null});
-        req.user=signedIn?{id:2,state:'AK'}:null;
+        const testUserId=req.get('x-test-user');
+        req.auth=()=>({userId:testUserId??null});
         next();
       });
+      app.use(getUserFromToken);
       app.use('/elections',electionsRouter);
+      app.use('/users',usersRouter);
       const server=app.listen(0,'127.0.0.1');
       await new Promise(resolve=>server.once('listening',resolve));
       const originalFetch=globalThis.fetch, originalDbQuery=db.query, originalDbConnect=db.connect;
@@ -173,8 +202,23 @@ test('elections additive migration and server persistence on disposable PostgreS
         return originalFetch(url,options);
       };
       const base=`http://127.0.0.1:${server.address().port}/elections`;
+      const appBase=`http://127.0.0.1:${server.address().port}`;
       const post=(path,body,headers={})=>originalFetch(`${base}/${path}`,{method:'POST',headers:{'Content-Type':'application/json',...headers},body:JSON.stringify(body)});
       try {
+        const verifiedMeResponse=await originalFetch(`${appBase}/users/me`,{headers:{'x-test-user':'clerk-b'}});
+        const verifiedMeText=await verifiedMeResponse.text();
+        assert.equal(verifiedMeResponse.status,200,verifiedMeText);
+        const verifiedMe=JSON.parse(verifiedMeText);
+        assert.equal(verifiedMe.election_geography_evidence_id,geography.id);
+        assert.equal(verifiedMe.state,null);
+        assert.equal(verifiedMe.district,null);
+        const legacyMeResponse=await originalFetch(`${appBase}/users/me`,{headers:{'x-test-user':'clerk-a'}});
+        const legacyMeText=await legacyMeResponse.text();
+        assert.equal(legacyMeResponse.status,200,legacyMeText);
+        const legacyMe=JSON.parse(legacyMeText);
+        assert.equal(legacyMe.district,13);
+        assert.equal(legacyMe.election_geography_evidence_id,null);
+
         const guestRosterResponse=await post('roster',{address:'1 Example Ave, Anchorage, AK 99501',chamber:'house'});
         assert.equal(guestRosterResponse.status,200);
         const guestRoster=await guestRosterResponse.json();
@@ -195,10 +239,20 @@ test('elections additive migration and server persistence on disposable PostgreS
         assert.equal(filteredFeed.items[0].candidacyId,secondCandidate.candidacy.id);
         assert.equal(filteredFeed.policyCounts.all,1);
         assert.equal(filteredFeed.policyCounts.byPolicyArea.economy,1);
+        const uncategorizedResponse=await post('feed',{address:'1 Example Ave, Anchorage, AK 99501',chamber:'house',policyArea:'uncategorized',limit:10});
+        const uncategorizedFeed=await uncategorizedResponse.json();
+        assert.equal(uncategorizedResponse.status,200);
+        assert.equal(uncategorizedFeed.items.length,0);
+        assert.equal(uncategorizedFeed.policyCounts.uncategorized,0);
         const spoofedGeography=await post('feed',{state:'AK',district:0});
         assert.equal(spoofedGeography.status,400);
 
         const authHeaders={'x-test-user':'clerk-b'};
+        const signedRosterResponse=await post('roster',{chamber:'house'},authHeaders);
+        assert.equal(signedRosterResponse.status,200);
+        const signedRoster=await signedRosterResponse.json();
+        assert.equal(signedRoster.geography.houseDistrict,0);
+        assert.equal(signedRoster.candidates.length,4);
         const signedFeedResponse=await post('feed',{chamber:'house',limit:10},authHeaders);
         assert.equal(signedFeedResponse.status,200);
         const signedFeed=await signedFeedResponse.json();
@@ -211,6 +265,13 @@ test('elections additive migration and server persistence on disposable PostgreS
         const alignmentResponse=await post('alignment',{chamber:'house',candidacyId:imported.candidacy.id},authHeaders);
         assert.equal(alignmentResponse.status,200);
         assert.deepEqual(await alignmentResponse.json(),{agreementCount:0,disagreementCount:1,answeredCount:1,percentage:0,status:'ready'});
+        const uncategorizedAlignmentResponse=await post('alignment',{
+          chamber:'house',candidacyId:imported.candidacy.id,policyArea:'uncategorized',
+        },authHeaders);
+        assert.equal(uncategorizedAlignmentResponse.status,200);
+        assert.deepEqual(await uncategorizedAlignmentResponse.json(),{
+          agreementCount:0,disagreementCount:0,answeredCount:0,percentage:null,status:'no-answers',
+        });
         const cleared=await originalFetch(`${base}/responses/${version.id}`,{method:'DELETE',headers:authHeaders});
         assert.equal(cleared.status,200);
         assert.deepEqual((await cleared.json()).response,{positionVersionId:version.id,stance:null});
@@ -224,7 +285,10 @@ test('elections additive migration and server persistence on disposable PostgreS
           eligibilityEvidence:{...fixture.eligibilityEvidence,checkedAt:new Date(Date.parse(checkedAt)+5000).toISOString()},
         },pool);
         globalThis.fetch=originalFetch; db.query=originalDbQuery; db.connect=originalDbConnect;
-        await new Promise(resolve=>server.close(resolve));
+        await new Promise(resolve=>{
+          server.close(resolve);
+          server.closeAllConnections();
+        });
       }
     });
     await t.test('address lookup binds election district and verified geography to the read',async()=>{
@@ -271,10 +335,13 @@ test('elections additive migration and server persistence on disposable PostgreS
       assert.equal((await elections.getElectionResponse(other,version.id,pool)).private_comment,'private B');
     });
     await t.test('ingestion completeness and browser role permission enforcement',async()=>{
-      const run=await elections.startElectionRun({stage:'discovery',adapter:'fixture',adapterVersion:'1'},pool);
+      const run=await elections.startElectionRun({stage:'discovery',adapter:'public-evidence',adapterVersion:'fixture-v1'},pool);
       await assert.rejects(elections.finishElectionRun(run.id,{status:'complete',coverage:[]},pool),/coverage/);
       await elections.finishElectionRun(run.id,{status:'partial',coverage:[{state:'AK',office:'house',status:'partial'},{state:'AK',office:'senate',status:'partial'}],counts:{read:4},errorCodes:['source-timeout']},pool);
-      assert.equal((await read()).coverage.status,'partial');
+      const partialFeed=await read();
+      assert.equal(partialFeed.coverage.status,'partial');
+      assert.equal(partialFeed.coverage.byOffice.house,'partial');
+      assert.equal(partialFeed.coverage.byOffice.senate,'partial');
       const tables=(await pool.query(`SELECT tablename,rowsecurity FROM pg_tables WHERE schemaname='public' AND (tablename LIKE 'election_%' OR tablename LIKE 'campaign_%')`)).rows;
       assert.equal(tables.length,19);
       const tablePrivileges=(await pool.query(`
@@ -339,6 +406,8 @@ test('elections additive migration and server persistence on disposable PostgreS
     });
   } finally {
     if(pool) await pool.end();
-    await admin.query(`DROP DATABASE ${database} WITH (FORCE)`); await admin.end();
+    const databaseExists=await admin.query('SELECT 1 FROM pg_database WHERE datname=$1',[database]);
+    if(databaseExists.rowCount) await admin.query(`DROP DATABASE ${database} WITH (FORCE)`);
+    await admin.end();
   }
 });

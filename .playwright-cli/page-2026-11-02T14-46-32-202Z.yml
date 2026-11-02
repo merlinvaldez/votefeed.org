@@ -1,0 +1,200 @@
+- generic [ref=f13e4]:
+  - complementary [ref=f13e5]:
+    - link "VoteFeed feed" [ref=f13e6] [cursor=pointer]:
+      - /url: /feed
+      - img "VoteFeed bullhorn" [ref=f13e8]
+      - generic [ref=f13e9]: VoteFeed
+    - navigation [ref=f13e10]:
+      - link "Feed" [ref=f13e11] [cursor=pointer]:
+        - /url: /feed
+      - link "Profile" [ref=f13e16] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=f13e21]:
+      - generic [ref=f13e22]:
+        - generic [ref=f13e23]: Policy Areas
+        - button "Search policy areas" [ref=f13e24] [cursor=pointer]
+      - generic [ref=f13e28]:
+        - button "All 71" [ref=f13e1055] [cursor=pointer]:
+          - generic [ref=f13e30]: All
+          - generic [ref=f13e1056]: "71"
+        - button "Armed Forces and National Security 3" [ref=f13e1057] [cursor=pointer]:
+          - generic [ref=f13e1058]: Armed Forces and National Security
+          - generic [ref=f13e1059]: "3"
+        - button "Crime and Law Enforcement 2" [ref=f13e1060] [cursor=pointer]:
+          - generic [ref=f13e1061]: Crime and Law Enforcement
+          - generic [ref=f13e1062]: "2"
+        - button "Economics and Public Finance 11" [ref=f13e1063] [cursor=pointer]:
+          - generic [ref=f13e1064]: Economics and Public Finance
+          - generic [ref=f13e1065]: "11"
+        - button "Education 1" [ref=f13e1066] [cursor=pointer]:
+          - generic [ref=f13e1067]: Education
+          - generic [ref=f13e1068]: "1"
+        - button "Energy 6" [ref=f13e1069] [cursor=pointer]:
+          - generic [ref=f13e1070]: Energy
+          - generic [ref=f13e1071]: "6"
+        - button "Environmental Protection 9" [ref=f13e1072] [cursor=pointer]:
+          - generic [ref=f13e1073]: Environmental Protection
+          - generic [ref=f13e1074]: "9"
+        - button "Finance and Financial Sector 6" [ref=f13e1075] [cursor=pointer]:
+          - generic [ref=f13e1076]: Finance and Financial Sector
+          - generic [ref=f13e1077]: "6"
+        - button "Foreign Trade and International Finance 5" [ref=f13e1078] [cursor=pointer]:
+          - generic [ref=f13e1079]: Foreign Trade and International Finance
+          - generic [ref=f13e1080]: "5"
+        - button "Government Operations and Politics 3" [ref=f13e1081] [cursor=pointer]:
+          - generic [ref=f13e1082]: Government Operations and Politics
+          - generic [ref=f13e1083]: "3"
+        - button "Health 2" [ref=f13e1084] [cursor=pointer]:
+          - generic [ref=f13e1085]: Health
+          - generic [ref=f13e1086]: "2"
+        - button "Housing and Community Development 1" [ref=f13e1087] [cursor=pointer]:
+          - generic [ref=f13e1088]: Housing and Community Development
+          - generic [ref=f13e1089]: "1"
+        - button "International Affairs 10" [ref=f13e1090] [cursor=pointer]:
+          - generic [ref=f13e1091]: International Affairs
+          - generic [ref=f13e1092]: "10"
+        - button "Public Lands and Natural Resources 7" [ref=f13e1093] [cursor=pointer]:
+          - generic [ref=f13e1094]: Public Lands and Natural Resources
+          - generic [ref=f13e1095]: "7"
+        - button "Sports and Recreation 1" [ref=f13e1096] [cursor=pointer]:
+          - generic [ref=f13e1097]: Sports and Recreation
+          - generic [ref=f13e1098]: "1"
+        - button "Taxation 3" [ref=f13e1099] [cursor=pointer]:
+          - generic [ref=f13e1100]: Taxation
+          - generic [ref=f13e1101]: "3"
+        - button "Transportation and Public Works 1" [ref=f13e1102] [cursor=pointer]:
+          - generic [ref=f13e1103]: Transportation and Public Works
+          - generic [ref=f13e1104]: "1"
+  - main [ref=f13e122]:
+    - tablist "Feed sections" [ref=f13e123]:
+      - tab "All Reps" [ref=f13e124] [cursor=pointer]
+      - tab "House of Representatives" [ref=f13e131] [cursor=pointer]
+      - tab "Senate" [active] [selected] [ref=f13e137] [cursor=pointer]
+      - tab "Elections" [ref=f13e141] [cursor=pointer]
+    - tabpanel "Senate" [ref=f13e1105]:
+      - region "Your congressional delegation" [ref=f13e469]:
+        - generic [ref=f13e470]:
+          - generic [ref=f13e471]:
+            - generic [ref=f13e472]:
+              - article "Gillibrand, Kirsten E." [ref=f13e1106]:
+                - img "Gillibrand, Kirsten E. official portrait" [ref=f13e1108]
+                - generic [ref=f13e1109]:
+                  - heading "Gillibrand, Kirsten E." [level=3] [ref=f13e1110]
+                  - generic [ref=f13e1111]:
+                    - generic [ref=f13e1112]: Democratic Party
+                    - generic [ref=f13e1114]: New York
+                    - link "Gillibrand, Kirsten E. official website (opens in a new tab)" [ref=f13e1118] [cursor=pointer]:
+                      - /url: https://www.gillibrand.senate.gov
+                      - generic [ref=f13e1122]: Website
+              - article "Schumer, Charles E." [ref=f13e1123]:
+                - img "Schumer, Charles E. official portrait" [ref=f13e1125]
+                - generic [ref=f13e1126]:
+                  - heading "Schumer, Charles E." [level=3] [ref=f13e1127]
+                  - generic [ref=f13e1128]:
+                    - generic [ref=f13e1129]: Democratic Party
+                    - generic [ref=f13e1131]: New York
+                    - link "Schumer, Charles E. official website (opens in a new tab)" [ref=f13e1135] [cursor=pointer]:
+                      - /url: https://www.schumer.senate.gov/
+                      - generic [ref=f13e1139]: Website
+            - status
+          - generic [ref=f13e512]:
+            - generic [ref=f13e513]:
+              - 'img "Policy alignment: 100%" [ref=f13e1140]'
+              - generic [aria-hidden] [ref=f13e519]: 100%
+            - generic [ref=f13e520]:
+              - generic [ref=f13e521]: Policy Alignment
+    - [signed-in response summary redacted]
+      - generic [ref=f13e523]:
+        - heading "Legislative Feed" [level=2] [ref=f13e524]
+        - 'article "Sens. Gillibrand, Kirsten E. and Schumer, Charles E.: H.R. 3633" [ref=f13e1141]':
+          - generic [ref=f13e1142]:
+            - generic [ref=f13e1143]:
+              - generic [ref=f13e1144]:
+                - group "Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1145]:
+                  - img "Gillibrand, Kirsten E. official portrait" [ref=f13e1147]
+                  - img "Schumer, Charles E. official portrait" [ref=f13e1149]
+                - button "H.R. 3633" [ref=f13e1150] [cursor=pointer]
+                - generic [ref=f13e1151]: Sep 15, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e1155] [cursor=pointer]
+            - generic [ref=f13e1159]:
+              - text: Sens. Gillibrand and Schumer voted
+              - generic [ref=f13e1160]: Nay
+              - text: on H.R. 3633, a bill to set rules for digital assets, with federal trade oversight and some trades still subject to securities agency rules.
+            - generic [ref=f13e1161]:
+    - [signed-in stance state redacted]
+                - generic [ref=f13e1165]: I agree with Sens. Gillibrand and Schumer
+              - button "Disagree with Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1166] [cursor=pointer]
+              - button "Open comments on H.R. 3633 for Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1169] [cursor=pointer]: 1 Comment
+        - 'article "Sens. Gillibrand, Kirsten E. and Schumer, Charles E.: H.R. 6500" [ref=f13e1172]':
+          - generic [ref=f13e1173]:
+            - generic [ref=f13e1174]:
+              - generic [ref=f13e1175]:
+                - group "Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1176]:
+                  - img "Gillibrand, Kirsten E. official portrait" [ref=f13e1178]
+                  - img "Schumer, Charles E. official portrait" [ref=f13e1180]
+                - button "H.R. 6500" [ref=f13e1181] [cursor=pointer]
+                - generic [ref=f13e1182]: Aug 8, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e1186] [cursor=pointer]
+            - generic [ref=f13e1190]:
+              - text: Sens. Gillibrand and Schumer voted
+              - generic [ref=f13e1191]: Yea
+              - text: on H.R. 6500, a bill to keep the federal government running with short-term funding and extend programs set to expire.
+            - generic [ref=f13e1192]:
+              - button "Agree with Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1193] [cursor=pointer]
+              - button "Disagree with Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1196] [cursor=pointer]
+              - button "Open comments on H.R. 6500 for Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1199] [cursor=pointer]: 0 Comments
+        - 'article "Sens. Gillibrand, Kirsten E. and Schumer, Charles E.: H.R. 6644" [ref=f13e1202]':
+          - generic [ref=f13e1203]:
+            - generic [ref=f13e1204]:
+              - generic [ref=f13e1205]:
+                - group "Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1206]:
+                  - img "Gillibrand, Kirsten E. official portrait" [ref=f13e1208]
+                  - img "Schumer, Charles E. official portrait" [ref=f13e1210]
+                - button "H.R. 6644" [ref=f13e1211] [cursor=pointer]
+                - generic [ref=f13e1212]: Jun 22, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e1216] [cursor=pointer]
+            - generic [ref=f13e1220]:
+              - text: Sens. Gillibrand and Schumer voted
+              - generic [ref=f13e1221]: Yea
+              - text: on H.R. 6644, a bill to make it easier to build, repair, and finance more homes by changing federal housing programs.
+            - generic [ref=f13e1222]:
+              - button "Agree with Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1223] [cursor=pointer]
+              - button "Disagree with Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1226] [cursor=pointer]
+              - button "Open comments on H.R. 6644 for Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1229] [cursor=pointer]: 0 Comments
+        - 'article "Sens. Gillibrand, Kirsten E. and Schumer, Charles E.: S. 1318" [ref=f13e1232]':
+          - generic [ref=f13e1233]:
+            - generic [ref=f13e1234]:
+              - generic [ref=f13e1235]:
+                - group "Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1236]:
+                  - img "Gillibrand, Kirsten E. official portrait" [ref=f13e1238]
+                  - img "Schumer, Charles E. official portrait" [ref=f13e1240]
+                - button "S. 1318" [ref=f13e1241] [cursor=pointer]
+                - generic [ref=f13e1242]: Jun 5, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e1246] [cursor=pointer]
+            - generic [ref=f13e1250]:
+              - text: Sens. Gillibrand and Schumer voted
+              - generic [ref=f13e1251]: Nay
+              - text: on S. 1318, a bill to require a program to find Jewish service members buried overseas with the wrong faith marker and contact their families.
+            - generic [ref=f13e1252]:
+              - button "Agree with Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1253] [cursor=pointer]
+              - button "Disagree with Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1256] [cursor=pointer]
+              - button "Open comments on S. 1318 for Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1259] [cursor=pointer]: 0 Comments
+        - 'article "Sens. Gillibrand, Kirsten E. and Schumer, Charles E.: H.J.Res. 140" [ref=f13e1262]':
+          - generic [ref=f13e1263]:
+            - generic [ref=f13e1264]:
+              - generic [ref=f13e1265]:
+                - group "Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1266]:
+                  - img "Gillibrand, Kirsten E. official portrait" [ref=f13e1268]
+                  - img "Schumer, Charles E. official portrait" [ref=f13e1270]
+                - button "H.J.Res. 140" [ref=f13e1271] [cursor=pointer]
+                - generic [ref=f13e1272]: Apr 16, 2026
+              - button "This is an AI-generated summary. Toggle here to see the original from Congress.gov." [ref=f13e1276] [cursor=pointer]
+            - generic [ref=f13e1280]:
+              - text: Sens. Gillibrand and Schumer voted
+              - generic [ref=f13e1281]: Nay
+              - text: on H.J.Res. 140, a joint resolution to allow mining and geothermal leases again on protected national forest land near Minnesota's Boundary Waters.
+            - generic [ref=f13e1282]:
+              - button "Agree with Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1283] [cursor=pointer]
+              - button "Disagree with Sens. Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1286] [cursor=pointer]
+              - button "Open comments on H.J.Res. 140 for Gillibrand, Kirsten E. and Schumer, Charles E." [ref=f13e1289] [cursor=pointer]: 0 Comments
+        - generic [ref=f13e1292]: Scroll for more

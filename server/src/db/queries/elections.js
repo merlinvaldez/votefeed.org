@@ -1,9 +1,20 @@
 import { createHash } from 'node:crypto';
 import db from '../client.js';
-import { RELEASE_SCOPE, normalizeRace, normalizeState, normalizeDistrict, validateExtractionItem, positionVersionKey, ELECTION_GEOGRAPHY_SOURCE, ELECTION_GEOGRAPHY_VERSION } from '../../elections/contracts.js';
+import { RELEASE_SCOPE, normalizeRace, normalizeState, normalizeDistrict, validateExtractionItem, positionVersionKey, ELECTION_GEOGRAPHY_SOURCE, ELECTION_GEOGRAPHY_VERSION, matchesPolicyArea } from '../../elections/contracts.js';
 
 const hash = value => createHash('sha256').update(value).digest('hex');
 const one = async (runner, sql, values = []) => (await runner.query(sql, values)).rows[0];
+// Campaign sites often publish a logo or promotional banner as og:image. Only
+// use a campaign-site asset as a candidate portrait when its evidence labels it
+// explicitly as a portrait; official representative and Civic images retain
+// their source-specific trust and expiry handling.
+const candidatePortraitProjection = `COALESCE(
+  CASE WHEN ca.image_url IS NOT NULL
+    AND (ca.image_expires_at IS NULL OR ca.image_expires_at>now())
+    AND (ca.image_source IS DISTINCT FROM 'campaign-site' OR ca.image_evidence->>'assetKind'='portrait')
+    THEN ca.image_url END,
+  CASE WHEN ca.match_status='matched' THEN rep.image_url END
+)`;
 const required = (value, field) => {
   if (typeof value !== 'string' || !value.trim()) throw new TypeError(`Missing ${field}`);
   return value;
@@ -336,6 +347,66 @@ export async function publishCampaignPositions(input, pool = db) {
   });
 }
 
+// Summary refreshes append a presentation revision and keep answered position versions immutable.
+export async function recordCampaignSummaryRefresh(input, pool = db) {
+  const model = required(input.model, 'model');
+  const promptVersion = required(input.promptVersion, 'promptVersion');
+  if (!Array.isArray(input.items) || !input.items.length || input.items.length > 20) throw new TypeError('Provide 1 to 20 refreshed summaries');
+  const itemsById = new Map();
+  for (const item of input.items) {
+    const id = required(item.positionVersionId, 'positionVersionId');
+    const summary = required(item.summary, 'summary').trim();
+    if (summary.length > 500 || /^(?:the campaign\b|campaign priority\b|proposed priority\b|the priorities page\b|is working to\b|working to\b|would\b|plans? to\b|aims? to\b|wants? to\b|seeks? to\b|intends? to\b)/i.test(summary)) {
+      throw new TypeError('Summary must be concise and action-first');
+    }
+    if (itemsById.has(id)) throw new TypeError('Duplicate positionVersionId');
+    itemsById.set(id, { positionVersionId: id, summary });
+  }
+
+  return transaction(pool, async c => {
+    const ids = [...itemsById.keys()];
+    const rows = (await c.query(`SELECT p.id AS "positionVersionId",p.candidacy_id AS "candidacyId",p.snapshot_id AS "snapshotId",p.topic,p.excerpt
+      FROM campaign_position_versions p
+      JOIN election_candidacies co ON co.id=p.candidacy_id
+      JOIN election_races r ON r.id=co.race_id
+      JOIN campaign_sites w ON w.candidacy_id=co.id AND w.is_current
+      WHERE p.id=ANY($1::uuid[]) AND p.state='published' AND p.validation->>'outcome'='valid'
+        AND co.eligibility='ballot-confirmed' AND r.election_date >= date '2026-01-01' AND r.election_date < date '2027-01-01'
+        AND r.stage='general' AND r.contest_type IN ('regular','special')
+        AND w.status IN ('verified','ambiguous') AND w.review_after>now()
+        AND EXISTS(SELECT 1 FROM campaign_position_evidence pe JOIN campaign_sources es ON es.id=pe.snapshot_id
+          WHERE pe.position_version_id=p.id AND es.site_id=w.id AND es.candidacy_id=p.candidacy_id)
+      FOR UPDATE OF p,co,w`, [ids])).rows;
+    const groups = new Map();
+    for (const row of rows) {
+      if (!groups.has(row.candidacyId)) groups.set(row.candidacyId, []);
+      groups.get(row.candidacyId).push({ ...row, summary: itemsById.get(row.positionVersionId).summary });
+    }
+
+    let written = 0;
+    for (const [candidacyId, group] of groups) {
+      const positionVersionIds = group.map(item => item.positionVersionId);
+      const attempt = await one(c, `INSERT INTO campaign_processing_attempts(candidacy_id,status,model,prompt_version,validation,reconciliation)
+        VALUES($1,'complete',$2,$3,$4,$5) RETURNING *`, [candidacyId,model,promptVersion,
+        {summaryOnly:true,itemCount:group.length}, {method:'action-first-summary-refresh',positionVersionIds}]);
+      for (const item of group) {
+        const presentation = {
+          summary:item.summary,
+          excerpt:item.excerpt,
+          topic:item.topic,
+          summaryPromptVersion:promptVersion,
+          validation:{outcome:'valid',validatorVersion:'campaign-summary-format-1.0',reasons:['action-first-format']},
+        };
+        await c.query(`INSERT INTO campaign_position_evidence(position_version_id,snapshot_id,attempt_id,presentation)
+          VALUES($1,$2,$3,$4) ON CONFLICT(position_version_id,snapshot_id,attempt_id) DO NOTHING`,
+        [item.positionVersionId,item.snapshotId,attempt.id,presentation]);
+        written++;
+      }
+    }
+    return {written,skipped:input.items.length-written,attempts:groups.size};
+  });
+}
+
 export async function saveElectionGeography(input, runner = db) {
   const state = normalizeState(input.state);
   const status = input.status;
@@ -402,7 +473,8 @@ function coverageSummary(runs, state, offices, geographyVerified, district=null)
   const byOffice = Object.fromEntries(['house','senate'].map(office => {
     if (office === 'house' && !geographyVerified) return [office,'geography-unverified'];
     if (!offices.includes(office)) return [office,'not-requested'];
-    const entries = Array.isArray(runs?.[office]?.coverage) ? runs[office].coverage : [];
+    const officeRun = Array.isArray(runs?.coverage) ? runs : runs?.[office];
+    const entries = Array.isArray(officeRun?.coverage) ? officeRun.coverage : [];
     const entry = entries.find(value => value.state === state && value.office === office
       && (office==='senate' || value.district == null || value.district===district));
     if (entry?.status === 'complete' && entry.noRaces === true) return [office,'no-race'];
@@ -417,7 +489,7 @@ function coverageSummary(runs, state, offices, geographyVerified, district=null)
     message: status === 'complete' ? null : status === 'partial'
       ? 'Candidate coverage is incomplete for one or more matching races.'
       : 'Candidate coverage has not been confirmed for these matching races.',
-    runStatus: runs?.house?.status ?? runs?.senate?.status ?? null,
+    runStatus: runs?.status ?? runs?.house?.status ?? runs?.senate?.status ?? null,
   };
 }
 
@@ -437,7 +509,7 @@ export async function readElectionRoster(input, pool = db) {
         co.party,
         CASE WHEN ca.match_status='matched' AND ca.member_id IS NOT NULL AND rep.is_current_member THEN 'incumbent'
           WHEN ca.match_status='matched' AND ca.member_id IS NOT NULL AND NOT rep.is_current_member THEN 'not-incumbent' ELSE 'unknown' END AS incumbency,
-        CASE WHEN ca.match_status='matched' THEN rep.image_url ELSE NULL END AS "portraitUrl",
+        ${candidatePortraitProjection} AS "portraitUrl",
         co.eligibility AS "ballotStatus",
         CASE WHEN EXISTS(SELECT 1 FROM election_candidate_identities fi WHERE fi.candidate_id=ca.id AND fi.system='fec:candidate')
           THEN 'fec-registered' ELSE 'state-listed' END AS "registrationStatus",
@@ -455,10 +527,10 @@ export async function readElectionRoster(input, pool = db) {
       LEFT JOIN reps rep ON rep.bioguideid=ca.member_id AND ca.match_status='matched'
       LEFT JOIN campaign_sites w ON w.candidacy_id=co.id AND w.is_current
       WHERE r.state=$1 AND r.office=ANY($2::text[]) AND extract(year FROM r.election_date)=$3
-        AND r.stage=$4 AND r.contest_type=$5 AND (r.office='senate' OR ($6::boolean AND r.district=$7))
-        AND co.eligibility NOT IN ('withdrawn','disqualified')
+        AND r.stage=$4 AND r.contest_type=ANY($5::text[]) AND (r.office='senate' OR ($6::boolean AND r.district=$7))
+        AND co.eligibility='ballot-confirmed'
       ORDER BY r.election_date,r.state,r.office,COALESCE(r.district,r.senate_seat),r.id,ca.id,co.id`,
-    [state,offices,scope.cycle,scope.stage,scope.contestType,geographyVerified,district])).rows;
+    [state,offices,scope.cycle,scope.stage,[scope.contestType,'special'],geographyVerified,district])).rows;
     const runs={};
     for (const office of offices) {
       if (office==='house' && !geographyVerified) continue;
@@ -510,14 +582,18 @@ export async function readElectionPositions(input, auth = null, pool = db) {
       FROM election_races r LEFT JOIN election_candidacies co ON co.race_id=r.id
       LEFT JOIN campaign_sites w ON w.candidacy_id=co.id AND w.is_current
       WHERE r.state=$1 AND r.state=ANY($2::text[]) AND r.office=ANY($3::text[]) AND extract(year FROM r.election_date)=$4
-      AND r.stage=$5 AND r.contest_type=$6 AND (r.office='senate' OR ($7::boolean AND r.district=$8))
+      AND r.stage=$5 AND r.contest_type=ANY($6::text[]) AND (r.office='senate' OR ($7::boolean AND r.district=$8))
       ORDER BY r.election_date,r.state,r.office,COALESCE(r.district,r.senate_seat),r.id,co.candidate_id`,
-    [state,scope.states,scope.offices,scope.cycle,scope.stage,scope.contestType,Boolean(geography),district])).rows;
-    const allItems = (await c.query(`SELECT p.id AS "positionVersionId",p.claim_id AS "claimId",p.candidacy_id AS "candidacyId",p.topic,p.summary,p.excerpt,
+    [state,scope.states,scope.offices,scope.cycle,scope.stage,[scope.contestType,'special'],Boolean(geography),district])).rows;
+    const allItems = (await c.query(`SELECT p.id AS "positionVersionId",p.claim_id AS "claimId",p.candidacy_id AS "candidacyId",p.topic,
+      COALESCE((SELECT NULLIF(pe.presentation->>'summary','') FROM campaign_position_evidence pe
+        JOIN campaign_processing_attempts pa ON pa.id=pe.attempt_id
+        WHERE pe.position_version_id=p.id AND pe.presentation ? 'summary'
+        ORDER BY pa.created_at DESC,pa.id DESC LIMIT 1),p.summary) AS summary,p.excerpt,
       jsonb_build_object('id',ca.id,'candidateId',ca.id,'name',ca.name,'party',co.party,
         'incumbency',CASE WHEN ca.match_status='matched' AND ca.member_id IS NOT NULL AND rep.is_current_member THEN 'incumbent'
           WHEN ca.match_status='matched' AND ca.member_id IS NOT NULL AND NOT rep.is_current_member THEN 'not-incumbent' ELSE 'unknown' END,
-        'portraitUrl',CASE WHEN ca.match_status='matched' THEN rep.image_url ELSE NULL END) AS candidate,
+        'portraitUrl',${candidatePortraitProjection}) AS candidate,
       jsonb_build_object('office',r.office,'state',r.state,'district',r.district,'senateSeat',r.senate_seat,
         'electionDate',r.election_date,'stage',r.stage,'contestType',r.contest_type) AS race,
       jsonb_build_object('snapshotId',s.id,'url',s.final_url,'retrievedAt',s.retrieved_at) AS source,
@@ -530,8 +606,8 @@ export async function readElectionPositions(input, auth = null, pool = db) {
       JOIN campaign_sources s ON s.id=p.snapshot_id JOIN campaign_sites w ON w.candidacy_id=co.id AND w.is_current
       LEFT JOIN reps rep ON rep.bioguideid=ca.member_id
       LEFT JOIN election_interactions i ON i.position_version_id=p.id AND i.user_id=$1
-      WHERE r.id=ANY($2::uuid[]) AND (co.eligibility='ballot-confirmed' OR (co.eligibility NOT IN ('withdrawn','disqualified')
-        AND EXISTS(SELECT 1 FROM election_candidate_identities fi WHERE fi.candidate_id=co.candidate_id AND fi.system='fec:candidate'))) AND w.status IN ('verified','ambiguous') AND w.review_after>now()
+      WHERE r.id=ANY($2::uuid[]) AND co.eligibility='ballot-confirmed'
+        AND w.status IN ('verified','ambiguous') AND w.review_after>now()
       AND p.state='published' AND p.validation->>'outcome'='valid'
       AND EXISTS(SELECT 1 FROM campaign_position_evidence pe JOIN campaign_sources es ON es.id=pe.snapshot_id
         WHERE pe.position_version_id=p.id AND es.site_id=w.id AND es.candidacy_id=p.candidacy_id)
@@ -545,7 +621,7 @@ export async function readElectionPositions(input, auth = null, pool = db) {
       if (item.topic == null) policyCounts.uncategorized += 1;
       else policyCounts.byPolicyArea[item.topic]=(policyCounts.byPolicyArea[item.topic] ?? 0)+1;
     }
-    const visibleItems = policyArea == null ? scopedItems : scopedItems.filter(item => item.topic === policyArea);
+    const visibleItems = scopedItems.filter(item => matchesPolicyArea(item.topic, policyArea));
     const coverage = (await c.query(`SELECT status,coverage,finished_at FROM election_ingestion_runs WHERE stage='discovery' AND status<>'pending'
       AND scope @> $1::jsonb ORDER BY finished_at DESC,id DESC LIMIT 1`,[JSON.stringify({cycle:scope.cycle,stage:scope.stage,contestType:scope.contestType,states:[state],offices:scope.offices})])).rows[0] ?? null;
     // Cursor binds the complete visible publication set and filter; mutation forces restart.
@@ -574,7 +650,7 @@ export async function readElectionPositions(input, auth = null, pool = db) {
     else if (!availability && selectedRace?.availability==='no-positions') availability='no-positions';
     else if (!availability && policyArea != null && scopedItems.length>0) availability='no-topic-match';
     else if (!availability) availability='coverage-unknown';
-    const alignment = userId == null || candidacyId == null ? null : scopedItems.reduce((counts,item) => {
+    const alignment = userId == null || candidacyId == null ? null : visibleItems.reduce((counts,item) => {
       if (item.response?.stance==='approve') counts.agreementCount += 1;
       if (item.response?.stance==='disapprove') counts.disagreementCount += 1;
       return counts;

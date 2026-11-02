@@ -78,8 +78,21 @@ try {
         if (-not $ready) { throw 'PostgreSQL did not listen on 127.0.0.1:55439 within 30 seconds.' }
     }
 
-    & $psqlExe -X -h 127.0.0.1 -p 55439 -U postgres -d postgres -v ON_ERROR_STOP=1 -Atqc 'SELECT 1' *> $null
-    if ($LASTEXITCODE -ne 0) { throw 'The isolated PostgreSQL test database did not accept a SQL connection.' }
+    $databaseReady = $false
+    $lastReadinessOutput = ''
+    for ($attempt = 0; $attempt -lt 60; $attempt++) {
+        $readinessOutput = & $psqlExe -X -h 127.0.0.1 -p 55439 -U postgres -d postgres `
+            -v ON_ERROR_STOP=1 -Atqc 'SELECT 1' 2>&1
+        if ($LASTEXITCODE -eq 0) {
+            $databaseReady = $true
+            break
+        }
+        $lastReadinessOutput = ($readinessOutput | Out-String).Trim()
+        Start-Sleep -Milliseconds 500
+    }
+    if (-not $databaseReady) {
+        throw "The isolated PostgreSQL test database did not accept a SQL connection. $lastReadinessOutput"
+    }
 
     foreach ($flag in $flags) {
         [Environment]::SetEnvironmentVariable($flag, '1', 'Process')
@@ -90,7 +103,7 @@ try {
     if ($testFiles.Count -eq 0) { throw 'No Node test files were found under tests.' }
 
     Write-Host "Running $($testFiles.Count) test files with PostgreSQL at 127.0.0.1:55439."
-    & $nodeExe --test @testFiles
+    & $nodeExe --test --test-reporter=spec @testFiles
     if ($LASTEXITCODE -ne 0) { throw "Node test runner failed with exit code $LASTEXITCODE." }
 } finally {
     foreach ($flag in $flags) {
