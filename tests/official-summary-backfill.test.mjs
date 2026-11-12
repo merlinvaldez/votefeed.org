@@ -62,6 +62,10 @@ test('service-only repair restores official HTML through the real Congress looku
   runInNewContext(source.replace(/^import .*;\r?$/gm, ''), {
     Deno: { env: { get: () => 'test' }, serve(fn) { handler = fn; } },
     createClient: () => client, officialBillUrl, json, console, URL, AbortSignal,
+    refreshAiSummaries: async () => {
+      assert.equal(bill.summary, '<p>Official published summary</p>');
+      return { generatedCount: 1, failedCount: 0 };
+    },
     atob, Response, Request, setTimeout,
     fetch: async url => { requests.push(String(url)); return Response.json({ summaries: [
       { text: '<p>Older version</p>', updateDate: '2026-10-01T00:00:00Z' },

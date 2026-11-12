@@ -4,7 +4,7 @@ import { useAuth } from "./authContext";
 import { API_BASE } from "./constants";
 import { billFolderTabs, initialBillFolder, billDetailUrl } from "./billDetailContext";
 import BillDetailPanel from "./BillPage";
-import { hasSummaryText } from "./feedSummaries";
+import { hasSummaryText, officialSummaryHtml, shouldShowOfficialSummary } from "./feedSummaries";
 
 export default function BillPageRoute() {
   const { billType, billNumber } = useParams();
@@ -23,7 +23,7 @@ export default function BillPageRoute() {
   const [summaryPreference, setSummaryPreference] = useState(null);
   const [summaryResult, setSummaryResult] = useState(null);
   const summaryScope = JSON.stringify([billType, billNumber, congress]);
-  const showOriginal = summaryPreference?.scope === summaryScope ? summaryPreference.showOriginal : true;
+  const prefersOriginal = summaryPreference?.scope === summaryScope ? summaryPreference.showOriginal : true;
   const setShowOriginal = value => setSummaryPreference({ scope: summaryScope, showOriginal: value });
   useEffect(() => {
     const controller = new AbortController();
@@ -53,6 +53,7 @@ export default function BillPageRoute() {
     return () => controller.abort();
   }, [scope, token, billType, billNumber, congress, cardId, state, district, authFetch, retry]);
   const detail = loaded?.scope === scope ? loaded.detail : null;
+  const showOriginal = shouldShowOfficialSummary(detail?.bill?.summary, prefersOriginal);
   const folders = useMemo(() => detail ? billFolderTabs(detail) : [], [detail]);
   const currentSummaryResult = summaryResult?.scope === summaryScope ? summaryResult : null;
   const aiSummary = [currentSummaryResult?.summary, detail?.bill?.aisummary].find(hasSummaryText) || "";
@@ -86,7 +87,9 @@ export default function BillPageRoute() {
           setSummaryResult({
             scope: summaryScope,
             summary: "",
-            error: "Simplified summary unavailable. Showing the official summary.",
+            error: officialSummaryHtml(detail.bill.summary)
+              ? "Simplified summary unavailable. Showing the official summary."
+              : "Simplified summary unavailable. Please retry.",
           });
         }
       }

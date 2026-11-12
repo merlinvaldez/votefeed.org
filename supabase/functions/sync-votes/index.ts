@@ -3,6 +3,7 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 
 import { json } from "../_shared/http.ts";
 import { officialBillUrl } from "../_shared/billUrl.ts";
+import { refreshAiSummaries } from "../_shared/refreshAiSummaries.ts";
 
 const CONGRESS_API_ORIGIN = "https://api.congress.gov";
 const RETRYABLE_MEMBER_STATUSES = new Set([429, 500, 502, 503, 504]);
@@ -1279,7 +1280,8 @@ Deno.serve(async (req) => {
       const result = officialSummaryMode
         ? await backfillMissingOfficialSummaries(supabase, congressApiKey)
         : await runPendingBillBackfill(supabase, congressApiKey);
-      return json(result, result.failures.length > 0 ? 500 : 200);
+      const aiSummaryRefresh = await refreshAiSummaries(supabase, Deno.env.get("OPENAI_API_KEY"));
+      return json({ ...result, aiSummaryRefresh }, result.failures.length > 0 ? 500 : 200);
     }
     const syncRunId = crypto.randomUUID();
 
@@ -1393,6 +1395,7 @@ Deno.serve(async (req) => {
     if (officialSummaryBackfill.failures.length) {
       console.warn("[sync-votes] official summary repairs deferred", officialSummaryBackfill.failures);
     }
+    const aiSummaryRefresh = await refreshAiSummaries(supabase, Deno.env.get("OPENAI_API_KEY"));
 
     const summaryReadyQueueCandidates =
       await findSummaryReadyVotesMissingOutbox(
@@ -1426,6 +1429,7 @@ Deno.serve(async (req) => {
       billSummaryProcessedCount,
       billSummaryUpsertedCount,
       officialSummaryBackfill,
+      aiSummaryRefresh,
       firstStartDate: houseVotes[0]?.startDate ?? null,
       checkedHouseBillCount: houseBillTitleSummary.checkedCount,
       insertedHouseBillTitleCount: houseBillTitleSummary.insertedCount,

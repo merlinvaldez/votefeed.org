@@ -12,6 +12,10 @@ export function officialSummaryHtml(summary) {
   return typeof html === "string" && html.trim() ? html : null;
 }
 
+export function shouldShowOfficialSummary(summary, preference = true) {
+  return Boolean(officialSummaryHtml(summary)) && preference;
+}
+
 export function summaryView({ showOriginal, officialHtml, simplifiedText, loading, error }) {
   if (showOriginal || error) return { mode: "official", showAction: true,
     message: officialHtml ? null : "The official summary is unavailable." };

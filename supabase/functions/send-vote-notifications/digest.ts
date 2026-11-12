@@ -30,6 +30,8 @@ export type DigestVote = {
   roll_call_number: number;
   voted_on: string | null;
   summary_ready: boolean;
+  legislation_type?: string;
+  legislation_number?: number;
 };
 
 export type EmailDigestVote = DigestVote & {
@@ -188,12 +190,28 @@ export function buildUserDigest<T extends DigestVote>(
     selectedByEvent.set(eventKey, merged);
   }
 
-  const votes = [...selectedByEvent.values()].sort(compareVotesNewestFirst);
+  const allVotes = [...selectedByEvent.values()].sort(compareVotesNewestFirst);
+  const latestByMeasure = new Map<string, T>();
+  for (const vote of allVotes) {
+    const measure = vote.legislation_type && Number(vote.legislation_number) > 0
+      ? JSON.stringify([vote.member_id, vote.chamber, vote.congress_number,
+        vote.legislation_type, vote.legislation_number])
+      : getEventKey(vote);
+    const latest = latestByMeasure.get(measure);
+    if (latest) {
+      // Older events are represented by the newest line, but still need to be
+      // acknowledged after delivery so the next retry cannot repeat them.
+      latest.outboxIds = [...new Set([...latest.outboxIds, ...vote.outboxIds])];
+    } else {
+      latestByMeasure.set(measure, { ...vote, outboxIds: [...vote.outboxIds] });
+    }
+  }
+  const votes = [...latestByMeasure.values()];
   const blockedVoteCount = votes.filter((vote) => !vote.summary_ready).length;
   const outboxIds = [...new Set(votes.flatMap((vote) => vote.outboxIds))];
   const progressByNextScope = new Map<string, VoteProgress>();
 
-  for (const vote of votes) {
+  for (const vote of allVotes) {
     const scopeKey = getProgressScopeKey(vote.chamber, vote.congress_number);
     const existing = progressByNextScope.get(scopeKey);
     const isNewer = !existing ||

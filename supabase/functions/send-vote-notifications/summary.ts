@@ -1,5 +1,5 @@
 export type VoteSummary = {
-  kind: "quick" | "title";
+  kind: "quick";
   text: string;
 };
 
@@ -20,6 +20,7 @@ export function normalizeQuickSummary(
     .replace(/[.!?]+\s*$/, "")
     .trim();
   if (
+    normalized.length > 180 || /ai summary failed|failed to generate summary/i.test(normalized) ||
     PROMPT_ECHO_PATTERNS.some((pattern) => pattern.test(normalized))
   ) {
     return "";
@@ -41,7 +42,7 @@ export function normalizeFallbackTitle(title: string | null) {
 
 export function resolveVoteSummary(
   aiSummary: string | null,
-  fallbackTitle: string | null,
+  _fallbackTitle: string | null,
   officialSummary: string | null = null,
 ): VoteSummary | null {
   const quickSummary = normalizeQuickSummary(aiSummary);
@@ -52,6 +53,5 @@ export function resolveVoteSummary(
     };
   }
 
-  const title = normalizeFallbackTitle(fallbackTitle);
-  return title ? { kind: "title", text: title } : null;
+  return null;
 }

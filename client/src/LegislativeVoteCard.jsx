@@ -1,3 +1,5 @@
+import SummarySourceToggle from "./SummarySourceToggle";
+import OfficialSummary from "./OfficialSummary";
 import { useId } from "react";
 import { cardMemberNames } from "./legislativeCardNames";
 import "./LegislativeVoteCard.css";
@@ -5,7 +7,7 @@ import MemberPortrait from "./MemberPortraitAvatar.jsx";
 import { summaryIdentity, hasSummaryText, summaryView } from "./feedSummaries";
 import { getVotePosition } from "./votePosition";
 import { getCardResponseTargets, getCardResponseState } from "./voteInteractions";
-import { ThumbsUp, ThumbsDown, MessageCircle, Clock3, ScrollText } from "lucide-react";
+import { ThumbsUp, ThumbsDown, MessageCircle, Clock3 } from "lucide-react";
 
 const formatVotedOn = (value) => {
   if (!value) return "Unknown date";
@@ -99,29 +101,7 @@ export default function LegislativeVoteCard({ vote, interactions, isAuthed, stan
             {formatVotedOn(vote.voted_on)}
           </span>
         </div>
-        <button
-          type="button"
-          className={`summary-source-toggle${showOriginal ? " active" : ""}`}
-          onClick={() =>
-            setShowOriginalByCard((prev) => ({
-              ...prev,
-              [voteKey]: !prev[voteKey],
-            }))
-          }
-          aria-label={
-            showOriginal
-              ? "Show simplified summary"
-              : "This is an AI-generated summary. Toggle here to see the original from Congress.gov."
-          }
-          aria-pressed={showOriginal}
-          title={
-            showOriginal
-              ? "Show simplified summary"
-              : "This is an AI-generated summary. Toggle here to see the original from Congress.gov."
-          }
-        >
-          <ScrollText size={24} strokeWidth={2} aria-hidden="true" />
-        </button>
+          <SummarySourceToggle officialHtml={vote.officialSummary} showOriginal={showOriginal} onToggle={() => setShowOriginalByCard(prev => ({ ...prev, [voteKey]: !prev[voteKey] }))} />
       </div>
         {aiError && (
           <div className="error-text leg-summary-error">
@@ -136,10 +116,7 @@ export default function LegislativeVoteCard({ vote, interactions, isAuthed, stan
           </div>
         )}
       {view.mode === "official" && vote.officialSummary ? (
-        <div
-          className="leg-body"
-          dangerouslySetInnerHTML={{ __html: vote.officialSummary }}
-        />
+        <OfficialSummary html={vote.officialSummary} />
       ) : view.mode !== "simplified" ? (
         <div className="leg-body" role="status">{view.message}</div>
       ) : (

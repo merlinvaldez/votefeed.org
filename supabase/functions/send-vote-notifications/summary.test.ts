@@ -13,17 +13,9 @@ Deno.test("prefers the existing AI quick summary when it is available", () => {
   }
 });
 
-Deno.test("uses a compact official title when no AI summary is available", () => {
-  const summary = resolveVoteSummary(
-    null,
-    "Protect College Sports Act of 2026",
-  );
-
-  if (
-    summary?.kind !== "title" ||
-    summary.text !== "Protect College Sports Act of 2026"
-  ) {
-    throw new Error("Expected the official title as the fallback");
+Deno.test("a title alone must not allow an email before AI is ready", () => {
+  if (resolveVoteSummary(null, "Protect College Sports Act of 2026") !== null) {
+    throw new Error("A title is source material, not a completed AI summary");
   }
 });
 
@@ -77,7 +69,13 @@ Deno.test("rejects a prompt echo from a previously cached summary", () => {
     "Ratepayer Protection Act",
   );
 
-  if (summary?.kind !== "title") {
-    throw new Error("Expected the prompt echo to use the official title");
+  if (summary !== null) {
+    throw new Error("Invalid AI must defer the email instead of using a title");
+  }
+});
+
+Deno.test("oversized and failed AI caches cannot unblock delivery", () => {
+  for (const value of ['x'.repeat(181), 'AI summary failed', 'Failed to generate summary']) {
+    if (resolveVoteSummary(value, 'Available title') !== null) throw new Error('Invalid AI unblocked email');
   }
 });

@@ -20,7 +20,7 @@ const answers = new Map();
 const comments = new Map();
 let nextId = 10;
 const apiCalls = [];
-const server = await createServer({ root, configFile: false, envDir: false,
+const server = await createServer({ root, configFile: false, envDir: false, cacheDir: "node_modules/.vite-summary-preview",
   define: { "import.meta.env.VITE_API_URL": JSON.stringify("/test-api") },
   plugins: [{ name: "bill-ui-fixture", enforce: "pre",
     resolveId(source) {
@@ -54,8 +54,8 @@ const server = await createServer({ root, configFile: false, envDir: false,
           const split = url.searchParams.get("district") === "1";
           const senate = split ? [baseCard("senate-a", [members[1]], "Senate", "Yea", "Failed"), baseCard("senate-b", [members[2]], "Senate", "Not Voting", "Failed")]
             : [baseCard("senate", members.slice(1), "Senate", "Yea", "Failed")];
-          return send({ bill: { id: 7, number: 7, bill_type: "hr", summary: "<p>This measure improves public services.</p>",
-            aisummary: url.searchParams.get("district") === "3" ? "paste the draft_quick_summary you want simplified" : "improve public services", legislation_url: "https://www.congress.gov/bill/119th-congress/house-bill/7" },
+          return send({ bill: { id: 7, number: 7, bill_type: "hr", summary: ["4", "5"].includes(url.searchParams.get("district")) ? "" : "<p>This measure improves public services.</p>",
+            aisummary: ["3", "5"].includes(url.searchParams.get("district")) ? "paste the draft_quick_summary you want simplified" : "improve public services", legislation_url: "https://www.congress.gov/bill/119th-congress/house-bill/7" },
             cards: [baseCard("house", [members[0]], "House", "Nay", "Passed"), ...senate],
             delegation: { houseMember: people[0], senators: people.slice(1) }, warnings: [] });
         }

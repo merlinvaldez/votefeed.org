@@ -331,3 +331,26 @@ Deno.test("the same Senate vote on another bill stays a separate email line", ()
 
   assert(groups.length === 2, "different bills should remain separate lines");
 });
+
+Deno.test("latest House vote per bill replaces repetitive roll calls and acknowledges both", () => {
+  const common = { ...vote({outboxIds: ['older'], member_id: 'house-1'}),
+    legislation_type: 'hres', legislation_number: 1650, vote: 'Nay' };
+  const result = buildUserDigest(user, [
+    {...common, roll_call_number: 318, voted_on: '2026-11-10T23:10:00Z'},
+    {...common, outboxIds: ['latest'], roll_call_number: 319, voted_on: '2026-11-10T23:20:00Z', vote: 'No'},
+  ], new Map());
+  assert(result.votes.length === 1, 'one email line per representative and bill');
+  assert(result.votes[0].vote === 'No', 'keep the latest recorded position');
+  assert(result.outboxIds.length === 2, 'acknowledge older hidden events too');
+  const progress = new Map(result.progress.map(p => [getProgressScopeKey(p.chamber,p.congress_number),p]));
+  assert(buildUserDigest(user, result.votes, progress).votes.length === 0, 'successful progress prevents retry resends');
+});
+
+Deno.test("latest-per-bill selection preserves separate bills, bill types and members", () => {
+  const common = {...vote({outboxIds:['one'],member_id:'house-1'}), legislation_type:'hres', legislation_number:1650};
+  const result = buildUserDigest(user,[common,
+    {...common,outboxIds:['two'],roll_call_number:11,legislation_type:'hr'},
+    {...common,outboxIds:['three'],roll_call_number:12,legislation_number:1655},
+  ],new Map());
+  assert(result.votes.length === 3, 'different measures must not collapse');
+});

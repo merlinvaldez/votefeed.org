@@ -1,0 +1,2 @@
+.summary-source-control { display: inline-flex; margin-left: auto; flex-shrink: 0; }
+.summary-source-toggle:disabled { opacity: 0.4; cursor: default; pointer-events: none; }

@@ -1,3 +1,5 @@
+import SummarySourceToggle from "./SummarySourceToggle";
+import OfficialSummary from "./OfficialSummary";
 import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { isAnsweredVote, getCardResponseState, buildCardStanceRequest, reconcileCardStanceResult } from "./voteInteractions";
@@ -26,7 +28,6 @@ import {
   Phone,
   MessageSquare,
   Send,
-  ScrollText,
   Trash2,
 } from "lucide-react";
 import { UserAvatar } from "@clerk/clerk-react";
@@ -828,34 +829,14 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
               </span>
             )}
           </div>
-          <button
-            type="button"
-            className={`summary-source-toggle${showOriginal ? " active" : ""}`}
-            onClick={() => setShowOriginal(!showOriginal)}
-            aria-label={
-              showOriginal
-                ? "Show simplified summary"
-                : "This is an AI-generated summary. Toggle here to see the original from Congress.gov."
-            }
-            aria-pressed={showOriginal}
-            title={
-              showOriginal
-                ? "Show simplified summary"
-                : "This is an AI-generated summary. Toggle here to see the original from Congress.gov."
-            }
-          >
-            <ScrollText size={24} strokeWidth={2} aria-hidden="true" />
-          </button>
+          <SummarySourceToggle officialHtml={officialHtml} showOriginal={showOriginal} onToggle={() => setShowOriginal(!showOriginal)} />
         </div>
         {status === "loading" && <p>Loading summary</p>}
         {status === "error" && <p className="error-text">{error}</p>}
         {(showOriginal || aiError) && officialHtml && (
-          <div
-            className="leg-body"
-            dangerouslySetInnerHTML={{ __html: officialHtml }}
-          ></div>
+          <OfficialSummary html={officialHtml} />
         )}
-        {(showOriginal || aiError) && !officialHtml && <p className="leg-body">The official summary is unavailable.</p>}
+        {showOriginal && !officialHtml && <p className="leg-body">The official summary is unavailable.</p>}
         {status === "ready" &&
           !showOriginal &&
           !aiError &&
