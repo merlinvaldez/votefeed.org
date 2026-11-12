@@ -654,6 +654,54 @@ async function runPendingBillBackfill(
   };
 }
 
+// Summary publication dates are independent of vote dates. Also retry older
+// bills with unpublished summaries, including Senate bills and delivered emails.
+async function backfillMissingOfficialSummaries(
+  supabase: SupabaseClient,
+  apiKey: string,
+) {
+  const candidates: Array<{ id: number; bill_type: string; number: number; legislation_url: string | null }> = [];
+  // Read before writing so removing repaired rows cannot shift pagination.
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await supabase.from("bills")
+      .select("id,bill_type,number,legislation_url")
+      .or("summary.is.null,summary.eq.")
+      .order("id", { ascending: true }).range(from, from + 999);
+    if (error) throw error;
+    candidates.push(...(data ?? []));
+    if ((data?.length ?? 0) < 1000) break;
+  }
+  let repairedCount = 0;
+  let unavailableCount = 0;
+  const failures: Array<{ billType: string; number: number; error: string }> = [];
+  // Bound extra API work on the daily vote job. Rotate daily so measures whose
+  // summaries remain unpublished cannot permanently starve later bills.
+  const batchSize = 20;
+  const batchCount = Math.max(1, Math.ceil(candidates.length / batchSize));
+  const batchStart = (Math.floor(Date.now() / 86_400_000) % batchCount) * batchSize;
+  const selected = candidates.slice(batchStart, batchStart + batchSize);
+  let nextIndex = 0;
+  await Promise.all(Array.from({ length: Math.min(4, selected.length) }, async () => {
+    while (nextIndex < selected.length) {
+      const row = selected[nextIndex++];
+      try {
+        // bills has no Congress column; only repair verified current measures.
+        if (row.legislation_url !== officialBillUrl(119, row.bill_type, row.number)) continue;
+        const result = await backfillOneBill(supabase, apiKey, {
+          congress: 119, billType: row.bill_type, number: row.number,
+        });
+        if (result.changed && result.summaryFound) repairedCount += 1;
+        if (!result.summaryFound) unavailableCount += 1;
+      } catch (error) {
+        failures.push({ billType: row.bill_type, number: row.number,
+          error: error instanceof Error ? error.message : String(error) });
+      }
+    }
+  }));
+  return { checkedCount: selected.length, deferredCount: candidates.length - selected.length,
+    repairedCount, unavailableCount, failures };
+}
+
 async function ensureHouseBillTitles(
   supabase: SupabaseClient,
   apiKey: string,
@@ -1209,6 +1257,7 @@ Deno.serve(async (req) => {
 
   const requestBody = await req.json().catch(() => ({}));
   const backfillMode = requestBody?.mode === "backfill-pending-bill-data";
+  const officialSummaryMode = requestBody?.mode === "backfill-official-summaries";
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -1220,14 +1269,16 @@ Deno.serve(async (req) => {
 
   try {
     const supabase = createClient(supabaseUrl, serviceRoleKey);
-    if (backfillMode) {
+    if (backfillMode || officialSummaryMode) {
       // Supabase verifies the JWT signature before invoking this function.
       if (!hasServiceRoleAuthorization(req)) {
         return json({
           error: "Backfill mode requires service-role authorization",
         }, 403);
       }
-      const result = await runPendingBillBackfill(supabase, congressApiKey);
+      const result = officialSummaryMode
+        ? await backfillMissingOfficialSummaries(supabase, congressApiKey)
+        : await runPendingBillBackfill(supabase, congressApiKey);
       return json(result, result.failures.length > 0 ? 500 : 200);
     }
     const syncRunId = crypto.randomUUID();
@@ -1338,6 +1389,11 @@ Deno.serve(async (req) => {
       billSummaryUpsertedCount += summary.upsertedCount;
     }
 
+    const officialSummaryBackfill = await backfillMissingOfficialSummaries(supabase, congressApiKey);
+    if (officialSummaryBackfill.failures.length) {
+      console.warn("[sync-votes] official summary repairs deferred", officialSummaryBackfill.failures);
+    }
+
     const summaryReadyQueueCandidates =
       await findSummaryReadyVotesMissingOutbox(
         supabase,
@@ -1369,6 +1425,7 @@ Deno.serve(async (req) => {
       syncedBillTypeCount: billSummaryTargets.length,
       billSummaryProcessedCount,
       billSummaryUpsertedCount,
+      officialSummaryBackfill,
       firstStartDate: houseVotes[0]?.startDate ?? null,
       checkedHouseBillCount: houseBillTitleSummary.checkedCount,
       insertedHouseBillTitleCount: houseBillTitleSummary.insertedCount,
