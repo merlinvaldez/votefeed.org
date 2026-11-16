@@ -4,7 +4,7 @@ import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { isAnsweredVote, getCardResponseState, buildCardStanceRequest, reconcileCardStanceResult } from "./voteInteractions";
 import { panelBill } from "./billDetailContext";
-import { publicCommentsUrl } from "./publicComments";
+import { publicCommentsUrl, otherPublicComments } from "./publicComments";
 import BillVoteFolders from "./BillVoteFolders";
 import GroupContactGuides from "./GroupContactGuides";
 import { sharedContactRequest, validateSharedContactDrafts } from "./sharedContactFlow";
@@ -46,6 +46,15 @@ const getRepLastName = (fullName = "") => {
 };
 
 
+
+const commentRecipientLabel = (comment, roster) => {
+  const recipient = roster.find(person => person.bioguideid === comment?.rep_bioguide_id);
+  const name = comment?.recipient_name || recipient?.full_name;
+  if (!name) return "";
+  const chamber = comment?.recipient_chamber || recipient?.chamber || "";
+  const title = chamber.toLowerCase().includes("senate") ? "Sen." : "Rep.";
+  return `${title} ${getRepLastName(name)}`;
+};
 
 const formatVotedOn = (value) => {
   if (!value) return "Unknown date";
@@ -177,6 +186,8 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
   const status = "ready";
   const error = "";
   const [interaction, setInteraction] = useState(null);
+  const [ownedInteractions, setOwnedInteractions] = useState([]);
+  const [selectedCommentInteractionId, setSelectedCommentInteractionId] = useState(null);
   const [groupInteractions, setGroupInteractions] = useState([]);
   const [interactionsReady, setInteractionsReady] = useState(false);
   const [ownedCommentId, setOwnedCommentId] = useState(null);
@@ -234,16 +245,30 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
     ? `${memberTitle} ${repLastName || repFullName}`
     : "my representative";
   const responseReference = grouped ? `Sens. ${card.members.map(item => getRepLastName(item.name)).join(" and ")}` : repReference;
-  const repContactUrl = buildRepContactUrl(rep?.official_website_url);
-  const repDialHref = getDialHref(rep?.office_phone);
   const commentAuthorName = userName || "You";
-  const approvedCommentText = interaction?.comment_approved_text?.trim() ?? "";
+  const commentInteraction = ownedInteractions.find(item => item.id === selectedCommentInteractionId)
+    ?? ownedInteractions[0] ?? interaction;
+  const commentDraftKey = commentInteraction?.id ?? memberVoteId;
+  const commentRep = roster.find(item => item.bioguideid === commentInteraction?.rep_bioguide_id);
+  const commentRepReference = commentRep?.full_name || repReference;
+  const commentRepDialHref = getDialHref(commentRep?.office_phone);
+  const commentRepContactUrl = buildRepContactUrl(commentRep?.official_website_url);
+  const useGroupedContact = grouped && commentInteraction?.id === interaction?.id;
+  const updateCommentInteraction = (update) => {
+    const updated = update(commentInteraction);
+    setOwnedInteractions(current => {
+      const others = current.filter(item => item.id !== updated.id);
+      return updated.comment_id ? [updated, ...others] : others;
+    });
+    if (updated.id === interaction?.id) setInteraction(updated);
+  };
+  const approvedCommentText = commentInteraction?.comment_approved_text?.trim() ?? "";
   const hasPostedOwnedComment = Boolean(approvedCommentText);
-  const discussionComments = publicComments;
+  const discussionComments = otherPublicComments(publicComments);
   const showPostedOwnedComment =
     hasPostedOwnedComment && !isCommentComposerOpen;
   const showOwnedCommentThread =
-    Boolean(interaction?.id) && (isCommentComposerOpen || showPostedOwnedComment);
+    Boolean(commentInteraction?.id) && (isCommentComposerOpen || showPostedOwnedComment || Boolean(commentInteraction.comment_id));
   const showPublicCommentsPanel =
     discussionRequested || discussionComments.length > 0 || Boolean(publicCommentsError);
   const publicCommentsToggleLabel =
@@ -294,7 +319,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
   };
 
   useEffect(() => {
-    if (!active || !token || !card) return;
+    if (!active || !token || !billId) return;
     let cancelled = false;
     setInteractionsReady(false);
     (async () => {
@@ -303,7 +328,10 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
         const meResp = await authFetch(`${API_BASE}/users/me`);
         if (!meResp.ok) throw new Error("Failed to load user");
         const me = await meResp.json();
-        const answers = await Promise.all(card.members.map(async target => {
+        const ownedResp = await authFetch(`${API_BASE}/interactions/bills/${billId}/comments/mine`);
+        if (!ownedResp.ok) throw new Error("Failed to load your comments");
+        const owned = await ownedResp.json();
+        const answers = await Promise.all((card?.members ?? []).map(async target => {
           const params = new URLSearchParams({ memberVoteId: String(target.memberVoteId), repBioguideId: target.bioguideId });
           const resp = await authFetch(`${API_BASE}/interactions/users/${me.id}/bill/${billId}?${params}`);
           if (!resp.ok) throw new Error("Failed to load responses");
@@ -311,6 +339,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
           return text ? JSON.parse(text) : null;
         }));
         if (cancelled) return;
+        setOwnedInteractions(owned);
         setUserId(me.id);
         setUserName(`${me.first_name || ""} ${me.last_name || ""}`.trim());
         setGroupInteractions(answers.filter(Boolean));
@@ -357,11 +386,11 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
   }, [active, billId, isAuthed, authFetch, detail.delegation]);
 
   useEffect(() => {
-    setOwnedCommentId(interaction?.comment_id ?? null);
-    setCommentDraftText(commentDraftsRef.current.get(memberVoteId) ?? interaction?.comment_draft_text ?? "");
-    setCommentModerationStatus(interaction?.comment_moderation_status ?? null);
-    setIsCommentPublic(Boolean(interaction?.comment_is_public));
-  }, [memberVoteId, interaction?.comment_id, interaction?.comment_draft_text, interaction?.comment_moderation_status, interaction?.comment_is_public]);
+    setOwnedCommentId(commentInteraction?.comment_id ?? null);
+    setCommentDraftText(commentDraftsRef.current.get(commentDraftKey) ?? commentInteraction?.comment_draft_text ?? "");
+    setCommentModerationStatus(commentInteraction?.comment_moderation_status ?? null);
+    setIsCommentPublic(Boolean(commentInteraction?.comment_is_public));
+  }, [commentDraftKey, commentInteraction?.comment_id, commentInteraction?.comment_draft_text, commentInteraction?.comment_moderation_status, commentInteraction?.comment_is_public]);
 
   useEffect(() => {
     if (!hasPostedOwnedComment) {
@@ -384,18 +413,18 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
     setContactDraftError("");
   }, [
     groupStanceKey,
-    interaction?.id,
-    interaction?.stance,
-    interaction?.comment_id,
-    interaction?.comment_updated_at,
-    interaction?.comment_approved_text,
+    commentInteraction?.id,
+    commentInteraction?.stance,
+    commentInteraction?.comment_id,
+    commentInteraction?.comment_updated_at,
+    commentInteraction?.comment_approved_text,
   ]);
 
   useEffect(() => {
-    if (!interaction?.id) {
+    if (!commentInteraction?.id) {
       setIsCommentComposerOpen(false);
     }
-  }, [interaction?.id]);
+  }, [commentInteraction?.id]);
 
   useEffect(() => {
     if (selectedAction === "message") return;
@@ -413,7 +442,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
   };
 
   const loadContactDrafts = useEffectEvent(async () => {
-    if (!active || stancePendingRef.current || !interaction?.id || !hasPostedOwnedComment) return null;
+    if (!active || stancePendingRef.current || !commentInteraction?.id || !hasPostedOwnedComment) return null;
     if (contactDrafts?.members?.length === 2 || (contactDrafts?.callScript && contactDrafts?.messageTemplate)) {
       return contactDrafts;
     }
@@ -424,8 +453,8 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
       setContactDraftError("");
       setContactDraftStatus("loading");
       const resp = await authFetch(
-        `${API_BASE}/interactions/${interaction.id}/comment/contact-drafts${grouped ? "/group" : ""}`,
-        grouped ? { method: "POST", body: JSON.stringify(sharedContactRequest(card, groupInteractions)) } : undefined,
+        `${API_BASE}/interactions/${commentInteraction.id}/comment/contact-drafts${useGroupedContact ? "/group" : ""}`,
+        useGroupedContact ? { method: "POST", body: JSON.stringify(sharedContactRequest(card, groupInteractions)) } : undefined,
       );
       if (!resp.ok) {
         const details = await resp.text();
@@ -434,7 +463,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
         throw new Error(message || "Failed to prepare contact drafts");
       }
       const drafts = await resp.json();
-      if (grouped) validateSharedContactDrafts(card, drafts);
+      if (useGroupedContact) validateSharedContactDrafts(card, drafts);
       if (requestId !== contactDraftRequestRef.current || stancePendingRef.current) return null;
       setContactDrafts(drafts);
       setContactDraftStatus("ready");
@@ -469,7 +498,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
     hasPostedOwnedComment,
     contactDrafts,
     contactDraftStatus,
-    interaction?.id,
+    commentInteraction?.id,
   ]);
 
   const handleCopyMessage = async () => {
@@ -528,14 +557,14 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
 
   const handleSubmitCommentForModeration = async () => {
     if (stancePendingRef.current) return;
-    if (!interaction?.id) return;
+    if (!commentInteraction?.id) return;
     if (!commentDraftText.trim()) return;
 
     try {
       setInteractionError("");
       setIsSubmittingComment(true);
       const resp = await authFetch(
-        `${API_BASE}/interactions/${interaction.id}/comment/submit`,
+        `${API_BASE}/interactions/${commentInteraction.id}/comment/submit`,
         {
           method: "POST",
           body: JSON.stringify({ draft_text: commentDraftText }),
@@ -543,8 +572,8 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
       );
       if (!resp.ok) throw new Error("Failed to submit comment for moderation");
       const moderatedComment = await resp.json();
-      commentDraftsRef.current.delete(memberVoteId);
-      setInteraction((currentInteraction) =>
+      commentDraftsRef.current.delete(commentDraftKey);
+      updateCommentInteraction((currentInteraction) =>
         mergeCommentIntoInteraction(currentInteraction, moderatedComment),
       );
       if (moderatedComment?.moderation_status === "approved" && billId) {
@@ -581,7 +610,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
     if (stancePendingRef.current) return;
     if (!approvedCommentText) return;
     setInteractionError("");
-    commentDraftsRef.current.set(memberVoteId, approvedCommentText);
+    commentDraftsRef.current.set(commentDraftKey, approvedCommentText);
     setCommentDraftText(approvedCommentText);
     setSelectedAction(null);
     setIsCommentMenuOpen(false);
@@ -590,19 +619,19 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
 
   const handleDeleteComment = async () => {
     if (stancePendingRef.current) return;
-    if (!interaction?.id) return;
+    if (!commentInteraction?.id) return;
 
     try {
       setInteractionError("");
-      const resp = await authFetch(`${API_BASE}/interactions/${interaction.id}/comment`, {
+      const resp = await authFetch(`${API_BASE}/interactions/${commentInteraction.id}/comment`, {
         method: "DELETE",
       });
       if (!resp.ok) throw new Error("Failed to delete comment");
-      commentDraftsRef.current.delete(memberVoteId);
+      commentDraftsRef.current.delete(commentDraftKey);
       setSelectedAction(null);
       setIsCommentMenuOpen(false);
       setIsCommentComposerOpen(false);
-      setInteraction((currentInteraction) =>
+      updateCommentInteraction((currentInteraction) =>
         clearCommentFromInteraction(currentInteraction),
       );
       if (billId) {
@@ -645,7 +674,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
       }
 
       const updatedComment = await resp.json();
-      setInteraction((currentInteraction) =>
+      updateCommentInteraction((currentInteraction) =>
         mergeCommentIntoInteraction(currentInteraction, updatedComment),
       );
 
@@ -719,6 +748,15 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
     }
   };
 
+  const applySavedStances = (savedInteractions) => {
+    const saved = savedInteractions.find(answer => answer.rep_bioguide_id === rep?.bioguideid);
+    setInteraction(current => ({ ...current, ...saved }));
+    setOwnedInteractions(current => current.map(item => {
+      const savedAnswer = savedInteractions.find(answer => answer.id === item.id);
+      return savedAnswer ? { ...item, ...savedAnswer } : item;
+    }));
+  };
+
   const handleStanceClick = async (nextStance) => {
     if (!token) {
       promptGuestInteraction();
@@ -751,8 +789,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
         const result = await resp.json();
         const confirmed = reconcileCardStanceResult(groupInteractions, request, result.interactions);
         setGroupInteractions(confirmed);
-        const saved = confirmed.find(answer => answer.rep_bioguide_id === rep.bioguideid);
-        setInteraction(prev => ({ ...prev, ...saved }));
+        applySavedStances(confirmed);
         return;
       }
         if (isAnsweredVote(interaction, memberVoteId) && interaction.stance === nextStance) {
@@ -762,7 +799,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
           );
           if (!resp.ok) throw new Error("Failed to clear stance");
           const cleared = await resp.json();
-          setInteraction(prev => ({ ...prev, ...cleared }));
+          applySavedStances([cleared]);
           return;
         }
 
@@ -790,7 +827,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
         throw new Error(payload?.error || "Failed to save stance");
       }
       const saved = await resp.json();
-      setInteraction(prev => ({ ...prev, ...saved }));
+      applySavedStances([saved]);
     } catch (err) {
       setInteractionError(err.message || "Failed to save stance");
     } finally {
@@ -930,11 +967,36 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
           )}
         </div>}
 
-            {card && showOwnedCommentThread && (
-              <fieldset className="comment-thread" aria-label="Your comment and contact actions" disabled={isSavingStance} style={{ border: 0, margin: 0, padding: 0, minWidth: 0 }}>
-                <div className="comment-thread-header">
-                  <div className="comment-thread-title">Comments</div>
+            {(showOwnedCommentThread || ownedInteractions.length > 0 || showPublicCommentsPanel) && (
+          <section id="public-comments" ref={publicDiscussionRef} tabIndex={-1} aria-label="Comments" className="comment-thread">
+            <div className="comment-thread-header"><h2 className="comment-thread-title">Comments</h2></div>
+            {ownedInteractions.filter(item => item.id !== commentInteraction?.id).map(item => (
+              <article key={item.comment_id} className="comment-card">
+                <div className="comment-row">
+                  <div className="comment-author-avatar" aria-label="Profile photo"><span className="comment-avatar-initial" aria-hidden="true">{commentAuthorName.charAt(0).toUpperCase()}</span><UserAvatar rounded={true} /></div>
+                  <div className="comment-card-body">
+                    <div className="comment-author-name">
+                      {commentAuthorName}
+                      {commentRecipientLabel(item, roster) && <span className="comment-recipient"> to {commentRecipientLabel(item, roster)}</span>}
+                    </div>
+                    <div className="comment-text">{item.comment_approved_text || item.comment_draft_text}</div>
+                    <button type="button" className="ghost-btn comment-edit-btn" disabled={busy} onClick={() => {
+                      setSelectedCommentInteractionId(item.id);
+                      setIsCommentComposerOpen(true);
+                      setSelectedAction(null);
+                    }}>Edit comment</button>
+                  </div>
                 </div>
+              </article>
+            ))}
+            {showOwnedCommentThread && (
+              <fieldset className="owned-comment-thread" aria-label="Your comment and contact actions" disabled={isSavingStance}>
+
+            {!hasPostedOwnedComment && !isCommentComposerOpen && (
+              <button type="button" className="ghost-btn" onClick={() => setIsCommentComposerOpen(true)}>
+                Continue editing your comment
+              </button>
+            )}
 
             {isCommentComposerOpen && (
               <div className="comment-composer-shell">
@@ -942,19 +1004,24 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
                   className="comment-author-avatar comment-composer-avatar"
                   aria-label="Profile photo"
                 >
-                  <UserAvatar rounded={true}></UserAvatar>
+                  <span className="comment-avatar-initial" aria-hidden="true">{commentAuthorName.charAt(0).toUpperCase()}</span>
+                    <UserAvatar rounded={true}></UserAvatar>
                 </div>
                 <section id="bill-comment-composer" className="comment-box">
                   <textarea
                     value={commentDraftText}
                     onChange={(event) => {
-                      commentDraftsRef.current.set(memberVoteId, event.target.value);
+                      commentDraftsRef.current.set(commentDraftKey, event.target.value);
                       setCommentDraftText(event.target.value);
                     }}
                     placeholder="Write your comment here..."
                     aria-label="Comment draft"
                   ></textarea>
                   <div className="comment-actions">
+                    <button type="button" className="ghost-btn" disabled={isSubmittingComment}
+                      onClick={() => setIsCommentComposerOpen(false)}>
+                      Cancel edit
+                    </button>
                     <button
                       type="button"
                       className="primary-btn comment-submit-btn"
@@ -971,9 +1038,9 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
                     </button>
                   </div>
                   {commentModerationStatus === "blocked" &&
-                    interaction?.comment_moderation_reason && (
+                    commentInteraction?.comment_moderation_reason && (
                       <p className="error-text comment-error-text">
-                        {interaction.comment_moderation_reason}
+                        {commentInteraction.comment_moderation_reason}
                       </p>
                     )}
                 </section>
@@ -984,20 +1051,26 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
               <section className="comment-card">
                 <div className="comment-row">
                   <div className="comment-author-avatar" aria-label="Profile photo">
+                    <span className="comment-avatar-initial" aria-hidden="true">{commentAuthorName.charAt(0).toUpperCase()}</span>
                     <UserAvatar rounded={true}></UserAvatar>
                   </div>
                   <div className="comment-card-body">
                     <div className="comment-ahead">
                       <div className="comment-card-meta">
-                        <div className="comment-author-name">{commentAuthorName}</div>
+                        <div className="comment-author-name">
+                          {commentAuthorName}
+                          {commentRecipientLabel(commentInteraction, roster) && <span className="comment-recipient"> to {commentRecipientLabel(commentInteraction, roster)}</span>}
+                        </div>
                       </div>
+                    </div>
+                    <div className="comment-text">{approvedCommentText}</div>
                       <div
                         ref={commentMenuRef}
                         className="comment-owner-actions"
                       >
                         <button
                           type="button"
-                          className="ghost-btn comment-owner-icon-btn"
+                          className={`ghost-btn comment-owner-icon-btn ${selectedAction === "call" ? "active" : ""}`}
                           onClick={() => toggleSelectedAction("call")}
                           aria-label={
                             selectedAction === "call"
@@ -1005,14 +1078,15 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
                               : "Show call script"
                           }
                           aria-expanded={selectedAction === "call"}
+                          aria-pressed={selectedAction === "call"}
                           aria-controls="bill-call-script-panel"
                           title="Call script"
                         >
-                          <Phone size={16}></Phone>
+                          <Phone size={15}></Phone>
                         </button>
                         <button
                           type="button"
-                          className="ghost-btn comment-owner-icon-btn"
+                          className={`ghost-btn comment-owner-icon-btn ${selectedAction === "message" ? "active" : ""}`}
                           onClick={() => toggleSelectedAction("message")}
                           aria-label={
                             selectedAction === "message"
@@ -1020,10 +1094,11 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
                               : "Show message template"
                           }
                           aria-expanded={selectedAction === "message"}
+                          aria-pressed={selectedAction === "message"}
                           aria-controls="bill-message-template-panel"
                           title="Message template"
                         >
-                          <Mail size={16}></Mail>
+                          <Mail size={15}></Mail>
                         </button>
                         <button
                           type="button"
@@ -1046,7 +1121,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
                               : "Make public to other VoteFeed users"
                           }
                         >
-                          <Eye size={16}></Eye>
+                          <Eye size={15}></Eye>
                         </button>
                         <button
                           type="button"
@@ -1065,7 +1140,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
                           aria-haspopup="menu"
                           title="Comment actions"
                         >
-                          <MoreHorizontal size={16}></MoreHorizontal>
+                          <MoreHorizontal size={16}></MoreHorizontal><span>More</span>
                         </button>
                         {isCommentMenuOpen && (
                           <div className="comment-owner-menu" role="menu">
@@ -1090,14 +1165,13 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
                           </div>
                         )}
                       </div>
-                    </div>
-                    <div className="comment-text">{approvedCommentText}</div>
+
                     {publicVisibilityError && (
                       <p className="error-text comment-error-text">
                         {publicVisibilityError}
                       </p>
                     )}
-                    {grouped && !isSavingStance && ["call", "message"].includes(selectedAction) && (
+                    {useGroupedContact && !isSavingStance && ["call", "message"].includes(selectedAction) && (
                       <GroupContactGuides action={selectedAction} status={contactDraftStatus} error={contactDraftError}
                         drafts={contactDrafts} onRetry={() => { setContactDraftStatus("idle"); setContactDraftError(""); }}
                         members={card.members.map(target => {
@@ -1107,20 +1181,20 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
                             contactUrl: buildRepContactUrl(person?.official_website_url) };
                         })} />
                     )}
-                    {!grouped && !isSavingStance && selectedAction === "call" && (
+                    {!useGroupedContact && !isSavingStance && selectedAction === "call" && (
                       <section
                         id="bill-call-script-panel"
                         className="action-guide-card comment-action-panel"
                       >
-                        {repDialHref ? (
-                          <a className="action-guide-inline-link" href={repDialHref}>
+                        {commentRepDialHref ? (
+                          <a className="action-guide-inline-link" href={commentRepDialHref}>
                             <Phone size={16}></Phone>
-                            Call {repReference} at {rep.office_phone}
+                            Call {commentRepReference} at {commentRep?.office_phone}
                           </a>
                         ) : (
                           <span className="action-guide-inline-missing">
                             <Phone size={16}></Phone>
-                            Call info unavailable for {repReference}
+                            Call info unavailable for {commentRepReference}
                           </span>
                         )}
                         {contactDraftStatus === "loading" && (
@@ -1138,26 +1212,26 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
                         )}
                       </section>
                     )}
-                    {!grouped && !isSavingStance && selectedAction === "message" && (
+                    {!useGroupedContact && !isSavingStance && selectedAction === "message" && (
                       <section
                         id="bill-message-template-panel"
                         className="action-guide-card comment-action-panel"
                       >
-                        {repContactUrl ? (
+                        {commentRepContactUrl ? (
                           <a
                             className="action-guide-inline-link"
-                            href={repContactUrl}
+                            href={commentRepContactUrl}
                             target="_blank"
                             rel="noreferrer"
                           >
                             <Mail size={16}></Mail>
-                            Message {repReference}
+                            Message {commentRepReference}
                             <ExternalLink size={16}></ExternalLink>
                           </a>
                         ) : (
                           <span className="action-guide-inline-missing">
                             <Mail size={16}></Mail>
-                            Contact page unavailable for {repReference}
+                            Contact page unavailable for {commentRepReference}
                           </span>
                         )}
                         {contactDraftStatus === "loading" && (
@@ -1214,16 +1288,11 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
           </fieldset>
         )}
         {showPublicCommentsPanel && (
-          <section
-            id="public-comments"
-            ref={publicDiscussionRef}
-            tabIndex={-1}
-            aria-label="Comments"
-            className="comment-thread public-comments-panel"
+          <div
+            className="public-comments-panel"
             aria-busy={publicCommentsStatus === "loading"}
           >
             <div className="comment-thread-header">
-              <div className="comment-thread-title">Comments</div>
               {discussionComments.length > 0 && (
                 <button
                   type="button"
@@ -1241,7 +1310,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
               )}
             </div>
             {publicCommentsStatus === "loading" && <p role="status">Loading comments…</p>}
-            {publicCommentsStatus === "ready" && discussionComments.length === 0 && <p>No comments yet.</p>}
+            {publicCommentsStatus === "ready" && discussionComments.length === 0 && ownedInteractions.length === 0 && !showOwnedCommentThread && <p>No comments yet.</p>}
             {isPublicCommentsOpen && discussionComments.length > 0 && (
               <div id="public-comments-list" className="public-comments-list">
                 {discussionComments.map((comment) => {
@@ -1253,11 +1322,12 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
                   );
 
                   return (
-                    <article key={comment.id} className="public-comment-item">
+                    <article key={comment.id} className="public-comment-item" data-initial={comment.author_display_name?.charAt(0).toUpperCase() || "C"}>
                       <div className="public-comment-top">
                         <div className="public-comment-meta">
                           <div className="public-comment-author">
                             {comment.author_display_name}
+                            {commentRecipientLabel(comment, roster) && <span className="comment-recipient"> to {commentRecipientLabel(comment, roster)}</span>}
                           </div>
                           {publishedLabel && (
                             <span className="public-comment-time">
@@ -1265,7 +1335,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
                             </span>
                           )}
                         </div>
-                        {card && <button
+                        <button
                           type="button"
                           className={`ghost-btn public-useful-btn ${
                             comment.viewer_has_marked_useful ? "active" : ""
@@ -1285,10 +1355,11 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
                           }
                         >
                           <ThumbsUp size={14}></ThumbsUp>
+                          <span>Useful</span>
                           <span className="public-useful-count">
                             {comment.useful_count}
                           </span>
-                        </button>}
+                        </button>
                       </div>
                       <div className="public-comment-text">{comment.text}</div>
                     </article>
@@ -1301,6 +1372,8 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
                 {publicCommentsError}
               </p>
             )}
+          </div>
+        )}
           </section>
         )}
         {interactionError && <p className="error-text">{interactionError}</p>}

@@ -19,6 +19,7 @@ const members = people.map((person, index) => ({ bioguideId: person.bioguideid, 
 const answers = new Map();
 const comments = new Map();
 let nextId = 10;
+let nextCommentId = 50;
 const apiCalls = [];
 const server = await createServer({ root, configFile: false, envDir: false, cacheDir: "node_modules/.vite-summary-preview",
   define: { "import.meta.env.VITE_API_URL": JSON.stringify("/test-api") },
@@ -70,12 +71,29 @@ const server = await createServer({ root, configFile: false, envDir: false, cach
             cards: [baseCard("house", [members[0]], "House", "Nay", "Passed"), ...senate],
             delegation: { state: "Alaska", district: Number(url.searchParams.get("district") ?? 0), houseMember: people[0], senators: people.slice(1) }, warnings: [] });
         }
-        if (path === "/users/me") return send({ id: 1, first_name: "Fixture", state: "Alaska", district: 0 });
+        if (path === "/users/me") return send({ id: 1, first_name: "Fixture", last_name: "Constituent", state: "Alaska", district: 0 });
+        if (path === "/interactions/bills/7/comments/mine") return send([...answers.values()]
+          .filter(row => comments.has(row.id)).map(row => {
+            const comment = comments.get(row.id);
+            const recipient = people.find(person => person.bioguideid === row.rep_bioguide_id);
+            return { ...row, recipient_name: recipient?.full_name, recipient_chamber: recipient?.chamber, comment_id: comment.id, comment_draft_text: comment.draft_text,
+              comment_approved_text: comment.approved_text, comment_moderation_status: comment.moderation_status,
+              comment_is_public: Boolean(comment.is_public), comment_updated_at: comment.updated_at };
+          }));
         if (path.includes("/comments/bills/")) {
           if (url.searchParams.get("state") !== "Alaska" || !/^\d+$/.test(url.searchParams.get("district") ?? "")) {
             return send({ error: "District required" }, 400);
           }
-          return send({ comments: [{ id: 70, text: "Public comment from this district.", author_display_name: "Local constituent", useful_count: 0, viewer_has_marked_useful: false, is_owned_by_viewer: false }] });
+          return send({ comments: [{ id: 70, text: "Public comment from this district.", author_display_name: "Local Constituent", recipient_name: "Alice Smith", recipient_chamber: "Senate", useful_count: 0, viewer_has_marked_useful: false, is_owned_by_viewer: false },
+            ...[...comments.values()].filter(comment => comment.is_public).map(comment => ({
+              id: comment.id, text: comment.approved_text, author_display_name: "Fixture",
+              useful_count: 0, is_owned_by_viewer: true,
+            }))] });
+        }
+        if (req.method === "DELETE" && path.endsWith("/comment")) {
+          const id = Number(path.split("/")[2]);
+          comments.delete(id);
+          return send({ deleted: true });
         }
         if (path.includes("/interactions/users/")) return send(answers.get(url.searchParams.get("repBioguideId")) ?? null);
         if (req.method === "PUT" || req.method === "POST") {
@@ -103,12 +121,12 @@ const server = await createServer({ root, configFile: false, envDir: false, cach
           }) });
           if (path.endsWith("/comment/submit")) {
             const priorComment = comments.get(existing.id) ?? {};
-            const comment = { ...priorComment, id: priorComment.id ?? 50, draft_text: body.draft_text,
+            const comment = { ...priorComment, id: priorComment.id ?? nextCommentId++, draft_text: body.draft_text,
               approved_text: body.draft_text, moderation_status: "approved", updated_at: "2026-10-15T13:01:00Z" };
             comments.set(existing.id, comment); return send(comment);
           }
           if (path.endsWith("/comment")) {
-            const comment = { id: 50, ...comments.get(existing.id), draft_text: body.draft_text, moderation_status: "draft", updated_at: "2026-10-15T13:00:00Z" };
+            const comment = { id: comments.get(existing.id)?.id ?? nextCommentId++, ...comments.get(existing.id), draft_text: body.draft_text, moderation_status: "draft", updated_at: "2026-10-15T13:00:00Z" };
             comments.set(existing.id, comment); return send(comment);
           }
           const row = existing ? { ...existing, ...body } : { ...body, id: nextId++ };

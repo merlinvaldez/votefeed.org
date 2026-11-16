@@ -14,6 +14,7 @@ import {
   applyCommentModerationResult,
   getOrCreateCommentContactDrafts,
   upsertDraftComment,
+  listOwnedBillComments,
 } from "../db/queries/comments.js";
 import { getBillById } from "../db/queries/bills.js";
 import { findRepByBioguideId } from "../db/queries/reps.js";
@@ -67,6 +68,14 @@ router.get("/users/:userId", async (req, res) => {
   const { userId } = req.params;
   const interactions = await getAllUserInteractions(userId);
   res.status(200).send(interactions);
+});
+
+router.get("/bills/:billId/comments/mine", requireUser, async (req, res) => {
+  const billId = Number(req.params.billId);
+  if (!Number.isSafeInteger(billId) || billId < 1) {
+    return res.status(400).json({ error: "Invalid bill ID" });
+  }
+  res.json(await listOwnedBillComments(req.user.id, billId));
 });
 
 router.get("/users/:userId/bill/:billId", async (req, res) => {

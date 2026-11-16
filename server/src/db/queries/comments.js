@@ -45,6 +45,21 @@ export async function getCommentById(commentId, runner = db) {
   return comment ?? null;
 }
 
+export async function listOwnedBillComments(userId, billId, runner = db) {
+  const { rows } = await runner.query(`SELECT interactions.*,
+    c.id AS comment_id, c.draft_text AS comment_draft_text,
+    c.approved_text AS comment_approved_text,
+    c.moderation_status AS comment_moderation_status,
+    c.moderation_reason AS comment_moderation_reason,
+    c.is_public AS comment_is_public, c.updated_at AS comment_updated_at,
+    reps.full_name AS recipient_name, reps.chamber AS recipient_chamber
+    FROM interactions JOIN bill_comments c ON c.interaction_id = interactions.id
+    LEFT JOIN reps ON reps.bioguideid = interactions.rep_bioguide_id
+    WHERE interactions.user_id = $1 AND interactions.bill_id = $2
+    ORDER BY c.created_at DESC, c.id DESC`, [userId, billId]);
+  return rows;
+}
+
 export async function upsertDraftComment(
   { interactionId, userId, billId, repBioguideId, draftText },
   runner = db,
@@ -228,7 +243,9 @@ export async function listPublicCommentsByBillId(
       bill_comments.approved_text AS text,
       bill_comments.published_at,
       bill_comments.updated_at,
-      COALESCE(NULLIF(TRIM(users.first_name), ''), 'Constituent') AS author_display_name,
+      COALESCE(NULLIF(TRIM(CONCAT_WS(' ', NULLIF(TRIM(users.first_name), ''), NULLIF(TRIM(users.last_name), ''))), ''), 'Constituent') AS author_display_name,
+      reps.full_name AS recipient_name,
+      reps.chamber AS recipient_chamber,
       COALESCE(useful_counts.useful_count, 0)::integer AS useful_count,
       CASE
         WHEN $2::integer IS NULL THEN false
@@ -240,6 +257,7 @@ export async function listPublicCommentsByBillId(
       END AS is_owned_by_viewer
     FROM bill_comments
     JOIN users ON users.id = bill_comments.user_id
+    LEFT JOIN reps ON reps.bioguideid = bill_comments.rep_bioguide_id
     LEFT JOIN useful_counts ON useful_counts.comment_id = bill_comments.id
     LEFT JOIN viewer_votes ON viewer_votes.comment_id = bill_comments.id
     WHERE bill_comments.bill_id = $1

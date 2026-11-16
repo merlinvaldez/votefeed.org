@@ -16,8 +16,10 @@ test("PostgreSQL: counts and discussions include only approved public comments i
     await client.query(`CREATE TEMP TABLE users (id integer, first_name text, state text, district integer);
       CREATE TEMP TABLE bill_comments (id integer, bill_id integer, user_id integer, is_public boolean,
         moderation_status text, approved_text text, published_at timestamptz, updated_at timestamptz, created_at timestamptz);
+      ALTER TABLE users ADD COLUMN last_name text;
+      CREATE TEMP TABLE reps (bioguideid text, full_name text, chamber text);
       CREATE TEMP TABLE comment_useful_votes (comment_id integer, user_id integer);
-      INSERT INTO users VALUES (1,'Local','Alaska',0),(2,'Other district','Alaska',1),
+      INSERT INTO users (id,first_name,state,district) VALUES (1,'Local','Alaska',0),(2,'Other district','Alaska',1),
         (3,'Other state','Wyoming',0),(4,'No district','Alaska',NULL);
       INSERT INTO bill_comments (id,bill_id,user_id,is_public,moderation_status,approved_text) VALUES
         (1,7,1,true,'approved','Local public'),(2,7,2,true,'approved','Other district'),
@@ -25,6 +27,10 @@ test("PostgreSQL: counts and discussions include only approved public comments i
         (5,7,1,true,'draft','Draft'),(6,7,1,true,'rejected','Rejected'),
         (7,7,1,true,'approved',NULL),(8,8,1,true,'approved','Other bill'),
         (9,7,4,true,'approved','Unknown district');
+      ALTER TABLE bill_comments ADD COLUMN rep_bioguide_id text;
+      INSERT INTO reps VALUES ('H','Alice Smith','House of Representatives');
+      UPDATE users SET last_name = 'Constituent' WHERE id=1;
+      UPDATE bill_comments SET rep_bioguide_id = 'H' WHERE id=1;
       INSERT INTO comment_useful_votes VALUES (1,2);`);
     const location = { state: " alaska ", district: "0" };
     const counts = await getPublicBillCommentCounts([7,8,9,7], client, location);
@@ -32,6 +38,9 @@ test("PostgreSQL: counts and discussions include only approved public comments i
     for (const viewerUserId of [null, 2]) {
       const comments = await listPublicCommentsByBillId(7, { viewerUserId, location }, client);
       assert.deepEqual(comments.map(comment => comment.id), [1]);
+      assert.equal(comments[0].author_display_name, 'Local Constituent');
+      assert.equal(comments[0].recipient_name, 'Alice Smith');
+      assert.equal(comments[0].recipient_chamber, 'House of Representatives');
       assert.equal(comments[0].useful_count, 1);
       assert.equal(comments[0].viewer_has_marked_useful, viewerUserId === 2);
     }

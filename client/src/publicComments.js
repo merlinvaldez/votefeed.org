@@ -8,3 +8,7 @@
   const query = new URLSearchParams({ state, district: String(Number(district)) });
   return `${apiBase}/comments/bills/${billId}/public?${query}`;
 }
+
+export function otherPublicComments(comments) {
+  return comments.filter(comment => !comment.is_owned_by_viewer);
+}
