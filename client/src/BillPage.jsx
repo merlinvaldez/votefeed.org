@@ -4,7 +4,7 @@ import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { isAnsweredVote, getCardResponseState, buildCardStanceRequest, reconcileCardStanceResult } from "./voteInteractions";
 import { panelBill } from "./billDetailContext";
-import { publicCommentsUrl, otherPublicComments } from "./publicComments";
+import { publicCommentsUrl, otherPublicComments, ownedCommentsForFolder, commentRecipientLabel } from "./publicComments";
 import BillVoteFolders from "./BillVoteFolders";
 import GroupContactGuides from "./GroupContactGuides";
 import { sharedContactRequest, validateSharedContactDrafts } from "./sharedContactFlow";
@@ -46,15 +46,6 @@ const getRepLastName = (fullName = "") => {
 };
 
 
-
-const commentRecipientLabel = (comment, roster) => {
-  const recipient = roster.find(person => person.bioguideid === comment?.rep_bioguide_id);
-  const name = comment?.recipient_name || recipient?.full_name;
-  if (!name) return "";
-  const chamber = comment?.recipient_chamber || recipient?.chamber || "";
-  const title = chamber.toLowerCase().includes("senate") ? "Sen." : "Rep.";
-  return `${title} ${getRepLastName(name)}`;
-};
 
 const formatVotedOn = (value) => {
   if (!value) return "Unknown date";
@@ -246,8 +237,13 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
     : "my representative";
   const responseReference = grouped ? `Sens. ${card.members.map(item => getRepLastName(item.name)).join(" and ")}` : repReference;
   const commentAuthorName = userName || "You";
-  const commentInteraction = ownedInteractions.find(item => item.id === selectedCommentInteractionId)
-    ?? ownedInteractions[0] ?? interaction;
+  const scopedOwnedInteractions = ownedCommentsForFolder(ownedInteractions, folder, detail.delegation);
+  const showCommentRecipients = folder.id === "All Reps";
+  const commentInteraction = selectedCommentInteractionId === interaction?.id
+    ? interaction
+    : scopedOwnedInteractions.find(item => item.id === selectedCommentInteractionId)
+      ?? scopedOwnedInteractions.find(item => item.id === interaction?.id)
+      ?? scopedOwnedInteractions[0] ?? interaction;
   const commentDraftKey = commentInteraction?.id ?? memberVoteId;
   const commentRep = roster.find(item => item.bioguideid === commentInteraction?.rep_bioguide_id);
   const commentRepReference = commentRep?.full_name || repReference;
@@ -946,14 +942,15 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
               <span>I disagree with {responseReference}</span>
             )}
           </button>
-          {interaction?.id && !hasPostedOwnedComment && (
+          {interaction?.id && !interaction.comment_id && !scopedOwnedInteractions.some(item => item.id === interaction.id) && (
             <button
               type="button"
               className={`ghost-btn ${isCommentComposerOpen ? "active" : ""}`}
               disabled={isSavingStance}
-              onClick={() =>
-                setIsCommentComposerOpen((currentValue) => !currentValue)
-              }
+              onClick={() => {
+                setSelectedCommentInteractionId(interaction.id);
+                setIsCommentComposerOpen(currentValue => !currentValue);
+              }}
               aria-label={
                 isCommentComposerOpen ? "Hide comment composer" : "Write comment"
               }
@@ -967,17 +964,17 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
           )}
         </div>}
 
-            {(showOwnedCommentThread || ownedInteractions.length > 0 || showPublicCommentsPanel) && (
+            {(showOwnedCommentThread || scopedOwnedInteractions.length > 0 || showPublicCommentsPanel) && (
           <section id="public-comments" ref={publicDiscussionRef} tabIndex={-1} aria-label="Comments" className="comment-thread">
             <div className="comment-thread-header"><h2 className="comment-thread-title">Comments</h2></div>
-            {ownedInteractions.filter(item => item.id !== commentInteraction?.id).map(item => (
+            {scopedOwnedInteractions.filter(item => item.id !== commentInteraction?.id).map(item => (
               <article key={item.comment_id} className="comment-card">
                 <div className="comment-row">
                   <div className="comment-author-avatar" aria-label="Profile photo"><span className="comment-avatar-initial" aria-hidden="true">{commentAuthorName.charAt(0).toUpperCase()}</span><UserAvatar rounded={true} /></div>
                   <div className="comment-card-body">
                     <div className="comment-author-name">
                       {commentAuthorName}
-                      {commentRecipientLabel(item, roster) && <span className="comment-recipient"> to {commentRecipientLabel(item, roster)}</span>}
+                      {showCommentRecipients && commentRecipientLabel(item, roster, detail.cards) && <span className="comment-recipient"> to {commentRecipientLabel(item, roster, detail.cards)}</span>}
                     </div>
                     <div className="comment-text">{item.comment_approved_text || item.comment_draft_text}</div>
                     <button type="button" className="ghost-btn comment-edit-btn" disabled={busy} onClick={() => {
@@ -1059,7 +1056,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
                       <div className="comment-card-meta">
                         <div className="comment-author-name">
                           {commentAuthorName}
-                          {commentRecipientLabel(commentInteraction, roster) && <span className="comment-recipient"> to {commentRecipientLabel(commentInteraction, roster)}</span>}
+                          {showCommentRecipients && commentRecipientLabel(commentInteraction, roster, detail.cards) && <span className="comment-recipient"> to {commentRecipientLabel(commentInteraction, roster, detail.cards)}</span>}
                         </div>
                       </div>
                     </div>
@@ -1310,7 +1307,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
               )}
             </div>
             {publicCommentsStatus === "loading" && <p role="status">Loading comments…</p>}
-            {publicCommentsStatus === "ready" && discussionComments.length === 0 && ownedInteractions.length === 0 && !showOwnedCommentThread && <p>No comments yet.</p>}
+            {publicCommentsStatus === "ready" && discussionComments.length === 0 && scopedOwnedInteractions.length === 0 && !showOwnedCommentThread && <p>No comments yet.</p>}
             {isPublicCommentsOpen && discussionComments.length > 0 && (
               <div id="public-comments-list" className="public-comments-list">
                 {discussionComments.map((comment) => {
@@ -1327,7 +1324,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
                         <div className="public-comment-meta">
                           <div className="public-comment-author">
                             {comment.author_display_name}
-                            {commentRecipientLabel(comment, roster) && <span className="comment-recipient"> to {commentRecipientLabel(comment, roster)}</span>}
+                            {showCommentRecipients && commentRecipientLabel(comment, roster) && <span className="comment-recipient"> to {commentRecipientLabel(comment, roster)}</span>}
                           </div>
                           {publishedLabel && (
                             <span className="public-comment-time">

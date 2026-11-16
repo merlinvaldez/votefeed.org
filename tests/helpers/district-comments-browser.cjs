@@ -54,7 +54,7 @@ async (page) => {
     refreshed = page.waitForResponse(response => response.url().includes("/comments/bills/") && response.ok());
     await page.getByRole("button", { name: "Submit comment", exact: true }).click();
     await refreshed;
-    for (const folder of ["All Reps", "House", "Senate"]) {
+    for (const folder of ["All Reps", "Senate"]) {
       await page.getByRole("tab", { name: folder, exact: true }).click();
       await page.reload();
       await page.getByRole("button", { name: "Show comment actions", exact: true }).waitFor();
@@ -64,7 +64,10 @@ async (page) => {
       if (await page.getByText("An updated comment for this district.", { exact: true }).count() !== 1) {
         throw new Error("Owned public comment must render once after returning");
       }
-      await page.getByText("Fixture Constituent to Sen. Smith", { exact: true }).waitFor();
+      await page.getByText(folder === "All Reps" ? "Fixture Constituent to Sen. Smith and Sen. Jones" : "Fixture Constituent", { exact: true }).waitFor();
+      if (folder !== "All Reps" && await page.locator(".comment-recipient").count()) {
+        throw new Error("Recipient labels should appear only in All Reps");
+      }
       await page.getByRole("button", { name: "Show comment actions", exact: true }).click();
       await page.getByRole("menuitem", { name: "Edit", exact: true }).click();
       if (await page.getByRole("textbox", { name: "Comment draft", exact: true }).inputValue() !== "An updated comment for this district.") {
@@ -78,15 +81,26 @@ async (page) => {
     if (await page.getByRole("button", { name: "Disagree with Sens. Smith and Jones", exact: true }).getAttribute("aria-pressed") !== "true") {
       throw new Error("Comment update restored a stale stance");
     }
-    const saved = await page.request.post(`${base}/test-api/interactions/addstance`, {
-      data: { bill_id: 7, rep_bioguide_id: "H", member_vote_id: 1, stance: "approve" },
-    });
-    const house = await saved.json();
-    await page.request.post(`${base}/test-api/interactions/${house.id}/comment/submit`, {
-      data: { draft_text: "A second owned comment." },
-    });
-    await page.reload();
+    await page.getByRole("tab", { name: "House", exact: true }).click();
+    await page.getByRole("button", { name: "Agree with Rep. Member", exact: true }).waitFor();
+    if (await page.getByText("An updated comment for this district.", { exact: true }).count()) {
+      throw new Error("House tab displayed a Senate comment");
+    }
+    await page.getByRole("button", { name: "Agree with Rep. Member", exact: true }).click();
+    await page.getByRole("button", { name: "Write comment", exact: true }).click();
+    await page.getByRole("textbox", { name: "Comment draft", exact: true }).fill("A second owned comment.");
+    await page.getByRole("button", { name: "Submit comment", exact: true }).click();
     await page.getByText("A second owned comment.", { exact: true }).waitFor();
+    if (await page.locator(".comment-recipient").count()) throw new Error("House tab has redundant recipient labels");
+    await page.getByRole("tab", { name: "Senate", exact: true }).click();
+    await page.getByText("An updated comment for this district.", { exact: true }).waitFor();
+    if (await page.getByText("A second owned comment.", { exact: true }).count()) {
+      throw new Error("Senate tab displayed a House comment");
+    }
+    await page.getByRole("tab", { name: "All Reps", exact: true }).click();
+    await page.getByText("A second owned comment.", { exact: true }).waitFor();
+    await page.getByText("Fixture Constituent to Rep. Member", { exact: true }).waitFor();
+    await page.getByText("Fixture Constituent to Sen. Smith and Sen. Jones", { exact: true }).waitFor();
     await page.getByRole("button", { name: "Edit comment", exact: true }).click();
     await page.getByRole("button", { name: "Cancel edit", exact: true }).click();
     await page.getByRole("button", { name: "Show comment actions", exact: true }).click();

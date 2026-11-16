@@ -2,6 +2,32 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import pg from "../server/node_modules/pg/lib/index.js";
 import { listOwnedBillComments } from "../server/src/db/queries/comments.js";
+import { ownedCommentsForFolder, commentRecipientLabel } from "../client/src/publicComments.js";
+
+test("shared Senate comments name both recipients using the exact recorded response", () => {
+  const cards = [{ event: { chamber: "Senate" }, members: [
+    { bioguideId: "A", memberVoteId: 10, name: "Alice Smith" },
+    { bioguideId: "B", memberVoteId: 11, name: "Robert Jones" },
+  ] }];
+  const comment = { rep_bioguide_id: "A", member_vote_id: 10, recipient_name: "Alice Smith", recipient_chamber: "Senate" };
+  assert.equal(commentRecipientLabel(comment, [], cards), "Sen. Smith and Sen. Jones");
+  assert.equal(commentRecipientLabel({ ...comment, member_vote_id: 9 }, [], cards), "Sen. Smith");
+  assert.equal(commentRecipientLabel(comment, [], []), "Sen. Smith");
+  assert.equal(commentRecipientLabel({ recipient_name: "Jane Doe", recipient_chamber: "House" }, [], cards), "Rep. Doe");
+});
+
+test("owned comments follow the House, Senate, individual Senator, and All Reps tabs", () => {
+  const comments = [
+    { id: 1, rep_bioguide_id: "H" },
+    { id: 2, rep_bioguide_id: "A" },
+    { id: 3, rep_bioguide_id: "B" },
+  ];
+  const delegation = { houseMember: { bioguideid: "H" }, senators: [{ bioguideid: "A" }, { bioguideid: "B" }] };
+  assert.deepEqual(ownedCommentsForFolder(comments, { id: "House" }, delegation).map(row => row.id), [1]);
+  assert.deepEqual(ownedCommentsForFolder(comments, { id: "Senate" }, delegation).map(row => row.id), [2, 3]);
+  assert.deepEqual(ownedCommentsForFolder(comments, { id: "All Reps" }, delegation), comments);
+  assert.deepEqual(ownedCommentsForFolder(comments, { id: "B", cards: [{ members: [{ bioguideId: "B" }] }] }, delegation).map(row => row.id), [3]);
+});
 
 test("discussion excludes owned public copies while preserving other constituents", async () => {
   const { otherPublicComments } = await import("../client/src/publicComments.js");
