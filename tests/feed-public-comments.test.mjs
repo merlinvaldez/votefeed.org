@@ -6,7 +6,7 @@ const page = () => ({ cards: [
   { id: "house", bill: { id: 7 }, members: [{ memberVoteId: 1 }] },
   { id: "senate", bill: { id: 7 }, members: [{ memberVoteId: 2 }, { memberVoteId: 3 }] },
   { id: "other", bill: { id: 8 }, members: [{ memberVoteId: 4 }] },
-], warnings: [], dataStatus: "complete", retry: null, page: { nextCursor: "unchanged" } });
+], delegation: { state: "Alaska", district: 0 }, warnings: [], dataStatus: "complete", retry: null, page: { nextCursor: "unchanged" } });
 
 test("page enrichment queries each displayed bill once and shares its public count", async () => {
   const queries = [];
@@ -16,7 +16,7 @@ test("page enrichment queries each displayed bill once and shares its public cou
       ? [{ id: 7, summary: "Official", aisummary: "Simple" }]
       : [{ bill_id: 7, count: 5 }] };
   } });
-  assert.deepEqual(queries, [[[7, 8]], [[7, 8]]]);
+  assert.deepEqual(queries, [[[7, 8]], [[7, 8], "Alaska", 0]]);
   assert.deepEqual(result.cards.map(card => card.publicCommentCount), [5, 5, 0]);
   assert.deepEqual(result.cards[0].summary, { officialHtml: "Official", simplifiedText: "Simple" });
   assert.deepEqual(result.cards[1].members, page().cards[1].members);

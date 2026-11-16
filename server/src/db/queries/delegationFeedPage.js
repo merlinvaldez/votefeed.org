@@ -59,7 +59,7 @@ export async function enrichFeedPage(page, runner = db) {
   let counts;
   const warnings = [...(page.warnings ?? [])];
   try {
-    counts = await getPublicBillCommentCounts(ids, runner);
+    counts = await getPublicBillCommentCounts(ids, runner, page.delegation);
   } catch (error) {
     console.error("Comment count query failed", error);
     warnings.push({ code: "PUBLIC_COMMENT_COUNTS_UNAVAILABLE",

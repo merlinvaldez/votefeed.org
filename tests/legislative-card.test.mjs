@@ -34,9 +34,11 @@ test("rendered cards retain identity, truthful positions, selected states and se
     assert.match(unpublished, /title="Official summary not yet available"/);
     assert.match(unpublished, /class="summary-source-toggle" disabled=""/);
     assert.match(unpublished, /improve public services/);
-    for (const [count, label] of [[0, "0 Comments"], [1, "1 Comment"], [12, "12 Comments"]]) {
+    for (const [count, label] of [[1, "1 Comment"], [12, "12 Comments"]]) {
       assert.match(render({ vote: { ...vote, publicCommentCount: count } }), new RegExp(label));
     }
+    assert.doesNotMatch(render({ vote: { ...vote, publicCommentCount: 0 } }), /class="comments"/);
+    assert.match(render({ vote: { ...vote, publicCommentCount: null } }), /class="comments"/);
     assert.doesNotMatch(render({ vote: { ...vote, publicCommentCount: null } }), /0 Comments/);
     assert.match(neutral,/border-color:#2563eb/);
     assert.match(neutral,/border-color:#dc2626/);

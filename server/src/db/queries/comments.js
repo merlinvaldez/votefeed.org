@@ -5,13 +5,25 @@ const publicVisibility = `bill_comments.is_public = true
   AND bill_comments.moderation_status = 'approved'
   AND bill_comments.approved_text IS NOT NULL`;
 
-export async function getPublicBillCommentCounts(billIds, runner = db) {
+function commentDistrict(location) {
+  const state = typeof location?.state === "string" ? location.state.trim().replace(/\s+/g, " ") : "";
+  const district = location?.district;
+  if (!state || !["string", "number"].includes(typeof district) ||
+      !/^\d+$/.test(String(district).trim()) || !Number.isSafeInteger(Number(district))) {
+    throw Object.assign(new Error("State and a non-negative integer district are required to view comments"), { status: 400 });
+  }
+  return { state, district: Number(district) };
+}
+
+export async function getPublicBillCommentCounts(billIds, runner = db, location) {
+  const { state, district } = commentDistrict(location);
   const ids = [...new Set(billIds)];
   if (!ids.length) return new Map();
   const { rows } = await runner.query(`SELECT bill_comments.bill_id, COUNT(*)::integer AS count
     FROM bill_comments JOIN users ON users.id = bill_comments.user_id
     WHERE bill_comments.bill_id = ANY($1::integer[]) AND ${publicVisibility}
-    GROUP BY bill_comments.bill_id`, [ids]);
+      AND LOWER(BTRIM(users.state)) = LOWER($2) AND users.district = $3
+    GROUP BY bill_comments.bill_id`, [ids, state, district]);
   const counts = new Map(ids.map(id => [id, 0]));
   for (const row of rows) counts.set(row.bill_id, row.count);
   return counts;
@@ -194,9 +206,10 @@ export async function setCommentPublicVisibility(
 
 export async function listPublicCommentsByBillId(
   billId,
-  { viewerUserId = null } = {},
+  { viewerUserId = null, location } = {},
   runner = db,
 ) {
+  const { state, district } = commentDistrict(location);
   const sql = `
     WITH useful_counts AS (
       SELECT
@@ -231,11 +244,12 @@ export async function listPublicCommentsByBillId(
     LEFT JOIN viewer_votes ON viewer_votes.comment_id = bill_comments.id
     WHERE bill_comments.bill_id = $1
       AND ${publicVisibility}
+      AND LOWER(BTRIM(users.state)) = LOWER($3) AND users.district = $4
     ORDER BY
       COALESCE(bill_comments.published_at, bill_comments.updated_at, bill_comments.created_at) DESC,
       bill_comments.id DESC
   `;
-  const { rows } = await runner.query(sql, [billId, viewerUserId]);
+  const { rows } = await runner.query(sql, [billId, viewerUserId, state, district]);
   return rows;
 }
 

@@ -4,6 +4,7 @@ import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { isAnsweredVote, getCardResponseState, buildCardStanceRequest, reconcileCardStanceResult } from "./voteInteractions";
 import { panelBill } from "./billDetailContext";
+import { publicCommentsUrl } from "./publicComments";
 import BillVoteFolders from "./BillVoteFolders";
 import GroupContactGuides from "./GroupContactGuides";
 import { sharedContactRequest, validateSharedContactDrafts } from "./sharedContactFlow";
@@ -141,8 +142,8 @@ const copyTextToClipboard = async (text) => {
   }
 };
 
-const requestPublicComments = async ({ billId, isAuthed, authFetch }) => {
-  const requestUrl = `${API_BASE}/comments/bills/${billId}/public`;
+const requestPublicComments = async ({ billId, isAuthed, authFetch, location }) => {
+  const requestUrl = publicCommentsUrl(API_BASE, billId, location);
   const resp = isAuthed ? await authFetch(requestUrl) : await fetch(requestUrl);
   if (!resp.ok) {
     const details = await resp.text();
@@ -334,6 +335,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
           billId,
           isAuthed,
           authFetch,
+          location: detail.delegation,
         });
         if (!cancelled) {
           setPublicComments(comments);
@@ -352,7 +354,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
     return () => {
       cancelled = true;
     };
-  }, [active, billId, isAuthed, authFetch]);
+  }, [active, billId, isAuthed, authFetch, detail.delegation]);
 
   useEffect(() => {
     setOwnedCommentId(interaction?.comment_id ?? null);
@@ -551,6 +553,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
             billId,
             isAuthed,
             authFetch,
+            location: detail.delegation,
           });
           setPublicComments(comments);
           setPublicCommentsStatus("ready");
@@ -608,6 +611,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
             billId,
             isAuthed,
             authFetch,
+            location: detail.delegation,
           });
           setPublicComments(comments);
           setPublicCommentsStatus("ready");
@@ -651,6 +655,7 @@ export default function BillDetailPanel({ detail, folder, active, folders, selec
             billId,
             isAuthed,
             authFetch,
+            location: detail.delegation,
           });
           setPublicComments(comments);
           setPublicCommentsStatus("ready");

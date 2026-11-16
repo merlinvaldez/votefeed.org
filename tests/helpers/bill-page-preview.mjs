@@ -32,9 +32,10 @@ const server = await createServer({ root, configFile: false, envDir: false, cach
       if (id === "\0fixture-avatar") return "export function UserAvatar(){return null;}";
       if (id.replaceAll('\\', '/').endsWith("/src/main.jsx")) return `
         import React from 'react'; import {createRoot} from 'react-dom/client';
-        import {BrowserRouter,Routes,Route} from 'react-router-dom';
-        import BillPage from './BillPageRoute.jsx'; import './index.css';
-        createRoot(document.getElementById('root')).render(<BrowserRouter><main style={{maxWidth:1000,margin:'24px auto',padding:16}}><Routes><Route path="/bill/:billType/:billNumber" element={<BillPage/>}/></Routes></main></BrowserRouter>);`;
+        import {BrowserRouter,Routes,Route,Outlet} from 'react-router-dom';
+        import BillPage from './BillPageRoute.jsx'; import Feed from './Feed.jsx'; import './index.css';
+        function Layout(){const [selectedPolicyArea,setSelectedPolicyArea]=React.useState(null);return <Outlet context={{selectedPolicyArea,setSelectedPolicyArea,setSidebarPolicyAreas:()=>{},setSidebarTotalPolicyCount:()=>{}}}/>;}
+        createRoot(document.getElementById('root')).render(<BrowserRouter><main style={{maxWidth:1000,margin:'24px auto',padding:16}}><Routes><Route element={<Layout/>}><Route path="/feed" element={<Feed state={{district:{state:'Alaska',district:0},votes:[]}}/>}/><Route path="/bill/:billType/:billNumber" element={<BillPage/>}/></Route></Routes></main></BrowserRouter>);`;
     },
     configureServer(vite) {
       vite.middlewares.use(async (req, res, next) => {
@@ -44,6 +45,16 @@ const server = await createServer({ root, configFile: false, envDir: false, cach
         apiCalls.push({ method: req.method, path, query: Object.fromEntries(url.searchParams) });
         const send = (data, status = 200) => { res.statusCode = status; res.setHeader("Content-Type", "application/json"); res.end(JSON.stringify(data)); };
         if (path === "/fixture-calls") return send(apiCalls);
+        if (path === "/reps/state/Alaska/senators") return send({ senators: people.slice(1) });
+        if (path.endsWith("/delegation/feed")) return send({
+          cards: [
+            { ...baseCard("house", [members[0]], "House", "Nay", "Passed"), publicCommentCount: 0 },
+            { ...baseCard("senate", members.slice(1), "Senate", "Yea", "Failed"), publicCommentCount: 1 },
+          ],
+          delegation: { state: "Alaska", district: 0, houseMember: people[0], senators: people.slice(1) },
+          page: { limit: 5, snapshotId: "fixture", hasMore: false, nextCursor: null },
+          selectedChamber: "All Reps", selectedPolicyArea: null, policyAreas: [], warnings: [],
+        });
         if (path.endsWith("/ai-summary")) {
           const attempts = apiCalls.filter(call => call.path.endsWith("/ai-summary")).length;
           return attempts === 1
@@ -57,14 +68,26 @@ const server = await createServer({ root, configFile: false, envDir: false, cach
           return send({ bill: { id: 7, number: 7, bill_type: "hr", summary: ["4", "5"].includes(url.searchParams.get("district")) ? "" : "<p>This measure improves public services.</p>",
             aisummary: ["3", "5"].includes(url.searchParams.get("district")) ? "paste the draft_quick_summary you want simplified" : "improve public services", legislation_url: "https://www.congress.gov/bill/119th-congress/house-bill/7" },
             cards: [baseCard("house", [members[0]], "House", "Nay", "Passed"), ...senate],
-            delegation: { houseMember: people[0], senators: people.slice(1) }, warnings: [] });
+            delegation: { state: "Alaska", district: Number(url.searchParams.get("district") ?? 0), houseMember: people[0], senators: people.slice(1) }, warnings: [] });
         }
         if (path === "/users/me") return send({ id: 1, first_name: "Fixture", state: "Alaska", district: 0 });
-        if (path.includes("/comments/bills/")) return send({ comments: [] });
+        if (path.includes("/comments/bills/")) {
+          if (url.searchParams.get("state") !== "Alaska" || !/^\d+$/.test(url.searchParams.get("district") ?? "")) {
+            return send({ error: "District required" }, 400);
+          }
+          return send({ comments: [{ id: 70, text: "Public comment from this district.", author_display_name: "Local constituent", useful_count: 0, viewer_has_marked_useful: false, is_owned_by_viewer: false }] });
+        }
         if (path.includes("/interactions/users/")) return send(answers.get(url.searchParams.get("repBioguideId")) ?? null);
         if (req.method === "PUT" || req.method === "POST") {
           const chunks = []; for await (const chunk of req) chunks.push(chunk);
           const body = JSON.parse(Buffer.concat(chunks).toString() || "{}");
+          if (path.startsWith("/comments/") && path.endsWith("/public")) {
+            const entry = [...comments.entries()].find(([, comment]) => path === `/comments/${comment.id}/public`);
+            if (!entry) return send({ error: "Comment not found" }, 404);
+            const updated = { ...entry[1], is_public: body.is_public };
+            comments.set(entry[0], updated);
+            return send(updated);
+          }
           if (path === "/interactions/stances/batch") {
             const rows = body.members.map(member => ({ id: answers.get(member.rep_bioguide_id)?.id ?? nextId++,
               bill_id: body.bill_id, ...member, stance: body.stance }));

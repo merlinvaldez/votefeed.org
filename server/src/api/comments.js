@@ -20,9 +20,11 @@ router.get("/bills/:billId/public", async (req, res, next) => {
 
     const comments = await listPublicCommentsByBillId(billId, {
       viewerUserId: req.user?.id ?? null,
+      location: req.user ?? { state: req.query.state, district: req.query.district },
     });
     return res.json({ comments });
   } catch (err) {
+    if (err.status === 400) return res.status(400).json({ error: err.message });
     return next(err);
   }
 });

@@ -25,7 +25,7 @@ test("PostgreSQL: shared delegation read selects latest eligible member measures
       CREATE TEMP TABLE member_voting_record (id integer, member_id text, chamber text,
         congress_number integer, session_number integer, roll_call_number integer,
         legislation_type text, legislationnumber integer, voted_on timestamptz, vote text);
-      CREATE TEMP TABLE users (id integer);
+      CREATE TEMP TABLE users (id integer, state text, district integer);
       CREATE TEMP TABLE bill_comments (bill_id integer, user_id integer,
         is_public boolean, moderation_status text, approved_text text);
       INSERT INTO reps (bioguideid,chamber,state,congressionaldistrict,is_current_member)

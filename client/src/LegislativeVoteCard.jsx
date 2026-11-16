@@ -185,7 +185,7 @@ export default function LegislativeVoteCard({ vote, interactions, isAuthed, stan
           )}
         </button>
 
-        <button
+        {vote.publicCommentCount !== 0 && <button
           type="button"
           className="comments"
           aria-label={`Open comments on ${billLabel} for ${fullNames}`}
@@ -197,7 +197,7 @@ export default function LegislativeVoteCard({ vote, interactions, isAuthed, stan
           {Number.isSafeInteger(vote.publicCommentCount) && vote.publicCommentCount >= 0
             ? `${vote.publicCommentCount} ${vote.publicCommentCount === 1 ? "Comment" : "Comments"}`
             : "Comments"}
-        </button>
+        </button>}
       </div>
       </div>
     </article>

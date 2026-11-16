@@ -395,7 +395,6 @@ function Feed(props) {
   };
 
   const handleCommentIntent = (vote) => {
-    if (promptGuestInteraction()) return;
     goToBill(vote, true);
   };
 
