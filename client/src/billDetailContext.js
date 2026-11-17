@@ -4,7 +4,9 @@ export const memberLastName = (name = "") => name.includes(",")
 export function billFolderTabs(detail) {
   const house = detail.cards.filter(card => card.event.chamber === "House");
   const senate = detail.cards.filter(card => card.event.chamber === "Senate");
-  const tabs = [{ id: "All Reps", label: "All Reps", cards: detail.cards }];
+  const tabs = house.length && senate.length
+    ? [{ id: "All Reps", label: "All Reps", cards: detail.cards }]
+    : [];
   if (house.length) tabs.push({ id: "House", label: "House", cards: house });
   if (senate.length) {
     if (senate.length > 1) {
@@ -16,13 +18,14 @@ export function billFolderTabs(detail) {
       }
     } else tabs.push({ id: "Senate", label: "Senate", cards: senate });
   }
-  return tabs;
+  // Keep the bill details available even when there are no vote tabs to display.
+  return tabs.length ? tabs : [{ id: "All Reps", label: "All Reps", cards: [] }];
 }
 
 export function initialBillFolder(tabs, { chamber = "All Reps", cardId = null } = {}) {
   const exact = tabs.find(tab => tab.id !== "All Reps" && tab.cards.some(card => card.id === cardId));
-  if (chamber === "Senate") return exact?.id ?? tabs.find(tab => tab.id === "Senate")?.id ?? "All Reps";
-  return tabs.some(tab => tab.id === chamber) ? chamber : "All Reps";
+  if (chamber === "Senate" && exact) return exact.id;
+  return tabs.find(tab => tab.id === chamber)?.id ?? tabs[0]?.id ?? "All Reps";
 }
 
 export function billDetailUrl({ apiBase, authenticated, billType, billNumber, congress, location, cardId }) {

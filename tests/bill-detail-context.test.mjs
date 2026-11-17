@@ -24,21 +24,23 @@ test("matching Senate action stays combined; All Reps includes each exact chambe
 
 test("split positions use separate surname tabs and select the clicked Senator", () => {
   const tabs = billFolderTabs(detail([card("one", [a]), card("two", [b], "Not Voting")]));
-  assert.deepEqual(tabs.map(tab => tab.label), ["All Reps", "Smith", "Jones"]);
+  assert.deepEqual(tabs.map(tab => tab.label), ["Smith", "Jones"]);
   assert.equal(initialBillFolder(tabs, { chamber: "Senate", cardId: "two" }), "B");
-  assert.deepEqual(tabs[2].cards[0].members.map(member => member.memberVoteId), [b.memberVoteId]);
-  assert.equal(tabs[2].cards[0].position, "Not Voting");
+  assert.deepEqual(tabs[1].cards[0].members.map(member => member.memberVoteId), [b.memberVoteId]);
+  assert.equal(tabs[1].cards[0].position, "Not Voting");
   const duplicates = billFolderTabs(detail([card("one", [a]), card("two", [{ ...b, name: "Robert Smith" }])]));
-  assert.deepEqual(duplicates.slice(1).map(tab => tab.label), ["Smith, Alice", "Robert Smith"]);
+  assert.deepEqual(duplicates.map(tab => tab.label), ["Smith, Alice", "Robert Smith"]);
 });
 
 test("vacant chambers and chambers with no vote do not manufacture actions", () => {
   const missingHouse = detail([card("one", [a])]);
   missingHouse.delegation.houseMember = null;
-  assert.deepEqual(billFolderTabs(missingHouse).map(tab => tab.label), ["All Reps", "Senate"]);
+  const senateOnly = billFolderTabs(missingHouse);
+  assert.deepEqual(senateOnly.map(tab => tab.label), ["Senate"]);
+  assert.equal(initialBillFolder(senateOnly), "Senate");
   const houseOnly = billFolderTabs(detail([card("house", [h], "Nay", "House")]));
-  assert.deepEqual(houseOnly.map(tab => tab.label), ["All Reps", "House"]);
-  assert.equal(initialBillFolder(houseOnly, { chamber: "Senate" }), "All Reps");
+  assert.deepEqual(houseOnly.map(tab => tab.label), ["House"]);
+  assert.equal(initialBillFolder(houseOnly, { chamber: "Senate" }), "House");
   const empty = detail([]);
   const tabs = billFolderTabs(empty);
   assert.deepEqual(tabs.map(tab => tab.label), ["All Reps"]);
