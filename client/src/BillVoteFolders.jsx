@@ -29,6 +29,7 @@ export default function BillVoteFolders({ tabs, selected, onSelect, disabled }) 
       <div className="bill-folder-panel"><p>No eligible recorded vote is available on this bill.</p></div>
     </section>;
   }
+  const showTabs = tabs.length > 1;
   const panelId = "bill-votes-panel";
   function onKeyDown(event, index) {
     let next;
@@ -42,14 +43,16 @@ export default function BillVoteFolders({ tabs, selected, onSelect, disabled }) 
     event.currentTarget.parentElement.children[next].focus();
   }
   return <section className="bill-vote-folder">
-    <div className="bill-folder-tabs" role="tablist" aria-label="Recorded votes by representative">
+    {showTabs && <div className="bill-folder-tabs" role="tablist" aria-label="Recorded votes by representative">
       {tabs.map((tab, index) => <button key={tab.id} id={`bill-folder-${tab.id.replaceAll(" ", "-")}`}
         type="button" role="tab" aria-selected={selected === tab.id} aria-controls={panelId}
         tabIndex={selected === tab.id ? 0 : -1} disabled={disabled}
         onClick={() => onSelect(tab.id)} onKeyDown={event => onKeyDown(event, index)}>{tab.label}</button>)}
-    </div>
-    <div className="bill-folder-panel" id={panelId} role="tabpanel"
-      aria-labelledby={`bill-folder-${selected.replaceAll(" ", "-")}`} tabIndex={0}>
+    </div>}
+    <div className="bill-folder-panel" id={showTabs ? panelId : undefined}
+      role={showTabs ? "tabpanel" : undefined}
+      aria-labelledby={showTabs ? `bill-folder-${selected.replaceAll(" ", "-")}` : undefined}
+      tabIndex={showTabs ? 0 : undefined}>
       {current.cards.map(card => {
         const yes = card.result?.yes_count;
         const no = card.result?.no_count;
