@@ -24,23 +24,25 @@ test("matching Senate action stays combined; All Reps includes each exact chambe
 
 test("split positions use separate surname tabs and select the clicked Senator", () => {
   const tabs = billFolderTabs(detail([card("one", [a]), card("two", [b], "Not Voting")]));
-  assert.deepEqual(tabs.map(tab => tab.label), ["All Reps", "House", "Smith", "Jones"]);
+  assert.deepEqual(tabs.map(tab => tab.label), ["All Reps", "Smith", "Jones"]);
   assert.equal(initialBillFolder(tabs, { chamber: "Senate", cardId: "two" }), "B");
-  assert.deepEqual(tabs[3].cards[0].members.map(member => member.memberVoteId), [b.memberVoteId]);
-  assert.equal(tabs[3].cards[0].position, "Not Voting");
+  assert.deepEqual(tabs[2].cards[0].members.map(member => member.memberVoteId), [b.memberVoteId]);
+  assert.equal(tabs[2].cards[0].position, "Not Voting");
   const duplicates = billFolderTabs(detail([card("one", [a]), card("two", [{ ...b, name: "Robert Smith" }])]));
-  assert.deepEqual(duplicates.slice(2).map(tab => tab.label), ["Smith, Alice", "Robert Smith"]);
+  assert.deepEqual(duplicates.slice(1).map(tab => tab.label), ["Smith, Alice", "Robert Smith"]);
 });
 
 test("vacant chambers and chambers with no vote do not manufacture actions", () => {
   const missingHouse = detail([card("one", [a])]);
   missingHouse.delegation.houseMember = null;
   assert.deepEqual(billFolderTabs(missingHouse).map(tab => tab.label), ["All Reps", "Senate"]);
+  const houseOnly = billFolderTabs(detail([card("house", [h], "Nay", "House")]));
+  assert.deepEqual(houseOnly.map(tab => tab.label), ["All Reps", "House"]);
+  assert.equal(initialBillFolder(houseOnly, { chamber: "Senate" }), "All Reps");
   const empty = detail([]);
-  empty.delegation.senators = [];
   const tabs = billFolderTabs(empty);
-  assert.deepEqual(tabs.map(tab => tab.label), ["All Reps", "House"]);
-  assert.deepEqual(tabs[1].cards, []);
+  assert.deepEqual(tabs.map(tab => tab.label), ["All Reps"]);
+  assert.deepEqual(tabs[0].cards, []);
 });
 
 test("detail URLs survive refresh with exact Congress, source card and district zero", () => {

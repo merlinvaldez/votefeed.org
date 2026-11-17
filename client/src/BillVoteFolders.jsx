@@ -24,6 +24,11 @@ function MemberVote({ member, position }) {
 
 export default function BillVoteFolders({ tabs, selected, onSelect, disabled }) {
   const current = tabs.find(tab => tab.id === selected);
+  if (!current?.cards.length) {
+    return <section className="bill-vote-folder">
+      <div className="bill-folder-panel"><p>No eligible recorded vote is available on this bill.</p></div>
+    </section>;
+  }
   const panelId = "bill-votes-panel";
   function onKeyDown(event, index) {
     let next;
@@ -45,8 +50,7 @@ export default function BillVoteFolders({ tabs, selected, onSelect, disabled }) 
     </div>
     <div className="bill-folder-panel" id={panelId} role="tabpanel"
       aria-labelledby={`bill-folder-${selected.replaceAll(" ", "-")}`} tabIndex={0}>
-      {!current?.cards.length && <p>No eligible recorded vote is available for this chamber on this bill.</p>}
-      {current?.cards.map(card => {
+      {current.cards.map(card => {
         const yes = card.result?.yes_count;
         const no = card.result?.no_count;
         const total = Number(yes) + Number(no);

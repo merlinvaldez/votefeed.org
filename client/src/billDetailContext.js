@@ -5,8 +5,8 @@ export function billFolderTabs(detail) {
   const house = detail.cards.filter(card => card.event.chamber === "House");
   const senate = detail.cards.filter(card => card.event.chamber === "Senate");
   const tabs = [{ id: "All Reps", label: "All Reps", cards: detail.cards }];
-  if (detail.delegation.houseMember) tabs.push({ id: "House", label: "House", cards: house });
-  if (detail.delegation.senators.length) {
+  if (house.length) tabs.push({ id: "House", label: "House", cards: house });
+  if (senate.length) {
     if (senate.length > 1) {
       for (const card of senate) for (const member of card.members) {
         const surname = memberLastName(member.name);
