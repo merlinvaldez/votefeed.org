@@ -7,6 +7,13 @@ async (page) => {
   };
   page.on("request", record);
   try {
+    const expectIconButton = async (name, tooltip) => {
+      const button = page.getByRole("button", { name, exact: true });
+      if ((await button.innerText()).trim() || !await button.locator("svg").count() ||
+          await button.getAttribute("title") !== tooltip) {
+        throw new Error(`Expected an icon-only ${name} button with tooltip "${tooltip}"`);
+      }
+    };
     await page.goto(`${base}/feed`);
     const localComments = page.getByRole("button", { name: "Open comments on H.R. 7 for Alice Smith and Robert Jones", exact: true });
     await localComments.waitFor();
@@ -16,6 +23,7 @@ async (page) => {
     await localComments.click();
     await page.waitForURL(/#public-comments/);
     await page.getByText("Public comment from this district.", { exact: true }).waitFor();
+    await expectIconButton("Mark comment as useful", "Mark comment as useful");
     for (const folder of ["House", "Senate", "All Reps"]) {
       await page.getByRole("tab", { name: folder, exact: true }).click();
       await page.getByRole("region", { name: "Comments", exact: true }).waitFor();
@@ -24,10 +32,12 @@ async (page) => {
     await page.getByRole("button", { name: "Agree with Sens. Smith and Jones", exact: true }).click();
     await page.getByRole("button", { name: "Write comment", exact: true }).click();
     await page.getByRole("textbox", { name: "Comment draft", exact: true }).fill("Please support services for our district.");
+    await expectIconButton("Submit comment", "Submit comment");
     let refreshed = page.waitForResponse(response => response.url().includes("/comments/bills/") && response.ok());
     await page.getByRole("button", { name: "Submit comment", exact: true }).click();
     await refreshed;
     await page.getByText("Please support services for our district.", { exact: true }).waitFor();
+    await expectIconButton("Show comment actions", "Comment actions");
     for (const [show, hide, panelId] of [
       ["Show call script", "Hide call script", "bill-call-script-panel"],
       ["Show message template", "Hide message template", "bill-message-template-panel"],
@@ -64,7 +74,7 @@ async (page) => {
       if (await page.getByText("An updated comment for this district.", { exact: true }).count() !== 1) {
         throw new Error("Owned public comment must render once after returning");
       }
-      await page.getByText(folder === "All Reps" ? "Fixture Constituent to Sen. Smith and Sen. Jones" : "Fixture Constituent", { exact: true }).waitFor();
+      await page.getByText(folder === "All Reps" ? "Fixture Constituent to Sens. Smith and Jones" : "Fixture Constituent", { exact: true }).waitFor();
       if (folder !== "All Reps" && await page.locator(".comment-recipient").count()) {
         throw new Error("Recipient labels should appear only in All Reps");
       }
@@ -100,15 +110,36 @@ async (page) => {
     await page.getByRole("tab", { name: "All Reps", exact: true }).click();
     await page.getByText("A second owned comment.", { exact: true }).waitFor();
     await page.getByText("Fixture Constituent to Rep. Member", { exact: true }).waitFor();
-    await page.getByText("Fixture Constituent to Sen. Smith and Sen. Jones", { exact: true }).waitFor();
-    await page.getByRole("button", { name: "Edit comment", exact: true }).click();
-    await page.getByRole("button", { name: "Cancel edit", exact: true }).click();
-    await page.getByRole("button", { name: "Show comment actions", exact: true }).click();
+    await page.getByText("Fixture Constituent to Sens. Smith and Jones", { exact: true }).waitFor();
+    const showDiscussion = page.getByRole("button", { name: "Show 1 comment", exact: true });
+    await page.getByRole("button", { name: /^(Show|Hide) 1 comment$/ }).waitFor();
+    if (await showDiscussion.isVisible()) await showDiscussion.click();
+    await page.getByText("Local Constituent to Sens. Smith and Jones", { exact: true }).waitFor();
+    const senateComment = page.locator(".comment-card").filter({ hasText: "An updated comment for this district." });
+    const houseComment = page.locator(".comment-card").filter({ hasText: "A second owned comment." });
+    for (const [comment, members] of [[houseComment, ["House Member"]], [senateComment, ["Alice Smith", "Robert Jones"]]]) {
+      await comment.getByRole("button", { name: "Show call script", exact: true }).click();
+      for (const member of members) await comment.locator("#bill-call-script-panel pre").filter({ hasText: member }).waitFor();
+      await comment.getByRole("button", { name: "Hide call script", exact: true }).click();
+      await comment.getByRole("button", { name: "Show message template", exact: true }).click();
+      for (const member of members) await comment.locator("#bill-message-template-panel pre").filter({ hasText: member }).waitFor();
+      await comment.getByRole("button", { name: "Hide message template", exact: true }).click();
+      await comment.getByRole("button", { name: "Make public to other VoteFeed users", exact: true }).waitFor();
+      await comment.getByRole("button", { name: "Show comment actions", exact: true }).waitFor();
+    }
+    await houseComment.getByRole("button", { name: "Make public to other VoteFeed users", exact: true }).click();
+    await houseComment.getByRole("button", { name: "Public to other VoteFeed users", exact: true }).waitFor();
+    await senateComment.getByRole("button", { name: "Make public to other VoteFeed users", exact: true }).waitFor();
+    await houseComment.getByRole("button", { name: "Show comment actions", exact: true }).click();
+    await houseComment.getByRole("menuitem", { name: "Edit", exact: true }).click();
+    await page.getByRole("button", { name: "Cancel", exact: true }).click();
+    await houseComment.getByRole("button", { name: "Show comment actions", exact: true }).click();
     await page.getByRole("menuitem", { name: "Edit", exact: true }).click();
     await page.getByRole("textbox", { name: "Comment draft", exact: true }).fill("A revised second comment.");
     await page.getByRole("button", { name: "Submit comment", exact: true }).click();
     await page.getByText("A revised second comment.", { exact: true }).waitFor();
-    await page.getByRole("button", { name: "Show comment actions", exact: true }).click();
+    await page.locator(".comment-card").filter({ hasText: "A revised second comment." })
+      .getByRole("button", { name: "Show comment actions", exact: true }).click();
     const deleted = page.waitForResponse(response => response.request().method() === "DELETE" && response.ok());
     await page.getByRole("menuitem", { name: "Delete", exact: true }).click();
     await deleted;

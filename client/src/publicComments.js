@@ -1,6 +1,7 @@
 import { memberLastName } from "./billDetailContext.js";
+import { cardMemberNames } from "./legislativeCardNames.js";
 
-﻿export function publicCommentsUrl(apiBase, billId, location) {
+export function publicCommentsUrl(apiBase, billId, location) {
   const state = typeof location?.state === "string" ? location.state.trim() : "";
   const district = location?.district;
   if (!state || !["string", "number"].includes(typeof district) ||
@@ -25,12 +26,17 @@ export function ownedCommentsForFolder(comments, folder, delegation) {
   return comments.filter(comment => memberIds.includes(comment.rep_bioguide_id));
 }
 
-export function commentRecipientLabel(comment, roster, cards = []) {
-  const sharedCard = cards.find(card => card.event.chamber === "Senate" && card.members.length === 2 &&
+export function sharedSenateCommentCard(comment, cards) {
+  return cards.find(card => card.event.chamber === "Senate" && card.members.length === 2 &&
     card.members.some(member => member.bioguideId === comment?.rep_bioguide_id &&
       member.memberVoteId === comment?.member_vote_id));
+}
+
+export function commentRecipientLabel(comment, roster, cards = []) {
+  const sharedCard = sharedSenateCommentCard(comment, cards);
   if (sharedCard) {
-    return sharedCard.members.map(member => `Sen. ${memberLastName(member.name)}`).join(" and ");
+    const { title, surnames } = cardMemberNames(sharedCard.members);
+    return `${title} ${surnames}`;
   }
   const recipient = roster.find(person => person.bioguideid === comment?.rep_bioguide_id);
   const name = comment?.recipient_name || recipient?.full_name;

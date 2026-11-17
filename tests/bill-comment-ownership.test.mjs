@@ -10,7 +10,7 @@ test("shared Senate comments name both recipients using the exact recorded respo
     { bioguideId: "B", memberVoteId: 11, name: "Robert Jones" },
   ] }];
   const comment = { rep_bioguide_id: "A", member_vote_id: 10, recipient_name: "Alice Smith", recipient_chamber: "Senate" };
-  assert.equal(commentRecipientLabel(comment, [], cards), "Sen. Smith and Sen. Jones");
+  assert.equal(commentRecipientLabel(comment, [], cards), "Sens. Smith and Jones");
   assert.equal(commentRecipientLabel({ ...comment, member_vote_id: 9 }, [], cards), "Sen. Smith");
   assert.equal(commentRecipientLabel(comment, [], []), "Sen. Smith");
   assert.equal(commentRecipientLabel({ recipient_name: "Jane Doe", recipient_chamber: "House" }, [], cards), "Rep. Doe");

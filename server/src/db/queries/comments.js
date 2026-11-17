@@ -246,6 +246,8 @@ export async function listPublicCommentsByBillId(
       COALESCE(NULLIF(TRIM(CONCAT_WS(' ', NULLIF(TRIM(users.first_name), ''), NULLIF(TRIM(users.last_name), ''))), ''), 'Constituent') AS author_display_name,
       reps.full_name AS recipient_name,
       reps.chamber AS recipient_chamber,
+      bill_comments.rep_bioguide_id,
+      interactions.member_vote_id,
       COALESCE(useful_counts.useful_count, 0)::integer AS useful_count,
       CASE
         WHEN $2::integer IS NULL THEN false
@@ -257,6 +259,7 @@ export async function listPublicCommentsByBillId(
       END AS is_owned_by_viewer
     FROM bill_comments
     JOIN users ON users.id = bill_comments.user_id
+    LEFT JOIN interactions ON interactions.id = bill_comments.interaction_id
     LEFT JOIN reps ON reps.bioguideid = bill_comments.rep_bioguide_id
     LEFT JOIN useful_counts ON useful_counts.comment_id = bill_comments.id
     LEFT JOIN viewer_votes ON viewer_votes.comment_id = bill_comments.id

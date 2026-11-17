@@ -378,7 +378,7 @@
   min-width: 0;
 }
 
-.owned-comment-thread > .comment-card {
+.owned-comment-thread > .comment-card:last-child {
   padding-bottom: 0;
 }
 
@@ -833,6 +833,14 @@
   overflow-wrap: anywhere;
 }
 
+.public-useful-votes {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
 .public-useful-btn {
   min-width: 0;
   display: inline-flex;
@@ -908,10 +916,6 @@
   .comment-owner-icon-btn {
     padding-inline: 6px;
     font-size: 12px;
-  }
-
-  .comment-owner-icon-btn:last-of-type span {
-    display: none;
   }
 
   .action-guide-link {

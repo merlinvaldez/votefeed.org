@@ -84,7 +84,7 @@ const server = await createServer({ root, configFile: false, envDir: false, cach
           if (url.searchParams.get("state") !== "Alaska" || !/^\d+$/.test(url.searchParams.get("district") ?? "")) {
             return send({ error: "District required" }, 400);
           }
-          return send({ comments: [{ id: 70, text: "Public comment from this district.", author_display_name: "Local Constituent", recipient_name: "Alice Smith", recipient_chamber: "Senate", useful_count: 0, viewer_has_marked_useful: false, is_owned_by_viewer: false },
+          return send({ comments: [{ id: 70, text: "Public comment from this district.", author_display_name: "Local Constituent", recipient_name: "Alice Smith", recipient_chamber: "Senate", rep_bioguide_id: "A", member_vote_id: 2, useful_count: 0, viewer_has_marked_useful: false, is_owned_by_viewer: false },
             ...[...comments.values()].filter(comment => comment.is_public).map(comment => ({
               id: comment.id, text: comment.approved_text, author_display_name: "Fixture",
               useful_count: 0, is_owned_by_viewer: true,
@@ -96,6 +96,13 @@ const server = await createServer({ root, configFile: false, envDir: false, cach
           return send({ deleted: true });
         }
         if (path.includes("/interactions/users/")) return send(answers.get(url.searchParams.get("repBioguideId")) ?? null);
+        if (req.method === "GET" && path.endsWith("/comment/contact-drafts")) {
+          const interaction = [...answers.values()].find(row => path === `/interactions/${row.id}/comment/contact-drafts`);
+          const person = people.find(item => item.bioguideid === interaction?.rep_bioguide_id);
+          const comment = comments.get(interaction?.id)?.approved_text;
+          if (!person || !comment) return send({ error: "Approved comment required" }, 404);
+          return send({ callScript: `Hello ${person.full_name}. ${comment}`, messageTemplate: `Dear ${person.full_name}, ${comment}` });
+        }
         if (req.method === "PUT" || req.method === "POST") {
           const chunks = []; for await (const chunk of req) chunks.push(chunk);
           const body = JSON.parse(Buffer.concat(chunks).toString() || "{}");

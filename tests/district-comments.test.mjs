@@ -18,6 +18,7 @@ test("PostgreSQL: counts and discussions include only approved public comments i
         moderation_status text, approved_text text, published_at timestamptz, updated_at timestamptz, created_at timestamptz);
       ALTER TABLE users ADD COLUMN last_name text;
       CREATE TEMP TABLE reps (bioguideid text, full_name text, chamber text);
+      CREATE TEMP TABLE interactions (id integer PRIMARY KEY, member_vote_id integer);
       CREATE TEMP TABLE comment_useful_votes (comment_id integer, user_id integer);
       INSERT INTO users (id,first_name,state,district) VALUES (1,'Local','Alaska',0),(2,'Other district','Alaska',1),
         (3,'Other state','Wyoming',0),(4,'No district','Alaska',NULL);
@@ -28,9 +29,11 @@ test("PostgreSQL: counts and discussions include only approved public comments i
         (7,7,1,true,'approved',NULL),(8,8,1,true,'approved','Other bill'),
         (9,7,4,true,'approved','Unknown district');
       ALTER TABLE bill_comments ADD COLUMN rep_bioguide_id text;
+      ALTER TABLE bill_comments ADD COLUMN interaction_id integer;
+      INSERT INTO interactions VALUES (10,20);
       INSERT INTO reps VALUES ('H','Alice Smith','House of Representatives');
       UPDATE users SET last_name = 'Constituent' WHERE id=1;
-      UPDATE bill_comments SET rep_bioguide_id = 'H' WHERE id=1;
+      UPDATE bill_comments SET rep_bioguide_id = 'H', interaction_id = 10 WHERE id=1;
       INSERT INTO comment_useful_votes VALUES (1,2);`);
     const location = { state: " alaska ", district: "0" };
     const counts = await getPublicBillCommentCounts([7,8,9,7], client, location);
@@ -41,6 +44,8 @@ test("PostgreSQL: counts and discussions include only approved public comments i
       assert.equal(comments[0].author_display_name, 'Local Constituent');
       assert.equal(comments[0].recipient_name, 'Alice Smith');
       assert.equal(comments[0].recipient_chamber, 'House of Representatives');
+      assert.equal(comments[0].rep_bioguide_id, 'H');
+      assert.equal(comments[0].member_vote_id, 20);
       assert.equal(comments[0].useful_count, 1);
       assert.equal(comments[0].viewer_has_marked_useful, viewerUserId === 2);
     }
