@@ -22,6 +22,7 @@ export function createCommentSubmissionHandler({
       repBioguideId: owned.rep_bioguide_id,
       draftText,
     });
+    if (!savedDraft) return res.status(400).send("Set your district before writing a comment");
 
     let moderationResult;
     try {
@@ -32,7 +33,7 @@ export function createCommentSubmissionHandler({
     }
 
     const moderatedComment = await applyModerationResult({
-      interactionId,
+      commentId: savedDraft.id,
       draftText: savedDraft.draft_text,
       status: moderationResult.status,
       moderationReason: moderationResult.moderationReason,

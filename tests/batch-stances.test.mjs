@@ -36,7 +36,8 @@ test('PostgreSQL and HTTP: atomic batch, retries, clearing, authorization and fa
         session_number integer, roll_call_number integer, legislation_type text, legislationnumber integer, vote text, voted_on timestamptz);
       CREATE TABLE interactions (id serial PRIMARY KEY, user_id integer, bill_id integer, rep_bioguide_id text,
         member_vote_id integer, stance text NOT NULL, user_comment text);
-      CREATE TABLE bill_comments (interaction_id integer, approved_text text, call_script text, message_template text, updated_at timestamptz);
+      CREATE TABLE bill_comments (id integer GENERATED ALWAYS AS IDENTITY, interaction_id integer, user_id integer,
+        district_state text, district_number integer, approved_text text, call_script text, message_template text, updated_at timestamptz);
       INSERT INTO users VALUES (1,'Alaska',0),(2,'Ohio',1);
       INSERT INTO reps VALUES ('S1','Alaska','Senate',true),('S2','Alaska','Senate',true);
       INSERT INTO bills VALUES (7,7,'hr','https://www.congress.gov/bill/119th-congress/house-bill/7');
@@ -59,7 +60,10 @@ test('PostgreSQL and HTTP: atomic batch, retries, clearing, authorization and fa
     const retries = await Promise.all(Array.from({ length: 4 }, () => saveBatchStances(1, body, pool)));
     for (const retry of retries) assert.deepEqual(retry, first);
     assert.equal((await admin.query('SELECT count(*)::int AS n FROM interactions')).rows[0].n, 2);
-    await admin.query("UPDATE interactions SET user_comment='Keep legacy'; INSERT INTO bill_comments SELECT id,'Keep published','old call','old message',now() FROM interactions");
+    await admin.query(`UPDATE interactions SET user_comment='Keep legacy';
+      INSERT INTO bill_comments (interaction_id,user_id,district_state,district_number,approved_text,call_script,message_template,updated_at)
+      SELECT i.id,i.user_id,u.state,u.district,'Keep published','old call','old message',now()
+      FROM interactions i JOIN users u ON u.id=i.user_id`);
     const cleared = await saveBatchStances(1, { ...body, stance: null }, pool);
     const unaligned = await getDelegationAlignment({ id: 1, state: 'Alaska', district: 0 }, { chamber: 'All Reps', runner: pool });
     assert.equal(unaligned.comparableCount, 0);
@@ -159,23 +163,23 @@ test('PostgreSQL and HTTP: atomic batch, retries, clearing, authorization and fa
     assert.equal(comment.call_script, null);
     assert.equal(comment.message_template, null);
     assert.equal((await admin.query('SELECT stance FROM interactions WHERE id=$1', [first.interactions[1].id])).rows[0].stance, 'approve');
-    await assert.rejects(getOrCreateCommentContactDrafts({ interactionId, expectedStance: 'approve',
+    await assert.rejects(getOrCreateCommentContactDrafts({ interactionId, userId: 1, expectedStance: 'approve',
       generateDrafts: () => assert.fail('stale stance must not generate') }, pool), { status: 409 });
-    await assert.rejects(getOrCreateCommentContactDrafts({ interactionId, expectedStance: null,
+    await assert.rejects(getOrCreateCommentContactDrafts({ interactionId, userId: 1, expectedStance: null,
       generateDrafts: async () => {
         await saveBatchStances(1, body, pool);
         return { callScript: 'Old stance call', messageTemplate: 'Old stance message' };
       } }, pool), { status: 409 });
     assert.equal((await admin.query('SELECT call_script FROM bill_comments WHERE interaction_id=$1', [interactionId])).rows[0].call_script, null);
-    await assert.rejects(getOrCreateCommentContactDrafts({ interactionId, expectedStance: 'approve',
+    await assert.rejects(getOrCreateCommentContactDrafts({ interactionId, userId: 1, expectedStance: 'approve',
       generateDrafts: async () => {
         await admin.query("UPDATE bill_comments SET approved_text='New comment', updated_at=now() WHERE interaction_id=$1", [interactionId]);
         return { callScript: 'Old comment call', messageTemplate: 'Old comment message' };
       } }, pool), { status: 409 });
-    const fresh = await getOrCreateCommentContactDrafts({ interactionId, expectedStance: 'approve',
+    const fresh = await getOrCreateCommentContactDrafts({ interactionId, userId: 1, expectedStance: 'approve',
       generateDrafts: async comment => ({ callScript: `Call: ${comment.approved_text}`, messageTemplate: 'Current message' }) }, pool);
     assert.equal(fresh.callScript, 'Call: New comment');
-    const cached = await getOrCreateCommentContactDrafts({ interactionId, expectedStance: 'approve',
+    const cached = await getOrCreateCommentContactDrafts({ interactionId, userId: 1, expectedStance: 'approve',
       generateDrafts: () => assert.fail('reuse current cache') }, pool);
     assert.equal(cached.source, 'cache');
   } finally {

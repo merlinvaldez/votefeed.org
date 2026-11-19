@@ -1,5 +1,6 @@
 import db from "../client.js";
 import { matchesSummaryMeasure } from "../../utils/summaryMeasure.js";
+import { sameCommentDistrict } from "./comments.js";
 
 const fail = (status, message) => { throw Object.assign(new Error(message), { status }); };
 
@@ -39,6 +40,7 @@ export async function sharedCommentContactDrafts({ userId, sourceInteractionId, 
       JOIN reps r ON r.bioguideid = i.rep_bioguide_id AND r.is_current_member = true
         AND r.chamber = 'Senate' AND LOWER(BTRIM(r.state)) = LOWER(BTRIM(u.state))
       JOIN bill_comments c ON c.interaction_id = $3 AND c.user_id = i.user_id AND c.bill_id = i.bill_id
+        AND ${sameCommentDistrict("c", "u")}
       WHERE i.user_id = $1 AND i.id = ANY($2::integer[]) AND isfinite(m.voted_on) ORDER BY i.id`, [userId, interactionIds, sourceInteractionId]);
     return rows;
   };

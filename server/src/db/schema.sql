@@ -204,7 +204,7 @@ WHERE member_vote_id IS NOT NULL;
 
 CREATE TABLE bill_comments (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    interaction_id integer NOT NULL UNIQUE REFERENCES interactions(id) ON DELETE CASCADE,
+    interaction_id integer NOT NULL REFERENCES interactions(id) ON DELETE CASCADE,
     user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     bill_id integer NOT NULL REFERENCES bills(id) ON DELETE CASCADE,
     rep_bioguide_id text NOT NULL REFERENCES reps(bioguideId),
@@ -239,6 +239,9 @@ ON bill_comments(bill_id, is_public, moderation_status, published_at DESC);
 
 CREATE INDEX idx_bill_comments_user_bill
 ON bill_comments(user_id, bill_id);
+
+CREATE UNIQUE INDEX bill_comments_interaction_district_key
+ON bill_comments (interaction_id, LOWER(BTRIM(district_state)), district_number);
 
 CREATE INDEX idx_interactions_user_rep
 ON interactions(user_id,rep_bioguide_id);

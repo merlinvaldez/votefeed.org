@@ -32,7 +32,7 @@ test("new and edited comments save and moderate the exact text submitted", async
         return { status: "approved", moderationReason: null, moderationCategories: {} };
       },
       applyModerationResult: async input => {
-        events.push(["apply", input.draftText, input.status]);
+        events.push(["apply", input.commentId, input.draftText, input.status]);
         return { id: previous?.id ?? "new-comment", draft_text: input.draftText,
           approved_text: input.draftText, moderation_status: input.status };
       },
@@ -53,7 +53,7 @@ test("new and edited comments save and moderate the exact text submitted", async
     assert.deepEqual(events, [
       ["save", "The exact latest edited text"],
       ["moderate", "The exact latest edited text"],
-      ["apply", "The exact latest edited text", "approved"],
+      ["apply", previous?.id ?? "new-comment", "The exact latest edited text", "approved"],
     ], scenario);
   }
 });
@@ -63,7 +63,7 @@ test("a moderation result cannot approve a draft changed while moderation was ru
   let params;
   const moderatedText = "Text that was actually moderated";
   const result = await applyCommentModerationResult({
-    interactionId: 9,
+    commentId: "saved-comment",
     draftText: moderatedText,
     status: "approved",
     moderationReason: null,
@@ -77,7 +77,8 @@ test("a moderation result cannot approve a draft changed while moderation was ru
   });
 
   assert.equal(result, null);
-  assert.match(sql, /WHERE interaction_id = \$1\s+AND draft_text = \$5/);
+  assert.match(sql, /WHERE id = \$1\s+AND draft_text = \$5/);
+  assert.equal(params[0], "saved-comment");
   assert.equal(params[4], moderatedText);
 });
 

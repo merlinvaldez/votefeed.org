@@ -29,19 +29,17 @@ export async function getPublicBillCommentCounts(billIds, runner = db, location)
   return counts;
 }
 
-export async function getCommentByInteractionId(interactionId, runner = db) {
-  const sql = `SELECT * FROM bill_comments WHERE interaction_id = $1`;
-  const {
-    rows: [comment],
-  } = await runner.query(sql, [interactionId]);
-  return comment ?? null;
+export function sameCommentDistrict(comment, user) {
+  return `LOWER(BTRIM(${comment}.district_state)) = LOWER(BTRIM(${user}.state))
+    AND ${comment}.district_number = ${user}.district`;
 }
 
-export async function getCommentById(commentId, runner = db) {
-  const sql = `SELECT * FROM bill_comments WHERE id = $1`;
+export async function getCommentById(commentId, viewerId, runner = db) {
+  const sql = `SELECT c.* FROM bill_comments c JOIN users u ON u.id = $2
+    WHERE c.id = $1 AND ${sameCommentDistrict("c", "u")}`;
   const {
     rows: [comment],
-  } = await runner.query(sql, [commentId]);
+  } = await runner.query(sql, [commentId, viewerId]);
   return comment ?? null;
 }
 
@@ -54,6 +52,8 @@ export async function listOwnedBillComments(userId, billId, runner = db) {
     c.is_public AS comment_is_public, c.updated_at AS comment_updated_at,
     reps.full_name AS recipient_name, reps.chamber AS recipient_chamber
     FROM interactions JOIN bill_comments c ON c.interaction_id = interactions.id
+      AND c.user_id = interactions.user_id
+    JOIN users u ON u.id = c.user_id AND ${sameCommentDistrict("c", "u")}
     LEFT JOIN reps ON reps.bioguideid = interactions.rep_bioguide_id
     WHERE interactions.user_id = $1 AND interactions.bill_id = $2
     ORDER BY c.created_at DESC, c.id DESC`, [userId, billId]);
@@ -78,8 +78,8 @@ export async function upsertDraftComment(
     )
     SELECT $1, users.id, $3, $4, users.state, users.district, $5, 'draft', now()
     FROM users
-    WHERE users.id = $2
-    ON CONFLICT (interaction_id) DO UPDATE SET
+    WHERE users.id = $2 AND BTRIM(users.state) <> '' AND users.district >= 0
+    ON CONFLICT (interaction_id, LOWER(BTRIM(district_state)), district_number) DO UPDATE SET
       draft_text = EXCLUDED.draft_text,
       moderation_status = 'draft',
       moderation_reason = NULL,
@@ -100,12 +100,14 @@ export async function upsertDraftComment(
 }
 
 export async function getOrCreateCommentContactDrafts(
-  { interactionId, generateDrafts, expectedStance },
+  { interactionId, userId, generateDrafts, expectedStance },
   runner = db,
 ) {
   const { rows: [comment] } = await runner.query(`SELECT c.*, c.updated_at::text AS source_version,
     i.stance AS source_stance FROM bill_comments c
-    JOIN interactions i ON i.id = c.interaction_id WHERE c.interaction_id = $1`, [interactionId]);
+    JOIN interactions i ON i.id = c.interaction_id AND i.user_id = c.user_id
+    JOIN users u ON u.id = c.user_id AND ${sameCommentDistrict("c", "u")}
+    WHERE c.interaction_id = $1 AND c.user_id = $2`, [interactionId, userId]);
   if (!comment) return null;
   if (comment.source_stance !== expectedStance) {
     throw Object.assign(new Error("Response changed. Please retry contact drafts."), { status: 409 });
@@ -141,14 +143,16 @@ export async function getOrCreateCommentContactDrafts(
     SET call_script = $2,
         message_template = $3,
         updated_at = now()
-    WHERE interaction_id = $1
+    WHERE id = $1
       AND updated_at::text = $4
-      AND EXISTS (SELECT 1 FROM interactions i WHERE i.id = $1 AND i.stance IS NOT DISTINCT FROM $5::text)
+      AND EXISTS (SELECT 1 FROM interactions i JOIN users u ON u.id = i.user_id
+        WHERE i.id = bill_comments.interaction_id AND i.stance IS NOT DISTINCT FROM $5::text
+          AND ${sameCommentDistrict("bill_comments", "u")})
     RETURNING call_script, message_template
   `;
   const {
     rows: [savedDrafts],
-  } = await runner.query(sql, [interactionId, callScript, messageTemplate, comment.source_version, expectedStance]);
+  } = await runner.query(sql, [comment.id, callScript, messageTemplate, comment.source_version, expectedStance]);
   if (!savedDrafts) {
     throw Object.assign(new Error("Comment or response changed. Please retry contact drafts."), { status: 409 });
   }
@@ -162,7 +166,7 @@ export async function getOrCreateCommentContactDrafts(
 }
 
 export async function applyCommentModerationResult(
-  { interactionId, draftText, status, moderationReason, moderationCategories },
+  { commentId, draftText, status, moderationReason, moderationCategories },
   runner = db,
 ) {
   const sql = `
@@ -185,14 +189,14 @@ export async function applyCommentModerationResult(
         last_submitted_at = now(),
         last_moderated_at = now(),
         updated_at = now()
-    WHERE interaction_id = $1
+    WHERE id = $1
       AND draft_text = $5
     RETURNING *
   `;
   const {
     rows: [comment],
   } = await runner.query(sql, [
-    interactionId,
+    commentId,
     status,
     moderationReason,
     moderationCategories,
@@ -215,6 +219,7 @@ export async function setCommentPublicVisibility(
         updated_at = now()
     WHERE id = $1
       AND user_id = $2
+      AND EXISTS (SELECT 1 FROM users u WHERE u.id = $2 AND ${sameCommentDistrict("bill_comments", "u")})
     RETURNING *
   `;
   const {

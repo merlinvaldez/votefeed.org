@@ -5,7 +5,8 @@ import pg from "../server/node_modules/pg/lib/index.js";
 import express from "../server/node_modules/express/index.js";
 import db from "../server/src/db/client.js";
 import router from "../server/src/api/comments.js";
-import { getPublicBillCommentCounts, listPublicCommentsByBillId, upsertDraftComment } from "../server/src/db/queries/comments.js";
+import { getPublicBillCommentCounts, listOwnedBillComments, listPublicCommentsByBillId, setCommentPublicVisibility, upsertDraftComment } from "../server/src/db/queries/comments.js";
+import { deleteComment } from "../server/src/db/queries/interactions.js";
 
 test("PostgreSQL: counts and discussions include only approved public comments in the same state and district", {
   skip: process.env.DELEGATION_TEST_POSTGRES !== "1",
@@ -21,7 +22,7 @@ test("PostgreSQL: counts and discussions include only approved public comments i
         published_at timestamptz, updated_at timestamptz, created_at timestamptz);
       ALTER TABLE users ADD COLUMN last_name text;
       CREATE TEMP TABLE reps (bioguideid text, full_name text, chamber text);
-      CREATE TEMP TABLE interactions (id integer PRIMARY KEY, member_vote_id integer);
+      CREATE TEMP TABLE interactions (id integer PRIMARY KEY, member_vote_id integer, user_id integer, bill_id integer, rep_bioguide_id text);
       CREATE TEMP TABLE comment_useful_votes (comment_id integer, user_id integer);
       INSERT INTO users (id,first_name,state,district) VALUES (1,'Local','Alaska',0),(2,'Other district','Alaska',1),
         (3,'Other state','Wyoming',0),(4,'No district','Alaska',NULL);
@@ -33,13 +34,15 @@ test("PostgreSQL: counts and discussions include only approved public comments i
         (9,7,4,true,'approved','Unknown district');
       ALTER TABLE bill_comments ADD COLUMN rep_bioguide_id text;
       ALTER TABLE bill_comments ADD COLUMN interaction_id integer UNIQUE;
-      INSERT INTO interactions VALUES (10,20);
+      INSERT INTO interactions VALUES (10,20,1,7,'H'),(11,21,1,7,'S');
       INSERT INTO reps VALUES ('H','Alice Smith','House of Representatives');
       UPDATE users SET last_name = 'Constituent' WHERE id=1;
       UPDATE bill_comments SET rep_bioguide_id = 'H', interaction_id = 10 WHERE id=1;
       INSERT INTO comment_useful_votes VALUES (1,2);`);
     const migration = await readFile(new URL("../supabase/migrations/20261119161830_snapshot_bill_comment_district.sql", import.meta.url), "utf8");
     await client.query(migration.replaceAll("public.", "pg_temp."));
+    const identityMigration = await readFile(new URL("../supabase/migrations/20261119175204_scope_comment_identity_to_district.sql", import.meta.url), "utf8");
+    await client.query(identityMigration.replaceAll("public.", "pg_temp."));
     const location = { state: " alaska ", district: "0" };
     const counts = await getPublicBillCommentCounts([7,8,9,7], client, location);
     assert.deepEqual([...counts], [[7,1],[8,1],[9,0]]);
@@ -67,14 +70,19 @@ test("PostgreSQL: counts and discussions include only approved public comments i
     assert.equal((await getPublicBillCommentCounts([7], client, location)).get(7), 1);
     assert.deepEqual((await listPublicCommentsByBillId(7, { location }, client)).map(comment => comment.id), [1]);
 
-    const draft = { interactionId: 11, userId: 1, billId: 7, repBioguideId: "H", draftText: "New district draft" };
+    const draft = { interactionId: 11, userId: 1, billId: 7, repBioguideId: "S", draftText: "New district draft" };
     const created = await upsertDraftComment(draft, client);
     assert.equal(created.district_state, "Alaska");
     assert.equal(created.district_number, 2);
-    await client.query("UPDATE users SET state = 'Wyoming', district = 0 WHERE id = 1");
-    const edited = await upsertDraftComment({ ...draft, draftText: "Edited draft" }, client);
-    assert.equal(edited.district_state, "Alaska");
-    assert.equal(edited.district_number, 2);
+    await client.query("UPDATE users SET district = 3 WHERE id = 1");
+    const second = await upsertDraftComment({ ...draft, draftText: "Another Alaska district draft" }, client);
+    assert.notEqual(second.id, created.id);
+    assert.deepEqual((await listOwnedBillComments(1, 7, client)).map(row => row.comment_draft_text), ["Another Alaska district draft"]);
+    assert.equal(await setCommentPublicVisibility({ commentId: created.id, userId: 1, isPublic: true }, client), null);
+    assert.equal((await deleteComment(draft.interactionId, draft.userId, client)).id, second.id);
+    await client.query("UPDATE users SET state = ' alaska ', district = 2 WHERE id = 1");
+    assert.deepEqual((await listOwnedBillComments(1, 7, client)).map(row => row.comment_draft_text), ["New district draft"]);
+    assert.equal((await upsertDraftComment({ ...draft, draftText: "Edited draft" }, client)).id, created.id);
   } finally { await client.query("ROLLBACK"); await client.end(); }
 });
 

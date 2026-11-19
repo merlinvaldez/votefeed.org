@@ -1,6 +1,7 @@
 import db from "../client.js";
 import { getAlignmentByUserAndMembers } from "./alignment.js";
 import { findRepByBioguideId } from "./reps.js";
+import { sameCommentDistrict } from "./comments.js";
 
 export async function addStance(userId, billId, rep_bioguide_id, stance, memberVoteId, runner = db) {
   const sql = `INSERT INTO interactions (user_id, bill_id, rep_bioguide_id, stance, member_vote_id)
@@ -37,12 +38,25 @@ export async function updateStance(interactionId, newStance, memberVoteId, runne
   return updatedStance;
 }
 
-export async function removeStanceAndComment(interactionId) {
-  const sql = `DELETE from interactions where id=$1 RETURNING *`;
-  const {
-    rows: [deleted],
-  } = await db.query(sql, [interactionId]);
-  return deleted;
+export async function removeStanceAndComment(interactionId, userId) {
+  const client = await db.connect();
+  try {
+    await client.query("BEGIN");
+    // A new comment takes a foreign-key lock on this interaction.
+    await client.query("SELECT id FROM interactions WHERE id = $1 AND user_id = $2 FOR UPDATE", [interactionId, userId]);
+    const { rows: [deleted] } = await client.query(`DELETE FROM interactions
+      USING users u WHERE interactions.id = $1 AND interactions.user_id = $2 AND u.id = $2
+        AND NOT EXISTS (SELECT 1 FROM bill_comments c WHERE c.interaction_id = interactions.id
+          AND (${sameCommentDistrict("c", "u")}) IS NOT TRUE)
+      RETURNING interactions.*`, [interactionId, userId]);
+    await client.query("COMMIT");
+    return deleted;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
 }
 
 export async function updateComment(interactionId, comment) {
@@ -56,13 +70,14 @@ export async function updateComment(interactionId, comment) {
   return addedComment;
 }
 
-export async function deleteComment(interactionId) {
-  const sql = `DELETE FROM bill_comments
-  WHERE interaction_id=$1 
-  RETURNING *`;
+export async function deleteComment(interactionId, userId, runner = db) {
+  const sql = `DELETE FROM bill_comments c USING users u
+  WHERE c.interaction_id = $1 AND c.user_id = $2 AND u.id = $2
+    AND ${sameCommentDistrict("c", "u")}
+  RETURNING c.*`;
   const {
     rows: [deletedComment],
-  } = await db.query(sql, [interactionId]);
+  } = await runner.query(sql, [interactionId, userId]);
   return deletedComment;
 }
 
@@ -86,7 +101,7 @@ export async function getAlignmentByUserAndRep(
   }] : [], options);
 }
 
-export async function getUserInteractionsByBill(userId, billId, { memberVoteId = null, repId = null } = {}) {
+export async function getUserInteractionsByBill(userId, billId, { memberVoteId = null, repId = null, viewerId = null } = {}) {
   const sql = `SELECT
     interactions.*,
     bill_comments.id AS comment_id,
@@ -101,7 +116,9 @@ export async function getUserInteractionsByBill(userId, billId, { memberVoteId =
     bill_comments.published_at AS comment_published_at,
     bill_comments.updated_at AS comment_updated_at
   FROM interactions
+  LEFT JOIN users viewer ON viewer.id = $5 AND viewer.id = interactions.user_id
   LEFT JOIN bill_comments ON bill_comments.interaction_id = interactions.id
+    AND bill_comments.user_id = viewer.id AND ${sameCommentDistrict("bill_comments", "viewer")}
   WHERE interactions.user_id=$1 AND interactions.bill_id=$2
     AND ($3::integer IS NULL OR interactions.member_vote_id = $3 OR interactions.member_vote_id IS NULL)
     AND ($4::text IS NULL OR interactions.rep_bioguide_id = $4)
@@ -109,7 +126,7 @@ export async function getUserInteractionsByBill(userId, billId, { memberVoteId =
   LIMIT 1`;
   const {
     rows: [userInteractionsOnBill],
-  } = await db.query(sql, [userId, billId, memberVoteId, repId]);
+  } = await db.query(sql, [userId, billId, memberVoteId, repId, viewerId]);
   return userInteractionsOnBill;
 }
 

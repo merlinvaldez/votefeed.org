@@ -83,6 +83,7 @@ router.get("/users/:userId/bill/:billId", async (req, res) => {
   const interactions = await getUserInteractionsByBill(userId, billId, {
     memberVoteId: req.query.memberVoteId ?? null,
     repId: req.query.repBioguideId ?? null,
+    viewerId: req.user?.id ?? null,
   });
   res.status(200).send(interactions);
 });
@@ -152,7 +153,8 @@ router.delete("/:interactionId", requireUser, async (req, res) => {
   const { interactionId } = req.params;
   const owned = await getOwnedInteractionsOrSendError(req, res, interactionId);
   if (!owned) return;
-  const deleted = await removeStanceAndComment(interactionId);
+  const deleted = await removeStanceAndComment(interactionId, req.user.id);
+  if (!deleted) return res.status(409).send("This response has comments in another district. Clear your stance instead.");
   res.status(201).send(deleted);
 });
 
@@ -176,6 +178,7 @@ router.put(
       repBioguideId: owned.rep_bioguide_id,
       draftText: draft_text,
     });
+    if (!savedDraft) return res.status(400).send("Set your district before writing a comment");
     res.status(201).send(savedDraft);
   },
 );
@@ -210,6 +213,7 @@ router.get("/:interactionId/comment/contact-drafts", requireUser, async (req, re
 
     const drafts = await getOrCreateCommentContactDrafts({
       interactionId,
+      userId: req.user.id,
       expectedStance: owned.stance,
       generateDrafts: async (comment) =>
         generateCommentContactDrafts({
@@ -248,6 +252,7 @@ router.delete("/:interactionId/comment", requireUser, async (req, res) => {
   const { interactionId } = req.params;
   const owned = await getOwnedInteractionsOrSendError(req, res, interactionId);
   if (!owned) return;
-  const deleted = await deleteComment(interactionId);
+  const deleted = await deleteComment(interactionId, req.user.id);
+  if (!deleted) return res.status(404).send("Comment not found in your district");
   res.status(201).send(deleted);
 });

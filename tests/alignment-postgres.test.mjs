@@ -25,7 +25,8 @@ test("isolated PostgreSQL: migration, pair query, summaries and answer updates",
       CREATE TABLE member_voting_record (id serial PRIMARY KEY, legislationnumber integer, legislation_type text, member_id text,
         chamber text, congress_number integer, session_number integer, roll_call_number integer, vote text, voted_on timestamptz);
       CREATE TABLE interactions (id serial PRIMARY KEY, user_id integer, bill_id integer, rep_bioguide_id text, stance text);
-      CREATE TABLE bill_comments (interaction_id integer, call_script text, message_template text, updated_at timestamptz);`);
+      CREATE TABLE bill_comments (interaction_id integer, district_state text, district_number integer,
+        call_script text, message_template text, updated_at timestamptz);`);
     const migration = await readFile(new URL("../supabase/migrations/20261009154322_link_alignment_stances_to_member_votes.sql", import.meta.url), "utf8");
     // Run the exact migration statements against the isolated schema.
     await client.query(migration.replaceAll("public.", "alignment_test."));
@@ -83,7 +84,16 @@ test("isolated PostgreSQL: migration, pair query, summaries and answer updates",
     assert.equal((await getDelegationAlignment(user, { policyArea: "Education", runner: client })).hasData, false);
 
     const originalQuery = db.query;
+    const originalConnect = db.connect;
     db.query = client.query.bind(client);
+    db.connect = async () => ({
+      query: (sql, params) => client.query({
+        BEGIN: "SAVEPOINT delete_interaction",
+        COMMIT: "RELEASE SAVEPOINT delete_interaction",
+        ROLLBACK: "ROLLBACK TO SAVEPOINT delete_interaction",
+      }[sql] ?? sql, params),
+      release() {},
+    });
     const app = express();
     app.use(express.json());
     app.use((req, res, next) => {
@@ -134,6 +144,7 @@ test("isolated PostgreSQL: migration, pair query, summaries and answer updates",
     } finally {
       await new Promise(resolve => server.close(resolve));
       db.query = originalQuery;
+      db.connect = originalConnect;
     }
   } finally {
     await client.query("ROLLBACK");

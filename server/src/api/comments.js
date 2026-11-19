@@ -45,7 +45,7 @@ router.put(
         return res.status(400).json({ error: "is_public must be a boolean" });
       }
 
-      const comment = await getCommentById(commentId);
+      const comment = await getCommentById(commentId, req.user.id);
       if (!comment) {
         return res.status(404).send("Comment not found");
       }
@@ -68,6 +68,7 @@ router.put(
         isPublic,
       });
 
+      if (!updatedComment) return res.status(409).send("Comment district changed. Reload the discussion.");
       return res.json(updatedComment);
     } catch (err) {
       return next(err);
@@ -82,7 +83,7 @@ router.put("/:commentId/useful", requireUser, async (req, res, next) => {
       return res.status(400).json({ error: "Invalid comment id" });
     }
 
-    const comment = await getCommentById(commentId);
+    const comment = await getCommentById(commentId, req.user.id);
     if (!comment) {
       return res.status(404).send("Comment not found");
     }

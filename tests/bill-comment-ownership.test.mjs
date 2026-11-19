@@ -49,14 +49,17 @@ test("PostgreSQL: returning users recover all their bill comments across vote ev
       INSERT INTO reps VALUES ('H','House Member','House'),('S','Alice Smith','Senate');
       CREATE TABLE interactions(id integer PRIMARY KEY, user_id integer, bill_id integer,
         rep_bioguide_id text, member_vote_id integer, stance text);
-      CREATE TABLE bill_comments(id integer, interaction_id integer, draft_text text,
+      CREATE TABLE users(id integer PRIMARY KEY, state text, district integer);
+      INSERT INTO users VALUES (5,'Alaska',0),(6,'Alaska',0);
+      CREATE TABLE bill_comments(id integer, interaction_id integer, user_id integer, district_state text,
+        district_number integer, draft_text text,
         approved_text text, moderation_status text, moderation_reason text, is_public boolean,
         updated_at timestamptz, created_at timestamptz DEFAULT now());
       INSERT INTO interactions VALUES (1,5,7,'H',10,'approve'),(2,5,7,'S',20,'disapprove'),
         (3,6,7,'H',10,'approve'),(4,5,8,'H',30,'approve');
-      INSERT INTO bill_comments(id,interaction_id,draft_text,approved_text,moderation_status,is_public)
-        VALUES (11,1,'private','private','approved',false),(12,2,'public','public','approved',true),
-        (13,3,'someone else','someone else','approved',true),(14,4,'another bill',null,'draft',false);`);
+      INSERT INTO bill_comments(id,interaction_id,user_id,district_state,district_number,draft_text,approved_text,moderation_status,is_public)
+        VALUES (11,1,5,'Alaska',0,'private','private','approved',false),(12,2,5,'Alaska',0,'public','public','approved',true),
+        (13,3,6,'Alaska',0,'someone else','someone else','approved',true),(14,4,5,'Alaska',0,'another bill',null,'draft',false);`);
     const rows = await listOwnedBillComments(5, 7, client);
     assert.deepEqual(rows.map(row => row.id), [2, 1]);
     assert.deepEqual(rows.map(row => row.comment_approved_text), ["public", "private"]);
