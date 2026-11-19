@@ -27,6 +27,7 @@ test("PostgreSQL: shared delegation read selects latest eligible member measures
         legislation_type text, legislationnumber integer, voted_on timestamptz, vote text);
       CREATE TEMP TABLE users (id integer, state text, district integer);
       CREATE TEMP TABLE bill_comments (bill_id integer, user_id integer,
+        district_state text, district_number integer,
         is_public boolean, moderation_status text, approved_text text);
       INSERT INTO reps (bioguideid,chamber,state,congressionaldistrict,is_current_member)
       VALUES ('H','House of Representatives','Alaska',0,true),
@@ -68,6 +69,7 @@ test("PostgreSQL: shared delegation read selects latest eligible member measures
     const location = { state: "Alaska", district: 0 };
     const firstPage = await readDelegationFeedPage(location, { runner, userId: 1, limit: 2 });
     assert.equal(firstPage.cards.length, 2);
+    assert.deepEqual(firstPage.cards.map(card => card.publicCommentCount), [0, 0]);
     assert.equal(firstPage.page.hasMore, true);
     assert.equal(firstPage.totalPolicyCount, 4);
     assert.equal(firstPage.filteredCardCount, 4);

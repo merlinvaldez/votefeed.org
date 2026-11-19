@@ -20,9 +20,9 @@ export async function getPublicBillCommentCounts(billIds, runner = db, location)
   const ids = [...new Set(billIds)];
   if (!ids.length) return new Map();
   const { rows } = await runner.query(`SELECT bill_comments.bill_id, COUNT(*)::integer AS count
-    FROM bill_comments JOIN users ON users.id = bill_comments.user_id
+    FROM bill_comments
     WHERE bill_comments.bill_id = ANY($1::integer[]) AND ${publicVisibility}
-      AND LOWER(BTRIM(users.state)) = LOWER($2) AND users.district = $3
+      AND LOWER(BTRIM(bill_comments.district_state)) = LOWER($2) AND bill_comments.district_number = $3
     GROUP BY bill_comments.bill_id`, [ids, state, district]);
   const counts = new Map(ids.map(id => [id, 0]));
   for (const row of rows) counts.set(row.bill_id, row.count);
@@ -70,11 +70,15 @@ export async function upsertDraftComment(
       user_id,
       bill_id,
       rep_bioguide_id,
+      district_state,
+      district_number,
       draft_text,
       moderation_status,
       updated_at
     )
-    VALUES ($1, $2, $3, $4, $5, 'draft', now())
+    SELECT $1, users.id, $3, $4, users.state, users.district, $5, 'draft', now()
+    FROM users
+    WHERE users.id = $2
     ON CONFLICT (interaction_id) DO UPDATE SET
       draft_text = EXCLUDED.draft_text,
       moderation_status = 'draft',
@@ -265,7 +269,7 @@ export async function listPublicCommentsByBillId(
     LEFT JOIN viewer_votes ON viewer_votes.comment_id = bill_comments.id
     WHERE bill_comments.bill_id = $1
       AND ${publicVisibility}
-      AND LOWER(BTRIM(users.state)) = LOWER($3) AND users.district = $4
+      AND LOWER(BTRIM(bill_comments.district_state)) = LOWER($3) AND bill_comments.district_number = $4
     ORDER BY
       COALESCE(bill_comments.published_at, bill_comments.updated_at, bill_comments.created_at) DESC,
       bill_comments.id DESC

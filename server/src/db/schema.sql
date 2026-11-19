@@ -208,6 +208,8 @@ CREATE TABLE bill_comments (
     user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     bill_id integer NOT NULL REFERENCES bills(id) ON DELETE CASCADE,
     rep_bioguide_id text NOT NULL REFERENCES reps(bioguideId),
+    district_state text,
+    district_number integer,
     draft_text text,
     approved_text text,
     call_script text,
